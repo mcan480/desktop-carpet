@@ -1,0 +1,2 @@
+rugVisible true
+wallpaper {"src":"C:\\Users\\runneradmin\\AppData\\Roaming\\Microsoft\\Windows\\Themes\\TranscodedWallpaper","mode":"fill","bytes":112551}
