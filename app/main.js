@@ -232,8 +232,101 @@ function buildRug({ keepPose = true, saved = null } = {}) {
   pick = new THREE.Mesh(geom, new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }));
   pick.visible = false;
   scene.add(front, back);
+  buildFringe();
   syncGeometry();
   wake();
+}
+
+// ---------- fringe (püskül) ----------
+// Wool fringe along the two short ends, like the warp threads of a real rug: threads leave the edge, are gathered
+// into a knot a little way out, then fan loose to their tips. They lie on the floor and hang when the edge lifts.
+let fringe = null;
+const PER_BUNDLE = 4, PTS = 4; // threads per knot, points per thread
+
+function fringeColor(style) {
+  const P = STYLES[style] || {};
+  return P.fringe || '#e8dcc2';
+}
+
+function buildFringe() {
+  if (fringe) { scene.remove(fringe); fringe.geometry.dispose(); fringe.material.dispose(); fringe = null; }
+  if (STYLES[state.style]?.invisible) return; // the Invisible rug has no tassels to give it away
+  const ny = cloth.ny;
+  const bundles = Math.max(8, Math.round(cloth.height / 13)); // knots per end
+  const span = (ny - 1) / bundles;
+  const threads = [];
+  let seed = 12345; const R = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  for (const side of [0, 1]) for (let b = 0; b < bundles; b++) {
+    const tb = (b + 0.5) * span;
+    for (let k = 0; k < PER_BUNDLE; k++) {
+      const u = (k + 0.5) / PER_BUNDLE - 0.5; // -0.5..0.5 across the bundle
+      threads.push({ side, tb, t0: Math.min(ny - 1, Math.max(0, tb + u * span * 0.8)), fan: u * 0.5 + (R() - 0.5) * 0.12,
+                     len: 0.85 + R() * 0.3, wave: (R() - 0.5) * 0.18, shade: 0.88 + R() * 0.16 });
+    }
+  }
+  const n = threads.length, V = PTS * 2;
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * V * 3), 3));
+  const col = new Float32Array(n * V * 3), base = new THREE.Color(fringeColor(state.style));
+  const index = [];
+  threads.forEach((th, i) => {
+    for (let v = 0; v < V; v++) {
+      const pt = v >> 1, sh = th.shade * (pt === 1 ? 0.8 : pt === 0 ? 0.9 : 1); // knot a bit darker
+      const o = (i * V + v) * 3; col[o] = base.r * sh; col[o + 1] = base.g * sh; col[o + 2] = base.b * sh;
+    }
+    for (let q = 0; q < PTS - 1; q++) { const o = i * V + q * 2; index.push(o, o + 1, o + 2, o + 1, o + 3, o + 2); }
+  });
+  g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  g.setIndex(index);
+  fringe = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0, side: THREE.DoubleSide }));
+  fringe.castShadow = true;
+  fringe.userData.threads = threads;
+  scene.add(fringe);
+}
+
+const fv = { a: new THREE.Vector3(), b: new THREE.Vector3(), edge: new THREE.Vector3(), knot: new THREE.Vector3(), inner: new THREE.Vector3(),
+  tan: new THREE.Vector3(), dir: new THREE.Vector3(), p: new THREE.Vector3(), d2: new THREE.Vector3() };
+
+function syncFringe(arr) {
+  if (!fringe) return;
+  const { nx, ny } = cloth, threads = fringe.userData.threads, out = fringe.geometry.attributes.position.array;
+  const L = cloth.width * 0.06, floor = cloth.floorZ + 0.4;
+  const at = (i, j, v) => v.set(arr[(j * nx + i) * 3], arr[(j * nx + i) * 3 + 1], arr[(j * nx + i) * 3 + 2]);
+  const edgeAt = (ci, t, v) => { const j0 = Math.min(ny - 2, Math.floor(t)), f = t - j0; return v.copy(at(ci, j0, fv.a)).lerp(at(ci, j0 + 1, fv.b), f); };
+  const { edge, knot, inner, tan, dir, p, d2 } = fv;
+  const W2 = [0.75, 1.15, 0.7, 0.45]; // half widths: thread, knot, thread, tip
+  threads.forEach((th, ti) => {
+    const ci = th.side ? nx - 1 : 0, ii = th.side ? nx - 2 : 1;
+    const j0 = Math.min(ny - 2, Math.floor(th.tb));
+    tan.copy(at(ci, j0 + 1, fv.a)).sub(at(ci, j0, fv.b)).normalize();
+    knot.copy(edgeAt(ci, th.tb, knot)); inner.copy(edgeAt(ii, th.tb, inner));
+    dir.copy(knot).sub(inner).normalize();                      // outward, in the rug's surface
+    const len = L * th.len;
+    const lift = Math.max(0, knot.z - floor), hang = Math.min(1, lift / (L * 1.1));
+    const place = (v, s) => { // push a point that is s along the thread down when the edge is up in the air
+      v.z -= s * hang * 0.95; if (v.z < floor) v.z = floor;
+      return v;
+    };
+    // knot sits ~22% out from the edge, at the bundle's centre
+    knot.addScaledVector(dir, len * 0.22 * (1 - hang * 0.8)); place(knot, len * 0.22);
+    for (let k = 0; k < PTS; k++) {
+      if (k === 0) p.copy(edgeAt(ci, th.t0, p));
+      else if (k === 1) p.copy(knot);
+      else {
+        const s = k === 2 ? 0.55 : 1.0;                           // fraction of the loose tail
+        d2.copy(dir).addScaledVector(tan, th.fan * s + th.wave * (k === 2 ? 1 : -0.6)).normalize();
+        p.copy(knot).addScaledVector(d2, len * 0.78 * s * (1 - hang * 0.85));
+        place(p, len * (0.22 + 0.78 * s));
+      }
+      // ribbon across the thread, in the rug's plane (along the edge)
+      const w = W2[k], o = (ti * PTS * 2 + k * 2) * 3;
+      out[o] = p.x - tan.x * w; out[o + 1] = p.y - tan.y * w; out[o + 2] = p.z + 0.05;
+      out[o + 3] = p.x + tan.x * w; out[o + 4] = p.y + tan.y * w; out[o + 5] = p.z + 0.05;
+    }
+  });
+  fringe.geometry.attributes.position.needsUpdate = true;
+  fringe.geometry.computeVertexNormals();
+  fringe.geometry.computeBoundingSphere();
 }
 
 function syncGeometry() {
@@ -248,6 +341,7 @@ function syncGeometry() {
   geom.attributes.position.needsUpdate = true;
   geom.computeVertexNormals();
   geom.computeBoundingSphere();
+  syncFringe(arr);
 }
 
 // ---------- picking ----------
