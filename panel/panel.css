@@ -132,6 +132,12 @@ h2{margin:0 0 8px;font:600 .64rem/1.3 var(--f-mono);letter-spacing:.14em;text-tr
 .badge{font:600 .56rem/1 var(--f-mono);font-style:normal;letter-spacing:.12em;padding:4px 6px 3px;border-radius:3px;color:var(--ink);
   background:linear-gradient(110deg,#9fe3ff,#e2d4ff,#fff1c2) 0 0/200% 100%;animation:shimmer 6s linear infinite}
 .special-text small{font:400 .72rem/1.35 var(--f-body);color:rgba(242,230,204,.78);white-space:normal}
+/* Seasonal drops (Halloween): their own little shelf under the patterns, in pumpkin colours. */
+.season{grid-column:1/-1;margin-top:6px;padding:9px 10px 10px;border-radius:7px;background:linear-gradient(180deg,rgba(224,118,31,.14),rgba(75,35,102,.18));
+  outline:1.5px dashed rgba(224,118,31,.55);outline-offset:-1.5px}
+.season h3{display:flex;align-items:center;gap:7px;margin:0 0 8px;font:600 .64rem/1.3 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:#f09a4a}
+.season h3 svg{width:17px;height:17px;flex:none}
+.season-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 @keyframes shimmer{to{background-position:300% 0}}
 @media (prefers-reduced-motion:reduce){.swatches .special::before,.badge{animation:none}}
 

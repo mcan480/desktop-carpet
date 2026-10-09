@@ -8,6 +8,10 @@ export const STYLES = {
   lacivert:{ name: 'Gece Mavisi',   field: '#1c2a4c', field2: '#16223f', navy: '#7d1a1e', cream: '#e6d5b3', gold: '#c9a35a', blue: '#4f7aa0', dark: '#0d0d17' },
   zumrut:  { name: 'Zümrüt',        field: '#1f4a3a', field2: '#183d30', navy: '#3a1820', cream: '#ecdcb8', gold: '#c99b4e', blue: '#8a2a2a', dark: '#0e1412' },
   kilim:   { name: 'Kilim',         kilim: true },
+  // Halloween drops
+  balkabagi:{ name: 'Balkabağı Tarlası', halloween: 'pumpkin' },
+  orumcek:  { name: 'Örümcek Ağı',       halloween: 'web' },
+  hayalet:  { name: 'Hayalet Gecesi',    halloween: 'ghost' },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -357,6 +361,249 @@ function kilim(ctx, W, H) {
   for (const [x, y] of [[ix + 3, iy + 3], [ix + iw - 4, iy + 3], [ix + 3, iy + ih - 4], [ix + iw - 4, iy + ih - 4]]) diamond(x, y, 2, [C.navy, C.gold]);
 }
 
+// ---------- Halloween ----------
+// Woven like the kilim: everything is laid out on a grid of knots ("blocks"), so the motifs keep the stepped,
+// hand-knotted look instead of looking printed.
+function knotGrid(ctx, W, H, rowsWanted) {
+  const s = Math.round(H / rowsWanted);
+  const cols = Math.floor(W / s), rows = Math.floor(H / s);
+  const blk = (x, y, c) => { if (x < 0 || y < 0 || x >= cols || y >= rows) return; ctx.fillStyle = c; ctx.fillRect(x * s, y * s, s + 0.5, s + 0.5); };
+  return { s, cols, rows, blk };
+}
+
+// A border of zigzag "teeth" in two colours, `bw` knots deep.
+function toothBorder(g, bw, base, tooth, line) {
+  const { cols, rows, blk } = g;
+  for (let x = 0; x < cols; x++) for (let k = 0; k < bw; k++) { blk(x, k, base); blk(x, rows - 1 - k, base); }
+  for (let y = 0; y < rows; y++) for (let k = 0; k < bw; k++) { blk(k, y, base); blk(cols - 1 - k, y, base); }
+  for (let x = 0; x < cols; x++) {
+    const h = 2 - Math.abs((x % 4) - 2);
+    for (let k = 0; k <= h; k++) { blk(x, 1 + k, tooth); blk(x, rows - 2 - k, tooth); }
+  }
+  for (let y = 0; y < rows; y++) {
+    const h = 2 - Math.abs((y % 4) - 2);
+    for (let k = 0; k <= h; k++) { blk(1 + k, y, tooth); blk(cols - 2 - k, y, tooth); }
+  }
+  for (let x = bw; x < cols - bw; x++) { blk(x, bw, line); blk(x, rows - 1 - bw, line); }
+  for (let y = bw; y < rows - bw; y++) { blk(bw, y, line); blk(cols - 1 - bw, y, line); }
+}
+
+// Jack-o'-lantern made of knots, centred on (cx, cy), r knots wide each side.
+function pumpkinKnots(blk, cx, cy, r, C, face) {
+  const ry = Math.round(r * 0.8);
+  for (let dy = -ry; dy <= ry; dy++) for (let dx = -r; dx <= r; dx++) {
+    const e = (dx * dx) / (r * r) + (dy * dy) / (ry * ry);
+    if (e > 1.02) continue;
+    const rib = Math.abs(dx) === Math.round(r * 0.45) || dx === 0;
+    blk(cx + dx, cy + dy, e > 0.78 ? C.orange2 : rib ? C.orange2 : C.orange);
+  }
+  // stem and leaf
+  for (let k = 1; k <= Math.max(2, Math.round(r * 0.3)); k++) blk(cx, cy - ry - k, C.stem);
+  blk(cx + 1, cy - ry - 1, C.leaf); blk(cx + 2, cy - ry - 2, C.leaf); blk(cx + 2, cy - ry - 1, C.leaf);
+  if (!face) return;
+  const ey = cy - Math.round(ry * 0.22), ex = Math.round(r * 0.42), es = Math.max(1, Math.round(r * 0.16)); // eye size
+  for (const sx of [-1, 1]) { // triangle eyes, point up
+    for (let k = 0; k <= es; k++) for (let dx = -k; dx <= k; dx++) blk(cx + sx * ex + dx, ey - es + k, C.glow);
+  }
+  for (let k = 0; k < Math.max(1, Math.round(es * 0.6)); k++) for (let dx = -k; dx <= k; dx++) blk(cx + dx, ey + 2 + k, C.glow); // nose
+  const my = cy + Math.round(ry * 0.38), mw = Math.round(r * 0.62), mt = Math.max(1, Math.round(r * 0.12)); // grin
+  for (let t = 0; t < mt + 1; t++) for (let dx = -mw + t; dx <= mw - t; dx++) {
+    const tooth = t === 0 && (Math.abs(dx - Math.round(mw / 2)) < Math.max(1, mt) || Math.abs(dx + Math.round(mw / 2)) < Math.max(1, mt));
+    if (!tooth) blk(cx + dx, my + t, C.glow);
+  }
+  for (let k = 1; k <= Math.max(1, Math.round(mt * 0.8)); k++) { blk(cx - mw - k, my - k, C.glow); blk(cx + mw + k, my - k, C.glow); }
+}
+
+function batKnots(blk, cx, cy, c, flip = 1) {
+  const pts = [[0, 0], [-1, 0], [1, 0], [0, -1], [-1, -1], [1, -1], // body + ears
+    [-2, 0], [-3, -1], [-4, -1], [-5, 0], [-4, 0], [-3, 0], [-5, 1], [-3, 1], // left wing
+    [2, 0], [3, -1], [4, -1], [5, 0], [4, 0], [3, 0], [5, 1], [3, 1]];
+  for (const [x, y] of pts) blk(cx + x * flip, cy + y, c);
+}
+
+function halloweenPumpkin(ctx, W, H) {
+  const C = { field: '#1b1216', field2: '#24161c', orange: '#e0761f', orange2: '#b5520f', glow: '#ffd25a', stem: '#5a3a1a', leaf: '#4f7a3a',
+              purple: '#4b2366', purple2: '#6c3591', cream: '#efe0bd', black: '#0d0a0c' };
+  const g = knotGrid(ctx, W, H, 72), { cols, rows, blk } = g;
+  ctx.fillStyle = C.field; ctx.fillRect(0, 0, W, H);
+  // faint diagonal lattice in the field
+  for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) if ((x + y) % 8 === 0 || (x - y + 800) % 8 === 0) blk(x, y, C.field2);
+  toothBorder(g, 7, C.purple, C.orange, C.cream);
+  // candy-corn stripe inside the border
+  const inset = 9;
+  for (let x = inset; x < cols - inset; x++) {
+    const c = [C.cream, C.orange, C.glow][Math.floor(x / 2) % 3];
+    blk(x, inset, c); blk(x, rows - 1 - inset, c);
+  }
+  // pumpkin patch: rows of jack-o'-lanterns, the middle one big
+  const ix = inset + 3, iw = cols - 2 * ix, iy = inset + 3, ih = rows - 2 * iy;
+  const big = Math.floor(Math.min(ih * 0.36, iw * 0.15));
+  pumpkinKnots(blk, Math.floor(cols / 2), Math.floor(rows / 2) + 1, big, C, true);
+  const small = Math.max(5, Math.floor(big * 0.55));
+  for (const fx of [0.13, 0.87]) for (const fy of [0.28, 0.74]) pumpkinKnots(blk, ix + Math.round(iw * fx), iy + Math.round(ih * fy), small, C, true);
+  for (const fx of [0.33, 0.67]) pumpkinKnots(blk, ix + Math.round(iw * fx), iy + Math.round(ih * 0.86), Math.max(3, small - 3), C, false);
+  // a few bats
+  for (const [fx, fy, fl] of [[0.31, 0.13, 1], [0.69, 0.13, -1], [0.5, 0.93, 1]]) batKnots(blk, ix + Math.round(iw * fx), iy + Math.round(ih * fy), C.purple2, fl);
+}
+
+function halloweenWeb(ctx, W, H, seed) {
+  const R = rng(seed + 31);
+  const C = { field: '#2a1236', field2: '#331745', web: '#e9dfc6', web2: 'rgba(233,223,198,.55)', border: '#120a16', border2: '#e0761f',
+              moon: '#f3d27a', bat: '#0e0812', spider: '#0b070d', eye: '#d63a2f' };
+  const u = H / 100;
+  ctx.fillStyle = C.field; ctx.fillRect(0, 0, W, H);
+  // field with soft abrash bands (real rugs vary in dye lot)
+  for (let i = 0; i < 9; i++) { ctx.fillStyle = i % 2 ? C.field2 : C.field; ctx.globalAlpha = 0.5; ctx.fillRect(0, (H / 9) * i, W, H / 9); }
+  ctx.globalAlpha = 1;
+  // border: black band with orange crescent moons and bats
+  ctx.fillStyle = C.border; frameRect(ctx, 0, 0, W, H, 11 * u);
+  ctx.fillStyle = C.border2; frameRect(ctx, 11 * u, 11 * u, W - 22 * u, H - 22 * u, 1.2 * u);
+  ctx.fillStyle = C.web; frameRect(ctx, 2 * u, 2 * u, W - 4 * u, H - 4 * u, 0.6 * u);
+  for (const [x, y, side, i] of bandPoints(5.5 * u, 5.5 * u, W - 11 * u, H - 11 * u, 13 * u)) {
+    ctx.save(); ctx.translate(x, y);
+    if (i % 2) { // crescent moon
+      ctx.fillStyle = C.moon; ctx.beginPath(); ctx.arc(0, 0, 2.6 * u, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = C.border; ctx.beginPath(); ctx.arc(1.1 * u, -0.6 * u, 2.3 * u, 0, Math.PI * 2); ctx.fill();
+    } else { // little bat
+      ctx.fillStyle = C.border2;
+      ctx.beginPath(); ctx.ellipse(0, 0, 0.9 * u, 1.3 * u, 0, 0, Math.PI * 2); ctx.fill();
+      for (const sx of [-1, 1]) {
+        ctx.beginPath(); ctx.moveTo(sx * 0.6 * u, -0.6 * u);
+        ctx.quadraticCurveTo(sx * 2.4 * u, -2 * u, sx * 4 * u, -0.8 * u);
+        ctx.quadraticCurveTo(sx * 3.2 * u, 0.2 * u, sx * 2.7 * u, 0.9 * u);
+        ctx.quadraticCurveTo(sx * 2 * u, 0.2 * u, sx * 1.4 * u, 0.9 * u);
+        ctx.quadraticCurveTo(sx * 1 * u, 0.2 * u, sx * 0.6 * u, 0.6 * u);
+        ctx.fill();
+      }
+    }
+    ctx.restore();
+  }
+  // big web medallion
+  const cx = W / 2, cy = H / 2, rx = W * 0.3, ry = H * 0.32, spokes = 16;
+  ctx.strokeStyle = C.web; ctx.lineCap = 'round';
+  ctx.lineWidth = 0.55 * u;
+  for (let k = 0; k < spokes; k++) {
+    const a = (k / spokes) * Math.PI * 2;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(a) * rx * 1.08, cy + Math.sin(a) * ry * 1.08); ctx.stroke();
+  }
+  ctx.lineWidth = 0.42 * u;
+  for (let ring = 1; ring <= 8; ring++) {
+    const f = ring / 8;
+    ctx.beginPath();
+    for (let k = 0; k <= spokes; k++) {
+      const a0 = (k / spokes) * Math.PI * 2, a1 = ((k + 1) / spokes) * Math.PI * 2;
+      const x0 = cx + Math.cos(a0) * rx * f, y0 = cy + Math.sin(a0) * ry * f;
+      const x1 = cx + Math.cos(a1) * rx * f, y1 = cy + Math.sin(a1) * ry * f;
+      const sag = 0.82; // threads sag toward the centre between spokes
+      const mx = cx + (Math.cos((a0 + a1) / 2) * rx * f) * sag, my = cy + (Math.sin((a0 + a1) / 2) * ry * f) * sag;
+      if (k === 0) ctx.moveTo(x0, y0);
+      ctx.quadraticCurveTo(mx, my, x1, y1);
+    }
+    ctx.stroke();
+  }
+  // corner webs
+  ctx.strokeStyle = C.web2; ctx.lineWidth = 0.35 * u;
+  mirror4(W, H, 13 * u, 13 * u, (x, y, sx, sy) => {
+    for (let k = 0; k <= 5; k++) {
+      const a = (k / 5) * Math.PI / 2;
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + sx * Math.cos(a) * 20 * u, y + sy * Math.sin(a) * 20 * u); ctx.stroke();
+    }
+    for (let r = 5; r <= 20; r += 5) {
+      ctx.beginPath();
+      for (let k = 0; k <= 5; k++) { const a = (k / 5) * Math.PI / 2; const px = x + sx * Math.cos(a) * r * u, py = y + sy * Math.sin(a) * r * u; k ? ctx.lineTo(px, py) : ctx.moveTo(px, py); }
+      ctx.stroke();
+    }
+  });
+  // spider hanging off-centre on a thread
+  const spx = cx + rx * 0.34, spy = cy + ry * 0.18;
+  ctx.strokeStyle = C.web; ctx.lineWidth = 0.3 * u;
+  ctx.beginPath(); ctx.moveTo(spx, cy - ry * 0.55); ctx.lineTo(spx, spy - 2.4 * u); ctx.stroke();
+  ctx.strokeStyle = C.spider; ctx.lineWidth = 0.7 * u;
+  for (const sx of [-1, 1]) for (let k = 0; k < 4; k++) {
+    const yy = spy - 1.2 * u + k * 1.1 * u;
+    ctx.beginPath(); ctx.moveTo(spx, yy); ctx.quadraticCurveTo(spx + sx * 3.2 * u, yy - 2.2 * u + k * 0.6 * u, spx + sx * 4.6 * u, yy + 1.4 * u + k * 0.4 * u); ctx.stroke();
+  }
+  ctx.fillStyle = C.spider;
+  ctx.beginPath(); ctx.ellipse(spx, spy + 1.2 * u, 2.1 * u, 2.7 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(spx, spy - 1.6 * u, 1.4 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = C.eye;
+  ctx.beginPath(); ctx.arc(spx - 0.5 * u, spy - 1.8 * u, 0.32 * u, 0, Math.PI * 2); ctx.arc(spx + 0.5 * u, spy - 1.8 * u, 0.32 * u, 0, Math.PI * 2); ctx.fill();
+  // dew drops on the web
+  ctx.fillStyle = 'rgba(255,245,220,.8)';
+  for (let i = 0; i < 26; i++) {
+    const a = R() * Math.PI * 2, f = 0.2 + R() * 0.8;
+    ctx.beginPath(); ctx.arc(cx + Math.cos(a) * rx * f, cy + Math.sin(a) * ry * f, 0.35 * u, 0, Math.PI * 2); ctx.fill();
+  }
+}
+
+function ghostShape(ctx, x, y, w, h, body, eye, tilt = 0) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(tilt);
+  ctx.fillStyle = body;
+  ctx.beginPath();
+  ctx.moveTo(-w / 2, 0);
+  ctx.arc(0, 0, w / 2, Math.PI, 0); // head
+  ctx.lineTo(w / 2, h);
+  const waves = 4;
+  for (let i = waves; i > 0; i--) { // wavy hem
+    const x0 = -w / 2 + (w * i) / waves, x1 = -w / 2 + (w * (i - 1)) / waves;
+    ctx.quadraticCurveTo((x0 + x1) / 2, h + (i % 2 ? -w * 0.16 : w * 0.16), x1, h);
+  }
+  ctx.closePath(); ctx.fill();
+  ctx.fillStyle = eye;
+  ctx.beginPath(); ctx.ellipse(-w * 0.17, -w * 0.02, w * 0.07, w * 0.11, 0, 0, Math.PI * 2); ctx.ellipse(w * 0.17, -w * 0.02, w * 0.07, w * 0.11, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(0, w * 0.2, w * 0.08, w * 0.1, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+}
+
+function halloweenGhost(ctx, W, H, seed) {
+  const R = rng(seed + 77);
+  const C = { sky: '#14263a', sky2: '#1c3550', ghost: '#f1ecdf', ghost2: '#cfd8d4', eye: '#141016', moon: '#f4d987', star: '#f6e7b0',
+              border: '#0c1622', border2: '#5e8a6e', bone: '#efe6cf', candy: ['#efe0bd', '#e0761f', '#ffd25a'] };
+  const u = H / 100;
+  const grad = ctx.createLinearGradient(0, 0, 0, H); grad.addColorStop(0, C.sky); grad.addColorStop(1, C.sky2);
+  ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
+  // border: dark band with a row of bones, framed by a candy-corn stripe
+  ctx.fillStyle = C.border; frameRect(ctx, 0, 0, W, H, 11 * u);
+  const stripe = 1.4 * u;
+  for (let i = 0; i < 3; i++) { ctx.fillStyle = C.candy[i]; frameRect(ctx, 11 * u + i * stripe, 11 * u + i * stripe, W - 2 * (11 * u + i * stripe), H - 2 * (11 * u + i * stripe), stripe); }
+  ctx.fillStyle = C.border2; frameRect(ctx, 1.6 * u, 1.6 * u, W - 3.2 * u, H - 3.2 * u, 0.7 * u);
+  for (const [x, y, side] of bandPoints(5.6 * u, 5.6 * u, W - 11.2 * u, H - 11.2 * u, 9 * u)) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(side ? Math.PI / 2 : 0);
+    ctx.fillStyle = C.bone;
+    ctx.fillRect(-2.6 * u, -0.55 * u, 5.2 * u, 1.1 * u);
+    for (const sx of [-1, 1]) for (const sy of [-1, 1]) { ctx.beginPath(); ctx.arc(sx * 2.7 * u, sy * 0.75 * u, 0.85 * u, 0, Math.PI * 2); ctx.fill(); }
+    ctx.restore();
+  }
+  // stars
+  const fx0 = 16 * u, fy0 = 16 * u, fw = W - 32 * u, fh = H - 32 * u;
+  ctx.fillStyle = C.star;
+  for (let i = 0; i < 60; i++) {
+    const x = fx0 + R() * fw, y = fy0 + R() * fh, r = (0.25 + R() * 0.45) * u;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+  }
+  // big moon with a ghost floating in front of it
+  const mx = W / 2, my = H * 0.46, mr = 21 * u;
+  const halo = ctx.createRadialGradient(mx, my, mr * 0.8, mx, my, mr * 1.7);
+  halo.addColorStop(0, 'rgba(244,217,135,.35)'); halo.addColorStop(1, 'rgba(244,217,135,0)');
+  ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(mx, my, mr * 1.7, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = C.moon; ctx.beginPath(); ctx.arc(mx, my, mr, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = 'rgba(200,160,80,.35)';
+  for (const [dx, dy, r] of [[-6, -5, 3.2], [7, 4, 2.4], [-3, 8, 1.8], [5, -9, 1.4]]) { ctx.beginPath(); ctx.arc(mx + dx * u, my + dy * u, r * u, 0, Math.PI * 2); ctx.fill(); }
+  ghostShape(ctx, mx, my + 2 * u, 20 * u, 18 * u, C.ghost, C.eye);
+  // smaller ghosts drifting at the sides, mirrored like a rug's corner motifs
+  mirror4(W, H, W * 0.22, H * 0.33, (x, y, sx, sy) => ghostShape(ctx, x, y - (sy < 0 ? 6 * u : 0), 10 * u, 9 * u, sy > 0 ? C.ghost : C.ghost2, C.eye, sx * 0.12));
+  // graveyard hill along the bottom of the field
+  ctx.fillStyle = '#0f1d2b';
+  ctx.beginPath(); ctx.moveTo(fx0, fy0 + fh);
+  ctx.quadraticCurveTo(W * 0.3, H * 0.72, W * 0.5, H * 0.79); ctx.quadraticCurveTo(W * 0.72, H * 0.86, fx0 + fw, H * 0.76);
+  ctx.lineTo(fx0 + fw, fy0 + fh); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#2d4152';
+  for (const [x, w, h] of [[0.28, 3.4, 6], [0.36, 2.8, 4.6], [0.64, 3.2, 5.4], [0.72, 2.6, 4]]) {
+    const bx = W * x, by = H * 0.83;
+    ctx.beginPath(); ctx.moveTo(bx - w * u, by); ctx.lineTo(bx - w * u, by - h * u + w * u); ctx.arc(bx, by - h * u + w * u, w * u, Math.PI, 0); ctx.lineTo(bx + w * u, by); ctx.closePath(); ctx.fill();
+  }
+}
+
 function addWeave(ctx, W, H, seed, strength = 26) {
   const R = rng(seed + 99);
   const img = ctx.getImageData(0, 0, W, H);
@@ -382,7 +629,10 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   const c = document.createElement('canvas');
   c.width = W; c.height = H;
   const ctx = c.getContext('2d');
-  if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
+  if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
+  else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
+  else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
+  else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
   addWeave(ctx, W, H, seed);
 
   // Back side: same pattern, faded and flattened.

@@ -33,7 +33,7 @@ const LANG = () => (settings.lang && settings.lang !== 'auto' && I18N.LANGS[sett
   : I18N.pick([...(app.getPreferredSystemLanguages?.() || []), app.getLocale()]);
 // Menu keys map onto the panel's strings.
 const MENU_KEYS = { open: 'openApp', show: 'showRug', hide: 'hideRug', locked: 'lockedMenu',
-  tabriz: 's_tabriz', klasik: 's_klasik', lacivert: 's_lacivert', zumrut: 's_zumrut', kilim: 's_kilim', gorunmez: 's_gorunmez',
+  tabriz: 's_tabriz', klasik: 's_klasik', lacivert: 's_lacivert', zumrut: 's_zumrut', kilim: 's_kilim', gorunmez: 's_gorunmez', balkabagi: 's_balkabagi', orumcek: 's_orumcek', hayalet: 's_hayalet',
   kucuk: 'small', orta: 'medium', buyuk: 'large', hafif: 'light', normal: 'normal', agir: 'heavy' };
 const t = (k) => { if (k === 'tip') return 'Desktop Carpet'; const v = I18N.strings(LANG())[MENU_KEYS[k] || k]; return typeof v === 'string' ? v : k; };
 
@@ -492,7 +492,7 @@ function buildMenu() {
       { label: t('center'), click: () => rugCommand('center') },
       userHidden ? { label: t('show'), click: () => rugCommand('show') } : { label: t('hide'), click: () => rugCommand('hide') },
       { type: 'separator' },
-      { label: t('pattern'), submenu: radio('style', ['tabriz', 'klasik', 'lacivert', 'zumrut', 'kilim', 'gorunmez']) },
+      { label: t('pattern'), submenu: radio('style', ['tabriz', 'klasik', 'lacivert', 'zumrut', 'kilim', 'gorunmez', 'balkabagi', 'orumcek', 'hayalet']) },
       { label: t('size'), submenu: radio('size', ['kucuk', 'orta', 'buyuk']) },
       { label: t('weight'), submenu: radio('weight', ['hafif', 'normal', 'agir']) },
     );
