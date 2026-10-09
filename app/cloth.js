@@ -69,6 +69,10 @@ export class Cloth {
     this.cb = Int32Array.from(b);
     this.rest = Float32Array.from(rest);
     this.stiff = Float32Array.from(stiff);
+    // solver-ready copies: array offsets instead of particle indices, stiffness pre-halved (equal masses)
+    this.ca3 = this.ca.map((v) => v * 3);
+    this.cb3 = this.cb.map((v) => v * 3);
+    this.half = this.stiff.map((v) => v * 0.5);
   }
 
   buildHash() {
@@ -123,21 +127,20 @@ export class Cloth {
       pos[k + 2] += (pin.z - pos[k + 2]) * a;
     };
 
-    const { ca, cb, rest, stiff } = this;
+    const { ca3: ca, cb3: cb, rest, half } = this;
     const m = ca.length;
     for (let it = 0; it < this.iterations; it++) {
       applyPin();
+      // Every particle has the same mass (the grab is a soft pull, not a fixed point), so each spring simply moves
+      // both ends half the correction.
       for (let c = 0; c < m; c++) {
-        const p = ca[c], q = cb[c];
-        const wp = invMass[p], wq = invMass[q], w = wp + wq;
-        if (w === 0) continue;
-        const kp = p * 3, kq = q * 3;
+        const kp = ca[c], kq = cb[c]; // already multiplied by 3
         const dx = pos[kq] - pos[kp], dy = pos[kq + 1] - pos[kp + 1], dz = pos[kq + 2] - pos[kp + 2];
         const d = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1e-6;
-        const diff = (d - rest[c]) / d;
-        const f = (diff * stiff[c]) / w;
-        pos[kp] += dx * f * wp; pos[kp + 1] += dy * f * wp; pos[kp + 2] += dz * f * wp;
-        pos[kq] -= dx * f * wq; pos[kq + 1] -= dy * f * wq; pos[kq + 2] -= dz * f * wq;
+        const f = (d - rest[c]) / d * half[c];
+        const fx = dx * f, fy = dy * f, fz = dz * f;
+        pos[kp] += fx; pos[kp + 1] += fy; pos[kp + 2] += fz;
+        pos[kq] -= fx; pos[kq + 1] -= fy; pos[kq + 2] -= fz;
       }
       if (it % 2 === 1 || it === this.iterations - 1) this.selfCollide();
       // floor
@@ -166,20 +169,39 @@ export class Cloth {
   selfCollide() {
     const { pos, prev, n, head, next, nx } = this;
     const r = this.collideDist, r2 = r * r, inv = 1 / r;
+    // Only particles off the floor can be part of a fold. Two particles that both lie on the floor can't pass through
+    // each other, so the hash holds just the raised ones and every pair needs at least one of them: a rug lying flat
+    // (or dragged flat) costs almost nothing here.
+    const low = this.floorZ + r * 0.35;
     head.fill(-1);
+    let raised = 0, bx0 = Infinity, by0 = Infinity, bx1 = -Infinity, by1 = -Infinity;
     for (let p = 0; p < n; p++) {
       const k = p * 3;
+      if (pos[k + 2] < low) continue;
+      raised++;
+      if (pos[k] < bx0) bx0 = pos[k]; if (pos[k] > bx1) bx1 = pos[k];
+      if (pos[k + 1] < by0) by0 = pos[k + 1]; if (pos[k + 1] > by1) by1 = pos[k + 1];
       const h = this.hashKey(Math.floor(pos[k] * inv), Math.floor(pos[k + 1] * inv), Math.floor(pos[k + 2] * inv));
       next[p] = head[h]; head[h] = p;
     }
+    if (!raised) return;
+    bx0 -= r; by0 -= r; bx1 += r; by1 += r;
     for (let p = 0; p < n; p++) {
       const k = p * 3;
-      const gx = Math.floor(pos[k] * inv), gy = Math.floor(pos[k + 1] * inv), gz = Math.floor(pos[k + 2] * inv);
+      const pRaised = pos[k + 2] >= low;
+      // a floor particle only needs checking if it lies under the raised part
+      if (!pRaised && (pos[k] < bx0 || pos[k] > bx1 || pos[k + 1] < by0 || pos[k + 1] > by1)) continue;
+      // Cells are as big as the collision distance, so a sphere around p reaches at most 2 cells per axis:
+      // the one it's in and the neighbour on the side it's closer to (8 cells instead of 27).
+      const fx = pos[k] * inv, fy = pos[k + 1] * inv, fz = pos[k + 2] * inv;
+      const gx = Math.floor(fx), gy = Math.floor(fy), gz = Math.floor(fz);
+      const sx = fx - gx < 0.5 ? -1 : 1, sy = fy - gy < 0.5 ? -1 : 1, sz = fz - gz < 0.5 ? -1 : 1;
       const pi = p % nx, pj = (p / nx) | 0;
-      for (let ox = -1; ox <= 1; ox++) for (let oy = -1; oy <= 1; oy++) for (let oz = -1; oz <= 1; oz++) {
-        let q = head[this.hashKey(gx + ox, gy + oy, gz + oz)];
+      for (let c = 0; c < 8; c++) {
+        let q = head[this.hashKey(gx + (c & 1 ? sx : 0), gy + (c & 2 ? sy : 0), gz + (c & 4 ? sz : 0))];
         while (q !== -1) {
-          if (q > p) {
+          // raised-raised pairs are seen from both sides: handle them once (q > p)
+          if (q !== p && (!pRaised || q > p)) {
             const qi = q % nx, qj = (q / nx) | 0;
             if (Math.abs(qi - pi) > 2 || Math.abs(qj - pj) > 2) {
               const kq = q * 3;

@@ -25,7 +25,19 @@ let W = window.innerWidth, H = window.innerHeight;
 
 // ---------- three.js scene ----------
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, premultipliedAlpha: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+// ---------- render quality ----------
+// The canvas covers the whole screen, so pixels are the main cost on the GPU. Cap the canvas at about 4 million
+// pixels (a 1440p screen at 100%), and step quality down by itself on computers that can't keep up.
+const PIXEL_BUDGET = 4.2e6;
+let quality = 0;
+try { quality = Math.min(3, Math.max(0, parseInt(localStorage.getItem('dc-quality') || '0', 10) || 0)); } catch {}
+function pixelRatio() {
+  const dpr = window.devicePixelRatio || 1;
+  const budget = Math.sqrt(PIXEL_BUDGET / Math.max(1, window.innerWidth * window.innerHeight));
+  const pr = Math.min(dpr, 2, Math.max(0.75, budget));
+  return pr * [1, 0.85, 0.72, 0.62][quality];
+}
+renderer.setPixelRatio(pixelRatio());
 renderer.setSize(W, H);
 renderer.setClearColor(0x000000, 0);
 renderer.shadowMap.enabled = true;
@@ -40,7 +52,7 @@ const camera = new THREE.PerspectiveCamera(30, W / H, 10, 10000);
 scene.add(new THREE.HemisphereLight(0xfff6ea, 0x8a7560, 1.25));
 const sun = new THREE.DirectionalLight(0xfff3e0, 2.1);
 sun.castShadow = true;
-sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.mapSize.set(quality ? 1024 : 2048, quality ? 1024 : 2048);
 sun.shadow.bias = -0.0004;
 sun.shadow.normalBias = 1.2;
 sun.shadow.radius = 6;
@@ -52,6 +64,7 @@ scene.add(floor);
 
 function layout() {
   W = window.innerWidth; H = window.innerHeight;
+  renderer.setPixelRatio(pixelRatio());
   renderer.setSize(W, H);
   camera.aspect = W / H;
   camera.fov = THREE.MathUtils.radToDeg(2 * Math.atan(H / 2 / CAM_D));
@@ -498,12 +511,40 @@ function wake() {
   if (!awake) { awake = true; last = performance.now(); requestAnimationFrame(frame); }
 }
 
+// Quality watch: while the rug is moving, keep an eye on the frame rate. If it stays under ~38 fps, step the
+// quality down (smaller canvas, smaller shadow map, then no shadows); the level is remembered between runs.
+let fpsFrames = 0, fpsTime = 0;
+function applyQuality() {
+  renderer.setPixelRatio(pixelRatio());
+  renderer.setSize(W, H);
+  const size = quality ? 1024 : 2048;
+  if (sun.shadow.mapSize.x !== size) { sun.shadow.mapSize.set(size, size); sun.shadow.map?.dispose(); sun.shadow.map = null; }
+  renderer.shadowMap.enabled = quality < 3;
+  scene.traverse((o) => { if (o.material) o.material.needsUpdate = true; });
+  if (wallTex) drawWallpaper();
+  try { localStorage.setItem('dc-quality', String(quality)); } catch {}
+}
+function watchFps(interval) {
+  if (interval > 250) { fpsFrames = 0; fpsTime = 0; return; } // a pause, not a slow frame
+  fpsFrames++; fpsTime += interval;
+  if (fpsFrames < 60) return;
+  const avg = fpsTime / fpsFrames;
+  fpsFrames = 0; fpsTime = 0;
+  if (avg > 26 && quality < 3) { quality++; applyQuality(); }
+}
+
 function frame(now) {
-  let elapsed = Math.min(0.05, (now - last) / 1000);
+  const interval = now - last;
+  let elapsed = Math.min(0.05, interval / 1000);
   last = now;
   acc += elapsed;
-  let moved = 0;
+  // Fast monitors (120/144 Hz) call us more often than the physics runs; draw only when something stepped.
+  if (acc < DT) { requestAnimationFrame(frame); return; }
+  if (grab || still < 10) watchFps(interval);
+  let moved = 0, steps = 0;
   while (acc >= DT) {
+    // A slow frame shouldn't snowball into more and more catch-up steps: run at most 3, then drop the rest.
+    if (++steps > 3) { acc = 0; break; }
     if (grab) {
       const w = W8();
       grab.t = Math.min(1, grab.t + DT * 4);
