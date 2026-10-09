@@ -1,5 +1,5 @@
 // Desktop Carpet: a cloth rug that lies on the Windows or macOS desktop, unlocked by a desktopcarpet.com license.
-const { app, BrowserWindow, ipcMain, Menu, Tray, nativeImage, screen, shell, powerMonitor } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, Tray, nativeImage, screen, shell, powerMonitor, desktopCapturer } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
@@ -287,6 +287,60 @@ async function readWallpaperMac() {
   return { src: p, mode: 'fill', color: 'rgb(0,0,0)' };
 }
 
+// Windows doesn't always center a cropped ("fill") wallpaper: on some setups it keeps more of the top.
+// So instead of guessing, look once at a small capture of the screen (kept in memory only, never saved or sent) and
+// find where along the cropped direction the picture really sits. Returns 0..1 (0 = start, 0.5 = centered, 1 = end).
+const anchorCache = new Map();
+async function measureWallpaperAnchor(src, mode, d) {
+  if (process.platform !== 'win32' || !src || !['fill', 'span'].includes(mode)) return 0.5;
+  const key = JSON.stringify([src, fs.statSync(src).mtimeMs, d.bounds]);
+  if (anchorCache.has(key)) return anchorCache.get(key);
+  try {
+    const tw = 960, th = Math.round(tw * d.bounds.height / d.bounds.width);
+    const sources = await desktopCapturer.getSources({ types: ['screen'], thumbnailSize: { width: tw, height: th } });
+    const srcShot = sources.find((x) => x.display_id === String(d.id)) || sources[0];
+    const shot = srcShot?.thumbnail;
+    if (!shot || shot.isEmpty()) return 0.5;
+    const ss = shot.getSize(), sb = shot.toBitmap(); // BGRA
+    const img = nativeImage.createFromPath(src);
+    if (img.isEmpty()) return 0.5;
+    const is = img.getSize();
+    const f = Math.max(ss.width / is.width, ss.height / is.height);
+    const rw = Math.max(1, Math.round(is.width * f)), rh = Math.max(1, Math.round(is.height * f));
+    const r = img.resize({ width: rw, height: rh, quality: 'good' }), rs = r.getSize(), rb = r.toBitmap();
+    const overX = Math.max(0, rs.width - ss.width), overY = Math.max(0, rs.height - ss.height);
+    const over = Math.max(overX, overY);
+    if (over < 2) { anchorCache.set(key, 0.5); return 0.5; }
+    const lum = (b, i) => b[i] * 0.11 + b[i + 1] * 0.59 + b[i + 2] * 0.3;
+    const ls = new Float32Array(ss.width * ss.height), lr = new Float32Array(rs.width * rs.height);
+    for (let i = 0; i < ls.length; i++) ls[i] = lum(sb, i * 4);
+    for (let i = 0; i < lr.length; i++) lr[i] = lum(rb, i * 4);
+    // Try every pixel offset along the cropped direction; the error is the mean of clipped differences, so icons,
+    // windows and the rug itself (big differences) only count a little.
+    const errs = [];
+    for (let o = 0; o <= over; o++) {
+      const ox = overX ? o : 0, oy = overY ? o : 0;
+      let sum = 0, n = 0;
+      for (let y = 0; y < ss.height; y += 3) for (let x = 0; x < ss.width; x += 3) {
+        sum += Math.min(40, Math.abs(ls[y * ss.width + x] - lr[(y + oy) * rs.width + x + ox])); n++;
+      }
+      errs.push(sum / n);
+    }
+    let bi = 0; for (let i = 1; i < errs.length; i++) if (errs[i] < errs[bi]) bi = i;
+    const bestErr = errs[bi];
+    // Sub-pixel: fit a parabola through the best offset and its neighbours.
+    let off = bi;
+    if (bi > 0 && bi < errs.length - 1) {
+      const a = errs[bi - 1], b = errs[bi], c = errs[bi + 1], den = a - 2 * b + c;
+      if (den > 0) off = bi + 0.5 * (a - c) / den;
+    }
+    const best = off / over;
+    const anchor = bestErr < 18 ? best : 0.5; // screen mostly covered (full-screen app)? keep the default
+    if (bestErr < 18) anchorCache.set(key, anchor);
+    return anchor;
+  } catch (e) { console.error('wallpaper anchor failed:', e.message); return 0.5; }
+}
+
 async function sendWallpaper(force = false) {
   if (!win || win.isDestroyed()) return;
   try {
@@ -298,8 +352,11 @@ async function sendWallpaper(force = false) {
     if (!force && sig === wallpaperSig) return;
     wallpaperSig = sig;
     const bytes = w.src ? fs.readFileSync(w.src) : null;
-    lastWallpaper = { src: w.src, mode: w.mode, bytes: bytes ? bytes.length : 0 };
-    send('wallpaper', { bytes, mode: w.mode, color: w.color, scale: d.scaleFactor, bounds: d.bounds, workArea: d.workArea });
+    const anchor = await measureWallpaperAnchor(w.src, w.mode, d);
+    // Couldn't measure this time (e.g. a full-screen app covered the desktop): try again on the next check.
+    if (process.platform === 'win32' && w.src && ['fill', 'span'].includes(w.mode) && !anchorCache.has(JSON.stringify([w.src, mtime, d.bounds]))) wallpaperSig = '';
+    lastWallpaper = { src: w.src, mode: w.mode, bytes: bytes ? bytes.length : 0, anchor };
+    send('wallpaper', { bytes, mode: w.mode, color: w.color, scale: d.scaleFactor, bounds: d.bounds, workArea: d.workArea, anchor });
   } catch (e) { console.error('wallpaper failed:', e.message); }
 }
 

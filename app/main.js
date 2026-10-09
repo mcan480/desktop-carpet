@@ -108,7 +108,9 @@ function drawWallpaper() {
       else for (let y = 0; y < dh; y += h) for (let x = 0; x < dw; x += w) ctx.drawImage(wallImg, x, y, w, h);
     } else {
       const f = mode === 'fit' ? Math.min(dw / iw, dh / ih) : Math.max(dw / iw, dh / ih); // fill / span
-      ctx.drawImage(wallImg, (dw - iw * f) / 2, (dh - ih * f) / 2, iw * f, ih * f);
+      // Where the OS puts a cropped picture: centered by default, or what the main process measured on screen.
+      const t = mode === 'fit' ? 0.5 : (wallInfo.anchor ?? 0.5);
+      ctx.drawImage(wallImg, (dw - iw * f) * t, (dh - ih * f) * t, iw * f, ih * f);
     }
     ctx.restore();
   }
