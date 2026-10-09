@@ -458,9 +458,12 @@ function halloweenWeb(ctx, W, H, seed) {
   // border: black band with orange crescent moons and bats
   ctx.fillStyle = C.border; frameRect(ctx, 0, 0, W, H, 11 * u);
   ctx.fillStyle = C.border2; frameRect(ctx, 11 * u, 11 * u, W - 22 * u, H - 22 * u, 1.2 * u);
-  ctx.fillStyle = C.web; frameRect(ctx, 2 * u, 2 * u, W - 4 * u, H - 4 * u, 0.6 * u);
-  for (const [x, y, side, i] of bandPoints(5.5 * u, 5.5 * u, W - 11 * u, H - 11 * u, 13 * u)) {
-    ctx.save(); ctx.translate(x, y);
+  ctx.fillStyle = C.web; frameRect(ctx, 0.9 * u, 0.9 * u, W - 1.8 * u, H - 1.8 * u, 0.5 * u);
+  // Motifs sit in the middle of the black band (between the cream edge line at ~1.4u and the orange line at 11u)
+  // and stay well inside it: moons 2u across the radius, bats about 6u wide.
+  const bc = 6.2 * u;
+  for (const [x, y, side, i] of bandPoints(bc, bc, W - 2 * bc, H - 2 * bc, 12 * u)) {
+    ctx.save(); ctx.translate(x, y); ctx.scale(0.78, 0.78);
     if (i % 2) { // crescent moon
       ctx.fillStyle = C.moon; ctx.beginPath(); ctx.arc(0, 0, 2.6 * u, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = C.border; ctx.beginPath(); ctx.arc(1.1 * u, -0.6 * u, 2.3 * u, 0, Math.PI * 2); ctx.fill();
@@ -566,9 +569,10 @@ function halloweenGhost(ctx, W, H, seed) {
   ctx.fillStyle = C.border; frameRect(ctx, 0, 0, W, H, 11 * u);
   const stripe = 1.4 * u;
   for (let i = 0; i < 3; i++) { ctx.fillStyle = C.candy[i]; frameRect(ctx, 11 * u + i * stripe, 11 * u + i * stripe, W - 2 * (11 * u + i * stripe), H - 2 * (11 * u + i * stripe), stripe); }
-  ctx.fillStyle = C.border2; frameRect(ctx, 1.6 * u, 1.6 * u, W - 3.2 * u, H - 3.2 * u, 0.7 * u);
-  for (const [x, y, side] of bandPoints(5.6 * u, 5.6 * u, W - 11.2 * u, H - 11.2 * u, 9 * u)) {
-    ctx.save(); ctx.translate(x, y); ctx.rotate(side ? Math.PI / 2 : 0);
+  ctx.fillStyle = C.border2; frameRect(ctx, 0.9 * u, 0.9 * u, W - 1.8 * u, H - 1.8 * u, 0.6 * u);
+  const bc = 6.2 * u;
+  for (const [x, y, side] of bandPoints(bc, bc, W - 2 * bc, H - 2 * bc, 9 * u)) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(side ? Math.PI / 2 : 0); ctx.scale(0.85, 0.85);
     ctx.fillStyle = C.bone;
     ctx.fillRect(-2.6 * u, -0.55 * u, 5.2 * u, 1.1 * u);
     for (const sx of [-1, 1]) for (const sy of [-1, 1]) { ctx.beginPath(); ctx.arc(sx * 2.7 * u, sy * 0.75 * u, 0.85 * u, 0, Math.PI * 2); ctx.fill(); }
