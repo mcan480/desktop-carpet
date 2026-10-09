@@ -9,7 +9,7 @@ A rug for your desktop. Grab it, lift a corner and sweep your files under it.
 ## How a release is made
 1. Bump `version` in `package.json` (and `VERSION` in `installer/installer.nsi`).
 2. Add `release-notes/vX.Y.Z.md`.
-3. Push a tag `vX.Y.Z`. GitHub Actions builds `DesktopCarpet-Setup.exe` on Windows and publishes the release.
+3. Push to `main`. When the version has no release yet, GitHub Actions creates tag `vX.Y.Z`, builds `DesktopCarpet-Setup.exe` on Windows and publishes the release.
    Installed apps find it within a few hours and offer "Restart and update".
 
 ## Layout
