@@ -439,6 +439,24 @@
     },
   };
 
+  // macOS wording for the few strings that name Windows things (startup, system language, tray).
+  const MAC = {
+    en: { login: 'Open at login', langAuto: 'Same as macOS', tip4: 'Right-click the carpet or the menu bar icon for quick options.' },
+    tr: { login: 'Oturum açılınca başlat', langAuto: 'macOS ile aynı', tip4: 'Hızlı seçenekler için halıya ya da menü çubuğundaki simgeye sağ tıkla.' },
+    es: { login: 'Abrir al iniciar sesión', langAuto: 'Igual que macOS', tip4: 'Clic derecho en la alfombra o en el icono de la barra de menús para opciones rápidas.' },
+    de: { login: 'Bei der Anmeldung öffnen', langAuto: 'Wie macOS', tip4: 'Rechtsklick auf den Teppich oder das Symbol in der Menüleiste für schnelle Optionen.' },
+    fr: { login: 'Ouvrir à l’ouverture de session', langAuto: 'Comme macOS', tip4: 'Clic droit sur le tapis ou sur l’icône de la barre des menus pour les options rapides.' },
+    pt: { login: 'Abrir ao iniciar sessão', langAuto: 'Igual ao macOS', tip4: 'Clique com o botão direito no tapete ou no ícone da barra de menus para opções rápidas.' },
+    it: { login: 'Apri al login', langAuto: 'Come macOS', tip4: 'Clic destro sul tappeto o sull’icona nella barra dei menu per le opzioni rapide.' },
+    ru: { login: 'Открывать при входе', langAuto: 'Как в macOS', tip4: 'Правый щелчок по ковру или значку в строке меню — быстрые настройки.' },
+    pl: { login: 'Otwieraj po zalogowaniu', langAuto: 'Jak w macOS', tip4: 'Kliknij prawym przyciskiem dywan lub ikonę na pasku menu, aby zobaczyć szybkie opcje.' },
+    ja: { login: 'ログイン時に開く', langAuto: 'macOS と同じ', tip4: 'じゅうたんかメニューバーのアイコンを右クリックするとクイック設定が開きます。' },
+    zh: { login: '登录时打开', langAuto: '与 macOS 相同', tip4: '右键单击地毯或菜单栏图标可打开快捷选项。' },
+    ko: { login: '로그인 시 열기', langAuto: 'macOS와 같게', tip4: '러그나 메뉴 막대 아이콘을 마우스 오른쪽 버튼으로 클릭하면 빠른 설정이 열립니다.' },
+  };
+  let platform = 'win32';
+  function setPlatform(p) { platform = p || 'win32'; }
+
   // Pick a supported language from a list of locale tags like "pt-BR", "zh-Hans-CN".
   function pick(tags) {
     for (const tag of tags || []) {
@@ -451,10 +469,11 @@
   // English fills anything a language is missing.
   function strings(lang) {
     const base = STR.en, t = STR[lang] || base;
-    return { ...base, ...t, reasons: { ...base.reasons, ...(t.reasons || {}) } };
+    const plat = platform === 'darwin' ? { ...MAC.en, ...(MAC[lang] || {}) } : {};
+    return { ...base, ...t, ...plat, reasons: { ...base.reasons, ...(t.reasons || {}) } };
   }
 
-  const api = { LANGS, STR, pick, strings };
+  const api = { LANGS, STR, MAC, pick, strings, setPlatform };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DC_I18N = api;
 })(typeof window !== 'undefined' ? window : globalThis);

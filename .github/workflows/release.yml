@@ -1,27 +1,52 @@
-# Builds the Windows installer on GitHub's Windows machines and publishes it as a release.
+# Builds Desktop Carpet for Windows and macOS on GitHub's machines and publishes them as one release.
 # Trigger: any push to main. If package.json has a version that has no release yet, it builds and
 # publishes release v<version> (the tag is created automatically). Notes come from release-notes/v<version>.md.
-# The app's auto-updater and the site's download button both use the asset name DesktopCarpet-Setup.exe.
+# Asset names are fixed because the apps' auto-updaters and the site's download buttons use them:
+#   DesktopCarpet-Setup.exe (Windows), DesktopCarpet-Mac.dmg (Mac download), DesktopCarpet-Mac.zip (Mac updates)
 #
-# Code signing (SSL.com eSigner) switches on by itself once these repository secrets exist:
-#   ES_USERNAME, ES_PASSWORD, ES_CREDENTIAL_ID, ES_TOTP_SECRET
-# After the first signed release, set the repository variable REQUIRE_SIGNING=true so an unsigned build can
-# never be published (signed apps refuse unsigned updates anyway).
+# Optional signing switches on by itself when these repository secrets exist:
+#   Windows (SSL.com eSigner): ES_USERNAME, ES_PASSWORD, ES_CREDENTIAL_ID, ES_TOTP_SECRET
+#   macOS (Apple Developer ID): MAC_CERT_P12 (base64), MAC_CERT_PASSWORD, MAC_SIGN_IDENTITY,
+#                               and for notarization APPLE_ID, APPLE_APP_PASSWORD, APPLE_TEAM_ID
+# Repository variable REQUIRE_SIGNING=true refuses to publish an unsigned Windows build.
 name: Release
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'test/**']   # test/* branches build and launch-test everything but never publish
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.ver.outputs.version }}
+      skip: ${{ steps.ver.outputs.skip }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read version
+        id: ver
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          v=$(node -p "require('./package.json').version")
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.ref }}" = "refs/heads/main" ] && gh release view "v$v" -R "${{ github.repository }}" > /dev/null 2>&1; then
+            echo "Release v$v already exists, nothing to do."; echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
   windows:
+    needs: check
+    if: needs.check.outputs.skip != 'true'
     runs-on: windows-latest
     env:
       SIGN: ${{ secrets.ES_USERNAME != '' && secrets.ES_TOTP_SECRET != '' }}
+      VERSION: ${{ needs.check.outputs.version }}
     steps:
       - uses: actions/checkout@v4
 
@@ -29,31 +54,19 @@ jobs:
         with:
           node-version: 22
 
-      - name: Read version
-        id: ver
+      - name: Signing policy
         shell: pwsh
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
-          $v = (Get-Content package.json -Raw | ConvertFrom-Json).version
-          "VERSION=$v" | Out-File -FilePath $env:GITHUB_ENV -Append
-          gh release view "v$v" -R "${{ github.repository }}" *> $null
-          if ($LASTEXITCODE -eq 0) { "Release v$v already exists, nothing to do."; "skip=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append }
-          else { "skip=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append }
           if ("${{ vars.REQUIRE_SIGNING }}" -eq "true" -and $env:SIGN -ne "true") { throw "REQUIRE_SIGNING is on but the signing secrets are missing" }
-          exit 0
 
       - name: Install
-        if: steps.ver.outputs.skip != 'true'
         run: npm install --no-audit --no-fund
 
       - name: Build app
-        if: steps.ver.outputs.skip != 'true'
         run: node build.cjs
 
       # Start the packaged app the way users get it and make sure the panel and the rug come up.
       - name: Launch test
-        if: steps.ver.outputs.skip != 'true'
         shell: pwsh
         run: |
           $shots = Join-Path $env:RUNNER_TEMP 'smoke'
@@ -69,22 +82,22 @@ jobs:
           if (-not (Test-Path (Join-Path $shots 'panel-active.png'))) { throw "panel did not render" }
 
       - name: Upload launch test screenshots
-        if: always() && steps.ver.outputs.skip != 'true'
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: launch-test
+          name: launch-test-windows
           path: ${{ runner.temp }}/smoke
           if-no-files-found: ignore
 
       - name: Stage app exe for signing
-        if: steps.ver.outputs.skip != 'true' && env.SIGN == 'true'
+        if: env.SIGN == 'true'
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force sign | Out-Null
           Copy-Item 'dist\Desktop Carpet-win32-x64\DesktopCarpet.exe' sign\DesktopCarpet.exe
 
       - name: Sign app exe
-        if: steps.ver.outputs.skip != 'true' && env.SIGN == 'true'
+        if: env.SIGN == 'true'
         uses: sslcom/esigner-codesign@b7f8ff36fc0de8690fbbab8e5b4421d29802f747
         with:
           command: sign
@@ -98,7 +111,7 @@ jobs:
           environment_name: PROD
 
       - name: Put signed exe back
-        if: steps.ver.outputs.skip != 'true' && env.SIGN == 'true'
+        if: env.SIGN == 'true'
         shell: pwsh
         run: |
           Copy-Item sign\DesktopCarpet.exe 'dist\Desktop Carpet-win32-x64\DesktopCarpet.exe' -Force
@@ -107,7 +120,6 @@ jobs:
           "Signed by $($s.SignerCertificate.Subject)"
 
       - name: Build installer
-        if: steps.ver.outputs.skip != 'true'
         shell: pwsh
         run: |
           $mk = (Get-Command makensis -ErrorAction SilentlyContinue).Source
@@ -117,7 +129,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw "makensis failed" }
 
       - name: Sign installer
-        if: steps.ver.outputs.skip != 'true' && env.SIGN == 'true'
+        if: env.SIGN == 'true'
         uses: sslcom/esigner-codesign@b7f8ff36fc0de8690fbbab8e5b4421d29802f747
         with:
           command: sign
@@ -131,20 +143,115 @@ jobs:
           environment_name: PROD
 
       - name: Check installer signature
-        if: steps.ver.outputs.skip != 'true' && env.SIGN == 'true'
+        if: env.SIGN == 'true'
         shell: pwsh
         run: |
           $s = Get-AuthenticodeSignature dist\DesktopCarpet-Setup.exe
           if ($s.Status -ne 'Valid') { throw "installer signature: $($s.Status)" }
           "Signed by $($s.SignerCertificate.Subject)"
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: dist/DesktopCarpet-Setup.exe
+          if-no-files-found: error
+
+  mac:
+    needs: check
+    if: needs.check.outputs.skip != 'true'
+    runs-on: macos-latest
+    env:
+      MAC_SIGN: ${{ secrets.MAC_CERT_P12 != '' && secrets.MAC_SIGN_IDENTITY != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install
+        run: |
+          npm install --no-audit --no-fund
+          # Both architectures of koffi's native part go into the universal app.
+          npm install --no-save --no-audit --no-fund --force @koromix/koffi-darwin-x64@3.3.2 @koromix/koffi-darwin-arm64@3.3.2
+
+      - name: Import Developer ID certificate
+        if: env.MAC_SIGN == 'true'
+        env:
+          P12: ${{ secrets.MAC_CERT_P12 }}
+          P12_PASSWORD: ${{ secrets.MAC_CERT_PASSWORD }}
+        run: |
+          KC="$RUNNER_TEMP/sign.keychain-db"; KCP=$(uuidgen)
+          echo "$P12" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security create-keychain -p "$KCP" "$KC"
+          security set-keychain-settings -lut 21600 "$KC"
+          security unlock-keychain -p "$KCP" "$KC"
+          security import "$RUNNER_TEMP/cert.p12" -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k "$KC"
+          security set-key-partition-list -S apple-tool:,apple: -k "$KCP" "$KC"
+          security list-keychains -d user -s "$KC" $(security list-keychains -d user | sed 's/"//g')
+          rm "$RUNNER_TEMP/cert.p12"
+
+      - name: Build app
+        env:
+          MAC_SIGN_IDENTITY: ${{ env.MAC_SIGN == 'true' && secrets.MAC_SIGN_IDENTITY || '' }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: node build.cjs mac
+
+      - name: Launch test
+        run: |
+          SHOTS="$RUNNER_TEMP/smoke"; mkdir -p "$SHOTS"
+          DC_SMOKE="$SHOTS" "dist/Desktop Carpet.app/Contents/MacOS/Desktop Carpet" > "$RUNNER_TEMP/smoke.log" 2>&1 &
+          PID=$!
+          for i in $(seq 1 120); do kill -0 $PID 2>/dev/null || break; sleep 1; done
+          if kill -0 $PID 2>/dev/null; then kill $PID; cat "$RUNNER_TEMP/smoke.log"; echo "app did not finish the launch test in time"; exit 1; fi
+          cat "$RUNNER_TEMP/smoke.log"
+          grep -q 'rugVisible true' "$SHOTS/smoke.txt" || { echo "rug did not show up"; exit 1; }
+          test -f "$SHOTS/panel-active.png" || { echo "panel did not render"; exit 1; }
+
+      - name: Upload launch test screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: launch-test-mac
+          path: ${{ runner.temp }}/smoke
+          if-no-files-found: ignore
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac
+          path: |
+            dist/DesktopCarpet-Mac.dmg
+            dist/DesktopCarpet-Mac.zip
+          if-no-files-found: error
+
+  publish:
+    needs: [check, windows, mac]
+    # Windows must succeed; a Mac failure still lets the Windows release out (Mac users then just get no update).
+    if: always() && github.ref == 'refs/heads/main' && needs.check.outputs.skip != 'true' && needs.windows.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: windows
+          path: out
+      - uses: actions/download-artifact@v4
+        if: needs.mac.result == 'success'
+        with:
+          name: mac
+          path: out
+      - run: ls -la out
       - name: Publish release
-        if: steps.ver.outputs.skip != 'true'
         uses: softprops/action-gh-release@v2
         with:
-          name: Desktop Carpet ${{ env.VERSION }} for Windows
-          tag_name: v${{ env.VERSION }}
+          name: Desktop Carpet ${{ needs.check.outputs.version }}
+          tag_name: v${{ needs.check.outputs.version }}
           target_commitish: ${{ github.sha }}
-          body_path: release-notes/v${{ env.VERSION }}.md
-          files: dist/DesktopCarpet-Setup.exe
-          fail_on_unmatched_files: true
+          body_path: release-notes/v${{ needs.check.outputs.version }}.md
+          files: |
+            out/DesktopCarpet-Setup.exe
+            out/DesktopCarpet-Mac.dmg
+            out/DesktopCarpet-Mac.zip
+          fail_on_unmatched_files: false

@@ -39,6 +39,7 @@ button,input{font:inherit;color:inherit}
 
 /* Title bar area: Windows draws its own buttons on the right (titleBarOverlay) */
 .bar{height:40px;display:flex;align-items:center;padding:0 140px 0 14px;background:var(--ink);color:var(--ivory);-webkit-app-region:drag}
+.mac .bar{padding:0 14px 0 84px}
 .brand{display:flex;align-items:center;gap:9px;font:400 1.06rem/1 var(--f-display);letter-spacing:.01em}
 .brand svg{width:30px;height:21px;transform:rotate(-6deg)}
 

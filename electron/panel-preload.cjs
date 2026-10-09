@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('dc', {
+  platform: process.platform,
   ready: () => ipcRenderer.send('panel-ready'),
   onState: (fn) => ipcRenderer.on('state', (_e, s) => fn(s)),
   activate: (key) => ipcRenderer.invoke('license-activate', key),

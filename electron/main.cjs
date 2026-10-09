@@ -1,16 +1,17 @@
-// Desktop Carpet: a cloth rug that lies on the Windows desktop, unlocked by a desktopcarpet.com license.
+// Desktop Carpet: a cloth rug that lies on the Windows or macOS desktop, unlocked by a desktopcarpet.com license.
 const { app, BrowserWindow, ipcMain, Menu, Tray, nativeImage, screen, shell, powerMonitor } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
 const { pathToFileURL } = require('url');
 
-app.setAppUserModelId('com.desktopcarpet.app');
+const IS_MAC = process.platform === 'darwin';
+if (process.platform === 'win32') app.setAppUserModelId('com.desktopcarpet.app');
 if (!app.requestSingleInstanceLock()) { app.quit(); process.exit(0); }
 
 const SITE = 'https://desktopcarpet.com';
 const URLS = { home: `${SITE}/`, pricing: `${SITE}/#pricing` };
-const AUTOSTART = process.argv.includes('--autostart');
+let AUTOSTART = process.argv.includes('--autostart');
 const STATE_FILE = () => path.join(app.getPath('userData'), 'carpet-state.json');
 const SETTINGS_FILE = () => path.join(app.getPath('userData'), 'settings.json');
 
@@ -26,6 +27,7 @@ let lic = null;          // LicenseClient
 
 // ---------- strings (shared with the panel) ----------
 const I18N = require('../panel/i18n.js');
+I18N.setPlatform(process.platform);
 const LANG = () => (settings.lang && settings.lang !== 'auto' && I18N.LANGS[settings.lang])
   ? settings.lang
   : I18N.pick([...(app.getPreferredSystemLanguages?.() || []), app.getLocale()]);
@@ -59,7 +61,44 @@ function loadUser32() {
   return user32;
 }
 
+// macOS: Objective-C runtime and CoreGraphics through koffi, for the window level and the mouse button.
+let mac = null;
+function loadMac() {
+  if (!IS_MAC || mac) return mac;
+  try {
+    const koffi = require('koffi');
+    const objc = koffi.load('/usr/lib/libobjc.A.dylib');
+    const cg = koffi.load('/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics');
+    const sel = objc.func('sel_registerName', 'uintptr_t', ['str']);
+    mac = {
+      sel,
+      sendId: objc.func('objc_msgSend', 'uintptr_t', ['uintptr_t', 'uintptr_t']),
+      sendLong: objc.func('objc_msgSend', 'void', ['uintptr_t', 'uintptr_t', 'long']),
+      sendULong: objc.func('objc_msgSend', 'void', ['uintptr_t', 'uintptr_t', 'unsigned long']),
+      levelForKey: cg.func('CGWindowLevelForKey', 'int32_t', ['int32_t']),
+      buttonState: cg.func('CGEventSourceButtonState', 'bool', ['int32_t', 'uint32_t']),
+    };
+  } catch (e) { console.error('koffi/objc unavailable:', e.message); }
+  return mac;
+}
+
+// macOS: put the rug window one level above Finder's desktop icons (kCGDesktopIconWindowLevel + 1), so it sits
+// on the icons but under every app window, on every Space, and stays put in Mission Control and "Show Desktop".
+function pinToDesktopMac() {
+  const m = loadMac();
+  if (!m || !win || win.isDestroyed()) return;
+  try {
+    const view = Number(win.getNativeWindowHandle().readBigUInt64LE(0)); // NSView*
+    const nswin = m.sendId(view, m.sel('window'));
+    if (!nswin) return;
+    m.sendLong(nswin, m.sel('setLevel:'), m.levelForKey(18) + 1); // 18 = kCGDesktopIconWindowLevelKey
+    // canJoinAllSpaces | stationary | ignoresCycle
+    m.sendULong(nswin, m.sel('setCollectionBehavior:'), (1 << 0) | (1 << 4) | (1 << 6));
+  } catch (e) { console.error('pinToDesktopMac failed:', e.message); }
+}
+
 function pinToDesktop() {
+  if (IS_MAC) return pinToDesktopMac();
   const u = loadUser32();
   if (!u || !win || win.isDestroyed()) return;
   try {
@@ -74,6 +113,10 @@ function pinToDesktop() {
 
 // Physical state of the (logical) left mouse button; null when it can't be read.
 function leftButtonDown() {
+  if (IS_MAC) {
+    const m = loadMac();
+    try { return m ? !!m.buttonState(0, 0) : null; } catch { return null; } // combined session state, left button
+  }
   const u = loadUser32();
   if (!u?.GetAsyncKeyState) return null;
   try {
@@ -108,13 +151,14 @@ function createRugWindow() {
   win = new BrowserWindow({
     x, y, width, height, frame: false, transparent: true, backgroundColor: '#00000000',
     resizable: false, movable: false, minimizable: false, maximizable: false, fullscreenable: false,
-    skipTaskbar: true, focusable: false, hasShadow: false, show: false,
+    skipTaskbar: true, focusable: false, hasShadow: false, show: false, acceptFirstMouse: true,
     webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, nodeIntegration: false, sandbox: true, backgroundThrottling: false },
   });
   // The rug only ever shows its own page: no pop-ups, no navigating away.
   win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
   win.webContents.on('will-navigate', (e) => e.preventDefault());
   win.setIgnoreMouseEvents(true, { forward: true });
+  if (IS_MAC) win.setHiddenInMissionControl?.(true);
   win.loadFile(path.join(__dirname, '..', 'app', 'index.html'));
   win.once('ready-to-show', () => { rugReady = true; updateRugVisibility(); });
   setInterval(() => { if (!settings.onTop && win.isVisible()) pinToDesktop(); }, 15000);
@@ -133,7 +177,10 @@ function createRugWindow() {
     lastCursor = key;
     const b = win.getBounds();
     let free = true;
-    if (pressed) { const sp = screen.dipToScreenPoint(p); free = pointOnDesktop(Math.round(sp.x), Math.round(sp.y)); }
+    if (pressed) {
+      if (IS_MAC) free = false; // macOS delivers clicks to the rug reliably; the poll only tracks drags and releases
+      else { const sp = screen.dipToScreenPoint(p); free = pointOnDesktop(Math.round(sp.x), Math.round(sp.y)); }
+    }
     send('cursor', { x: p.x - b.x, y: p.y - b.y, down, free });
   }, 16);
 }
@@ -165,6 +212,7 @@ function updateRugVisibility() {
 // Windows sometimes shows a transparent window with an opaque gray background. Re-applying the
 // clear background and nudging the size makes DWM rebuild the surface with transparency.
 function refreshTransparency() {
+  if (process.platform !== 'win32') return;
   const nudge = () => {
     if (!win || win.isDestroyed() || !win.isVisible()) return;
     win.setBackgroundColor('#00000000');
@@ -211,7 +259,7 @@ function applySetting(name, value) {
     settings.lang = I18N.LANGS[value] ? value : 'auto';
     writeJson(SETTINGS_FILE(), settings);
   } else if (name === 'openAtLogin') {
-    app.setLoginItemSettings({ openAtLogin: !!value, args: ['--autostart'] });
+    app.setLoginItemSettings(IS_MAC ? { openAtLogin: !!value } : { openAtLogin: !!value, args: ['--autostart'] });
   }
   refreshMenus();
   broadcast();
@@ -258,19 +306,24 @@ async function recheck() {
 function openPanel() {
   if (panel && !panel.isDestroyed()) {
     if (panel.isMinimized()) panel.restore();
+    if (IS_MAC) app.dock?.show();
     panel.show(); panel.focus();
     return;
   }
+  if (IS_MAC) app.dock?.show();
   panel = new BrowserWindow({
     width: 460, height: Math.min(820, screen.getPrimaryDisplay().workArea.height - 40), minWidth: 420, minHeight: 560, show: false, title: 'Desktop Carpet',
     backgroundColor: '#c4925c', icon: path.join(__dirname, 'icon.png'), autoHideMenuBar: true,
-    titleBarStyle: 'hidden', titleBarOverlay: { color: '#22130c', symbolColor: '#f2e6cc', height: 40 },
+    ...(IS_MAC
+      ? { titleBarStyle: 'hidden', trafficLightPosition: { x: 14, y: 13 } }
+      : { titleBarStyle: 'hidden', titleBarOverlay: { color: '#22130c', symbolColor: '#f2e6cc', height: 40 } }),
     webPreferences: { preload: path.join(__dirname, 'panel-preload.cjs'), contextIsolation: true, nodeIntegration: false, sandbox: true },
   });
   panel.setMenu(null);
   panel.loadFile(path.join(__dirname, '..', 'panel', 'index.html'));
   panel.once('ready-to-show', () => { panel.show(); panel.moveTop(); panel.focus(); });
-  panel.on('closed', () => { panel = null; });
+  // macOS: the app lives in the menu bar; the Dock icon is only there while the panel is open.
+  panel.on('closed', () => { panel = null; if (IS_MAC) app.dock?.hide(); });
   // Links open in the real browser, never inside the app.
   panel.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
   panel.webContents.on('will-navigate', (e) => e.preventDefault());
@@ -283,7 +336,7 @@ function panelState() {
     license,
     rug: { ...rugState, hidden: userHidden },
     update: { state: update.state, version: update.version },
-    settings: { onTop: settings.onTop, langSetting: settings.lang || 'auto', openAtLogin: app.getLoginItemSettings({ args: ['--autostart'] }).openAtLogin },
+    settings: { onTop: settings.onTop, langSetting: settings.lang || 'auto', openAtLogin: app.getLoginItemSettings(IS_MAC ? undefined : { args: ['--autostart'] }).openAtLogin },
   };
 }
 
@@ -329,7 +382,7 @@ function refreshMenus() {
 // The newest release on github.com/mcan480/desktop-carpet with a "DesktopCarpet-Setup.exe" asset is downloaded in the
 // background, checked against its size and SHA-256, then installed silently when the user clicks "Restart and update".
 const UPDATE_API = 'https://api.github.com/repos/mcan480/desktop-carpet/releases/latest';
-const UPDATE_ASSET = 'DesktopCarpet-Setup.exe';
+const UPDATE_ASSET = IS_MAC ? 'DesktopCarpet-Mac.zip' : 'DesktopCarpet-Setup.exe';
 let update = { state: 'idle' };   // idle | downloading | ready
 
 function newer(a, b) {
@@ -351,7 +404,7 @@ async function checkForUpdate() {
     if (!asset) return;
 
     update = { state: 'downloading', version };
-    const file = path.join(app.getPath('temp'), `DesktopCarpet-Setup-${version}.exe`);
+    const file = path.join(app.getPath('temp'), IS_MAC ? `DesktopCarpet-Mac-${version}.zip` : `DesktopCarpet-Setup-${version}.exe`);
     const res = await fetch(asset.browser_download_url, { headers: { 'user-agent': 'DesktopCarpet/' + app.getVersion() } });
     if (!res.ok || !res.body) throw new Error('download ' + res.status);
     const hash = require('crypto').createHash('sha256');
@@ -366,7 +419,18 @@ async function checkForUpdate() {
     // so even a release uploaded by someone else (e.g. a stolen GitHub account) is refused.
     const mine = await signerOf(process.execPath);
     if (mine && (await signerOf(file)) !== mine) { fs.rmSync(file, { force: true }); throw new Error('update not signed by ' + mine); }
-    update = { state: 'ready', version, file };
+    if (IS_MAC) {
+      // Unpack the new Desktop Carpet.app next to the zip; it replaces the running one on restart.
+      const dir = path.join(app.getPath('temp'), `DesktopCarpet-${version}`);
+      fs.rmSync(dir, { recursive: true, force: true });
+      await new Promise((ok, bad) => require('child_process').execFile('/usr/bin/ditto', ['-x', '-k', file, dir], (e) => (e ? bad(e) : ok())));
+      fs.rmSync(file, { force: true });
+      const appDir = path.join(dir, 'Desktop Carpet.app');
+      if (!fs.existsSync(path.join(appDir, 'Contents', 'MacOS'))) throw new Error('bad mac update');
+      update = { state: 'ready', version, file: appDir };
+    } else {
+      update = { state: 'ready', version, file };
+    }
   } catch (e) {
     console.error('update check failed:', e.message);
     if (update.state === 'downloading') update = { state: 'idle' };
@@ -387,8 +451,26 @@ function signerOf(file) {
   });
 }
 
+// The .app bundle we are running from, e.g. /Applications/Desktop Carpet.app (macOS only).
+function currentAppBundle() {
+  const p = path.resolve(path.dirname(process.execPath), '..', '..');
+  return p.endsWith('.app') ? p : null;
+}
+
 function installUpdate() {
   if (update.state !== 'ready' || !fs.existsSync(update.file)) return;
+  if (IS_MAC) {
+    const target = currentAppBundle();
+    let writable = false;
+    try { fs.accessSync(path.dirname(target), fs.constants.W_OK); writable = !!target && !target.includes('/AppTranslocation/'); } catch {}
+    if (!writable) { shell.openExternal(URLS.home); return; } // can't replace it in place: send them to the download
+    // After we quit: swap the bundles (keeping the old one until the new one is in place), then start the new one.
+    const script = 'while kill -0 "$1" 2>/dev/null; do sleep 0.2; done; ' +
+      'mv "$2" "$2.old" && if mv "$3" "$2"; then rm -rf "$2.old"; xattr -dr com.apple.quarantine "$2" 2>/dev/null; else mv "$2.old" "$2"; fi; open "$2"';
+    require('child_process').spawn('/bin/sh', ['-c', script, 'sh', String(process.pid), target, update.file], { detached: true, stdio: 'ignore' }).unref();
+    app.quit();
+    return;
+  }
   // /S = silent NSIS install; the installer closes us, replaces the files and starts the new version.
   require('child_process').spawn(update.file, ['/S'], { detached: true, stdio: 'ignore' }).unref();
   app.quit();
@@ -397,9 +479,13 @@ function installUpdate() {
 // ---------- app lifecycle ----------
 app.whenReady().then(() => {
   settings = { ...settings, ...readJson(SETTINGS_FILE(), {}) };
+  if (IS_MAC) {
+    try { const li = app.getLoginItemSettings(); if (li.wasOpenedAtLogin || li.wasOpenedAsHidden) AUTOSTART = true; } catch {}
+    if (AUTOSTART) app.dock?.hide();
+  }
   createRugWindow();
 
-  tray = new Tray(path.join(__dirname, process.platform === 'win32' ? 'tray.ico' : 'tray.png'));
+  tray = new Tray(path.join(__dirname, process.platform === 'win32' ? 'tray.ico' : IS_MAC ? 'trayTemplate.png' : 'tray.png'));
   tray.setToolTip(t('tip'));
   tray.on('click', openPanel);
   refreshMenus();
@@ -413,6 +499,7 @@ app.whenReady().then(() => {
   screen.on('display-added', fitToScreen);
   screen.on('display-removed', fitToScreen);
 
+  setTimeout(() => { launchSettled = true; }, 1500);
   if (process.env.DC_SMOKE) runSmoke();
 });
 
@@ -421,8 +508,12 @@ app.on('second-instance', () => {
   openPanel();
   if (unlocked() && userHidden) { userHidden = false; updateRugVisibility(); }
 });
-// Closing the panel keeps the carpet running in the tray.
+// Closing the panel keeps the carpet running in the tray / menu bar.
 app.on('window-all-closed', () => {});
+// macOS: clicking the Dock icon (or opening the app again from Finder) brings up the panel.
+// (macOS also sends 'activate' right at launch; that one is ignored so a login start stays quiet.)
+let launchSettled = false;
+app.on('activate', () => { if (launchSettled) openPanel(); });
 
 // ---------- IPC: rug window ----------
 ipcMain.on('ignore-mouse', (_e, ignore) => { if (win && !win.isDestroyed()) win.setIgnoreMouseEvents(!!ignore, { forward: true }); });

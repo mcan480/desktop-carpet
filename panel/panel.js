@@ -5,6 +5,8 @@
   const dc = window.dc;
 
   const I18N = window.DC_I18N;
+  I18N.setPlatform(dc.platform);
+  if (dc.platform === 'darwin') document.documentElement.classList.add('mac');
 
   let T = I18N.strings('en'), lang = 'en', st = null, busy = false;
 

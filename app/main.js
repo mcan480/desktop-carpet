@@ -187,15 +187,16 @@ function setOver(v, force = false) {
 // Cursor position and left-button state polled by the main process. Windows sometimes stops
 // sending mouse events to a click-through window (after a menu, an overlay or a focus change), so
 // hover, dragging and letting go all keep working from this even when those events are missing.
-let polledDown = false, pendingStart = 0;
+let polledDown = false, pendingStart = 0, pollSeesButton = false;
 function onCursor(p) {
   mouse = { x: p.x, y: p.y };
   const down = p.down, wasDown = polledDown;
   if (down !== null && down !== undefined) polledDown = down;
+  if (down) pollSeesButton = true; // only trust "button up" from a poll that has ever seen it down
   if (grab) {
     // Let go when the button is up. Ignore the first moments of a grab: the poll can lag behind
     // the pointerdown event that started it.
-    if (down === false && performance.now() - grab.at > 150) endGrab(); else wake();
+    if (down === false && pollSeesButton && performance.now() - grab.at > 150) endGrab(); else wake();
     return;
   }
   const hit = hitTest(p.x, p.y);
