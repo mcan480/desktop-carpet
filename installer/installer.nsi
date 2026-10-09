@@ -8,7 +8,7 @@ SetCompressorDictSize 64
 !define EXE "DesktopCarpet.exe"
 !define APPID "com.desktopcarpet.app"
 !ifndef VERSION
-  !define VERSION "1.4.1"
+  !define VERSION "1.4.2"
 !endif
 !define UNINSTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\DesktopCarpet"
 
