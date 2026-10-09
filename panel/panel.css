@@ -1,0 +1,146 @@
+/* Desktop Carpet control panel. Same materials as desktopcarpet.com: a wooden floor,
+   a woven ivory label for the license, dark "ink" panel for the rug controls. */
+@font-face{font-family:"Shrikhand";font-weight:400;src:url(./fonts/shrikhand-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Shrikhand";font-weight:400;src:url(./fonts/shrikhand-latin-ext-400-normal.woff2) format("woff2");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Instrument Sans";font-weight:400;src:url(./fonts/instrument-sans-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+FEFF,U+FFFD}
+@font-face{font-family:"Instrument Sans";font-weight:400;src:url(./fonts/instrument-sans-latin-ext-400-normal.woff2) format("woff2");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Instrument Sans";font-weight:500;src:url(./fonts/instrument-sans-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+FEFF,U+FFFD}
+@font-face{font-family:"Instrument Sans";font-weight:500;src:url(./fonts/instrument-sans-latin-ext-500-normal.woff2) format("woff2");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Instrument Sans";font-weight:600;src:url(./fonts/instrument-sans-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+FEFF,U+FFFD}
+@font-face{font-family:"Instrument Sans";font-weight:600;src:url(./fonts/instrument-sans-latin-ext-600-normal.woff2) format("woff2");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Instrument Sans";font-weight:700;src:url(./fonts/instrument-sans-latin-700-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+FEFF,U+FFFD}
+@font-face{font-family:"Instrument Sans";font-weight:700;src:url(./fonts/instrument-sans-latin-ext-700-normal.woff2) format("woff2");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Martian Mono";font-weight:400;src:url(./fonts/martian-mono-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+FEFF,U+FFFD}
+@font-face{font-family:"Martian Mono";font-weight:400;src:url(./fonts/martian-mono-latin-ext-400-normal.woff2) format("woff2");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Martian Mono";font-weight:600;src:url(./fonts/martian-mono-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+FEFF,U+FFFD}
+@font-face{font-family:"Martian Mono";font-weight:600;src:url(./fonts/martian-mono-latin-ext-600-normal.woff2) format("woff2");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+:root{
+  --floor:#c4925c;--floor-2:#b98551;--ink:#22130c;--ink-2:#4a2c1c;--madder:#8f1b1d;--ivory:#f2e6cc;--saffron:#d89a2e;--moss:#2c5a2e;
+  --f-display:"Shrikhand","Segoe UI Black","Yu Gothic UI","Microsoft YaHei UI","Malgun Gothic",Georgia,serif;
+  --f-body:"Instrument Sans","Segoe UI","Yu Gothic UI","Microsoft YaHei UI","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"Martian Mono",Consolas,"Yu Gothic UI","Microsoft YaHei UI","Malgun Gothic",ui-monospace,monospace;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;display:grid;grid-template-rows:auto 1fr auto;color:var(--ink);font:16px/1.5 var(--f-body);-webkit-font-smoothing:antialiased;user-select:none;
+  background-color:var(--floor);
+  /* wooden planks: board seams + soft grain */
+  background-image:
+    repeating-linear-gradient(0deg,rgba(34,19,12,.22) 0 1px,transparent 1px 58px),
+    repeating-linear-gradient(90deg,rgba(34,19,12,.08) 0 1px,transparent 1px 233px),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 7px),
+    linear-gradient(180deg,var(--floor),var(--floor-2));}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--saffron);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* Title bar area: Windows draws its own buttons on the right (titleBarOverlay) */
+.bar{height:40px;display:flex;align-items:center;padding:0 140px 0 14px;background:var(--ink);color:var(--ivory);-webkit-app-region:drag}
+.brand{display:flex;align-items:center;gap:9px;font:400 1.06rem/1 var(--f-display);letter-spacing:.01em}
+.brand svg{width:30px;height:21px;transform:rotate(-6deg)}
+
+main{overflow:auto;padding:20px 18px 8px;display:grid;gap:18px;align-content:start;scrollbar-width:thin}
+
+/* License label (woven ivory tag with a stitched border) */
+.label{position:relative;background-color:var(--ivory);padding:24px 22px 22px;transform:rotate(-.6deg);display:grid;gap:12px;
+  background-image:repeating-linear-gradient(0deg,rgba(34,19,12,.045) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(34,19,12,.045) 0 1px,transparent 1px 3px);
+  outline:2px dashed rgba(143,27,29,.55);outline-offset:-10px;box-shadow:0 22px 34px -22px rgba(34,19,12,.9)}
+.label > div{display:grid;gap:12px}
+.eyebrow{margin:0;font:600 .66rem/1.3 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--madder)}
+h1{margin:0;font:400 1.75rem/1.02 var(--f-display);text-wrap:balance}
+p{margin:0}
+.lead{font-weight:500;color:var(--ink-2);font-size:.95rem}
+.note{font:500 .7rem/1.6 var(--f-mono);color:var(--ink-2)}
+.warn{font-weight:600;font-size:.88rem;color:var(--madder)}
+.ok{color:#7fbf6a}
+
+.keyform{display:flex;gap:8px}
+.keyinput{flex:1;min-width:0;background:#fff8ea;border:2px solid var(--ink);border-radius:4px;padding:.7em .8em;font:600 .86rem/1.2 var(--f-mono);letter-spacing:.04em;text-transform:uppercase;user-select:text}
+.keyinput.small{text-transform:none;letter-spacing:0;font:500 .9rem/1.2 var(--f-body)}
+.keyinput::placeholder{color:rgba(34,19,12,.35)}
+.keyinput[aria-invalid="true"]{border-color:var(--madder);background:#fbe9df}
+.msg{font-weight:600;font-size:.86rem}
+.msg.bad{color:var(--madder)}
+.msg.good{color:var(--moss)}
+.lostform{display:grid;gap:8px;border-top:1px dashed rgba(34,19,12,.35);padding-top:12px}
+
+.key{display:grid;gap:8px;background:var(--ink);color:var(--ivory);border-radius:5px;padding:14px 14px 11px}
+.key code{font:600 1.02rem/1.2 var(--f-mono);letter-spacing:.06em;text-align:center;user-select:text}
+.key-row{display:flex;justify-content:space-between;gap:10px;font:500 .66rem/1.3 var(--f-mono);color:rgba(242,230,204,.72)}
+.facts{margin:0;display:grid;grid-template-columns:auto 1fr;border-top:2px solid var(--ink);font-size:.9rem}
+.facts dt,.facts dd{margin:0;padding:7px 0;border-bottom:1px dashed rgba(34,19,12,.38)}
+.facts dt{font:600 .64rem/1.7 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding-right:16px;padding-top:9px}
+.facts dd{font-weight:600}
+.devices{margin:0;padding:0;list-style:none;display:grid;gap:4px;font-size:.9rem}
+.devices li{display:flex;justify-content:space-between;border-bottom:1px dashed rgba(34,19,12,.35);padding:5px 0}
+.devices small{font:500 .66rem/1.8 var(--f-mono);color:var(--ink-2)}
+
+.loom{height:26px;position:relative;border-radius:3px;overflow:hidden;background:rgba(34,19,12,.1)}
+.loom i{position:absolute;inset:0;transform-origin:left;animation:weave 1.6s ease-in-out infinite;
+  background:repeating-linear-gradient(90deg,var(--madder) 0 14px,var(--ivory) 14px 16px,#1e274d 16px 26px,var(--ivory) 26px 28px,var(--saffron) 28px 34px,var(--ivory) 34px 36px)}
+@keyframes weave{0%{transform:scaleX(0)}60%{transform:scaleX(1)}100%{transform:scaleX(1);opacity:0}}
+@media (prefers-reduced-motion:reduce){.loom i{animation:none}}
+
+/* Buttons */
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{--b:var(--madder);display:inline-flex;align-items:center;justify-content:center;gap:.5em;font:600 .9rem/1 var(--f-body);padding:.85em 1.15em;color:var(--ivory);background:var(--b);border-radius:4px;
+  border:0;cursor:pointer;outline:1.5px dashed rgba(242,230,204,.6);outline-offset:-5px;box-shadow:0 3px 0 var(--ink);transition:transform .16s ease,filter .16s}
+.btn:hover{transform:translateY(-1px) rotate(-.6deg)}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+.btn:disabled{filter:grayscale(.6) opacity(.6);cursor:default;transform:none}
+.btn.ink{--b:var(--ink)}
+.btn.small{font-size:.76rem;padding:.7em .95em;box-shadow:none;--b:#fff4dd;color:var(--ink);outline-color:rgba(34,19,12,.35)}
+.linkish{background:none;border:0;padding:0;font:500 .78rem/1.4 var(--f-mono);color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.links{gap:16px}
+
+/* Rug controls on a dark panel */
+.panel{position:relative;background:var(--ink);color:var(--ivory);border-radius:6px;padding:16px 16px 14px;display:grid;gap:16px;box-shadow:0 18px 30px -20px rgba(0,0,0,.9)}
+.panel .btn.small{--b:transparent;color:var(--ivory);outline-color:rgba(242,230,204,.4)}
+.panel .btn.small:hover{--b:rgba(242,230,204,.08)}
+.panel .linkish{color:var(--ivory)}
+.panel .note{color:rgba(242,230,204,.7)}
+.panel.locked .group,.panel.locked > .row{opacity:.35;pointer-events:none}
+.lock{font-weight:600;font-size:.88rem;background:var(--madder);color:var(--ivory);padding:9px 12px;border-radius:4px;outline:1.5px dashed rgba(242,230,204,.5);outline-offset:-5px}
+h2{margin:0 0 8px;font:600 .64rem/1.3 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--saffron)}
+.group.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.swatches button{display:grid;gap:5px;padding:0;background:none;border:0;cursor:pointer;color:var(--ivory);font:500 .66rem/1.2 var(--f-mono);text-align:left}
+.swatches img{width:100%;aspect-ratio:1.58;object-fit:cover;border-radius:3px;outline:2px solid transparent;outline-offset:2px;transition:transform .16s,outline-color .16s;box-shadow:0 6px 10px -6px #000}
+.swatches button:hover img{transform:rotate(-2deg) translateY(-1px)}
+.swatches button[aria-checked="true"] img{outline-color:var(--saffron)}
+.swatches button[aria-checked="true"] span{color:var(--saffron)}
+.swatches button:disabled{cursor:default;opacity:.35}
+.swatches button:disabled:hover img{transform:none}
+
+.seg{display:flex;border:1.5px solid rgba(242,230,204,.35);border-radius:4px;overflow:hidden}
+.seg button{flex:1;background:none;border:0;padding:.55em .2em;color:var(--ivory);font:600 .74rem/1 var(--f-body);cursor:pointer}
+.seg button + button{border-left:1.5px solid rgba(242,230,204,.2)}
+.seg button[aria-pressed="true"]{background:var(--ivory);color:var(--ink)}
+
+.toggle{display:flex;align-items:center;gap:10px;padding:5px 0;font-weight:500;font-size:.9rem;cursor:pointer}
+.toggle input{appearance:none;width:34px;height:20px;border-radius:10px;background:rgba(242,230,204,.22);position:relative;margin:0;cursor:pointer;transition:background .16s;flex:none}
+.toggle input::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--ivory);transition:transform .16s}
+.toggle input:checked{background:var(--moss)}
+.toggle input:checked::after{transform:translateX(14px)}
+
+.tips summary{cursor:pointer;font:600 .7rem/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(242,230,204,.8)}
+.tips ul{margin:10px 0 0;padding-left:1.1em;display:grid;gap:4px;font-size:.84rem;color:rgba(242,230,204,.85)}
+
+.foot{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:10px 18px 12px;font:500 .68rem/1 var(--f-mono);color:var(--ink)}
+.foot .linkish{font-size:.68rem}
+
+/* Update ready bar */
+.upd{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--moss);color:var(--ivory);padding:10px 12px;border-radius:5px;
+  font-weight:600;font-size:.88rem;outline:1.5px dashed rgba(242,230,204,.5);outline-offset:-5px;box-shadow:0 10px 20px -14px #000}
+.upd .btn{--b:var(--ink);font-size:.78rem;padding:.7em .95em;box-shadow:none;flex:none}
+
+/* Language picker (footer, always usable) */
+.langrow{display:flex;align-items:center;gap:6px;color:var(--ink)}
+.langrow svg{width:14px;height:14px;flex:none}
+.langrow select{font:600 .7rem/1 var(--f-mono);color:var(--ink);background:rgba(242,230,204,.85);border:0;border-radius:4px;padding:.45em .5em;cursor:pointer;max-width:150px}
+main{overflow-x:hidden}
+.foot{flex-wrap:wrap;row-gap:6px}

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'">
+<title>Desktop Carpet</title>
+<link rel="stylesheet" href="./panel.css">
+</head>
+<body>
+<header class="bar">
+  <div class="brand">
+    <svg viewBox="0 0 40 28" aria-hidden="true"><rect x="1" y="1" width="38" height="26" rx="2" fill="#22130c"/><rect x="4" y="4" width="32" height="20" fill="#f2e6cc"/><rect x="6.5" y="6.5" width="27" height="15" fill="#8f1b1d"/><path d="M20 8.5 27 14l-7 5.5L13 14z" fill="#22130c"/><path d="M20 11 23.5 14 20 17 16.5 14z" fill="#f2e6cc"/><circle cx="20" cy="14" r="1.3" fill="#d89a2e"/></svg>
+    <span>Desktop Carpet</span>
+  </div>
+</header>
+
+<main>
+  <div class="upd" id="updBar" hidden role="status">
+    <span id="updText"></span>
+    <button type="button" class="btn" id="updBtn" data-t="updInstall">Restart and update</button>
+  </div>
+
+  <!-- License label: content switches with the license state -->
+  <section class="label" id="license" aria-live="polite">
+    <p class="eyebrow" id="licEyebrow">License</p>
+
+    <div data-view="checking">
+      <h1 data-t="checking">Checking your license…</h1>
+      <div class="loom"><i></i></div>
+    </div>
+
+    <div data-view="none" hidden>
+      <h1 data-t="noneTitle">Roll out your carpet</h1>
+      <p class="lead" data-t="noneLead">Paste the license key you got after paying. It looks like DC-XXXX-XXXX-XXXX-XXXX.</p>
+      <form id="keyForm" class="keyform" autocomplete="off">
+        <label class="sr" for="keyInput" data-t="keyLabel">License key</label>
+        <input id="keyInput" class="keyinput" spellcheck="false" maxlength="40" placeholder="DC-XXXX-XXXX-XXXX-XXXX" aria-describedby="keyMsg">
+        <button class="btn" id="keyGo" type="submit" data-t="activate">Activate</button>
+      </form>
+      <p class="msg" id="keyMsg" role="status" hidden></p>
+      <div class="row links">
+        <button type="button" class="linkish" data-url="pricing" data-t="buy">Get a license</button>
+        <button type="button" class="linkish" id="lostBtn" data-t="lost">Lost your key?</button>
+      </div>
+      <form id="lostForm" class="lostform" hidden>
+        <label class="note" for="lostEmail" data-t="lostLead">Enter the email you paid with. We'll send the key there.</label>
+        <div class="keyform">
+          <input id="lostEmail" class="keyinput small" type="email" placeholder="you@example.com" required>
+          <button class="btn ink" type="submit" data-t="send">Send</button>
+        </div>
+        <p class="msg" id="lostMsg" role="status" hidden></p>
+      </form>
+    </div>
+
+    <div data-view="active" hidden>
+      <h1><span data-t="activeTitle">Your carpet is down</span></h1>
+      <div class="key">
+        <code id="keyShown">DC-••••</code>
+        <div class="key-row"><span id="keyState" class="ok">● <span data-t="active">Active</span></span><span id="keyDays"></span></div>
+      </div>
+      <dl class="facts">
+        <dt data-t="plan">Plan</dt><dd id="factPlan">—</dd>
+        <dt data-t="until">Valid until</dt><dd id="factUntil">—</dd>
+        <dt data-t="computers">Computers</dt><dd id="factDevices">—</dd>
+      </dl>
+      <p class="warn" id="soonWarn" hidden></p>
+      <div class="row">
+        <button type="button" class="btn small" id="extendBtn" data-url="pricing">Add more time</button>
+        <button type="button" class="btn small" id="removeBtn" data-t="remove">Remove this computer</button>
+      </div>
+    </div>
+
+    <div data-view="expired" hidden>
+      <h1 id="expiredTitle">Your carpet got rolled up</h1>
+      <p class="lead" id="expiredLead"></p>
+      <div class="row">
+        <button type="button" class="btn" id="renewBtn" data-url="pricing">Renew</button>
+        <button type="button" class="btn small" id="recheckBtn" data-t="recheck">I paid, check again</button>
+      </div>
+      <p class="note" data-t="renewNote">Pay with the same email and the time is added to the same key.</p>
+    </div>
+
+    <div data-view="device_limit" hidden>
+      <h1 data-t="limitTitle">This key is on too many computers</h1>
+      <p class="lead" id="limitLead"></p>
+      <ul class="devices" id="deviceList"></ul>
+      <p class="note" data-t="limitNote">Open Desktop Carpet on one of those computers and choose "Remove this computer", then try again here.</p>
+      <div class="row"><button type="button" class="btn small" id="limitBack" data-t="otherKey">Use a different key</button></div>
+    </div>
+
+    <div data-view="error" hidden>
+      <h1 data-t="errorTitle">Can't reach the server</h1>
+      <p class="lead" data-t="errorLead">Check your internet connection. Your carpet comes back as soon as the license is confirmed.</p>
+      <div class="row"><button type="button" class="btn" id="retryBtn" data-t="retry">Try again</button></div>
+    </div>
+  </section>
+
+  <!-- Rug controls: disabled while there is no license -->
+  <section class="panel" id="controls">
+    <div class="lock" id="lockNote" hidden><span data-t="locked">Activate a license to lay down the carpet.</span></div>
+
+    <div class="group">
+      <h2 data-t="pattern">Pattern</h2>
+      <div class="swatches" id="swatches" role="radiogroup">
+        <button type="button" role="radio" data-style="tabriz"><img src="./thumbs/tabriz.webp" alt=""><span data-t="s_tabriz">Tabriz After Midnight</span></button>
+        <button type="button" role="radio" data-style="klasik"><img src="./thumbs/klasik.webp" alt=""><span data-t="s_klasik">Madder Red</span></button>
+        <button type="button" role="radio" data-style="lacivert"><img src="./thumbs/lacivert.webp" alt=""><span data-t="s_lacivert">Midnight</span></button>
+        <button type="button" role="radio" data-style="zumrut"><img src="./thumbs/zumrut.webp" alt=""><span data-t="s_zumrut">Emerald</span></button>
+        <button type="button" role="radio" data-style="kilim"><img src="./thumbs/kilim.webp" alt=""><span data-t="s_kilim">Kilim</span></button>
+      </div>
+      <p class="note" id="patternNote" hidden data-t="expiredPattern">Renew to unlock every pattern.</p>
+    </div>
+
+    <div class="group two">
+      <div>
+        <h2 data-t="size">Size</h2>
+        <div class="seg" id="sizeSeg">
+          <button type="button" data-v="kucuk" data-t="small">Small</button>
+          <button type="button" data-v="orta" data-t="medium">Medium</button>
+          <button type="button" data-v="buyuk" data-t="large">Large</button>
+        </div>
+      </div>
+      <div>
+        <h2 data-t="weight">Weight</h2>
+        <div class="seg" id="weightSeg">
+          <button type="button" data-v="hafif" data-t="light">Light</button>
+          <button type="button" data-v="normal" data-t="normal">Normal</button>
+          <button type="button" data-v="agir" data-t="heavy">Heavy</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="group">
+      <label class="toggle"><input type="checkbox" id="tShow"><span data-t="showRug">Show the carpet</span></label>
+      <label class="toggle"><input type="checkbox" id="tTop"><span data-t="onTop">Keep it above windows</span></label>
+      <label class="toggle"><input type="checkbox" id="tLogin"><span data-t="login">Start with Windows</span></label>
+    </div>
+
+    <div class="row">
+      <button type="button" class="btn small" id="flattenBtn" data-t="flatten">Flatten</button>
+      <button type="button" class="btn small" id="centerBtn" data-t="center">Bring to center</button>
+    </div>
+
+    <details class="tips">
+      <summary data-t="tipsTitle">How to use it</summary>
+      <ul>
+        <li data-t="tip1">Grab the carpet anywhere and drag. The edge lifts, let go and it drops.</li>
+        <li data-t="tip2">Drag files next to it, then pull the carpet over them.</li>
+        <li data-t="tip3">Double-click flattens it. Scroll over it to turn it, Ctrl + scroll to resize.</li>
+        <li data-t="tip4">Right-click the carpet or the tray icon for quick options.</li>
+      </ul>
+    </details>
+  </section>
+</main>
+
+<footer class="foot">
+  <span id="version">v1.0.0</span>
+  <label class="langrow"><span class="sr" data-t="language">Language</span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 8h13M8 1.5c2 2 2 11 0 13M8 1.5c-2 2-2 11 0 13" fill="none" stroke="currentColor" stroke-width="1.1"/></svg><select id="langSel"></select></label>
+  <button type="button" class="linkish" data-url="home">desktopcarpet.com</button>
+  <button type="button" class="linkish" id="quitBtn" data-t="quit">Quit</button>
+</footer>
+
+<script src="./i18n.js"></script>
+<script src="./panel.js"></script>
+</body>
+</html>

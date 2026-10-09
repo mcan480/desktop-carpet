@@ -1,0 +1,51 @@
+# Builds the Windows installer on GitHub's Windows machines and publishes it as a release.
+# Trigger: push a tag like v1.0.2 (the tag must match "version" in package.json).
+# The app's auto-updater and the site's download button both use the asset name DesktopCarpet-Setup.exe.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check version matches tag
+        shell: pwsh
+        run: |
+          $v = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          if ("v$v" -ne "${{ github.ref_name }}") { throw "package.json version $v does not match tag ${{ github.ref_name }}" }
+          "VERSION=$v" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Install
+        run: npm install --no-audit --no-fund
+
+      - name: Build app
+        run: node build.cjs
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          $mk = (Get-Command makensis -ErrorAction SilentlyContinue).Source
+          if (-not $mk) { $mk = "${env:ProgramFiles(x86)}\NSIS\makensis.exe" }
+          if (-not (Test-Path $mk)) { choco install nsis -y --no-progress; $mk = "${env:ProgramFiles(x86)}\NSIS\makensis.exe" }
+          & $mk /V2 "/DVERSION=$env:VERSION" installer\installer.nsi
+          if ($LASTEXITCODE -ne 0) { throw "makensis failed" }
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Desktop Carpet ${{ env.VERSION }} for Windows
+          body_path: release-notes/${{ github.ref_name }}.md
+          files: dist/DesktopCarpet-Setup.exe
+          fail_on_unmatched_files: true
