@@ -49,6 +49,11 @@ function loadUser32() {
     user32 = {
       FindWindowW: lib.func('__stdcall', 'FindWindowW', 'intptr_t', ['str16', 'str16']),
       SetWindowLongPtrW: lib.func('__stdcall', 'SetWindowLongPtrW', 'intptr_t', ['intptr_t', 'int', 'intptr_t']),
+      GetAsyncKeyState: lib.func('__stdcall', 'GetAsyncKeyState', 'int16_t', ['int']),
+      GetSystemMetrics: lib.func('__stdcall', 'GetSystemMetrics', 'int', ['int']),
+      WindowFromPoint: lib.func('__stdcall', 'WindowFromPoint', 'intptr_t', [koffi.struct('POINT', { x: 'long', y: 'long' })]),
+      GetAncestor: lib.func('__stdcall', 'GetAncestor', 'intptr_t', ['intptr_t', 'uint']),
+      GetClassNameW: lib.func('__stdcall', 'GetClassNameW', 'int', ['intptr_t', 'uint16_t *', 'int']),
     };
   } catch (e) { console.error('koffi/user32 unavailable:', e.message); }
   return user32;
@@ -67,6 +72,37 @@ function pinToDesktop() {
   } catch (e) { console.error('pinToDesktop failed:', e.message); }
 }
 
+// Physical state of the (logical) left mouse button; null when it can't be read.
+function leftButtonDown() {
+  const u = loadUser32();
+  if (!u?.GetAsyncKeyState) return null;
+  try {
+    const swapped = u.GetSystemMetrics(23) !== 0; // SM_SWAPBUTTON: left-handed mouse setting
+    return (u.GetAsyncKeyState(swapped ? 0x02 : 0x01) & 0x8000) !== 0;
+  } catch { return null; }
+}
+
+// True when a click at this screen point (physical pixels) lands on the rug window or the bare
+// desktop, i.e. not on some app window or the taskbar that happens to cover the rug.
+function pointOnDesktop(px, py) {
+  const u = loadUser32();
+  if (!u?.WindowFromPoint) return true;
+  try {
+    const root = u.GetAncestor(u.WindowFromPoint({ x: px, y: py }), 2); // GA_ROOT
+    if (!root) return true;
+    if (root === nativeHwnd()) return true;
+    const buf = new Uint16Array(64);
+    const n = u.GetClassNameW(root, buf, 64);
+    const cls = String.fromCharCode(...buf.slice(0, Math.max(0, n)));
+    return cls === 'Progman' || cls === 'WorkerW';
+  } catch { return true; }
+}
+
+function nativeHwnd() {
+  const buf = win.getNativeWindowHandle();
+  return Number(buf.length >= 8 ? buf.readBigUInt64LE(0) : buf.readUInt32LE(0));
+}
+
 function createRugWindow() {
   const { x, y, width, height } = screen.getPrimaryDisplay().workArea;
   win = new BrowserWindow({
@@ -80,17 +116,23 @@ function createRugWindow() {
   win.once('ready-to-show', () => { rugReady = true; updateRugVisibility(); });
   setInterval(() => { if (!settings.onTop && win.isVisible()) pinToDesktop(); }, 15000);
 
-  // Poll the cursor: Windows stops forwarding mouse moves to click-through windows after menus.
+  // Poll the cursor and the left mouse button. Windows sometimes stops sending mouse events to a
+  // transparent click-through window (after menus, overlays like the NVIDIA one, focus changes),
+  // so the rug follows this instead of relying on those events alone.
   let lastCursor = '';
   setInterval(() => {
     if (!win || win.isDestroyed() || !win.isVisible()) return;
     const p = screen.getCursorScreenPoint();
-    const key = p.x + ',' + p.y;
+    const down = leftButtonDown();
+    const key = p.x + ',' + p.y + ',' + down;
     if (key === lastCursor) return;
+    const pressed = down && !lastCursor.endsWith(',true');
     lastCursor = key;
     const b = win.getBounds();
-    send('cursor', { x: p.x - b.x, y: p.y - b.y });
-  }, 33);
+    let free = true;
+    if (pressed) { const sp = screen.dipToScreenPoint(p); free = pointOnDesktop(Math.round(sp.x), Math.round(sp.y)); }
+    send('cursor', { x: p.x - b.x, y: p.y - b.y, down, free });
+  }, 16);
 }
 
 // An expired paid license keeps the Madder Red carpet; an expired free trial locks everything.

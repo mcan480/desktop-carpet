@@ -184,12 +184,28 @@ function setOver(v, force = false) {
   api?.setIgnoreMouse(!v);
 }
 
-// Cursor position polled by the main process. Windows stops forwarding mouse moves to a
-// click-through window after a menu or focus change, so this keeps hover detection alive.
+// Cursor position and left-button state polled by the main process. Windows sometimes stops
+// sending mouse events to a click-through window (after a menu, an overlay or a focus change), so
+// hover, dragging and letting go all keep working from this even when those events are missing.
+let polledDown = false, pendingStart = 0;
 function onCursor(p) {
-  if (grab) return;
   mouse = { x: p.x, y: p.y };
-  setOver(!!hitTest(p.x, p.y));
+  const down = p.down, wasDown = polledDown;
+  if (down !== null && down !== undefined) polledDown = down;
+  if (grab) {
+    // Let go when the button is up. Ignore the first moments of a grab: the poll can lag behind
+    // the pointerdown event that started it.
+    if (down === false && performance.now() - grab.at > 150) endGrab(); else wake();
+    return;
+  }
+  const hit = hitTest(p.x, p.y);
+  setOver(!!hit);
+  // Pressed over the rug but no pointerdown arrived: start the drag from the poll instead.
+  if (down && !wasDown && hit && p.free !== false) {
+    clearTimeout(pendingStart);
+    const sx = p.x, sy = p.y;
+    pendingStart = setTimeout(() => { if (!grab && polledDown) startGrab(sx, sy); }, 60);
+  }
 }
 
 window.addEventListener('pointermove', (e) => {
@@ -201,8 +217,16 @@ window.addEventListener('pointermove', (e) => {
 
 window.addEventListener('pointerdown', (e) => {
   if (e.button !== 0) return;
-  const hit = hitTest(e.clientX, e.clientY);
-  if (!hit) return;
+  mouse = { x: e.clientX, y: e.clientY };
+  if (!startGrab(e.clientX, e.clientY)) return;
+  try { e.target.setPointerCapture?.(e.pointerId); } catch {}
+});
+
+function startGrab(mx, my) {
+  if (grab) return true;
+  const hit = hitTest(mx, my);
+  if (!hit) return false;
+  clearTimeout(pendingStart);
   const f = hit.face;
   const cands = [f.a, f.b, f.c];
   let best = cands[0], bd = Infinity;
@@ -212,12 +236,12 @@ window.addEventListener('pointerdown', (e) => {
     if (d < bd) { bd = d; best = c; }
   }
   const k = best * 3;
-  grab = { i: best, z: cloth.pos[k + 2], startZ: cloth.pos[k + 2], t: 0, x: cloth.pos[k], y: cloth.pos[k + 1] };
+  grab = { i: best, z: cloth.pos[k + 2], startZ: cloth.pos[k + 2], t: 0, x: cloth.pos[k], y: cloth.pos[k + 1], at: performance.now() };
   document.body.classList.add('grabbing');
-  try { e.target.setPointerCapture?.(e.pointerId); } catch {}
   api?.setIgnoreMouse(false);
   wake();
-});
+  return true;
+}
 
 function endGrab() {
   if (!grab) return;
