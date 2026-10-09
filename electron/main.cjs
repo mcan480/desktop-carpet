@@ -109,8 +109,11 @@ function createRugWindow() {
     x, y, width, height, frame: false, transparent: true, backgroundColor: '#00000000',
     resizable: false, movable: false, minimizable: false, maximizable: false, fullscreenable: false,
     skipTaskbar: true, focusable: false, hasShadow: false, show: false,
-    webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, nodeIntegration: false, backgroundThrottling: false },
+    webPreferences: { preload: path.join(__dirname, 'preload.cjs'), contextIsolation: true, nodeIntegration: false, sandbox: true, backgroundThrottling: false },
   });
+  // The rug only ever shows its own page: no pop-ups, no navigating away.
+  win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+  win.webContents.on('will-navigate', (e) => e.preventDefault());
   win.setIgnoreMouseEvents(true, { forward: true });
   win.loadFile(path.join(__dirname, '..', 'app', 'index.html'));
   win.once('ready-to-show', () => { rugReady = true; updateRugVisibility(); });
@@ -357,7 +360,12 @@ async function checkForUpdate() {
     for await (const chunk of res.body) { hash.update(chunk); size += chunk.length; if (!out.write(chunk)) await new Promise((ok) => out.once('drain', ok)); }
     await new Promise((ok, bad) => out.end((e) => (e ? bad(e) : ok())));
     const digest = 'sha256:' + hash.digest('hex');
-    if (size !== asset.size || (asset.digest && asset.digest !== digest)) { fs.rmSync(file, { force: true }); throw new Error('bad download'); }
+    // GitHub's SHA-256 is required: an asset without one is never installed.
+    if (size !== asset.size || !asset.digest || asset.digest !== digest) { fs.rmSync(file, { force: true }); throw new Error('bad download'); }
+    // Once Desktop Carpet itself is code-signed, an update must carry a valid signature from the same publisher,
+    // so even a release uploaded by someone else (e.g. a stolen GitHub account) is refused.
+    const mine = await signerOf(process.execPath);
+    if (mine && (await signerOf(file)) !== mine) { fs.rmSync(file, { force: true }); throw new Error('update not signed by ' + mine); }
     update = { state: 'ready', version, file };
   } catch (e) {
     console.error('update check failed:', e.message);
@@ -365,6 +373,18 @@ async function checkForUpdate() {
   }
   refreshMenus();
   broadcast();
+}
+
+// Subject of a valid Authenticode signature on a file, or '' when it is unsigned or the signature is bad.
+function signerOf(file) {
+  if (process.platform !== 'win32') return Promise.resolve('');
+  const ps = path.join(process.env.SystemRoot || 'C:\\Windows', 'System32', 'WindowsPowerShell', 'v1.0', 'powershell.exe');
+  const script = "$s = Get-AuthenticodeSignature -LiteralPath $env:DC_SIGNED_FILE; if ($s.Status -eq 'Valid') { $s.SignerCertificate.Subject }";
+  return new Promise((resolve) => {
+    require('child_process').execFile(ps, ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-Command', script],
+      { env: { ...process.env, DC_SIGNED_FILE: file }, windowsHide: true, timeout: 30000 },
+      (err, stdout) => resolve(err ? '' : String(stdout).trim()));
+  });
 }
 
 function installUpdate() {
@@ -477,6 +497,7 @@ async function runSmoke() {
   broadcast();
   await wait(3000);
   console.log('SMOKE after unlock rugVisible', win.isVisible());
+  fs.appendFileSync(path.join(out, 'smoke.txt'), `rugVisible ${win.isVisible()}\n`);
   await shot(panel, 'panel-active.png');
   await shot(win, 'rug.png');
   applyLicense({ state: 'expired', plan: 'monthly', expiresAt: new Date(Date.now() - 2 * 864e5).toISOString() });

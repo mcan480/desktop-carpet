@@ -2,6 +2,11 @@
 # Trigger: any push to main. If package.json has a version that has no release yet, it builds and
 # publishes release v<version> (the tag is created automatically). Notes come from release-notes/v<version>.md.
 # The app's auto-updater and the site's download button both use the asset name DesktopCarpet-Setup.exe.
+#
+# Code signing (SSL.com eSigner) switches on by itself once these repository secrets exist:
+#   ES_USERNAME, ES_PASSWORD, ES_CREDENTIAL_ID, ES_TOTP_SECRET
+# After the first signed release, set the repository variable REQUIRE_SIGNING=true so an unsigned build can
+# never be published (signed apps refuse unsigned updates anyway).
 name: Release
 
 on:
@@ -15,6 +20,8 @@ permissions:
 jobs:
   windows:
     runs-on: windows-latest
+    env:
+      SIGN: ${{ secrets.ES_USERNAME != '' && secrets.ES_TOTP_SECRET != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -33,6 +40,7 @@ jobs:
           gh release view "v$v" -R "${{ github.repository }}" *> $null
           if ($LASTEXITCODE -eq 0) { "Release v$v already exists, nothing to do."; "skip=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append }
           else { "skip=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append }
+          if ("${{ vars.REQUIRE_SIGNING }}" -eq "true" -and $env:SIGN -ne "true") { throw "REQUIRE_SIGNING is on but the signing secrets are missing" }
           exit 0
 
       - name: Install
@@ -43,6 +51,61 @@ jobs:
         if: steps.ver.outputs.skip != 'true'
         run: node build.cjs
 
+      # Start the packaged app the way users get it and make sure the panel and the rug come up.
+      - name: Launch test
+        if: steps.ver.outputs.skip != 'true'
+        shell: pwsh
+        run: |
+          $shots = Join-Path $env:RUNNER_TEMP 'smoke'
+          New-Item -ItemType Directory -Force $shots | Out-Null
+          $env:DC_SMOKE = $shots
+          $exe = Resolve-Path 'dist\Desktop Carpet-win32-x64\DesktopCarpet.exe'
+          $log = Join-Path $env:RUNNER_TEMP 'smoke.log'
+          $p = Start-Process -FilePath $exe -PassThru -RedirectStandardOutput $log -RedirectStandardError "$log.err"
+          if (-not $p.WaitForExit(120000)) { $p.Kill(); Get-Content $log; throw "app did not finish the launch test in time" }
+          Get-Content $log
+          $res = Join-Path $shots 'smoke.txt'
+          if (-not (Test-Path $res) -or ((Get-Content $res -Raw) -notmatch 'rugVisible true')) { Get-Content "$log.err" -ErrorAction SilentlyContinue; throw "rug did not show up" }
+          if (-not (Test-Path (Join-Path $shots 'panel-active.png'))) { throw "panel did not render" }
+
+      - name: Upload launch test screenshots
+        if: always() && steps.ver.outputs.skip != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: launch-test
+          path: ${{ runner.temp }}/smoke
+          if-no-files-found: ignore
+
+      - name: Stage app exe for signing
+        if: steps.ver.outputs.skip != 'true' && env.SIGN == 'true'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force sign | Out-Null
+          Copy-Item 'dist\Desktop Carpet-win32-x64\DesktopCarpet.exe' sign\DesktopCarpet.exe
+
+      - name: Sign app exe
+        if: steps.ver.outputs.skip != 'true' && env.SIGN == 'true'
+        uses: sslcom/esigner-codesign@b7f8ff36fc0de8690fbbab8e5b4421d29802f747
+        with:
+          command: sign
+          username: ${{ secrets.ES_USERNAME }}
+          password: ${{ secrets.ES_PASSWORD }}
+          credential_id: ${{ secrets.ES_CREDENTIAL_ID }}
+          totp_secret: ${{ secrets.ES_TOTP_SECRET }}
+          file_path: ${{ github.workspace }}\sign\DesktopCarpet.exe
+          override: true
+          malware_block: false
+          environment_name: PROD
+
+      - name: Put signed exe back
+        if: steps.ver.outputs.skip != 'true' && env.SIGN == 'true'
+        shell: pwsh
+        run: |
+          Copy-Item sign\DesktopCarpet.exe 'dist\Desktop Carpet-win32-x64\DesktopCarpet.exe' -Force
+          $s = Get-AuthenticodeSignature 'dist\Desktop Carpet-win32-x64\DesktopCarpet.exe'
+          if ($s.Status -ne 'Valid') { throw "app exe signature: $($s.Status)" }
+          "Signed by $($s.SignerCertificate.Subject)"
+
       - name: Build installer
         if: steps.ver.outputs.skip != 'true'
         shell: pwsh
@@ -52,6 +115,28 @@ jobs:
           if (-not (Test-Path $mk)) { choco install nsis -y --no-progress; $mk = "${env:ProgramFiles(x86)}\NSIS\makensis.exe" }
           & $mk /V2 "/DVERSION=$env:VERSION" installer\installer.nsi
           if ($LASTEXITCODE -ne 0) { throw "makensis failed" }
+
+      - name: Sign installer
+        if: steps.ver.outputs.skip != 'true' && env.SIGN == 'true'
+        uses: sslcom/esigner-codesign@b7f8ff36fc0de8690fbbab8e5b4421d29802f747
+        with:
+          command: sign
+          username: ${{ secrets.ES_USERNAME }}
+          password: ${{ secrets.ES_PASSWORD }}
+          credential_id: ${{ secrets.ES_CREDENTIAL_ID }}
+          totp_secret: ${{ secrets.ES_TOTP_SECRET }}
+          file_path: ${{ github.workspace }}\dist\DesktopCarpet-Setup.exe
+          override: true
+          malware_block: false
+          environment_name: PROD
+
+      - name: Check installer signature
+        if: steps.ver.outputs.skip != 'true' && env.SIGN == 'true'
+        shell: pwsh
+        run: |
+          $s = Get-AuthenticodeSignature dist\DesktopCarpet-Setup.exe
+          if ($s.Status -ne 'Valid') { throw "installer signature: $($s.Status)" }
+          "Signed by $($s.SignerCertificate.Subject)"
 
       - name: Publish release
         if: steps.ver.outputs.skip != 'true'

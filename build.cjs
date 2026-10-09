@@ -11,7 +11,7 @@ const pkg = require('./package.json');
     electronVersion: '44.7.0', out: 'dist', overwrite: true, prune: true,
     asar: { unpack: '**/*.node' }, appVersion: pkg.version, appCopyright: 'Desktop Carpet',
     ignore: [/^\/dist/, /^\/build\.cjs/, /^\/pack\.cjs/, /^\/installer/, /^\/app\/(main|cloth|rugTexture)\.js$/, /^\/app\/vendor/,
-             /node_modules\/(three|esbuild|@esbuild|resedit|pe-library|@fontsource)/,
+             /node_modules\/(three|esbuild|@esbuild|resedit|pe-library|@fontsource|@electron)/,
              /node_modules\/@koromix\/koffi-(linux|darwin|freebsd|openbsd|win32-(ia32|arm64))/],
   });
   // Trim Chromium locales we don't need.
@@ -38,5 +38,16 @@ const pkg = require('./package.json');
   vi.outputToResourceEntries(res.entries);
   res.outputResource(exe);
   fs.writeFileSync(exePath, Buffer.from(exe.generate()));
+
+  // Electron fuses: switch off ways to run the exe as something other than Desktop Carpet
+  // (plain Node.js mode, NODE_OPTIONS, debugger flags) and only load the app from its asar.
+  const { flipFuses, FuseVersion, FuseV1Options } = require('@electron/fuses');
+  await flipFuses(exePath, {
+    version: FuseVersion.V1,
+    [FuseV1Options.RunAsNode]: false,
+    [FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
+    [FuseV1Options.EnableNodeCliInspectArguments]: false,
+    [FuseV1Options.OnlyLoadAppFromAsar]: true,
+  });
   console.log('packaged', out);
 })().catch((e) => { console.error(e); process.exit(1); });
