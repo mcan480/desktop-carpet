@@ -33,7 +33,7 @@ const LANG = () => (settings.lang && settings.lang !== 'auto' && I18N.LANGS[sett
   : I18N.pick([...(app.getPreferredSystemLanguages?.() || []), app.getLocale()]);
 // Menu keys map onto the panel's strings.
 const MENU_KEYS = { open: 'openApp', show: 'showRug', hide: 'hideRug', locked: 'lockedMenu',
-  tabriz: 's_tabriz', klasik: 's_klasik', lacivert: 's_lacivert', zumrut: 's_zumrut', kilim: 's_kilim',
+  tabriz: 's_tabriz', klasik: 's_klasik', lacivert: 's_lacivert', zumrut: 's_zumrut', kilim: 's_kilim', gorunmez: 's_gorunmez',
   kucuk: 'small', orta: 'medium', buyuk: 'large', hafif: 'light', normal: 'normal', agir: 'heavy' };
 const t = (k) => { if (k === 'tip') return 'Desktop Carpet'; const v = I18N.strings(LANG())[MENU_KEYS[k] || k]; return typeof v === 'string' ? v : k; };
 
@@ -230,6 +230,77 @@ function fitToScreen() {
   const { x, y, width, height } = screen.getPrimaryDisplay().workArea;
   win.setBounds({ x, y, width, height });
   send('layout');
+  if (rugState.style === 'gorunmez') sendWallpaper();
+}
+
+// ---------- wallpaper (for the Invisible rug, which shows what's behind it) ----------
+// Sent to the rug window as { bytes | color, mode, scale, bounds, workArea }: the image file, how the OS lays it
+// out on the primary display, and where the rug window (the work area) sits on that display.
+let wallpaperSig = '', lastWallpaper = null;
+const execFileP = (cmd, args, opts = {}) => new Promise((ok) =>
+  require('child_process').execFile(cmd, args, { windowsHide: true, timeout: 15000, maxBuffer: 1 << 20, ...opts }, (e, out) => ok(e ? '' : String(out))));
+
+async function readWallpaperWin() {
+  const q = async (key, name) => {
+    const out = await execFileP('reg', ['query', key, '/v', name]);
+    const m = out.match(new RegExp(name + '\\s+REG_\\w+\\s+(.*)'));
+    return m ? m[1].trim() : '';
+  };
+  const [file, style, tile, color] = await Promise.all([
+    q('HKCU\\Control Panel\\Desktop', 'WallPaper'), q('HKCU\\Control Panel\\Desktop', 'WallpaperStyle'),
+    q('HKCU\\Control Panel\\Desktop', 'TileWallpaper'), q('HKCU\\Control Panel\\Colors', 'Background')]);
+  const rgb = (color.match(/\d+/g) || [0, 0, 0]).slice(0, 3).map(Number);
+  // TranscodedWallpaper is Windows' own copy of the current picture (also for slideshows and Spotlight).
+  const transcoded = path.join(process.env.APPDATA || '', 'Microsoft', 'Windows', 'Themes', 'TranscodedWallpaper');
+  const src = file ? [transcoded, file].find((f) => { try { return fs.statSync(f).size > 0; } catch { return false; } }) : null;
+  const mode = tile === '1' ? 'tile' : ({ 0: 'center', 2: 'stretch', 6: 'fit', 10: 'fill', 22: 'span' })[style] || 'fill';
+  return { src, mode, color: `rgb(${rgb.join(',')})` };
+}
+
+let macWallpaperCache = { key: '', file: null };
+async function readWallpaperMac() {
+  const m = loadMac();
+  let p = null;
+  try {
+    const koffi = require('koffi');
+    const objc = koffi.load('/usr/lib/libobjc.A.dylib');
+    m.getClass ??= objc.func('objc_getClass', 'uintptr_t', ['str']);
+    m.sendId1 ??= objc.func('objc_msgSend', 'uintptr_t', ['uintptr_t', 'uintptr_t', 'uintptr_t']);
+    m.sendStr ??= objc.func('objc_msgSend', 'str', ['uintptr_t', 'uintptr_t']);
+    const ws = m.sendId(m.getClass('NSWorkspace'), m.sel('sharedWorkspace'));
+    const screens = m.sendId(m.getClass('NSScreen'), m.sel('screens'));
+    const main = m.sendId(screens, m.sel('firstObject')); // the screen with the menu bar
+    const url = m.sendId1(ws, m.sel('desktopImageURLForScreen:'), main);
+    if (url) p = m.sendStr(m.sendId(url, m.sel('path')), m.sel('UTF8String'));
+  } catch (e) { console.error('wallpaper (mac) failed:', e.message); }
+  if (!p || !fs.existsSync(p) || fs.statSync(p).isDirectory()) return { src: null, mode: 'fill', color: 'rgb(0,0,0)' };
+  // Chromium can't read HEIC (dynamic and default macOS wallpapers): convert those with the built-in sips.
+  if (/\.(heic|heif)$/i.test(p)) {
+    const key = p + ':' + fs.statSync(p).mtimeMs;
+    if (macWallpaperCache.key !== key) {
+      const out = path.join(app.getPath('temp'), 'desktopcarpet-wallpaper.jpg');
+      await execFileP('/usr/bin/sips', ['-s', 'format', 'jpeg', '-Z', '3840', p, '--out', out]);
+      macWallpaperCache = { key, file: fs.existsSync(out) ? out : null };
+    }
+    p = macWallpaperCache.file;
+  }
+  return { src: p, mode: 'fill', color: 'rgb(0,0,0)' };
+}
+
+async function sendWallpaper(force = false) {
+  if (!win || win.isDestroyed()) return;
+  try {
+    const w = IS_MAC ? await readWallpaperMac() : process.platform === 'win32' ? await readWallpaperWin() : { src: null, mode: 'fill', color: 'rgb(0,0,0)' };
+    const d = screen.getPrimaryDisplay();
+    let mtime = 0;
+    try { if (w.src) mtime = fs.statSync(w.src).mtimeMs; } catch {}
+    const sig = JSON.stringify([w.src, mtime, w.mode, w.color, d.bounds, d.workArea, d.scaleFactor]);
+    if (!force && sig === wallpaperSig) return;
+    wallpaperSig = sig;
+    const bytes = w.src ? fs.readFileSync(w.src) : null;
+    lastWallpaper = { src: w.src, mode: w.mode, bytes: bytes ? bytes.length : 0 };
+    send('wallpaper', { bytes, mode: w.mode, color: w.color, scale: d.scaleFactor, bounds: d.bounds, workArea: d.workArea });
+  } catch (e) { console.error('wallpaper failed:', e.message); }
 }
 
 function send(cmd, arg) {
@@ -237,12 +308,16 @@ function send(cmd, arg) {
 }
 
 // ---------- rug commands (from panel, menus) ----------
+// While the Invisible rug is out, notice wallpaper changes (slideshows, the user picking a new one).
+setInterval(() => { if (rugState.style === 'gorunmez' && win && win.isVisible()) sendWallpaper(); }, 20000);
+
 function rugCommand(cmd, arg) {
   if (!unlocked() && cmd !== 'hide') return;
   if (cmd === 'show') { userHidden = false; updateRugVisibility(); return; }
   if (cmd === 'hide') { userHidden = true; updateRugVisibility(); return; }
   if (cmd === 'style' && expiredPaid() && arg !== 'klasik') return;
   if (cmd === 'style' || cmd === 'size' || cmd === 'weight') rugState[cmd] = arg; // optimistic, renderer confirms
+  if (cmd === 'style' && arg === 'gorunmez') sendWallpaper(true);
   send(cmd, arg);
   broadcast();
 }
@@ -360,7 +435,7 @@ function buildMenu() {
       { label: t('center'), click: () => rugCommand('center') },
       userHidden ? { label: t('show'), click: () => rugCommand('show') } : { label: t('hide'), click: () => rugCommand('hide') },
       { type: 'separator' },
-      { label: t('pattern'), submenu: radio('style', ['tabriz', 'klasik', 'lacivert', 'zumrut', 'kilim']) },
+      { label: t('pattern'), submenu: radio('style', ['tabriz', 'klasik', 'lacivert', 'zumrut', 'kilim', 'gorunmez']) },
       { label: t('size'), submenu: radio('size', ['kucuk', 'orta', 'buyuk']) },
       { label: t('weight'), submenu: radio('weight', ['hafif', 'normal', 'agir']) },
     );
@@ -522,7 +597,9 @@ ipcMain.on('show-menu', () => {
   buildMenu().popup({ callback: () => setTimeout(() => send('reset-input'), 50) });
 });
 ipcMain.on('report-state', (_e, s) => {
+  const wasInvisible = rugState.style === 'gorunmez';
   rugState = { ...rugState, style: s.style ?? rugState.style, size: s.size ?? rugState.size, weight: s.weight ?? rugState.weight };
+  if (rugState.style === 'gorunmez' && !wasInvisible) sendWallpaper(true);
   if (expiredPaid() && rugState.style !== 'klasik') send('style', 'klasik');
   refreshMenus();
   broadcast();
@@ -591,6 +668,13 @@ async function runSmoke() {
   fs.appendFileSync(path.join(out, 'smoke.txt'), `rugVisible ${win.isVisible()}\n`);
   await shot(panel, 'panel-active.png');
   await shot(win, 'rug.png');
+  rugCommand('style', 'gorunmez');
+  await wait(3500);
+  console.log('SMOKE wallpaper', JSON.stringify(lastWallpaper));
+  fs.appendFileSync(path.join(out, 'smoke.txt'), `wallpaper ${JSON.stringify(lastWallpaper)}\n`);
+  await shot(win, 'rug-invisible.png');
+  rugCommand('style', 'tabriz');
+  await wait(800);
   applyLicense({ state: 'expired', plan: 'monthly', expiresAt: new Date(Date.now() - 2 * 864e5).toISOString() });
   await wait(1500);
   await shot(panel, 'panel-expired.png');

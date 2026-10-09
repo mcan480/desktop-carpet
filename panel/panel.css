@@ -108,7 +108,7 @@ p{margin:0}
 h2{margin:0 0 8px;font:600 .64rem/1.3 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--saffron)}
 .group.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
-.swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:9px 7px}
 .swatches button{display:grid;gap:5px;padding:0;background:none;border:0;cursor:pointer;color:var(--ivory);font:500 .66rem/1.2 var(--f-mono);text-align:left}
 .swatches img{width:100%;aspect-ratio:1.58;object-fit:cover;border-radius:3px;outline:2px solid transparent;outline-offset:2px;transition:transform .16s,outline-color .16s;box-shadow:0 6px 10px -6px #000}
 .swatches button:hover img{transform:rotate(-2deg) translateY(-1px)}

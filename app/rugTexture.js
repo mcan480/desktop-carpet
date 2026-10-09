@@ -8,6 +8,8 @@ export const STYLES = {
   lacivert:{ name: 'Gece Mavisi',   field: '#1c2a4c', field2: '#16223f', navy: '#7d1a1e', cream: '#e6d5b3', gold: '#c9a35a', blue: '#4f7aa0', dark: '#0d0d17' },
   zumrut:  { name: 'Zümrüt',        field: '#1f4a3a', field2: '#183d30', navy: '#3a1820', cream: '#ecdcb8', gold: '#c99b4e', blue: '#8a2a2a', dark: '#0e1412' },
   kilim:   { name: 'Kilim',         kilim: true },
+  // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
+  gorunmez:{ name: 'Görünmez',      invisible: true },
 };
 
 function rng(seed) {

@@ -81,6 +81,16 @@ jobs:
           if (-not (Test-Path $res) -or ((Get-Content $res -Raw) -notmatch 'rugVisible true')) { Get-Content "$log.err" -ErrorAction SilentlyContinue; throw "rug did not show up" }
           if (-not (Test-Path (Join-Path $shots 'panel-active.png'))) { throw "panel did not render" }
 
+      - name: Save launch test screenshots to ci-shots-windows branch
+        if: always() && startsWith(github.ref, 'refs/heads/test/')
+        shell: bash
+        run: |
+          D="$RUNNER_TEMP/shots-repo"; rm -rf "$D"; mkdir -p "$D"; cd "$D"
+          git init -q; git checkout -q -b ci-shots-windows
+          cp -R "$RUNNER_TEMP/smoke/." . 2>/dev/null || true; cp "$RUNNER_TEMP/smoke.log" . 2>/dev/null || true
+          git add -A; git -c user.name=ci -c user.email=ci@localhost commit -qm "windows launch test ${{ github.sha }}" || exit 0
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" ci-shots-windows
+
       - name: Upload launch test screenshots
         if: always()
         uses: actions/upload-artifact@v4

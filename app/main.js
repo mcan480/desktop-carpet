@@ -77,7 +77,105 @@ let state = {
 const W8 = () => WEIGHTS[state.weight] || WEIGHTS.normal;
 let cloth, geom, front, back, pick, textures = [];
 
+// ---------- the Invisible rug ----------
+// It shows the wallpaper pixel that is right behind each point of it, so whatever lies under it on the desktop
+// (icons, files) seems to vanish. Folds bend the picture a little and the edges catch a faint glint, so you can
+// still find it.
+let wallInfo = null, wallImg = null, wallTex = null;
+const wallCanvas = document.createElement('canvas');
+
+function drawWallpaper() {
+  const buf = new THREE.Vector2();
+  renderer.getDrawingBufferSize(buf);
+  wallCanvas.width = Math.max(1, buf.x); wallCanvas.height = Math.max(1, buf.y);
+  const ctx = wallCanvas.getContext('2d');
+  const k = buf.x / W; // canvas pixels per window (DIP) pixel
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.fillStyle = wallInfo?.color || '#000';
+  ctx.fillRect(0, 0, wallCanvas.width, wallCanvas.height);
+  if (wallInfo && wallImg) {
+    const { bounds: b, workArea: a, mode, scale = 1 } = wallInfo;
+    // Lay the picture out over the whole display the way the OS does, then look at it from the rug window,
+    // which covers only the work area (no taskbar / menu bar / Dock).
+    ctx.setTransform(k, 0, 0, k, (b.x - a.x) * k, (b.y - a.y) * k);
+    const iw = wallImg.width, ih = wallImg.height, dw = b.width, dh = b.height;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, 0, dw, dh); ctx.clip();
+    if (mode === 'stretch') ctx.drawImage(wallImg, 0, 0, dw, dh);
+    else if (mode === 'center' || mode === 'tile') {
+      const w = iw / scale, h = ih / scale; // these modes show the picture at its own pixel size
+      if (mode === 'center') ctx.drawImage(wallImg, (dw - w) / 2, (dh - h) / 2, w, h);
+      else for (let y = 0; y < dh; y += h) for (let x = 0; x < dw; x += w) ctx.drawImage(wallImg, x, y, w, h);
+    } else {
+      const f = mode === 'fit' ? Math.min(dw / iw, dh / ih) : Math.max(dw / iw, dh / ih); // fill / span
+      ctx.drawImage(wallImg, (dw - iw * f) / 2, (dh - ih * f) / 2, iw * f, ih * f);
+    }
+    ctx.restore();
+  }
+  if (!wallTex) {
+    wallTex = new THREE.CanvasTexture(wallCanvas);
+    wallTex.colorSpace = THREE.NoColorSpace; // pass the wallpaper's pixels through untouched
+    wallTex.generateMipmaps = false;
+    wallTex.minFilter = wallTex.magFilter = THREE.LinearFilter;
+  } else {
+    wallTex.image = wallCanvas;
+  }
+  wallTex.needsUpdate = true;
+  invisibleUniforms.uRes.value.set(wallCanvas.width, wallCanvas.height);
+  invisibleUniforms.uWall.value = wallTex;
+}
+
+async function setWallpaper(info) {
+  wallInfo = info;
+  wallImg = null;
+  if (info?.bytes) {
+    try { wallImg = await createImageBitmap(new Blob([info.bytes])); } catch (e) { console.error('wallpaper image', e); }
+  }
+  drawWallpaper();
+  wake();
+}
+
+const invisibleUniforms = {
+  uWall: { value: null },
+  uRes: { value: new THREE.Vector2(1, 1) },
+  uAspect: { value: ASPECT },
+};
+
+function invisibleMaterial(side) {
+  return new THREE.ShaderMaterial({
+    uniforms: invisibleUniforms,
+    side,
+    vertexShader: `
+      varying vec3 vN; varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        vN = normalize(normalMatrix * normal);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }`,
+    fragmentShader: `
+      uniform sampler2D uWall; uniform vec2 uRes; uniform float uAspect;
+      varying vec3 vN; varying vec2 vUv;
+      void main() {
+        vec3 n = normalize(gl_FrontFacing ? vN : -vN);
+        float tilt = 1.0 - abs(n.z);                       // 0 where it lies flat, up to 1 on steep folds
+        vec2 uv = gl_FragCoord.xy / uRes + n.xy * 0.018;   // a little refraction where it bends
+        vec3 col = texture2D(uWall, uv).rgb;
+        // faint glint along the four edges, a touch stronger on folds
+        vec2 e = min(vUv, 1.0 - vUv) * vec2(uAspect, 1.0);
+        float edge = 1.0 - smoothstep(0.0, 0.012, min(e.x, e.y));
+        float rim = pow(tilt, 2.0);
+        col = mix(col, vec3(0.86, 0.93, 1.0), clamp(edge * 0.28 + rim * 0.22, 0.0, 0.6));
+        col *= 1.0 - tilt * 0.12;                           // folds read as slightly darker glass
+        gl_FragColor = vec4(col, 1.0);
+      }`,
+  });
+}
+
 function makeMaterials(style) {
+  if (STYLES[style]?.invisible) {
+    if (!wallTex) drawWallpaper();
+    return { front: invisibleMaterial(THREE.FrontSide), back: invisibleMaterial(THREE.BackSide), invisible: true };
+  }
   textures.forEach((t) => t.dispose());
   const { front: fc, back: bc, bump } = makeRugCanvases(style, ASPECT);
   const ft = new THREE.CanvasTexture(fc);
@@ -127,8 +225,8 @@ function buildRug({ keepPose = true, saved = null } = {}) {
   const mats = makeMaterials(state.style);
   front = new THREE.Mesh(geom, mats.front);
   back = new THREE.Mesh(geom, mats.back);
-  front.castShadow = true; front.receiveShadow = true;
-  back.castShadow = true; back.receiveShadow = true;
+  // The Invisible rug casts no shadow and takes none, or it would give itself away.
+  front.castShadow = back.castShadow = front.receiveShadow = back.receiveShadow = !mats.invisible;
   pick = new THREE.Mesh(geom, new THREE.MeshBasicMaterial({ side: THREE.DoubleSide }));
   pick.visible = false;
   scene.add(front, back);
@@ -372,7 +470,8 @@ function command(cmd, arg) {
     case 'hide': state.hidden = true; applyHidden(); break;
     case 'show': state.hidden = false; applyHidden(); ensureOnScreen(); break;
     case 'weight': if (WEIGHTS[arg]) { state.weight = arg; cloth.setWeight(W8()); } break;
-    case 'layout': layout(); syncGeometry(); wake(); break;
+    case 'layout': layout(); syncGeometry(); if (wallTex) drawWallpaper(); wake(); break;
+    case 'wallpaper': setWallpaper(arg); return;
     case 'cursor': onCursor(arg); return;
     case 'redraw': wake(); return;
     case 'reset-input': endGrab(); setOver(!!hitTest(mouse.x, mouse.y), true); return;
@@ -382,6 +481,7 @@ function command(cmd, arg) {
 }
 
 window.addEventListener('resize', () => command('layout'));
+if (!api) window.__dcCommand = command; // plain-browser preview: lets a test page drive the rug
 
 (async () => {
   let saved = null;
