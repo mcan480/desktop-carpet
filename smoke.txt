@@ -1,0 +1,2 @@
+rugVisible true
+wallpaper {"src":"/System/Library/Desktop Pictures/Solid Colors/Black.png","mode":"fill","bytes":390}
