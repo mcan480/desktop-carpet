@@ -247,6 +247,7 @@ function endGrab() {
   if (!grab) return;
   grab = null;
   cloth.releasePin();
+  checkTangle = true;
   document.body.classList.remove('grabbing');
   setOver(!!hitTest(mouse.x, mouse.y));
   wake();
@@ -294,7 +295,7 @@ function center() {
 }
 
 // ---------- simulation loop (sleeps when still) ----------
-let awake = false, still = 0, last = 0, acc = 0;
+let awake = false, still = 0, last = 0, acc = 0, checkTangle = false;
 const DT = 1 / 120;
 
 function wake() {
@@ -326,6 +327,11 @@ function frame(now) {
   renderer.render(scene, camera);
 
   if (!grab && moved < 0.02) still++; else still = 0;
+  if (still > 45 && checkTangle) {
+    // Let go and it settled as a heap (twisted round and round): lay it back out flat.
+    checkTangle = false;
+    if (cloth.maxHeight() > cloth.collideDist * 5) { flatten(); requestAnimationFrame(frame); return; }
+  }
   if (still > 45) {
     awake = false;
     save();

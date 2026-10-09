@@ -59,7 +59,10 @@ export class Cloth {
       for (let i = 0; i < this.nx; i++) {
         add(i, j, i + 1, j, 1); add(i, j, i, j + 1, 1);            // structural
         add(i, j, i + 1, j + 1, 0.9); add(i + 1, j, i, j + 1, 0.9); // shear
-        add(i, j, i + 2, j, 0.22); add(i, j, i, j + 2, 0.22);      // bending
+        // Bending: a rug is thick and stiff, so it folds in wide curves instead of crumpling
+        // like a scarf. The longer springs keep it from twisting into a heap.
+        add(i, j, i + 2, j, 0.45); add(i, j, i, j + 2, 0.45);
+        add(i, j, i + 3, j, 0.3); add(i, j, i, j + 3, 0.3);
       }
     }
     this.ca = Int32Array.from(a);
@@ -131,11 +134,8 @@ export class Cloth {
         const kp = p * 3, kq = q * 3;
         const dx = pos[kq] - pos[kp], dy = pos[kq + 1] - pos[kp + 1], dz = pos[kq + 2] - pos[kp + 2];
         const d = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1e-6;
-        let diff = (d - rest[c]) / d;
-        const s = stiff[c];
-        // bending springs only resist stretching weakly, compression lightly
-        if (s < 0.5 && diff < 0) diff *= 0.6;
-        const f = (diff * s) / w;
+        const diff = (d - rest[c]) / d;
+        const f = (diff * stiff[c]) / w;
         pos[kp] += dx * f * wp; pos[kp + 1] += dy * f * wp; pos[kp + 2] += dz * f * wp;
         pos[kq] -= dx * f * wq; pos[kq + 1] -= dy * f * wq; pos[kq + 2] -= dz * f * wq;
       }
@@ -206,6 +206,13 @@ export class Cloth {
         }
       }
     }
+  }
+
+  // Highest point above the floor; a settled rug piled much higher than a couple of layers is tangled.
+  maxHeight() {
+    let z = 0;
+    for (let p = 0; p < this.n; p++) if (this.pos[p * 3 + 2] > z) z = this.pos[p * 3 + 2];
+    return z - this.floorZ;
   }
 
   centroid() {
