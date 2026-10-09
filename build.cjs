@@ -1,6 +1,6 @@
 // Build: package the Electron app.
 //   node build.cjs        → Windows x64: branded exe in dist/Desktop Carpet-win32-x64 (installer/installer.nsi makes the setup)
-//   node build.cjs mac    → macOS universal (Apple Silicon + Intel): dist/Desktop Carpet.app, DesktopCarpet-Mac.zip (updates)
+//   node build.cjs mac    → macOS universal (Apple Silicon + Intel): dist/Desktop Carpet-darwin-universal/Desktop Carpet.app, DesktopCarpet-Mac.zip (updates)
 //                           and DesktopCarpet-Mac.dmg (downloads). Must run on a Mac (codesign, ditto, hdiutil).
 const { packager } = require('@electron/packager');
 const fs = require('fs');

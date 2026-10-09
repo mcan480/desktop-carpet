@@ -202,7 +202,7 @@ jobs:
       - name: Launch test
         run: |
           SHOTS="$RUNNER_TEMP/smoke"; mkdir -p "$SHOTS"
-          DC_SMOKE="$SHOTS" "dist/Desktop Carpet.app/Contents/MacOS/Desktop Carpet" > "$RUNNER_TEMP/smoke.log" 2>&1 &
+          DC_SMOKE="$SHOTS" "dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/MacOS/Desktop Carpet" > "$RUNNER_TEMP/smoke.log" 2>&1 &
           PID=$!
           # On failure the app's output is also shown as an annotation, readable from the run summary.
           fail() { L=$(tail -c 3500 "$RUNNER_TEMP/smoke.log" | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}'); echo "::error title=$1::$L"; exit 1; }
