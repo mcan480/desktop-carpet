@@ -17,6 +17,7 @@ export const STYLES = {
   mesa:     { name: 'Çöl Mesası',            america: 'mesa' },
   yorgan:   { name: 'Yama Yorgan',           america: 'quilt' },
   ekose:    { name: 'Oduncu Ekose',          america: 'plaid' },
+  kanyon:   { name: 'Kanyon Gün Batımı',     america: 'canyon' },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -614,6 +615,25 @@ function halloweenGhost(ctx, W, H, seed) {
 }
 
 // ---------- America pack ----------
+// Split a side of length `len` into a whole number of pieces close to `step`, so a row of motifs starts and ends
+// exactly at the corners (no half motif or overlap where two sides meet).
+function evenSteps(len, step) { const n = Math.max(1, Math.round(len / step)); return { n, d: len / n }; }
+
+// Dashed stitching around a rectangle; each side starts and ends on a stitch, so the corners join up.
+function stitchRect(ctx, x, y, w, h, step, thick, color) {
+  ctx.fillStyle = color;
+  const side = (x0, y0, len, horiz) => {
+    const { n, d } = evenSteps(len, step), l = d * 0.58;
+    for (let i = 0; i <= n; i++) {
+      // first and last stitch are centred on the corner so the two sides meet in one stitch
+      const a = i * d - l / 2, a0 = Math.max(0, a), a1 = Math.min(len, a + l);
+      if (a1 <= a0) continue;
+      if (horiz) ctx.fillRect(x0 + a0 - (i === 0 ? thick / 2 : 0), y0 - thick / 2, a1 - a0 + (i === 0 || i === n ? thick / 2 : 0), thick);
+      else ctx.fillRect(x0 - thick / 2, y0 + a0 - (i === 0 ? thick / 2 : 0), thick, a1 - a0 + (i === 0 || i === n ? thick / 2 : 0));
+    }
+  };
+  side(x, y, w, true); side(x, y + h, w, true); side(x, y, h, false); side(x + w, y, h, false);
+}
 function star5(ctx, x, y, r, rot = -Math.PI / 2) {
   ctx.beginPath();
   for (let i = 0; i < 10; i++) {
@@ -652,10 +672,7 @@ function americaFlag(ctx, W, H, seed) {
   fade.addColorStop(0, 'rgba(255,240,215,0)'); fade.addColorStop(1, 'rgba(255,240,215,.13)');
   ctx.fillStyle = fade; ctx.fillRect(0, 0, W, H);
   // stitched edge on the binding
-  ctx.fillStyle = 'rgba(236,224,196,.7)';
-  const step = 2.2 * u;
-  for (let x = b; x < W - b; x += step) { ctx.fillRect(x, b * 0.45, step * 0.55, 0.35 * u); ctx.fillRect(x, H - b * 0.45 - 0.35 * u, step * 0.55, 0.35 * u); }
-  for (let y = b; y < H - b; y += step) { ctx.fillRect(b * 0.45, y, 0.35 * u, step * 0.55); ctx.fillRect(W - b * 0.45 - 0.35 * u, y, 0.35 * u, step * 0.55); }
+  stitchRect(ctx, b * 0.5, b * 0.5, W - b, H - b, 2.2 * u, 0.4 * u, 'rgba(236,224,196,.72)');
 }
 
 // Southwestern desert kilim: sand field, stepped diamonds in terracotta, turquoise and black, lightning-zigzag borders.
@@ -667,14 +684,23 @@ function americaMesa(ctx, W, H) {
   // outer bands
   const band = (k, c) => { for (let x = k; x < cols - k; x++) { blk(x, k, c); blk(x, rows - 1 - k, c); } for (let y = k; y < rows - k; y++) { blk(k, y, c); blk(cols - 1 - k, y, c); } };
   band(0, C.black); band(1, C.black); band(2, C.terra); band(3, C.terra); band(4, C.cream);
-  // zigzag lightning band between rows 5..9 on top and bottom
-  for (let x = 5; x < cols - 5; x++) {
-    const h = Math.abs(((x % 8) - 4)); // 0..4
-    for (const [y, c] of [[5 + h, C.black], [6 + h, C.turq]]) { if (y <= 9) { blk(x, y, c); blk(x, rows - 1 - y, c); } }
+  // zigzag lightning band (rows/cols 5..9) between square corner blocks that each hold a small stepped diamond;
+  // every side holds a whole number of zigzags so they end the same way at both corners
+  const zig = (len) => { const n = Math.max(1, Math.round(len / 8)), per = len / n; return (i) => Math.round(Math.abs(((i % per) / per) * 8 - 4)); };
+  const zx = zig(cols - 20), zy = zig(rows - 20);
+  for (let x = 10; x < cols - 10; x++) {
+    const h = zx(x - 10);
+    for (const [y, c] of [[5 + h, C.black], [6 + h, C.turq]]) if (y <= 9) { blk(x, y, c); blk(x, rows - 1 - y, c); }
   }
-  for (let y = 5; y < rows - 5; y++) {
-    const h = Math.abs(((y % 8) - 4));
-    for (const [x, c] of [[5 + h, C.black], [6 + h, C.turq]]) { if (x <= 9) { blk(x, y, c); blk(cols - 1 - x, y, c); } }
+  for (let y = 10; y < rows - 10; y++) {
+    const h = zy(y - 10);
+    for (const [x, c] of [[5 + h, C.black], [6 + h, C.turq]]) if (x <= 9) { blk(x, y, c); blk(cols - 1 - x, y, c); }
+  }
+  for (const [cx, cy] of [[7, 7], [cols - 8, 7], [7, rows - 8], [cols - 8, rows - 8]]) {
+    for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
+      const d = Math.abs(dx) + Math.abs(dy);
+      if (d <= 2) blk(cx + dx, cy + dy, d === 2 ? C.black : d === 1 ? C.turq : C.terra);
+    }
   }
   band(10, C.rust);
   // stepped diamond with outline, filled in rings
@@ -711,19 +737,28 @@ function americaQuilt(ctx, W, H, seed) {
   const C = { border: '#24365a', saw1: '#e9dcc0', saw2: '#9b2f2f', center: '#b8312f', stitch: 'rgba(250,240,220,.55)' };
   const u = H / 100, bw = 9 * u;
   ctx.fillStyle = C.border; ctx.fillRect(0, 0, W, H);
-  // sawtooth triangles on the border
-  const tri = 4.5 * u;
-  const sawRow = (x0, y0, len, horiz, flip) => {
-    for (let s = 0; s * tri < len - 0.1; s++) {
-      ctx.fillStyle = s % 2 ? C.saw1 : C.saw2;
+  // sawtooth triangles between square corner blocks; each side fits a whole number of teeth
+  const cb = bw * 0.9, m = bw * 0.05; // corner block size and margin
+  const teeth = (x0, y0, len, horiz, flip) => {
+    const { n, d } = evenSteps(len, 4.5 * u), depth = cb * 0.62;
+    for (let k = 0; k < n; k++) {
+      ctx.fillStyle = k % 2 ? C.saw1 : C.saw2;
       ctx.beginPath();
-      if (horiz) { const x = x0 + s * tri; ctx.moveTo(x, y0); ctx.lineTo(x + tri, y0); ctx.lineTo(x + tri / 2, y0 + flip * tri * 0.8); }
-      else { const y = y0 + s * tri; ctx.moveTo(x0, y); ctx.lineTo(x0, y + tri); ctx.lineTo(x0 + flip * tri * 0.8, y + tri / 2); }
+      if (horiz) { const x = x0 + k * d; ctx.moveTo(x, y0); ctx.lineTo(x + d, y0); ctx.lineTo(x + d / 2, y0 + flip * depth); }
+      else { const y = y0 + k * d; ctx.moveTo(x0, y); ctx.lineTo(x0, y + d); ctx.lineTo(x0 + flip * depth, y + d / 2); }
       ctx.closePath(); ctx.fill();
     }
   };
-  sawRow(bw * 0.25, bw * 0.3, W - bw * 0.5, true, 1); sawRow(bw * 0.25, H - bw * 0.3, W - bw * 0.5, true, -1);
-  sawRow(bw * 0.3, bw * 0.25 + tri, H - bw * 0.5 - 2 * tri, false, 1); sawRow(W - bw * 0.3, bw * 0.25 + tri, H - bw * 0.5 - 2 * tri, false, -1);
+  const top = m + cb * 0.19, bot = H - m - cb * 0.19, lft = m + cb * 0.19, rgt = W - m - cb * 0.19;
+  teeth(m + cb, top, W - 2 * (m + cb), true, 1); teeth(m + cb, bot, W - 2 * (m + cb), true, -1);
+  teeth(lft, m + cb, H - 2 * (m + cb), false, 1); teeth(rgt, m + cb, H - 2 * (m + cb), false, -1);
+  // corner blocks: a little four-patch with a navy centre
+  for (const [x, y] of [[m, m], [W - m - cb, m], [m, H - m - cb], [W - m - cb, H - m - cb]]) {
+    const q = cb / 2;
+    ctx.fillStyle = C.saw1; ctx.fillRect(x, y, q, q); ctx.fillRect(x + q, y + q, q, q);
+    ctx.fillStyle = C.saw2; ctx.fillRect(x + q, y, q, q); ctx.fillRect(x, y + q, q, q);
+    ctx.fillStyle = C.border; ctx.fillRect(x + q * 0.6, y + q * 0.6, q * 0.8, q * 0.8);
+  }
   // log cabin blocks
   const fx = bw, fy = bw, fw = W - 2 * bw, fh = H - 2 * bw;
   const bc = 6, br = 4, bwid = fw / bc, bhei = fh / br;
@@ -755,6 +790,87 @@ function americaQuilt(ctx, W, H, seed) {
   ctx.setLineDash([]);
 }
 
+// A woven landscape: a desert canyon at sunset. Banded sky, a stepped sun on the horizon, layers of mesas getting
+// warmer and closer, a river winding through the desert floor and saguaros in front, all on the knot grid.
+function americaCanyon(ctx, W, H, seed) {
+  const R = rng(seed + 66);
+  const g = knotGrid(ctx, W, H, 96), { cols, rows, blk } = g;
+  const C = { frame: '#2a1a14', line: '#ecdcbc', tooth: '#c2562a',
+    sky: ['#2b2350', '#43306a', '#6b3b78', '#9c3f6e', '#cf5a55', '#e9814a', '#f2a74a', '#f6c766'],
+    sun: '#ffe08a', sun2: '#fbd06a', far: '#7a4a6e', far2: '#8f5674', mid: '#a5442e', mid2: '#8a3826', midTop: '#c2603a',
+    near: '#c98a4a', near2: '#b5773c', sand: '#d9a65c', river: '#4aa6a3', river2: '#2f7f86', cactus: '#2f4a33', cactus2: '#24392a', bird: '#2a1a24' };
+  // border: dark frame, cream line, terracotta stepped teeth (whole number per side, mirrored at the corners)
+  const fb = 4;
+  ctx.fillStyle = C.frame; ctx.fillRect(0, 0, W, H);
+  const x0 = fb + 1, y0 = fb + 1, x1 = cols - fb - 2, y1 = rows - fb - 2; // field, inclusive
+  for (let x = fb; x <= cols - fb - 1; x++) { blk(x, fb, C.line); blk(x, rows - fb - 1, C.line); }
+  for (let y = fb; y <= rows - fb - 1; y++) { blk(fb, y, C.line); blk(cols - fb - 1, y, C.line); }
+  const teethRow = (len, put) => { const n = Math.max(1, Math.round(len / 4)), per = len / n; for (let i = 0; i < len; i++) { const ph = (i % per) / per; const h = ph < 0.5 ? Math.round(ph * 4) : Math.round((1 - ph) * 4); for (let k = 0; k < Math.min(2, h); k++) put(i, k); } };
+  teethRow(cols - 2 * fb - 2, (i, k) => { blk(fb + 1 + i, 1 + k, C.tooth); blk(fb + 1 + i, rows - 2 - k, C.tooth); });
+  teethRow(rows - 2 * fb - 2, (i, k) => { blk(1 + k, fb + 1 + i, C.tooth); blk(cols - 2 - k, fb + 1 + i, C.tooth); });
+  for (const [cx, cy] of [[2, 2], [cols - 3, 2], [2, rows - 3], [cols - 3, rows - 3]]) { blk(cx, cy, C.tooth); blk(cx - 1, cy, C.tooth); blk(cx + 1, cy, C.tooth); blk(cx, cy - 1, C.tooth); blk(cx, cy + 1, C.tooth); }
+
+  const fw = x1 - x0 + 1, fh = y1 - y0 + 1;
+  const horizon = y0 + Math.round(fh * 0.56);
+  // sky: woven bands, each band's edge jitters a knot so it reads as weaving, not a gradient
+  for (let y = y0; y < horizon; y++) {
+    for (let x = x0; x <= x1; x++) {
+      const t = (y - y0) / (horizon - y0);
+      const band = Math.min(C.sky.length - 1, Math.floor(t * C.sky.length + (((x * 7 + y * 3) % 5) - 2) * 0.06));
+      blk(x, y, C.sky[Math.max(0, band)]);
+    }
+  }
+  // stars in the dark top bands
+  for (let i = 0; i < 26; i++) { const x = x0 + Math.floor(R() * fw), y = y0 + Math.floor(R() * (horizon - y0) * 0.28); blk(x, y, '#e8dcf0'); }
+  // sun sitting on the horizon, with stepped rays
+  const sx = x0 + Math.round(fw * 0.62), sr = Math.round(fh * 0.13);
+  for (let dy = -sr; dy <= 0; dy++) for (let dx = -sr; dx <= sr; dx++) if (dx * dx + dy * dy <= sr * sr) blk(sx + dx, horizon + dy, (dx * dx + dy * dy) > (sr - 2) * (sr - 2) ? C.sun2 : C.sun);
+  for (let k = 0; k < 7; k++) {
+    const a = Math.PI * (0.12 + k * 0.127), r0 = sr + 2, r1 = sr + 4 + (k % 2 ? 1 : 3);
+    for (let r = r0; r <= r1; r++) blk(sx + Math.round(Math.cos(a) * r), horizon - Math.round(Math.sin(a) * r), C.sun2);
+  }
+  // a stepped skyline: heights per column from a few flat-topped mesas (plateau, cliff, plateau)
+  const ridge = (base, peaks, jag) => {
+    const h = new Array(cols).fill(0);
+    for (const [cx, w, top] of peaks) for (let x = Math.round(cx - w / 2); x <= Math.round(cx + w / 2); x++) if (x >= x0 && x <= x1) {
+      const edge = Math.min(x - (cx - w / 2), (cx + w / 2) - x);
+      h[x] = Math.max(h[x], Math.min(top, Math.floor(edge * jag) + 1));
+    }
+    return (x) => base - h[x];
+  };
+  const fill = (top, bottom, c1, c2, shade) => { for (let x = x0; x <= x1; x++) for (let y = Math.max(y0, top(x)); y <= Math.min(y1, bottom); y++) blk(x, y, (shade && (x + y) % 9 === 0) || y === top(x) ? c2 : c1); };
+  const far = ridge(horizon + 1, [[x0 + fw * 0.12, fw * 0.22, 8], [x0 + fw * 0.4, fw * 0.16, 6], [x0 + fw * 0.86, fw * 0.24, 9]], 1.6);
+  fill((x) => Math.min(far(x), horizon), horizon + 9, C.far, C.far2, false); // no gap under the sky
+  const mid = ridge(horizon + 6, [[x0 + fw * 0.22, fw * 0.3, 13], [x0 + fw * 0.7, fw * 0.2, 10], [x0 + fw * 0.98, fw * 0.18, 12]], 2.2);
+  fill(mid, horizon + 9, C.mid, C.midTop, true);
+  // cliff stripes (rock strata) on the mid mesas
+  for (let x = x0; x <= x1; x++) for (let y = mid(x) + 2; y <= horizon + 9; y += 3) blk(x, y, C.mid2);
+  // desert floor
+  for (let y = horizon + 10; y <= y1; y++) for (let x = x0; x <= x1; x++) blk(x, y, (y - horizon) % 5 === 0 && (x + y) % 3 ? C.near2 : y > horizon + 18 ? C.sand : C.near);
+  // river: a winding band from the sun's reflection down to the bottom
+  for (let y = horizon + 10; y <= y1; y++) {
+    const t = (y - horizon - 10) / (y1 - horizon - 10);
+    const cx = Math.round(sx - t * fw * 0.32 + Math.sin(t * 6) * fw * 0.05), w = 1 + Math.round(t * 5);
+    for (let dx = -w; dx <= w; dx++) blk(cx + dx, y, Math.abs(dx) === w ? C.river2 : (y % 4 === 0 && dx === 0 ? C.sun : C.river));
+  }
+  // saguaros: trunk with two arms
+  const saguaro = (cx, by, h, flip) => {
+    for (let y = 0; y < h; y++) { blk(cx, by - y, C.cactus); blk(cx + 1, by - y, C.cactus2); }
+    const a1 = Math.round(h * 0.42), a2 = Math.round(h * 0.58), al = Math.max(3, Math.round(h * 0.26)), out = Math.max(2, Math.round(h * 0.1));
+    for (let k = 1; k <= out; k++) { blk(cx - k * flip, by - a1, C.cactus); blk(cx - k * flip, by - a1 + 1, C.cactus2); }
+    for (let y = 0; y < al; y++) { blk(cx - out * flip, by - a1 - y, C.cactus); blk(cx - (out - 1) * flip, by - a1 - y, C.cactus); }
+    for (let k = 1; k <= out; k++) { blk(cx + 1 + k * flip, by - a2, C.cactus2); blk(cx + 1 + k * flip, by - a2 + 1, C.cactus); }
+    for (let y = 0; y < al - 1; y++) { blk(cx + 1 + out * flip, by - a2 - y, C.cactus2); blk(cx + out * flip, by - a2 - y, C.cactus2); }
+  };
+  saguaro(x0 + Math.round(fw * 0.1), y1 - 2, Math.round(fh * 0.3), 1);
+  saguaro(x0 + Math.round(fw * 0.86), y1 - 1, Math.round(fh * 0.26), -1);
+  saguaro(x0 + Math.round(fw * 0.32), horizon + 18, Math.round(fh * 0.12), 1);
+  // two birds
+  for (const [bx, by] of [[x0 + Math.round(fw * 0.3), y0 + Math.round(fh * 0.22)], [x0 + Math.round(fw * 0.36), y0 + Math.round(fh * 0.17)]]) {
+    blk(bx, by, C.bird); blk(bx - 1, by - 1, C.bird); blk(bx - 2, by - 1, C.bird); blk(bx + 1, by - 1, C.bird); blk(bx + 2, by - 1, C.bird);
+  }
+}
+
 // Buffalo check: red and black squares with a twill weave, wrapped in a cream blanket-stitch edge.
 function americaPlaid(ctx, W, H) {
   const C = { red: '#a3242a', black: '#17121a', mix: '#5b1a20', cream: '#ece1c8' };
@@ -772,14 +888,20 @@ function americaPlaid(ctx, W, H) {
   for (let d = -H + 0.45 * u; d < W; d += 0.9 * u) { ctx.beginPath(); ctx.moveTo(d, H); ctx.lineTo(d + H, 0); ctx.stroke(); }
   // blanket-stitch edge
   ctx.fillStyle = C.black; frameRect(ctx, 0, 0, W, H, edge);
-  ctx.strokeStyle = C.cream; ctx.lineWidth = 0.55 * u;
-  const st = 2.4 * u;
+  // blanket stitch: a cream line along the edge with evenly spaced ticks reaching in; each side fits a whole
+  // number of ticks and the corners get one diagonal tick, like a hand-finished blanket
+  ctx.strokeStyle = C.cream; ctx.lineWidth = 0.55 * u; ctx.lineCap = 'square';
+  const o = edge * 0.45, reach = edge + 1.4 * u, inset = edge * 1.2;
   ctx.beginPath();
-  for (let x = edge; x <= W - edge; x += st) { ctx.moveTo(x, edge * 0.35); ctx.lineTo(x, edge + 1.6 * u); ctx.moveTo(x, H - edge * 0.35); ctx.lineTo(x, H - edge - 1.6 * u); }
-  for (let y = edge; y <= H - edge; y += st) { ctx.moveTo(edge * 0.35, y); ctx.lineTo(edge + 1.6 * u, y); ctx.moveTo(W - edge * 0.35, y); ctx.lineTo(W - edge - 1.6 * u, y); }
+  const ticks = (len, at) => { const { n, d } = evenSteps(len, 2.4 * u); for (let i = 1; i < n; i++) at(i * d); };
+  ticks(W - 2 * inset, (a) => { ctx.moveTo(inset + a, o); ctx.lineTo(inset + a, reach); ctx.moveTo(inset + a, H - o); ctx.lineTo(inset + a, H - reach); });
+  ticks(H - 2 * inset, (a) => { ctx.moveTo(o, inset + a); ctx.lineTo(reach, inset + a); ctx.moveTo(W - o, inset + a); ctx.lineTo(W - reach, inset + a); });
+  for (const [cx, cy, sx, sy] of [[o, o, 1, 1], [W - o, o, -1, 1], [o, H - o, 1, -1], [W - o, H - o, -1, -1]]) {
+    ctx.moveTo(cx, cy); ctx.lineTo(cx + sx * (reach - o) * 1.1, cy + sy * (reach - o) * 1.1);
+  }
   ctx.stroke();
-  ctx.lineWidth = 0.45 * u;
-  ctx.strokeRect(edge * 0.35, edge * 0.35, W - edge * 0.7, H - edge * 0.7);
+  ctx.lineWidth = 0.45 * u; ctx.lineJoin = 'miter';
+  ctx.strokeRect(o, o, W - 2 * o, H - 2 * o);
 }
 
 function addWeave(ctx, W, H, seed, strength = 26) {
@@ -811,6 +933,7 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.america === 'mesa') americaMesa(ctx, W, H);
   else if (P.america === 'quilt') americaQuilt(ctx, W, H, seed);
   else if (P.america === 'plaid') americaPlaid(ctx, W, H);
+  else if (P.america === 'canyon') americaCanyon(ctx, W, H, seed);
   else if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
