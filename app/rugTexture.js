@@ -12,13 +12,22 @@ export const STYLES = {
   balkabagi:{ name: 'Balkabağı Tarlası', halloween: 'pumpkin' },
   orumcek:  { name: 'Örümcek Ağı',       halloween: 'web' },
   hayalet:  { name: 'Hayalet Gecesi',    halloween: 'ghost' },
-  // America pack: classic Americana graphics
-  kartpostal:{ name: 'Amerika’dan Selamlar', america: 'postcard', fonts: true },
-  millipark: { name: 'Ulusal Park',          america: 'park', fonts: true },
-  beyzbol:   { name: 'Beyzbol Sahası',       america: 'baseball' },
-  basketbol: { name: 'Basketbol Sahası',     america: 'basketball' },
-  diner:     { name: 'Diner',                america: 'diner', fonts: true },
-  route66:   { name: 'Route 66',             america: 'route66', fonts: true },
+  // USA pack. Woven / pieced / knotted:
+  yildizlar: { name: 'Yıldızlar ve Çizgiler', america: 'flag' },
+  mesa:      { name: 'Çöl Mesası',            america: 'mesa' },
+  yorgan:    { name: 'Yama Yorgan',           america: 'quilt' },
+  ekose:     { name: 'Oduncu Ekose',          america: 'plaid' },
+  kanyon:    { name: 'Kanyon Gün Batımı',     america: 'canyon' },
+  ambar:     { name: 'Ambar Yıldızı',         america: 'hex' },
+  yalniz:    { name: 'Yalnız Yıldız',         america: 'lonestar' },
+  bizon:     { name: 'Bizon Ovası',           america: 'bison' },
+  // ...and hooked rugs (pictures made of wool loops):
+  kartpostal:{ name: 'Amerika’dan Selamlar', america: 'postcard', fonts: true, hooked: true },
+  millipark: { name: 'Ulusal Park',          america: 'park', fonts: true, hooked: true },
+  beyzbol:   { name: 'Beyzbol Sahası',       america: 'baseball', hooked: true },
+  basketbol: { name: 'Basketbol Sahası',     america: 'basketball', hooked: true },
+  diner:     { name: 'Diner',                america: 'diner', fonts: true, hooked: true },
+  route66:   { name: 'Route 66',             america: 'route66', fonts: true, hooked: true },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -895,6 +904,428 @@ function americaRoute66(ctx, W, H) {
   ctx.fillStyle = '#f6f2e6'; frameRect(ctx, 2.4 * u, 2.4 * u, W - 4.8 * u, H - 4.8 * u, 0.6 * u);
 }
 
+// ---------- USA pack: woven, pieced and knotted rugs (restored from the earlier drafts) ----------
+// Dashed stitching around a rectangle; each side starts and ends on a stitch, so the corners join up.
+function stitchRect(ctx, x, y, w, h, step, thick, color) {
+  ctx.fillStyle = color;
+  const side = (x0, y0, len, horiz) => {
+    const { n, d } = evenSteps(len, step), l = d * 0.58;
+    for (let i = 0; i <= n; i++) {
+      // first and last stitch are centred on the corner so the two sides meet in one stitch
+      const a = i * d - l / 2, a0 = Math.max(0, a), a1 = Math.min(len, a + l);
+      if (a1 <= a0) continue;
+      if (horiz) ctx.fillRect(x0 + a0 - (i === 0 ? thick / 2 : 0), y0 - thick / 2, a1 - a0 + (i === 0 || i === n ? thick / 2 : 0), thick);
+      else ctx.fillRect(x0 - thick / 2, y0 + a0 - (i === 0 ? thick / 2 : 0), thick, a1 - a0 + (i === 0 || i === n ? thick / 2 : 0));
+    }
+  };
+  side(x, y, w, true); side(x, y + h, w, true); side(x, y, h, false); side(x + w, y, h, false);
+}
+// A sun-faded flag woven as a rug: 13 stripes, a 50-star canton, a narrow navy binding with a stitched edge.
+function americaFlag(ctx, W, H, seed) {
+  const R = rng(seed + 13);
+  const C = { red: '#9e2b2f', red2: '#8a2428', cream: '#ece0c4', navy: '#20304f', navy2: '#1a2843', star: '#f1e7cf', bind: '#182238' };
+  const u = H / 100, b = 4.2 * u; // binding width
+  ctx.fillStyle = C.bind; ctx.fillRect(0, 0, W, H);
+  const x0 = b, y0 = b, fw = W - 2 * b, fh = H - 2 * b, sh = fh / 13;
+  for (let i = 0; i < 13; i++) {
+    ctx.fillStyle = i % 2 ? C.cream : (i % 4 === 0 ? C.red : C.red2);
+    ctx.fillRect(x0, y0 + i * sh, fw, sh + 0.5);
+  }
+  const cw = fw * 0.4, ch = sh * 7;
+  ctx.fillStyle = C.navy; ctx.fillRect(x0, y0, cw, ch);
+  // faint woven rows in the canton
+  ctx.fillStyle = C.navy2; for (let y = 0; y < ch; y += 0.9 * u) if ((y / (0.9 * u)) % 2 < 1) ctx.fillRect(x0, y0 + y, cw, 0.45 * u);
+  ctx.fillStyle = C.star;
+  for (let row = 0; row < 9; row++) {
+    const n = row % 2 ? 5 : 6;
+    for (let k = 0; k < n; k++) {
+      const sx = x0 + cw * ((row % 2 ? 2 : 1) + k * 2) / 12, sy = y0 + ch * (row + 1) / 10;
+      star5(ctx, sx, sy, ch * 0.042, -Math.PI / 2 + (R() - 0.5) * 0.08);
+    }
+  }
+  // sun fading toward one corner, the way an old rug in a window gets
+  const fade = ctx.createLinearGradient(0, 0, W, H);
+  fade.addColorStop(0, 'rgba(255,240,215,0)'); fade.addColorStop(1, 'rgba(255,240,215,.13)');
+  ctx.fillStyle = fade; ctx.fillRect(0, 0, W, H);
+  // stitched edge on the binding
+  stitchRect(ctx, b * 0.5, b * 0.5, W - b, H - b, 2.2 * u, 0.4 * u, 'rgba(236,224,196,.72)');
+}
+
+// Southwestern desert kilim: sand field, stepped diamonds in terracotta, turquoise and black, lightning-zigzag borders.
+function americaMesa(ctx, W, H) {
+  const C = { sand: '#d8c09a', sand2: '#cdb48b', terra: '#b4532f', rust: '#8e3b22', turq: '#3f9a92', black: '#1d1714', cream: '#f0e5cc', ochre: '#c98f37' };
+  const g = knotGrid(ctx, W, H, 72), { cols, rows, blk } = g;
+  ctx.fillStyle = C.sand; ctx.fillRect(0, 0, W, H);
+  for (let y = 0; y < rows; y++) if (y % 6 === 0) for (let x = 0; x < cols; x++) blk(x, y, C.sand2); // lazy lines
+  // outer bands
+  const band = (k, c) => { for (let x = k; x < cols - k; x++) { blk(x, k, c); blk(x, rows - 1 - k, c); } for (let y = k; y < rows - k; y++) { blk(k, y, c); blk(cols - 1 - k, y, c); } };
+  band(0, C.black); band(1, C.black); band(2, C.terra); band(3, C.terra); band(4, C.cream);
+  // zigzag lightning band (rows/cols 5..9) between square corner blocks that each hold a small stepped diamond;
+  // every side holds a whole number of zigzags so they end the same way at both corners
+  const zig = (len) => { const n = Math.max(1, Math.round(len / 8)), per = len / n; return (i) => Math.round(Math.abs(((i % per) / per) * 8 - 4)); };
+  const zx = zig(cols - 20), zy = zig(rows - 20);
+  for (let x = 10; x < cols - 10; x++) {
+    const h = zx(x - 10);
+    for (const [y, c] of [[5 + h, C.black], [6 + h, C.turq]]) if (y <= 9) { blk(x, y, c); blk(x, rows - 1 - y, c); }
+  }
+  for (let y = 10; y < rows - 10; y++) {
+    const h = zy(y - 10);
+    for (const [x, c] of [[5 + h, C.black], [6 + h, C.turq]]) if (x <= 9) { blk(x, y, c); blk(cols - 1 - x, y, c); }
+  }
+  for (const [cx, cy] of [[7, 7], [cols - 8, 7], [7, rows - 8], [cols - 8, rows - 8]]) {
+    for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
+      const d = Math.abs(dx) + Math.abs(dy);
+      if (d <= 2) blk(cx + dx, cy + dy, d === 2 ? C.black : d === 1 ? C.turq : C.terra);
+    }
+  }
+  band(10, C.rust);
+  // stepped diamond with outline, filled in rings
+  const diamond = (cx, cy, n, ring) => {
+    for (let dy = -n; dy <= n; dy++) {
+      const w = n - Math.abs(dy);
+      for (let dx = -w; dx <= w; dx++) {
+        const d = Math.abs(dx) + Math.abs(dy);
+        blk(cx + dx, cy + dy, d >= n - 1 ? C.black : ring[Math.floor((n - d) / 2) % ring.length]);
+      }
+    }
+  };
+  const ix = 12, iy = 12, iw = cols - 2 * ix, ih = rows - 2 * iy, midY = iy + Math.floor(ih / 2);
+  const n = Math.floor(ih / 2) - 3;
+  diamond(Math.floor(cols / 2), midY, n, [C.cream, C.terra, C.turq, C.ochre, C.black, C.cream]);
+  // side diamonds, fully inside the field, and small ones above and below the arrows
+  const side = Math.floor(n * 0.55), cxm = Math.floor(cols / 2);
+  const leftC = ix + side + 3, rightC = cols - ix - side - 4;
+  for (const cx of [leftC, rightC]) diamond(cx, midY, side, [C.turq, C.cream, C.terra]);
+  // arrows centred in the gaps between the side diamonds and the big one, pointing outward
+  for (const [a, bnd, dir] of [[leftC + side, cxm - n, -1], [rightC - side, cxm + n, 1]]) {
+    const ax = Math.round((a + bnd) / 2), half = Math.max(2, Math.floor(Math.abs(bnd - a) / 2) - 3);
+    for (let k = -half; k <= half; k++) blk(ax + k, midY, C.black);
+    for (let k = 1; k <= 2; k++) { blk(ax + dir * (half - k), midY - k, C.black); blk(ax + dir * (half - k), midY + k, C.black); }
+    for (let k = 0; k < 2; k++) { blk(ax - dir * (half - k), midY - 1, C.terra); blk(ax - dir * (half - k), midY + 1, C.terra); }
+    for (const oy of [-Math.round(ih * 0.3), Math.round(ih * 0.3)]) diamond(ax, midY + oy, 3, [C.terra, C.cream]);
+  }
+}
+
+// Patchwork quilt made into a rug: log-cabin blocks in calico colours, a sawtooth border, running-stitch quilting.
+function americaQuilt(ctx, W, H, seed) {
+  const R = rng(seed + 51);
+  const fabrics = ['#9b2f2f', '#c4683a', '#d9a940', '#2f4b6e', '#5d7f62', '#7a4b6e', '#e9dcc0', '#b9c7cf'];
+  const C = { border: '#24365a', saw1: '#e9dcc0', saw2: '#9b2f2f', center: '#b8312f', stitch: 'rgba(250,240,220,.55)' };
+  const u = H / 100, bw = 9 * u;
+  ctx.fillStyle = C.border; ctx.fillRect(0, 0, W, H);
+  // sawtooth triangles between square corner blocks; each side fits a whole number of teeth
+  const cb = bw * 0.9, m = bw * 0.05; // corner block size and margin
+  const teeth = (x0, y0, len, horiz, flip) => {
+    const { n, d } = evenSteps(len, 4.5 * u), depth = cb * 0.62;
+    for (let k = 0; k < n; k++) {
+      ctx.fillStyle = k % 2 ? C.saw1 : C.saw2;
+      ctx.beginPath();
+      if (horiz) { const x = x0 + k * d; ctx.moveTo(x, y0); ctx.lineTo(x + d, y0); ctx.lineTo(x + d / 2, y0 + flip * depth); }
+      else { const y = y0 + k * d; ctx.moveTo(x0, y); ctx.lineTo(x0, y + d); ctx.lineTo(x0 + flip * depth, y + d / 2); }
+      ctx.closePath(); ctx.fill();
+    }
+  };
+  const top = m + cb * 0.19, bot = H - m - cb * 0.19, lft = m + cb * 0.19, rgt = W - m - cb * 0.19;
+  teeth(m + cb, top, W - 2 * (m + cb), true, 1); teeth(m + cb, bot, W - 2 * (m + cb), true, -1);
+  teeth(lft, m + cb, H - 2 * (m + cb), false, 1); teeth(rgt, m + cb, H - 2 * (m + cb), false, -1);
+  // corner blocks: a little four-patch with a navy centre
+  for (const [x, y] of [[m, m], [W - m - cb, m], [m, H - m - cb], [W - m - cb, H - m - cb]]) {
+    const q = cb / 2;
+    ctx.fillStyle = C.saw1; ctx.fillRect(x, y, q, q); ctx.fillRect(x + q, y + q, q, q);
+    ctx.fillStyle = C.saw2; ctx.fillRect(x + q, y, q, q); ctx.fillRect(x, y + q, q, q);
+    ctx.fillStyle = C.border; ctx.fillRect(x + q * 0.6, y + q * 0.6, q * 0.8, q * 0.8);
+  }
+  // log cabin blocks
+  const fx = bw, fy = bw, fw = W - 2 * bw, fh = H - 2 * bw;
+  const bc = 6, br = 4, bwid = fw / bc, bhei = fh / br;
+  const calico = (x, y, w, h, col) => {
+    ctx.fillStyle = col; ctx.fillRect(x, y, w + 0.5, h + 0.5);
+    ctx.fillStyle = 'rgba(255,255,255,.18)'; // tiny print
+    for (let yy = y + 0.6 * u; yy < y + h; yy += 1.3 * u) for (let xx = x + 0.6 * u + ((yy / u) % 2) * 0.6 * u; xx < x + w; xx += 1.3 * u) { ctx.beginPath(); ctx.arc(xx, yy, 0.18 * u, 0, Math.PI * 2); ctx.fill(); }
+  };
+  for (let j = 0; j < br; j++) for (let i = 0; i < bc; i++) {
+    const x = fx + i * bwid, y = fy + j * bhei;
+    const light = [fabrics[6], fabrics[7], fabrics[2]], dark = [fabrics[0], fabrics[3], fabrics[4], fabrics[5], fabrics[1]];
+    const steps = 4, sx = bwid / (2 * steps + 1), sy = bhei / (2 * steps + 1);
+    // logs spiral outward: light on two sides, dark on the other two (classic log cabin light/dark split)
+    for (let k = steps; k >= 1; k--) {
+      const pick = (arr) => arr[Math.floor(R() * arr.length)];
+      const L = pick(light), D = pick(dark);
+      const ox = x + (steps - k) * sx, oy = y + (steps - k) * sy, ow = bwid - 2 * (steps - k) * sx, oh = bhei - 2 * (steps - k) * sy;
+      calico(ox, oy, ow, sy, (i + j) % 2 ? L : D);            // top
+      calico(ox, oy + oh - sy, ow, sy, (i + j) % 2 ? D : L);  // bottom
+      calico(ox, oy + sy, sx, oh - 2 * sy, (i + j) % 2 ? L : D);       // left
+      calico(ox + ow - sx, oy + sy, sx, oh - 2 * sy, (i + j) % 2 ? D : L); // right
+    }
+    ctx.fillStyle = C.center; ctx.fillRect(x + steps * sx, y + steps * sy, sx + 0.5, sy + 0.5); // red hearth in the middle
+  }
+  // running-stitch quilting along the block seams
+  ctx.strokeStyle = C.stitch; ctx.lineWidth = 0.32 * u; ctx.setLineDash([1.1 * u, 0.9 * u]);
+  for (let i = 0; i <= bc; i++) { ctx.beginPath(); ctx.moveTo(fx + i * bwid, fy); ctx.lineTo(fx + i * bwid, fy + fh); ctx.stroke(); }
+  for (let j = 0; j <= br; j++) { ctx.beginPath(); ctx.moveTo(fx, fy + j * bhei); ctx.lineTo(fx + fw, fy + j * bhei); ctx.stroke(); }
+  ctx.setLineDash([]);
+}
+
+// A woven landscape: a desert canyon at sunset. Banded sky, a stepped sun on the horizon, layers of mesas getting
+// warmer and closer, a river winding through the desert floor and saguaros in front, all on the knot grid.
+function americaCanyon(ctx, W, H, seed) {
+  const R = rng(seed + 66);
+  const g = knotGrid(ctx, W, H, 96), { cols, rows, blk } = g;
+  const C = { frame: '#2a1a14', line: '#ecdcbc', tooth: '#c2562a',
+    sky: ['#2b2350', '#43306a', '#6b3b78', '#9c3f6e', '#cf5a55', '#e9814a', '#f2a74a', '#f6c766'],
+    sun: '#ffe08a', sun2: '#fbd06a', far: '#7a4a6e', far2: '#8f5674', mid: '#a5442e', mid2: '#8a3826', midTop: '#c2603a',
+    near: '#c98a4a', near2: '#b5773c', sand: '#d9a65c', river: '#4aa6a3', river2: '#2f7f86', cactus: '#2f4a33', cactus2: '#24392a', bird: '#2a1a24' };
+  // border: dark frame, cream line, terracotta stepped teeth (whole number per side, mirrored at the corners)
+  const fb = 4;
+  ctx.fillStyle = C.frame; ctx.fillRect(0, 0, W, H);
+  const x0 = fb + 1, y0 = fb + 1, x1 = cols - fb - 2, y1 = rows - fb - 2; // field, inclusive
+  for (let x = fb; x <= cols - fb - 1; x++) { blk(x, fb, C.line); blk(x, rows - fb - 1, C.line); }
+  for (let y = fb; y <= rows - fb - 1; y++) { blk(fb, y, C.line); blk(cols - fb - 1, y, C.line); }
+  const teethRow = (len, put) => { const n = Math.max(1, Math.round(len / 4)), per = len / n; for (let i = 0; i < len; i++) { const ph = (i % per) / per; const h = ph < 0.5 ? Math.round(ph * 4) : Math.round((1 - ph) * 4); for (let k = 0; k < Math.min(2, h); k++) put(i, k); } };
+  teethRow(cols - 2 * fb - 2, (i, k) => { blk(fb + 1 + i, 1 + k, C.tooth); blk(fb + 1 + i, rows - 2 - k, C.tooth); });
+  teethRow(rows - 2 * fb - 2, (i, k) => { blk(1 + k, fb + 1 + i, C.tooth); blk(cols - 2 - k, fb + 1 + i, C.tooth); });
+  for (const [cx, cy] of [[2, 2], [cols - 3, 2], [2, rows - 3], [cols - 3, rows - 3]]) { blk(cx, cy, C.tooth); blk(cx - 1, cy, C.tooth); blk(cx + 1, cy, C.tooth); blk(cx, cy - 1, C.tooth); blk(cx, cy + 1, C.tooth); }
+
+  const fw = x1 - x0 + 1, fh = y1 - y0 + 1;
+  const horizon = y0 + Math.round(fh * 0.56);
+  // sky: woven bands, each band's edge jitters a knot so it reads as weaving, not a gradient
+  for (let y = y0; y < horizon; y++) {
+    for (let x = x0; x <= x1; x++) {
+      const t = (y - y0) / (horizon - y0);
+      const band = Math.min(C.sky.length - 1, Math.floor(t * C.sky.length + (((x * 7 + y * 3) % 5) - 2) * 0.06));
+      blk(x, y, C.sky[Math.max(0, band)]);
+    }
+  }
+  // stars in the dark top bands
+  for (let i = 0; i < 26; i++) { const x = x0 + Math.floor(R() * fw), y = y0 + Math.floor(R() * (horizon - y0) * 0.28); blk(x, y, '#e8dcf0'); }
+  // sun sitting on the horizon, with stepped rays
+  const sx = x0 + Math.round(fw * 0.62), sr = Math.round(fh * 0.13);
+  for (let dy = -sr; dy <= 0; dy++) for (let dx = -sr; dx <= sr; dx++) if (dx * dx + dy * dy <= sr * sr) blk(sx + dx, horizon + dy, (dx * dx + dy * dy) > (sr - 2) * (sr - 2) ? C.sun2 : C.sun);
+  for (let k = 0; k < 7; k++) {
+    const a = Math.PI * (0.12 + k * 0.127), r0 = sr + 2, r1 = sr + 4 + (k % 2 ? 1 : 3);
+    for (let r = r0; r <= r1; r++) blk(sx + Math.round(Math.cos(a) * r), horizon - Math.round(Math.sin(a) * r), C.sun2);
+  }
+  // a stepped skyline: heights per column from a few flat-topped mesas (plateau, cliff, plateau)
+  const ridge = (base, peaks, jag) => {
+    const h = new Array(cols).fill(0);
+    for (const [cx, w, top] of peaks) for (let x = Math.round(cx - w / 2); x <= Math.round(cx + w / 2); x++) if (x >= x0 && x <= x1) {
+      const edge = Math.min(x - (cx - w / 2), (cx + w / 2) - x);
+      h[x] = Math.max(h[x], Math.min(top, Math.floor(edge * jag) + 1));
+    }
+    return (x) => base - h[x];
+  };
+  const fill = (top, bottom, c1, c2, shade) => { for (let x = x0; x <= x1; x++) for (let y = Math.max(y0, top(x)); y <= Math.min(y1, bottom); y++) blk(x, y, (shade && (x + y) % 9 === 0) || y === top(x) ? c2 : c1); };
+  const far = ridge(horizon + 1, [[x0 + fw * 0.12, fw * 0.22, 8], [x0 + fw * 0.4, fw * 0.16, 6], [x0 + fw * 0.86, fw * 0.24, 9]], 1.6);
+  fill((x) => Math.min(far(x), horizon), horizon + 9, C.far, C.far2, false); // no gap under the sky
+  const mid = ridge(horizon + 6, [[x0 + fw * 0.22, fw * 0.3, 13], [x0 + fw * 0.7, fw * 0.2, 10], [x0 + fw * 0.98, fw * 0.18, 12]], 2.2);
+  fill(mid, horizon + 9, C.mid, C.midTop, true);
+  // cliff stripes (rock strata) on the mid mesas
+  for (let x = x0; x <= x1; x++) for (let y = mid(x) + 2; y <= horizon + 9; y += 3) blk(x, y, C.mid2);
+  // desert floor
+  for (let y = horizon + 10; y <= y1; y++) for (let x = x0; x <= x1; x++) blk(x, y, (y - horizon) % 5 === 0 && (x + y) % 3 ? C.near2 : y > horizon + 18 ? C.sand : C.near);
+  // river: a winding band from the sun's reflection down to the bottom
+  for (let y = horizon + 10; y <= y1; y++) {
+    const t = (y - horizon - 10) / (y1 - horizon - 10);
+    const cx = Math.round(sx - t * fw * 0.32 + Math.sin(t * 6) * fw * 0.05), w = 1 + Math.round(t * 5);
+    for (let dx = -w; dx <= w; dx++) blk(cx + dx, y, Math.abs(dx) === w ? C.river2 : (y % 4 === 0 && dx === 0 ? C.sun : C.river));
+  }
+  // saguaros: trunk with two arms
+  const saguaro = (cx, by, h, flip) => {
+    for (let y = 0; y < h; y++) { blk(cx, by - y, C.cactus); blk(cx + 1, by - y, C.cactus2); }
+    const a1 = Math.round(h * 0.42), a2 = Math.round(h * 0.58), al = Math.max(3, Math.round(h * 0.26)), out = Math.max(2, Math.round(h * 0.1));
+    for (let k = 1; k <= out; k++) { blk(cx - k * flip, by - a1, C.cactus); blk(cx - k * flip, by - a1 + 1, C.cactus2); }
+    for (let y = 0; y < al; y++) { blk(cx - out * flip, by - a1 - y, C.cactus); blk(cx - (out - 1) * flip, by - a1 - y, C.cactus); }
+    for (let k = 1; k <= out; k++) { blk(cx + 1 + k * flip, by - a2, C.cactus2); blk(cx + 1 + k * flip, by - a2 + 1, C.cactus); }
+    for (let y = 0; y < al - 1; y++) { blk(cx + 1 + out * flip, by - a2 - y, C.cactus2); blk(cx + out * flip, by - a2 - y, C.cactus2); }
+  };
+  saguaro(x0 + Math.round(fw * 0.1), y1 - 2, Math.round(fh * 0.3), 1);
+  saguaro(x0 + Math.round(fw * 0.86), y1 - 1, Math.round(fh * 0.26), -1);
+  saguaro(x0 + Math.round(fw * 0.32), horizon + 18, Math.round(fh * 0.12), 1);
+  // two birds
+  for (const [bx, by] of [[x0 + Math.round(fw * 0.3), y0 + Math.round(fh * 0.22)], [x0 + Math.round(fw * 0.36), y0 + Math.round(fh * 0.17)]]) {
+    blk(bx, by, C.bird); blk(bx - 1, by - 1, C.bird); blk(bx - 2, by - 1, C.bird); blk(bx + 1, by - 1, C.bird); blk(bx + 2, by - 1, C.bird);
+  }
+}
+
+// ---------- woven pictures ----------
+// Draw a scene with ordinary canvas shapes on a tiny canvas (one pixel per knot), snap every pixel to the rug's
+// palette, then lay it down knot by knot: smooth shapes come out with the stepped edges of a hand-knotted rug.
+function weavePicture(ctx, W, H, rowsWanted, palette, draw) {
+  const g = knotGrid(ctx, W, H, rowsWanted), { cols, rows, blk } = g;
+  const c = document.createElement('canvas'); c.width = cols; c.height = rows;
+  const x = c.getContext('2d');
+  draw(x, cols, rows);
+  const d = x.getImageData(0, 0, cols, rows).data;
+  const pal = palette.map((h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16), h]);
+  for (let i = 0; i < cols * rows; i++) {
+    const r = d[i * 4], gg = d[i * 4 + 1], b = d[i * 4 + 2];
+    let best = pal[0], bd = Infinity;
+    for (const p of pal) { const e = (p[0] - r) ** 2 + (p[1] - gg) ** 2 + (p[2] - b) ** 2; if (e < bd) { bd = e; best = p; } }
+    blk(i % cols, (i / cols) | 0, best[3]);
+  }
+  return g;
+}
+
+// Border shared by the picture rugs: dark band, cream line, and a whole number of little diamonds per side with a
+// star in each corner.
+function pictureBorder(x, cols, rows, C) {
+  x.fillStyle = C.frame; x.fillRect(0, 0, cols, rows);
+  x.fillStyle = C.line; x.fillRect(5, 5, cols - 10, rows - 10);
+  x.fillStyle = C.frame; x.fillRect(6, 6, cols - 12, rows - 12);
+  x.fillStyle = C.accent;
+  const dia = (cx, cy) => { x.beginPath(); x.moveTo(cx, cy - 1.6); x.lineTo(cx + 1.6, cy); x.lineTo(cx, cy + 1.6); x.lineTo(cx - 1.6, cy); x.closePath(); x.fill(); };
+  const row = (len, put) => { const { n, d } = evenSteps(len, 6); for (let i = 0; i <= n; i++) put(i * d); };
+  row(cols - 16, (a) => { dia(8 + a, 2.6); dia(8 + a, rows - 2.6); });
+  row(rows - 16, (a) => { dia(2.6, 8 + a); dia(cols - 2.6, 8 + a); });
+  x.fillStyle = C.star; for (const [cx, cy] of [[2.6, 2.6], [cols - 2.6, 2.6], [2.6, rows - 2.6], [cols - 2.6, rows - 2.6]]) { x.beginPath(); star5(x, cx, cy, 2.4); }
+}
+
+// Barn star: the round painted hex sign of Pennsylvania barns, on weathered red planks, with two daisy hexes
+// beside it and tulips in the corners.
+function americaHex(ctx, W, H) {
+  const C = { frame: '#1d2a44', line: '#efe3c6', accent: '#d8a33a', star: '#efe3c6',
+    barn: '#8e2a25', barn2: '#7a231f', disc: '#efe3c6', ring: '#1b1714', red: '#b5312b', blue: '#2f5a8c', gold: '#e1a83a', green: '#4c7a43', cream2: '#d9c9a4' };
+  weavePicture(ctx, W, H, 108, Object.values(C), (x, cols, rows) => {
+    pictureBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16;
+    x.fillStyle = C.barn; x.fillRect(fx, fy, fw, fh);
+    x.fillStyle = C.barn2; for (let y = fy + 6; y < fy + fh; y += 7) x.fillRect(fx, y, fw, 1); // planks
+    const rosette = (cx, cy, r, points, cols2) => {
+      // scalloped cream disc with a dark ring
+      x.fillStyle = C.disc;
+      for (let i = 0; i < points * 2; i++) { const a = (i / (points * 2)) * Math.PI * 2; x.beginPath(); x.arc(cx + Math.cos(a) * r, cy + Math.sin(a) * r, r * 0.13, 0, Math.PI * 2); x.fill(); }
+      x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); x.fill();
+      x.strokeStyle = C.ring; x.lineWidth = Math.max(1, r * 0.06); x.beginPath(); x.arc(cx, cy, r * 0.9, 0, Math.PI * 2); x.stroke();
+      // star points: long diamonds, each split into a light and a dark half
+      for (let i = 0; i < points; i++) {
+        const a = (i / points) * Math.PI * 2 - Math.PI / 2, L = r * 0.84, w = r * Math.tan(Math.PI / points) * 0.42;
+        const tip = [cx + Math.cos(a) * L, cy + Math.sin(a) * L], mid = [cx + Math.cos(a) * L * 0.45, cy + Math.sin(a) * L * 0.45];
+        const side = (sgn) => [mid[0] + Math.cos(a + Math.PI / 2) * w * sgn, mid[1] + Math.sin(a + Math.PI / 2) * w * sgn];
+        x.fillStyle = cols2[i % cols2.length]; x.beginPath(); x.moveTo(cx, cy); x.lineTo(...side(1)); x.lineTo(...tip); x.closePath(); x.fill();
+        x.fillStyle = cols2[(i + 1) % cols2.length]; x.beginPath(); x.moveTo(cx, cy); x.lineTo(...side(-1)); x.lineTo(...tip); x.closePath(); x.fill();
+      }
+      x.fillStyle = C.ring; x.beginPath(); x.arc(cx, cy, r * 0.14, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.gold; x.beginPath(); x.arc(cx, cy, r * 0.08, 0, Math.PI * 2); x.fill();
+    };
+    const cy = fy + fh / 2;
+    rosette(cols / 2, cy, fh * 0.37, 8, [C.red, C.blue, C.gold, C.red, C.blue, C.gold, C.red, C.blue]);
+    for (const sx of [-1, 1]) rosette(cols / 2 + sx * fw * 0.355, cy, fh * 0.15, 6, [C.gold, C.red, C.blue]);
+    // tulips in the four corners: three petals on a stem with two leaves
+    for (const [tx, ty] of [[fx + 7, fy + 9], [fx + fw - 7, fy + 9], [fx + 7, fy + fh - 3], [fx + fw - 7, fy + fh - 3]]) {
+      x.fillStyle = C.green; x.fillRect(tx - 0.5, ty - 2, 1.2, 7);
+      x.beginPath(); x.ellipse(tx - 2.2, ty + 2, 2.2, 0.9, -0.6, 0, Math.PI * 2); x.ellipse(tx + 2.4, ty + 2.5, 2.2, 0.9, 0.6, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.gold; x.beginPath(); x.ellipse(tx, ty - 4, 1.6, 2.6, 0, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.red; x.beginPath(); x.ellipse(tx - 1.8, ty - 3.4, 1.3, 2.4, -0.4, 0, Math.PI * 2); x.ellipse(tx + 1.8, ty - 3.4, 1.3, 2.4, 0.4, 0, Math.PI * 2); x.fill();
+    }
+  });
+}
+
+// Lone Star quilt: one big eight-pointed star pieced from little diamonds whose colours ripple out from the
+// centre, on navy with scattered stars. Drawn as fabric pieces (crisp edges, a dark seam round each diamond).
+function americaLoneStar(ctx, W, H, seed) {
+  const R = rng(seed + 91);
+  const ring = ['#f2d27a', '#e9a43f', '#d4672f', '#a8322f', '#7c2346', '#3f4f8c', '#5f86b8', '#a9c4d8', '#efe3c6'];
+  const C = { navy: '#1f2c4c', bind: '#141c33', red: '#a8322f', cream: '#efe3c6', dot: '#d9cdb0', seam: 'rgba(15,20,38,.55)' };
+  const u = H / 100, bw = 6 * u;
+  ctx.fillStyle = C.bind; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = C.red; ctx.fillRect(bw - 1.2 * u, bw - 1.2 * u, W - 2 * bw + 2.4 * u, H - 2 * bw + 2.4 * u);
+  ctx.fillStyle = C.navy; ctx.fillRect(bw, bw, W - 2 * bw, H - 2 * bw);
+  stitchRect(ctx, bw * 0.5, bw * 0.5, W - bw, H - bw, 2.2 * u, 0.35 * u, 'rgba(239,227,198,.7)');
+  const cx = W / 2, cy = H / 2, L = (H - 2 * bw) * 0.47, half = Math.PI / 8, steps = 7;
+  const edge = L / (2 * Math.cos(half)), cell = edge / steps;
+  // scattered stars, clear of the big one
+  ctx.fillStyle = C.dot;
+  for (let i = 0; i < 70; i++) {
+    const sx = bw + 3 * u + R() * (W - 2 * bw - 6 * u), sy = bw + 3 * u + R() * (H - 2 * bw - 6 * u);
+    if (Math.hypot(sx - cx, sy - cy) < L + 3 * u) continue;
+    star5(ctx, sx, sy, (0.7 + R() * 0.6) * u);
+  }
+  ctx.lineJoin = 'round';
+  for (let k = 0; k < 8; k++) {
+    const axis = -Math.PI / 2 + k * Math.PI / 4;
+    const e1 = [Math.cos(axis + half) * cell, Math.sin(axis + half) * cell], e2 = [Math.cos(axis - half) * cell, Math.sin(axis - half) * cell];
+    for (let i = 0; i < steps; i++) for (let j = 0; j < steps; j++) {
+      const p = (a, b) => [cx + e1[0] * a + e2[0] * b, cy + e1[1] * a + e2[1] * b];
+      const q = [p(i, j), p(i + 1, j), p(i + 1, j + 1), p(i, j + 1)];
+      ctx.fillStyle = ring[Math.round(((i + j) / (2 * steps - 2)) * (ring.length - 1))];
+      ctx.beginPath(); q.forEach(([x, y], n) => (n ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = C.seam; ctx.lineWidth = 0.32 * u; ctx.stroke();
+    }
+  }
+}
+
+// Bison on the plains, in the manner of an old hooked rug: a big shaggy bull against a low sun and rolling hills.
+function americaBison(ctx, W, H) {
+  const C = { frame: '#2a1d14', line: '#ead9b5', accent: '#c8742f', star: '#ead9b5',
+    sky: '#e9d3a2', sky2: '#e3bf86', sun: '#d9672e', hill: '#9a8a52', hill2: '#7d7444', grass: '#c39b48', grass2: '#a8823a',
+    fur: '#4a2f1d', fur2: '#6b4429', fur3: '#2f1d12', horn: '#e6dcc4' };
+  weavePicture(ctx, W, H, 104, Object.values(C), (x, cols, rows) => {
+    pictureBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16;
+    // sky in hooked rows, with abrash bands
+    for (let y = fy; y < fy + fh; y++) { x.fillStyle = (Math.floor((y - fy) / 4) % 3 === 1) ? C.sky2 : C.sky; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    x.fillStyle = C.sun; x.beginPath(); x.arc(fx + fw * 0.78, fy + fh * 0.42, fh * 0.16, 0, Math.PI * 2); x.fill();
+    // hills and prairie
+    x.fillStyle = C.hill; x.beginPath(); x.moveTo(fx, fy + fh * 0.58); x.quadraticCurveTo(fx + fw * 0.3, fy + fh * 0.44, fx + fw * 0.55, fy + fh * 0.57); x.quadraticCurveTo(fx + fw * 0.8, fy + fh * 0.68, fx + fw, fy + fh * 0.55); x.lineTo(fx + fw, fy + fh); x.lineTo(fx, fy + fh); x.fill();
+    x.fillStyle = C.hill2; x.beginPath(); x.moveTo(fx, fy + fh * 0.68); x.quadraticCurveTo(fx + fw * 0.5, fy + fh * 0.6, fx + fw, fy + fh * 0.7); x.lineTo(fx + fw, fy + fh); x.lineTo(fx, fy + fh); x.fill();
+    x.fillStyle = C.grass; x.fillRect(fx, fy + fh * 0.76, fw, fh);
+    x.fillStyle = C.grass2; for (let i = 0; i < 70; i++) { const gx = fx + (i * 37) % fw, gy = fy + fh * 0.78 + ((i * 13) % 18); x.fillRect(gx, gy, 1, 2.5); }
+    x.restore();
+    // the bison, facing left. Body and hump, head low with beard, horns, legs, tail.
+    const bx = fx + fw * 0.46, by = fy + fh * 0.66, s = fh / 100;
+    x.fillStyle = C.fur;
+    x.beginPath(); x.ellipse(bx + 8 * s, by - 6 * s, 26 * s, 15 * s, 0, 0, Math.PI * 2); x.fill();          // body
+    x.fillStyle = C.fur3; for (const [lx, w] of [[-10, 4.5], [-3, 4.5], [20, 4], [27, 4]]) x.fillRect(bx + lx * s, by + 2 * s, w * s, 15 * s); // legs
+    // shaggy hump and mane: big and high over the front legs, in the lighter brown, with tufts
+    x.fillStyle = C.fur2; x.beginPath(); x.ellipse(bx - 6 * s, by - 16 * s, 18 * s, 17 * s, -0.25, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.fur; for (const [tx, ty] of [[-14, -22], [-6, -27], [2, -25], [-18, -12], [-10, -10]]) { x.beginPath(); x.ellipse(bx + tx * s, by + ty * s, 3 * s, 1.6 * s, 0.4, 0, Math.PI * 2); x.fill(); }
+    // head held low, darker, with a beard
+    x.fillStyle = C.fur3; x.beginPath(); x.ellipse(bx - 25 * s, by - 1 * s, 8.5 * s, 10 * s, 0.25, 0, Math.PI * 2); x.fill();
+    x.beginPath(); x.moveTo(bx - 31 * s, by + 5 * s); x.lineTo(bx - 21 * s, by + 5 * s); x.lineTo(bx - 27 * s, by + 14 * s); x.closePath(); x.fill();
+    // short horn curving up from the top of the head, and a small dark eye with a light rim
+    x.strokeStyle = C.horn; x.lineWidth = 2.2; x.lineCap = 'round';
+    x.beginPath(); x.moveTo(bx - 23 * s, by - 9 * s); x.quadraticCurveTo(bx - 21 * s, by - 15 * s, bx - 26 * s, by - 17 * s); x.stroke();
+    x.fillStyle = C.horn; x.beginPath(); x.arc(bx - 28.5 * s, by - 3 * s, 1.5, 0, Math.PI * 2); x.fill();
+    x.fillStyle = '#000000'; x.beginPath(); x.arc(bx - 28.5 * s, by - 3 * s, 0.8, 0, Math.PI * 2); x.fill();
+    x.strokeStyle = C.fur3; x.lineWidth = 1.5 * s * 1.4; x.beginPath(); x.moveTo(bx + 33 * s, by - 10 * s); x.quadraticCurveTo(bx + 38 * s, by - 4 * s, bx + 36 * s, by + 4 * s); x.stroke(); // tail
+  });
+}
+
+// Buffalo check: red and black squares with a twill weave, wrapped in a cream blanket-stitch edge.
+function americaPlaid(ctx, W, H) {
+  const C = { red: '#a3242a', black: '#17121a', mix: '#5b1a20', cream: '#ece1c8' };
+  const u = H / 100, sq = 10 * u, edge = 3 * u;
+  ctx.fillStyle = C.red; ctx.fillRect(0, 0, W, H);
+  for (let y = 0; y < H; y += sq) for (let x = 0; x < W; x += sq) {
+    const a = Math.floor(x / sq) % 2, b = Math.floor(y / sq) % 2;
+    ctx.fillStyle = a && b ? C.black : (a || b ? C.mix : C.red);
+    ctx.fillRect(x, y, sq + 0.5, sq + 0.5);
+  }
+  // twill: fine diagonal threads over everything
+  ctx.strokeStyle = 'rgba(0,0,0,.18)'; ctx.lineWidth = 0.28 * u;
+  for (let d = -H; d < W; d += 0.9 * u) { ctx.beginPath(); ctx.moveTo(d, H); ctx.lineTo(d + H, 0); ctx.stroke(); }
+  ctx.strokeStyle = 'rgba(255,230,220,.07)';
+  for (let d = -H + 0.45 * u; d < W; d += 0.9 * u) { ctx.beginPath(); ctx.moveTo(d, H); ctx.lineTo(d + H, 0); ctx.stroke(); }
+  // blanket-stitch edge
+  ctx.fillStyle = C.black; frameRect(ctx, 0, 0, W, H, edge);
+  // blanket stitch: a cream line along the edge with evenly spaced ticks reaching in; each side fits a whole
+  // number of ticks and the corners get one diagonal tick, like a hand-finished blanket
+  ctx.strokeStyle = C.cream; ctx.lineWidth = 0.55 * u; ctx.lineCap = 'square';
+  const o = edge * 0.45, reach = edge + 1.4 * u, inset = edge * 1.2;
+  ctx.beginPath();
+  const ticks = (len, at) => { const { n, d } = evenSteps(len, 2.4 * u); for (let i = 1; i < n; i++) at(i * d); };
+  ticks(W - 2 * inset, (a) => { ctx.moveTo(inset + a, o); ctx.lineTo(inset + a, reach); ctx.moveTo(inset + a, H - o); ctx.lineTo(inset + a, H - reach); });
+  ticks(H - 2 * inset, (a) => { ctx.moveTo(o, inset + a); ctx.lineTo(reach, inset + a); ctx.moveTo(W - o, inset + a); ctx.lineTo(W - reach, inset + a); });
+  for (const [cx, cy, sx, sy] of [[o, o, 1, 1], [W - o, o, -1, 1], [o, H - o, 1, -1], [W - o, H - o, -1, -1]]) {
+    ctx.moveTo(cx, cy); ctx.lineTo(cx + sx * (reach - o) * 1.1, cy + sy * (reach - o) * 1.1);
+  }
+  ctx.stroke();
+  ctx.lineWidth = 0.45 * u; ctx.lineJoin = 'miter';
+  ctx.strokeRect(o, o, W - 2 * o, H - 2 * o);
+}
+
+
 // Hooked rug: re-make a finished picture out of rows of wool loops, the way American hooked rugs are made.
 // Colours are cut down to a few dyed shades per channel (so skies become bands, like real hooking), each loop is
 // a little rounded tuft with a light top and a shaded bottom, rows are slightly offset and each loop's hue wobbles
@@ -987,11 +1418,19 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.america === 'basketball') americaBasketball(ctx, W, H);
   else if (P.america === 'diner') americaDiner(ctx, W, H);
   else if (P.america === 'route66') americaRoute66(ctx, W, H);
+  else if (P.america === 'flag') americaFlag(ctx, W, H, seed);
+  else if (P.america === 'mesa') americaMesa(ctx, W, H);
+  else if (P.america === 'quilt') americaQuilt(ctx, W, H, seed);
+  else if (P.america === 'plaid') americaPlaid(ctx, W, H);
+  else if (P.america === 'canyon') americaCanyon(ctx, W, H, seed);
+  else if (P.america === 'hex') americaHex(ctx, W, H);
+  else if (P.america === 'lonestar') americaLoneStar(ctx, W, H, seed);
+  else if (P.america === 'bison') americaBison(ctx, W, H);
   else if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
   else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
-  if (P.america) hookedFrame(ctx, W, H, seed); else addWeave(ctx, W, H, seed);
+  if (P.hooked) hookedFrame(ctx, W, H, seed); else addWeave(ctx, W, H, seed);
 
   // Back side: same pattern, faded and flattened.
   const b = document.createElement('canvas');
