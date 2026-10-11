@@ -138,8 +138,9 @@ function paintRug(def){
     if ((x & 1) || (y & 1)){ const i = (y*W2 + x)*4, m = ((x & 1) && (y & 1)) ? .8 : .9; q[i] *= m; q[i + 1] *= m; q[i + 2] *= m; }
   }
   g.putImageData(fd, FR, 0);
-  g.lineCap = 'round';
-  for (const side of [0, 1]){
+  // No fringe here: the app crops the canvas to the rug body, and the round ends of the fringe strands reached a
+  // pixel into it, which showed as a pale dashed line down the left and right edges.
+  for (const side of []){
     const x0 = side ? FR + W2 : FR, dir = side ? 1 : -1;
     for (let y = 3; y < CH - 2; y += 3.2){
       const len = FR - 3 - R()*9; g.strokeStyle = def.pal.fringe || '#efe3c8'; g.globalAlpha = .7 + R()*.3; g.lineWidth = 1.4;

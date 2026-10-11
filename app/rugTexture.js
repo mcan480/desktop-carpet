@@ -382,8 +382,16 @@ function kilim(ctx, W, H) {
 // hand-knotted look instead of looking printed.
 function knotGrid(ctx, W, H, rowsWanted) {
   const s = Math.round(H / rowsWanted);
-  const cols = Math.floor(W / s), rows = Math.floor(H / s);
-  const blk = (x, y, c) => { if (x < 0 || y < 0 || x >= cols || y >= rows) return; ctx.fillStyle = c; ctx.fillRect(x * s, y * s, s + 0.5, s + 0.5); };
+  const cols = Math.round(W / s), rows = Math.round(H / s);
+  // Knots stretch by a fraction of a pixel so the grid reaches every edge of the canvas (a whole number of square
+  // knots rarely fits exactly, and the leftover strip showed as a pale line along the rug's edge). Edges are rounded
+  // to whole pixels so neighbouring knots meet without a seam.
+  const kx = W / cols, ky = H / rows;
+  const blk = (x, y, c) => {
+    if (x < 0 || y < 0 || x >= cols || y >= rows) return;
+    const x0 = Math.round(x * kx), y0 = Math.round(y * ky);
+    ctx.fillStyle = c; ctx.fillRect(x0, y0, Math.round((x + 1) * kx) - x0, Math.round((y + 1) * ky) - y0);
+  };
   return { s, cols, rows, blk };
 }
 
