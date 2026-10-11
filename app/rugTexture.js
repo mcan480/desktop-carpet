@@ -28,6 +28,20 @@ export const STYLES = {
   basketbol: { name: 'Basketbol Sahası',     america: 'basketball', hooked: true },
   diner:     { name: 'Diner',                america: 'diner', fonts: true, hooked: true },
   route66:   { name: 'Route 66',             america: 'route66', fonts: true, hooked: true },
+  // Canada pack. Woven / pieced / knotted:
+  akcaagac:  { name: 'Akçaağaç',            canada: 'flag' },
+  yaprak:    { name: 'Akçaağaç Yorganı',    canada: 'quilt' },
+  kayalik:   { name: 'Kayalık Dağlar',      canada: 'rockies' },
+  atlantik:  { name: 'Atlantik Ekosesi',    canada: 'tartan' },
+  geyik:     { name: 'Kanada Geyiği',       canada: 'moose' },
+  kazlar:    { name: 'Kanada Kazları',      canada: 'geese' },
+  dalgic:    { name: 'Buz Dalgıcı',         canada: 'loon' },
+  // ...and hooked rugs:
+  kanadakart:{ name: 'Kanada’dan Selamlar', canada: 'postcard', fonts: true, hooked: true },
+  hokey:     { name: 'Hokey Sahası',        canada: 'hockey', hooked: true },
+  kuzeyisik: { name: 'Kuzey Işıkları',      canada: 'aurora', hooked: true },
+  fener:     { name: 'Deniz Feneri',        canada: 'lighthouse', hooked: true },
+  kutupayisi:{ name: 'Kutup Ayısı',         canada: 'bear', hooked: true },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -697,7 +711,7 @@ const SCENES = [
 
 // Large-letter postcard: "Greetings from AMERICA", every letter a little scene, over a blue sky and green hills.
 // Sized in loops of the finished hooked rug, so the script is thick enough to read once it's made of wool.
-function americaPostcard(ctx, W, H) {
+function americaPostcard(ctx, W, H, word = 'AMERICA', scenes = SCENES) {
   const { cols, rows } = hookedPictureLoops(W, H), Lx = W / cols, Ly = H / rows;
   ctx.fillStyle = '#f3ead6'; ctx.fillRect(0, 0, W, H);                       // card
   const px = 2 * Lx, py = 2 * Ly, pw = W - 2 * px, ph = H - 2 * py;
@@ -714,7 +728,7 @@ function americaPostcard(ctx, W, H) {
 
   // AMERICA: tall block letters, each filled with a scene, with a cream outline and a navy extrusion. Built at full
   // width on its own canvas, then squeezed sideways to fit, like the condensed letters on the real cards.
-  const word = 'AMERICA', cap = 22 * Ly, base = 48 * Ly;
+  const cap = 22 * Ly, base = 48 * Ly;
   const probe = document.createElement('canvas').getContext('2d'); probe.font = blockFont(100);
   const F = cap / (probe.measureText('M').actualBoundingBoxAscent / 100);
   probe.font = blockFont(F);
@@ -731,7 +745,7 @@ function americaPostcard(ctx, W, H) {
     w2.strokeStyle = '#f6efdc'; w2.lineWidth = line; w2.strokeText(ch, x, wb);
     const off = document.createElement('canvas'); off.width = Math.ceil(cw) + 4; off.height = Math.ceil(F * 1.05);
     const oc = off.getContext('2d');
-    SCENES[i % SCENES.length](oc, off.width, off.height);
+    scenes[i % scenes.length](oc, off.width, off.height);
     oc.globalCompositeOperation = 'destination-in'; oc.font = w2.font; oc.textBaseline = 'alphabetic'; oc.fillStyle = '#000'; oc.fillText(ch, 2, F * 0.97);
     w2.drawImage(off, x - 2, wb - F * 0.97);
     x += cw + gap;
@@ -946,6 +960,513 @@ function americaRoute66(ctx, W, H) {
   // a frame like an old enamel sign
   ctx.fillStyle = '#1a1a1d'; frameRect(ctx, 0, 0, W, H, 2.4 * u);
   ctx.fillStyle = '#f6f2e6'; frameRect(ctx, 2.4 * u, 2.4 * u, W - 4.8 * u, H - 4.8 * u, 0.6 * u);
+}
+
+// ---------- Canada pack ----------
+// The same three crafts as the USA pack: woven and pieced rugs, folk pictures knotted on a grid, and hooked rugs,
+// which are Canada's own tradition (the hooked mats of the Maritimes and Newfoundland).
+
+// The flag's eleven-point maple leaf: the right half, from the top point round to the foot of the stem, x right and
+// y up, the leaf spanning about -1..1. The left half is its mirror.
+const MAPLE = [[0, 1], [0.13, 0.7], [0.32, 0.8], [0.22, 0.28], [0.62, 0.5], [0.64, 0.36], [0.96, 0.3], [0.74, 0.04],
+  [0.84, -0.12], [0.36, -0.2], [0.4, -0.42], [0.05, -0.36], [0.05, -0.8]];
+function mapleLeaf(ctx, cx, cy, s, rot = 0) {
+  const pts = [...MAPLE, ...MAPLE.slice().reverse().map(([x, y]) => [-x, y])];
+  const c = Math.cos(rot), sn = Math.sin(rot);
+  ctx.beginPath();
+  pts.forEach(([x, y], i) => {
+    const px = x * s, py = -y * s, X = cx + px * c - py * sn, Y = cy + px * sn + py * c;
+    i ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y);
+  });
+  ctx.closePath(); ctx.fill();
+}
+
+// Red, white, red, with the maple leaf: woven, with a dark red binding and a stitched edge, like the flag rug.
+function canadaFlag(ctx, W, H) {
+  const C = { red: '#b3282d', red2: '#a12327', white: '#efe6d2', white2: '#e5dac2', bind: '#6e1a1c' };
+  const u = H / 100, b = 4.2 * u;
+  ctx.fillStyle = C.bind; ctx.fillRect(0, 0, W, H);
+  const x0 = b, y0 = b, fw = W - 2 * b, fh = H - 2 * b, side = (fw - fh) / 2;
+  ctx.fillStyle = C.red; ctx.fillRect(x0, y0, side, fh); ctx.fillRect(x0 + fw - side, y0, side, fh);
+  ctx.fillStyle = C.white; ctx.fillRect(x0 + side, y0, fh, fh);
+  // faint woven rows
+  for (let k = 0, y = 0; y < fh; k++, y += 0.9 * u) if (k % 2 === 0) {
+    ctx.fillStyle = C.red2; ctx.fillRect(x0, y0 + y, side, 0.45 * u); ctx.fillRect(x0 + fw - side, y0 + y, side, 0.45 * u);
+    ctx.fillStyle = C.white2; ctx.fillRect(x0 + side, y0 + y, fh, 0.45 * u);
+  }
+  ctx.fillStyle = C.red; mapleLeaf(ctx, W / 2, y0 + fh * 0.48, fh * 0.39);
+  const fade = ctx.createLinearGradient(0, 0, W, H);
+  fade.addColorStop(0, 'rgba(255,240,215,0)'); fade.addColorStop(1, 'rgba(255,240,215,.12)');
+  ctx.fillStyle = fade; ctx.fillRect(0, 0, W, H);
+  stitchRect(ctx, b * 0.5, b * 0.5, W - b, H - b, 2.2 * u, 0.4 * u, 'rgba(239,230,210,.72)');
+}
+
+// Pieced quilt of Maple Leaf blocks, the old nine-patch: four half-square triangles, four solid squares and a stem,
+// in autumn fabrics on light calicos, with sashing, red cornerstones and a sawtooth border.
+function canadaLeafQuilt(ctx, W, H, seed) {
+  const R = rng(seed + 71), u = H / 100;
+  const leaves = ['#b3352b', '#cf5f2c', '#e0a33a', '#8e3424', '#c47f2e', '#a83a4a', '#7a8234'];
+  const bgs = ['#efe4cb', '#e8dbbd', '#f2eadb'];
+  const C = { border: '#2f4a36', saw1: '#efe4cb', saw2: '#b3352b', sash: '#d6c39b', stone: '#b3352b' };
+  const bw = 9 * u;
+  ctx.fillStyle = C.border; ctx.fillRect(0, 0, W, H);
+  const cb = bw * 0.9, m = bw * 0.05;
+  const teeth = (x0, y0, len, horiz, flip) => {
+    const { n, d } = evenSteps(len, 4.5 * u), depth = cb * 0.62;
+    for (let k = 0; k < n; k++) {
+      ctx.fillStyle = k % 2 ? C.saw1 : C.saw2;
+      ctx.beginPath();
+      if (horiz) { const x = x0 + k * d; ctx.moveTo(x, y0); ctx.lineTo(x + d, y0); ctx.lineTo(x + d / 2, y0 + flip * depth); }
+      else { const y = y0 + k * d; ctx.moveTo(x0, y); ctx.lineTo(x0, y + d); ctx.lineTo(x0 + flip * depth, y + d / 2); }
+      ctx.closePath(); ctx.fill();
+    }
+  };
+  const top = m + cb * 0.19, bot = H - m - cb * 0.19, lft = m + cb * 0.19, rgt = W - m - cb * 0.19;
+  teeth(m + cb, top, W - 2 * (m + cb), true, 1); teeth(m + cb, bot, W - 2 * (m + cb), true, -1);
+  teeth(lft, m + cb, H - 2 * (m + cb), false, 1); teeth(rgt, m + cb, H - 2 * (m + cb), false, -1);
+  for (const [x, y] of [[m, m], [W - m - cb, m], [m, H - m - cb], [W - m - cb, H - m - cb]]) {
+    ctx.fillStyle = C.saw1; ctx.fillRect(x + cb * 0.15, y + cb * 0.15, cb * 0.7, cb * 0.7);
+    ctx.fillStyle = C.saw2; mapleLeaf(ctx, x + cb / 2, y + cb * 0.52, cb * 0.3);
+  }
+  // blocks
+  const fx = bw, fy = bw, fw = W - 2 * bw, fh = H - 2 * bw, bc = 5, br = 3, sash = 1.8 * u;
+  const bs = Math.min((fw - (bc + 1) * sash) / bc, (fh - (br + 1) * sash) / br);
+  const gw = bc * bs + (bc + 1) * sash, gh = br * bs + (br + 1) * sash, gx = fx + (fw - gw) / 2, gy = fy + (fh - gh) / 2;
+  ctx.fillStyle = C.sash; ctx.fillRect(fx, fy, fw, fh);
+  const layout = [['h0', 'h0', 'L'], ['L', 'L', 'h1'], ['S', 'L', 'h1']];
+  for (let j = 0; j < br; j++) for (let i = 0; i < bc; i++) {
+    const x = gx + sash + i * (bs + sash), y = gy + sash + j * (bs + sash), q = bs / 3;
+    const bg = bgs[(i + j) % bgs.length], lf = leaves[(i * 3 + j * 2 + Math.floor(R() * 2)) % leaves.length];
+    ctx.fillStyle = bg; ctx.fillRect(x, y, bs, bs);
+    ctx.fillStyle = lf; ctx.strokeStyle = lf;
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
+      const ux = x + c * q, uy = y + r * q, t = layout[r][c];
+      ctx.beginPath();
+      if (t === 'L') { ctx.fillRect(ux, uy, q + 0.5, q + 0.5); continue; }
+      if (t === 'h0') { ctx.moveTo(ux + q, uy); ctx.lineTo(ux + q, uy + q); ctx.lineTo(ux, uy + q); ctx.closePath(); ctx.fill(); continue; }
+      if (t === 'h1') { ctx.moveTo(ux, uy); ctx.lineTo(ux + q, uy); ctx.lineTo(ux, uy + q); ctx.closePath(); ctx.fill(); continue; }
+      ctx.lineWidth = q * 0.2; ctx.lineCap = 'butt'; ctx.moveTo(ux + q, uy); ctx.lineTo(ux + q * 0.18, uy + q * 0.82); ctx.stroke(); // stem
+    }
+  }
+  // cornerstones where the sashing crosses
+  ctx.fillStyle = C.stone;
+  for (let j = 0; j <= br; j++) for (let i = 0; i <= bc; i++) ctx.fillRect(gx + i * (bs + sash), gy + j * (bs + sash), sash, sash);
+  // tiny calico print over the patchwork, and running-stitch quilting along the seams
+  ctx.fillStyle = 'rgba(255,255,255,.16)';
+  for (let yy = fy + 0.6 * u; yy < fy + fh; yy += 1.3 * u) for (let xx = fx + 0.6 * u + ((yy / u) % 2) * 0.6 * u; xx < fx + fw; xx += 1.3 * u) { ctx.beginPath(); ctx.arc(xx, yy, 0.18 * u, 0, Math.PI * 2); ctx.fill(); }
+  ctx.strokeStyle = 'rgba(250,240,220,.55)'; ctx.lineWidth = 0.32 * u; ctx.setLineDash([1.1 * u, 0.9 * u]);
+  for (let j = 0; j < br; j++) for (let i = 0; i < bc; i++) {
+    const x = gx + sash + i * (bs + sash), y = gy + sash + j * (bs + sash);
+    ctx.strokeRect(x + 0.8 * u, y + 0.8 * u, bs - 1.6 * u, bs - 1.6 * u);
+  }
+  ctx.setLineDash([]);
+}
+
+// A woven landscape of the Rockies at dawn: banded sky, jagged snow-capped peaks, a turquoise lake with their
+// reflection and a red canoe, pines along the shore, all on the knot grid. Border of little stepped pines.
+function canadaRockies(ctx, W, H, seed) {
+  const R = rng(seed + 88);
+  const g = knotGrid(ctx, W, H, 96), { cols, rows, blk } = g;
+  const C = { frame: '#1d2b26', line: '#ece2c8', tooth: '#3f8f86',
+    sky: ['#2c3f6e', '#3d5689', '#5f74a8', '#9a92c0', '#d8a2a8', '#f1bf9c', '#f7dbb0'],
+    far: '#8796bd', far2: '#a3afd0', rock: '#727a95', rock2: '#5a617c', snow: '#f4f1ea', snow2: '#d8dbe8',
+    lake: '#3fa3a8', lake2: '#2c7f88', lake3: '#79c9c4', pine: '#1f3d2f', pine2: '#2a5240', shore: '#4b5b3c', canoe: '#c0392b', man: '#2a2220' };
+  const fb = 4;
+  ctx.fillStyle = C.frame; ctx.fillRect(0, 0, W, H);
+  const x0 = fb + 1, y0 = fb + 1, x1 = cols - fb - 2, y1 = rows - fb - 2;
+  for (let x = fb; x <= cols - fb - 1; x++) { blk(x, fb, C.line); blk(x, rows - fb - 1, C.line); }
+  for (let y = fb; y <= rows - fb - 1; y++) { blk(fb, y, C.line); blk(cols - fb - 1, y, C.line); }
+  // border: little stepped pines (3 knots tall) evenly spaced, pointing inward
+  const pineRow = (len, put) => { const { n, d } = evenSteps(len, 6); for (let i = 0; i < n; i++) put(Math.round(i * d + d / 2)); };
+  pineRow(cols - 2 * fb - 2, (a) => { const x = fb + 1 + a; for (const [dx, k] of [[0, 1], [-1, 2], [0, 2], [1, 2], [0, 3], [-1, 3], [1, 3]]) { blk(x + dx, k, C.tooth); blk(x + dx, rows - 1 - k, C.tooth); } });
+  pineRow(rows - 2 * fb - 2, (a) => { const y = fb + 1 + a; for (const [dy, k] of [[0, 1], [-1, 2], [0, 2], [1, 2], [0, 3], [-1, 3], [1, 3]]) { blk(k, y + dy, C.tooth); blk(cols - 1 - k, y + dy, C.tooth); } });
+  for (const [cx, cy] of [[2, 2], [cols - 3, 2], [2, rows - 3], [cols - 3, rows - 3]]) { blk(cx, cy, C.line); blk(cx - 1, cy, C.tooth); blk(cx + 1, cy, C.tooth); blk(cx, cy - 1, C.tooth); blk(cx, cy + 1, C.tooth); }
+
+  const fw = x1 - x0 + 1, fh = y1 - y0 + 1, horizon = y0 + Math.round(fh * 0.55);
+  for (let y = y0; y < horizon; y++) for (let x = x0; x <= x1; x++) {
+    const t = (y - y0) / (horizon - y0);
+    const band = Math.min(C.sky.length - 1, Math.max(0, Math.floor(t * C.sky.length + (((x * 7 + y * 3) % 5) - 2) * 0.06)));
+    blk(x, y, C.sky[band]);
+  }
+  // peaks: each column's height is the highest of a few jagged triangles
+  const range = (peaks, jag) => {
+    const h = new Array(cols).fill(0);
+    for (const [cx, half, top] of peaks) for (let x = Math.round(cx - half); x <= Math.round(cx + half); x++) if (x >= x0 && x <= x1) {
+      const v = top * (1 - Math.abs(x - cx) / half) + ((x * 13) % 3 === 0 ? jag : 0);
+      if (v > h[x]) h[x] = v;
+    }
+    return h.map((v) => Math.round(v));
+  };
+  const far = range([[x0 + fw * 0.08, fw * 0.16, 16], [x0 + fw * 0.3, fw * 0.14, 20], [x0 + fw * 0.55, fw * 0.15, 17], [x0 + fw * 0.82, fw * 0.16, 22], [x0 + fw * 1.0, fw * 0.12, 15]], 1);
+  for (let x = x0; x <= x1; x++) for (let k = 0; k < far[x]; k++) blk(x, horizon - 1 - k, k > far[x] - 4 ? C.far2 : C.far);
+  const nearP = [[x0 + fw * 0.18, fw * 0.17, 30], [x0 + fw * 0.44, fw * 0.2, 36], [x0 + fw * 0.7, fw * 0.16, 27], [x0 + fw * 0.93, fw * 0.14, 24]];
+  const near = range(nearP, 1);
+  for (let x = x0; x <= x1; x++) {
+    // which peak owns this column, so its sunlit (left) face is lighter
+    let own = nearP[0]; for (const pk of nearP) if (Math.abs(x - pk[0]) < Math.abs(x - own[0])) own = pk;
+    for (let k = 0; k < near[x]; k++) {
+      const fromTop = near[x] - k, snowLine = Math.round(near[x] * 0.32) + ((x * 7) % 3);
+      blk(x, horizon - 1 - k, fromTop <= snowLine ? (x < own[0] ? C.snow : C.snow2) : (x < own[0] ? C.rock : C.rock2));
+    }
+  }
+  // treeline along the shore
+  for (let x = x0; x <= x1; x++) { const h = 2 + ((x * 5) % 4 === 0 ? 2 : (x * 3) % 5 === 0 ? 1 : 0); for (let k = 0; k < h; k++) blk(x, horizon - 1 - k + 1, x % 2 ? C.pine : C.pine2); }
+  // lake with the mountains' reflection and ripples
+  const lakeBottom = y1 - 7;
+  for (let y = horizon + 1; y <= lakeBottom; y++) for (let x = x0; x <= x1; x++) {
+    const d = y - horizon, refl = d < near[x] * 0.7;
+    blk(x, y, refl ? C.lake2 : C.lake);
+    if (y % 3 === 0 && (x + y * 5) % 11 < 4) blk(x, y, C.lake3);
+  }
+  // red canoe with a paddler
+  const cx = x0 + Math.round(fw * 0.62), cy = horizon + Math.round((lakeBottom - horizon) * 0.55);
+  for (let dx = -7; dx <= 7; dx++) { blk(cx + dx, cy, C.canoe); if (Math.abs(dx) < 6) blk(cx + dx, cy + 1, C.canoe); }
+  blk(cx - 8, cy - 1, C.canoe); blk(cx + 8, cy - 1, C.canoe);
+  for (let k = 1; k <= 3; k++) blk(cx, cy - k, C.man); blk(cx, cy - 4, C.man);
+  for (let k = 0; k < 4; k++) blk(cx + 1 + k, cy - 3 + k, C.man); // paddle
+  // shore and big pines in front, left and right
+  for (let y = lakeBottom + 1; y <= y1; y++) for (let x = x0; x <= x1; x++) blk(x, y, (x + y) % 7 === 0 ? C.pine2 : C.shore);
+  const inField = (x, y, c) => { if (x >= x0 && x <= x1 && y >= y0 && y <= y1) blk(x, y, c); };
+  const pine = (px, by, h) => {
+    for (let k = 0; k < h; k++) { const w = Math.round((k / h) * h * 0.32 + ((k % 4) === 3 ? -1 : 0)); for (let dx = -w; dx <= w; dx++) inField(px + dx, by - h + k, dx < 0 ? C.pine2 : C.pine); }
+    inField(px, by, C.shore);
+  };
+  pine(x0 + 4, y1 - 1, Math.round(fh * 0.5)); pine(x0 + 13, y1 - 1, Math.round(fh * 0.36)); pine(x0 + 20, y1, Math.round(fh * 0.24));
+  pine(x1 - 5, y1 - 1, Math.round(fh * 0.46)); pine(x1 - 14, y1, Math.round(fh * 0.3));
+  void R;
+}
+
+// Tartan in the Atlantic colours: navy and spruce green with white, red and gold lines, woven 2/2 twill so the
+// stripes blend where they cross. Blanket-stitched edge.
+function canadaTartan(ctx, W, H) {
+  const u = H / 100;
+  const sett = [['#1d2c52', 18], ['#2f5d46', 14], ['#e9e3d4', 2], ['#2f5d46', 14], ['#1d2c52', 18], ['#b33a32', 3], ['#1d2c52', 6], ['#d1a23c', 2], ['#1d2c52', 6], ['#b33a32', 3]];
+  const seq = []; for (const [c, n] of sett) for (let k = 0; k < n; k++) seq.push(c);
+  const full = [...seq, ...seq.slice().reverse()], n = full.length, t = 0.42 * u;
+  const offX = Math.floor(n / 2 - (W / t / 2) % n + n) % n, offY = Math.floor(n / 2 - (H / t / 2) % n + n) % n;
+  for (let j = 0; j * t < H; j++) for (let i = 0; i * t < W; i++) {
+    ctx.fillStyle = ((i + j) & 3) < 2 ? full[(i + offX) % n] : full[(j + offY) % n];
+    ctx.fillRect(i * t, j * t, t + 0.5, t + 0.5);
+  }
+  const edge = 3 * u;
+  ctx.fillStyle = '#141d36'; frameRect(ctx, 0, 0, W, H, edge);
+  ctx.strokeStyle = '#ece4d0'; ctx.lineWidth = 0.55 * u; ctx.lineCap = 'square';
+  const o = edge * 0.45, reach = edge + 1.4 * u, inset = edge * 1.2;
+  ctx.beginPath();
+  const ticks = (len, at) => { const { n: k, d } = evenSteps(len, 2.4 * u); for (let i = 1; i < k; i++) at(i * d); };
+  ticks(W - 2 * inset, (a) => { ctx.moveTo(inset + a, o); ctx.lineTo(inset + a, reach); ctx.moveTo(inset + a, H - o); ctx.lineTo(inset + a, H - reach); });
+  ticks(H - 2 * inset, (a) => { ctx.moveTo(o, inset + a); ctx.lineTo(reach, inset + a); ctx.moveTo(W - o, inset + a); ctx.lineTo(W - reach, inset + a); });
+  for (const [cx, cy, sx, sy] of [[o, o, 1, 1], [W - o, o, -1, 1], [o, H - o, 1, -1], [W - o, H - o, -1, -1]]) { ctx.moveTo(cx, cy); ctx.lineTo(cx + sx * (reach - o) * 1.1, cy + sy * (reach - o) * 1.1); }
+  ctx.stroke();
+  ctx.lineWidth = 0.45 * u; ctx.strokeRect(o, o, W - 2 * o, H - 2 * o);
+}
+
+// Border for the Canadian folk pictures: like the American one, with a little maple leaf in each corner.
+function canadaBorder(x, cols, rows, C) {
+  pictureBorder(x, cols, rows, C);
+  for (const [cx, cy] of [[2.6, 2.6], [cols - 2.6, 2.6], [2.6, rows - 2.6], [cols - 2.6, rows - 2.6]]) {
+    x.fillStyle = C.frame; x.fillRect(cx - 2.6, cy - 2.6, 5.2, 5.2);
+    x.fillStyle = C.star; mapleLeaf(x, cx, cy + 0.2, 2.5);
+  }
+}
+
+// Folk picture: a moose standing in a lake at dusk, a pale moon, a pine ridge behind.
+function canadaMoose(ctx, W, H) {
+  const C = { frame: '#1f2a24', line: '#e8dcbc', accent: '#c0532f', star: '#e8dcbc',
+    sky: '#f0c27c', sky2: '#e89a6c', sky3: '#b4677c', moon: '#f7e9bd', ridge: '#6b5577', pine: '#243a30', pine2: '#30493b',
+    water: '#6d8ca8', water2: '#56718d', water3: '#a6bccc', fur: '#4a3020', fur2: '#2f1d10', fur3: '#6e4a32', antler: '#d2b98e', reed: '#6b5c32' };
+  weavePicture(ctx, W, H, 104, Object.values(C), (x, cols, rows) => {
+    canadaBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16, wy = fy + fh * 0.66;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    for (let y = fy; y < wy; y++) { const t = (y - fy) / (wy - fy); x.fillStyle = t < 0.3 ? C.sky3 : t < 0.62 ? C.sky2 : C.sky; x.fillRect(fx, y, fw, 1); }
+    x.fillStyle = C.moon; x.beginPath(); x.arc(fx + fw * 0.2, fy + fh * 0.2, fh * 0.08, 0, Math.PI * 2); x.fill();
+    // far ridge and a row of pines along it
+    x.fillStyle = C.ridge; x.beginPath(); x.moveTo(fx, wy); x.lineTo(fx, fy + fh * 0.5); x.quadraticCurveTo(fx + fw * 0.35, fy + fh * 0.4, fx + fw * 0.6, fy + fh * 0.5); x.quadraticCurveTo(fx + fw * 0.85, fy + fh * 0.56, fx + fw, fy + fh * 0.46); x.lineTo(fx + fw, wy); x.fill();
+    for (let i = 0, px = fx; px < fx + fw; i++, px += 3.4) {
+      const h = 6 + ((i * 7) % 5) * 1.6, by = wy + 0.5;
+      x.fillStyle = i % 2 ? C.pine : C.pine2; x.beginPath(); x.moveTo(px, by - h); x.lineTo(px + 2.4, by); x.lineTo(px - 2.4, by); x.fill();
+    }
+    // lake with ripples
+    x.fillStyle = C.water; x.fillRect(fx, wy, fw, fh);
+    x.fillStyle = C.water3; for (let y = wy + 3; y < fy + fh; y += 4) for (let k = 0; k < 6; k++) x.fillRect(fx + ((k * 37 + y * 11) % fw), y, 5 + (k % 3) * 2, 1);
+    // the moose, facing left, standing in the shallows
+    const s = fh / 100, bx = fx + fw * 0.55, by = wy + 6 * s;
+    // reflection first, broken by ripples
+    x.fillStyle = C.water2; x.beginPath(); x.ellipse(bx + 3 * s, by + 9 * s, 26 * s, 5 * s, 0, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.fur2; for (const lx of [-16, -9, 12, 19]) x.fillRect(bx + lx * s, by - 26 * s, 4.4 * s, 28 * s); // legs, into the water
+    x.fillStyle = C.water3; for (const lx of [-16, -9, 12, 19]) x.fillRect(bx + (lx - 2) * s, by + 2 * s, 8.4 * s, 1); // ripples round the legs
+    x.fillStyle = C.fur; x.beginPath(); x.ellipse(bx + 5 * s, by - 30 * s, 22 * s, 10.5 * s, 0, 0, Math.PI * 2); x.fill(); // body
+    x.fillStyle = C.fur3; x.beginPath(); x.ellipse(bx - 7 * s, by - 35 * s, 12 * s, 9 * s, -0.2, 0, Math.PI * 2); x.fill(); // shoulder hump
+    x.fillStyle = C.fur; x.beginPath(); x.moveTo(bx - 12 * s, by - 42 * s); x.lineTo(bx - 23 * s, by - 37 * s); x.lineTo(bx - 20 * s, by - 26 * s); x.lineTo(bx - 8 * s, by - 26 * s); x.closePath(); x.fill(); // neck
+    x.fillStyle = C.fur2; x.beginPath(); // long head with the heavy muzzle
+    x.moveTo(bx - 20 * s, by - 41 * s); x.lineTo(bx - 33 * s, by - 32 * s); x.quadraticCurveTo(bx - 38 * s, by - 26 * s, bx - 33 * s, by - 23 * s); x.lineTo(bx - 25 * s, by - 26 * s); x.lineTo(bx - 18 * s, by - 32 * s); x.closePath(); x.fill();
+    x.beginPath(); x.moveTo(bx - 27 * s, by - 26 * s); x.lineTo(bx - 25 * s, by - 17 * s); x.lineTo(bx - 22 * s, by - 27 * s); x.fill(); // bell
+    x.beginPath(); x.moveTo(bx - 18 * s, by - 40 * s); x.lineTo(bx - 15 * s, by - 45 * s); x.lineTo(bx - 16 * s, by - 39 * s); x.fill(); // ear
+    // palmate antlers: broad flat palms with tines along the top
+    const palm = (ax, ay, rx, ry, rot, tines) => {
+      x.fillStyle = C.antler; x.beginPath(); x.ellipse(ax, ay, rx, ry, rot, 0, Math.PI * 2); x.fill();
+      for (let k = 0; k < tines; k++) { const t = -0.8 + (1.6 * k) / (tines - 1), tx = ax + Math.cos(rot) * rx * t, ty = ay + Math.sin(rot) * rx * t - ry * 0.7; x.beginPath(); x.moveTo(tx - 1.2 * s, ty + 1 * s); x.lineTo(tx, ty - 4.5 * s); x.lineTo(tx + 1.2 * s, ty + 1 * s); x.fill(); }
+    };
+    x.fillStyle = C.antler; x.fillRect(bx - 22 * s, by - 44 * s, 6 * s, 2.5 * s);
+    palm(bx - 10 * s, by - 48 * s, 10 * s, 3.6 * s, -0.25, 5);
+    palm(bx - 30 * s, by - 48 * s, 8 * s, 3.2 * s, 0.3, 4);
+    x.fillStyle = C.moon; x.beginPath(); x.arc(bx - 26 * s, by - 34 * s, 0.9, 0, Math.PI * 2); x.fill(); // eye
+    // reeds in the front corners
+    x.fillStyle = C.reed; for (let k = 0; k < 14; k++) { const rx = k < 7 ? fx + 2 + k * 1.6 : fx + fw - 4 - (k - 7) * 1.7, rh = 6 + (k * 5) % 7; x.fillRect(rx, fy + fh - rh, 1, rh); }
+    x.restore();
+  });
+}
+
+// Folk picture: Canada geese flying south in a V over a marsh at sunset, with cattails in front.
+function canadaGeese(ctx, W, H) {
+  const C = { frame: '#2a2017', line: '#ecdcb8', accent: '#b5532c', star: '#ecdcb8',
+    sky: '#f3d08a', sky2: '#efab66', sky3: '#d97f5c', sky4: '#a8607a', sun: '#fbe4a2', far: '#6f4f5c', water: '#d6936c', water2: '#b9785c', water3: '#f2c38c',
+    reed: '#4d3c22', reed2: '#6f5a30', cat: '#5a3218', goose: '#262220', goose2: '#6b5444', chin: '#efe6d2' };
+  weavePicture(ctx, W, H, 104, Object.values(C), (x, cols, rows) => {
+    canadaBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16, hz = fy + fh * 0.64;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    for (let y = fy; y < hz; y++) { const t = (y - fy) / (hz - fy); x.fillStyle = t < 0.25 ? C.sky4 : t < 0.5 ? C.sky3 : t < 0.78 ? C.sky2 : C.sky; x.fillRect(fx, y, fw, 1); }
+    x.fillStyle = C.sun; x.beginPath(); x.arc(fx + fw * 0.74, hz, fh * 0.12, Math.PI, 0); x.fill();
+    // far shore
+    x.fillStyle = C.far; x.beginPath(); x.moveTo(fx, hz + 1); for (let k = 0; k <= 30; k++) x.lineTo(fx + (fw * k) / 30, hz - 1.5 - ((k * 7) % 4)); x.lineTo(fx + fw, hz + 1); x.fill();
+    // marsh water with the sun's reflection
+    x.fillStyle = C.water; x.fillRect(fx, hz + 1, fw, fh);
+    for (let y = hz + 3; y < fy + fh; y += 3) { x.fillStyle = C.water2; x.fillRect(fx + ((y * 23) % 30), y, fw * 0.3, 1); x.fillStyle = C.water3; const w = fh * 0.2 * (1 - (y - hz) / fh); x.fillRect(fx + fw * 0.74 - w / 2, y, w, 1); }
+    // cattails and reeds in the front corners
+    for (let k = 0; k < 22; k++) {
+      const left = k < 11, rx = left ? fx + 1 + (k % 11) * 2.1 : fx + fw - 2 - (k % 11) * 2.1, rh = 10 + ((k * 7) % 9) * 1.4, by = fy + fh;
+      x.fillStyle = k % 2 ? C.reed : C.reed2; x.fillRect(rx, by - rh, 1, rh);
+      if (k % 3 === 0) { x.fillStyle = C.cat; x.fillRect(rx - 0.4, by - rh - 3, 1.8, 4); }
+    }
+    // the V: leader in front (left), two trailing arms
+    const goose = (gx, gy, g, up) => {
+      x.fillStyle = C.goose2; x.beginPath(); x.ellipse(gx, gy, 2.3 * g, 0.85 * g, 0, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.goose; x.beginPath(); x.moveTo(gx - 1.2 * g, gy - 0.3 * g); x.lineTo(gx - 3.4 * g, gy - 0.5 * g); x.lineTo(gx - 3.4 * g, gy + 0.2 * g); x.lineTo(gx - 1.2 * g, gy + 0.5 * g); x.fill(); // neck
+      x.beginPath(); x.ellipse(gx - 3.8 * g, gy - 0.2 * g, 0.8 * g, 0.55 * g, 0, 0, Math.PI * 2); x.fill(); // head
+      x.fillStyle = C.chin; x.fillRect(gx - 3.9 * g, gy - 0.1 * g, 0.7 * g, 0.5 * g); // white chinstrap
+      x.fillStyle = C.goose; x.beginPath(); // wing, up or down
+      if (up) { x.moveTo(gx - 1 * g, gy - 0.4 * g); x.lineTo(gx + 1.6 * g, gy - 3 * g); x.lineTo(gx + 1 * g, gy - 0.4 * g); }
+      else { x.moveTo(gx - 1 * g, gy + 0.2 * g); x.lineTo(gx + 0.6 * g, gy + 2.8 * g); x.lineTo(gx + 1.2 * g, gy + 0.2 * g); }
+      x.fill();
+      x.fillStyle = C.goose; x.beginPath(); x.moveTo(gx + 2 * g, gy - 0.5 * g); x.lineTo(gx + 3 * g, gy); x.lineTo(gx + 2 * g, gy + 0.5 * g); x.fill(); // tail
+    };
+    const g = fh * 0.036, lx = fx + fw * 0.28, ly = fy + fh * 0.32, dx = fw * 0.08, dy = fh * 0.07;
+    goose(lx, ly, g, true);
+    for (let k = 1; k <= 4; k++) { goose(lx + k * dx, ly - k * dy * 0.7, g * (1 - k * 0.04), true); goose(lx + k * dx, ly + k * dy * 0.85, g * (1 - k * 0.04), true); }
+    x.restore();
+  });
+}
+
+// Folk picture: a loon on a still northern lake at dawn, mist on the water, a pine shore behind. The black-and-white
+// bird stands out against the bright water.
+function canadaLoon(ctx, W, H) {
+  const C = { frame: '#16222a', line: '#e6dcc0', accent: '#4f8fa0', star: '#e6dcc0',
+    sky: '#3d5f7e', sky2: '#7f8fa8', sky3: '#d9a99a', sky4: '#f4cfa4', sun: '#fde6b4', ridge: '#24382f', pine: '#16291f',
+    water: '#e7b897', water2: '#c99c86', water3: '#f6dcbc', mist: '#efe0cc', black: '#121314', white: '#f1f2ee', grey: '#3e444e', eye: '#c0302c' };
+  weavePicture(ctx, W, H, 104, Object.values(C), (x, cols, rows) => {
+    canadaBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16, hz = fy + fh * 0.48;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    for (let y = fy; y < hz; y++) { const t = (y - fy) / (hz - fy); x.fillStyle = t < 0.25 ? C.sky : t < 0.5 ? C.sky2 : t < 0.78 ? C.sky3 : C.sky4; x.fillRect(fx, y, fw, 1); }
+    x.fillStyle = C.sun; x.beginPath(); x.arc(fx + fw * 0.7, hz - 7, fh * 0.08, 0, Math.PI * 2); x.fill();
+    // far shore: low ridge with pines
+    x.fillStyle = C.ridge; x.fillRect(fx, hz - 2, fw, 4);
+    for (let i = 0, px = fx; px < fx + fw; i++, px += 2.6) { const h = 4 + ((i * 5) % 4) * 1.6; x.fillStyle = C.pine; x.beginPath(); x.moveTo(px, hz - h - 1); x.lineTo(px + 1.8, hz + 1); x.lineTo(px - 1.8, hz + 1); x.fill(); }
+    // bright still water with bands of mist and the sun's path
+    x.fillStyle = C.water; x.fillRect(fx, hz + 2, fw, fh);
+    for (let y = hz + 3; y < fy + fh; y += 3) { x.fillStyle = C.water2; x.fillRect(fx + ((y * 31) % fw), y, 8, 1); x.fillStyle = C.water3; const w = 4 + (y - hz) * 0.25; x.fillRect(fx + fw * 0.7 - w / 2, y, w, 1); }
+    x.fillStyle = C.mist; x.fillRect(fx, hz + 3, fw * 0.4, 1); x.fillRect(fx + fw * 0.55, hz + 5, fw * 0.45, 1);
+    // the loon, floating, facing left
+    const s = fh / 100, bx = fx + fw * 0.44, wy = fy + fh * 0.8;
+    x.fillStyle = C.water2; x.beginPath(); x.ellipse(bx + 2 * s, wy + 4 * s, 34 * s, 3.5 * s, 0, 0, Math.PI * 2); x.fill(); // reflection
+    x.fillStyle = C.black;
+    x.beginPath(); x.moveTo(bx - 24 * s, wy); x.quadraticCurveTo(bx - 22 * s, wy - 15 * s, bx + 4 * s, wy - 14 * s); x.quadraticCurveTo(bx + 26 * s, wy - 13 * s, bx + 34 * s, wy - 5 * s); x.lineTo(bx + 29 * s, wy); x.closePath(); x.fill(); // body
+    x.beginPath(); x.moveTo(bx - 23 * s, wy - 4 * s); x.lineTo(bx - 28 * s, wy - 25 * s); x.lineTo(bx - 17 * s, wy - 27 * s); x.lineTo(bx - 13 * s, wy - 10 * s); x.fill(); // neck
+    x.beginPath(); x.ellipse(bx - 23 * s, wy - 29 * s, 8 * s, 6.5 * s, 0, 0, Math.PI * 2); x.fill(); // head
+    x.beginPath(); x.moveTo(bx - 29 * s, wy - 32 * s); x.lineTo(bx - 45 * s, wy - 27 * s); x.lineTo(bx - 29 * s, wy - 25 * s); x.fill(); // dagger bill
+    x.fillStyle = C.eye; x.fillRect(bx - 26 * s, wy - 31 * s, 1.6, 1.4);
+    x.fillStyle = C.white; // striped necklace, checkered back, white flank line
+    for (let k = 0; k < 4; k++) x.fillRect(bx - 26 * s + k * 2.8 * s, wy - 19 * s, 1, 3);
+    for (let r = 0; r < 3; r++) for (let k = 0; k < 8; k++) { const px = bx - 6 * s + k * 4.6 * s + (r % 2) * 2.3 * s, py = wy - 11.5 * s + r * 3.2 * s; if (px < bx + 28 * s - r * 4 * s) x.fillRect(px, py, 1.6, 1.4); }
+    x.fillRect(bx - 20 * s, wy - 2.5 * s, 16 * s, 1.2);
+    x.restore();
+  });
+}
+
+// Hooked border in Canada's colours: red and white sawtooth on a dark band, a white line round the picture.
+const CANADA_FRAME = { dark: '#231a1a', a: '#b3282d', b: '#efe6d2', line: '#efe6d2' };
+
+// Letter scenes for the Canadian postcard.
+const CANADA_SCENES = [
+  (c, w, h) => { c.fillStyle = '#e8a83a'; c.fillRect(0, 0, w, h); c.fillStyle = '#b3282d'; mapleLeaf(c, w * 0.5, h * 0.48, w * 0.48); }, // maple leaf
+  (c, w, h) => { // Rockies over a turquoise lake
+    c.fillStyle = '#8fc0de'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#6a7290'; c.beginPath(); c.moveTo(-w * 0.2, h * 0.66); c.lineTo(w * 0.35, h * 0.14); c.lineTo(w * 0.62, h * 0.4); c.lineTo(w * 0.82, h * 0.24); c.lineTo(w * 1.2, h * 0.66); c.fill();
+    c.fillStyle = '#f4f2ec'; c.beginPath(); c.moveTo(w * 0.24, h * 0.25); c.lineTo(w * 0.35, h * 0.14); c.lineTo(w * 0.46, h * 0.26); c.fill();
+    c.fillStyle = '#38a6a6'; c.fillRect(0, h * 0.66, w, h);
+  },
+  (c, w, h) => { // northern lights
+    c.fillStyle = '#122247'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#4fdc9c'; c.fillRect(0, h * 0.24, w, h * 0.14); c.fillStyle = '#7d5cc4'; c.fillRect(0, h * 0.14, w, h * 0.1);
+    c.fillStyle = '#2fa58a'; c.fillRect(0, h * 0.38, w, h * 0.1);
+    c.fillStyle = '#e6edf4'; c.fillRect(0, h * 0.8, w, h);
+    c.fillStyle = '#16301f'; c.beginPath(); c.moveTo(w * 0.5, h * 0.42); c.lineTo(w * 0.85, h * 0.85); c.lineTo(w * 0.15, h * 0.85); c.fill();
+  },
+  (c, w, h) => { // lighthouse stripes
+    for (let i = 0; i < 6; i++) { c.fillStyle = i % 2 ? '#f2efe8' : '#b3282d'; c.fillRect(0, (h * i) / 6, w, h / 6 + 1); }
+  },
+  (c, w, h) => { // prairie with a grain elevator
+    c.fillStyle = '#9fcbe2'; c.fillRect(0, 0, w, h); c.fillStyle = '#e3b448'; c.fillRect(0, h * 0.62, w, h);
+    c.fillStyle = '#a3302f'; c.fillRect(w * 0.3, h * 0.24, w * 0.4, h * 0.42); c.beginPath(); c.moveTo(w * 0.26, h * 0.26); c.lineTo(w * 0.5, h * 0.1); c.lineTo(w * 0.74, h * 0.26); c.fill();
+  },
+  (c, w, h) => { // the flag
+    c.fillStyle = '#b3282d'; c.fillRect(0, 0, w, h); c.fillStyle = '#f2ece0'; c.fillRect(w * 0.25, 0, w * 0.5, h);
+    c.fillStyle = '#b3282d'; mapleLeaf(c, w * 0.5, h * 0.5, w * 0.22);
+  },
+];
+function canadaPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'CANADA', CANADA_SCENES); }
+
+// A hockey rink from above: the boards, white ice, the red centre line and goal lines, the blue lines, face-off
+// circles, the creases and nets, and a maple leaf at centre ice.
+function canadaHockey(ctx, W, H) {
+  const u = H / 100;
+  ctx.fillStyle = '#1d2a44'; ctx.fillRect(0, 0, W, H);                      // stands
+  const m = 5 * u, rx = m, ry = m, rw = W - 2 * m, rh = H - 2 * m, rad = 16 * u;
+  ctx.fillStyle = '#f2c13a'; roundRect(ctx, rx, ry, rw, rh, rad); ctx.fill(); // kickplate
+  const b = 1.8 * u;
+  ctx.fillStyle = '#e8f0f3'; roundRect(ctx, rx + b, ry + b, rw - 2 * b, rh - 2 * b, rad - b); ctx.fill(); // ice
+  const cx = W / 2, cy = H / 2, RED = '#c0302c', BLUE = '#2b55a6';
+  const gl = rx + rw * 0.07, gr = rx + rw * 0.93, bl = cx - rw * 0.16, brl = cx + rw * 0.16;
+  ctx.save(); roundRect(ctx, rx + b, ry + b, rw - 2 * b, rh - 2 * b, rad - b); ctx.clip();
+  ctx.fillStyle = RED; ctx.fillRect(cx - 1.1 * u, ry, 2.2 * u, rh);                 // centre line
+  ctx.fillRect(gl - 0.6 * u, ry, 1.2 * u, rh); ctx.fillRect(gr - 0.6 * u, ry, 1.2 * u, rh); // goal lines
+  ctx.fillStyle = BLUE; ctx.fillRect(bl - 1.4 * u, ry, 2.8 * u, rh); ctx.fillRect(brl - 1.4 * u, ry, 2.8 * u, rh); // blue lines
+  ctx.restore();
+  // centre circle with the leaf
+  ctx.strokeStyle = BLUE; ctx.lineWidth = 2 * u; ctx.beginPath(); ctx.arc(cx, cy, 12 * u, 0, Math.PI * 2); ctx.stroke();
+  ctx.fillStyle = RED; mapleLeaf(ctx, cx, cy + 0.6 * u, 8 * u);
+  // face-off circles and dots in each end, dots in the neutral zone
+  ctx.strokeStyle = RED; ctx.lineWidth = 1.9 * u;
+  for (const [ex, side] of [[gl + rw * 0.14, -1], [gr - rw * 0.14, 1]]) for (const dy of [-1, 1]) {
+    ctx.beginPath(); ctx.arc(ex, cy + dy * rh * 0.24, 10 * u, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = RED; ctx.beginPath(); ctx.arc(ex, cy + dy * rh * 0.24, 2.2 * u, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx + side * rw * 0.22, cy + dy * rh * 0.24, 2.2 * u, 0, Math.PI * 2); ctx.fill();
+  }
+  // creases and nets
+  for (const [x, dir] of [[gl, 1], [gr, -1]]) {
+    ctx.fillStyle = '#7fb0e0'; ctx.beginPath(); ctx.moveTo(x, cy - 5 * u); ctx.arc(x, cy, 5 * u, -Math.PI / 2, Math.PI / 2, dir < 0); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = RED; ctx.lineWidth = 0.9 * u; ctx.stroke();
+    ctx.fillStyle = RED; ctx.fillRect(dir > 0 ? x - 3.4 * u : x, cy - 3.6 * u, 3.4 * u, 7.2 * u);
+    ctx.fillStyle = '#f4f4f0'; ctx.fillRect(dir > 0 ? x - 2.6 * u : x + 0.8 * u, cy - 2.8 * u, 1.8 * u, 5.6 * u);
+  }
+}
+
+// Northern lights over the snow: green and violet curtains, stars, dark pines and a log cabin with a lit window.
+function canadaAurora(ctx, W, H) {
+  const u = H / 100, R = rng(626);
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.7); sky.addColorStop(0, '#0a1430'); sky.addColorStop(0.6, '#13305a'); sky.addColorStop(1, '#1f5068');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#e6ecf6'; for (let i = 0; i < 70; i++) { ctx.beginPath(); ctx.arc(R() * W, R() * H * 0.55, (0.35 + R() * 0.5) * u, 0, Math.PI * 2); ctx.fill(); }
+  // curtains: wavy ribbons, bright at the lower edge and fading upward
+  const curtain = (base, amp, phase, len, col, alpha) => {
+    for (let x = 0; x < W; x += 0.8 * u) {
+      const y = base + Math.sin(x / (W * 0.16) + phase) * amp + Math.sin(x / (W * 0.05) + phase * 2) * amp * 0.2;
+      const g = ctx.createLinearGradient(0, y - len, 0, y);
+      g.addColorStop(0, col.replace('A', '0')); g.addColorStop(0.7, col.replace('A', String(alpha * 0.7))); g.addColorStop(1, col.replace('A', String(alpha)));
+      ctx.fillStyle = g; ctx.fillRect(x, y - len, 0.9 * u, len);
+    }
+  };
+  curtain(H * 0.3, 7 * u, 0.4, 22 * u, 'rgba(140,90,210,A)', 0.55);
+  curtain(H * 0.42, 9 * u, 1.6, 26 * u, 'rgba(70,225,160,A)', 0.9);
+  curtain(H * 0.5, 6 * u, 2.9, 14 * u, 'rgba(60,200,190,A)', 0.6);
+  // snowy hills
+  const hill = (y0, amp, f0, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, H); for (let k = 0; k <= 40; k++) { const t = k / 40; ctx.lineTo(W * t, y0 - amp * Math.sin(t * Math.PI * 2.2 + f0)); } ctx.lineTo(W, H); ctx.fill(); };
+  hill(H * 0.66, 4 * u, 0.3, '#7d93b6'); hill(H * 0.76, 5 * u, 2.2, '#c7d5e6'); hill(H * 0.86, 3 * u, 4.1, '#e8eef6');
+  // pines
+  const pine = (x, by, h) => { ctx.fillStyle = '#10241b'; for (let k = 0; k < 3; k++) { const ty = by - h + k * h * 0.27, w = h * (0.17 + k * 0.08); ctx.beginPath(); ctx.moveTo(x, ty); ctx.lineTo(x + w, ty + h * 0.38); ctx.lineTo(x - w, ty + h * 0.38); ctx.fill(); } ctx.fillRect(x - h * 0.03, by - h * 0.06, h * 0.06, h * 0.08); };
+  for (const [fx, fy, h] of [[0.05, 0.86, 30], [0.12, 0.84, 22], [0.19, 0.8, 15], [0.3, 0.72, 9], [0.36, 0.73, 7], [0.62, 0.71, 8], [0.88, 0.84, 26], [0.95, 0.88, 34], [0.8, 0.79, 14]]) pine(W * fx, H * fy, h * u);
+  // log cabin with snow on the roof and a warm window
+  const cxb = W * 0.66, cyb = H * 0.8, cw = 22 * u, ch = 11 * u;
+  ctx.fillStyle = '#5a3a26'; ctx.fillRect(cxb - cw / 2, cyb - ch, cw, ch);
+  ctx.fillStyle = '#4a2f1f'; for (let k = 1; k < 4; k++) ctx.fillRect(cxb - cw / 2, cyb - ch + k * ch / 4, cw, 0.5 * u);
+  ctx.fillStyle = '#f4f7fb'; ctx.beginPath(); ctx.moveTo(cxb - cw / 2 - 2.5 * u, cyb - ch); ctx.lineTo(cxb, cyb - ch - 9 * u); ctx.lineTo(cxb + cw / 2 + 2.5 * u, cyb - ch); ctx.fill();
+  ctx.fillStyle = '#3a2a24'; ctx.fillRect(cxb + cw * 0.22, cyb - ch - 9 * u, 2.6 * u, 6 * u); // chimney
+  ctx.fillStyle = '#ffd36a'; ctx.fillRect(cxb - cw * 0.3, cyb - ch * 0.7, 5 * u, 4.4 * u); ctx.fillRect(cxb + cw * 0.08, cyb - ch * 0.7, 5 * u, 4.4 * u);
+  ctx.fillStyle = '#e8eef6'; ctx.fillRect(0, cyb, W, H - cyb);
+}
+
+// A red-roofed lighthouse on the granite rocks of the Atlantic shore, with waves, a fishing boat and gulls.
+function canadaLighthouse(ctx, W, H) {
+  const u = H / 100;
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.56); sky.addColorStop(0, '#4f97cc'); sky.addColorStop(1, '#bfe0ee');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f7f9fb'; for (const [x, y, r] of [[0.14, 0.16, 6], [0.22, 0.13, 8], [0.3, 0.17, 5], [0.72, 0.1, 6], [0.8, 0.12, 7.5], [0.88, 0.14, 5]]) { ctx.beginPath(); ctx.ellipse(W * x, H * y, r * u * 1.7, r * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  const hz = H * 0.56;
+  ctx.fillStyle = '#2a6f5a'; ctx.beginPath(); ctx.moveTo(W * 0.7, hz); ctx.quadraticCurveTo(W * 0.86, hz - 6 * u, W, hz - 4 * u); ctx.lineTo(W, hz); ctx.fill(); // far headland
+  const sea = ctx.createLinearGradient(0, hz, 0, H); sea.addColorStop(0, '#255f8f'); sea.addColorStop(1, '#2f7aa8');
+  ctx.fillStyle = sea; ctx.fillRect(0, hz, W, H - hz);
+  ctx.fillStyle = '#d9eef6'; for (let i = 0; i < 26; i++) { const y = hz + 3 * u + (i % 6) * 5 * u, x = ((i * 173) % 100) / 100 * W; ctx.fillRect(x, y, 7 * u, 0.9 * u); }
+  // fishing boat
+  ctx.fillStyle = '#b3282d'; ctx.beginPath(); ctx.moveTo(W * 0.74, hz + 8 * u); ctx.lineTo(W * 0.84, hz + 8 * u); ctx.lineTo(W * 0.82, hz + 11 * u); ctx.lineTo(W * 0.76, hz + 11 * u); ctx.fill();
+  ctx.fillStyle = '#f2efe8'; ctx.fillRect(W * 0.775, hz + 4.5 * u, W * 0.03, 3.5 * u);
+  // the lighthouse
+  const lx = W * 0.36, base = H * 0.74, top = H * 0.2, bw = 16 * u, tw = 10 * u;
+  ctx.fillStyle = '#f2efe8'; ctx.beginPath(); ctx.moveTo(lx - bw / 2, base); ctx.lineTo(lx - tw / 2, top); ctx.lineTo(lx + tw / 2, top); ctx.lineTo(lx + bw / 2, base); ctx.fill();
+  ctx.fillStyle = '#d6d1c7'; ctx.beginPath(); ctx.moveTo(lx + bw * 0.15, base); ctx.lineTo(lx + tw * 0.15, top); ctx.lineTo(lx + tw / 2, top); ctx.lineTo(lx + bw / 2, base); ctx.fill(); // shade
+  ctx.fillStyle = '#b3282d'; ctx.fillRect(lx - tw / 2 - 2 * u, top - 2 * u, tw + 4 * u, 2.4 * u);          // gallery
+  ctx.fillStyle = '#ffe08a'; ctx.fillRect(lx - tw / 2 + 1 * u, top - 8.5 * u, tw - 2 * u, 6.5 * u);       // lantern
+  ctx.fillStyle = '#2a2a2e'; for (let k = 0; k < 4; k++) ctx.fillRect(lx - tw / 2 + 1 * u + k * (tw - 2.8 * u) / 3, top - 8.5 * u, 0.8 * u, 6.5 * u);
+  ctx.fillStyle = '#b3282d'; ctx.beginPath(); ctx.moveTo(lx - tw / 2 - 0.5 * u, top - 8.5 * u); ctx.lineTo(lx, top - 15 * u); ctx.lineTo(lx + tw / 2 + 0.5 * u, top - 8.5 * u); ctx.fill(); // roof
+  ctx.fillStyle = '#b3282d'; ctx.fillRect(lx - 2 * u, base - 8 * u, 4 * u, 8 * u);                         // door
+  ctx.fillStyle = '#3a4250'; ctx.fillRect(lx - 1.4 * u, top + 14 * u, 2.8 * u, 3.6 * u); ctx.fillRect(lx - 1.4 * u, top + 30 * u, 2.8 * u, 3.6 * u);
+  // granite rocks in front
+  const rock = (x, y, rx, ry, col, hi) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = hi; ctx.beginPath(); ctx.ellipse(x - rx * 0.2, y - ry * 0.35, rx * 0.55, ry * 0.4, 0, 0, Math.PI * 2); ctx.fill(); };
+  for (const [x, y, rx, ry, c] of [[0.1, 0.92, 22, 12, 0], [0.3, 0.86, 30, 13, 1], [0.5, 0.95, 26, 12, 0], [0.62, 0.84, 16, 8, 1], [0.86, 0.95, 28, 12, 1], [0.44, 0.78, 14, 6, 0]]) {
+    rock(W * x, H * y, rx * u, ry * u, c ? '#a39389' : '#b8aaa0', c ? '#c4b6ac' : '#d6cabf');
+  }
+  ctx.fillStyle = '#f4f8fa'; for (const [x, y] of [[0.56, 0.8], [0.7, 0.83], [0.2, 0.83]]) { ctx.beginPath(); ctx.ellipse(W * x, H * y, 5 * u, 1.6 * u, 0, 0, Math.PI * 2); ctx.fill(); } // spray
+  // gulls
+  ctx.strokeStyle = '#f7f8fa'; ctx.lineWidth = 1.2 * u; ctx.lineCap = 'round';
+  for (const [x, y, s] of [[0.56, 0.24, 3], [0.62, 0.3, 2.4], [0.5, 0.32, 2]]) { ctx.beginPath(); ctx.moveTo(W * x - s * u, H * y - s * 0.4 * u); ctx.quadraticCurveTo(W * x - s * 0.4 * u, H * y - s * 0.8 * u, W * x, H * y); ctx.quadraticCurveTo(W * x + s * 0.4 * u, H * y - s * 0.8 * u, W * x + s * u, H * y - s * 0.4 * u); ctx.stroke(); }
+}
+
+// A polar bear walking on an ice floe under the low Arctic sun, icebergs on the horizon.
+function canadaPolarBear(ctx, W, H) {
+  const u = H / 100;
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.5); sky.addColorStop(0, '#4d7fae'); sky.addColorStop(0.7, '#9ab9d2'); sky.addColorStop(1, '#f2cdb0');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  const hz = H * 0.5;
+  ctx.fillStyle = '#ffe2b0'; ctx.beginPath(); ctx.arc(W * 0.78, hz - 2 * u, 8 * u, Math.PI, 0); ctx.fill();
+  ctx.fillStyle = '#e4eef4'; for (const [x, w, h] of [[0.08, 0.14, 8], [0.3, 0.08, 5], [0.55, 0.12, 10], [0.9, 0.1, 6]]) { ctx.beginPath(); ctx.moveTo(W * x, hz); ctx.lineTo(W * (x + w * 0.25), hz - h * u); ctx.lineTo(W * (x + w * 0.6), hz - h * 0.8 * u); ctx.lineTo(W * (x + w), hz); ctx.fill(); }
+  const sea = ctx.createLinearGradient(0, hz, 0, H); sea.addColorStop(0, '#2c5f86'); sea.addColorStop(1, '#3a76a0');
+  ctx.fillStyle = sea; ctx.fillRect(0, hz, W, H - hz);
+  ctx.fillStyle = '#ffd9a8'; for (let k = 0; k < 6; k++) ctx.fillRect(W * 0.78 - (7 - k) * u, hz + 2 * u + k * 2.6 * u, (14 - 2 * k) * u, 0.8 * u); // sun on the water
+  ctx.fillStyle = '#5f93b8'; for (let i = 0; i < 16; i++) ctx.fillRect(((i * 211) % 100) / 100 * W, hz + 4 * u + (i % 5) * 4 * u, 6 * u, 0.7 * u);
+  // the floe: a flat slab with a blue-grey edge
+  const fy = H * 0.72;
+  ctx.fillStyle = '#9fbdd0'; ctx.beginPath(); ctx.moveTo(W * 0.12, fy); ctx.lineTo(W * 0.8, fy - 2 * u); ctx.lineTo(W * 0.86, fy + 4 * u); ctx.lineTo(W * 0.8, fy + 10 * u); ctx.lineTo(W * 0.16, fy + 10 * u); ctx.lineTo(W * 0.1, fy + 5 * u); ctx.fill();
+  ctx.fillStyle = '#dceaf2'; ctx.beginPath(); ctx.moveTo(W * 0.12, fy); ctx.lineTo(W * 0.3, fy - 6 * u); ctx.lineTo(W * 0.72, fy - 8 * u); ctx.lineTo(W * 0.8, fy - 2 * u); ctx.lineTo(W * 0.6, fy + 2 * u); ctx.lineTo(W * 0.2, fy + 3 * u); ctx.fill();
+  ctx.fillStyle = '#4a7fa6'; ctx.beginPath(); ctx.ellipse(W * 0.48, fy + 14 * u, 30 * u, 2 * u, 0, 0, Math.PI * 2); ctx.fill(); // reflection
+  // the bear, walking left: drawn once a little larger in a shadow tone as an outline, then in cream
+  const s = u * 1.15, bx = W * 0.5, by = fy - 4 * u;
+  const shape = (grow, body, shade) => {
+    const g = grow * s;
+    for (const [lx, back] of [[-13, 0], [-6, 1], [10, 0], [16, 1]]) { ctx.fillStyle = shade || (back ? '#d2c6ad' : '#efe5cc'); roundRect(ctx, bx + lx * s - g, by - 12 * s - g, 5 * s + 2 * g, 13 * s + 2 * g, 2 * s); ctx.fill(); }
+    ctx.fillStyle = shade || body;
+    ctx.beginPath(); ctx.ellipse(bx + 2 * s, by - 16 * s, 21 * s + g, 10 * s + g, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(bx + 14 * s, by - 18 * s, 10 * s + g, 9 * s + g, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(bx - 14 * s, by - 22 * s - g); ctx.lineTo(bx - 25 * s - g, by - 17 * s - g); ctx.lineTo(bx - 24 * s - g, by - 10 * s + g); ctx.lineTo(bx - 12 * s, by - 10 * s + g); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(bx - 27 * s, by - 13 * s, 6.5 * s + g, 4.6 * s + g, 0.15, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(bx - 32 * s, by - 11 * s, 3.4 * s + g, 2.6 * s + g, 0.1, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(bx - 25 * s, by - 18 * s, 1.6 * s + g, 0, Math.PI * 2); ctx.fill();
+  };
+  shape(0.9, null, '#8f8a80');
+  shape(0, '#f1e7cc');
+  ctx.fillStyle = '#d9cdb2'; ctx.beginPath(); ctx.ellipse(bx + 2 * s, by - 9.5 * s, 18 * s, 3.5 * s, 0, 0, Math.PI * 2); ctx.fill(); // belly shadow
+  ctx.fillStyle = '#1a1a1c'; ctx.beginPath(); ctx.arc(bx - 35 * s, by - 11.5 * s, 1.3 * s, 0, Math.PI * 2); ctx.fill(); // nose
+  ctx.beginPath(); ctx.arc(bx - 28.5 * s, by - 14.5 * s, 0.9 * s, 0, Math.PI * 2); ctx.fill(); // eye
 }
 
 // ---------- USA pack: woven, pieced and knotted rugs (restored from the earlier drafts) ----------
@@ -1417,13 +1938,13 @@ function hookedPictureLoops(W, H) { const NC = Math.round(W / (H / HOOK_ROWS)); 
 // mustard diamond in each corner) and make the whole thing out of wool loops. The border is laid out loop by loop
 // so every tooth comes out the same. `inner(r, h, rgb)` may restyle loops of the picture (r and h counted from the
 // picture's top-left loop).
-function hookedFrame(ctx, W, H, seed, inner) {
+function hookedFrame(ctx, W, H, seed, inner, pal = {}) {
   const rows = HOOK_ROWS, E = HOOK_EDGE, p = H / rows, NC = Math.round(W / p), px = W / NC;
   const pic = document.createElement('canvas'); pic.width = W; pic.height = H;
   pic.getContext('2d').drawImage(ctx.canvas, 0, 0);
-  ctx.fillStyle = '#2a201a'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = pal.dark || '#2a201a'; ctx.fillRect(0, 0, W, H);
   ctx.imageSmoothingEnabled = false; ctx.drawImage(pic, E * px, E * p, W - 2 * E * px, H - 2 * E * p); ctx.imageSmoothingEnabled = true;
-  const DARK = rgbOf('#2a201a'), CREAM = rgbOf('#e9dcbc'), RED = rgbOf('#a8322f'), GOLD = rgbOf('#c99a3a');
+  const DARK = rgbOf(pal.dark || '#2a201a'), CREAM = rgbOf(pal.line || '#e9dcbc'), RED = rgbOf(pal.a || '#a8322f'), GOLD = rgbOf(pal.b || '#c99a3a');
   const T = 5;                                   // sawtooth depth (rows) and tooth width (loops)
   const B = 2, L = B + T;                        // sawtooth starts after the binding; cream line at depth L
   // teeth along the top and bottom: whole teeth, centred, every one starting on the same kind of loop
@@ -1495,11 +2016,23 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.america === 'hex') americaHex(ctx, W, H);
   else if (P.america === 'lonestar') americaLoneStar(ctx, W, H, seed);
   else if (P.america === 'bison') americaBison(ctx, W, H);
+  else if (P.canada === 'flag') canadaFlag(ctx, W, H);
+  else if (P.canada === 'quilt') canadaLeafQuilt(ctx, W, H, seed);
+  else if (P.canada === 'rockies') canadaRockies(ctx, W, H, seed);
+  else if (P.canada === 'tartan') canadaTartan(ctx, W, H);
+  else if (P.canada === 'moose') canadaMoose(ctx, W, H);
+  else if (P.canada === 'geese') canadaGeese(ctx, W, H);
+  else if (P.canada === 'loon') canadaLoon(ctx, W, H);
+  else if (P.canada === 'postcard') canadaPostcard(ctx, W, H);
+  else if (P.canada === 'hockey') canadaHockey(ctx, W, H);
+  else if (P.canada === 'aurora') canadaAurora(ctx, W, H);
+  else if (P.canada === 'lighthouse') canadaLighthouse(ctx, W, H);
+  else if (P.canada === 'bear') canadaPolarBear(ctx, W, H);
   else if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
   else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
-  if (P.hooked) hookedFrame(ctx, W, H, seed, inner); else addWeave(ctx, W, H, seed);
+  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : undefined); else addWeave(ctx, W, H, seed);
 
   // Back side: same pattern, faded and flattened.
   const b = document.createElement('canvas');
