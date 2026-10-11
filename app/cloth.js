@@ -88,7 +88,30 @@ export class Cloth {
   // Soft grab: each solver iteration pulls the grabbed particle a fraction `k`
   // of the way to the cursor, so the rest of the rug's weight resists it.
   setPin(i, x, y, z, k = 0.3) {
+    if (!this.pin || this.pin.i !== i) this.buildGrab(i);
     this.pin = { i, x, y, z, k };
+  }
+
+  // What a hand holds: the grabbed point plus a small patch around it that follows with a smooth falloff, so a
+  // lifted rug makes a rounded peak instead of a needle. And for every particle, how far it may be from the grabbed
+  // one (its distance across the flat rug, plus a little give): a hard pull then drags the whole rug along at once
+  // instead of stretching the springs next to the hand into a long spike.
+  buildGrab(i) {
+    const { nx, ny, dx, dy, n } = this, i0 = i % nx, j0 = (i / nx) | 0;
+    const R = 2.5 * this.spacing, ri = Math.ceil(R / dx), rj = Math.ceil(R / dy);
+    const ids = [], ws = [];
+    for (let j = Math.max(0, j0 - rj); j <= Math.min(ny - 1, j0 + rj); j++) {
+      for (let ii = Math.max(0, i0 - ri); ii <= Math.min(nx - 1, i0 + ri); ii++) {
+        const d = Math.hypot((ii - i0) * dx, (j - j0) * dy);
+        if (d === 0 || d >= R) continue;
+        const t = 1 - (d / R) ** 2;
+        ids.push(this.idx(ii, j) * 3); ws.push(t * t);
+      }
+    }
+    this.grabIds = Int32Array.from(ids);
+    this.grabW = Float32Array.from(ws);
+    const reach = this.grabReach ||= new Float32Array(n);
+    for (let p = 0; p < n; p++) reach[p] = Math.hypot((p % nx - i0) * dx, (((p / nx) | 0) - j0) * dy) * 1.05;
   }
 
   setWeight({ gravity, friction, dragFriction }) {
@@ -122,9 +145,23 @@ export class Cloth {
     const applyPin = () => {
       if (!pin) return;
       const k = pin.i * 3, a = pin.k;
-      pos[k] += (pin.x - pos[k]) * a;
-      pos[k + 1] += (pin.y - pos[k + 1]) * a;
-      pos[k + 2] += (pin.z - pos[k + 2]) * a;
+      const ex = (pin.x - pos[k]) * a, ey = (pin.y - pos[k + 1]) * a, ez = (pin.z - pos[k + 2]) * a;
+      pos[k] += ex; pos[k + 1] += ey; pos[k + 2] += ez;
+      const ids = this.grabIds, ws = this.grabW;
+      for (let q = 0; q < ids.length; q++) {
+        const kq = ids[q], w = ws[q];
+        pos[kq] += ex * w; pos[kq + 1] += ey * w; pos[kq + 2] += ez * w;
+      }
+      // keep every particle within reach of the hand
+      const px = pos[k], py = pos[k + 1], pz = pos[k + 2], reach = this.grabReach;
+      for (let p = 0, kp = 0; p < n; p++, kp += 3) {
+        const dx = pos[kp] - px, dy = pos[kp + 1] - py, dz = pos[kp + 2] - pz;
+        const d2 = dx * dx + dy * dy + dz * dz, r = reach[p];
+        if (d2 > r * r) {
+          const f = 1 - r / Math.sqrt(d2);
+          pos[kp] -= dx * f; pos[kp + 1] -= dy * f; pos[kp + 2] -= dz * f;
+        }
+      }
     };
 
     const { ca3: ca, cb3: cb, rest, half } = this;
