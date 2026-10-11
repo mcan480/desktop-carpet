@@ -21,6 +21,9 @@ export const STYLES = {
   ozgurluk: { name: 'Özgürlük Heykeli',      america: 'liberty' },
   kartal:   { name: 'Kel Kartal',            america: 'eagle' },
   goldengate:{ name: 'Golden Gate',          america: 'bridge' },
+  ambar:    { name: 'Ambar Yıldızı',         america: 'hex' },
+  yalniz:   { name: 'Yalnız Yıldız',         america: 'lonestar' },
+  bizon:    { name: 'Bizon Ovası',           america: 'bison' },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -1060,6 +1063,118 @@ function americaBridge(ctx, W, H) {
   });
 }
 
+// Barn star: the round painted hex sign of Pennsylvania barns, on weathered red planks, with two daisy hexes
+// beside it and tulips in the corners.
+function americaHex(ctx, W, H) {
+  const C = { frame: '#1d2a44', line: '#efe3c6', accent: '#d8a33a', star: '#efe3c6',
+    barn: '#8e2a25', barn2: '#7a231f', disc: '#efe3c6', ring: '#1b1714', red: '#b5312b', blue: '#2f5a8c', gold: '#e1a83a', green: '#4c7a43', cream2: '#d9c9a4' };
+  weavePicture(ctx, W, H, 108, Object.values(C), (x, cols, rows) => {
+    pictureBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16;
+    x.fillStyle = C.barn; x.fillRect(fx, fy, fw, fh);
+    x.fillStyle = C.barn2; for (let y = fy + 6; y < fy + fh; y += 7) x.fillRect(fx, y, fw, 1); // planks
+    const rosette = (cx, cy, r, points, cols2) => {
+      // scalloped cream disc with a dark ring
+      x.fillStyle = C.disc;
+      for (let i = 0; i < points * 2; i++) { const a = (i / (points * 2)) * Math.PI * 2; x.beginPath(); x.arc(cx + Math.cos(a) * r, cy + Math.sin(a) * r, r * 0.13, 0, Math.PI * 2); x.fill(); }
+      x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); x.fill();
+      x.strokeStyle = C.ring; x.lineWidth = Math.max(1, r * 0.06); x.beginPath(); x.arc(cx, cy, r * 0.9, 0, Math.PI * 2); x.stroke();
+      // star points: long diamonds, each split into a light and a dark half
+      for (let i = 0; i < points; i++) {
+        const a = (i / points) * Math.PI * 2 - Math.PI / 2, L = r * 0.84, w = r * Math.tan(Math.PI / points) * 0.42;
+        const tip = [cx + Math.cos(a) * L, cy + Math.sin(a) * L], mid = [cx + Math.cos(a) * L * 0.45, cy + Math.sin(a) * L * 0.45];
+        const side = (sgn) => [mid[0] + Math.cos(a + Math.PI / 2) * w * sgn, mid[1] + Math.sin(a + Math.PI / 2) * w * sgn];
+        x.fillStyle = cols2[i % cols2.length]; x.beginPath(); x.moveTo(cx, cy); x.lineTo(...side(1)); x.lineTo(...tip); x.closePath(); x.fill();
+        x.fillStyle = cols2[(i + 1) % cols2.length]; x.beginPath(); x.moveTo(cx, cy); x.lineTo(...side(-1)); x.lineTo(...tip); x.closePath(); x.fill();
+      }
+      x.fillStyle = C.ring; x.beginPath(); x.arc(cx, cy, r * 0.14, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.gold; x.beginPath(); x.arc(cx, cy, r * 0.08, 0, Math.PI * 2); x.fill();
+    };
+    const cy = fy + fh / 2;
+    rosette(cols / 2, cy, fh * 0.37, 8, [C.red, C.blue, C.gold, C.red, C.blue, C.gold, C.red, C.blue]);
+    for (const sx of [-1, 1]) rosette(cols / 2 + sx * fw * 0.355, cy, fh * 0.15, 6, [C.gold, C.red, C.blue]);
+    // tulips in the four corners: three petals on a stem with two leaves
+    for (const [tx, ty] of [[fx + 7, fy + 9], [fx + fw - 7, fy + 9], [fx + 7, fy + fh - 3], [fx + fw - 7, fy + fh - 3]]) {
+      x.fillStyle = C.green; x.fillRect(tx - 0.5, ty - 2, 1.2, 7);
+      x.beginPath(); x.ellipse(tx - 2.2, ty + 2, 2.2, 0.9, -0.6, 0, Math.PI * 2); x.ellipse(tx + 2.4, ty + 2.5, 2.2, 0.9, 0.6, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.gold; x.beginPath(); x.ellipse(tx, ty - 4, 1.6, 2.6, 0, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.red; x.beginPath(); x.ellipse(tx - 1.8, ty - 3.4, 1.3, 2.4, -0.4, 0, Math.PI * 2); x.ellipse(tx + 1.8, ty - 3.4, 1.3, 2.4, 0.4, 0, Math.PI * 2); x.fill();
+    }
+  });
+}
+
+// Lone Star quilt: one big eight-pointed star pieced from little diamonds whose colours ripple out from the
+// centre, on navy with scattered stars. Drawn as fabric pieces (crisp edges, a dark seam round each diamond).
+function americaLoneStar(ctx, W, H, seed) {
+  const R = rng(seed + 91);
+  const ring = ['#f2d27a', '#e9a43f', '#d4672f', '#a8322f', '#7c2346', '#3f4f8c', '#5f86b8', '#a9c4d8', '#efe3c6'];
+  const C = { navy: '#1f2c4c', bind: '#141c33', red: '#a8322f', cream: '#efe3c6', dot: '#d9cdb0', seam: 'rgba(15,20,38,.55)' };
+  const u = H / 100, bw = 6 * u;
+  ctx.fillStyle = C.bind; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = C.red; ctx.fillRect(bw - 1.2 * u, bw - 1.2 * u, W - 2 * bw + 2.4 * u, H - 2 * bw + 2.4 * u);
+  ctx.fillStyle = C.navy; ctx.fillRect(bw, bw, W - 2 * bw, H - 2 * bw);
+  stitchRect(ctx, bw * 0.5, bw * 0.5, W - bw, H - bw, 2.2 * u, 0.35 * u, 'rgba(239,227,198,.7)');
+  const cx = W / 2, cy = H / 2, L = (H - 2 * bw) * 0.47, half = Math.PI / 8, steps = 7;
+  const edge = L / (2 * Math.cos(half)), cell = edge / steps;
+  // scattered stars, clear of the big one
+  ctx.fillStyle = C.dot;
+  for (let i = 0; i < 70; i++) {
+    const sx = bw + 3 * u + R() * (W - 2 * bw - 6 * u), sy = bw + 3 * u + R() * (H - 2 * bw - 6 * u);
+    if (Math.hypot(sx - cx, sy - cy) < L + 3 * u) continue;
+    star5(ctx, sx, sy, (0.7 + R() * 0.6) * u);
+  }
+  ctx.lineJoin = 'round';
+  for (let k = 0; k < 8; k++) {
+    const axis = -Math.PI / 2 + k * Math.PI / 4;
+    const e1 = [Math.cos(axis + half) * cell, Math.sin(axis + half) * cell], e2 = [Math.cos(axis - half) * cell, Math.sin(axis - half) * cell];
+    for (let i = 0; i < steps; i++) for (let j = 0; j < steps; j++) {
+      const p = (a, b) => [cx + e1[0] * a + e2[0] * b, cy + e1[1] * a + e2[1] * b];
+      const q = [p(i, j), p(i + 1, j), p(i + 1, j + 1), p(i, j + 1)];
+      ctx.fillStyle = ring[Math.round(((i + j) / (2 * steps - 2)) * (ring.length - 1))];
+      ctx.beginPath(); q.forEach(([x, y], n) => (n ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = C.seam; ctx.lineWidth = 0.32 * u; ctx.stroke();
+    }
+  }
+}
+
+// Bison on the plains, in the manner of an old hooked rug: a big shaggy bull against a low sun and rolling hills.
+function americaBison(ctx, W, H) {
+  const C = { frame: '#2a1d14', line: '#ead9b5', accent: '#c8742f', star: '#ead9b5',
+    sky: '#e9d3a2', sky2: '#e3bf86', sun: '#d9672e', hill: '#9a8a52', hill2: '#7d7444', grass: '#c39b48', grass2: '#a8823a',
+    fur: '#4a2f1d', fur2: '#6b4429', fur3: '#2f1d12', horn: '#e6dcc4' };
+  weavePicture(ctx, W, H, 104, Object.values(C), (x, cols, rows) => {
+    pictureBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16;
+    // sky in hooked rows, with abrash bands
+    for (let y = fy; y < fy + fh; y++) { x.fillStyle = (Math.floor((y - fy) / 4) % 3 === 1) ? C.sky2 : C.sky; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    x.fillStyle = C.sun; x.beginPath(); x.arc(fx + fw * 0.78, fy + fh * 0.42, fh * 0.16, 0, Math.PI * 2); x.fill();
+    // hills and prairie
+    x.fillStyle = C.hill; x.beginPath(); x.moveTo(fx, fy + fh * 0.58); x.quadraticCurveTo(fx + fw * 0.3, fy + fh * 0.44, fx + fw * 0.55, fy + fh * 0.57); x.quadraticCurveTo(fx + fw * 0.8, fy + fh * 0.68, fx + fw, fy + fh * 0.55); x.lineTo(fx + fw, fy + fh); x.lineTo(fx, fy + fh); x.fill();
+    x.fillStyle = C.hill2; x.beginPath(); x.moveTo(fx, fy + fh * 0.68); x.quadraticCurveTo(fx + fw * 0.5, fy + fh * 0.6, fx + fw, fy + fh * 0.7); x.lineTo(fx + fw, fy + fh); x.lineTo(fx, fy + fh); x.fill();
+    x.fillStyle = C.grass; x.fillRect(fx, fy + fh * 0.76, fw, fh);
+    x.fillStyle = C.grass2; for (let i = 0; i < 70; i++) { const gx = fx + (i * 37) % fw, gy = fy + fh * 0.78 + ((i * 13) % 18); x.fillRect(gx, gy, 1, 2.5); }
+    x.restore();
+    // the bison, facing left. Body and hump, head low with beard, horns, legs, tail.
+    const bx = fx + fw * 0.46, by = fy + fh * 0.66, s = fh / 100;
+    x.fillStyle = C.fur;
+    x.beginPath(); x.ellipse(bx + 8 * s, by - 6 * s, 26 * s, 15 * s, 0, 0, Math.PI * 2); x.fill();          // body
+    x.fillStyle = C.fur3; for (const [lx, w] of [[-10, 4.5], [-3, 4.5], [20, 4], [27, 4]]) x.fillRect(bx + lx * s, by + 2 * s, w * s, 15 * s); // legs
+    // shaggy hump and mane: big and high over the front legs, in the lighter brown, with tufts
+    x.fillStyle = C.fur2; x.beginPath(); x.ellipse(bx - 6 * s, by - 16 * s, 18 * s, 17 * s, -0.25, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.fur; for (const [tx, ty] of [[-14, -22], [-6, -27], [2, -25], [-18, -12], [-10, -10]]) { x.beginPath(); x.ellipse(bx + tx * s, by + ty * s, 3 * s, 1.6 * s, 0.4, 0, Math.PI * 2); x.fill(); }
+    // head held low, darker, with a beard
+    x.fillStyle = C.fur3; x.beginPath(); x.ellipse(bx - 25 * s, by - 1 * s, 8.5 * s, 10 * s, 0.25, 0, Math.PI * 2); x.fill();
+    x.beginPath(); x.moveTo(bx - 31 * s, by + 5 * s); x.lineTo(bx - 21 * s, by + 5 * s); x.lineTo(bx - 27 * s, by + 14 * s); x.closePath(); x.fill();
+    // short horn curving up from the top of the head, and a small dark eye with a light rim
+    x.strokeStyle = C.horn; x.lineWidth = 2.2; x.lineCap = 'round';
+    x.beginPath(); x.moveTo(bx - 23 * s, by - 9 * s); x.quadraticCurveTo(bx - 21 * s, by - 15 * s, bx - 26 * s, by - 17 * s); x.stroke();
+    x.fillStyle = C.horn; x.beginPath(); x.arc(bx - 28.5 * s, by - 3 * s, 1.5, 0, Math.PI * 2); x.fill();
+    x.fillStyle = '#000000'; x.beginPath(); x.arc(bx - 28.5 * s, by - 3 * s, 0.8, 0, Math.PI * 2); x.fill();
+    x.strokeStyle = C.fur3; x.lineWidth = 1.5 * s * 1.4; x.beginPath(); x.moveTo(bx + 33 * s, by - 10 * s); x.quadraticCurveTo(bx + 38 * s, by - 4 * s, bx + 36 * s, by + 4 * s); x.stroke(); // tail
+  });
+}
+
 // Buffalo check: red and black squares with a twill weave, wrapped in a cream blanket-stitch edge.
 function americaPlaid(ctx, W, H) {
   const C = { red: '#a3242a', black: '#17121a', mix: '#5b1a20', cream: '#ece1c8' };
@@ -1122,6 +1237,9 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.america === 'mesa') americaMesa(ctx, W, H);
   else if (P.america === 'quilt') americaQuilt(ctx, W, H, seed);
   else if (P.america === 'plaid') americaPlaid(ctx, W, H);
+  else if (P.america === 'hex') americaHex(ctx, W, H);
+  else if (P.america === 'lonestar') americaLoneStar(ctx, W, H, seed);
+  else if (P.america === 'bison') americaBison(ctx, W, H);
   else if (P.america === 'canyon') americaCanyon(ctx, W, H, seed);
   else if (P.america === 'liberty') americaLiberty(ctx, W, H);
   else if (P.america === 'eagle') americaEagle(ctx, W, H);
