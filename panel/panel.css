@@ -167,6 +167,18 @@ h2{margin:0 0 8px;font:600 .64rem/1.3 var(--f-mono);letter-spacing:.14em;text-tr
 
 .tips summary{cursor:pointer;font:600 .7rem/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(242,230,204,.8)}
 .tips ul{margin:10px 0 0;padding-left:1.1em;display:grid;gap:4px;font-size:.84rem;color:rgba(242,230,204,.85)}
+.report form{display:grid;gap:8px;margin-top:10px}
+.report .note{margin:0;font:500 .84rem/1.4 var(--f-body);letter-spacing:0;text-transform:none;color:rgba(242,230,204,.85)}
+.report .fine{margin:0;font-size:.72rem;line-height:1.35;color:rgba(242,230,204,.6)}
+.report textarea,.report input{width:100%;box-sizing:border-box;background:rgba(242,230,204,.08);border:1.5px solid rgba(242,230,204,.35);border-radius:4px;
+  padding:.6em .7em;color:var(--ivory);font:500 .84rem/1.4 var(--f-body);resize:vertical;user-select:text}
+.report textarea::placeholder,.report input::placeholder{color:rgba(242,230,204,.45)}
+.report textarea:focus,.report input:focus{outline:2px solid var(--saffron);outline-offset:1px;border-color:transparent}
+.report .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.report .linkish{color:var(--ivory)}
+.report .msg{margin:0;font-size:.82rem}
+.report .msg.good{color:#a7dca0}
+.report .msg.bad{color:#ffab9b}
 
 .foot{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:10px 18px 12px;font:500 .68rem/1 var(--f-mono);color:var(--ink)}
 .foot .linkish{font-size:.68rem}

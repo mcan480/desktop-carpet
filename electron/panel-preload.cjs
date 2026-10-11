@@ -12,6 +12,8 @@ contextBridge.exposeInMainWorld('dc', {
   rug: (cmd, arg) => ipcRenderer.send('rug', cmd, arg),
   setting: (name, value) => ipcRenderer.send('setting', name, value),
   open: (which) => ipcRenderer.send('open-url', which),
+  report: (r) => ipcRenderer.invoke('report', r),
+  onOpenReport: (fn) => ipcRenderer.on('open-report', () => fn()),
   quit: () => ipcRenderer.send('quit'),
   installUpdate: () => ipcRenderer.send('install-update'),
 });

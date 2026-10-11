@@ -10,7 +10,7 @@ if (process.platform === 'win32') app.setAppUserModelId('com.desktopcarpet.app')
 if (!app.requestSingleInstanceLock()) { app.quit(); process.exit(0); }
 
 const SITE = 'https://desktopcarpet.com';
-const URLS = { home: `${SITE}/`, pricing: `${SITE}/#pricing`, mcan2: 'https://mcan2.com/' };
+const URLS = { home: `${SITE}/`, pricing: `${SITE}/#pricing`, contact: `${SITE}/contact.html?topic=app`, mcan2: 'https://mcan2.com/' };
 let AUTOSTART = process.argv.includes('--autostart');
 const STATE_FILE = () => path.join(app.getPath('userData'), 'carpet-state.json');
 const SETTINGS_FILE = () => path.join(app.getPath('userData'), 'settings.json');
@@ -483,7 +483,7 @@ function buildMenu() {
     enabled: !(group === 'style' && expiredPaid() && k !== 'klasik'),
     click: () => rugCommand(group, k),
   }));
-  const items = [{ label: t('open'), click: openPanel }];
+  const items = [{ label: t('open'), click: openPanel }, { label: t('reportMenu'), click: openReport }];
   if (update.state === 'ready') items.push({ label: I18N.strings(LANG()).updMenu(update.version), click: installUpdate });
   items.push({ type: 'separator' });
   if (unlocked()) {
@@ -674,7 +674,17 @@ ipcMain.on('save-state', (_e, s) => writeJson(STATE_FILE(), s));
 ipcMain.handle('load-state', () => readJson(STATE_FILE(), null));
 
 // ---------- IPC: panel ----------
-ipcMain.on('panel-ready', () => broadcast());
+ipcMain.on('panel-ready', () => {
+  broadcast();
+  if (wantReport && panel && !panel.isDestroyed()) { wantReport = false; panel.webContents.send('open-report'); }
+});
+// Tray "Report a problem…": open the panel with the report form showing.
+let wantReport = false;
+function openReport() {
+  const fresh = !(panel && !panel.isDestroyed());
+  openPanel();
+  if (fresh) wantReport = true; else panel.webContents.send('open-report');
+}
 ipcMain.handle('license-activate', async (_e, key) => {
   if (!lic) return { state: 'error', reason: 'unknown' };
   let s;
@@ -706,7 +716,29 @@ ipcMain.handle('license-recover', async (_e, email) => {
 });
 ipcMain.on('rug', (_e, cmd, arg) => rugCommand(cmd, arg));
 ipcMain.on('setting', (_e, name, value) => applySetting(name, value));
-ipcMain.on('open-url', (_e, which) => { if (URLS[which]) shell.openExternal(URLS[which]); });
+ipcMain.on('open-url', (_e, which) => {
+  if (which === 'contact') { const u = new URL(URLS.contact); if (license?.key) u.searchParams.set('ref', license.key); shell.openExternal(u.toString()); return; }
+  if (URLS[which]) shell.openExternal(URLS[which]);
+});
+// Report a problem: posted to the contact inbox on the site (the same one as its contact form), with what we need
+// to help: app version, system, screen, the rug in use and the license key.
+ipcMain.handle('report', async (_e, r) => {
+  const email = String(r?.email || '').trim().slice(0, 254), text = String(r?.message || '').trim().slice(0, 3500);
+  const d = screen.getPrimaryDisplay();
+  const sys = IS_MAC ? `macOS ${process.getSystemVersion()}` : `Windows ${os.release()}`;
+  const diag = [`Desktop Carpet ${app.getVersion()}`, `${sys} ${process.arch}`,
+    `${screen.getAllDisplays().length} screen(s), ${d.size.width}x${d.size.height} @${d.scaleFactor}x`,
+    `rug ${rugState.style} / ${rugState.size} / ${rugState.weight}`, `lang ${LANG()}`,
+    `license ${license?.state || '?'}${license?.plan ? ' ' + license.plan : ''}`].join(' · ');
+  const body = { email, topic: 'app', message: `${text}\n\n— ${diag}`, page: `app ${app.getVersion()} ${process.platform}`, t: Math.max(0, Number(r?.t) || 0),
+    ...(license?.key ? { ref: String(license.key).slice(0, 60) } : {}) };
+  const ctl = new AbortController(), timer = setTimeout(() => ctl.abort(), 12000);
+  try {
+    const res = await fetch(`${SITE}/api/contact`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body), signal: ctl.signal });
+    const j = await res.json().catch(() => ({}));
+    return res.ok && j.ok ? { ok: true } : { ok: false, error: j.error || 'failed' };
+  } catch { return { ok: false, error: 'network' }; } finally { clearTimeout(timer); }
+});
 ipcMain.on('quit', () => app.quit());
 ipcMain.on('install-update', () => installUpdate());
 

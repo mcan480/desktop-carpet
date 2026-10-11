@@ -226,6 +226,21 @@
         <li data-t="tip4">Right-click the carpet or the tray icon for quick options.</li>
       </ul>
     </details>
+
+    <details class="tips report" id="report">
+      <summary data-t="reportTitle">Report a problem</summary>
+      <form id="reportForm" novalidate>
+        <p class="note" data-t="reportLead">Tell us what went wrong. We'll reply by email.</p>
+        <textarea id="reportText" rows="4" maxlength="3500" data-tp="reportPh" placeholder="What happened? What were you doing when it happened?"></textarea>
+        <input id="reportEmail" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com">
+        <p class="fine" data-t="reportFine">Your app version, system and license key are sent with it so we can help.</p>
+        <div class="row">
+          <button type="submit" class="btn small" id="reportGo" data-t="reportSend">Send</button>
+          <button type="button" class="linkish" id="reportWeb" data-url="contact" data-t="reportWeb" hidden>Open the contact page</button>
+        </div>
+        <p class="msg" id="reportMsg" role="status" hidden></p>
+      </form>
+    </details>
   </section>
 </main>
 

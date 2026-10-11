@@ -13,6 +13,7 @@
   function applyStrings() {
     document.documentElement.lang = lang;
     $$('[data-t]').forEach((el) => { const v = T[el.dataset.t]; if (typeof v === 'string') el.textContent = v; });
+    $$('[data-tp]').forEach((el) => { const v = T[el.dataset.tp]; if (typeof v === 'string') el.placeholder = v; });
   }
 
   const fmtDate = (iso) => {
@@ -170,6 +171,33 @@
   $('#quitBtn').addEventListener('click', () => dc.quit());
   $('#langSel').addEventListener('change', (e) => dc.setting('lang', e.target.value));
   $('#updBtn').addEventListener('click', (e) => { e.target.disabled = true; dc.installUpdate(); });
+
+  // ---- report a problem: goes to the contact inbox on desktopcarpet.com ----
+  const rep = $('#report'), repText = $('#reportText'), repEmail = $('#reportEmail'), repGo = $('#reportGo'), repMsg = $('#reportMsg');
+  let repOpened = 0, repBusy = false;
+  rep.addEventListener('toggle', () => { if (rep.open && !repOpened) repOpened = Date.now(); });
+  try { repEmail.value = localStorage.getItem('dc-report-email') || ''; } catch {}
+  $('#reportForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (repBusy) return;
+    const message = repText.value.trim(), email = repEmail.value.trim();
+    $('#reportWeb').hidden = true;
+    if (message.length < 5) { setMsg(repMsg, T.reportEmpty, 'bad'); repText.focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { setMsg(repMsg, T.reportBadEmail, 'bad'); repEmail.focus(); return; }
+    repBusy = true; repGo.disabled = true; repGo.textContent = T.reportSending; repMsg.hidden = true;
+    let r;
+    try { r = await dc.report({ email, message, t: Date.now() - (repOpened || 0) }); } catch { r = { ok: false, error: 'network' }; }
+    repBusy = false; repGo.disabled = false; repGo.textContent = T.reportSend;
+    if (r?.ok) {
+      setMsg(repMsg, T.reportSent, 'good'); repText.value = '';
+      try { localStorage.setItem('dc-report-email', email); } catch {}
+      return;
+    }
+    const why = { bad_email: 'reportBadEmail', empty: 'reportEmpty', rate_limited: 'reportRate' }[r?.error] || 'reportFail';
+    setMsg(repMsg, T[why], 'bad');
+    if (why === 'reportFail' || why === 'reportRate') $('#reportWeb').hidden = false;
+  });
+  dc.onOpenReport?.(() => { rep.open = true; rep.scrollIntoView({ behavior: 'smooth', block: 'start' }); setTimeout(() => repText.focus(), 250); });
 
   dc.onState((s) => {
     const first = !st;
