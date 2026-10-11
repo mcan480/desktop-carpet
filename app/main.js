@@ -1,6 +1,6 @@
 import * as THREE from './vendor/three.module.js';
 import { Cloth } from './cloth.js';
-import { makeRugCanvases, STYLES } from './rugTexture.js';
+import { makeRugCanvases, STYLES, loadRugFonts } from './rugTexture.js';
 
 const api = window.halim || null; // provided by Electron preload; absent in a plain browser
 if (!api) {
@@ -524,6 +524,9 @@ function command(cmd, arg) {
 }
 
 window.addEventListener('resize', () => command('layout'));
+// Lettered rugs (postcard, diner, Route 66…) use the panel's display fonts; once they're loaded, redraw such a rug
+// so its lettering switches from the fallback font.
+loadRugFonts().then(() => { if (STYLES[state.style]?.fonts && cloth) buildRug(); });
 if (!api) window.__dcCommand = command; // plain-browser preview: lets a test page drive the rug
 
 (async () => {
