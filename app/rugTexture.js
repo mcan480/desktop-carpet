@@ -18,6 +18,9 @@ export const STYLES = {
   yorgan:   { name: 'Yama Yorgan',           america: 'quilt' },
   ekose:    { name: 'Oduncu Ekose',          america: 'plaid' },
   kanyon:   { name: 'Kanyon Gün Batımı',     america: 'canyon' },
+  ozgurluk: { name: 'Özgürlük Heykeli',      america: 'liberty' },
+  kartal:   { name: 'Kel Kartal',            america: 'eagle' },
+  goldengate:{ name: 'Golden Gate',          america: 'bridge' },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -871,6 +874,192 @@ function americaCanyon(ctx, W, H, seed) {
   }
 }
 
+// ---------- woven pictures ----------
+// Draw a scene with ordinary canvas shapes on a tiny canvas (one pixel per knot), snap every pixel to the rug's
+// palette, then lay it down knot by knot: smooth shapes come out with the stepped edges of a hand-knotted rug.
+function weavePicture(ctx, W, H, rowsWanted, palette, draw) {
+  const g = knotGrid(ctx, W, H, rowsWanted), { cols, rows, blk } = g;
+  const c = document.createElement('canvas'); c.width = cols; c.height = rows;
+  const x = c.getContext('2d');
+  draw(x, cols, rows);
+  const d = x.getImageData(0, 0, cols, rows).data;
+  const pal = palette.map((h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16), h]);
+  for (let i = 0; i < cols * rows; i++) {
+    const r = d[i * 4], gg = d[i * 4 + 1], b = d[i * 4 + 2];
+    let best = pal[0], bd = Infinity;
+    for (const p of pal) { const e = (p[0] - r) ** 2 + (p[1] - gg) ** 2 + (p[2] - b) ** 2; if (e < bd) { bd = e; best = p; } }
+    blk(i % cols, (i / cols) | 0, best[3]);
+  }
+  return g;
+}
+
+// Border shared by the picture rugs: dark band, cream line, and a whole number of little diamonds per side with a
+// star in each corner.
+function pictureBorder(x, cols, rows, C) {
+  x.fillStyle = C.frame; x.fillRect(0, 0, cols, rows);
+  x.fillStyle = C.line; x.fillRect(5, 5, cols - 10, rows - 10);
+  x.fillStyle = C.frame; x.fillRect(6, 6, cols - 12, rows - 12);
+  x.fillStyle = C.accent;
+  const dia = (cx, cy) => { x.beginPath(); x.moveTo(cx, cy - 1.6); x.lineTo(cx + 1.6, cy); x.lineTo(cx, cy + 1.6); x.lineTo(cx - 1.6, cy); x.closePath(); x.fill(); };
+  const row = (len, put) => { const { n, d } = evenSteps(len, 6); for (let i = 0; i <= n; i++) put(i * d); };
+  row(cols - 16, (a) => { dia(8 + a, 2.6); dia(8 + a, rows - 2.6); });
+  row(rows - 16, (a) => { dia(2.6, 8 + a); dia(cols - 2.6, 8 + a); });
+  x.fillStyle = C.star; for (const [cx, cy] of [[2.6, 2.6], [cols - 2.6, 2.6], [2.6, rows - 2.6], [cols - 2.6, rows - 2.6]]) { x.beginPath(); star5(x, cx, cy, 2.4); }
+}
+
+// Statue of Liberty at dusk: verdigris figure holding up a gold torch, on her pedestal above the harbour.
+function americaLiberty(ctx, W, H) {
+  const C = { frame: '#1c2540', line: '#e9dcc0', accent: '#a8322f', star: '#f0e3c4',
+    sky1: '#22305a', sky1b: '#2d3b6b', sky2: '#3a4a7c', sky2b: '#5b4f86', sky2c: '#8a5a7c', sky3: '#c86f5a', sky3b: '#e08f5f', sky4: '#f0b26a', green: '#5c9f8a', green2: '#3f7a69', green3: '#8cc3ad',
+    stone: '#9b8f7d', stone2: '#7b705f', gold: '#f2c14e', flame: '#f08a3a', water: '#2b4d72', water2: '#3f6a92', city: '#26304d' };
+  const pal = Object.values(C);
+  weavePicture(ctx, W, H, 104, pal, (x, cols, rows) => {
+    pictureBorder(x, cols, rows, C);
+    const fx = 7, fy = 7, fw = cols - 14, fh = rows - 14;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const sky = x.createLinearGradient(0, fy, 0, fy + fh * 0.78);
+    sky.addColorStop(0, C.sky1); sky.addColorStop(0.45, C.sky2); sky.addColorStop(0.8, C.sky3); sky.addColorStop(1, C.sky4);
+    x.fillStyle = sky; x.fillRect(fx, fy, fw, fh);
+    x.fillStyle = C.star; for (const [a, b] of [[0.04, 0.1], [0.22, 0.2], [0.8, 0.12], [0.9, 0.26], [0.68, 0.06], [0.3, 0.08], [0.14, 0.32]]) x.fillRect(fx + fw * a, fy + fh * b, 1, 1);
+    // skyline far left and right
+    x.fillStyle = C.city;
+    for (const [a, w, h] of [[0.02, 0.05, 0.12], [0.07, 0.04, 0.18], [0.11, 0.06, 0.1], [0.83, 0.05, 0.16], [0.88, 0.04, 0.22], [0.92, 0.06, 0.12]]) x.fillRect(fx + fw * a, fy + fh * (0.8 - h), fw * w, fh * h);
+    // water
+    x.fillStyle = C.water; x.fillRect(fx, fy + fh * 0.8, fw, fh * 0.2);
+    x.fillStyle = C.water2; for (let i = 0; i < 6; i++) x.fillRect(fx + fw * (0.05 + i * 0.16), fy + fh * (0.85 + (i % 2) * 0.06), fw * 0.08, 1);
+    // statue, centred
+    const cx = fx + fw * 0.5, base = fy + fh * 0.86, S = fh / 90;
+    x.fillStyle = C.stone; x.fillRect(cx - 9 * S, base - 22 * S, 18 * S, 22 * S);          // pedestal
+    x.fillStyle = C.stone2; x.fillRect(cx - 11 * S, base - 4 * S, 22 * S, 4 * S); x.fillRect(cx - 7 * S, base - 18 * S, 14 * S, 2 * S);
+    x.fillStyle = C.green2; x.fillRect(cx - 6 * S, base - 26 * S, 12 * S, 4 * S);          // plinth
+    // robe: a long tapered body
+    x.fillStyle = C.green;
+    x.beginPath(); x.moveTo(cx - 6 * S, base - 26 * S); x.lineTo(cx - 4.5 * S, base - 58 * S); x.lineTo(cx + 4.5 * S, base - 58 * S); x.lineTo(cx + 6 * S, base - 26 * S); x.closePath(); x.fill();
+    x.fillStyle = C.green3; x.fillRect(cx - 1.2 * S, base - 56 * S, 1.2 * S, 28 * S);     // robe fold highlight
+    // left arm holding the tablet against her side
+    x.fillStyle = C.green2; x.save(); x.translate(cx - 5.5 * S, base - 48 * S); x.rotate(-0.25); x.fillRect(-2.5 * S, -2 * S, 5 * S, 10 * S); x.restore();
+    // raised right arm and torch
+    x.fillStyle = C.green; x.save(); x.translate(cx + 3.5 * S, base - 56 * S); x.rotate(0.12); x.fillRect(-1.5 * S, -16 * S, 3 * S, 16 * S); x.restore();
+    x.fillStyle = C.gold; x.fillRect(cx + 4 * S, base - 75 * S, 4 * S, 2.5 * S);
+    x.fillStyle = C.flame; x.beginPath(); x.moveTo(cx + 6 * S, base - 82 * S); x.quadraticCurveTo(cx + 9 * S, base - 77 * S, cx + 7.6 * S, base - 75 * S); x.lineTo(cx + 4.4 * S, base - 75 * S); x.quadraticCurveTo(cx + 3.6 * S, base - 78 * S, cx + 6 * S, base - 82 * S); x.fill();
+    x.fillStyle = C.gold; x.beginPath(); x.arc(cx + 6 * S, base - 77.5 * S, 1.2 * S, 0, Math.PI * 2); x.fill();
+    // head and crown with seven rays
+    x.fillStyle = C.green; x.beginPath(); x.arc(cx, base - 61.5 * S, 3.4 * S, 0, Math.PI * 2); x.fill();
+    x.strokeStyle = C.green3; x.lineWidth = 1.1 * S;
+    for (let i = 0; i < 7; i++) { const a = -Math.PI * (0.12 + i * 0.127); x.beginPath(); x.moveTo(cx + Math.cos(a) * 3.4 * S, base - 62 * S + Math.sin(a) * 3.4 * S); x.lineTo(cx + Math.cos(a) * 7.5 * S, base - 62 * S + Math.sin(a) * 7.5 * S); x.stroke(); }
+    x.restore();
+  });
+}
+
+// Bald eagle with its wings spread, the way it's carved over doorways: white head and tail, gold beak and talons,
+// an olive branch, on a red field with a scatter of stars.
+function americaEagle(ctx, W, H) {
+  const C = { frame: '#1d2a48', line: '#e9dcc0', accent: '#b2342f', star: '#f0e3c4', field: '#8f2a2c', field2: '#7a2226',
+    brown: '#5a3a24', brown2: '#3f2818', brown3: '#7b5233', white: '#f2ece0', gold: '#e3a93a', olive: '#6e8a3c', navy: '#22305a' };
+  weavePicture(ctx, W, H, 104, Object.values(C), (x, cols, rows) => {
+    pictureBorder(x, cols, rows, C);
+    const fx = 7, fy = 7, fw = cols - 14, fh = rows - 14;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    x.fillStyle = C.field; x.fillRect(fx, fy, fw, fh);
+    x.fillStyle = C.field2; for (let yy = fy; yy < fy + fh; yy += 4) x.fillRect(fx, yy, fw, 1); // woven ribs
+    // a ring of stars behind the head
+    const cx = fx + fw / 2, cy = fy + fh * 0.5, S = fh / 100;
+    x.fillStyle = C.star;
+    for (let i = 0; i < 13; i++) { const a = Math.PI * (1.08 + i * 0.07); star5(x, cx + Math.cos(a) * 34 * S, cy - 18 * S + Math.sin(a) * 30 * S, 2.2 * S); }
+    // wings: a solid raised wing with a scalloped trailing edge of long primaries, lighter coverts on top
+    const wing = (dir) => {
+      const sh = { x: cx + dir * 5 * S, y: cy - 6 * S };        // shoulder
+      const tip = { x: cx + dir * 46 * S, y: cy - 30 * S };     // wing tip, raised
+      x.fillStyle = C.brown2;
+      x.beginPath(); x.moveTo(sh.x, sh.y - 4 * S);
+      x.quadraticCurveTo(cx + dir * 24 * S, cy - 34 * S, tip.x, tip.y);
+      // trailing edge: 7 rounded primaries stepping back toward the body
+      const feathers = 7;
+      for (let i = 0; i <= feathers; i++) {
+        const t = i / feathers;
+        const ex = tip.x + (sh.x + dir * 4 * S - tip.x) * t, ey = tip.y + (cy + 8 * S - tip.y) * t + 9 * S * Math.sin(t * Math.PI);
+        const px = ex + dir * -1.5 * S, py = ey + 5 * S;
+        x.quadraticCurveTo(px, py + 2 * S, ex + (sh.x - tip.x) / feathers * 0.5, ey + 1 * S);
+      }
+      x.lineTo(sh.x, sh.y + 6 * S); x.closePath(); x.fill();
+      // coverts: a lighter band along the top of the wing
+      x.fillStyle = C.brown3;
+      x.beginPath(); x.moveTo(sh.x, sh.y - 3 * S);
+      x.quadraticCurveTo(cx + dir * 24 * S, cy - 32 * S, cx + dir * 38 * S, cy - 26 * S);
+      x.quadraticCurveTo(cx + dir * 24 * S, cy - 18 * S, sh.x, sh.y + 4 * S); x.closePath(); x.fill();
+      // feather lines on the coverts
+      x.strokeStyle = C.brown; x.lineWidth = 0.9 * S;
+      for (let i = 1; i <= 4; i++) { const t = i / 5; x.beginPath(); x.moveTo(sh.x + dir * 30 * S * t, cy - 6 * S - 20 * S * t); x.lineTo(sh.x + dir * (30 * t + 4) * S, cy - 1 * S - 16 * S * t); x.stroke(); }
+    };
+    wing(1); wing(-1);
+    // body and a fanned white tail
+    x.fillStyle = C.white; x.beginPath(); x.moveTo(cx, cy + 12 * S);
+    for (let i = 0; i <= 6; i++) { const a = Math.PI * (0.38 + i * 0.04), r = (i % 2 ? 14 : 16) * S; x.lineTo(cx + Math.cos(a) * r, cy + 12 * S + Math.sin(a) * r); }
+    x.closePath(); x.fill();
+    x.strokeStyle = C.line; x.lineWidth = 0.8 * S; for (let i = 1; i < 6; i++) { const a = Math.PI * (0.38 + i * 0.04); x.beginPath(); x.moveTo(cx, cy + 16 * S); x.lineTo(cx + Math.cos(a) * 14 * S, cy + 12 * S + Math.sin(a) * 14 * S); x.stroke(); }
+    x.fillStyle = C.brown; x.beginPath(); x.ellipse(cx, cy + 3 * S, 8 * S, 14 * S, 0, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.brown3; x.beginPath(); x.ellipse(cx, cy + 1 * S, 4.5 * S, 10 * S, 0, 0, Math.PI * 2); x.fill();
+    // white head and neck, gold hooked beak, eye
+    x.fillStyle = C.white; x.beginPath(); x.ellipse(cx, cy - 13 * S, 6.5 * S, 7.5 * S, 0, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.gold; x.beginPath(); x.moveTo(cx + 5 * S, cy - 14 * S); x.lineTo(cx + 11 * S, cy - 12 * S); x.quadraticCurveTo(cx + 11 * S, cy - 9 * S, cx + 8 * S, cy - 9 * S); x.lineTo(cx + 5 * S, cy - 10 * S); x.closePath(); x.fill();
+    x.fillStyle = C.brown2; x.fillRect(cx + 2 * S, cy - 16 * S, 1.6 * S, 1.6 * S);
+    // gold talons holding an olive branch
+    x.fillStyle = C.gold; for (const sx of [-1, 1]) x.fillRect(cx + sx * 4 * S - 1.5 * S, cy + 14 * S, 3 * S, 4 * S);
+    x.strokeStyle = C.olive; x.lineWidth = 1.3 * S; x.beginPath(); x.moveTo(cx - 9 * S, cy + 18 * S); x.quadraticCurveTo(cx, cy + 21 * S, cx + 11 * S, cy + 17 * S); x.stroke();
+    x.fillStyle = C.olive; for (let i = 0; i < 6; i++) { const t = i / 5; x.beginPath(); x.ellipse(cx - 8 * S + t * 18 * S, cy + 18.5 * S + Math.sin(t * Math.PI) * 1.5 * S + (i % 2 ? -1.6 : 1.6) * S, 1.9 * S, 0.9 * S, i % 2 ? 0.5 : -0.5, 0, Math.PI * 2); x.fill(); }
+    x.restore();
+  });
+}
+
+// Golden Gate at sunset: the orange towers and cables over the bay, fog rolling in, hills behind.
+function americaBridge(ctx, W, H) {
+  const C = { frame: '#23263c', line: '#e9dcc0', accent: '#c4472c', star: '#f0e3c4',
+    sky1: '#3b3a6e', sky1b: '#5a3f78', sky2: '#a2507a', sky2b: '#c9636a', sky3: '#ef8a55', sky3b: '#f3a75e', sky4: '#f6c76a', fog: '#e6dfe2', fog2: '#c9c3d2',
+    hill: '#4d5b6e', hill2: '#3c4859', orange: '#c4472c', orange2: '#9e3522', sea: '#2d5a7a', sea2: '#467a99', sun: '#ffe08a' };
+  weavePicture(ctx, W, H, 104, Object.values(C), (x, cols, rows) => {
+    pictureBorder(x, cols, rows, C);
+    const fx = 7, fy = 7, fw = cols - 14, fh = rows - 14;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const sea = fy + fh * 0.7;
+    const sky = x.createLinearGradient(0, fy, 0, sea);
+    sky.addColorStop(0, C.sky1); sky.addColorStop(0.45, C.sky2); sky.addColorStop(0.8, C.sky3); sky.addColorStop(1, C.sky4);
+    x.fillStyle = sky; x.fillRect(fx, fy, fw, fh);
+    x.fillStyle = C.sun; x.beginPath(); x.arc(fx + fw * 0.78, sea - fh * 0.02, fh * 0.1, Math.PI, 0); x.fill();
+    // hills on both shores
+    x.fillStyle = C.hill2; x.beginPath(); x.moveTo(fx, sea); x.quadraticCurveTo(fx + fw * 0.08, sea - fh * 0.22, fx + fw * 0.2, sea); x.fill();
+    x.fillStyle = C.hill; x.beginPath(); x.moveTo(fx + fw * 0.72, sea); x.quadraticCurveTo(fx + fw * 0.9, sea - fh * 0.2, fx + fw, sea - fh * 0.1); x.lineTo(fx + fw, sea); x.fill();
+    // sea with sparkle rows
+    x.fillStyle = C.sea; x.fillRect(fx, sea, fw, fh);
+    x.fillStyle = C.sea2; for (let i = 0; i < 8; i++) x.fillRect(fx + fw * ((i * 0.13) % 1), sea + fh * (0.05 + (i % 4) * 0.06), fw * 0.07, 1);
+    // bridge: deck, two towers, main cables sagging between them, suspenders
+    const deck = sea - fh * 0.08, t1 = fx + fw * 0.3, t2 = fx + fw * 0.66, top = fy + fh * 0.12;
+    x.fillStyle = C.orange2; x.fillRect(fx, deck, fw, fh * 0.035);
+    for (const tx of [t1, t2]) {
+      x.fillStyle = C.orange; x.fillRect(tx - fw * 0.012, top, fw * 0.024, sea - top + fh * 0.04);
+      x.fillRect(tx + fw * 0.03, top, fw * 0.024, sea - top + fh * 0.04);
+      x.fillStyle = C.orange2; for (const yy of [0.18, 0.34, 0.5]) x.fillRect(tx - fw * 0.012, fy + fh * yy, fw * 0.066, fh * 0.02);
+    }
+    x.strokeStyle = C.orange; x.lineWidth = 1;
+    const cable = (xa, xb, sag) => { x.beginPath(); x.moveTo(xa, top + 1); x.quadraticCurveTo((xa + xb) / 2, deck + sag, xb, top + 1); x.stroke(); };
+    cable(t1 + fw * 0.02, t2 + fw * 0.02, -fh * 0.06);
+    x.beginPath(); x.moveTo(fx, deck - fh * 0.02); x.quadraticCurveTo(fx + fw * 0.15, deck - fh * 0.04, t1 + fw * 0.02, top + 1); x.stroke();
+    x.beginPath(); x.moveTo(t2 + fw * 0.02, top + 1); x.quadraticCurveTo(fx + fw * 0.85, deck - fh * 0.04, fx + fw, deck - fh * 0.03); x.stroke();
+    // suspenders hang from the main cable (same curve as above) down to the deck
+    x.strokeStyle = C.orange2;
+    const ca = t1 + fw * 0.02, cbx = t2 + fw * 0.02, ctrl = deck - fh * 0.06;
+    for (let k = 1; k < 16; k++) {
+      const t = k / 16, xx = ca + (cbx - ca) * t;
+      const y = (1 - t) * (1 - t) * (top + 1) + 2 * t * (1 - t) * ctrl + t * t * (top + 1);
+      if (xx > t1 + fw * 0.06 && xx < t2 - fw * 0.01) { x.beginPath(); x.moveTo(xx, y); x.lineTo(xx, deck); x.stroke(); }
+    }
+    // fog drifting under the deck and around the left tower
+    x.fillStyle = C.fog2; x.beginPath(); x.ellipse(fx + fw * 0.12, deck + fh * 0.03, fw * 0.16, fh * 0.05, 0, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.fog; x.beginPath(); x.ellipse(fx + fw * 0.2, deck + fh * 0.05, fw * 0.2, fh * 0.04, 0, 0, Math.PI * 2); x.fill();
+    x.beginPath(); x.ellipse(fx + fw * 0.55, deck + fh * 0.07, fw * 0.14, fh * 0.025, 0, 0, Math.PI * 2); x.fill();
+    x.restore();
+  });
+}
+
 // Buffalo check: red and black squares with a twill weave, wrapped in a cream blanket-stitch edge.
 function americaPlaid(ctx, W, H) {
   const C = { red: '#a3242a', black: '#17121a', mix: '#5b1a20', cream: '#ece1c8' };
@@ -934,6 +1123,9 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.america === 'quilt') americaQuilt(ctx, W, H, seed);
   else if (P.america === 'plaid') americaPlaid(ctx, W, H);
   else if (P.america === 'canyon') americaCanyon(ctx, W, H, seed);
+  else if (P.america === 'liberty') americaLiberty(ctx, W, H);
+  else if (P.america === 'eagle') americaEagle(ctx, W, H);
+  else if (P.america === 'bridge') americaBridge(ctx, W, H);
   else if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
