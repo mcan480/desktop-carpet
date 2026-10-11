@@ -656,92 +656,114 @@ function star5(ctx, x, y, r, rot = -Math.PI / 2) {
 }
 function roundRect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, w, h, r) : ctx.rect(x, y, w, h); }
 
-// Little scenes used inside the postcard letters. Each fills (0,0,w,h).
+// Little scenes used inside the postcard letters. Each fills (0,0,w,h). They're kept to a few big shapes: a letter
+// is only a handful of loops wide, so fine detail would just turn into speckles.
 const SCENES = [
-  (c, w, h) => { // snowy mountains over a lake
-    const g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#7fb6d6'); g.addColorStop(1, '#d9ecf2'); c.fillStyle = g; c.fillRect(0, 0, w, h);
-    c.fillStyle = '#5b6f9a'; c.beginPath(); c.moveTo(-w * 0.1, h * 0.7); c.lineTo(w * 0.35, h * 0.22); c.lineTo(w * 0.7, h * 0.62); c.lineTo(w * 0.9, h * 0.35); c.lineTo(w * 1.1, h * 0.7); c.fill();
-    c.fillStyle = '#f4f6f6'; c.beginPath(); c.moveTo(w * 0.25, h * 0.34); c.lineTo(w * 0.35, h * 0.22); c.lineTo(w * 0.45, h * 0.35); c.lineTo(w * 0.38, h * 0.32); c.lineTo(w * 0.32, h * 0.37); c.fill();
-    c.fillStyle = '#2f6b52'; c.fillRect(0, h * 0.68, w, h * 0.08); c.fillStyle = '#3d86a8'; c.fillRect(0, h * 0.76, w, h);
+  (c, w, h) => { // snowy mountain over a lake
+    c.fillStyle = '#86bedc'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#5b6f9a'; c.beginPath(); c.moveTo(-w * 0.2, h * 0.72); c.lineTo(w * 0.5, h * 0.12); c.lineTo(w * 1.2, h * 0.72); c.fill();
+    c.fillStyle = '#f4f6f6'; c.beginPath(); c.moveTo(w * 0.27, h * 0.32); c.lineTo(w * 0.5, h * 0.12); c.lineTo(w * 0.73, h * 0.32); c.fill();
+    c.fillStyle = '#2f6b52'; c.fillRect(0, h * 0.68, w, h * 0.1); c.fillStyle = '#3d86a8'; c.fillRect(0, h * 0.78, w, h);
   },
-  (c, w, h) => { // beach with a palm
-    const g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#f7a35c'); g.addColorStop(0.55, '#ffd27d'); c.fillStyle = g; c.fillRect(0, 0, w, h);
-    c.fillStyle = '#2a8fa0'; c.fillRect(0, h * 0.58, w, h * 0.2); c.fillStyle = '#f1d9a6'; c.fillRect(0, h * 0.78, w, h);
-    c.strokeStyle = '#3a2f22'; c.lineWidth = w * 0.05; c.beginPath(); c.moveTo(w * 0.6, h); c.quadraticCurveTo(w * 0.62, h * 0.55, w * 0.42, h * 0.3); c.stroke();
-    c.fillStyle = '#2f6b3a'; for (let k = 0; k < 6; k++) { const a = -Math.PI + k * 0.6; c.beginPath(); c.ellipse(w * 0.42 + Math.cos(a) * w * 0.16, h * 0.3 + Math.sin(a) * h * 0.06 + h * 0.03, w * 0.2, h * 0.035, a, 0, Math.PI * 2); c.fill(); }
+  (c, w, h) => { // beach at sunset
+    c.fillStyle = '#f39a52'; c.fillRect(0, 0, w, h); c.fillStyle = '#ffd27d'; c.beginPath(); c.arc(w * 0.5, h * 0.5, w * 0.3, Math.PI, 0); c.fill();
+    c.fillStyle = '#2a8fa0'; c.fillRect(0, h * 0.5, w, h * 0.25); c.fillStyle = '#f1d9a6'; c.fillRect(0, h * 0.75, w, h);
   },
-  (c, w, h) => { // desert mesas
-    const g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#f2b45a'); g.addColorStop(1, '#f6dca0'); c.fillStyle = g; c.fillRect(0, 0, w, h);
-    c.fillStyle = '#b4532f'; c.fillRect(w * 0.1, h * 0.38, w * 0.35, h * 0.4); c.fillRect(w * 0.05, h * 0.5, w * 0.5, h * 0.3); c.fillRect(w * 0.6, h * 0.48, w * 0.3, h * 0.3);
+  (c, w, h) => { // desert mesa
+    c.fillStyle = '#f2b45a'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#b4532f'; c.fillRect(w * 0.12, h * 0.3, w * 0.6, h * 0.5); c.fillRect(0, h * 0.48, w, h * 0.3);
     c.fillStyle = '#d99a5a'; c.fillRect(0, h * 0.76, w, h);
-    c.fillStyle = '#2f5a3e'; c.fillRect(w * 0.72, h * 0.6, w * 0.05, h * 0.25); c.fillRect(w * 0.66, h * 0.66, w * 0.06, h * 0.03); c.fillRect(w * 0.66, h * 0.6, w * 0.03, h * 0.07);
   },
   (c, w, h) => { // city at dusk
-    const g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#2b3a6b'); g.addColorStop(1, '#e98a6c'); c.fillStyle = g; c.fillRect(0, 0, w, h);
-    const R = rng(5); c.fillStyle = '#1b2240';
-    for (let x = 0; x < w; ) { const bw = w * (0.08 + R() * 0.12), bh = h * (0.25 + R() * 0.5); c.fillRect(x, h - bh, bw, bh); x += bw + 1; }
-    c.fillStyle = '#f2c75c'; for (let i = 0; i < 60; i++) c.fillRect(R() * w, h * 0.5 + R() * h * 0.5, w * 0.015, h * 0.012);
+    c.fillStyle = '#2b3a6b'; c.fillRect(0, 0, w, h * 0.5); c.fillStyle = '#e98a6c'; c.fillRect(0, h * 0.5, w, h);
+    c.fillStyle = '#1b2240'; for (const [x, bw, bh] of [[0, 0.3, 0.55], [0.28, 0.24, 0.8], [0.5, 0.28, 0.62], [0.76, 0.3, 0.72]]) c.fillRect(w * x, h * (1 - bh), w * bw, h * bh);
+    c.fillStyle = '#f2c75c'; for (let i = 0; i < 4; i++) for (let k = 0; k < 3; k++) c.fillRect(w * (0.08 + i * 0.24), h * (0.5 + k * 0.15), w * 0.07, h * 0.05);
   },
   (c, w, h) => { // pine forest
-    c.fillStyle = '#a8d0c4'; c.fillRect(0, 0, w, h); c.fillStyle = '#6aa58f'; c.fillRect(0, h * 0.5, w, h);
-    for (let i = 0; i < 9; i++) { const x = (i / 8) * w, th = h * (0.35 + (i % 3) * 0.12); c.fillStyle = i % 2 ? '#24543f' : '#2f6b4f'; c.beginPath(); c.moveTo(x, h - th - h * 0.1); c.lineTo(x + w * 0.09, h); c.lineTo(x - w * 0.09, h); c.fill(); }
+    c.fillStyle = '#a8d0c4'; c.fillRect(0, 0, w, h); c.fillStyle = '#5f9a7f'; c.fillRect(0, h * 0.55, w, h);
+    c.fillStyle = '#24543f'; c.beginPath(); c.moveTo(w * 0.5, h * 0.08); c.lineTo(w * 1.1, h * 0.95); c.lineTo(-w * 0.1, h * 0.95); c.fill();
   },
-  (c, w, h) => { // golden wheat field with a red barn
-    c.fillStyle = '#9fcbe2'; c.fillRect(0, 0, w, h); c.fillStyle = '#e8b64c'; c.fillRect(0, h * 0.55, w, h);
-    c.fillStyle = '#d29a35'; for (let y = h * 0.6; y < h; y += h * 0.06) c.fillRect(0, y, w, h * 0.015);
-    c.fillStyle = '#a3302f'; c.fillRect(w * 0.3, h * 0.38, w * 0.4, h * 0.22); c.beginPath(); c.moveTo(w * 0.27, h * 0.4); c.lineTo(w * 0.5, h * 0.24); c.lineTo(w * 0.73, h * 0.4); c.fill();
-    c.fillStyle = '#efe3c6'; c.fillRect(w * 0.44, h * 0.46, w * 0.12, h * 0.14);
+  (c, w, h) => { // red barn in a wheat field
+    c.fillStyle = '#9fcbe2'; c.fillRect(0, 0, w, h); c.fillStyle = '#e8b64c'; c.fillRect(0, h * 0.62, w, h);
+    c.fillStyle = '#a3302f'; c.fillRect(w * 0.15, h * 0.36, w * 0.7, h * 0.3); c.beginPath(); c.moveTo(w * 0.08, h * 0.38); c.lineTo(w * 0.5, h * 0.16); c.lineTo(w * 0.92, h * 0.38); c.fill();
+    c.fillStyle = '#efe3c6'; c.fillRect(w * 0.4, h * 0.46, w * 0.2, h * 0.2);
   },
   (c, w, h) => { // stars and stripes
-    for (let i = 0; i < 9; i++) { c.fillStyle = i % 2 ? '#efe3c6' : '#b5312b'; c.fillRect(0, (h * i) / 9, w, h / 9 + 1); }
-    c.fillStyle = '#25345e'; c.fillRect(0, 0, w * 0.55, h * 0.45); c.fillStyle = '#efe3c6';
-    for (let r = 0; r < 4; r++) for (let k = 0; k < 4; k++) star5(c, w * 0.08 + k * w * 0.13, h * 0.07 + r * h * 0.1, w * 0.035);
+    for (let i = 0; i < 7; i++) { c.fillStyle = i % 2 ? '#efe3c6' : '#b5312b'; c.fillRect(0, (h * i) / 7, w, h / 7 + 1); }
+    c.fillStyle = '#25345e'; c.fillRect(0, 0, w * 0.6, h * 0.43); c.fillStyle = '#efe3c6';
+    for (let r = 0; r < 2; r++) for (let k = 0; k < 2; k++) star5(c, w * (0.16 + k * 0.28), h * (0.11 + r * 0.2), w * 0.09);
   },
 ];
 
-// Large-letter postcard: "Greetings from AMERICA", every letter a little scene, on a sky with clouds, in a white
-// postcard border with a stamp.
+// Large-letter postcard: "Greetings from AMERICA", every letter a little scene, over a blue sky and green hills.
+// Sized in loops of the finished hooked rug, so the script is thick enough to read once it's made of wool.
 function americaPostcard(ctx, W, H) {
-  const u = H / 100;
+  const { cols, rows } = hookedPictureLoops(W, H), Lx = W / cols, Ly = H / rows;
   ctx.fillStyle = '#f3ead6'; ctx.fillRect(0, 0, W, H);                       // card
-  const px = 5 * u, py = 5 * u, pw = W - 10 * u, ph = H - 10 * u;
-  const sky = ctx.createLinearGradient(0, py, 0, py + ph); sky.addColorStop(0, '#5aa3c8'); sky.addColorStop(0.7, '#cfe6ea'); sky.addColorStop(1, '#f2e2b8');
-  ctx.save(); roundRect(ctx, px, py, pw, ph, 3 * u); ctx.clip();
+  const px = 2 * Lx, py = 2 * Ly, pw = W - 2 * px, ph = H - 2 * py;
+  ctx.save(); roundRect(ctx, px, py, pw, ph, 2 * Ly); ctx.clip();
+  const sky = ctx.createLinearGradient(0, py, 0, py + ph); sky.addColorStop(0, '#3a80b4'); sky.addColorStop(0.5, '#8cc2db'); sky.addColorStop(1, '#d6ecef');
   ctx.fillStyle = sky; ctx.fillRect(px, py, pw, ph);
-  ctx.fillStyle = 'rgba(255,255,255,.75)';
-  for (const [cx, cy, r] of [[0.12, 0.18, 5], [0.2, 0.15, 7], [0.8, 0.2, 6], [0.88, 0.16, 5], [0.55, 0.12, 4], [0.62, 0.1, 5]]) { ctx.beginPath(); ctx.ellipse(px + pw * cx, py + ph * cy, r * u * 1.8, r * u, 0, 0, Math.PI * 2); ctx.fill(); }
-  // big block letters with a scene in each, a dark extrusion behind and a cream outline
-  const word = 'AMERICA';
-  let size = ph * 0.56; ctx.font = blockFont(size);
-  const wide = ctx.measureText(word).width + (word.length - 1) * size * 0.04;
-  if (wide > pw * 0.9) size *= (pw * 0.9) / wide;
-  ctx.font = blockFont(size); ctx.textBaseline = 'alphabetic';
-  const gap = size * 0.04, total = ctx.measureText(word).width + gap * (word.length - 1);
-  let x = W / 2 - total / 2; const base = py + ph * 0.76;
-  const depth = size * 0.07;
+  const hill = (y0, amp, col, f0) => {
+    ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(px, py + ph);
+    for (let k = 0; k <= 48; k++) { const t = k / 48; ctx.lineTo(px + pw * t, py + ph * (y0 - amp * Math.sin(t * Math.PI * 2 + f0))); }
+    ctx.lineTo(px + pw, py + ph); ctx.fill();
+  };
+  hill(0.76, 0.05, '#86b06a', 0.6); hill(0.86, 0.04, '#4f8a55', 2.4);
+  ctx.restore();
+
+  // AMERICA: tall block letters, each filled with a scene, with a cream outline and a navy extrusion. Built at full
+  // width on its own canvas, then squeezed sideways to fit, like the condensed letters on the real cards.
+  const word = 'AMERICA', cap = 22 * Ly, base = 48 * Ly;
+  const probe = document.createElement('canvas').getContext('2d'); probe.font = blockFont(100);
+  const F = cap / (probe.measureText('M').actualBoundingBoxAscent / 100);
+  probe.font = blockFont(F);
+  const gap = F * 0.05, depth = 2 * Lx, line = 2.2 * Lx;
+  const widths = [...word].map((ch) => probe.measureText(ch).width);
+  const ww = widths.reduce((a, b) => a + b, 0) + gap * (word.length - 1) + depth + line * 2;
+  const wc = document.createElement('canvas'); wc.width = Math.ceil(ww); wc.height = Math.ceil(F * 1.2);
+  const w2 = wc.getContext('2d'); w2.font = blockFont(F); w2.textBaseline = 'alphabetic'; w2.lineJoin = 'round';
+  const wb = F;                                                                // baseline inside the word canvas
+  let x = line;
   for (let i = 0; i < word.length; i++) {
-    const ch = word[i], cw = ctx.measureText(ch).width;
-    for (let d = depth; d > 0; d -= Math.max(1, depth / 12)) { ctx.fillStyle = '#1d2a4a'; ctx.fillText(ch, x + d, base + d); } // extrusion
-    ctx.lineJoin = 'round'; ctx.strokeStyle = '#f6efdc'; ctx.lineWidth = size * 0.05; ctx.strokeText(ch, x, base);
-    // scene clipped to the letter
-    const off = document.createElement('canvas'); off.width = Math.ceil(cw) + 4; off.height = Math.ceil(size * 1.05);
+    const ch = word[i], cw = widths[i];
+    w2.fillStyle = '#1d2a4a'; for (let d = depth; d > 0; d -= 2) w2.fillText(ch, x + d, wb + d); // extrusion
+    w2.strokeStyle = '#f6efdc'; w2.lineWidth = line; w2.strokeText(ch, x, wb);
+    const off = document.createElement('canvas'); off.width = Math.ceil(cw) + 4; off.height = Math.ceil(F * 1.05);
     const oc = off.getContext('2d');
     SCENES[i % SCENES.length](oc, off.width, off.height);
-    oc.globalCompositeOperation = 'destination-in'; oc.font = ctx.font; oc.textBaseline = 'alphabetic'; oc.fillStyle = '#000'; oc.fillText(ch, 2, size * 0.97);
-    ctx.drawImage(off, x - 2, base - size * 0.97);
+    oc.globalCompositeOperation = 'destination-in'; oc.font = w2.font; oc.textBaseline = 'alphabetic'; oc.fillStyle = '#000'; oc.fillText(ch, 2, F * 0.97);
+    w2.drawImage(off, x - 2, wb - F * 0.97);
     x += cw + gap;
   }
-  // "Greetings from" in a red script with a cream outline, tilted
-  ctx.save(); ctx.translate(px + pw * 0.06, py + ph * 0.34); ctx.rotate(-0.06);
-  ctx.font = `${size * 0.46}px ${SCRIPT}`; ctx.lineWidth = size * 0.07; ctx.strokeStyle = '#f6efdc'; ctx.strokeText('Greetings from', 0, 0);
-  ctx.fillStyle = '#b5312b'; ctx.fillText('Greetings from', 0, 0); ctx.restore();
-  ctx.restore();
-  // stamp in the corner
-  const sw = 13 * u, sh = 16 * u, sx = W - px - sw - 3 * u, sy = py + 3 * u;
-  ctx.fillStyle = '#f6efdc'; ctx.fillRect(sx - 0.8 * u, sy - 0.8 * u, sw + 1.6 * u, sh + 1.6 * u);
-  ctx.fillStyle = '#25345e'; ctx.fillRect(sx, sy, sw, sh);
-  ctx.fillStyle = '#efe3c6'; star5(ctx, sx + sw / 2, sy + sh * 0.45, sw * 0.3);
-  ctx.fillStyle = '#f3ead6'; for (let k = 0; k <= 8; k++) { for (const [ex, ey] of [[sx - 0.8 * u + (k / 8) * (sw + 1.6 * u), sy - 0.8 * u], [sx - 0.8 * u + (k / 8) * (sw + 1.6 * u), sy + sh + 0.8 * u]]) { ctx.beginPath(); ctx.arc(ex, ey, 0.6 * u, 0, Math.PI * 2); ctx.fill(); } }
+  const targetW = Math.min(ww, pw * 0.94);
+  ctx.drawImage(wc, W / 2 - targetW / 2, base - wb, targetW, wc.height);
+
+  // "GREETINGS FROM" in cream capitals on a red ribbon with folded ends. Capitals in a heavy sans stay readable
+  // when every stroke is only a loop or two wide; a script's little counters fill in with wool.
+  const ry = 11 * Ly, rh = 12 * Ly, rx0 = px + pw * 0.07, rx1 = px + pw * 0.93, notch = 2.5 * Lx, tail = 4.5 * Lx, drop = 2.5 * Ly;
+  ctx.fillStyle = '#7d1f1c';
+  for (const sgn of [-1, 1]) {
+    const ex = sgn < 0 ? rx0 : rx1, ox = ex + sgn * tail;
+    ctx.beginPath(); ctx.moveTo(ex - sgn * 3 * Lx, ry - rh / 2 + drop); ctx.lineTo(ox, ry - rh / 2 + drop); ctx.lineTo(ox - sgn * notch, ry + drop);
+    ctx.lineTo(ox, ry + rh / 2 + drop); ctx.lineTo(ex - sgn * 3 * Lx, ry + rh / 2 + drop); ctx.closePath(); ctx.fill();
+  }
+  ctx.fillStyle = '#1d2a4a'; ctx.fillRect(rx0 + 0.9 * Lx, ry - rh / 2 + 0.9 * Ly, rx1 - rx0, rh);       // shadow
+  ctx.fillStyle = '#c0362f'; ctx.fillRect(rx0, ry - rh / 2, rx1 - rx0, rh);
+  ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.lineJoin = 'round';
+  const spacing = ctx.letterSpacing !== undefined;
+  const fitText = (txt, maxW, capRows) => {
+    ctx.font = blockFont(100); if (spacing) ctx.letterSpacing = `${0.8 * Lx}px`;
+    const m = ctx.measureText(txt), capH = m.actualBoundingBoxAscent;
+    return Math.min(100 * maxW / m.width, 100 * capRows * Ly / capH);
+  };
+  const GF = fitText('GREETINGS FROM', (rx1 - rx0) - 4 * Lx, 7.5);
+  ctx.font = blockFont(GF); if (spacing) ctx.letterSpacing = `${0.8 * Lx}px`;
+  const capH = ctx.measureText('G').actualBoundingBoxAscent;
+  ctx.fillStyle = ctx.strokeStyle = '#f6efdc'; ctx.lineWidth = 0.3 * Lx;
+  ctx.strokeText('GREETINGS FROM', W / 2, ry + capH / 2); ctx.fillText('GREETINGS FROM', W / 2, ry + capH / 2);
+  if (spacing) ctx.letterSpacing = '0px';
+  ctx.textAlign = 'left';
 }
 
 // National-park poster in the style of the old screen-printed travel posters: flat layered mountains, a pine
@@ -781,50 +803,42 @@ function americaPark(ctx, W, H) {
   ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
 }
 
-// A baseball diamond from above: striped outfield grass, the dirt infield, chalk lines, bases and the mound.
+// A baseball diamond from above: mowed outfield inside the fence, the dirt infield, chalk lines, bases and the mound.
+// The grass is mowed into stripes loop by loop, so the stripes stay straight.
 function americaBaseball(ctx, W, H) {
-  const u = H / 100;
-  ctx.fillStyle = '#2f6b3a'; ctx.fillRect(0, 0, W, H);
-  const s = 9 * u; // mowing checks
-  for (let y = 0; y < H; y += s) for (let x = 0; x < W; x += s) if (((x / s) + (y / s)) % 2 < 1) { ctx.fillStyle = '#367a42'; ctx.fillRect(x, y, s, s); }
-  const hx = W / 2, hy = H * 0.9, d = H * 0.42; // home plate and base distance
-  // warning track arc and outfield wall
-  ctx.strokeStyle = '#a8683f'; ctx.lineWidth = 5 * u; ctx.beginPath(); ctx.arc(hx, hy, H * 0.98, Math.PI * 1.22, Math.PI * 1.78); ctx.stroke();
-  // infield dirt: circle-cut arc beyond the bases, and the base paths
+  const u = H / 100, KEY = '#2f6b3a';
+  ctx.fillStyle = '#1d3a2a'; ctx.fillRect(0, 0, W, H);                 // stands beyond the fence
+  const hx = W / 2, hy = H * 0.9, d = H * 0.4, fence = H * 0.8;          // home plate, base distance, fence radius
+  ctx.fillStyle = KEY; ctx.beginPath(); ctx.arc(hx, hy, fence, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#a8683f'; ctx.lineWidth = 5 * u; ctx.beginPath(); ctx.arc(hx, hy, fence - 2.5 * u, Math.PI, Math.PI * 2); ctx.stroke(); // warning track
+  // infield dirt: circle-cut arc beyond the bases, with the grass inside the base paths
   ctx.fillStyle = '#b97a4c';
-  ctx.beginPath(); ctx.moveTo(hx, hy); ctx.arc(hx, hy, d * 1.34, Math.PI * 1.25, Math.PI * 1.75); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(hx, hy); ctx.arc(hx, hy, d * 1.36, Math.PI * 1.25, Math.PI * 1.75); ctx.closePath(); ctx.fill();
   const b1 = [hx + d * Math.SQRT1_2, hy - d * Math.SQRT1_2], b2 = [hx, hy - d * Math.SQRT2], b3 = [hx - d * Math.SQRT1_2, hy - d * Math.SQRT1_2];
-  ctx.fillStyle = '#2f6b3a'; ctx.beginPath(); // infield grass inside the base paths
-  const inset = 2.6 * u;
-  ctx.moveTo(hx, hy - inset * 1.6); ctx.lineTo(b1[0] - inset * 1.6, b1[1]); ctx.lineTo(b2[0], b2[1] + inset * 1.6); ctx.lineTo(b3[0] + inset * 1.6, b3[1]); ctx.closePath(); ctx.fill();
-  ctx.fillStyle = '#b97a4c'; ctx.beginPath(); ctx.arc(hx, hy - d * 0.69, 4.5 * u, 0, Math.PI * 2); ctx.fill();   // mound
-  ctx.fillStyle = '#f3efe4'; ctx.fillRect(hx - 1.4 * u, hy - d * 0.69 - 0.3 * u, 2.8 * u, 0.6 * u);                 // rubber
-  ctx.fillStyle = '#b97a4c'; ctx.beginPath(); ctx.arc(hx, hy, 6.5 * u, 0, Math.PI * 2); ctx.fill();             // home circle
-  // foul lines out to the wall
-  ctx.strokeStyle = '#f3efe4'; ctx.lineWidth = 0.7 * u;
-  for (const sgn of [-1, 1]) { ctx.beginPath(); ctx.moveTo(hx, hy); ctx.lineTo(hx + sgn * H * 0.98 * Math.cos(Math.PI / 4), hy - H * 0.98 * Math.sin(Math.PI / 4)); ctx.stroke(); }
-  // batter's boxes and home plate
-  ctx.lineWidth = 0.45 * u; ctx.strokeRect(hx - 4.6 * u, hy - 3 * u, 2.6 * u, 5 * u); ctx.strokeRect(hx + 2 * u, hy - 3 * u, 2.6 * u, 5 * u);
-  ctx.fillStyle = '#f3efe4'; ctx.beginPath(); ctx.moveTo(hx - 1.2 * u, hy - 1.2 * u); ctx.lineTo(hx + 1.2 * u, hy - 1.2 * u); ctx.lineTo(hx + 1.2 * u, hy); ctx.lineTo(hx, hy + 1.2 * u); ctx.lineTo(hx - 1.2 * u, hy); ctx.fill();
-  // the bases
-  for (const [bx, by] of [b1, b2, b3]) { ctx.save(); ctx.translate(bx, by); ctx.rotate(Math.PI / 4); ctx.fillRect(-1.3 * u, -1.3 * u, 2.6 * u, 2.6 * u); ctx.restore(); }
-  // a frame like the stands' wall
-  ctx.fillStyle = '#1d3a2a'; frameRect(ctx, 0, 0, W, H, 2.2 * u);
-  ctx.fillStyle = '#f3efe4'; frameRect(ctx, 2.2 * u, 2.2 * u, W - 4.4 * u, H - 4.4 * u, 0.5 * u);
+  const inset = 4 * u;
+  ctx.fillStyle = KEY; ctx.beginPath();
+  ctx.moveTo(hx, hy - inset * 1.4); ctx.lineTo(b1[0] - inset * 1.4, b1[1]); ctx.lineTo(b2[0], b2[1] + inset * 1.4); ctx.lineTo(b3[0] + inset * 1.4, b3[1]); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#b97a4c'; ctx.beginPath(); ctx.arc(hx, hy - d * 0.7, 5.5 * u, 0, Math.PI * 2); ctx.fill();    // mound
+  ctx.beginPath(); ctx.arc(hx, hy, 8 * u, 0, Math.PI * 2); ctx.fill();                                          // home circle
+  ctx.fillStyle = '#f3efe4'; ctx.fillRect(hx - 2.2 * u, hy - d * 0.7 - 0.8 * u, 4.4 * u, 1.6 * u);                // rubber
+  // foul lines out to the fence, batter's boxes, home plate and the bases, all in chalk thick enough to hook
+  ctx.strokeStyle = '#f3efe4'; ctx.lineWidth = 1.6 * u;
+  for (const sgn of [-1, 1]) { ctx.beginPath(); ctx.moveTo(hx, hy); ctx.lineTo(hx + sgn * (fence - 5 * u) * Math.SQRT1_2, hy - (fence - 5 * u) * Math.SQRT1_2); ctx.stroke(); }
+  ctx.fillStyle = '#f3efe4'; ctx.beginPath(); ctx.moveTo(hx - 1.8 * u, hy - 1.8 * u); ctx.lineTo(hx + 1.8 * u, hy - 1.8 * u); ctx.lineTo(hx + 1.8 * u, hy); ctx.lineTo(hx, hy + 1.8 * u); ctx.lineTo(hx - 1.8 * u, hy); ctx.fill();
+  for (const [bx, by] of [b1, b2, b3]) { ctx.save(); ctx.translate(bx, by); ctx.rotate(Math.PI / 4); ctx.fillRect(-2 * u, -2 * u, 4 * u, 4 * u); ctx.restore(); }
+  const key = rgbOf(KEY), G1 = rgbOf('#2f6b3a'), G2 = rgbOf('#3b7f47');
+  return (r, h, rgb) => nearRgb(rgb, key, 12) ? (Math.floor(r / 4) & 1 ? G2 : G1) : null;
 }
 
-// A basketball court from above: maple boards, painted keys, the three-point arcs and a star at centre court.
+// A basketball court from above: maple boards, painted keys, the three-point arcs and a star at centre court. The
+// boards are laid out loop by loop, two rows each, so the floor reads as planks rather than as stray lines.
 function americaBasketball(ctx, W, H) {
-  const u = H / 100, R = rng(808);
+  const u = H / 100, KEY = '#d4a46c';
   const apron = 6 * u;
   ctx.fillStyle = '#25345e'; ctx.fillRect(0, 0, W, H);
-  // boards
-  const cx0 = apron, cy0 = apron, cw = W - 2 * apron, ch = H - 2 * apron, plank = 2.4 * u;
-  for (let y = cy0; y < cy0 + ch; y += plank) {
-    let x = cx0 - R() * 30 * u;
-    while (x < cx0 + cw) { const len = (18 + R() * 26) * u, t = 0.85 + R() * 0.2; ctx.fillStyle = `rgb(${Math.round(222 * t)},${Math.round(176 * t)},${Math.round(116 * t)})`; ctx.fillRect(Math.max(cx0, x), y, Math.min(len, cx0 + cw - x), plank - 0.15 * u); x += len; }
-  }
-  ctx.strokeStyle = '#f6efe2'; ctx.lineWidth = 1.5 * u;
+  const cx0 = apron, cy0 = apron, cw = W - 2 * apron, ch = H - 2 * apron;
+  ctx.fillStyle = KEY; ctx.fillRect(cx0, cy0, cw, ch);
+  ctx.strokeStyle = '#f6efe2'; ctx.lineWidth = 1.6 * u;
   ctx.strokeRect(cx0 + 1.2 * u, cy0 + 1.2 * u, cw - 2.4 * u, ch - 2.4 * u);
   const mx = W / 2, my = H / 2;
   ctx.beginPath(); ctx.moveTo(mx, cy0 + 1.2 * u); ctx.lineTo(mx, cy0 + ch - 1.2 * u); ctx.stroke();
@@ -832,27 +846,42 @@ function americaBasketball(ctx, W, H) {
   ctx.fillStyle = '#b5312b'; ctx.beginPath(); ctx.arc(mx, my, 11 * u, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
   ctx.fillStyle = '#f6efe2'; star5(ctx, mx, my + 0.6 * u, 7.5 * u);
   for (const side of [-1, 1]) {
-    const bx = side < 0 ? cx0 + 1.2 * u : cx0 + cw - 1.2 * u, kw = 19 * u, kh = 16 * u;
+    const bx = side < 0 ? cx0 + 1.2 * u : cx0 + cw - 1.2 * u, kw = 19 * u, kh = 18 * u;
     // painted key
     ctx.fillStyle = '#25345e'; ctx.fillRect(side < 0 ? bx : bx - kw, my - kh / 2, kw, kh); ctx.strokeRect(side < 0 ? bx : bx - kw, my - kh / 2, kw, kh);
     // free-throw circle
-    ctx.beginPath(); ctx.arc(bx + side * -kw, my, 6 * u, side < 0 ? -Math.PI / 2 : Math.PI / 2, side < 0 ? Math.PI / 2 : Math.PI * 1.5); ctx.stroke();
+    ctx.beginPath(); ctx.arc(bx + side * -kw, my, 7 * u, side < 0 ? -Math.PI / 2 : Math.PI / 2, side < 0 ? Math.PI / 2 : Math.PI * 1.5); ctx.stroke();
     // three-point line: short straight bits then the arc
     const r3 = 31 * u, hoop = bx + side * -5 * u;
     ctx.beginPath();
-    ctx.moveTo(bx, my - 28 * u); ctx.lineTo(hoop + side * -Math.sqrt(r3 * r3 - (28 * u) ** 2) + side * 0, my - 28 * u);
+    ctx.moveTo(bx, my - 28 * u); ctx.lineTo(hoop + side * -Math.sqrt(r3 * r3 - (28 * u) ** 2), my - 28 * u);
     ctx.arc(hoop, my, r3, side < 0 ? -Math.asin(28 / 31) : Math.PI + Math.asin(28 / 31), side < 0 ? Math.asin(28 / 31) : Math.PI - Math.asin(28 / 31), side > 0);
     ctx.lineTo(bx, my + 28 * u); ctx.stroke();
-    // hoop and backboard
-    ctx.strokeStyle = '#e8742b'; ctx.beginPath(); ctx.arc(hoop, my, 1.6 * u, 0, Math.PI * 2); ctx.stroke(); ctx.strokeStyle = '#f6efe2';
-    ctx.fillStyle = '#f6efe2'; ctx.fillRect(bx + side * -3.4 * u - 0.3 * u, my - 4 * u, 0.6 * u, 8 * u);
+    // backboard and hoop
+    ctx.fillStyle = '#f6efe2'; ctx.fillRect(bx + side * -2.6 * u - 0.8 * u, my - 4.5 * u, 1.6 * u, 9 * u);
+    ctx.strokeStyle = '#e8742b'; ctx.lineWidth = 1.4 * u; ctx.beginPath(); ctx.arc(hoop, my, 2.4 * u, 0, Math.PI * 2); ctx.stroke();
+    ctx.strokeStyle = '#f6efe2'; ctx.lineWidth = 1.6 * u;
   }
+  // floorboards: per pair of rows, boards of random length, each a slightly different shade of maple
+  const key = rgbOf(KEY), R = rng(808), boards = new Map();
+  const shadeAt = (plank, x) => {
+    let b = boards.get(plank);
+    if (!b) { b = []; let e = -R() * 14; while (e < 400) { e += 10 + R() * 16; b.push([e, 0.86 + R() * 0.18]); } boards.set(plank, b); }
+    for (const [e, t] of b) if (x < e) return t;
+    return 1;
+  };
+  return (r, h, rgb) => {
+    if (!nearRgb(rgb, key, 12)) return null;
+    const t = shadeAt(r >> 1, h / 2);
+    return [222 * t, 176 * t, 116 * t];
+  };
 }
 
-// A diner floor: black-and-white checks, a chrome-and-red trim, and a neon sign in the middle.
+// A diner floor: black-and-white checks, a chrome-and-red trim, and a neon sign in the middle. The floor is painted
+// plain grey and the checks are laid out loop by loop, so every square comes out the same size.
 function americaDiner(ctx, W, H) {
-  const u = H / 100, sq = 8 * u;
-  for (let j = 0; j * sq < H; j++) for (let i = 0; i * sq < W; i++) { ctx.fillStyle = (i + j) % 2 ? '#f1ece0' : '#1a1a1d'; ctx.fillRect(i * sq, j * sq, sq + 0.5, sq + 0.5); }
+  const u = H / 100, KEY = '#857f78';
+  ctx.fillStyle = KEY; ctx.fillRect(0, 0, W, H);
   // chrome band with a red stripe
   const chrome = ctx.createLinearGradient(0, 0, 0, H); chrome.addColorStop(0, '#e9edf1'); chrome.addColorStop(0.5, '#9aa3ad'); chrome.addColorStop(1, '#e9edf1');
   ctx.fillStyle = chrome; frameRect(ctx, 0, 0, W, H, 4 * u);
@@ -873,6 +902,9 @@ function americaDiner(ctx, W, H) {
   ctx.shadowColor = '#ffd84a'; ctx.shadowBlur = 2.5 * u; ctx.fillStyle = '#ffe680';
   for (const [x, y] of [[sx + sw * 0.08, sy + sh * 0.2], [sx + sw * 0.92, sy + sh * 0.2]]) star5(ctx, x, y, 3 * u);
   ctx.shadowBlur = 0; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  const { cols, rows } = hookedPictureLoops(W, H), k = 6, key = rgbOf(KEY), DARK = rgbOf('#1a1a1d'), LIGHT = rgbOf('#f1ece0');
+  const oh = ((2 * k - (2 * cols) % (2 * k)) / 2) | 0, orow = ((k - rows % k) / 2) | 0;
+  return (r, h, rgb) => nearRgb(rgb, key, 12) ? ((Math.floor((h + oh) / (2 * k)) + Math.floor((r + orow) / k)) & 1 ? LIGHT : DARK) : null;
 }
 
 // Route 66: a two-lane road running to the horizon through the desert at sunset, with the highway shield.
@@ -892,8 +924,12 @@ function americaRoute66(ctx, W, H) {
   ctx.fillStyle = '#f2c94c';
   for (let t = 0.05; t < 1; t += 0.11) { const y0 = hz + (H - hz) * t * t, y1 = hz + (H - hz) * Math.min(1, (t + 0.05) * (t + 0.05)), w0 = 0.15 * u + t * 0.9 * u; ctx.beginPath(); ctx.moveTo(W / 2 - w0, y0); ctx.lineTo(W / 2 + w0, y0); ctx.lineTo(W / 2 + w0 * 1.3, y1); ctx.lineTo(W / 2 - w0 * 1.3, y1); ctx.fill(); }
   // telephone poles getting smaller toward the horizon
-  ctx.strokeStyle = '#3b2a20'; ctx.lineWidth = 0.5 * u;
-  for (let k = 0; k < 6; k++) { const t = 1 - k * 0.16, x = W * 0.5 - (2 + 40 * t * t) * u, y = hz + (H - hz) * t * t * 0.9, h = (3 + 28 * t * t) * u; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y - h); ctx.moveTo(x - h * 0.18, y - h * 0.9); ctx.lineTo(x + h * 0.18, y - h * 0.9); ctx.stroke(); }
+  ctx.strokeStyle = '#3b2a20'; ctx.lineCap = 'butt';
+  for (let k = 0; k < 4; k++) {
+    const t = 1 - k * 0.22, x = W * 0.5 - (4 + 40 * t * t) * u, y = hz + (H - hz) * t * t * 0.9, h = (6 + 28 * t * t) * u;
+    ctx.lineWidth = (1.5 + 1.2 * t) * u;
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y - h); ctx.moveTo(x - h * 0.2, y - h * 0.86); ctx.lineTo(x + h * 0.2, y - h * 0.86); ctx.stroke();
+  }
   // the shield sign on its post
   const sx = W * 0.78, sy = H * 0.47, sw = 30 * u, sh = 33 * u;
   ctx.fillStyle = '#4a3a2a'; ctx.fillRect(sx - 0.8 * u, sy + sh * 0.5, 1.6 * u, H * 0.32);
@@ -1335,62 +1371,86 @@ function americaPlaid(ctx, W, H) {
 
 
 // Hooked rug: re-make a finished picture out of rows of wool loops, the way American hooked rugs are made.
-// Colours are cut down to a few dyed shades per channel (so skies become bands, like real hooking), each loop is
-// a little rounded tuft with a light top and a shaded bottom, rows are slightly offset and each loop's hue wobbles
-// a touch (abrash). The edge gets a whipped binding.
-function hookify(ctx, W, H, seed, loopsDown = 120) {
+// The loops sit on a fixed lattice: `rows` rows, every other row shifted by half a loop. Colours are cut down to a
+// few dyed shades per channel (so skies become bands, like real hooking), each loop is a little rounded tuft with a
+// light top and a shaded bottom, and each loop's hue wobbles a touch (abrash). `colorAt(r, h, rgb)` may replace a
+// loop's colour: r is the row, h the position along it in half loops (even rows use even h, odd rows odd h) and
+// rgb the picture's colour there; patterns that have to stay crisp (sawtooth, checks, floorboards) are laid out
+// loop by loop this way instead of being drawn and sampled. The edge gets a whipped binding.
+function hookify(ctx, W, H, seed, rows, colorAt) {
   const R = rng(seed + 777);
   const src = ctx.getImageData(0, 0, W, H).data;
-  const ls = H / loopsDown, rx = ls * 0.6, ry = ls * 0.56;
+  const p = H / rows, NC = Math.round(W / p), px = W / NC, rx = p * 0.652, ry = p * 0.609;
   const levels = 24, q = (v) => Math.round((v / 255) * (levels - 1)) / (levels - 1) * 255;
   ctx.fillStyle = '#2b2118'; ctx.fillRect(0, 0, W, H); // backing showing between loops
-  for (let row = 0, y = ls / 2; y < H + ls; row++, y += ls * 0.92) {
-    const off = (row % 2) * ls * 0.5;
-    for (let x = -ls / 2 + off; x < W + ls; x += ls * 0.92) {
-      const sx = Math.min(W - 1, Math.max(0, x | 0)), sy = Math.min(H - 1, Math.max(0, y | 0)), i = (sy * W + sx) * 4;
+  for (let r = 0; r < rows; r++) {
+    const y = (r + 0.5) * p, sy = Math.min(H - 1, y | 0);
+    for (let c = -1; c <= NC; c++) {
+      const h = 2 * c + (r & 1), x = (h / 2 + 0.5) * px, sx = Math.min(W - 1, Math.max(0, x | 0)), i = (sy * W + sx) * 4;
+      const rgb = colorAt?.(r, h, [src[i], src[i + 1], src[i + 2]]) || [src[i], src[i + 1], src[i + 2]];
       const j = (R() - 0.5) * 14; // abrash
-      const r = Math.max(0, Math.min(255, q(src[i]) + j)), g = Math.max(0, Math.min(255, q(src[i + 1]) + j)), b = Math.max(0, Math.min(255, q(src[i + 2]) + j));
-      ctx.fillStyle = `rgb(${r * 0.62 | 0},${g * 0.62 | 0},${b * 0.62 | 0})`;
-      ctx.beginPath(); ctx.ellipse(x, y + ls * 0.08, rx, ry, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = `rgb(${r | 0},${g | 0},${b | 0})`;
-      ctx.beginPath(); ctx.ellipse(x - ls * 0.04, y - ls * 0.05, rx * 0.82, ry * 0.78, 0, 0, Math.PI * 2); ctx.fill();
+      const cr = Math.max(0, Math.min(255, q(rgb[0]) + j)), cg = Math.max(0, Math.min(255, q(rgb[1]) + j)), cb = Math.max(0, Math.min(255, q(rgb[2]) + j));
+      ctx.fillStyle = `rgb(${cr * 0.62 | 0},${cg * 0.62 | 0},${cb * 0.62 | 0})`;
+      ctx.beginPath(); ctx.ellipse(x, y + p * 0.087, rx, ry, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = `rgb(${cr | 0},${cg | 0},${cb | 0})`;
+      ctx.beginPath(); ctx.ellipse(x - p * 0.043, y - p * 0.054, rx * 0.82, ry * 0.78, 0, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = `rgba(255,255,255,${0.12 + R() * 0.06})`;
-      ctx.beginPath(); ctx.ellipse(x - ls * 0.14, y - ls * 0.17, rx * 0.36, ry * 0.26, -0.5, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(x - p * 0.152, y - p * 0.185, rx * 0.36, ry * 0.26, -0.5, 0, Math.PI * 2); ctx.fill();
     }
   }
   // whipped binding round the edge
-  const bw = ls * 1.6;
+  const bw = p * 1.74;
   ctx.fillStyle = '#22262e'; frameRect(ctx, 0, 0, W, H, bw);
-  ctx.strokeStyle = 'rgba(255,255,255,.12)'; ctx.lineWidth = ls * 0.22;
-  for (let a = 0; a < W; a += ls * 0.55) { ctx.beginPath(); ctx.moveTo(a, 0); ctx.lineTo(a + ls * 0.4, bw); ctx.moveTo(a, H); ctx.lineTo(a + ls * 0.4, H - bw); ctx.stroke(); }
-  for (let a = 0; a < H; a += ls * 0.55) { ctx.beginPath(); ctx.moveTo(0, a); ctx.lineTo(bw, a + ls * 0.4); ctx.moveTo(W, a); ctx.lineTo(W - bw, a + ls * 0.4); ctx.stroke(); }
+  ctx.strokeStyle = 'rgba(255,255,255,.12)'; ctx.lineWidth = p * 0.24;
+  for (let a = 0; a < W; a += p * 0.6) { ctx.beginPath(); ctx.moveTo(a, 0); ctx.lineTo(a + p * 0.43, bw); ctx.moveTo(a, H); ctx.lineTo(a + p * 0.43, H - bw); ctx.stroke(); }
+  for (let a = 0; a < H; a += p * 0.6) { ctx.beginPath(); ctx.moveTo(0, a); ctx.lineTo(bw, a + p * 0.43); ctx.moveTo(W, a); ctx.lineTo(W - bw, a + p * 0.43); ctx.stroke(); }
 }
 
-// Put a finished picture inside a hooked-rug border (dark band, cream line, red and mustard sawtooth) and make
-// the whole thing out of wool loops.
-function hookedFrame(ctx, W, H, seed) {
-  const u = H / 100, inset = 9 * u;
+const HOOK_ROWS = 81;         // odd, so the top and bottom borders fall on rows of the same kind and come out alike
+const HOOK_EDGE = 8;          // loops of border before the picture: binding, sawtooth, cream line
+const rgbOf = (hex) => [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
+const nearRgb = (a, b, tol = 24) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2]) <= tol;
+// Size of the picture area of a hooked rug, in loops, for pictures that lay patterns out loop by loop.
+function hookedPictureLoops(W, H) { const NC = Math.round(W / (H / HOOK_ROWS)); return { cols: NC - 2 * HOOK_EDGE, rows: HOOK_ROWS - 2 * HOOK_EDGE }; }
+
+// Put a finished picture inside a hooked-rug border (dark band, red and mustard sawtooth, a cream line, a little
+// mustard diamond in each corner) and make the whole thing out of wool loops. The border is laid out loop by loop
+// so every tooth comes out the same. `inner(r, h, rgb)` may restyle loops of the picture (r and h counted from the
+// picture's top-left loop).
+function hookedFrame(ctx, W, H, seed, inner) {
+  const rows = HOOK_ROWS, E = HOOK_EDGE, p = H / rows, NC = Math.round(W / p), px = W / NC;
   const pic = document.createElement('canvas'); pic.width = W; pic.height = H;
   pic.getContext('2d').drawImage(ctx.canvas, 0, 0);
   ctx.fillStyle = '#2a201a'; ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = '#e9dcbc'; ctx.fillRect(inset - 1.6 * u, inset - 1.6 * u, W - 2 * inset + 3.2 * u, H - 2 * inset + 3.2 * u);
-  // sawtooth in the band, a whole number of teeth per side
-  const teeth = (x0, y0, len, horiz, flip) => {
-    const { n, d } = evenSteps(len, 6 * u), depth = 4.2 * u;
-    for (let k = 0; k < n; k++) {
-      ctx.fillStyle = k % 2 ? '#c99a3a' : '#a8322f';
-      ctx.beginPath();
-      if (horiz) { const x = x0 + k * d; ctx.moveTo(x, y0); ctx.lineTo(x + d, y0); ctx.lineTo(x + d / 2, y0 + flip * depth); }
-      else { const y = y0 + k * d; ctx.moveTo(x0, y); ctx.lineTo(x0, y + d); ctx.lineTo(x0 + flip * depth, y + d / 2); }
-      ctx.closePath(); ctx.fill();
+  ctx.imageSmoothingEnabled = false; ctx.drawImage(pic, E * px, E * p, W - 2 * E * px, H - 2 * E * p); ctx.imageSmoothingEnabled = true;
+  const DARK = rgbOf('#2a201a'), CREAM = rgbOf('#e9dcbc'), RED = rgbOf('#a8322f'), GOLD = rgbOf('#c99a3a');
+  const T = 5;                                   // sawtooth depth (rows) and tooth width (loops)
+  const B = 2, L = B + T;                        // sawtooth starts after the binding; cream line at depth L
+  // teeth along the top and bottom: whole teeth, centred, every one starting on the same kind of loop
+  let nTop = Math.floor((2 * NC - 4 * L - 1) / (2 * T)), h0 = NC - 1 - T * nTop;
+  if ((h0 & 1) === (B & 1)) { nTop--; h0 += T; }
+  // teeth down the sides: whole teeth, centred
+  const sideLen = rows - 2 * L, nSide = Math.floor(sideLen / T), r0 = L + Math.floor((sideLen - nSide * T) / 2);
+  hookify(ctx, W, H, seed, rows, (r, h, rgb) => {
+    const dT = Math.min(r, rows - 1 - r), dS = Math.max(0, Math.min(h / 2, NC - 1 - h / 2));
+    if (dT >= E && dS >= E) return inner ? inner(r - E, h - 2 * E, rgb) : null;
+    if (dT < B || dS < B) return DARK;
+    if (dT < L && dS < L) {                     // corner: a small stepped diamond
+      const dy = dT - (B + 2), dx = dS - (B + 2), k = Math.abs(dx) + Math.abs(dy) / 2;
+      return k === 0 ? RED : k <= 2 ? GOLD : DARK;
     }
-  };
-  const e = 2.3 * u, c = 7 * u;
-  teeth(c, e, W - 2 * c, true, 1); teeth(c, H - e, W - 2 * c, true, -1);
-  teeth(e, c, H - 2 * c, false, 1); teeth(W - e, c, H - 2 * c, false, -1);
-  ctx.fillStyle = '#c99a3a'; for (const [x, y] of [[c / 2 + 0.6 * u, c / 2 + 0.6 * u], [W - c / 2 - 0.6 * u, c / 2 + 0.6 * u], [c / 2 + 0.6 * u, H - c / 2 - 0.6 * u], [W - c / 2 - 0.6 * u, H - c / 2 - 0.6 * u]]) star5(ctx, x, y, 2.8 * u);
-  ctx.drawImage(pic, inset, inset, W - 2 * inset, H - 2 * inset);
-  hookify(ctx, W, H, seed, 74);
+    if (dT >= L && dS >= L) return CREAM;        // the cream line round the picture
+    if (dT < L) {                                // top or bottom sawtooth: rows of 5, 4, 3, 2, 1 loops
+      const t = dT - B, u = h - h0, k = Math.floor(u / (2 * T));
+      if (k < 0 || k >= nTop) return DARK;
+      return Math.abs(u - 2 * T * k - T) <= T - 1 - t ? (k % 2 ? GOLD : RED) : DARK;
+    }
+    // left or right sawtooth: 1, 3, 5, 3, 1 loops deep
+    const v = r - r0, k = Math.floor(v / T);
+    if (k < 0 || k >= nSide) return DARK;
+    const e = 4.6 * (1 - Math.abs(v - k * T - (T - 1) / 2) / ((T) / 2));
+    return dS - B <= e ? (k % 2 ? GOLD : RED) : DARK;
+  });
 }
 
 function evenSteps(len, step) { const n = Math.max(1, Math.round(len / step)); return { n, d: len / n }; }
@@ -1420,11 +1480,12 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   const c = document.createElement('canvas');
   c.width = W; c.height = H;
   const ctx = c.getContext('2d');
+  let inner = null; // hooked pictures may lay some patterns out loop by loop
   if (P.america === 'postcard') americaPostcard(ctx, W, H);
   else if (P.america === 'park') americaPark(ctx, W, H);
-  else if (P.america === 'baseball') americaBaseball(ctx, W, H);
-  else if (P.america === 'basketball') americaBasketball(ctx, W, H);
-  else if (P.america === 'diner') americaDiner(ctx, W, H);
+  else if (P.america === 'baseball') inner = americaBaseball(ctx, W, H);
+  else if (P.america === 'basketball') inner = americaBasketball(ctx, W, H);
+  else if (P.america === 'diner') inner = americaDiner(ctx, W, H);
   else if (P.america === 'route66') americaRoute66(ctx, W, H);
   else if (P.america === 'flag') americaFlag(ctx, W, H, seed);
   else if (P.america === 'mesa') americaMesa(ctx, W, H);
@@ -1438,7 +1499,7 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
   else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
-  if (P.hooked) hookedFrame(ctx, W, H, seed); else addWeave(ctx, W, H, seed);
+  if (P.hooked) hookedFrame(ctx, W, H, seed, inner); else addWeave(ctx, W, H, seed);
 
   // Back side: same pattern, faded and flattened.
   const b = document.createElement('canvas');
