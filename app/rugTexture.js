@@ -715,8 +715,8 @@ function americaPostcard(ctx, W, H) {
     x += cw + gap;
   }
   // "Greetings from" in a red script with a cream outline, tilted
-  ctx.save(); ctx.translate(px + pw * 0.07, py + ph * 0.3); ctx.rotate(-0.08);
-  ctx.font = `${size * 0.32}px ${SCRIPT}`; ctx.lineWidth = size * 0.05; ctx.strokeStyle = '#f6efdc'; ctx.strokeText('Greetings from', 0, 0);
+  ctx.save(); ctx.translate(px + pw * 0.06, py + ph * 0.34); ctx.rotate(-0.06);
+  ctx.font = `${size * 0.46}px ${SCRIPT}`; ctx.lineWidth = size * 0.07; ctx.strokeStyle = '#f6efdc'; ctx.strokeText('Greetings from', 0, 0);
   ctx.fillStyle = '#b5312b'; ctx.fillText('Greetings from', 0, 0); ctx.restore();
   ctx.restore();
   // stamp in the corner
@@ -724,7 +724,6 @@ function americaPostcard(ctx, W, H) {
   ctx.fillStyle = '#f6efdc'; ctx.fillRect(sx - 0.8 * u, sy - 0.8 * u, sw + 1.6 * u, sh + 1.6 * u);
   ctx.fillStyle = '#25345e'; ctx.fillRect(sx, sy, sw, sh);
   ctx.fillStyle = '#efe3c6'; star5(ctx, sx + sw / 2, sy + sh * 0.45, sw * 0.3);
-  ctx.font = blockFont(2.6 * u); ctx.textAlign = 'center'; ctx.fillText('USA', sx + sw / 2, sy + sh * 0.9); ctx.textAlign = 'left';
   ctx.fillStyle = '#f3ead6'; for (let k = 0; k <= 8; k++) { for (const [ex, ey] of [[sx - 0.8 * u + (k / 8) * (sw + 1.6 * u), sy - 0.8 * u], [sx - 0.8 * u + (k / 8) * (sw + 1.6 * u), sy + sh + 0.8 * u]]) { ctx.beginPath(); ctx.arc(ex, ey, 0.6 * u, 0, Math.PI * 2); ctx.fill(); } }
 }
 
@@ -733,7 +732,7 @@ function americaPostcard(ctx, W, H) {
 function americaPark(ctx, W, H) {
   const u = H / 100;
   ctx.fillStyle = '#efe3c6'; ctx.fillRect(0, 0, W, H);
-  const bx = 4 * u, by = 4 * u, bw = W - 8 * u, bh = H - 8 * u, band = bh * 0.2;
+  const bx = 4 * u, by = 4 * u, bw = W - 8 * u, bh = H - 8 * u, band = bh * 0.27;
   const ih = bh - band;
   ctx.save(); ctx.beginPath(); ctx.rect(bx, by, bw, ih); ctx.clip();
   const sky = [['#f6c76a', 0], ['#f19a57', 0.22], ['#e36f55', 0.4]];
@@ -758,11 +757,9 @@ function americaPark(ctx, W, H) {
   // lettered band
   ctx.fillStyle = '#1f3a3a'; ctx.fillRect(bx, by + ih, bw, band);
   ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.fillStyle = '#efe3c6'; ctx.font = blockFont(band * 0.58);
-  if (ctx.letterSpacing !== undefined) ctx.letterSpacing = `${band * 0.08}px`;
-  ctx.fillText('SEE AMERICA', W / 2, by + ih + band * 0.42);
-  ctx.font = blockFont(band * 0.16); if (ctx.letterSpacing !== undefined) ctx.letterSpacing = `${band * 0.12}px`;
-  ctx.fillStyle = '#f2b45a'; ctx.fillText('NATIONAL PARKS', W / 2, by + ih + band * 0.82);
+  ctx.fillStyle = '#efe3c6'; ctx.font = blockFont(band * 0.62);
+  if (ctx.letterSpacing !== undefined) ctx.letterSpacing = `${band * 0.06}px`;
+  ctx.fillText('SEE AMERICA', W / 2, by + ih + band * 0.52);
   if (ctx.letterSpacing !== undefined) ctx.letterSpacing = '0px';
   ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
 }
@@ -810,7 +807,7 @@ function americaBasketball(ctx, W, H) {
     let x = cx0 - R() * 30 * u;
     while (x < cx0 + cw) { const len = (18 + R() * 26) * u, t = 0.85 + R() * 0.2; ctx.fillStyle = `rgb(${Math.round(222 * t)},${Math.round(176 * t)},${Math.round(116 * t)})`; ctx.fillRect(Math.max(cx0, x), y, Math.min(len, cx0 + cw - x), plank - 0.15 * u); x += len; }
   }
-  ctx.strokeStyle = '#f6efe2'; ctx.lineWidth = 0.6 * u;
+  ctx.strokeStyle = '#f6efe2'; ctx.lineWidth = 1.5 * u;
   ctx.strokeRect(cx0 + 1.2 * u, cy0 + 1.2 * u, cw - 2.4 * u, ch - 2.4 * u);
   const mx = W / 2, my = H / 2;
   ctx.beginPath(); ctx.moveTo(mx, cy0 + 1.2 * u); ctx.lineTo(mx, cy0 + ch - 1.2 * u); ctx.stroke();
@@ -853,8 +850,8 @@ function americaDiner(ctx, W, H) {
     ctx.fillText(text, x, y); ctx.shadowBlur = 1.2 * u; ctx.fillText(text, x, y);
     ctx.shadowBlur = 0; ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.font = font; ctx.fillText(text, x, y - 0.15 * u);
   };
-  neon('Diner', `${sh * 0.5}px ${SCRIPT}`, W / 2, sy + sh * 0.42, '#ff5d7a', '#ff2d55');
-  neon('OPEN 24 HOURS', blockFont(sh * 0.12), W / 2, sy + sh * 0.8, '#5ff0e0', '#19d3c5');
+  neon('Diner', `${sh * 0.5}px ${SCRIPT}`, W / 2, sy + sh * 0.38, '#ff5d7a', '#ff2d55');
+  neon('OPEN', blockFont(sh * 0.22), W / 2, sy + sh * 0.8, '#5ff0e0', '#19d3c5');
   // neon star sparkles at the sign's corners
   ctx.shadowColor = '#ffd84a'; ctx.shadowBlur = 2.5 * u; ctx.fillStyle = '#ffe680';
   for (const [x, y] of [[sx + sw * 0.08, sy + sh * 0.2], [sx + sw * 0.92, sy + sh * 0.2]]) star5(ctx, x, y, 3 * u);
@@ -881,7 +878,7 @@ function americaRoute66(ctx, W, H) {
   ctx.strokeStyle = '#3b2a20'; ctx.lineWidth = 0.5 * u;
   for (let k = 0; k < 6; k++) { const t = 1 - k * 0.16, x = W * 0.5 - (2 + 40 * t * t) * u, y = hz + (H - hz) * t * t * 0.9, h = (3 + 28 * t * t) * u; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y - h); ctx.moveTo(x - h * 0.18, y - h * 0.9); ctx.lineTo(x + h * 0.18, y - h * 0.9); ctx.stroke(); }
   // the shield sign on its post
-  const sx = W * 0.78, sy = H * 0.5, sw = 22 * u, sh = 24 * u;
+  const sx = W * 0.78, sy = H * 0.47, sw = 30 * u, sh = 33 * u;
   ctx.fillStyle = '#4a3a2a'; ctx.fillRect(sx - 0.8 * u, sy + sh * 0.5, 1.6 * u, H * 0.32);
   const shield = (pad, col) => {
     const w = sw - pad * 2, h = sh - pad * 2, x0 = sx - w / 2, y0 = sy - sh / 2 + pad;
@@ -891,14 +888,73 @@ function americaRoute66(ctx, W, H) {
   };
   shield(0, '#111214'); shield(1.1 * u, '#f6f2e6');
   ctx.fillStyle = '#111214'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.font = blockFont(sh * 0.15); ctx.fillText('ROUTE', sx, sy - sh * 0.18);
-  ctx.fillRect(sx - sw * 0.38, sy - sh * 0.06, sw * 0.76, 0.5 * u);
-  ctx.font = blockFont(sh * 0.42); ctx.fillText('66', sx, sy + sh * 0.18);
+  ctx.font = blockFont(sh * 0.56); ctx.fillText('66', sx, sy + sh * 0.08);
   ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
   // a frame like an old enamel sign
   ctx.fillStyle = '#1a1a1d'; frameRect(ctx, 0, 0, W, H, 2.4 * u);
   ctx.fillStyle = '#f6f2e6'; frameRect(ctx, 2.4 * u, 2.4 * u, W - 4.8 * u, H - 4.8 * u, 0.6 * u);
 }
+
+// Hooked rug: re-make a finished picture out of rows of wool loops, the way American hooked rugs are made.
+// Colours are cut down to a few dyed shades per channel (so skies become bands, like real hooking), each loop is
+// a little rounded tuft with a light top and a shaded bottom, rows are slightly offset and each loop's hue wobbles
+// a touch (abrash). The edge gets a whipped binding.
+function hookify(ctx, W, H, seed, loopsDown = 120) {
+  const R = rng(seed + 777);
+  const src = ctx.getImageData(0, 0, W, H).data;
+  const ls = H / loopsDown, rx = ls * 0.6, ry = ls * 0.56;
+  const levels = 24, q = (v) => Math.round((v / 255) * (levels - 1)) / (levels - 1) * 255;
+  ctx.fillStyle = '#2b2118'; ctx.fillRect(0, 0, W, H); // backing showing between loops
+  for (let row = 0, y = ls / 2; y < H + ls; row++, y += ls * 0.92) {
+    const off = (row % 2) * ls * 0.5;
+    for (let x = -ls / 2 + off; x < W + ls; x += ls * 0.92) {
+      const sx = Math.min(W - 1, Math.max(0, x | 0)), sy = Math.min(H - 1, Math.max(0, y | 0)), i = (sy * W + sx) * 4;
+      const j = (R() - 0.5) * 14; // abrash
+      const r = Math.max(0, Math.min(255, q(src[i]) + j)), g = Math.max(0, Math.min(255, q(src[i + 1]) + j)), b = Math.max(0, Math.min(255, q(src[i + 2]) + j));
+      ctx.fillStyle = `rgb(${r * 0.62 | 0},${g * 0.62 | 0},${b * 0.62 | 0})`;
+      ctx.beginPath(); ctx.ellipse(x, y + ls * 0.08, rx, ry, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = `rgb(${r | 0},${g | 0},${b | 0})`;
+      ctx.beginPath(); ctx.ellipse(x - ls * 0.04, y - ls * 0.05, rx * 0.82, ry * 0.78, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = `rgba(255,255,255,${0.12 + R() * 0.06})`;
+      ctx.beginPath(); ctx.ellipse(x - ls * 0.14, y - ls * 0.17, rx * 0.36, ry * 0.26, -0.5, 0, Math.PI * 2); ctx.fill();
+    }
+  }
+  // whipped binding round the edge
+  const bw = ls * 1.6;
+  ctx.fillStyle = '#22262e'; frameRect(ctx, 0, 0, W, H, bw);
+  ctx.strokeStyle = 'rgba(255,255,255,.12)'; ctx.lineWidth = ls * 0.22;
+  for (let a = 0; a < W; a += ls * 0.55) { ctx.beginPath(); ctx.moveTo(a, 0); ctx.lineTo(a + ls * 0.4, bw); ctx.moveTo(a, H); ctx.lineTo(a + ls * 0.4, H - bw); ctx.stroke(); }
+  for (let a = 0; a < H; a += ls * 0.55) { ctx.beginPath(); ctx.moveTo(0, a); ctx.lineTo(bw, a + ls * 0.4); ctx.moveTo(W, a); ctx.lineTo(W - bw, a + ls * 0.4); ctx.stroke(); }
+}
+
+// Put a finished picture inside a hooked-rug border (dark band, cream line, red and mustard sawtooth) and make
+// the whole thing out of wool loops.
+function hookedFrame(ctx, W, H, seed) {
+  const u = H / 100, inset = 9 * u;
+  const pic = document.createElement('canvas'); pic.width = W; pic.height = H;
+  pic.getContext('2d').drawImage(ctx.canvas, 0, 0);
+  ctx.fillStyle = '#2a201a'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#e9dcbc'; ctx.fillRect(inset - 1.6 * u, inset - 1.6 * u, W - 2 * inset + 3.2 * u, H - 2 * inset + 3.2 * u);
+  // sawtooth in the band, a whole number of teeth per side
+  const teeth = (x0, y0, len, horiz, flip) => {
+    const { n, d } = evenSteps(len, 6 * u), depth = 4.2 * u;
+    for (let k = 0; k < n; k++) {
+      ctx.fillStyle = k % 2 ? '#c99a3a' : '#a8322f';
+      ctx.beginPath();
+      if (horiz) { const x = x0 + k * d; ctx.moveTo(x, y0); ctx.lineTo(x + d, y0); ctx.lineTo(x + d / 2, y0 + flip * depth); }
+      else { const y = y0 + k * d; ctx.moveTo(x0, y); ctx.lineTo(x0, y + d); ctx.lineTo(x0 + flip * depth, y + d / 2); }
+      ctx.closePath(); ctx.fill();
+    }
+  };
+  const e = 2.3 * u, c = 7 * u;
+  teeth(c, e, W - 2 * c, true, 1); teeth(c, H - e, W - 2 * c, true, -1);
+  teeth(e, c, H - 2 * c, false, 1); teeth(W - e, c, H - 2 * c, false, -1);
+  ctx.fillStyle = '#c99a3a'; for (const [x, y] of [[c / 2 + 0.6 * u, c / 2 + 0.6 * u], [W - c / 2 - 0.6 * u, c / 2 + 0.6 * u], [c / 2 + 0.6 * u, H - c / 2 - 0.6 * u], [W - c / 2 - 0.6 * u, H - c / 2 - 0.6 * u]]) star5(ctx, x, y, 2.8 * u);
+  ctx.drawImage(pic, inset, inset, W - 2 * inset, H - 2 * inset);
+  hookify(ctx, W, H, seed, 74);
+}
+
+function evenSteps(len, step) { const n = Math.max(1, Math.round(len / step)); return { n, d: len / n }; }
 
 function addWeave(ctx, W, H, seed, strength = 26) {
   const R = rng(seed + 99);
@@ -935,7 +991,7 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
   else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
-  addWeave(ctx, W, H, seed);
+  if (P.america) hookedFrame(ctx, W, H, seed); else addWeave(ctx, W, H, seed);
 
   // Back side: same pattern, faded and flattened.
   const b = document.createElement('canvas');
