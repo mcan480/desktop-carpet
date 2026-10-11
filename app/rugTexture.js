@@ -42,6 +42,20 @@ export const STYLES = {
   kuzeyisik: { name: 'Kuzey Işıkları',      canada: 'aurora', hooked: true },
   fener:     { name: 'Deniz Feneri',        canada: 'lighthouse', hooked: true },
   kutupayisi:{ name: 'Kutup Ayısı',         canada: 'bear', hooked: true },
+  // Mexico pack. Woven / knotted:
+  sarape:    { name: 'Sarape',              mexico: 'sarape' },
+  greca:     { name: 'Greca',               mexico: 'greca' },
+  cini:      { name: 'Mavi Çini',           mexico: 'tile' },
+  agave:     { name: 'Agave Tarlası',       mexico: 'agave' },
+  kafatasi:  { name: 'Şeker Kafatası',      mexico: 'skull' },
+  monark:    { name: 'Monark Kelebekleri',  mexico: 'monarch' },
+  jaguar:    { name: 'Renkli Jaguar',       mexico: 'jaguar' },
+  // ...and hooked rugs:
+  meksikakart:{ name: 'Meksika’dan Selamlar', mexico: 'postcard', fonts: true, hooked: true },
+  piramit:   { name: 'Piramit',             mexico: 'pyramid', hooked: true },
+  sokak:     { name: 'Renkli Sokak',        mexico: 'street', hooked: true },
+  trajinera: { name: 'Trajinera',           mexico: 'trajinera', hooked: true },
+  tulum:     { name: 'Tulum Plajı',         mexico: 'tulum', hooked: true },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -1469,6 +1483,503 @@ function canadaPolarBear(ctx, W, H) {
   ctx.beginPath(); ctx.arc(bx - 28.5 * s, by - 14.5 * s, 0.9 * s, 0, Math.PI * 2); ctx.fill(); // eye
 }
 
+// ---------- Mexico pack ----------
+// Woven rugs first (Mexico's own strongest rug craft: sarapes and flat-woven wool rugs), then folk pictures knotted on
+// a grid, then hooked pictures.
+
+// Sarape: bright stripes across the cloth in graded bands, and a serrated diamond in the middle on a black ground.
+function mexicoSarape(ctx, W, H) {
+  const g = knotGrid(ctx, W, H, 96), { cols, rows, blk } = g;
+  const C = { black: '#1c1418', white: '#f2ead8', red: '#c22a32', pink: '#e2477a', orange: '#ee7a2a', yellow: '#f4c13a',
+    green: '#3f9a4a', teal: '#1f9a9a', blue: '#2c4fa0', purple: '#6a3a8f', maroon: '#7a1f2c' };
+  const seq = [], add = (c, n) => { for (let k = 0; k < n; k++) seq.push(c); };
+  add(C.black, 2); add(C.white, 1); add(C.red, 3); add(C.orange, 2); add(C.yellow, 2); add(C.white, 1); add(C.teal, 2); add(C.blue, 3);
+  add(C.purple, 2); add(C.white, 1); add(C.pink, 3); add(C.red, 2); add(C.maroon, 2); add(C.black, 1); add(C.yellow, 1); add(C.black, 1);
+  add(C.green, 3); add(C.teal, 2); add(C.white, 1); add(C.orange, 3); add(C.yellow, 2); add(C.pink, 2); add(C.purple, 2);
+  // stripes run across the rug, mirrored about the middle so both ends match
+  for (let x = 0; x < cols; x++) { const k = Math.min(x, cols - 1 - x), c = seq[k % seq.length]; for (let y = 0; y < rows; y++) blk(x, y, c); }
+  // centre: black field in a stepped lozenge, holding concentric serrated diamonds
+  const cx = (cols - 1) / 2, cy = (rows - 1) / 2, hw = cols * 0.19, hh = rows * 0.38;
+  const rings = [C.yellow, C.orange, C.red, C.maroon, C.black, C.white, C.teal, C.blue, C.black, C.pink, C.red, C.black, C.yellow, C.black];
+  for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+    const d = Math.abs(x - cx) / hw + Math.abs(y - cy) / hh;
+    if (d > 1.12) continue;
+    if (d > 1) { blk(x, y, C.black); continue; }
+    const teeth = ((Math.abs(x - cx) + Math.abs(y - cy)) % 2) * 0.03; // serrated ring edges
+    blk(x, y, rings[Math.min(rings.length - 1, Math.floor((d + teeth) * rings.length))]);
+  }
+  // black binding round the edge with little white stitches on the long sides
+  for (let x = 0; x < cols; x++) { blk(x, 0, C.black); blk(x, rows - 1, C.black); if (x % 3 === 1) { blk(x, 1, C.white); blk(x, rows - 2, C.white); } }
+  for (let y = 0; y < rows; y++) { blk(0, y, C.black); blk(cols - 1, y, C.black); }
+}
+
+// Flat-woven wool rug in natural dyes (cochineal red, indigo, marigold) with a running step-fret (greca) border and a
+// big stepped diamond in the field.
+function mexicoGreca(ctx, W, H) {
+  const g = knotGrid(ctx, W, H, 90), { cols, rows, blk } = g;
+  const C = { cream: '#ebdfc4', red: '#a32b2f', red2: '#922529', indigo: '#24365e', gold: '#d99a2b', char: '#2b2422', brown: '#7a5236' };
+  for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) blk(x, y, C.char);
+  // the fret: a key that spirals in, its baseline running on into the next one
+  const KEY = ['#####.', '#...#.', '#.#.#.', '#.###.', '#.....', '######'];
+  const B = 1, band = 6, inner = B + band;          // char edge, then the fret band
+  for (let y = B; y < rows - B; y++) for (let x = B; x < cols - B; x++) if (x < inner || y < inner || x >= cols - inner || y >= rows - inner) blk(x, y, C.cream);
+  const runH = (y0, flip) => { const len = cols - 2 * inner, n = Math.floor(len / 6), off = inner + Math.floor((len - n * 6) / 2);
+    for (let i = 0; i < n * 6; i++) for (let r = 0; r < 6; r++) if (KEY[flip ? 5 - r : r][i % 6] === '#') blk(off + i, y0 + r, C.char); };
+  const runV = (x0, flip) => { const len = rows - 2 * inner, n = Math.floor(len / 6), off = inner + Math.floor((len - n * 6) / 2);
+    for (let i = 0; i < n * 6; i++) for (let r = 0; r < 6; r++) if (KEY[flip ? 5 - r : r][i % 6] === '#') blk(x0 + r, off + i, C.char); };
+  runH(B, false); runH(rows - B - 6, true); runV(B, false); runV(cols - B - 6, true);
+  // corner blocks: a small stepped diamond
+  for (const [x0, y0] of [[B, B], [cols - inner, B], [B, rows - inner], [cols - inner, rows - inner]]) {
+    for (let dy = 0; dy < band; dy++) for (let dx = 0; dx < band; dx++) {
+      const d = Math.abs(dx - 2.5) + Math.abs(dy - 2.5);
+      blk(x0 + dx, y0 + dy, d < 1.5 ? C.red : d < 2.6 ? C.char : C.cream);
+    }
+  }
+  // lines between border and field
+  for (let x = inner; x < cols - inner; x++) { blk(x, inner, C.gold); blk(x, rows - 1 - inner, C.gold); blk(x, inner + 1, C.char); blk(x, rows - 2 - inner, C.char); }
+  for (let y = inner; y < rows - inner; y++) { blk(inner, y, C.gold); blk(cols - 1 - inner, y, C.gold); blk(inner + 1, y, C.char); blk(cols - 2 - inner, y, C.char); }
+  // red field with lazy lines
+  const fx0 = inner + 2, fy0 = inner + 2, fx1 = cols - inner - 3, fy1 = rows - inner - 3;
+  for (let y = fy0; y <= fy1; y++) for (let x = fx0; x <= fx1; x++) blk(x, y, (y - fy0) % 5 === 4 && (x + y) % 9 < 6 ? C.red2 : C.red);
+  // big stepped diamond: concentric rings, a hook on each side point
+  const cx = (fx0 + fx1) / 2, cy = (fy0 + fy1) / 2, hh = (fy1 - fy0) / 2 - 2, hw = hh * 1.5;
+  const rings = [C.char, C.char, C.cream, C.cream, C.indigo, C.indigo, C.indigo, C.gold, C.gold, C.cream, C.cream, C.red, C.red, C.char, C.gold];
+  for (let y = fy0; y <= fy1; y++) for (let x = fx0; x <= fx1; x++) {
+    const d = Math.abs(x - cx) / hw + Math.abs(y - cy) / hh;
+    if (d <= 1) blk(x, y, rings[Math.min(rings.length - 1, Math.floor((1 - d) * rings.length))]);
+  }
+  // corner quarter-diamonds in indigo, outlined in cream
+  for (const [ax, ay, sx, sy] of [[fx0, fy0, 1, 1], [fx1, fy0, -1, 1], [fx0, fy1, 1, -1], [fx1, fy1, -1, 1 * -1]]) {
+    for (let dy = 0; dy < 12; dy++) for (let dx = 0; dx < 18; dx++) { const d = dx / 18 + dy / 12; if (d < 1) blk(ax + sx * dx, ay + sy * dy, d > 0.86 ? C.cream : C.indigo); }
+  }
+  // little stepped crosses in gold between the diamond and the corners
+  for (const [x, y] of [[cx - hw * 0.95, cy - hh * 0.62], [cx + hw * 0.95, cy - hh * 0.62], [cx - hw * 0.95, cy + hh * 0.62], [cx + hw * 0.95, cy + hh * 0.62]]) {
+    const X = Math.round(x), Y = Math.round(y);
+    for (const [dx, dy] of [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [2, 0], [-2, 0], [0, 2], [0, -2]]) blk(X + dx, Y + dy, C.gold);
+    blk(X, Y, C.char);
+  }
+}
+
+// Blue-and-white painted tiles: a cobalt flower in each tile, quarter circles in the corners that join into rings
+// across four tiles, yellow and orange touches, set in grout with a cobalt border.
+function mexicoTile(ctx, W, H) {
+  const u = H / 100;
+  const C = { glaze: '#f3ecdc', glaze2: '#ebe2cf', cobalt: '#1f3f8f', blue: '#5a82c8', yellow: '#e7b638', orange: '#d9682b', green: '#3f7d4a', grout: '#bdb5a5' };
+  const bw = 6 * u;
+  ctx.fillStyle = C.cobalt; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = C.yellow; frameRect(ctx, bw * 0.55, bw * 0.55, W - bw * 1.1, H - bw * 1.1, 0.9 * u);
+  ctx.fillStyle = C.glaze; for (const [x, y, len, horiz] of [[bw, bw * 0.28, W - 2 * bw, 1], [bw, H - bw * 0.28, W - 2 * bw, 1], [bw * 0.28, bw, H - 2 * bw, 0], [W - bw * 0.28, bw, H - 2 * bw, 0]]) {
+    const { n, d } = evenSteps(len, 3 * u); for (let i = 0; i <= n; i++) { ctx.beginPath(); ctx.arc(horiz ? x + i * d : x, horiz ? y : y + i * d, 0.5 * u, 0, Math.PI * 2); ctx.fill(); }
+  }
+  const fx = bw, fy = bw, fw = W - 2 * bw, fh = H - 2 * bw, nr = 4, nc = Math.round(fw / (fh / nr)), tw = fw / nc, th = fh / nr;
+  ctx.fillStyle = C.grout; ctx.fillRect(fx, fy, fw, fh);
+  const g = 0.35 * u;
+  for (let j = 0; j < nr; j++) for (let i = 0; i < nc; i++) {
+    const x = fx + i * tw, y = fy + j * th;
+    ctx.save(); ctx.beginPath(); ctx.rect(x + g, y + g, tw - 2 * g, th - 2 * g); ctx.clip();
+    ctx.fillStyle = (i + j) % 2 ? C.glaze : C.glaze2; ctx.fillRect(x, y, tw, th);
+    const T = Math.min(tw, th);
+    // corner quarter circles: cobalt ring, yellow, orange eye
+    for (const [cx, cy] of [[x, y], [x + tw, y], [x, y + th], [x + tw, y + th]]) {
+      ctx.fillStyle = C.cobalt; ctx.beginPath(); ctx.arc(cx, cy, T * 0.3, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = C.yellow; ctx.beginPath(); ctx.arc(cx, cy, T * 0.19, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = C.orange; ctx.beginPath(); ctx.arc(cx, cy, T * 0.08, 0, Math.PI * 2); ctx.fill();
+    }
+    // centre flower: eight petals, a yellow and orange heart
+    const mx = x + tw / 2, my = y + th / 2;
+    for (let k = 0; k < 8; k++) { const a = (k / 8) * Math.PI * 2; ctx.fillStyle = k % 2 ? C.blue : C.cobalt; ctx.beginPath(); ctx.ellipse(mx + Math.cos(a) * T * 0.17, my + Math.sin(a) * T * 0.17, T * 0.12, T * 0.055, a, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = C.yellow; ctx.beginPath(); ctx.arc(mx, my, T * 0.075, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = C.orange; ctx.beginPath(); ctx.arc(mx, my, T * 0.035, 0, Math.PI * 2); ctx.fill();
+    // green leaves toward the middle of each edge
+    ctx.fillStyle = C.green;
+    for (const [dx, dy] of [[0, -1], [0, 1], [-1, 0], [1, 0]]) { ctx.beginPath(); ctx.ellipse(mx + dx * tw * 0.4, my + dy * th * 0.4, T * (dx ? 0.03 : 0.06), T * (dx ? 0.06 : 0.03), 0, 0, Math.PI * 2); ctx.fill(); }
+    // glaze highlight
+    const hl = ctx.createLinearGradient(x, y, x + tw, y + th); hl.addColorStop(0, 'rgba(255,255,255,.14)'); hl.addColorStop(0.5, 'rgba(255,255,255,0)');
+    ctx.fillStyle = hl; ctx.fillRect(x, y, tw, th);
+    ctx.restore();
+  }
+}
+
+// A woven landscape of the blue agave fields: rows of spiky rosettes on red earth running off to a volcano at sunset.
+function mexicoAgave(ctx, W, H) {
+  const g = knotGrid(ctx, W, H, 96), { cols, rows, blk } = g;
+  const C = { frame: '#2a1a24', line: '#f0dcc0', tooth: '#e2477a', tooth2: '#ee7a2a',
+    sky: ['#3b2a5e', '#5f3474', '#93407a', '#c8566a', '#e8795a', '#f4a35a', '#f8cc72'], sun: '#fde6a0',
+    far: '#6a4a7e', far2: '#7f5a8a', vol: '#4f3a6a', vol2: '#5f4878', earth: '#9c4f36', earth2: '#87422e', earth3: '#b5623f', ag: '#6aa8a0', ag2: '#3f7f7a', ag3: '#8fc4b8' };
+  const fb = 4;
+  ctx.fillStyle = C.frame; ctx.fillRect(0, 0, W, H);
+  const x0 = fb + 1, y0 = fb + 1, x1 = cols - fb - 2, y1 = rows - fb - 2;
+  for (let x = fb; x <= cols - fb - 1; x++) { blk(x, fb, C.line); blk(x, rows - fb - 1, C.line); }
+  for (let y = fb; y <= rows - fb - 1; y++) { blk(fb, y, C.line); blk(cols - fb - 1, y, C.line); }
+  const teethRow = (len, put) => { const n = Math.max(1, Math.round(len / 4)), per = len / n; for (let i = 0; i < len; i++) { const ph = (i % per) / per, k = Math.floor(i / per); const h = ph < 0.5 ? Math.round(ph * 4) : Math.round((1 - ph) * 4); for (let j = 0; j < Math.min(2, h); j++) put(i, j, k % 2 ? C.tooth2 : C.tooth); } };
+  teethRow(cols - 2 * fb - 2, (i, j, c) => { blk(fb + 1 + i, 1 + j, c); blk(fb + 1 + i, rows - 2 - j, c); });
+  teethRow(rows - 2 * fb - 2, (i, j, c) => { blk(1 + j, fb + 1 + i, c); blk(cols - 2 - j, fb + 1 + i, c); });
+  for (const [cx, cy] of [[2, 2], [cols - 3, 2], [2, rows - 3], [cols - 3, rows - 3]]) { blk(cx, cy, C.line); blk(cx - 1, cy, C.tooth); blk(cx + 1, cy, C.tooth); blk(cx, cy - 1, C.tooth); blk(cx, cy + 1, C.tooth); }
+
+  const fw = x1 - x0 + 1, fh = y1 - y0 + 1, hz = y0 + Math.round(fh * 0.42);
+  for (let y = y0; y < hz; y++) for (let x = x0; x <= x1; x++) { const t = (y - y0) / (hz - y0); blk(x, y, C.sky[Math.min(C.sky.length - 1, Math.max(0, Math.floor(t * C.sky.length + (((x * 7 + y * 3) % 5) - 2) * 0.06)))]); }
+  const sx = x0 + Math.round(fw * 0.72), sr = Math.round(fh * 0.1);
+  for (let dy = -sr; dy <= 0; dy++) for (let dx = -sr; dx <= sr; dx++) if (dx * dx + dy * dy <= sr * sr) blk(sx + dx, hz + dy, C.sun);
+  // far hills and the volcano: a cone with a flat top
+  for (let x = x0; x <= x1; x++) {
+    const h1 = Math.round(4 + 2 * Math.sin(x * 0.11) + ((x * 7) % 3 === 0 ? 1 : 0));
+    for (let k = 0; k < h1; k++) blk(x, hz - 1 - k, k === h1 - 1 ? C.far2 : C.far);
+    const vx = x0 + fw * 0.3, vh = Math.round(fh * 0.28 - Math.max(0, Math.abs(x - vx) - 3) * 0.75);
+    for (let k = 0; k < vh; k++) blk(x, hz - 1 - k, x < vx ? C.vol2 : C.vol);
+  }
+  // earth, then rows of agaves in perspective, small and close together far away
+  for (let y = hz; y <= y1; y++) for (let x = x0; x <= x1; x++) blk(x, y, (y - hz) % 4 === 1 ? C.earth2 : C.earth);
+  const vpx = x0 + fw * 0.5, N = 7;
+  for (let r = 0; r < N; r++) {
+    const t = (r + 2) / (N + 1), y = Math.round(hz + 2 + (y1 - hz - 3) * t * t), size = 1 + Math.round(t * t * 8), gap = 5 + t * t * 15;
+    for (let x = vpx - Math.floor((vpx - x0) / gap) * gap; x <= x1; x += gap) {
+      const X = Math.round(x);
+      blk(X, y + 1, C.earth3);
+      for (const [ang, len] of [[-90, 0.8], [-68, 1], [-112, 1], [-45, 0.95], [-135, 0.95], [-22, 0.8], [-158, 0.8], [-5, 0.5], [-175, 0.5]]) {
+        const L = Math.max(1, Math.round(size * len)), a = (ang * Math.PI) / 180;
+        for (let k = 1; k <= L; k++) { const px = X + Math.round(Math.cos(a) * k * 1.3), py = y + Math.round(Math.sin(a) * k); if (px >= x0 && px <= x1 && py >= hz) blk(px, py, k === L && size > 3 ? C.ag3 : ang === -90 || size < 3 ? C.ag : C.ag2); }
+      }
+      blk(X, y, C.ag2);
+    }
+  }
+}
+
+// Border for the Mexican folk pictures: like the others, with a little four-petal flower in each corner.
+function mexicoBorder(x, cols, rows, C) {
+  pictureBorder(x, cols, rows, C);
+  for (const [cx, cy] of [[2.6, 2.6], [cols - 2.6, 2.6], [2.6, rows - 2.6], [cols - 2.6, rows - 2.6]]) {
+    x.fillStyle = C.frame; x.fillRect(cx - 2.6, cy - 2.6, 5.2, 5.2);
+    x.fillStyle = C.star; for (const [dx, dy] of [[0, -1.3], [0, 1.3], [-1.3, 0], [1.3, 0]]) { x.beginPath(); x.arc(cx + dx, cy + dy, 1.1, 0, Math.PI * 2); x.fill(); }
+    x.fillStyle = C.accent; x.fillRect(cx - 0.6, cy - 0.6, 1.2, 1.2);
+  }
+}
+
+// Folk picture: a sugar skull for the Day of the Dead, flowers for eyes, among marigolds on a dark ground.
+function mexicoSkull(ctx, W, H) {
+  const C = { frame: '#1b1420', line: '#f0e2c4', accent: '#e8782a', star: '#e4407a',
+    bg: '#2a1a36', bg2: '#33204a', bone: '#f3ece0', bone2: '#d6ccbd', black: '#141016', pink: '#e4407a', teal: '#2fb3b0',
+    yellow: '#f2c23a', orange: '#e8782a', purple: '#8a4aa8', green: '#4f9a4a', red: '#c22a32' };
+  weavePicture(ctx, W, H, 104, Object.values(C), (x, cols, rows) => {
+    mexicoBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    x.fillStyle = C.bg; x.fillRect(fx, fy, fw, fh);
+    x.fillStyle = C.bg2; for (let y = fy + 3; y < fy + fh; y += 6) x.fillRect(fx, y, fw, 1);
+    // marigolds and leaves down both sides
+    const marigold = (mx, my, r, col, col2) => {
+      x.fillStyle = C.green; x.beginPath(); x.ellipse(mx - r * 1.1, my + r * 0.9, r * 0.9, r * 0.35, -0.5, 0, Math.PI * 2); x.ellipse(mx + r * 1.1, my + r * 0.9, r * 0.9, r * 0.35, 0.5, 0, Math.PI * 2); x.fill();
+      x.fillStyle = col; for (let k = 0; k < 10; k++) { const a = (k / 10) * Math.PI * 2; x.beginPath(); x.arc(mx + Math.cos(a) * r * 0.7, my + Math.sin(a) * r * 0.7, r * 0.42, 0, Math.PI * 2); x.fill(); }
+      x.fillStyle = col2; x.beginPath(); x.arc(mx, my, r * 0.5, 0, Math.PI * 2); x.fill();
+    };
+    for (const [mx, my, r, k] of [[0.08, 0.18, 6, 0], [0.2, 0.42, 5, 1], [0.07, 0.68, 7, 1], [0.2, 0.88, 5, 0], [0.92, 0.2, 6, 1], [0.8, 0.44, 5, 0], [0.93, 0.68, 7, 0], [0.8, 0.9, 5, 1]]) {
+      marigold(fx + fw * mx, fy + fh * my, r, k ? C.orange : C.yellow, k ? C.yellow : C.orange);
+    }
+    // the skull
+    const s = fh / 100, cx = fx + fw / 2, cy = fy + fh * 0.48;
+    x.fillStyle = C.bone2; x.beginPath(); x.ellipse(cx + 1, cy - 6 * s + 1, 33 * s, 31 * s, 0, 0, Math.PI * 2); x.fill(); // shadow
+    x.fillStyle = C.bone;
+    x.beginPath(); x.ellipse(cx, cy - 8 * s, 33 * s, 31 * s, 0, 0, Math.PI * 2); x.fill();           // cranium
+    x.beginPath(); x.ellipse(cx, cy + 12 * s, 26 * s, 14 * s, 0, 0, Math.PI * 2); x.fill();          // cheeks
+    roundRect(x, cx - 17 * s, cy + 14 * s, 34 * s, 22 * s, 7 * s); x.fill();                           // jaw
+    // eyes: black sockets ringed with pink and teal petals
+    for (const sx of [-1, 1]) {
+      const ex = cx + sx * 13 * s, ey = cy + 2 * s;
+      for (let k = 0; k < 8; k++) { const a = (k / 8) * Math.PI * 2; x.fillStyle = k % 2 ? C.teal : C.pink; x.beginPath(); x.arc(ex + Math.cos(a) * 10 * s, ey + Math.sin(a) * 10 * s, 3.4 * s, 0, Math.PI * 2); x.fill(); }
+      x.fillStyle = C.black; x.beginPath(); x.arc(ex, ey, 8 * s, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.yellow; x.beginPath(); x.arc(ex, ey, 2.4 * s, 0, Math.PI * 2); x.fill();
+    }
+    // nose: an upside-down heart
+    x.fillStyle = C.black; x.beginPath(); x.moveTo(cx, cy + 13 * s); x.lineTo(cx - 4.5 * s, cy + 20 * s); x.lineTo(cx, cy + 22 * s); x.lineTo(cx + 4.5 * s, cy + 20 * s); x.fill();
+    // mouth: stitched smile and teeth
+    x.fillStyle = C.black; x.fillRect(cx - 15 * s, cy + 27 * s, 30 * s, 1.4);
+    for (let k = -3; k <= 3; k++) x.fillRect(cx + k * 4.4 * s - 0.5, cy + 24 * s, 1, 7 * s);
+    // forehead flower and dotted arcs
+    const ffx = cx, ffy = cy - 25 * s;
+    for (let k = 0; k < 6; k++) { const a = (k / 6) * Math.PI * 2; x.fillStyle = k % 2 ? C.orange : C.yellow; x.beginPath(); x.arc(ffx + Math.cos(a) * 6 * s, ffy + Math.sin(a) * 6 * s, 3.6 * s, 0, Math.PI * 2); x.fill(); }
+    x.fillStyle = C.pink; x.beginPath(); x.arc(ffx, ffy, 3.2 * s, 0, Math.PI * 2); x.fill();
+    for (const [sx, col] of [[-1, C.purple], [1, C.purple]]) for (let k = 0; k < 5; k++) { const a = Math.PI * (sx < 0 ? 0.62 + k * 0.08 : 0.38 - k * 0.08); x.fillStyle = col; x.beginPath(); x.arc(ffx + Math.cos(a) * 16 * s * -1, ffy + 6 * s - Math.sin(a) * 9 * s, 1.6 * s, 0, Math.PI * 2); x.fill(); }
+    // cheek swirls: dots and a little leaf
+    for (const sx of [-1, 1]) {
+      x.fillStyle = C.green; x.beginPath(); x.ellipse(cx + sx * 22 * s, cy + 14 * s, 4 * s, 1.8 * s, sx * 0.6, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.red; x.beginPath(); x.arc(cx + sx * 24 * s, cy + 9 * s, 2 * s, 0, Math.PI * 2); x.fill();
+    }
+    // chin: a teal heart
+    x.fillStyle = C.teal; x.beginPath(); x.arc(cx - 2.2 * s, cy + 33 * s, 2.4 * s, 0, Math.PI * 2); x.arc(cx + 2.2 * s, cy + 33 * s, 2.4 * s, 0, Math.PI * 2); x.fill();
+    x.beginPath(); x.moveTo(cx - 4.4 * s, cy + 33.6 * s); x.lineTo(cx, cy + 38 * s); x.lineTo(cx + 4.4 * s, cy + 33.6 * s); x.fill();
+    x.restore();
+  });
+}
+
+// Folk picture: monarch butterflies flying over the fir forest where they spend the winter.
+function mexicoMonarch(ctx, W, H) {
+  const C = { frame: '#1d2a1f', line: '#efe3c6', accent: '#e8782a', star: '#efe3c6',
+    sky: '#8fc8e2', sky2: '#b9def0', fir: '#1f4a35', fir2: '#2c5e43', fir3: '#163a2a', ground: '#3d5a35',
+    orange: '#ec7a22', orange2: '#f5a03a', black: '#141414', white: '#f6f2ea' };
+  weavePicture(ctx, W, H, 104, Object.values(C), (x, cols, rows) => {
+    mexicoBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    for (let y = fy; y < fy + fh; y++) { x.fillStyle = (y - fy) < fh * 0.32 ? C.sky : C.sky2; x.fillRect(fx, y, fw, 1); }
+    // layered fir forest
+    const firRow = (base, h, step, col, seed) => { for (let i = 0, px = fx - 2; px < fx + fw + 4; i++, px += step) { const hh = h * (0.8 + ((i * seed) % 5) * 0.1); x.fillStyle = col; x.beginPath(); x.moveTo(px, base - hh); x.lineTo(px + hh * 0.22, base); x.lineTo(px - hh * 0.22, base); x.fill(); } x.fillRect(fx, base, fw, fh); };
+    firRow(fy + fh * 0.62, fh * 0.3, 6, C.fir2, 3); firRow(fy + fh * 0.78, fh * 0.34, 7, C.fir, 7); firRow(fy + fh * 0.95, fh * 0.3, 9, C.fir3, 5);
+    // butterflies
+    const butterfly = (bx, by, s, rot) => {
+      x.save(); x.translate(bx, by); x.rotate(rot);
+      const wing = (sx, top) => {
+        const rx = top ? 7 * s : 5 * s, ry = top ? 5 * s : 4 * s, wx = sx * (top ? 6.5 * s : 4.5 * s), wy = top ? -3 * s : 3.6 * s;
+        x.fillStyle = C.black; x.beginPath(); x.ellipse(wx, wy, rx, ry, sx * (top ? -0.35 : 0.4), 0, Math.PI * 2); x.fill();
+        x.fillStyle = top ? C.orange : C.orange2; x.beginPath(); x.ellipse(wx - sx * 0.6 * s, wy, rx * 0.72, ry * 0.68, sx * (top ? -0.35 : 0.4), 0, Math.PI * 2); x.fill();
+        if (s > 1.4) { // veins and white dots on the big ones
+          x.strokeStyle = C.black; x.lineWidth = Math.max(0.8, s * 0.35);
+          for (const k of [-0.5, 0, 0.5]) { x.beginPath(); x.moveTo(sx * 0.6 * s, 0); x.lineTo(wx + sx * rx * 0.5, wy + k * ry); x.stroke(); }
+          x.fillStyle = C.white; for (let k = 0; k < 4; k++) { const a = (top ? -1.4 : 0.6) + k * 0.4; x.beginPath(); x.arc(wx + Math.cos(a) * rx * 0.88 * sx, wy + Math.sin(a) * ry * 0.88, Math.max(0.5, s * 0.4), 0, Math.PI * 2); x.fill(); }
+        }
+      };
+      for (const sx of [-1, 1]) { wing(sx, false); wing(sx, true); }
+      x.fillStyle = C.black; x.beginPath(); x.ellipse(0, 0, 1 * s, 5 * s, 0, 0, Math.PI * 2); x.fill();
+      x.restore();
+    };
+    const R = rng(1919);
+    for (let i = 0; i < 22; i++) butterfly(fx + R() * fw, fy + R() * fh * 0.7, 0.55 + R() * 0.35, (R() - 0.5) * 0.8);
+    butterfly(fx + fw * 0.26, fy + fh * 0.4, 2.3, -0.2);
+    butterfly(fx + fw * 0.74, fy + fh * 0.64, 1.9, 0.25);
+    x.restore();
+  });
+}
+
+// Folk picture: a painted wooden jaguar in the colours of the carved animals from Oaxaca: patterned all over, on pink.
+function mexicoJaguar(ctx, W, H) {
+  const C = { frame: '#2a1430', line: '#f2e4c4', accent: '#2fb3b0', star: '#f2c23a',
+    bg: '#d6246e', bg2: '#c01e62', dot: '#f2c23a', yellow: '#f2b52e', orange: '#e8782a', teal: '#2fb3b0', purple: '#6a3a8f',
+    black: '#1b1420', white: '#f6efe0', green: '#4f9a4a', pink: '#f07aa8' };
+  weavePicture(ctx, W, H, 104, Object.values(C), (x, cols, rows) => {
+    mexicoBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    x.fillStyle = C.bg; x.fillRect(fx, fy, fw, fh);
+    x.fillStyle = C.bg2; for (let y = fy + 2; y < fy + fh; y += 5) for (let k = 0; k < fw; k += 5) x.fillRect(fx + k + (y % 10 ? 2.5 : 0), y, 1, 1);
+    // flowers around
+    for (const [px, py, col] of [[0.1, 0.18, C.yellow], [0.88, 0.15, C.teal], [0.08, 0.8, C.teal], [0.9, 0.82, C.yellow], [0.5, 0.1, C.purple]]) {
+      const X = fx + fw * px, Y = fy + fh * py;
+      x.fillStyle = col; for (let k = 0; k < 5; k++) { const a = (k / 5) * Math.PI * 2; x.beginPath(); x.arc(X + Math.cos(a) * 2.6, Y + Math.sin(a) * 2.6, 1.8, 0, Math.PI * 2); x.fill(); }
+      x.fillStyle = C.white; x.beginPath(); x.arc(X, Y, 1.2, 0, Math.PI * 2); x.fill();
+    }
+    // the jaguar, walking left
+    const s = fh / 76, bx = fx + fw * 0.54, by = fy + fh * 0.84;
+    const legs = [[-22, 1], [-12, 0], [14, 1], [24, 0]];
+    for (const [lx, back] of legs) { // legs, striped
+      x.fillStyle = back ? C.orange : C.yellow; roundRect(x, bx + lx * s, by - 20 * s, 6 * s, 26 * s, 2.5 * s); x.fill();
+      x.fillStyle = C.purple; for (let k = 0; k < 3; k++) x.fillRect(bx + lx * s, by - 10 * s + k * 5 * s, 6 * s, 1.4);
+      x.fillStyle = C.black; x.fillRect(bx + lx * s - 0.5, by + 5 * s, 7 * s, 1.4);
+    }
+    // tail curling up
+    x.strokeStyle = C.yellow; x.lineWidth = 4.5 * s; x.lineCap = 'round';
+    x.beginPath(); x.moveTo(bx + 28 * s, by - 26 * s); x.quadraticCurveTo(bx + 46 * s, by - 26 * s, bx + 44 * s, by - 46 * s); x.stroke();
+    x.strokeStyle = C.teal; x.lineWidth = 1.4; for (let k = 0; k < 4; k++) { const t = 0.25 + k * 0.2, tx = bx + (28 + 18 * t) * s, ty = by - (26 + 20 * t * t) * s; x.beginPath(); x.moveTo(tx - 2 * s, ty); x.lineTo(tx + 2 * s, ty); x.stroke(); }
+    x.fillStyle = C.yellow; x.beginPath(); x.ellipse(bx + 2 * s, by - 24 * s, 31 * s, 12 * s, 0, 0, Math.PI * 2); x.fill(); // body
+    // rosettes: rings with a dot
+    for (let r = 0; r < 2; r++) for (let k = 0; k < 5; k++) {
+      const px = bx - 16 * s + k * 9 * s + r * 4.5 * s, py = by - 28 * s + r * 8 * s;
+      x.fillStyle = [C.teal, C.purple, C.orange][(k + r) % 3]; x.beginPath(); x.arc(px, py, 3.2 * s, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.yellow; x.beginPath(); x.arc(px, py, 1.5 * s, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.black; x.fillRect(px - 0.5, py - 0.5, 1, 1);
+    }
+    x.fillStyle = C.orange; x.fillRect(bx - 26 * s, by - 14 * s, 52 * s, 1.4); // belly line
+    // head
+    const hx = bx - 33 * s, hy = by - 30 * s;
+    x.fillStyle = C.yellow; x.beginPath(); x.arc(hx, hy, 11 * s, 0, Math.PI * 2); x.fill();
+    x.beginPath(); x.ellipse(hx - 8 * s, hy + 4 * s, 7 * s, 5.5 * s, 0, 0, Math.PI * 2); x.fill(); // muzzle
+    for (const ex of [-1, 1]) { x.fillStyle = C.yellow; x.beginPath(); x.arc(hx + ex * 6 * s + 2 * s, hy - 10 * s, 3.6 * s, 0, Math.PI * 2); x.fill(); x.fillStyle = C.pink; x.beginPath(); x.arc(hx + ex * 6 * s + 2 * s, hy - 10 * s, 1.8 * s, 0, Math.PI * 2); x.fill(); }
+    x.fillStyle = C.white; x.beginPath(); x.ellipse(hx - 4 * s, hy - 2 * s, 3.4 * s, 2.6 * s, 0, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.black; x.beginPath(); x.arc(hx - 4.6 * s, hy - 2 * s, 1.6 * s, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.pink; x.beginPath(); x.moveTo(hx - 15 * s, hy + 1 * s); x.lineTo(hx - 11 * s, hy + 1 * s); x.lineTo(hx - 13 * s, hy + 4 * s); x.fill(); // nose
+    x.fillStyle = C.black; x.fillRect(hx - 14 * s, hy + 7 * s, 8 * s, 1.2); // mouth
+    x.fillStyle = C.teal; for (let k = 0; k < 3; k++) x.fillRect(hx + 2 * s + k * 3 * s, hy - 6 * s + k * 0.5, 1.2, 1.2); // forehead dots
+    x.fillStyle = C.purple; x.fillRect(hx + 3 * s, hy + 3 * s, 6 * s, 1.2);
+    x.restore();
+  });
+}
+
+// Hooked border in festive colours: Mexican pink and marigold sawtooth on a dark plum band.
+const MEXICO_FRAME = { dark: '#2a1630', a: '#d6246e', b: '#e8902a', line: '#efe3c6' };
+
+// Letter scenes for the Mexican postcard.
+const MEXICO_SCENES = [
+  (c, w, h) => { // stepped pyramid in the jungle
+    c.fillStyle = '#7cc3e6'; c.fillRect(0, 0, w, h); c.fillStyle = '#2f7a3f'; c.fillRect(0, h * 0.72, w, h);
+    c.fillStyle = '#c9bfa8'; for (let k = 0; k < 5; k++) c.fillRect(w * (0.05 + k * 0.08), h * (0.72 - (k + 1) * 0.09), w * (0.9 - k * 0.16), h * 0.09);
+    c.fillStyle = '#9b8f78'; c.fillRect(w * 0.44, h * 0.27, w * 0.12, h * 0.45);
+  },
+  (c, w, h) => { const cols = ['#c22a32', '#ee7a2a', '#f4c13a', '#3f9a4a', '#1f9a9a', '#2c4fa0', '#6a3a8f', '#e2477a']; for (let i = 0; i < 8; i++) { c.fillStyle = cols[i]; c.fillRect(0, (h * i) / 8, w, h / 8 + 1); } }, // sarape
+  (c, w, h) => { // papel picado
+    c.fillStyle = '#e2477a'; c.fillRect(0, 0, w, h * 0.5); c.fillStyle = '#1f9a9a'; c.fillRect(0, h * 0.5, w, h);
+    c.fillStyle = '#f6efe0'; for (let k = 0; k < 6; k++) { c.beginPath(); c.arc(w * (0.2 + (k % 3) * 0.3), h * (0.25 + Math.floor(k / 3) * 0.5), w * 0.07, 0, Math.PI * 2); c.fill(); }
+  },
+  (c, w, h) => { // saguaro on the sand
+    c.fillStyle = '#f2b45a'; c.fillRect(0, 0, w, h); c.fillStyle = '#d99a5a'; c.fillRect(0, h * 0.75, w, h);
+    c.fillStyle = '#2f6b3f'; c.fillRect(w * 0.35, h * 0.15, w * 0.3, h * 0.65);
+  },
+  (c, w, h) => { // Caribbean beach
+    c.fillStyle = '#8fd0ea'; c.fillRect(0, 0, w, h); c.fillStyle = '#2bb5b0'; c.fillRect(0, h * 0.45, w, h * 0.3); c.fillStyle = '#f3e3bd'; c.fillRect(0, h * 0.75, w, h);
+    c.fillStyle = '#ffd36a'; c.beginPath(); c.arc(w * 0.7, h * 0.2, w * 0.14, 0, Math.PI * 2); c.fill();
+  },
+  (c, w, h) => { // marigolds
+    c.fillStyle = '#4f9a4a'; c.fillRect(0, 0, w, h);
+    for (let k = 0; k < 6; k++) { const x = w * (0.25 + (k % 2) * 0.5), y = h * (0.18 + Math.floor(k / 2) * 0.32); c.fillStyle = '#ee8a22'; c.beginPath(); c.arc(x, y, w * 0.2, 0, Math.PI * 2); c.fill(); c.fillStyle = '#f4c13a'; c.beginPath(); c.arc(x, y, w * 0.09, 0, Math.PI * 2); c.fill(); }
+  },
+];
+function mexicoPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'MEXICO', MEXICO_SCENES); }
+
+// The stepped pyramid at Chichén Itzá: nine terraces, the central stair, the temple on top, jungle round the plaza.
+function mexicoPyramid(ctx, W, H) {
+  const u = H / 100;
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.7); sky.addColorStop(0, '#3f8fcf'); sky.addColorStop(1, '#bfe3f2');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f7f9fb'; for (const [x, y, r] of [[0.15, 0.14, 6], [0.24, 0.12, 7.5], [0.78, 0.16, 6], [0.86, 0.13, 7]]) { ctx.beginPath(); ctx.ellipse(W * x, H * y, r * u * 1.7, r * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  const base = H * 0.8, top = H * 0.24, cx = W * 0.5, bw = W * 0.66, tw = W * 0.2, n = 9, th = (base - top) / n;
+  // jungle behind
+  ctx.fillStyle = '#2f6b3a'; for (let i = 0; i < 26; i++) { const x = (i / 25) * W, r = (7 + (i * 7) % 5) * u; ctx.beginPath(); ctx.arc(x, base - 2 * u, r, 0, Math.PI * 2); ctx.fill(); }
+  for (let k = 0; k < n; k++) {
+    const w = bw - (bw - tw) * (k / n), y = base - (k + 1) * th;
+    ctx.fillStyle = '#cbbfa4'; ctx.fillRect(cx - w / 2, y, w, th);
+    ctx.fillStyle = '#ab9f86'; ctx.fillRect(cx + w * 0.08, y, w * 0.42, th);          // shaded right side
+    ctx.fillStyle = '#e3d9c2'; ctx.fillRect(cx - w / 2, y, w, th * 0.18);             // terrace edge light
+  }
+  // the stair: a lighter band with step lines, and balustrades
+  const sw = 12 * u;
+  ctx.fillStyle = '#ded4bd'; ctx.fillRect(cx - sw / 2, top, sw, base - top);
+  ctx.fillStyle = '#a99c82'; for (let y = top + 1.4 * u; y < base; y += 2.2 * u) ctx.fillRect(cx - sw / 2, y, sw, 0.6 * u);
+  ctx.fillStyle = '#9b8f78'; ctx.fillRect(cx - sw / 2 - 1.6 * u, top, 1.6 * u, base - top); ctx.fillRect(cx + sw / 2, top, 1.6 * u, base - top);
+  // temple on top
+  ctx.fillStyle = '#c4b89d'; ctx.fillRect(cx - tw * 0.38, top - 11 * u, tw * 0.76, 11 * u);
+  ctx.fillStyle = '#a2967c'; ctx.fillRect(cx - tw * 0.38, top - 12.5 * u, tw * 0.76, 1.8 * u);
+  ctx.fillStyle = '#3a3228'; for (const dx of [-0.22, 0, 0.22]) ctx.fillRect(cx + dx * tw - 1.6 * u, top - 8 * u, 3.2 * u, 8 * u);
+  // plaza and near trees
+  ctx.fillStyle = '#86b25e'; ctx.fillRect(0, base, W, H - base);
+  ctx.fillStyle = '#76a352'; for (let y = base + 3 * u; y < H; y += 4 * u) ctx.fillRect(0, y, W, 0.8 * u);
+  ctx.fillStyle = '#245a2f'; for (const [x, r] of [[0.03, 14], [0.12, 10], [0.92, 13], [0.99, 16]]) { ctx.beginPath(); ctx.arc(W * x, base - r * 0.3 * u, r * u, 0, Math.PI * 2); ctx.fill(); }
+}
+
+// A street of brightly painted houses under strings of papel picado.
+function mexicoStreet(ctx, W, H) {
+  const u = H / 100;
+  ctx.fillStyle = '#7cc6ea'; ctx.fillRect(0, 0, W, H);
+  // houses
+  const houses = [['#e2477a', '#f4c13a'], ['#f4c13a', '#1f9a9a'], ['#1f9a9a', '#ee7a2a'], ['#ee7a2a', '#2c4fa0'], ['#6a3a8f', '#f4c13a'], ['#3f9a4a', '#e2477a']];
+  const base = H * 0.82, n = houses.length, hw = W / n;
+  houses.forEach(([wall, trim], i) => {
+    const x = i * hw, top = H * (0.34 + (i % 3) * 0.04);
+    ctx.fillStyle = wall; ctx.fillRect(x, top, hw + 1, base - top);
+    ctx.fillStyle = trim; ctx.fillRect(x, top, hw, 2.6 * u);                         // cornice
+    ctx.fillStyle = 'rgba(0,0,0,.12)'; ctx.fillRect(x + hw - 1.2 * u, top, 1.2 * u, base - top);
+    // arched door
+    const dw = hw * 0.32, dh = (base - top) * 0.46, dx = x + hw * 0.34;
+    ctx.fillStyle = trim; roundRect(ctx, dx - 1 * u, base - dh - 1 * u, dw + 2 * u, dh + 1 * u, dw * 0.5); ctx.fill();
+    ctx.fillStyle = '#5a3424'; roundRect(ctx, dx, base - dh, dw, dh, dw * 0.45); ctx.fill();
+    // window with shutters and a flower pot
+    const wy = top + 7 * u, ww = hw * 0.28, wx = x + hw * 0.36;
+    ctx.fillStyle = trim; ctx.fillRect(wx - 1 * u, wy - 1 * u, ww + 2 * u, 9 * u);
+    ctx.fillStyle = '#2b3550'; ctx.fillRect(wx, wy, ww, 7 * u);
+    ctx.fillStyle = '#b5623f'; ctx.fillRect(wx, wy + 7.4 * u, ww, 2.4 * u);
+    ctx.fillStyle = '#c22a32'; for (let k = 0; k < 3; k++) { ctx.beginPath(); ctx.arc(wx + ww * (0.2 + k * 0.3), wy + 6.6 * u, 1.4 * u, 0, Math.PI * 2); ctx.fill(); }
+  });
+  // cobbled street
+  ctx.fillStyle = '#9a8a78'; ctx.fillRect(0, base, W, H - base);
+  ctx.fillStyle = '#857565'; for (let y = base + 2 * u; y < H; y += 3 * u) for (let x = ((y / u) % 6) * u; x < W; x += 6 * u) ctx.fillRect(x, y, 4.4 * u, 2 * u);
+  // papel picado: strings across the sky with cut-paper flags
+  const cols = ['#e2477a', '#f4c13a', '#1f9a9a', '#ee7a2a', '#6a3a8f', '#3f9a4a', '#2c4fa0'];
+  for (const [y0, sag, off] of [[H * 0.07, 7 * u, 0], [H * 0.2, 6 * u, 3]]) {
+    const yAt = (x) => y0 + sag * Math.sin((x / W) * Math.PI);
+    ctx.strokeStyle = '#3a3a3a'; ctx.lineWidth = 0.6 * u; ctx.beginPath(); for (let x = 0; x <= W; x += 2 * u) x ? ctx.lineTo(x, yAt(x)) : ctx.moveTo(x, yAt(x)); ctx.stroke();
+    const fw = 9 * u, fh = 11 * u;
+    for (let i = 0, x = 3 * u; x < W - fw; i++, x += fw + 2 * u) {
+      const y = yAt(x + fw / 2);
+      ctx.fillStyle = cols[(i + off) % cols.length]; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + fw, y); ctx.lineTo(x + fw, y + fh);
+      for (let k = 4; k >= 0; k--) ctx.lineTo(x + (fw * k) / 4 + (k % 2 ? 0 : 0), y + fh - (k % 2 ? 1.6 * u : 0)); ctx.fill();
+      ctx.fillStyle = '#7cc6ea'; // the cut-outs show the sky
+      ctx.beginPath(); ctx.arc(x + fw / 2, y + fh * 0.48, 1.8 * u, 0, Math.PI * 2); ctx.fill();
+      ctx.fillRect(x + fw * 0.2, y + fh * 0.18, 1.2 * u, 1.2 * u); ctx.fillRect(x + fw * 0.68, y + fh * 0.18, 1.2 * u, 1.2 * u);
+    }
+  }
+}
+
+// Trajineras on the canals of Xochimilco: bright boats under painted arches, willows along the banks.
+function mexicoTrajinera(ctx, W, H) {
+  const u = H / 100;
+  ctx.fillStyle = '#9fd3ea'; ctx.fillRect(0, 0, W, H * 0.45);
+  ctx.fillStyle = '#4f8f4f'; for (let i = 0; i < 16; i++) { const x = (i / 15) * W, r = (14 + (i * 5) % 7) * u; ctx.beginPath(); ctx.ellipse(x, H * 0.36, r, r * 1.3, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#3f7d46'; for (let i = 0; i < 24; i++) { const x = (i / 23) * W, r = (9 + (i * 5) % 6) * u; ctx.beginPath(); ctx.arc(x, H * 0.42, r, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#2f6b3a'; for (let i = 0; i < 18; i++) { const x = (i / 17) * W + 3 * u, r = (6 + (i * 3) % 5) * u; ctx.beginPath(); ctx.arc(x, H * 0.47, r, 0, Math.PI * 2); ctx.fill(); }
+  const water = ctx.createLinearGradient(0, H * 0.48, 0, H); water.addColorStop(0, '#3e8b7c'); water.addColorStop(1, '#2f6f64');
+  ctx.fillStyle = water; ctx.fillRect(0, H * 0.48, W, H * 0.52);
+  ctx.fillStyle = '#6fb3a0'; for (let i = 0; i < 20; i++) ctx.fillRect(((i * 157) % 100) / 100 * W, H * 0.55 + (i % 6) * 6 * u, 8 * u, 0.9 * u);
+  const boat = (cx, y, s, hull, roof, arch) => {
+    const U = s * u, L = 72 * U, Hh = 8 * U;
+    ctx.fillStyle = 'rgba(0,0,0,.2)'; ctx.fillRect(cx - L * 0.46, y + Hh, L * 0.92, 2.4 * U);       // shadow on the water
+    // hull: two colours with a white band
+    ctx.fillStyle = hull[0]; ctx.beginPath(); ctx.moveTo(cx - L / 2, y); ctx.lineTo(cx + L / 2, y); ctx.lineTo(cx + L * 0.45, y + Hh); ctx.lineTo(cx - L * 0.45, y + Hh); ctx.fill();
+    ctx.fillStyle = '#f6efe0'; ctx.fillRect(cx - L * 0.48, y + Hh * 0.3, L * 0.96, Hh * 0.18);
+    ctx.fillStyle = hull[1]; ctx.fillRect(cx - L * 0.47, y + Hh * 0.55, L * 0.94, Hh * 0.22);
+    // posts and a flat canopy with a scalloped edge in alternating colours
+    ctx.fillStyle = '#5a3424'; for (const k of [-0.32, -0.08, 0.16, 0.4]) ctx.fillRect(cx + L * k - 0.9 * U, y - 20 * U, 1.8 * U, 20 * U);
+    ctx.fillStyle = roof; ctx.fillRect(cx - L * 0.36, y - 24 * U, L * 0.8, 4.4 * U);
+    const pal = ['#c22a32', '#f4c13a', '#3f9a4a', '#2c4fa0', '#e2477a'];
+    for (let k = 0, x = cx - L * 0.36; x < cx + L * 0.44; k++, x += 4 * U) { ctx.fillStyle = pal[k % pal.length]; ctx.beginPath(); ctx.arc(x + 2 * U, y - 19.6 * U, 2 * U, 0, Math.PI); ctx.fill(); }
+    // the painted arch at the bow: an open arch in a thick band of colours, a flower at the top
+    const ax = cx - L * 0.44, aw = 22 * U, ah = 30 * U, r = aw / 2;
+    ctx.lineWidth = 4.4 * U; ctx.lineCap = 'butt';
+    const segs = 7;
+    for (let k = 0; k < segs; k++) {
+      ctx.strokeStyle = [arch, '#e2477a', '#3f9a4a', '#2c4fa0'][k % 4];
+      ctx.beginPath(); ctx.arc(ax + r, y - ah + r, r, Math.PI + (k / segs) * Math.PI, Math.PI + ((k + 1) / segs) * Math.PI); ctx.stroke();
+    }
+    ctx.strokeStyle = arch; ctx.beginPath(); ctx.moveTo(ax, y - ah + r); ctx.lineTo(ax, y); ctx.moveTo(ax + aw, y - ah + r); ctx.lineTo(ax + aw, y); ctx.stroke();
+    ctx.fillStyle = '#c22a32'; ctx.beginPath(); ctx.arc(ax + r, y - ah - 1 * U, 3.4 * U, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#f4c13a'; ctx.beginPath(); ctx.arc(ax + r, y - ah - 1 * U, 1.5 * U, 0, Math.PI * 2); ctx.fill();
+  };
+  boat(W * 0.8, H * 0.6, 0.55, ['#2c4fa0', '#f4c13a'], '#3f9a4a', '#ee7a2a');
+  boat(W * 0.46, H * 0.84, 1.35, ['#c22a32', '#f4c13a'], '#e2477a', '#f4c13a');
+}
+
+// Tulum: a Mayan temple on the cliff above a turquoise Caribbean sea, white sand and palms.
+function mexicoTulum(ctx, W, H) {
+  const u = H / 100;
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.5); sky.addColorStop(0, '#3f9ad6'); sky.addColorStop(1, '#c6ecf6');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f7f9fb'; for (const [x, y, r] of [[0.6, 0.12, 6], [0.68, 0.1, 7.5], [0.8, 0.15, 5]]) { ctx.beginPath(); ctx.ellipse(W * x, H * y, r * u * 1.7, r * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  const hz = H * 0.46;
+  ctx.fillStyle = '#1f7fa8'; ctx.fillRect(0, hz, W, H * 0.12);
+  ctx.fillStyle = '#25b3b8'; ctx.fillRect(0, hz + H * 0.12, W, H * 0.12);
+  ctx.fillStyle = '#7fdcd2'; ctx.fillRect(0, hz + H * 0.24, W, H * 0.07);
+  ctx.fillStyle = '#f2f8f8'; for (let i = 0; i < 12; i++) ctx.fillRect(((i * 137) % 100) / 100 * W, hz + 4 * u + (i % 4) * 6 * u, 7 * u, 0.9 * u);
+  // beach
+  ctx.fillStyle = '#f3e3bd'; ctx.beginPath(); ctx.moveTo(0, H * 0.82); ctx.quadraticCurveTo(W * 0.5, H * 0.74, W, H * 0.8); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill();
+  ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.moveTo(0, H * 0.82); ctx.quadraticCurveTo(W * 0.5, H * 0.74, W, H * 0.8); ctx.lineTo(W, H * 0.815); ctx.quadraticCurveTo(W * 0.5, H * 0.755, 0, H * 0.835); ctx.fill();
+  // the cliff and the temple on it
+  ctx.fillStyle = '#c9b88f'; ctx.beginPath(); ctx.moveTo(0, H * 0.4); ctx.lineTo(W * 0.3, H * 0.42); ctx.lineTo(W * 0.38, H * 0.6); ctx.lineTo(W * 0.42, H * 0.8); ctx.lineTo(0, H * 0.84); ctx.fill();
+  ctx.fillStyle = '#a8966e'; ctx.beginPath(); ctx.moveTo(W * 0.24, H * 0.44); ctx.lineTo(W * 0.3, H * 0.42); ctx.lineTo(W * 0.38, H * 0.6); ctx.lineTo(W * 0.42, H * 0.8); ctx.lineTo(W * 0.3, H * 0.8); ctx.fill();
+  ctx.fillStyle = '#4f7f3a'; ctx.fillRect(0, H * 0.38, W * 0.3, 3 * u);
+  const tx = W * 0.14, ty = H * 0.38, tw = 22 * u, thh = 13 * u;
+  ctx.fillStyle = '#b7a77f'; ctx.fillRect(tx - tw / 2 - 2 * u, ty - 3 * u, tw + 4 * u, 3 * u);
+  ctx.fillStyle = '#d2c39c'; ctx.fillRect(tx - tw / 2, ty - 3 * u - thh, tw, thh);
+  ctx.fillStyle = '#b7a77f'; ctx.fillRect(tx - tw / 2 - 1 * u, ty - 3 * u - thh - 2.4 * u, tw + 2 * u, 2.4 * u);
+  ctx.fillStyle = '#3a3228'; for (const dx of [-0.3, 0, 0.3]) ctx.fillRect(tx + dx * tw - 1.8 * u, ty - 3 * u - thh * 0.7, 3.6 * u, thh * 0.7);
+  // palms on the beach
+  const palm = (x, y, h, lean) => {
+    ctx.strokeStyle = '#7a5a3a'; ctx.lineWidth = 2.4 * u; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.quadraticCurveTo(x + lean * h * 0.4, y - h * 0.5, x + lean * h * 0.3, y - h); ctx.stroke();
+    const tx2 = x + lean * h * 0.3, ty2 = y - h;
+    ctx.strokeStyle = '#2f7a3a'; ctx.lineWidth = 2.6 * u;
+    for (let k = 0; k < 8; k++) {
+      const a = Math.PI * (0.92 + k * 0.165), ex = tx2 + Math.cos(a) * h * 0.34, ey = ty2 + Math.sin(a) * h * 0.16 + h * 0.08;
+      ctx.beginPath(); ctx.moveTo(tx2, ty2); ctx.quadraticCurveTo(tx2 + Math.cos(a) * h * 0.22, ty2 + Math.sin(a) * h * 0.2 - h * 0.06, ex, ey); ctx.stroke();
+    }
+    ctx.fillStyle = '#5a3a24'; ctx.beginPath(); ctx.arc(tx2, ty2 + 1 * u, 1.8 * u, 0, Math.PI * 2); ctx.fill();
+  };
+  palm(W * 0.78, H * 0.92, 40 * u, -0.4); palm(W * 0.9, H * 0.94, 46 * u, -0.25); palm(W * 0.66, H * 0.9, 28 * u, 0.3);
+}
+
 // ---------- USA pack: woven, pieced and knotted rugs (restored from the earlier drafts) ----------
 // Dashed stitching around a rectangle; each side starts and ends on a stitch, so the corners join up.
 function stitchRect(ctx, x, y, w, h, step, thick, color) {
@@ -2028,11 +2539,23 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.canada === 'aurora') canadaAurora(ctx, W, H);
   else if (P.canada === 'lighthouse') canadaLighthouse(ctx, W, H);
   else if (P.canada === 'bear') canadaPolarBear(ctx, W, H);
+  else if (P.mexico === 'sarape') mexicoSarape(ctx, W, H);
+  else if (P.mexico === 'greca') mexicoGreca(ctx, W, H);
+  else if (P.mexico === 'tile') mexicoTile(ctx, W, H);
+  else if (P.mexico === 'agave') mexicoAgave(ctx, W, H);
+  else if (P.mexico === 'skull') mexicoSkull(ctx, W, H);
+  else if (P.mexico === 'monarch') mexicoMonarch(ctx, W, H);
+  else if (P.mexico === 'jaguar') mexicoJaguar(ctx, W, H);
+  else if (P.mexico === 'postcard') mexicoPostcard(ctx, W, H);
+  else if (P.mexico === 'pyramid') mexicoPyramid(ctx, W, H);
+  else if (P.mexico === 'street') mexicoStreet(ctx, W, H);
+  else if (P.mexico === 'trajinera') mexicoTrajinera(ctx, W, H);
+  else if (P.mexico === 'tulum') mexicoTulum(ctx, W, H);
   else if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
   else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
-  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : undefined); else addWeave(ctx, W, H, seed);
+  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : P.mexico ? MEXICO_FRAME : undefined); else addWeave(ctx, W, H, seed);
 
   // Back side: same pattern, faded and flattened.
   const b = document.createElement('canvas');
