@@ -24,6 +24,9 @@ export const STYLES = {
   ambar:    { name: 'Ambar Yıldızı',         america: 'hex' },
   yalniz:   { name: 'Yalnız Yıldız',         america: 'lonestar' },
   bizon:    { name: 'Bizon Ovası',           america: 'bison' },
+  newyork:  { name: 'New York Gecesi',       america: 'nyc' },
+  miami:    { name: 'Miami Gün Batımı',      america: 'miami' },
+  karli:    { name: 'Karlı Sokak',           america: 'snow' },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -1175,6 +1178,160 @@ function americaBison(ctx, W, H) {
   });
 }
 
+// ---------- city rugs ----------
+// Original skylines that give the feel of a place without copying any particular building.
+
+// New York at night: a dense wall of towers with lit windows, an art-deco spire, the river mirroring it all.
+function americaNyc(ctx, W, H, seed) {
+  const R = rng(seed + 401);
+  const C = { frame: '#141a2e', line: '#e9dcc0', accent: '#d9a43a', star: '#e9dcc0',
+    sky: '#1a2346', sky2: '#2b2f5e', sky3: '#4a3a72', moon: '#f3e6be', back: '#2c3558', mid: '#1f2747', front: '#151b33',
+    win: '#f2c75c', win2: '#e88b3c', water: '#121a33', water2: '#1d2a4d', bridge: '#8fa1c4' };
+  weavePicture(ctx, W, H, 112, Object.values(C), (x, cols, rows) => {
+    pictureBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16, base = fy + fh * 0.72;
+    x.beginPath(); x.rect(fx, fy, fw, fh); x.clip(); // keep the scene inside the border
+    const sky = x.createLinearGradient(0, fy, 0, base); sky.addColorStop(0, C.sky); sky.addColorStop(0.6, C.sky2); sky.addColorStop(1, C.sky3);
+    x.fillStyle = sky; x.fillRect(fx, fy, fw, fh);
+    x.fillStyle = C.moon; x.beginPath(); x.arc(fx + fw * 0.82, fy + fh * 0.16, fh * 0.07, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.sky; x.beginPath(); x.arc(fx + fw * 0.835, fy + fh * 0.15, fh * 0.065, 0, Math.PI * 2); x.fill();
+    for (let i = 0; i < 30; i++) { x.fillStyle = C.moon; x.fillRect(fx + R() * fw, fy + R() * fh * 0.35, 1, 1); }
+    const tower = (bx, w, h, col, lit, top) => {
+      x.fillStyle = col; x.fillRect(bx, base - h, w, h);
+      if (top === 'step') { x.fillRect(bx + w * 0.15, base - h - 3, w * 0.7, 3); x.fillRect(bx + w * 0.3, base - h - 6, w * 0.4, 3); }
+      if (top === 'spire') {
+        x.fillRect(bx + w * 0.12, base - h - 4, w * 0.76, 4); x.fillRect(bx + w * 0.25, base - h - 8, w * 0.5, 4);
+        x.beginPath(); x.moveTo(bx + w * 0.32, base - h - 8); x.lineTo(bx + w * 0.5, base - h - 22); x.lineTo(bx + w * 0.68, base - h - 8); x.fill();
+        x.fillRect(bx + w * 0.5 - 0.5, base - h - 30, 1, 9);
+      }
+      if (top === 'flat-ant') x.fillRect(bx + w * 0.5 - 0.5, base - h - 6, 1, 6);
+      if (!lit) return;
+      for (let yy = base - h + 2; yy < base - 1; yy += 2) for (let xx = bx + 1; xx < bx + w - 1; xx += 2) if (R() < lit) { x.fillStyle = R() < 0.8 ? C.win : C.win2; x.fillRect(xx, yy, 1, 1); }
+    };
+    // back row (hazy), middle row, front row
+    for (let bx = fx; bx < fx + fw; ) { const w = 4 + R() * 6, h = fh * (0.18 + R() * 0.2); tower(bx, w, h, C.back, 0.12, null); bx += w; }
+    for (let bx = fx - 2; bx < fx + fw; ) { const w = 5 + R() * 8, h = fh * (0.12 + R() * 0.26); tower(bx, w, h, C.mid, 0.28, R() < 0.25 ? 'step' : R() < 0.3 ? 'flat-ant' : null); bx += w + (R() < 0.3 ? 1 : 0); }
+    tower(fx + fw * 0.44, 9, fh * 0.5, C.front, 0.35, 'spire');
+    tower(fx + fw * 0.58, 8, fh * 0.42, C.front, 0.35, 'step');
+    for (const [px, w, h] of [[0.05, 10, 0.2], [0.16, 7, 0.28], [0.27, 9, 0.24], [0.68, 10, 0.3], [0.8, 8, 0.22], [0.9, 9, 0.26]]) tower(fx + fw * px, w, fh * h, C.front, 0.32, null);
+    // suspension bridge on the left reaching into the river
+    x.strokeStyle = C.bridge; x.lineWidth = 0.8;
+    x.beginPath(); x.moveTo(fx, base - fh * 0.12); x.quadraticCurveTo(fx + fw * 0.1, base - 2, fx + fw * 0.2, base - fh * 0.14); x.stroke();
+    x.fillStyle = C.bridge; x.fillRect(fx + fw * 0.2 - 1, base - fh * 0.16, 2, fh * 0.16); x.fillRect(fx, base - 1.5, fw * 0.26, 1);
+    // river with broken reflections of the lights
+    x.fillStyle = C.water; x.fillRect(fx, base, fw, fy + fh - base);
+    for (let yy = base + 1; yy < fy + fh; yy += 2) { x.fillStyle = C.water2; x.fillRect(fx, yy, fw, 1); }
+    for (let i = 0; i < 90; i++) { const rx = fx + R() * fw, ry = base + 1 + R() * (fy + fh - base - 2); x.fillStyle = R() < 0.7 ? C.win : C.win2; x.fillRect(rx, ry, 1 + R() * 3, 1); }
+  });
+}
+
+// Miami at sunset: a striped retro sun over the sea, pastel low-rise buildings and palm trees.
+function americaMiami(ctx, W, H, seed) {
+  const R = rng(seed + 402);
+  const C = { frame: '#203a4a', line: '#f6e7d0', accent: '#ef7f8f', star: '#f6e7d0',
+    sky1: '#4b3b7a', sky2: '#b0457e', sky3: '#ef7b6b', sky4: '#f7b45c', sun: '#ffd36a', sea: '#2f8a95', sea2: '#226d78', sand: '#f0d3a2',
+    pink: '#f2a3b5', mint: '#9fd8c4', cream: '#f5e6c8', winA: '#3c6b8a', palm: '#1e2a2f', palm2: '#2c3e3a' };
+  weavePicture(ctx, W, H, 108, Object.values(C), (x, cols, rows) => {
+    pictureBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16, horizon = fy + fh * 0.58;
+    x.beginPath(); x.rect(fx, fy, fw, fh); x.clip(); // keep the scene inside the border
+    const sky = x.createLinearGradient(0, fy, 0, horizon); sky.addColorStop(0, C.sky1); sky.addColorStop(0.4, C.sky2); sky.addColorStop(0.75, C.sky3); sky.addColorStop(1, C.sky4);
+    x.fillStyle = sky; x.fillRect(fx, fy, fw, horizon - fy);
+    // striped sun sinking into the sea
+    const sx = fx + fw * 0.5, sr = fh * 0.24;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, horizon - fy); x.clip();
+    x.fillStyle = C.sun; x.beginPath(); x.arc(sx, horizon, sr, Math.PI, 0); x.fill();
+    for (let k = 0; k < 5; k++) { x.fillStyle = C.sky3; x.fillRect(sx - sr, horizon - sr * 0.12 - k * sr * 0.17, sr * 2, 1 + k * 0.4); }
+    x.restore();
+    // sea with sun glints, then the beach
+    const beach = fy + fh * 0.82;
+    x.fillStyle = C.sea; x.fillRect(fx, horizon, fw, beach - horizon);
+    for (let yy = horizon + 1; yy < beach; yy += 2) { const w = sr * (1.4 - (yy - horizon) / (beach - horizon)); x.fillStyle = C.sun; x.fillRect(sx - w / 2 + (R() - 0.5) * 3, yy, w * (0.3 + R() * 0.4), 1); x.fillStyle = C.sea2; x.fillRect(fx + R() * fw, yy + 1, 6, 1); }
+    x.fillStyle = C.sand; x.fillRect(fx, beach, fw, fy + fh - beach);
+    // pastel deco buildings along the shore on both sides
+    const deco = (bx, w, h, col) => {
+      x.fillStyle = col; x.fillRect(bx, horizon - h, w, h);
+      x.fillRect(bx + w * 0.2, horizon - h - 3, w * 0.6, 3); // stepped crown
+      x.fillStyle = C.winA; for (let yy = horizon - h + 3; yy < horizon - 2; yy += 4) x.fillRect(bx + 2, yy, w - 4, 1); // ribbon windows
+      x.fillStyle = C.cream; x.fillRect(bx, horizon - h + 1, w, 1);
+    };
+    deco(fx + 2, 14, fh * 0.2, C.pink); deco(fx + 17, 11, fh * 0.14, C.mint); deco(fx + 29, 9, fh * 0.17, C.cream);
+    deco(fx + fw - 16, 14, fh * 0.18, C.mint); deco(fx + fw - 28, 11, fh * 0.22, C.pink); deco(fx + fw - 38, 9, fh * 0.13, C.cream);
+    // palm trees: curved trunk and drooping fronds
+    const palm = (bx, by, h, lean) => {
+      x.strokeStyle = C.palm; x.lineWidth = 2; x.lineCap = 'round';
+      x.beginPath(); x.moveTo(bx, by); x.quadraticCurveTo(bx + lean * 0.3, by - h * 0.6, bx + lean, by - h); x.stroke();
+      const tx = bx + lean, ty = by - h;
+      // fronds: a curved midrib with leaflets along it, getting shorter toward the tip
+      for (let k = 0; k < 8; k++) {
+        const a = -Math.PI + (k / 7) * Math.PI, len = h * (0.42 + (k % 2) * 0.08);
+        const ex = tx + Math.cos(a) * len, ey = ty + Math.sin(a) * len * 0.45 + len * 0.38;
+        const cxp = tx + Math.cos(a) * len * 0.55, cyp = ty + Math.sin(a) * len * 0.55 - 4;
+        const pt = (t) => [(1 - t) * (1 - t) * tx + 2 * (1 - t) * t * cxp + t * t * ex, (1 - t) * (1 - t) * ty + 2 * (1 - t) * t * cyp + t * t * ey];
+        x.strokeStyle = k % 2 ? C.palm : C.palm2; x.lineWidth = 1.2;
+        x.beginPath(); x.moveTo(tx, ty); x.quadraticCurveTo(cxp, cyp, ex, ey); x.stroke();
+        for (let t = 0.12; t < 1; t += 0.1) {
+          const [px, py] = pt(t), [qx, qy] = pt(Math.min(1, t + 0.02));
+          const dx = qx - px, dy = qy - py, n = Math.hypot(dx, dy) || 1, l = 3.4 * (1 - t) + 0.8;
+          x.beginPath(); x.moveTo(px, py); x.lineTo(px - dy / n * l + dx / n * l * 0.6, py + dx / n * l + dy / n * l * 0.6);
+          x.moveTo(px, py); x.lineTo(px + dy / n * l + dx / n * l * 0.6, py - dx / n * l + dy / n * l * 0.6); x.stroke();
+        }
+      }
+      x.fillStyle = C.palm; x.beginPath(); x.arc(tx, ty, 1.6, 0, Math.PI * 2); x.fill(); // coconuts
+    };
+    palm(fx + fw * 0.08, fy + fh - 2, fh * 0.62, 6); palm(fx + fw * 0.16, fy + fh - 3, fh * 0.46, -4);
+    palm(fx + fw * 0.88, fy + fh - 2, fh * 0.6, -7); palm(fx + fw * 0.95, fy + fh - 4, fh * 0.42, 3);
+  });
+}
+
+// A snowy American street at dusk: brick row houses with lit windows and stoops, street lamps, falling snow.
+function americaSnow(ctx, W, H, seed) {
+  const R = rng(seed + 403);
+  const C = { frame: '#1d2233', line: '#eef1f4', accent: '#b8463e', star: '#eef1f4',
+    sky: '#25335c', sky2: '#3a4a7a', brick: '#8c4436', brick2: '#73362b', brick3: '#a5584a', trim: '#e9e1d2', win: '#f4c76a', win2: '#e39a4a',
+    door: '#3a2a22', snow: '#eef1f4', snow2: '#c9d3e0', lamp: '#2a2a30', glow: '#f7dc8f', tree: '#2f5a3e' };
+  weavePicture(ctx, W, H, 108, Object.values(C), (x, cols, rows) => {
+    pictureBorder(x, cols, rows, C);
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16, ground = fy + fh * 0.82;
+    x.beginPath(); x.rect(fx, fy, fw, fh); x.clip(); // keep the scene inside the border
+    const sky = x.createLinearGradient(0, fy, 0, ground); sky.addColorStop(0, C.sky); sky.addColorStop(1, C.sky2);
+    x.fillStyle = sky; x.fillRect(fx, fy, fw, fh);
+    // row houses: three storeys, cornice, two windows a floor, a door with stoop; snow on the roof line
+    const house = (hx, w, h, col) => {
+      x.fillStyle = col; x.fillRect(hx, ground - h, w, h);
+      x.fillStyle = C.trim; x.fillRect(hx - 1, ground - h - 2, w + 2, 2);           // cornice
+      x.fillStyle = C.snow; x.fillRect(hx - 1, ground - h - 3, w + 2, 1.5);          // snow on it
+      const floors = 3, fhgt = (h - 6) / floors;
+      for (let f = 0; f < floors; f++) {
+        const wy = ground - h + 3 + f * fhgt;
+        for (const wx of [hx + w * 0.2, hx + w * 0.6]) {
+          x.fillStyle = C.trim; x.fillRect(wx - 0.5, wy - 0.5, w * 0.22 + 1, fhgt * 0.6 + 1);
+          x.fillStyle = R() < 0.75 ? (R() < 0.7 ? C.win : C.win2) : C.brick2; x.fillRect(wx, wy, w * 0.22, fhgt * 0.6);
+          x.fillStyle = C.snow; x.fillRect(wx - 0.5, wy + fhgt * 0.6, w * 0.22 + 1, 1); // snow on the sill
+        }
+      }
+      x.fillStyle = C.door; x.fillRect(hx + w * 0.4, ground - 7, w * 0.2, 7);
+      x.fillStyle = C.trim; for (let k = 0; k < 3; k++) x.fillRect(hx + w * 0.34 - k, ground - 2 + k * 0.7, w * 0.32 + 2 * k, 0.8); // stoop
+    };
+    let hx = fx - 2, i = 0;
+    while (hx < fx + fw) { const w = 15 + R() * 5; house(hx, w, fh * (0.48 + R() * 0.12), [C.brick, C.brick3, C.brick2][i++ % 3]); hx += w; }
+    // a small decorated tree
+    const tx = fx + fw * 0.5, ty = ground;
+    x.fillStyle = C.tree; x.beginPath(); x.moveTo(tx, ty - 16); x.lineTo(tx + 6, ty - 2); x.lineTo(tx - 6, ty - 2); x.closePath(); x.fill();
+    for (let k = 0; k < 8; k++) { x.fillStyle = k % 2 ? C.win : C.accent; x.fillRect(tx - 4 + R() * 8, ty - 14 + R() * 11, 1, 1); }
+    // street lamps with a warm glow
+    for (const lx of [fx + fw * 0.2, fx + fw * 0.78]) {
+      x.fillStyle = C.glow; x.globalAlpha = 0.35; x.beginPath(); x.arc(lx, ground - 20, 6, 0, Math.PI * 2); x.fill(); x.globalAlpha = 1;
+      x.fillStyle = C.lamp; x.fillRect(lx - 0.6, ground - 20, 1.4, 20); x.fillRect(lx - 2, ground - 22, 4, 2);
+      x.fillStyle = C.glow; x.fillRect(lx - 1.4, ground - 20.5, 3, 1.4);
+    }
+    // snowy street and falling snow
+    x.fillStyle = C.snow; x.fillRect(fx, ground, fw, fy + fh - ground);
+    x.fillStyle = C.snow2; for (let k = 0; k < 40; k++) x.fillRect(fx + R() * fw, ground + 2 + R() * (fy + fh - ground - 3), 3 + R() * 4, 1);
+    x.fillStyle = C.snow; for (let k = 0; k < 120; k++) x.fillRect(fx + R() * fw, fy + R() * (ground - fy), 1, 1);
+  });
+}
+
 // Buffalo check: red and black squares with a twill weave, wrapped in a cream blanket-stitch edge.
 function americaPlaid(ctx, W, H) {
   const C = { red: '#a3242a', black: '#17121a', mix: '#5b1a20', cream: '#ece1c8' };
@@ -1240,6 +1397,9 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.america === 'hex') americaHex(ctx, W, H);
   else if (P.america === 'lonestar') americaLoneStar(ctx, W, H, seed);
   else if (P.america === 'bison') americaBison(ctx, W, H);
+  else if (P.america === 'nyc') americaNyc(ctx, W, H, seed);
+  else if (P.america === 'miami') americaMiami(ctx, W, H, seed);
+  else if (P.america === 'snow') americaSnow(ctx, W, H, seed);
   else if (P.america === 'canyon') americaCanyon(ctx, W, H, seed);
   else if (P.america === 'liberty') americaLiberty(ctx, W, H);
   else if (P.america === 'eagle') americaEagle(ctx, W, H);
