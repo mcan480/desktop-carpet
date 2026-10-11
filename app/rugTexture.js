@@ -12,6 +12,11 @@ export const STYLES = {
   balkabagi:{ name: 'Balkabağı Tarlası', halloween: 'pumpkin' },
   orumcek:  { name: 'Örümcek Ağı',       halloween: 'web' },
   hayalet:  { name: 'Hayalet Gecesi',    halloween: 'ghost' },
+  // America pack
+  yildizlar:{ name: 'Yıldızlar ve Çizgiler', america: 'flag' },
+  mesa:     { name: 'Çöl Mesası',            america: 'mesa' },
+  yorgan:   { name: 'Yama Yorgan',           america: 'quilt' },
+  ekose:    { name: 'Oduncu Ekose',          america: 'plaid' },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -608,6 +613,175 @@ function halloweenGhost(ctx, W, H, seed) {
   }
 }
 
+// ---------- America pack ----------
+function star5(ctx, x, y, r, rot = -Math.PI / 2) {
+  ctx.beginPath();
+  for (let i = 0; i < 10; i++) {
+    const a = rot + (i * Math.PI) / 5, rr = i % 2 ? r * 0.42 : r;
+    const px = x + Math.cos(a) * rr, py = y + Math.sin(a) * rr;
+    i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+  }
+  ctx.closePath(); ctx.fill();
+}
+
+// A sun-faded flag woven as a rug: 13 stripes, a 50-star canton, a narrow navy binding with a stitched edge.
+function americaFlag(ctx, W, H, seed) {
+  const R = rng(seed + 13);
+  const C = { red: '#9e2b2f', red2: '#8a2428', cream: '#ece0c4', navy: '#20304f', navy2: '#1a2843', star: '#f1e7cf', bind: '#182238' };
+  const u = H / 100, b = 4.2 * u; // binding width
+  ctx.fillStyle = C.bind; ctx.fillRect(0, 0, W, H);
+  const x0 = b, y0 = b, fw = W - 2 * b, fh = H - 2 * b, sh = fh / 13;
+  for (let i = 0; i < 13; i++) {
+    ctx.fillStyle = i % 2 ? C.cream : (i % 4 === 0 ? C.red : C.red2);
+    ctx.fillRect(x0, y0 + i * sh, fw, sh + 0.5);
+  }
+  const cw = fw * 0.4, ch = sh * 7;
+  ctx.fillStyle = C.navy; ctx.fillRect(x0, y0, cw, ch);
+  // faint woven rows in the canton
+  ctx.fillStyle = C.navy2; for (let y = 0; y < ch; y += 0.9 * u) if ((y / (0.9 * u)) % 2 < 1) ctx.fillRect(x0, y0 + y, cw, 0.45 * u);
+  ctx.fillStyle = C.star;
+  for (let row = 0; row < 9; row++) {
+    const n = row % 2 ? 5 : 6;
+    for (let k = 0; k < n; k++) {
+      const sx = x0 + cw * ((row % 2 ? 2 : 1) + k * 2) / 12, sy = y0 + ch * (row + 1) / 10;
+      star5(ctx, sx, sy, ch * 0.042, -Math.PI / 2 + (R() - 0.5) * 0.08);
+    }
+  }
+  // sun fading toward one corner, the way an old rug in a window gets
+  const fade = ctx.createLinearGradient(0, 0, W, H);
+  fade.addColorStop(0, 'rgba(255,240,215,0)'); fade.addColorStop(1, 'rgba(255,240,215,.13)');
+  ctx.fillStyle = fade; ctx.fillRect(0, 0, W, H);
+  // stitched edge on the binding
+  ctx.fillStyle = 'rgba(236,224,196,.7)';
+  const step = 2.2 * u;
+  for (let x = b; x < W - b; x += step) { ctx.fillRect(x, b * 0.45, step * 0.55, 0.35 * u); ctx.fillRect(x, H - b * 0.45 - 0.35 * u, step * 0.55, 0.35 * u); }
+  for (let y = b; y < H - b; y += step) { ctx.fillRect(b * 0.45, y, 0.35 * u, step * 0.55); ctx.fillRect(W - b * 0.45 - 0.35 * u, y, 0.35 * u, step * 0.55); }
+}
+
+// Southwestern desert kilim: sand field, stepped diamonds in terracotta, turquoise and black, lightning-zigzag borders.
+function americaMesa(ctx, W, H) {
+  const C = { sand: '#d8c09a', sand2: '#cdb48b', terra: '#b4532f', rust: '#8e3b22', turq: '#3f9a92', black: '#1d1714', cream: '#f0e5cc', ochre: '#c98f37' };
+  const g = knotGrid(ctx, W, H, 72), { cols, rows, blk } = g;
+  ctx.fillStyle = C.sand; ctx.fillRect(0, 0, W, H);
+  for (let y = 0; y < rows; y++) if (y % 6 === 0) for (let x = 0; x < cols; x++) blk(x, y, C.sand2); // lazy lines
+  // outer bands
+  const band = (k, c) => { for (let x = k; x < cols - k; x++) { blk(x, k, c); blk(x, rows - 1 - k, c); } for (let y = k; y < rows - k; y++) { blk(k, y, c); blk(cols - 1 - k, y, c); } };
+  band(0, C.black); band(1, C.black); band(2, C.terra); band(3, C.terra); band(4, C.cream);
+  // zigzag lightning band between rows 5..9 on top and bottom
+  for (let x = 5; x < cols - 5; x++) {
+    const h = Math.abs(((x % 8) - 4)); // 0..4
+    for (const [y, c] of [[5 + h, C.black], [6 + h, C.turq]]) { if (y <= 9) { blk(x, y, c); blk(x, rows - 1 - y, c); } }
+  }
+  for (let y = 5; y < rows - 5; y++) {
+    const h = Math.abs(((y % 8) - 4));
+    for (const [x, c] of [[5 + h, C.black], [6 + h, C.turq]]) { if (x <= 9) { blk(x, y, c); blk(cols - 1 - x, y, c); } }
+  }
+  band(10, C.rust);
+  // stepped diamond with outline, filled in rings
+  const diamond = (cx, cy, n, ring) => {
+    for (let dy = -n; dy <= n; dy++) {
+      const w = n - Math.abs(dy);
+      for (let dx = -w; dx <= w; dx++) {
+        const d = Math.abs(dx) + Math.abs(dy);
+        blk(cx + dx, cy + dy, d >= n - 1 ? C.black : ring[Math.floor((n - d) / 2) % ring.length]);
+      }
+    }
+  };
+  const ix = 12, iy = 12, iw = cols - 2 * ix, ih = rows - 2 * iy, midY = iy + Math.floor(ih / 2);
+  const n = Math.floor(ih / 2) - 3;
+  diamond(Math.floor(cols / 2), midY, n, [C.cream, C.terra, C.turq, C.ochre, C.black, C.cream]);
+  // side diamonds, fully inside the field, and small ones above and below the arrows
+  const side = Math.floor(n * 0.55), cxm = Math.floor(cols / 2);
+  const leftC = ix + side + 3, rightC = cols - ix - side - 4;
+  for (const cx of [leftC, rightC]) diamond(cx, midY, side, [C.turq, C.cream, C.terra]);
+  // arrows centred in the gaps between the side diamonds and the big one, pointing outward
+  for (const [a, bnd, dir] of [[leftC + side, cxm - n, -1], [rightC - side, cxm + n, 1]]) {
+    const ax = Math.round((a + bnd) / 2), half = Math.max(2, Math.floor(Math.abs(bnd - a) / 2) - 3);
+    for (let k = -half; k <= half; k++) blk(ax + k, midY, C.black);
+    for (let k = 1; k <= 2; k++) { blk(ax + dir * (half - k), midY - k, C.black); blk(ax + dir * (half - k), midY + k, C.black); }
+    for (let k = 0; k < 2; k++) { blk(ax - dir * (half - k), midY - 1, C.terra); blk(ax - dir * (half - k), midY + 1, C.terra); }
+    for (const oy of [-Math.round(ih * 0.3), Math.round(ih * 0.3)]) diamond(ax, midY + oy, 3, [C.terra, C.cream]);
+  }
+}
+
+// Patchwork quilt made into a rug: log-cabin blocks in calico colours, a sawtooth border, running-stitch quilting.
+function americaQuilt(ctx, W, H, seed) {
+  const R = rng(seed + 51);
+  const fabrics = ['#9b2f2f', '#c4683a', '#d9a940', '#2f4b6e', '#5d7f62', '#7a4b6e', '#e9dcc0', '#b9c7cf'];
+  const C = { border: '#24365a', saw1: '#e9dcc0', saw2: '#9b2f2f', center: '#b8312f', stitch: 'rgba(250,240,220,.55)' };
+  const u = H / 100, bw = 9 * u;
+  ctx.fillStyle = C.border; ctx.fillRect(0, 0, W, H);
+  // sawtooth triangles on the border
+  const tri = 4.5 * u;
+  const sawRow = (x0, y0, len, horiz, flip) => {
+    for (let s = 0; s * tri < len - 0.1; s++) {
+      ctx.fillStyle = s % 2 ? C.saw1 : C.saw2;
+      ctx.beginPath();
+      if (horiz) { const x = x0 + s * tri; ctx.moveTo(x, y0); ctx.lineTo(x + tri, y0); ctx.lineTo(x + tri / 2, y0 + flip * tri * 0.8); }
+      else { const y = y0 + s * tri; ctx.moveTo(x0, y); ctx.lineTo(x0, y + tri); ctx.lineTo(x0 + flip * tri * 0.8, y + tri / 2); }
+      ctx.closePath(); ctx.fill();
+    }
+  };
+  sawRow(bw * 0.25, bw * 0.3, W - bw * 0.5, true, 1); sawRow(bw * 0.25, H - bw * 0.3, W - bw * 0.5, true, -1);
+  sawRow(bw * 0.3, bw * 0.25 + tri, H - bw * 0.5 - 2 * tri, false, 1); sawRow(W - bw * 0.3, bw * 0.25 + tri, H - bw * 0.5 - 2 * tri, false, -1);
+  // log cabin blocks
+  const fx = bw, fy = bw, fw = W - 2 * bw, fh = H - 2 * bw;
+  const bc = 6, br = 4, bwid = fw / bc, bhei = fh / br;
+  const calico = (x, y, w, h, col) => {
+    ctx.fillStyle = col; ctx.fillRect(x, y, w + 0.5, h + 0.5);
+    ctx.fillStyle = 'rgba(255,255,255,.18)'; // tiny print
+    for (let yy = y + 0.6 * u; yy < y + h; yy += 1.3 * u) for (let xx = x + 0.6 * u + ((yy / u) % 2) * 0.6 * u; xx < x + w; xx += 1.3 * u) { ctx.beginPath(); ctx.arc(xx, yy, 0.18 * u, 0, Math.PI * 2); ctx.fill(); }
+  };
+  for (let j = 0; j < br; j++) for (let i = 0; i < bc; i++) {
+    const x = fx + i * bwid, y = fy + j * bhei;
+    const light = [fabrics[6], fabrics[7], fabrics[2]], dark = [fabrics[0], fabrics[3], fabrics[4], fabrics[5], fabrics[1]];
+    const steps = 4, sx = bwid / (2 * steps + 1), sy = bhei / (2 * steps + 1);
+    // logs spiral outward: light on two sides, dark on the other two (classic log cabin light/dark split)
+    for (let k = steps; k >= 1; k--) {
+      const pick = (arr) => arr[Math.floor(R() * arr.length)];
+      const L = pick(light), D = pick(dark);
+      const ox = x + (steps - k) * sx, oy = y + (steps - k) * sy, ow = bwid - 2 * (steps - k) * sx, oh = bhei - 2 * (steps - k) * sy;
+      calico(ox, oy, ow, sy, (i + j) % 2 ? L : D);            // top
+      calico(ox, oy + oh - sy, ow, sy, (i + j) % 2 ? D : L);  // bottom
+      calico(ox, oy + sy, sx, oh - 2 * sy, (i + j) % 2 ? L : D);       // left
+      calico(ox + ow - sx, oy + sy, sx, oh - 2 * sy, (i + j) % 2 ? D : L); // right
+    }
+    ctx.fillStyle = C.center; ctx.fillRect(x + steps * sx, y + steps * sy, sx + 0.5, sy + 0.5); // red hearth in the middle
+  }
+  // running-stitch quilting along the block seams
+  ctx.strokeStyle = C.stitch; ctx.lineWidth = 0.32 * u; ctx.setLineDash([1.1 * u, 0.9 * u]);
+  for (let i = 0; i <= bc; i++) { ctx.beginPath(); ctx.moveTo(fx + i * bwid, fy); ctx.lineTo(fx + i * bwid, fy + fh); ctx.stroke(); }
+  for (let j = 0; j <= br; j++) { ctx.beginPath(); ctx.moveTo(fx, fy + j * bhei); ctx.lineTo(fx + fw, fy + j * bhei); ctx.stroke(); }
+  ctx.setLineDash([]);
+}
+
+// Buffalo check: red and black squares with a twill weave, wrapped in a cream blanket-stitch edge.
+function americaPlaid(ctx, W, H) {
+  const C = { red: '#a3242a', black: '#17121a', mix: '#5b1a20', cream: '#ece1c8' };
+  const u = H / 100, sq = 10 * u, edge = 3 * u;
+  ctx.fillStyle = C.red; ctx.fillRect(0, 0, W, H);
+  for (let y = 0; y < H; y += sq) for (let x = 0; x < W; x += sq) {
+    const a = Math.floor(x / sq) % 2, b = Math.floor(y / sq) % 2;
+    ctx.fillStyle = a && b ? C.black : (a || b ? C.mix : C.red);
+    ctx.fillRect(x, y, sq + 0.5, sq + 0.5);
+  }
+  // twill: fine diagonal threads over everything
+  ctx.strokeStyle = 'rgba(0,0,0,.18)'; ctx.lineWidth = 0.28 * u;
+  for (let d = -H; d < W; d += 0.9 * u) { ctx.beginPath(); ctx.moveTo(d, H); ctx.lineTo(d + H, 0); ctx.stroke(); }
+  ctx.strokeStyle = 'rgba(255,230,220,.07)';
+  for (let d = -H + 0.45 * u; d < W; d += 0.9 * u) { ctx.beginPath(); ctx.moveTo(d, H); ctx.lineTo(d + H, 0); ctx.stroke(); }
+  // blanket-stitch edge
+  ctx.fillStyle = C.black; frameRect(ctx, 0, 0, W, H, edge);
+  ctx.strokeStyle = C.cream; ctx.lineWidth = 0.55 * u;
+  const st = 2.4 * u;
+  ctx.beginPath();
+  for (let x = edge; x <= W - edge; x += st) { ctx.moveTo(x, edge * 0.35); ctx.lineTo(x, edge + 1.6 * u); ctx.moveTo(x, H - edge * 0.35); ctx.lineTo(x, H - edge - 1.6 * u); }
+  for (let y = edge; y <= H - edge; y += st) { ctx.moveTo(edge * 0.35, y); ctx.lineTo(edge + 1.6 * u, y); ctx.moveTo(W - edge * 0.35, y); ctx.lineTo(W - edge - 1.6 * u, y); }
+  ctx.stroke();
+  ctx.lineWidth = 0.45 * u;
+  ctx.strokeRect(edge * 0.35, edge * 0.35, W - edge * 0.7, H - edge * 0.7);
+}
+
 function addWeave(ctx, W, H, seed, strength = 26) {
   const R = rng(seed + 99);
   const img = ctx.getImageData(0, 0, W, H);
@@ -633,7 +807,11 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   const c = document.createElement('canvas');
   c.width = W; c.height = H;
   const ctx = c.getContext('2d');
-  if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
+  if (P.america === 'flag') americaFlag(ctx, W, H, seed);
+  else if (P.america === 'mesa') americaMesa(ctx, W, H);
+  else if (P.america === 'quilt') americaQuilt(ctx, W, H, seed);
+  else if (P.america === 'plaid') americaPlaid(ctx, W, H);
+  else if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
   else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
