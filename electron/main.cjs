@@ -10,7 +10,7 @@ if (process.platform === 'win32') app.setAppUserModelId('com.desktopcarpet.app')
 if (!app.requestSingleInstanceLock()) { app.quit(); process.exit(0); }
 
 const SITE = 'https://desktopcarpet.com';
-const URLS = { home: `${SITE}/`, pricing: `${SITE}/#pricing` };
+const URLS = { home: `${SITE}/`, pricing: `${SITE}/#pricing`, mcan2: 'https://mcan2.com/' };
 let AUTOSTART = process.argv.includes('--autostart');
 const STATE_FILE = () => path.join(app.getPath('userData'), 'carpet-state.json');
 const SETTINGS_FILE = () => path.join(app.getPath('userData'), 'settings.json');
@@ -492,7 +492,16 @@ function buildMenu() {
       { label: t('center'), click: () => rugCommand('center') },
       userHidden ? { label: t('show'), click: () => rugCommand('show') } : { label: t('hide'), click: () => rugCommand('hide') },
       { type: 'separator' },
-      { label: t('pattern'), submenu: radio('style', ['tabriz', 'klasik', 'lacivert', 'zumrut', 'kilim', 'gorunmez', 'balkabagi', 'orumcek', 'hayalet', 'yildizlar', 'mesa', 'yorgan', 'ekose', 'kanyon', 'ambar', 'yalniz', 'bizon', 'kartpostal', 'millipark', 'beyzbol', 'basketbol', 'diner', 'route66', 'akcaagac', 'yaprak', 'kayalik', 'atlantik', 'geyik', 'kazlar', 'dalgic', 'kanadakart', 'hokey', 'kuzeyisik', 'fener', 'kutupayisi', 'sarape', 'greca', 'cini', 'agave', 'kafatasi', 'monark', 'jaguar', 'meksikakart', 'piramit', 'sokak', 'trajinera', 'tulum']) },
+      { label: t('pattern'), submenu: [
+        ...radio('style', ['tabriz', 'klasik', 'lacivert', 'zumrut', 'kilim', 'gorunmez']),
+        { type: 'separator' },
+        { label: t('halloween'), submenu: radio('style', ['balkabagi', 'orumcek', 'hayalet']) },
+        { label: t('americas'), submenu: [
+          { label: t('usa'), submenu: radio('style', ['yildizlar', 'mesa', 'yorgan', 'ekose', 'kanyon', 'ambar', 'yalniz', 'bizon', 'kartpostal', 'millipark', 'beyzbol', 'basketbol', 'diner', 'route66']) },
+          { label: t('canada'), submenu: radio('style', ['akcaagac', 'yaprak', 'kayalik', 'atlantik', 'geyik', 'kazlar', 'dalgic', 'kanadakart', 'hokey', 'kuzeyisik', 'fener', 'kutupayisi']) },
+          { label: t('mexico'), submenu: radio('style', ['sarape', 'greca', 'cini', 'agave', 'kafatasi', 'monark', 'jaguar', 'meksikakart', 'piramit', 'sokak', 'trajinera', 'tulum']) },
+        ] },
+      ] },
       { label: t('size'), submenu: radio('size', ['kucuk', 'orta', 'buyuk']) },
       { label: t('weight'), submenu: radio('weight', ['hafif', 'normal', 'agir']) },
     );

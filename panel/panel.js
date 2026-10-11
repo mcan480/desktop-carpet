@@ -85,10 +85,11 @@
     $('#controls').classList.toggle('locked', !unlocked);
     $('#lockNote').hidden = unlocked || L.state === 'checking';
     const r = st.rug || {};
-    $$('#swatches button').forEach((b) => {
+    $$('#swatches button[data-style]').forEach((b) => {
       b.setAttribute('aria-checked', String(b.dataset.style === r.style));
       b.disabled = expiredPaid && b.dataset.style !== 'klasik';
     });
+    if (r.style !== shownStyle) { shownStyle = r.style; const home = $(`.country [data-style="${r.style}"]`)?.closest('.country'); if (home) showCountry(home.dataset.country); }
     $('#patternNote').hidden = !expiredPaid;
     $$('#sizeSeg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === r.size)));
     $$('#weightSeg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === r.weight)));
@@ -150,7 +151,14 @@
   $('#limitBack').addEventListener('click', () => dc.forget());
 
   // ---- rug controls ----
-  $$('#swatches button').forEach((b) => b.addEventListener('click', () => dc.rug('style', b.dataset.style)));
+  $$('#swatches button[data-style]').forEach((b) => b.addEventListener('click', () => dc.rug('style', b.dataset.style)));
+  // Americas pack: one country at a time. Opens on the country of the rug in use.
+  let shownStyle = null;
+  function showCountry(c) {
+    $$('.country-tabs [data-country]').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.country === c)));
+    $$('.country[data-country]').forEach((p) => { p.hidden = p.dataset.country !== c; });
+  }
+  $$('.country-tabs [data-country]').forEach((t) => t.addEventListener('click', () => showCountry(t.dataset.country)));
   $$('#sizeSeg button').forEach((b) => b.addEventListener('click', () => dc.rug('size', b.dataset.v)));
   $$('#weightSeg button').forEach((b) => b.addEventListener('click', () => dc.rug('weight', b.dataset.v)));
   $('#tShow').addEventListener('change', (e) => dc.rug(e.target.checked ? 'show' : 'hide'));
