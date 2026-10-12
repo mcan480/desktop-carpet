@@ -197,6 +197,14 @@ h2{margin:0 0 8px;font:600 .84rem/1.3 var(--f-body);color:var(--saffron)}
 .upd{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--moss);color:var(--ivory);padding:10px 12px;border-radius:5px;
   font-weight:600;font-size:.88rem;outline:1.5px dashed rgba(242,230,204,.5);outline-offset:-5px;box-shadow:0 10px 20px -14px #000}
 .upd .btn{--b:var(--ink);font-size:.78rem;padding:.7em .95em;box-shadow:none;flex:none}
+.upd #updText{flex:1}
+/* ready: the message on top, the restart button under it at full width */
+.upd:not(.getting){flex-direction:column;align-items:stretch;gap:9px}
+.upd:not(.getting) .btn{width:100%}
+/* downloading: the bar itself fills up like a progress bar */
+.upd.getting{background:linear-gradient(90deg,var(--moss) var(--p),#1f3a20 var(--p));font-weight:500}
+.upd-pct{font:600 .78rem/1 var(--f-mono);flex:none}
+.upd-pct:empty{display:none}
 
 /* Language picker (footer, always usable) */
 .langrow{display:flex;align-items:center;gap:6px;color:var(--ink)}

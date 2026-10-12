@@ -1,5 +1,5 @@
 // Desktop Carpet: a cloth rug that lies on the Windows or macOS desktop, unlocked by a desktopcarpet.com license.
-const { app, BrowserWindow, ipcMain, Menu, Tray, nativeImage, screen, shell, powerMonitor, desktopCapturer } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, Tray, Notification, nativeImage, screen, shell, powerMonitor, desktopCapturer } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
@@ -436,6 +436,7 @@ async function recheck() {
 
 // ---------- control panel window ----------
 function openPanel() {
+  checkForUpdate({ minGap: UPDATE_MIN_GAP });   // opening the app is when people expect it to be up to date
   if (panel && !panel.isDestroyed()) {
     if (panel.isMinimized()) panel.restore();
     if (IS_MAC) app.dock?.show();
@@ -468,7 +469,7 @@ function panelState() {
     version: app.getVersion(),
     license,
     rug: { ...rugState, hidden: userHidden },
-    update: { state: update.state, version: update.version },
+    update: { state: update.state, version: update.version, progress: update.progress || 0 },
     settings: { onTop: settings.onTop, langSetting: settings.lang || 'auto', openAtLogin: app.getLoginItemSettings(IS_MAC ? undefined : { args: ['--autostart'] }).openAtLogin },
   };
 }
@@ -524,9 +525,16 @@ function refreshMenus() {
 // ---------- automatic updates (GitHub Releases) ----------
 // The newest release on github.com/mcan480/desktop-carpet with a "DesktopCarpet-Setup.exe" asset is downloaded in the
 // background, checked against its size and SHA-256, then installed silently when the user clicks "Restart and update".
+// When it is checked: as soon as the app starts (retrying while the network comes up after a login start), every time
+// the app is opened again or the panel is opened (at most every few minutes), after the computer wakes, and every 6 hours.
 const UPDATE_API = 'https://api.github.com/repos/mcan480/desktop-carpet/releases/latest';
 const UPDATE_ASSET = IS_MAC ? 'DesktopCarpet-Mac.zip' : 'DesktopCarpet-Setup.exe';
+const UPDATE_MIN_GAP = 5 * 60 * 1000;   // opening the panel again within this time doesn't ask GitHub again
 let update = { state: 'idle' };   // idle | downloading | ready
+let updateRun = null;             // the check in progress, so two triggers never run side by side
+let lastUpdateCheck = 0;          // when GitHub last answered
+let updateNotified = '';          // version the user was already told about outside the panel
+let updateNote = null;            // keeps the macOS notification alive so its click still arrives
 
 function newer(a, b) {
   const pa = String(a).split('.').map((n) => parseInt(n, 10) || 0), pb = String(b).split('.').map((n) => parseInt(n, 10) || 0);
@@ -534,30 +542,68 @@ function newer(a, b) {
   return false;
 }
 
-async function checkForUpdate() {
-  if (!app.isPackaged || update.state === 'downloading') return;
+// Resolves to true when GitHub was reached and the app is up to date or the update is ready, false when it should be retried.
+function checkForUpdate({ minGap = 0 } = {}) {
+  if (!app.isPackaged) return Promise.resolve(true);
+  if (updateRun) return updateRun;
+  if (minGap && Date.now() - lastUpdateCheck < minGap) return Promise.resolve(true);
+  updateRun = runUpdateCheck().finally(() => { updateRun = null; });
+  return updateRun;
+}
+
+// At launch (also when Windows/macOS starts the app at login, when the network may not be up yet):
+// check right away, and if GitHub can't be reached try again after 30 s, 2 min and 10 min.
+function checkForUpdateAtLaunch(attempt = 0) {
+  const waits = [30 * 1000, 2 * 60 * 1000, 10 * 60 * 1000];
+  checkForUpdate().then((ok) => { if (!ok && attempt < waits.length) setTimeout(() => checkForUpdateAtLaunch(attempt + 1), waits[attempt]); });
+}
+
+function sha256File(file) {
+  return new Promise((ok, bad) => {
+    const hash = require('crypto').createHash('sha256');
+    fs.createReadStream(file).on('data', (c) => hash.update(c)).on('error', bad).on('end', () => ok('sha256:' + hash.digest('hex')));
+  });
+}
+
+async function runUpdateCheck() {
+  let ok = false;
   try {
     const r = await fetch(UPDATE_API, { headers: { accept: 'application/vnd.github+json', 'user-agent': 'DesktopCarpet/' + app.getVersion() }, signal: AbortSignal.timeout(15000) });
-    if (!r.ok) return;
+    if (!r.ok) throw new Error('github ' + r.status);
+    lastUpdateCheck = Date.now();
     const rel = await r.json();
     const version = String(rel.tag_name || '').replace(/^v/i, '');
-    if (rel.draft || rel.prerelease || !newer(version, app.getVersion())) return;
-    if (update.state === 'ready' && update.version === version) return;
+    ok = true;
+    if (rel.draft || rel.prerelease || !newer(version, app.getVersion())) return ok;
+    if (update.state === 'ready' && update.version === version && fs.existsSync(update.file)) return ok;
     const asset = (rel.assets || []).find((a) => a.name === UPDATE_ASSET);
-    if (!asset) return;
-
-    update = { state: 'downloading', version };
-    const file = path.join(app.getPath('temp'), IS_MAC ? `DesktopCarpet-Mac-${version}.zip` : `DesktopCarpet-Setup-${version}.exe`);
-    const res = await fetch(asset.browser_download_url, { headers: { 'user-agent': 'DesktopCarpet/' + app.getVersion() } });
-    if (!res.ok || !res.body) throw new Error('download ' + res.status);
-    const hash = require('crypto').createHash('sha256');
-    const out = fs.createWriteStream(file);
-    let size = 0;
-    for await (const chunk of res.body) { hash.update(chunk); size += chunk.length; if (!out.write(chunk)) await new Promise((ok) => out.once('drain', ok)); }
-    await new Promise((ok, bad) => out.end((e) => (e ? bad(e) : ok())));
-    const digest = 'sha256:' + hash.digest('hex');
     // GitHub's SHA-256 is required: an asset without one is never installed.
-    if (size !== asset.size || !asset.digest || asset.digest !== digest) { fs.rmSync(file, { force: true }); throw new Error('bad download'); }
+    if (!asset || !asset.digest) return ok;
+    ok = false;
+
+    const file = path.join(app.getPath('temp'), IS_MAC ? `DesktopCarpet-Mac-${version}.zip` : `DesktopCarpet-Setup-${version}.exe`);
+    // Downloaded on an earlier run but not installed yet: use it again if it is still exactly the released file.
+    let have = false;
+    try { have = fs.statSync(file).size === asset.size && (await sha256File(file)) === asset.digest; } catch {}
+    if (!have) {
+      update = { state: 'downloading', version, progress: 0 };
+      broadcast();
+      // (a stalled download is given up after 20 minutes so it can't block later checks)
+      const res = await fetch(asset.browser_download_url, { headers: { 'user-agent': 'DesktopCarpet/' + app.getVersion() }, signal: AbortSignal.timeout(20 * 60 * 1000) });
+      if (!res.ok || !res.body) throw new Error('download ' + res.status);
+      const hash = require('crypto').createHash('sha256');
+      const out = fs.createWriteStream(file);
+      let size = 0;
+      for await (const chunk of res.body) {
+        hash.update(chunk); size += chunk.length;
+        if (!out.write(chunk)) await new Promise((done) => out.once('drain', done));
+        const progress = Math.min(99, Math.floor((size / (asset.size || 1)) * 100));
+        if (progress !== update.progress) { update.progress = progress; broadcast(); }
+      }
+      await new Promise((done, bad) => out.end((e) => (e ? bad(e) : done())));
+      const digest = 'sha256:' + hash.digest('hex');
+      if (size !== asset.size || asset.digest !== digest) { fs.rmSync(file, { force: true }); throw new Error('bad download'); }
+    }
     // Once Desktop Carpet itself is code-signed, an update must carry a valid signature from the same publisher,
     // so even a release uploaded by someone else (e.g. a stolen GitHub account) is refused.
     const mine = await signerOf(process.execPath);
@@ -566,20 +612,42 @@ async function checkForUpdate() {
       // Unpack the new Desktop Carpet.app next to the zip; it replaces the running one on restart.
       const dir = path.join(app.getPath('temp'), `DesktopCarpet-${version}`);
       fs.rmSync(dir, { recursive: true, force: true });
-      await new Promise((ok, bad) => require('child_process').execFile('/usr/bin/ditto', ['-x', '-k', file, dir], (e) => (e ? bad(e) : ok())));
-      fs.rmSync(file, { force: true });
+      await new Promise((done, bad) => require('child_process').execFile('/usr/bin/ditto', ['-x', '-k', file, dir], (e) => (e ? bad(e) : done())));
+      // (the zip stays in the temp folder, so a later start can unpack it again without downloading)
       const appDir = path.join(dir, 'Desktop Carpet.app');
       if (!fs.existsSync(path.join(appDir, 'Contents', 'MacOS'))) throw new Error('bad mac update');
       update = { state: 'ready', version, file: appDir };
     } else {
       update = { state: 'ready', version, file };
     }
+    ok = true;
+    notifyUpdateReady();
   } catch (e) {
     console.error('update check failed:', e.message);
     if (update.state === 'downloading') update = { state: 'idle' };
   }
   refreshMenus();
   broadcast();
+  return ok;
+}
+
+// The panel shows a "Restart and update" bar; when the panel isn't on screen (e.g. the app started with the computer)
+// the user gets one notification per version instead. Clicking it restarts into the new version.
+function notifyUpdateReady() {
+  if (update.state !== 'ready' || updateNotified === update.version) return;
+  if (panel && !panel.isDestroyed() && panel.isVisible() && !panel.isMinimized()) return;
+  updateNotified = update.version;
+  const S = I18N.strings(LANG());
+  try {
+    if (process.platform === 'win32' && tray) {
+      // A tray balloon shows as a normal Windows notification and needs no Start-menu registration.
+      tray.displayBalloon({ title: S.updReady(update.version), content: S.updClick, iconType: 'info' });
+    } else if (Notification.isSupported()) {
+      updateNote = new Notification({ title: S.updReady(update.version), body: S.updClick, silent: true });
+      updateNote.on('click', installUpdate);
+      updateNote.show();
+    }
+  } catch (e) { console.error('update notification failed:', e.message); }
 }
 
 // Subject of a valid Authenticode signature on a file, or '' when it is unsigned or the signature is bad.
@@ -631,12 +699,14 @@ app.whenReady().then(() => {
   tray = new Tray(path.join(__dirname, process.platform === 'win32' ? 'tray.ico' : IS_MAC ? 'trayTemplate.png' : 'tray.png'));
   tray.setToolTip(t('tip'));
   tray.on('click', openPanel);
+  tray.on('balloon-click', installUpdate);   // the "update ready" notification on Windows
   refreshMenus();
 
   if (!AUTOSTART) openPanel();
   initLicense();
-  setTimeout(checkForUpdate, 20 * 1000);
-  setInterval(checkForUpdate, 6 * 3600 * 1000);
+  checkForUpdateAtLaunch();
+  setInterval(() => checkForUpdate(), 6 * 3600 * 1000);
+  powerMonitor.on('resume', () => setTimeout(() => checkForUpdate({ minGap: UPDATE_MIN_GAP }), 10 * 1000));
 
   screen.on('display-metrics-changed', fitToScreen);
   screen.on('display-added', fitToScreen);
@@ -751,6 +821,9 @@ async function runSmoke() {
   const shot = async (w, name) => { if (w && !w.isDestroyed()) fs.writeFileSync(path.join(out, name), (await w.webContents.capturePage()).toPNG()); };
   if (process.env.DC_LANG) { settings.lang = process.env.DC_LANG; refreshMenus(); }
   await wait(6000);
+  update = { state: 'downloading', version: '1.0.2', progress: 42 }; broadcast();
+  await wait(400);
+  await shot(panel, 'panel-updating.png');
   update = { state: 'ready', version: '1.0.2', file: 'none' }; broadcast();
   await wait(500);
   console.log('SMOKE license', JSON.stringify(license), 'rugVisible', win.isVisible(), 'lang', LANG());

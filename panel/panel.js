@@ -35,11 +35,22 @@
     sel.value = st?.settings?.langSetting || 'auto';
   }
 
+  function pct(n) {
+    try { return new Intl.NumberFormat((I18N.LANGS[lang] || I18N.LANGS.en).locale, { style: 'percent' }).format(n / 100); } catch { return n + '%'; }
+  }
+
   function render() {
     if (!st) return;
-    const U = st.update || {};
-    $('#updBar').hidden = U.state !== 'ready';
-    if (U.state === 'ready') $('#updText').textContent = T.updReady(U.version);
+    // Update bar: the download found at launch shows its progress, then turns into "Restart and update".
+    const U = st.update || {}, getting = U.state === 'downloading', ready = U.state === 'ready';
+    const bar = $('#updBar');
+    bar.hidden = !(getting || ready);
+    bar.classList.toggle('getting', getting);
+    bar.style.setProperty('--p', `${getting ? U.progress || 0 : 100}%`);
+    const updText = ready ? T.updReady(U.version) : getting ? T.updGetting(U.version) : '';
+    if ($('#updText').textContent !== updText) $('#updText').textContent = updText;
+    $('#updPct').textContent = getting ? pct(U.progress || 0) : '';
+    $('#updBtn').hidden = !ready;
     if (document.activeElement !== $('#langSel')) $('#langSel').value = st.settings?.langSetting || 'auto';
     const L = st.license || { state: 'checking' };
     const view = { active: 'active', offline: 'active', expired: 'expired', device_limit: 'device_limit', error: 'error', checking: 'checking' }[L.state] || 'none';
