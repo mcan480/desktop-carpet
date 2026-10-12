@@ -181,7 +181,7 @@
     $$('.coll[data-coll]').forEach((p) => { p.hidden = p.dataset.coll !== c; });
   }
   $$('.shelves [data-coll]').forEach((t) => t.addEventListener('click', () => { showColl(t.dataset.coll); $('.gallery').scrollTop = 0; }));
-  // Showrooms (Persia, Türkiye): the rug in use there (or the last one picked) hangs large, with the town it comes
+  // Showrooms (Persia, Türkiye, East Asia, Mediterranean): the rug in use there (or the last one picked) hangs large, with the town it comes
   // from; pointing at another one previews it.
   const rooms = $$('.showroom').map((el) => {
     const btns = [...el.querySelectorAll('[data-style]')], img = el.querySelector('.showcase-rug img');
@@ -211,7 +211,7 @@
   const featured = $('.shelves .shelf-featured')?.dataset.coll;
   let featuredSeen = true;
   try { featuredSeen = localStorage.getItem('dc-featured') === featured; } catch {}
-  // Packs with countries (Americas, East Asia): one country at a time, each pack keeping its own choice.
+  // Packs with countries (Americas, East Asia, Mediterranean): one country at a time, each pack keeping its own choice.
   function showCountry(c) {
     const scope = $(`.country-tabs [data-country="${c}"]`)?.closest('.coll');
     if (!scope) return;
