@@ -470,10 +470,9 @@ function frame(now) {
 
   if (!grab && moved < 0.02) still++; else still = 0;
   if (still > 45 && checkTangle) {
-    // Let go and it settled as a heap (twisted round and round), or passing through itself somewhere (a real rug
-    // can't): lay it back out flat.
+    // Let go and it settled as a heap (twisted round and round): lay it back out flat.
     checkTangle = false;
-    if (cloth.maxHeight() > cloth.spacing * 4.5 || cloth.crossesItself()) { flatten(); requestAnimationFrame(frame); return; }
+    if (cloth.maxHeight() > cloth.collideDist * 5) { flatten(); requestAnimationFrame(frame); return; }
   }
   if (still > 45) {
     awake = false;
@@ -544,8 +543,8 @@ if (!api) window.__dcCommand = command; // plain-browser preview: lets a test pa
   state.hidden = false; // opening the app always shows the rug
   const sameScreen = saved?.screen && saved.screen[0] === W && saved.screen[1] === H;
   buildRug({ keepPose: false, saved: sameScreen && saved.pos ? Float32Array.from(saved.pos) : null });
-  // no saved pose, or one where the rug passes through itself (an older version could leave it like that): lay it flat
-  if (!saved?.pos || cloth.crossesItself()) flatten();
+  // no saved pose, or one left crumpled up or broken (1.16.2 could leave a rug like that): lay it flat
+  if (!saved?.pos || cloth.pos.some((v) => !Number.isFinite(v)) || cloth.maxHeight() > cloth.collideDist * 5) flatten();
   applyHidden();
   ensureOnScreen();
   api?.reportState({ style: state.style, size: state.size, weight: state.weight });
