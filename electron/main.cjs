@@ -13,6 +13,7 @@ const SITE = 'https://desktopcarpet.com';
 const URLS = { home: `${SITE}/`, pricing: `${SITE}/#pricing`, contact: `${SITE}/contact.html?topic=app`, mcan2: 'https://mcan2.com/' };
 let AUTOSTART = process.argv.includes('--autostart');
 const JUST_UPDATED = process.argv.includes('--dc-updated');   // restarted by "Restart and update"
+let showUpdated = false;   // this is the first start of a newer version: say so
 const STATE_FILE = () => path.join(app.getPath('userData'), 'carpet-state.json');
 const SETTINGS_FILE = () => path.join(app.getPath('userData'), 'settings.json');
 
@@ -171,7 +172,7 @@ function createRugWindow() {
   win.once('ready-to-show', () => {
     rugReady = true; updateRugVisibility();
     global.dcBoot?.ok?.();   // this version starts fine: an app update is kept (electron/boot.cjs)
-    if (JUST_UPDATED) closeSplash(2600);
+    if (showUpdated) closeSplash(2600);
   });
   setInterval(() => { if (!settings.onTop && win.isVisible()) pinToDesktop(); }, 15000);
 
@@ -800,8 +801,8 @@ function showSplash(mode, version) {
   } catch (e) { console.error('splash failed:', e.message); }
 }
 function closeSplash(after = 0) {
+  const w = splash;   // this window, not whichever one is showing by then
   setTimeout(() => {
-    const w = splash;
     if (!w || w.isDestroyed()) return;
     w.webContents.executeJavaScript("document.getElementById('card').classList.add('leaving')").catch(() => {});
     setTimeout(() => { if (!w.isDestroyed()) w.close(); }, 450);
@@ -848,7 +849,10 @@ app.whenReady().then(() => {
     try { const li = app.getLoginItemSettings(); if (li.wasOpenedAtLogin || li.wasOpenedAsHidden) AUTOSTART = true; } catch {}
     if (AUTOSTART) app.dock?.hide();
   }
-  if (JUST_UPDATED) { showSplash('done', app.getVersion()); closeSplash(9000); }
+  // The first start of a newer version (after "Restart and update", or an update that went in by itself) says so.
+  showUpdated = JUST_UPDATED || (!!settings.lastVersion && newer(app.getVersion(), settings.lastVersion));
+  if (settings.lastVersion !== app.getVersion()) { settings.lastVersion = app.getVersion(); writeJson(SETTINGS_FILE(), settings); }
+  if (showUpdated) { showSplash('done', app.getVersion()); closeSplash(9000); }
   createRugWindow();
 
   tray = new Tray(path.join(__dirname, process.platform === 'win32' ? 'tray.ico' : IS_MAC ? 'trayTemplate.png' : 'tray.png'));
