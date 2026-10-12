@@ -193,7 +193,7 @@
         const src = `./thumbs/lg/${k}.webp`;
         if (!img.src.endsWith(src.slice(1))) img.src = src;
         el.querySelector('.showcase-text h3').textContent = b.querySelector('span').textContent;
-        el.querySelector('.showcase-origin span').textContent = T['o_' + k] || '';
+        el.querySelector('.showcase-origin span').textContent = T['o_' + k] || T[b.closest('.country')?.dataset.country] || '';
       },
     };
     btns.forEach((b) => {
@@ -208,15 +208,27 @@
     return room;
   });
   // The featured pack is the wide tab on the shelf.
-  const featured = $('.shelves .shelf-turkiye')?.dataset.coll;
+  const featured = $('.shelves .shelf-featured')?.dataset.coll;
   let featuredSeen = true;
   try { featuredSeen = localStorage.getItem('dc-featured') === featured; } catch {}
-  // Americas pack: one country at a time.
+  // Packs with countries (Americas, East Asia): one country at a time, each pack keeping its own choice.
   function showCountry(c) {
-    $$('.country-tabs [data-country]').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.country === c)));
-    $$('.country[data-country]').forEach((p) => { p.hidden = p.dataset.country !== c; });
+    const scope = $(`.country-tabs [data-country="${c}"]`)?.closest('.coll');
+    if (!scope) return;
+    scope.querySelectorAll('.country-tabs [data-country]').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.country === c)));
+    scope.querySelectorAll('.country[data-country]').forEach((p) => { p.hidden = p.dataset.country !== c; });
   }
-  $$('.country-tabs [data-country]').forEach((t) => t.addEventListener('click', () => showCountry(t.dataset.country)));
+  $$('.country-tabs [data-country]').forEach((t) => t.addEventListener('click', () => {
+    showCountry(t.dataset.country);
+    // in a showroom, the big rug follows the country: the one in use if it's from there, else the country's first
+    const room = rooms.find((r) => r.el.contains(t));
+    const panel = room?.el.querySelector(`.country[data-country="${t.dataset.country}"]`);
+    if (room && panel) {
+      const using = st?.rug?.style;
+      room.pick = panel.querySelector(`[data-style="${using}"]`) ? using : panel.querySelector('[data-style]').dataset.style;
+      room.show(room.pick);
+    }
+  }));
   $$('#sizeSeg button').forEach((b) => b.addEventListener('click', () => dc.rug('size', b.dataset.v)));
   $$('#weightSeg button').forEach((b) => b.addEventListener('click', () => dc.rug('weight', b.dataset.v)));
   $('#tShow').addEventListener('change', (e) => dc.rug(e.target.checked ? 'show' : 'hide'));

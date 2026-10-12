@@ -33,7 +33,7 @@ const LANG = () => (settings.lang && settings.lang !== 'auto' && I18N.LANGS[sett
   : I18N.pick([...(app.getPreferredSystemLanguages?.() || []), app.getLocale()]);
 // Menu keys map onto the panel's strings.
 const MENU_KEYS = { open: 'openApp', show: 'showRug', hide: 'hideRug', locked: 'lockedMenu',
-  tabriz: 's_tabriz', klasik: 's_klasik', lacivert: 's_lacivert', zumrut: 's_zumrut', kilim: 's_kilim', gorunmez: 's_gorunmez', balkabagi: 's_balkabagi', orumcek: 's_orumcek', hayalet: 's_hayalet', yildizlar: 's_yildizlar', mesa: 's_mesa', yorgan: 's_yorgan', ekose: 's_ekose', kanyon: 's_kanyon', ambar: 's_ambar', yalniz: 's_yalniz', bizon: 's_bizon', kartpostal: 's_kartpostal', millipark: 's_millipark', beyzbol: 's_beyzbol', basketbol: 's_basketbol', diner: 's_diner', route66: 's_route66', akcaagac: 's_akcaagac', yaprak: 's_yaprak', kayalik: 's_kayalik', atlantik: 's_atlantik', geyik: 's_geyik', kazlar: 's_kazlar', dalgic: 's_dalgic', kanadakart: 's_kanadakart', hokey: 's_hokey', kuzeyisik: 's_kuzeyisik', fener: 's_fener', kutupayisi: 's_kutupayisi', sarape: 's_sarape', greca: 's_greca', cini: 's_cini', agave: 's_agave', kafatasi: 's_kafatasi', monark: 's_monark', jaguar: 's_jaguar', meksikakart: 's_meksikakart', piramit: 's_piramit', sokak: 's_sokak', trajinera: 's_trajinera', tulum: 's_tulum', heriz: 's_heriz', bahce: 's_bahce', av: 's_av', hayat: 's_hayat', buta: 's_buta', bahtiyari: 's_bahtiyari', gabbe: 's_gabbe', nain: 's_nain', vazo: 's_vazo', herati: 's_herati', kum: 's_kum', turkmen: 's_turkmen', usak: 's_usak', lotto: 's_lotto', bergama: 's_bergama', yagcibedir: 's_yagcibedir', selcuklu: 's_selcuklu', hereke: 's_hereke', iznik: 's_iznik', turkiyekart: 's_turkiyekart', kapadokya: 's_kapadokya', bogaz: 's_bogaz', pamukkale: 's_pamukkale', nazar: 's_nazar',
+  tabriz: 's_tabriz', klasik: 's_klasik', lacivert: 's_lacivert', zumrut: 's_zumrut', kilim: 's_kilim', gorunmez: 's_gorunmez', balkabagi: 's_balkabagi', orumcek: 's_orumcek', hayalet: 's_hayalet', yildizlar: 's_yildizlar', mesa: 's_mesa', yorgan: 's_yorgan', ekose: 's_ekose', kanyon: 's_kanyon', ambar: 's_ambar', yalniz: 's_yalniz', bizon: 's_bizon', kartpostal: 's_kartpostal', millipark: 's_millipark', beyzbol: 's_beyzbol', basketbol: 's_basketbol', diner: 's_diner', route66: 's_route66', akcaagac: 's_akcaagac', yaprak: 's_yaprak', kayalik: 's_kayalik', atlantik: 's_atlantik', geyik: 's_geyik', kazlar: 's_kazlar', dalgic: 's_dalgic', kanadakart: 's_kanadakart', hokey: 's_hokey', kuzeyisik: 's_kuzeyisik', fener: 's_fener', kutupayisi: 's_kutupayisi', sarape: 's_sarape', greca: 's_greca', cini: 's_cini', agave: 's_agave', kafatasi: 's_kafatasi', monark: 's_monark', jaguar: 's_jaguar', meksikakart: 's_meksikakart', piramit: 's_piramit', sokak: 's_sokak', trajinera: 's_trajinera', tulum: 's_tulum', heriz: 's_heriz', bahce: 's_bahce', av: 's_av', hayat: 's_hayat', buta: 's_buta', bahtiyari: 's_bahtiyari', gabbe: 's_gabbe', nain: 's_nain', vazo: 's_vazo', herati: 's_herati', kum: 's_kum', turkmen: 's_turkmen', usak: 's_usak', lotto: 's_lotto', bergama: 's_bergama', yagcibedir: 's_yagcibedir', selcuklu: 's_selcuklu', hereke: 's_hereke', iznik: 's_iznik', turkiyekart: 's_turkiyekart', kapadokya: 's_kapadokya', bogaz: 's_bogaz', pamukkale: 's_pamukkale', nazar: 's_nazar', bojagi: 's_bojagi', saekdong: 's_saekdong', seladon: 's_seladon', dancheong: 's_dancheong', hangeul: 's_hangeul', najeon: 's_najeon', sipjang: 's_sipjang', kaplan: 's_kaplan', hanok: 's_hanok', seul: 's_seul', korekart: 's_korekart', yeondeung: 's_yeondeung', bibimbap: 's_bibimbap', jeju: 's_jeju', seigaiha: 's_seigaiha', asanoha: 's_asanoha', boro: 's_boro', koi: 's_koi', byobu: 's_byobu', shibori: 's_shibori', zen: 's_zen', fuji: 's_fuji', kyoto: 's_kyoto', japonkart: 's_japonkart', buyukdalga: 's_buyukdalga', manekineko: 's_manekineko', torii: 's_torii', sushi: 's_sushi', porselen: 's_porselen', bulut: 's_bulut', artdeco: 's_artdeco', ningxia: 's_ningxia', bambu: 's_bambu', kagitkesim: 's_kagitkesim', imparator: 's_imparator', mahjong: 's_mahjong', panda: 's_panda', seddicin: 's_seddicin', cinkart: 's_cinkart', fenerfest: 's_fenerfest', guilin: 's_guilin', dimsum: 's_dimsum',
   kucuk: 'small', orta: 'medium', buyuk: 'large', hafif: 'light', normal: 'normal', agir: 'heavy' };
 const t = (k) => { if (k === 'tip') return 'Desktop Carpet'; const v = I18N.strings(LANG())[MENU_KEYS[k] || k]; return typeof v === 'string' ? v : k; };
 
@@ -498,10 +498,10 @@ function buildMenu() {
         ...radio('style', ['tabriz', 'klasik', 'lacivert', 'zumrut', 'kilim', 'gorunmez']),
         { type: 'separator' },
         // the newest pack first, marked new
-        { label: `${t('turkiye')} · ${t('newBadge')}`, submenu: [
-          ...radio('style', ['usak', 'lotto', 'bergama', 'yagcibedir', 'selcuklu', 'hereke', 'iznik']),
-          { type: 'separator' },
-          ...radio('style', ['turkiyekart', 'kapadokya', 'bogaz', 'pamukkale', 'nazar']),
+        { label: `${t('eastAsia')} · ${t('newBadge')}`, submenu: [
+          { label: t('korea'), submenu: radio('style', ['bojagi', 'saekdong', 'seladon', 'dancheong', 'hangeul', 'najeon', 'sipjang', 'kaplan', 'hanok', 'seul', 'korekart', 'yeondeung', 'bibimbap', 'jeju']) },
+          { label: t('japan'), submenu: radio('style', ['seigaiha', 'asanoha', 'boro', 'koi', 'byobu', 'shibori', 'zen', 'fuji', 'kyoto', 'japonkart', 'buyukdalga', 'manekineko', 'torii', 'sushi']) },
+          { label: t('china'), submenu: radio('style', ['porselen', 'bulut', 'artdeco', 'ningxia', 'bambu', 'kagitkesim', 'imparator', 'mahjong', 'panda', 'seddicin', 'cinkart', 'fenerfest', 'guilin', 'dimsum']) },
         ] },
         { label: t('halloween'), submenu: radio('style', ['balkabagi', 'orumcek', 'hayalet']) },
         { label: t('americas'), submenu: [
@@ -510,6 +510,11 @@ function buildMenu() {
           { label: t('mexico'), submenu: radio('style', ['sarape', 'greca', 'cini', 'agave', 'kafatasi', 'monark', 'jaguar', 'meksikakart', 'piramit', 'sokak', 'trajinera', 'tulum']) },
         ] },
         { label: t('persia'), submenu: radio('style', ['heriz', 'bahce', 'av', 'hayat', 'buta', 'bahtiyari', 'gabbe', 'nain', 'vazo', 'herati', 'kum', 'turkmen']) },
+        { label: t('turkiye'), submenu: [
+          ...radio('style', ['usak', 'lotto', 'bergama', 'yagcibedir', 'selcuklu', 'hereke', 'iznik']),
+          { type: 'separator' },
+          ...radio('style', ['turkiyekart', 'kapadokya', 'bogaz', 'pamukkale', 'nazar']),
+        ] },
       ] },
       { label: t('size'), submenu: radio('size', ['kucuk', 'orta', 'buyuk']) },
       { label: t('weight'), submenu: radio('weight', ['hafif', 'normal', 'agir']) },
