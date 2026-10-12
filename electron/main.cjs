@@ -12,6 +12,7 @@ if (!app.requestSingleInstanceLock()) { app.quit(); process.exit(0); }
 const SITE = 'https://desktopcarpet.com';
 const URLS = { home: `${SITE}/`, pricing: `${SITE}/#pricing`, contact: `${SITE}/contact.html?topic=app`, mcan2: 'https://mcan2.com/' };
 let AUTOSTART = process.argv.includes('--autostart');
+const JUST_UPDATED = process.argv.includes('--dc-updated');   // restarted by "Restart and update"
 const STATE_FILE = () => path.join(app.getPath('userData'), 'carpet-state.json');
 const SETTINGS_FILE = () => path.join(app.getPath('userData'), 'settings.json');
 
@@ -24,6 +25,12 @@ let rugState = { style: 'tabriz', size: 'orta', weight: 'normal' };
 let settings = { onTop: false, lang: 'auto' };
 let license = { state: 'checking' };
 let lic = null;          // LicenseClient
+
+// koffi's native part ships with the installed app; an app update (electron/boot.cjs) doesn't carry it.
+function requireKoffi() {
+  try { return require('koffi'); } catch (e) { if (!app.isPackaged) throw e; }
+  return require(path.join(process.resourcesPath, 'app.asar', 'node_modules', 'koffi'));
+}
 
 // ---------- strings (shared with the panel) ----------
 const I18N = require('../panel/i18n.js');
@@ -47,7 +54,7 @@ let user32 = null;
 function loadUser32() {
   if (process.platform !== 'win32' || user32) return user32;
   try {
-    const koffi = require('koffi');
+    const koffi = requireKoffi();
     const lib = koffi.load('user32.dll');
     user32 = {
       FindWindowW: lib.func('__stdcall', 'FindWindowW', 'intptr_t', ['str16', 'str16']),
@@ -67,7 +74,7 @@ let mac = null;
 function loadMac() {
   if (!IS_MAC || mac) return mac;
   try {
-    const koffi = require('koffi');
+    const koffi = requireKoffi();
     const objc = koffi.load('/usr/lib/libobjc.A.dylib');
     const cg = koffi.load('/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics');
     const sel = objc.func('sel_registerName', 'uintptr_t', ['str']);
@@ -161,7 +168,11 @@ function createRugWindow() {
   win.setIgnoreMouseEvents(true, { forward: true });
   if (IS_MAC) win.setHiddenInMissionControl?.(true);
   win.loadFile(path.join(__dirname, '..', 'app', 'index.html'));
-  win.once('ready-to-show', () => { rugReady = true; updateRugVisibility(); });
+  win.once('ready-to-show', () => {
+    rugReady = true; updateRugVisibility();
+    global.dcBoot?.ok?.();   // this version starts fine: an app update is kept (electron/boot.cjs)
+    if (JUST_UPDATED) closeSplash(2600);
+  });
   setInterval(() => { if (!settings.onTop && win.isVisible()) pinToDesktop(); }, 15000);
 
   // Poll the cursor and the left mouse button. Windows sometimes stops sending mouse events to a
@@ -263,7 +274,7 @@ async function readWallpaperMac() {
   const m = loadMac();
   let p = null;
   try {
-    const koffi = require('koffi');
+    const koffi = requireKoffi();
     const objc = koffi.load('/usr/lib/libobjc.A.dylib');
     m.getClass ??= objc.func('objc_getClass', 'uintptr_t', ['str']);
     m.sendId1 ??= objc.func('objc_msgSend', 'uintptr_t', ['uintptr_t', 'uintptr_t', 'uintptr_t']);
@@ -470,7 +481,7 @@ function panelState() {
     version: app.getVersion(),
     license,
     rug: { ...rugState, hidden: userHidden },
-    update: { state: update.state, version: update.version, progress: update.progress || 0 },
+    update: { state: installing ? 'installing' : update.state, version: update.version, progress: update.progress || 0, kind: update.kind, got: update.got || 0, total: update.total || 0, platform: process.platform },
     settings: { onTop: settings.onTop, langSetting: settings.lang || 'auto', openAtLogin: app.getLoginItemSettings(IS_MAC ? undefined : { args: ['--autostart'] }).openAtLogin },
   };
 }
@@ -541,18 +552,28 @@ function refreshMenus() {
 }
 
 // ---------- automatic updates (GitHub Releases) ----------
-// The newest release on github.com/mcan480/desktop-carpet with a "DesktopCarpet-Setup.exe" asset is downloaded in the
-// background, checked against its size and SHA-256, then installed silently when the user clicks "Restart and update".
-// When it is checked: as soon as the app starts (retrying while the network comes up after a login start), every time
-// the app is opened again or the panel is opened (at most every few minutes), after the computer wakes, and every 6 hours.
+// The newest release on github.com/mcan480/desktop-carpet is checked: as soon as the app starts (retrying while the
+// network comes up after a login start), every time the app is opened again or the panel is opened (at most every few
+// minutes), after the computer wakes, and every 6 hours.
+// Two kinds of update:
+//  - app update: when the release was built for the same Electron as this installation (see electron/boot.cjs), only
+//    the app itself is downloaded (DesktopCarpet-Patch-<shell>.asar.br, a few MB) into the user's data folder; the
+//    next start runs it. Restarting is all "Restart and update" has to do.
+//  - full update: otherwise the installer (Windows) or the app (Mac, for this processor if there is one) is
+//    downloaded and installed on "Restart and update".
+// Everything downloaded is checked against the size and SHA-256 GitHub reports for it.
 const UPDATE_API = 'https://api.github.com/repos/mcan480/desktop-carpet/releases/latest';
-const UPDATE_ASSET = IS_MAC ? 'DesktopCarpet-Mac.zip' : 'DesktopCarpet-Setup.exe';
 const UPDATE_MIN_GAP = 5 * 60 * 1000;   // opening the panel again within this time doesn't ask GitHub again
-let update = { state: 'idle' };   // idle | downloading | ready
+const ofs = require('original-fs');     // .asar files written and moved as plain files
+const zlib = require('zlib');
+const { Readable, Transform } = require('stream');
+const { pipeline } = require('stream/promises');
+let update = { state: 'idle' };   // idle | downloading | ready  (+ version, kind: 'app' | 'full', got/total bytes, file)
 let updateRun = null;             // the check in progress, so two triggers never run side by side
 let lastUpdateCheck = 0;          // when GitHub last answered
 let updateNotified = '';          // version the user was already told about outside the panel
 let updateNote = null;            // keeps the macOS notification alive so its click still arrives
+let installing = false;
 
 function newer(a, b) {
   const pa = String(a).split('.').map((n) => parseInt(n, 10) || 0), pb = String(b).split('.').map((n) => parseInt(n, 10) || 0);
@@ -579,8 +600,39 @@ function checkForUpdateAtLaunch(attempt = 0) {
 function sha256File(file) {
   return new Promise((ok, bad) => {
     const hash = require('crypto').createHash('sha256');
-    fs.createReadStream(file).on('data', (c) => hash.update(c)).on('error', bad).on('end', () => ok('sha256:' + hash.digest('hex')));
+    ofs.createReadStream(file).on('data', (c) => hash.update(c)).on('error', bad).on('end', () => ok('sha256:' + hash.digest('hex')));
   });
+}
+
+// Downloads a release asset through `then` (a stream the bytes are piped into after counting and hashing them),
+// reporting progress; throws unless exactly the published bytes arrived.
+async function downloadAsset(asset, version, kind, ...then) {
+  update = { state: 'downloading', version, kind, progress: 0, got: 0, total: asset.size };
+  broadcast();
+  // (a stalled download is given up after 20 minutes so it can't block later checks)
+  const res = await fetch(asset.browser_download_url, { headers: { 'user-agent': 'DesktopCarpet/' + app.getVersion() }, signal: AbortSignal.timeout(20 * 60 * 1000) });
+  if (!res.ok || !res.body) throw new Error('download ' + res.status);
+  const hash = require('crypto').createHash('sha256');
+  let got = 0, shown = 0;
+  const count = new Transform({
+    transform(chunk, _enc, done) {
+      hash.update(chunk); got += chunk.length;
+      const progress = Math.min(99, Math.floor((got / (asset.size || 1)) * 100));
+      if (progress !== update.progress || got - shown > 512 * 1024) { shown = got; update.progress = progress; update.got = got; broadcast(); }
+      done(null, chunk);
+    },
+  });
+  await pipeline(Readable.fromWeb(res.body), count, ...then);
+  if (got !== asset.size || asset.digest !== 'sha256:' + hash.digest('hex')) throw new Error('bad download');
+}
+
+// An app update can be used here: the installation knows its shell (electron/boot.cjs) and, when Desktop Carpet is
+// code-signed, nothing unsigned is ever run (a signed app only takes signed full installers).
+let mySigner = null;
+async function appUpdatesAllowed() {
+  if (!global.dcBoot?.shell) return false;
+  if (mySigner === null) mySigner = await signerOf(process.execPath);
+  return !mySigner;
 }
 
 async function runUpdateCheck() {
@@ -593,52 +645,24 @@ async function runUpdateCheck() {
     const version = String(rel.tag_name || '').replace(/^v/i, '');
     ok = true;
     if (rel.draft || rel.prerelease || !newer(version, app.getVersion())) return ok;
-    if (update.state === 'ready' && update.version === version && fs.existsSync(update.file)) return ok;
-    const asset = (rel.assets || []).find((a) => a.name === UPDATE_ASSET);
-    // GitHub's SHA-256 is required: an asset without one is never installed.
-    if (!asset || !asset.digest) return ok;
-    ok = false;
+    if (update.state === 'ready' && update.version === version) return ok;
+    const assets = rel.assets || [];
+    // GitHub's SHA-256 is required: an asset without one is never used.
+    const find = (name) => assets.find((a) => a.name === name && a.digest);
 
-    const file = path.join(app.getPath('temp'), IS_MAC ? `DesktopCarpet-Mac-${version}.zip` : `DesktopCarpet-Setup-${version}.exe`);
-    // Downloaded on an earlier run but not installed yet: use it again if it is still exactly the released file.
-    let have = false;
-    try { have = fs.statSync(file).size === asset.size && (await sha256File(file)) === asset.digest; } catch {}
-    if (!have) {
-      update = { state: 'downloading', version, progress: 0 };
-      broadcast();
-      // (a stalled download is given up after 20 minutes so it can't block later checks)
-      const res = await fetch(asset.browser_download_url, { headers: { 'user-agent': 'DesktopCarpet/' + app.getVersion() }, signal: AbortSignal.timeout(20 * 60 * 1000) });
-      if (!res.ok || !res.body) throw new Error('download ' + res.status);
-      const hash = require('crypto').createHash('sha256');
-      const out = fs.createWriteStream(file);
-      let size = 0;
-      for await (const chunk of res.body) {
-        hash.update(chunk); size += chunk.length;
-        if (!out.write(chunk)) await new Promise((done) => out.once('drain', done));
-        const progress = Math.min(99, Math.floor((size / (asset.size || 1)) * 100));
-        if (progress !== update.progress) { update.progress = progress; broadcast(); }
-      }
-      await new Promise((done, bad) => out.end((e) => (e ? bad(e) : done())));
-      const digest = 'sha256:' + hash.digest('hex');
-      if (size !== asset.size || asset.digest !== digest) { fs.rmSync(file, { force: true }); throw new Error('bad download'); }
-    }
-    // Once Desktop Carpet itself is code-signed, an update must carry a valid signature from the same publisher,
-    // so even a release uploaded by someone else (e.g. a stolen GitHub account) is refused.
-    const mine = await signerOf(process.execPath);
-    if (mine && (await signerOf(file)) !== mine) { fs.rmSync(file, { force: true }); throw new Error('update not signed by ' + mine); }
-    if (IS_MAC) {
-      // Unpack the new Desktop Carpet.app next to the zip; it replaces the running one on restart.
-      const dir = path.join(app.getPath('temp'), `DesktopCarpet-${version}`);
-      fs.rmSync(dir, { recursive: true, force: true });
-      await new Promise((done, bad) => require('child_process').execFile('/usr/bin/ditto', ['-x', '-k', file, dir], (e) => (e ? bad(e) : done())));
-      // (the zip stays in the temp folder, so a later start can unpack it again without downloading)
-      const appDir = path.join(dir, 'Desktop Carpet.app');
-      if (!fs.existsSync(path.join(appDir, 'Contents', 'MacOS'))) throw new Error('bad mac update');
-      update = { state: 'ready', version, file: appDir };
+    const patch = (await appUpdatesAllowed()) && find(`DesktopCarpet-Patch-${global.dcBoot.shell}.asar.br`);
+    if (patch) {
+      ok = false;
+      await getAppUpdate(patch, version);
+      update = { state: 'ready', version, kind: 'app', total: patch.size };
+      ok = true;
     } else {
-      update = { state: 'ready', version, file };
+      const asset = IS_MAC ? find(`DesktopCarpet-Mac-${process.arch}.zip`) || find('DesktopCarpet-Mac.zip') : find('DesktopCarpet-Setup.exe');
+      if (!asset) return ok;
+      ok = false;
+      update = { state: 'ready', version, kind: 'full', total: asset.size, file: await getFullUpdate(asset, version) };
+      ok = true;
     }
-    ok = true;
     notifyUpdateReady();
   } catch (e) {
     console.error('update check failed:', e.message);
@@ -649,7 +673,74 @@ async function runUpdateCheck() {
   return ok;
 }
 
-// The panel shows a "Restart and update" bar; when the panel isn't on screen (e.g. the app started with the computer)
+// App update: unpacked into the updates folder, checked, then named in patch.json so the next start runs it.
+async function getAppUpdate(asset, version) {
+  const dir = global.dcBoot.dir();
+  const name = `app-${version}.asar`, file = path.join(dir, name);
+  const info = readJson(path.join(dir, 'patch.json'), {});
+  let have = false;
+  try { have = info.version === version && info.file === name && ofs.statSync(file).size === info.size; } catch {}
+  if (have) return;
+  ofs.mkdirSync(dir, { recursive: true });
+  const tmp = path.join(dir, `incoming-${version}.part`);
+  try {
+    await downloadAsset(asset, version, 'app', zlib.createBrotliDecompress(), ofs.createWriteStream(tmp));
+    // It must really be this version of Desktop Carpet before anything is switched over.
+    const pkg = JSON.parse(readFromAsar(tmp, 'package.json') || '{}');
+    if (pkg.version !== version || readFromAsar(tmp, 'electron/main.cjs') == null) throw new Error('bad app update');
+    ofs.renameSync(tmp, file);
+  } finally { try { ofs.rmSync(tmp, { force: true }); } catch {} }
+  writeJson(path.join(dir, 'patch.json'), { version, file: name, shell: global.dcBoot.shell, size: ofs.statSync(file).size });
+  // Earlier downloads are no longer needed (the one running now goes the next time the app starts).
+  for (const f of ofs.readdirSync(dir)) if (/^app-.*\.asar$/.test(f) && f !== name && f !== path.basename(global.dcBoot.patch?.file || '')) { try { ofs.rmSync(path.join(dir, f), { force: true }); } catch {} }
+}
+
+// One file out of an .asar archive, read as plain bytes (so Electron never opens the archive and holds on to it):
+// a pickled header (JSON listing every file with its offset and size) followed by the files' data.
+function readFromAsar(archive, inner) {
+  const fd = ofs.openSync(archive, 'r');
+  try {
+    const head = Buffer.alloc(16);
+    ofs.readSync(fd, head, 0, 16, 0);
+    const headerSize = head.readUInt32LE(4), jsonSize = head.readUInt32LE(12);
+    if (jsonSize > 32 * 1024 * 1024) return null;
+    const json = Buffer.alloc(jsonSize);
+    ofs.readSync(fd, json, 0, jsonSize, 16);
+    let node = JSON.parse(json.toString('utf8'));
+    for (const part of inner.split('/')) { node = node?.files?.[part]; if (!node) return null; }
+    if (node.unpacked || node.size == null || node.offset == null) return null;
+    const data = Buffer.alloc(node.size);
+    ofs.readSync(fd, data, 0, node.size, 8 + headerSize + Number(node.offset));
+    return data.toString('utf8');
+  } catch { return null; } finally { ofs.closeSync(fd); }
+}
+
+// Full update: the installer (Windows) or the app (Mac) in the temp folder.
+async function getFullUpdate(asset, version) {
+  const file = path.join(app.getPath('temp'), IS_MAC ? `DesktopCarpet-Mac-${version}.zip` : `DesktopCarpet-Setup-${version}.exe`);
+  // Downloaded on an earlier run but not installed yet: use it again if it is still exactly the released file.
+  let have = false;
+  try { have = ofs.statSync(file).size === asset.size && (await sha256File(file)) === asset.digest; } catch {}
+  if (!have) {
+    try { await downloadAsset(asset, version, 'full', ofs.createWriteStream(file)); }
+    catch (e) { ofs.rmSync(file, { force: true }); throw e; }
+  }
+  // Once Desktop Carpet itself is code-signed, an update must carry a valid signature from the same publisher,
+  // so even a release uploaded by someone else (e.g. a stolen GitHub account) is refused.
+  const mine = await signerOf(process.execPath);
+  if (mine && (await signerOf(file)) !== mine) { ofs.rmSync(file, { force: true }); throw new Error('update not signed by ' + mine); }
+  if (!IS_MAC) return file;
+  // Unpack the new Desktop Carpet.app next to the zip; it replaces the running one on restart.
+  const dir = path.join(app.getPath('temp'), `DesktopCarpet-${version}`);
+  fs.rmSync(dir, { recursive: true, force: true });
+  await new Promise((done, bad) => require('child_process').execFile('/usr/bin/ditto', ['-x', '-k', file, dir], (e) => (e ? bad(e) : done())));
+  // (the zip stays in the temp folder, so a later start can unpack it again without downloading)
+  const appDir = path.join(dir, 'Desktop Carpet.app');
+  if (!fs.existsSync(path.join(appDir, 'Contents', 'MacOS'))) throw new Error('bad mac update');
+  return appDir;
+}
+
+// The panel shows the update card; when the panel isn't on screen (e.g. the app started with the computer)
 // the user gets one notification per version instead. Clicking it restarts into the new version.
 function notifyUpdateReady() {
   if (update.state !== 'ready' || updateNotified === update.version) return;
@@ -686,23 +777,68 @@ function currentAppBundle() {
   return p.endsWith('.app') ? p : null;
 }
 
+// The small "updating" window: a rug being woven while the update goes in, and a finished one once the new version
+// is up (mode 'done'). It never takes focus.
+let splash = null;
+function showSplash(mode, version) {
+  try {
+    if (splash && !splash.isDestroyed()) splash.destroy();
+    const { x, y, width, height } = screen.getPrimaryDisplay().workArea;
+    const w = 380, h = 250;
+    splash = new BrowserWindow({
+      x: Math.round(x + (width - w) / 2), y: Math.round(y + (height - h) / 2), width: w, height: h,
+      frame: false, transparent: true, backgroundColor: '#00000000', resizable: false, movable: false, minimizable: false, maximizable: false,
+      fullscreenable: false, skipTaskbar: true, focusable: false, alwaysOnTop: true, hasShadow: false, show: false,
+      webPreferences: { contextIsolation: true, nodeIntegration: false, sandbox: true },
+    });
+    splash.setIgnoreMouseEvents(true);
+    splash.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+    splash.webContents.on('will-navigate', (e) => e.preventDefault());
+    splash.loadFile(path.join(__dirname, '..', 'panel', 'splash.html'), { query: { mode, v: String(version || ''), lang: LANG() } });
+    splash.once('ready-to-show', () => { if (splash && !splash.isDestroyed()) splash.showInactive(); });
+    splash.on('closed', () => { splash = null; });
+  } catch (e) { console.error('splash failed:', e.message); }
+}
+function closeSplash(after = 0) {
+  setTimeout(() => {
+    const w = splash;
+    if (!w || w.isDestroyed()) return;
+    w.webContents.executeJavaScript("document.getElementById('card').classList.add('leaving')").catch(() => {});
+    setTimeout(() => { if (!w.isDestroyed()) w.close(); }, 450);
+  }, after);
+}
+
 function installUpdate() {
-  if (update.state !== 'ready' || !fs.existsSync(update.file)) return;
+  if (update.state !== 'ready' || installing) return;
+  if (update.kind === 'full' && !fs.existsSync(update.file)) return;
+  const relaunchArgs = process.argv.slice(1).filter((a) => !['--autostart', '--dc-updated'].includes(a)).concat('--dc-updated');
+  if (update.kind === 'app') {
+    // The new app is already in place (electron/boot.cjs runs it): restart.
+    installing = true; broadcast(); showSplash('installing', update.version);
+    setTimeout(() => { app.relaunch({ args: relaunchArgs }); app.quit(); }, 1100);
+    return;
+  }
   if (IS_MAC) {
     const target = currentAppBundle();
     let writable = false;
     try { fs.accessSync(path.dirname(target), fs.constants.W_OK); writable = !!target && !target.includes('/AppTranslocation/'); } catch {}
     if (!writable) { shell.openExternal(URLS.home); return; } // can't replace it in place: send them to the download
+    installing = true; broadcast(); showSplash('installing', update.version);
     // After we quit: swap the bundles (keeping the old one until the new one is in place), then start the new one.
     const script = 'while kill -0 "$1" 2>/dev/null; do sleep 0.2; done; ' +
-      'mv "$2" "$2.old" && if mv "$3" "$2"; then rm -rf "$2.old"; xattr -dr com.apple.quarantine "$2" 2>/dev/null; else mv "$2.old" "$2"; fi; open "$2"';
-    require('child_process').spawn('/bin/sh', ['-c', script, 'sh', String(process.pid), target, update.file], { detached: true, stdio: 'ignore' }).unref();
-    app.quit();
+      'mv "$2" "$2.old" && if mv "$3" "$2"; then rm -rf "$2.old"; xattr -dr com.apple.quarantine "$2" 2>/dev/null; else mv "$2.old" "$2"; fi; open "$2" --args --dc-updated';
+    setTimeout(() => {
+      require('child_process').spawn('/bin/sh', ['-c', script, 'sh', String(process.pid), target, update.file], { detached: true, stdio: 'ignore' }).unref();
+      app.quit();
+    }, 900);
     return;
   }
-  // /S = silent NSIS install; the installer closes us, replaces the files and starts the new version.
-  require('child_process').spawn(update.file, ['/S'], { detached: true, stdio: 'ignore' }).unref();
-  app.quit();
+  // Windows: the installer shows its own progress (/UPDATE: no questions, closes when done) and starts the new version.
+  installing = true; broadcast(); showSplash('installing', update.version);
+  setTimeout(() => {
+    require('child_process').spawn(update.file, ['/UPDATE'], { detached: true, stdio: 'ignore' }).unref();
+    app.quit();
+  }, 900);
 }
 
 // ---------- app lifecycle ----------
@@ -712,6 +848,7 @@ app.whenReady().then(() => {
     try { const li = app.getLoginItemSettings(); if (li.wasOpenedAtLogin || li.wasOpenedAsHidden) AUTOSTART = true; } catch {}
     if (AUTOSTART) app.dock?.hide();
   }
+  if (JUST_UPDATED) { showSplash('done', app.getVersion()); closeSplash(9000); }
   createRugWindow();
 
   tray = new Tray(path.join(__dirname, process.platform === 'win32' ? 'tray.ico' : IS_MAC ? 'trayTemplate.png' : 'tray.png'));
@@ -839,11 +976,23 @@ async function runSmoke() {
   const shot = async (w, name) => { if (w && !w.isDestroyed()) fs.writeFileSync(path.join(out, name), (await w.webContents.capturePage()).toPNG()); };
   if (process.env.DC_LANG) { settings.lang = process.env.DC_LANG; refreshMenus(); }
   await wait(6000);
-  update = { state: 'downloading', version: '1.0.2', progress: 42 }; broadcast();
+  // which app is running: the installed one, or an app update (electron/boot.cjs)
+  fs.appendFileSync(path.join(out, 'smoke.txt'), `version ${app.getVersion()} patch ${global.dcBoot?.patch?.version || 'none'} shell ${global.dcBoot?.shell || '?'}\n`);
+  console.log('SMOKE version', app.getVersion(), 'patch', global.dcBoot?.patch?.version || 'none');
+  if (process.platform !== 'linux') { let k = 'ok'; try { requireKoffi(); } catch (e) { k = 'failed ' + e.message; } fs.appendFileSync(path.join(out, 'smoke.txt'), `koffi ${k}\n`); }
+  update = { state: 'downloading', version: '1.0.2', kind: 'app', progress: 42, got: 3.4e6, total: 8.1e6 }; broadcast();
   await wait(400);
   await shot(panel, 'panel-updating.png');
-  update = { state: 'ready', version: '1.0.2', file: 'none' }; broadcast();
+  update = { state: 'ready', version: '1.0.2', kind: 'app', total: 8.1e6 }; broadcast();
   await wait(500);
+  await shot(panel, 'panel-update-ready.png');
+  showSplash('installing', '1.0.2');
+  await wait(2200);
+  await shot(splash, 'splash-installing.png');
+  showSplash('done', '1.0.2');
+  await wait(1800);
+  await shot(splash, 'splash-done.png');
+  closeSplash();
   console.log('SMOKE license', JSON.stringify(license), 'rugVisible', win.isVisible(), 'lang', LANG());
   await shot(panel, 'panel-locked.png');
   if (process.env.DC_SMOKE_KEY) {

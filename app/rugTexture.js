@@ -7373,9 +7373,10 @@ function addWeave(ctx, W, H, seed, strength = 26) {
   ctx.putImageData(img, 0, 0);
 }
 
-export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
+// { frontOnly: true } skips the back and the bump map (the panel's previews only need the face).
+export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7, { frontOnly = false } = {}) {
   const P = STYLES[styleKey] || STYLES.klasik;
-  if (P.site) return { ...makeSiteRugCanvases(P.site), bump: makeBump(seed) };
+  if (P.site) return frontOnly ? makeSiteRugCanvases(P.site) : { ...makeSiteRugCanvases(P.site), bump: makeBump(seed) };
   const H = 1280, W = Math.round(H * aspect);
   const c = document.createElement('canvas');
   c.width = W; c.height = H;
@@ -7554,6 +7555,8 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
   else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
   if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : P.mexico ? MEXICO_FRAME : P.turkiye ? TURKIYE_FRAME : P.korea ? KOREA_FRAME : P.japan ? JAPAN_FRAME : P.china ? CHINA_FRAME : P.italy ? ITALY_FRAME : P.greece ? GREECE_FRAME : P.spain ? SPAIN_FRAME : P.france ? FRANCE_FRAME : undefined); else addWeave(ctx, W, H, seed, P.silk ? 12 : 26);
+
+  if (frontOnly) return { front: c };
 
   // Back side: same pattern, faded and flattened.
   const b = document.createElement('canvas');

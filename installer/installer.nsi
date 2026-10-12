@@ -8,7 +8,7 @@ SetCompressorDictSize 64
 !define EXE "DesktopCarpet.exe"
 !define APPID "com.desktopcarpet.app"
 !ifndef VERSION
-  !define VERSION "1.15.0"
+  !define VERSION "1.16.0"
 !endif
 !define UNINSTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\DesktopCarpet"
 
@@ -28,6 +28,11 @@ VIAddVersionKey "FileVersion" "${VERSION}"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 
 !include "MUI2.nsh"
+!include "FileFunc.nsh"
+!include "LogicLib.nsh"
+
+; /UPDATE: started by Desktop Carpet's "Restart and update". No questions, just the progress page, then the new version starts.
+Var UpdateMode
 !define MUI_ICON "..\electron\icon.ico"
 !define MUI_UNICON "..\electron\icon.ico"
 !define MUI_ABORTWARNING
@@ -36,8 +41,10 @@ VIAddVersionKey "ProductVersion" "${VERSION}"
 !define MUI_FINISHPAGE_RUN "$INSTDIR\${EXE}"
 !define MUI_FINISHPAGE_RUN_TEXT "$(RunText)"
 
+!define MUI_PAGE_CUSTOMFUNCTION_PRE SkipInUpdateMode
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_INSTFILES
+!define MUI_PAGE_CUSTOMFUNCTION_PRE SkipInUpdateMode
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
@@ -69,23 +76,48 @@ LangString RunText ${LANG_KOREAN} "Desktop Carpet 실행"
 
 !define MUI_LANGDLL_ALLLANGUAGES
 Function .onInit
-  ; Silent installs (automatic updates) skip the language question.
-  IfSilent +2
-  !insertmacro MUI_LANGDLL_DISPLAY
+  StrCpy $UpdateMode 0
+  ${GetParameters} $R0
+  ClearErrors
+  ${GetOptions} $R0 "/UPDATE" $R1
+  ${IfNot} ${Errors}
+    StrCpy $UpdateMode 1
+  ${EndIf}
+  ; Silent installs and updates skip the language question.
+  ${IfNot} ${Silent}
+  ${AndIf} $UpdateMode != 1
+    !insertmacro MUI_LANGDLL_DISPLAY
+  ${EndIf}
 FunctionEnd
 
-; After an automatic (silent) update, start the new version again.
+Function SkipInUpdateMode
+  ${If} $UpdateMode == 1
+    Abort
+  ${EndIf}
+FunctionEnd
+
+; After an automatic update, start the new version again (an update from the panel says so, for its "Updated" note).
 Function .onInstSuccess
-  IfSilent 0 +2
-  Exec '"$INSTDIR\${EXE}"'
+  ${If} $UpdateMode == 1
+    Exec '"$INSTDIR\${EXE}" --dc-updated'
+  ${ElseIf} ${Silent}
+    Exec '"$INSTDIR\${EXE}"'
+  ${EndIf}
 FunctionEnd
 
 Section "Install"
   ; Close a running copy so files can be replaced.
   nsExec::Exec 'taskkill /F /IM "${EXE}"'
   Sleep 600
+  ${If} $UpdateMode == 1
+    SetAutoClose true
+    SetDetailsView hide
+  ${EndIf}
   SetOutPath "$INSTDIR"
   RMDir /r "$INSTDIR\resources"
+  ; no longer shipped (only WebGPU used them)
+  Delete "$INSTDIR\dxcompiler.dll"
+  Delete "$INSTDIR\dxil.dll"
   File /r "..\dist\Desktop Carpet-win32-x64\*.*"
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
@@ -101,7 +133,7 @@ Section "Install"
   WriteRegStr HKCU "${UNINSTKEY}" "UninstallString" '"$INSTDIR\Uninstall.exe"'
   WriteRegDWORD HKCU "${UNINSTKEY}" "NoModify" 1
   WriteRegDWORD HKCU "${UNINSTKEY}" "NoRepair" 1
-  WriteRegDWORD HKCU "${UNINSTKEY}" "EstimatedSize" 330000
+  WriteRegDWORD HKCU "${UNINSTKEY}" "EstimatedSize" 300000
 SectionEnd
 
 Function un.onInit
@@ -116,4 +148,6 @@ Section "Uninstall"
   DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "${APPID}"
   DeleteRegKey HKCU "${UNINSTKEY}"
   RMDir /r "$INSTDIR"
+  ; downloaded app updates (the license and settings stay, for a reinstall)
+  RMDir /r "$APPDATA\Desktop Carpet\updates"
 SectionEnd

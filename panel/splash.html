@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'">
+<title>Desktop Carpet</title>
+<link rel="stylesheet" href="./splash.css">
+</head>
+<body>
+<!-- Shown while an update goes in (a rug being woven, column by column) and once the new version is up (the rug done). -->
+<main class="card" id="card">
+  <canvas id="loom" width="336" height="192" aria-hidden="true"></canvas>
+  <h1 id="title"></h1>
+  <p id="sub"></p>
+</main>
+<script src="./i18n.js"></script>
+<script src="./splash.js"></script>
+</body>
+</html>

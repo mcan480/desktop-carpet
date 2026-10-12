@@ -1,0 +1,25 @@
+/* The update splash: a small dark card with a stitched edge, the same ink, ivory and saffron as the panel.
+   The window itself is transparent, so the card's shadow falls on the desktop. */
+@font-face{font-family:"Shrikhand";font-weight:400;src:url(./fonts/shrikhand-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+FEFF,U+FFFD}
+@font-face{font-family:"Shrikhand";font-weight:400;src:url(./fonts/shrikhand-latin-ext-400-normal.woff2) format("woff2");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Instrument Sans";font-weight:500;src:url(./fonts/instrument-sans-latin-500-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+FEFF,U+FFFD}
+@font-face{font-family:"Instrument Sans";font-weight:500;src:url(./fonts/instrument-sans-latin-ext-500-normal.woff2) format("woff2");unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+:root{--ink:#22130c;--ivory:#f2e6cc;--saffron:#d89a2e;--madder:#8f1b1d;
+  --f-display:"Shrikhand","Segoe UI Black","Yu Gothic UI","Microsoft YaHei UI","Malgun Gothic",Georgia,serif;
+  --f-body:"Instrument Sans","Segoe UI","Yu Gothic UI","Microsoft YaHei UI","Malgun Gothic",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:transparent;overflow:hidden;user-select:none;-webkit-font-smoothing:antialiased}
+.card{position:absolute;inset:10px;display:grid;justify-items:center;align-content:center;gap:4px;padding:16px 22px 18px;border-radius:14px;
+  color:var(--ivory);text-align:center;background-color:var(--ink);
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 4px),repeating-linear-gradient(90deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);
+  box-shadow:0 14px 28px -12px rgba(0,0,0,.75),0 0 0 1px rgba(0,0,0,.5);
+  animation:in .35s cubic-bezier(.2,.8,.3,1) both}
+.card::before{content:"";position:absolute;inset:6px;border:1.5px dashed rgba(242,230,204,.32);border-radius:9px;pointer-events:none}
+canvas{width:168px;height:96px;margin-bottom:8px}
+h1{margin:0;font:400 1.5rem/1.15 var(--f-display);letter-spacing:.01em;color:var(--ivory)}
+p{margin:0;max-width:30ch;font:500 .84rem/1.4 var(--f-body);color:rgba(242,230,204,.78)}
+.done h1{color:#f6d98e}
+.leaving{animation:out .45s ease-in both}
+@keyframes in{from{opacity:0;transform:translateY(6px) scale(.98)}}
+@keyframes out{to{opacity:0;transform:translateY(-4px)}}
+@media (prefers-reduced-motion:reduce){.card,.leaving{animation:none}}

@@ -1,9 +1,9 @@
 {
   "name": "desktop-carpet",
   "productName": "Desktop Carpet",
-  "version": "1.15.0",
+  "version": "1.16.0",
   "description": "Desktop Carpet: a rug for your desktop",
-  "main": "electron/main.cjs",
+  "main": "electron/boot.cjs",
   "author": "Desktop Carpet",
   "license": "UNLICENSED",
   "scripts": {

@@ -35,22 +35,34 @@
     sel.value = st?.settings?.langSetting || 'auto';
   }
 
+  // bytes as megabytes in the panel's language, e.g. "3.4 MB", "3,4 MB"
+  function mb(n) {
+    const v = n / 1e6;
+    try { return new Intl.NumberFormat((I18N.LANGS[lang] || I18N.LANGS.en).locale, { style: 'unit', unit: 'megabyte', maximumFractionDigits: v < 10 ? 1 : 0 }).format(v); } catch { return v.toFixed(1) + ' MB'; }
+  }
+
   function pct(n) {
     try { return new Intl.NumberFormat((I18N.LANGS[lang] || I18N.LANGS.en).locale, { style: 'percent' }).format(n / 100); } catch { return n + '%'; }
   }
 
   function render() {
     if (!st) return;
-    // Update bar: the download found at launch shows its progress, then turns into "Restart and update".
-    const U = st.update || {}, getting = U.state === 'downloading', ready = U.state === 'ready';
+    // Update card: the download found at launch shows its progress (and how many MB), then turns into
+    // "Restart and update" (saying how long that takes); after the click it keeps weaving until the app restarts.
+    const U = st.update || {}, getting = U.state === 'downloading', ready = U.state === 'ready', inst = U.state === 'installing';
     const bar = $('#updBar');
-    bar.hidden = !(getting || ready);
+    bar.hidden = !(getting || ready || inst);
     bar.classList.toggle('getting', getting);
+    bar.classList.toggle('installing', inst);
     bar.style.setProperty('--p', `${getting ? U.progress || 0 : 100}%`);
-    const updText = ready ? T.updReady(U.version) : getting ? T.updGetting(U.version) : '';
+    const updText = inst ? T.updInstalling : ready ? T.updReady(U.version) : getting ? T.updGetting(U.version) : '';
     if ($('#updText').textContent !== updText) $('#updText').textContent = updText;
     $('#updPct').textContent = getting ? pct(U.progress || 0) : '';
+    const sub = getting ? (U.total ? T.updOf(mb(U.got || 0), mb(U.total)) : '')
+      : ready ? (U.kind === 'app' || U.platform === 'darwin' ? T.updQuick : T.updSlow) : inst ? T.updInstallingTo(U.version) : '';
+    if ($('#updSub').textContent !== sub) $('#updSub').textContent = sub;
     $('#updBtn').hidden = !ready;
+    $('#updBtn').disabled = false;
     if (document.activeElement !== $('#langSel')) $('#langSel').value = st.settings?.langSetting || 'auto';
     const L = st.license || { state: 'checking' };
     const view = { active: 'active', offline: 'active', expired: 'expired', device_limit: 'device_limit', error: 'error', checking: 'checking' }[L.state] || 'none';
@@ -181,17 +193,58 @@
     $$('.coll[data-coll]').forEach((p) => { p.hidden = p.dataset.coll !== c; });
   }
   $$('.shelves [data-coll]').forEach((t) => t.addEventListener('click', () => { showColl(t.dataset.coll); $('.gallery').scrollTop = 0; }));
+  // Large showroom pictures: the small thumbnail shows at once, then a sharp one drawn from the rug's own code in a
+  // worker replaces it (so no large pictures ship with the app). One drawing at a time; while it runs, only the
+  // latest rug asked for waits. Drawn pictures are kept for the session.
+  const previews = (() => {
+    const cache = new Map(), want = new Map();
+    let worker = null, busy = false, next = null, broken = false;
+    function start() {
+      if (worker || broken) return !!worker;
+      try { worker = new Worker('rugworker.js'); } catch { broken = true; return false; }
+      worker.onmessage = ({ data }) => {
+        busy = false;
+        if (data.blob) {
+          const url = URL.createObjectURL(data.blob);
+          cache.set(data.key, url);
+          while (cache.size > 60) { const [k, u] = cache.entries().next().value; cache.delete(k); URL.revokeObjectURL(u); }
+          want.get(data.key)?.(url);
+        }
+        want.delete(data.key);
+        if (next) { const k = next; next = null; draw(k); }
+      };
+      worker.onerror = () => { broken = true; worker = null; busy = false; };
+      return true;
+    }
+    function draw(k) {
+      if (!start()) return;
+      if (busy) { next = k; return; }
+      busy = true;
+      worker.postMessage({ key: k, w: 960, h: 608 });
+    }
+    return {
+      // calls back with the sharp picture's URL, now if it was drawn before, else when it's ready
+      get(k, cb) {
+        if (cache.has(k)) { cb(cache.get(k)); return true; }
+        want.set(k, cb); draw(k); return false;
+      },
+    };
+  })();
+
   // Showrooms (Persia, Türkiye, East Asia, Mediterranean): the rug in use there (or the last one picked) hangs large, with the town it comes
   // from; pointing at another one previews it.
   const rooms = $$('.showroom').map((el) => {
     const btns = [...el.querySelectorAll('[data-style]')], img = el.querySelector('.showcase-rug img');
     const room = {
-      el, pick: btns[0]?.dataset.style, hover: false,
+      el, pick: btns[0]?.dataset.style, hover: false, shown: null,
       show(k) {
         const b = el.querySelector(`[data-style="${k}"]`);
         if (!b) return;
-        const src = `./thumbs/lg/${k}.webp`;
-        if (!img.src.endsWith(src.slice(1))) img.src = src;
+        if (room.shown !== k) {
+          room.shown = k;
+          const sharp = previews.get(k, (url) => { if (room.shown === k) img.src = url; });
+          if (!sharp) img.src = `./thumbs/${k}.webp`;
+        }
         el.querySelector('.showcase-text h3').textContent = b.querySelector('span').textContent;
         el.querySelector('.showcase-origin span').textContent = T['o_' + k] || T[b.closest('.country')?.dataset.country] || '';
       },
@@ -199,7 +252,6 @@
     btns.forEach((b) => {
       b.addEventListener('pointerenter', () => { room.hover = true; room.show(b.dataset.style); });
       b.addEventListener('focus', () => room.show(b.dataset.style));
-      const i = new Image(); i.src = `./thumbs/lg/${b.dataset.style}.webp`;
     });
     el.querySelectorAll('.room-grid').forEach((g) => {
       g.addEventListener('pointerleave', () => { room.hover = false; room.show(room.pick); });

@@ -193,18 +193,24 @@ h2{margin:0 0 8px;font:600 .84rem/1.3 var(--f-body);color:var(--saffron)}
 .foot .credit b{font-weight:700;letter-spacing:.12em}
 .foot .credit:hover{opacity:1;text-decoration:underline}
 
-/* Update ready bar */
-.upd{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--moss);color:var(--ivory);padding:10px 12px;border-radius:5px;
-  font-weight:600;font-size:.88rem;outline:1.5px dashed rgba(242,230,204,.5);outline-offset:-5px;box-shadow:0 10px 20px -14px #000}
-.upd .btn{--b:var(--ink);font-size:.78rem;padding:.7em .95em;box-shadow:none;flex:none}
-.upd #updText{flex:1}
-/* ready: the message on top, the restart button under it at full width */
-.upd:not(.getting){flex-direction:column;align-items:stretch;gap:9px}
-.upd:not(.getting) .btn{width:100%}
-/* downloading: the bar itself fills up like a progress bar */
-.upd.getting{background:linear-gradient(90deg,var(--moss) var(--p),#1f3a20 var(--p));font-weight:500}
+/* Update card: moss green with a stitched edge. While downloading, a woven strip fills up (with how many MB so far);
+   when ready, the restart button; while installing, the strip keeps weaving. */
+.upd{display:grid;gap:8px;background:var(--moss);color:var(--ivory);padding:11px 13px 12px;border-radius:5px;font-size:.88rem;
+  outline:1.5px dashed rgba(242,230,204,.5);outline-offset:-5px;box-shadow:0 10px 20px -14px #000}
+.upd-top{display:flex;align-items:baseline;gap:10px}
+.upd-title{flex:1;font-weight:600;line-height:1.3}
 .upd-pct{font:600 .78rem/1 var(--f-mono);flex:none}
 .upd-pct:empty{display:none}
+.upd-meter{height:10px;border-radius:2px;background:rgba(20,30,18,.55);overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.45)}
+.upd-meter i{display:block;height:100%;width:var(--p,0%);transition:width .35s ease-out;
+  background:repeating-linear-gradient(90deg,var(--ivory) 0 4px,#e6cf9c 4px 5px,var(--saffron) 5px 9px,#b97c27 9px 10px),var(--ivory);
+  background-blend-mode:normal;box-shadow:inset 0 -2px 0 rgba(0,0,0,.18)}
+.upd.installing .upd-meter i{width:100%;animation:upd-weave .8s linear infinite}
+@keyframes upd-weave{to{background-position:20px 0}}
+.upd-sub{margin:0;font-size:.76rem;font-weight:500;line-height:1.35;color:rgba(242,230,204,.82)}
+.upd-sub:empty{display:none}
+.upd .btn{--b:var(--ink);font-size:.78rem;padding:.7em .95em;box-shadow:none;width:100%}
+@media (prefers-reduced-motion:reduce){.upd.installing .upd-meter i{animation:none}}
 
 /* Language picker (footer, always usable) */
 .langrow{display:flex;align-items:center;gap:6px;color:var(--ink)}
