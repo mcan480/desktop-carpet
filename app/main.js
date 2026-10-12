@@ -392,6 +392,21 @@ window.addEventListener('contextmenu', (e) => {
   if (hitTest(e.clientX, e.clientY)) api?.showMenu();
 });
 
+// Every point is a number and every thread between neighbours is about its own length.
+function poseIntact(c) {
+  const p = c.pos;
+  for (let k = 0; k < p.length; k++) if (!Number.isFinite(p[k])) return false;
+  for (let j = 0; j < c.ny; j++) for (let i = 0; i < c.nx; i++) {
+    const a = (j * c.nx + i) * 3;
+    for (const [b, rest] of [[i < c.nx - 1 ? a + 3 : -1, c.dx], [j < c.ny - 1 ? a + c.nx * 3 : -1, c.dy]]) {
+      if (b < 0) continue;
+      const d = Math.hypot(p[b] - p[a], p[b + 1] - p[a + 1], p[b + 2] - p[a + 2]);
+      if (d > rest * 2.5 || d < rest * 0.2) return false;
+    }
+  }
+  return true;
+}
+
 function flatten() {
   const { x, y } = cloth.centroid();
   const a = cloth.angle();
@@ -543,8 +558,10 @@ if (!api) window.__dcCommand = command; // plain-browser preview: lets a test pa
   state.hidden = false; // opening the app always shows the rug
   const sameScreen = saved?.screen && saved.screen[0] === W && saved.screen[1] === H;
   buildRug({ keepPose: false, saved: sameScreen && saved.pos ? Float32Array.from(saved.pos) : null });
-  // no saved pose, or one left crumpled up or broken (1.16.2 could leave a rug like that): lay it flat
-  if (!saved?.pos || cloth.pos.some((v) => !Number.isFinite(v)) || cloth.maxHeight() > cloth.collideDist * 5) flatten();
+  // A saved pose that's torn apart (1.16.2 could leave a rug like that): start again flat in the middle.
+  // One left crumpled up in a heap: lay it flat where it is.
+  if (saved?.pos && !poseIntact(cloth)) buildRug({ keepPose: false });
+  if (!saved?.pos || !poseIntact(cloth) || cloth.maxHeight() > cloth.collideDist * 5) flatten();
   applyHidden();
   ensureOnScreen();
   api?.reportState({ style: state.style, size: state.size, weight: state.weight });
