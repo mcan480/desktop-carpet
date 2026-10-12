@@ -194,40 +194,42 @@
   }
   $$('.shelves [data-coll]').forEach((t) => t.addEventListener('click', () => { showColl(t.dataset.coll); $('.gallery').scrollTop = 0; }));
   // Large showroom pictures: the small thumbnail shows at once, then a sharp one drawn from the rug's own code in a
-  // worker replaces it (so no large pictures ship with the app). One drawing at a time; while it runs, only the
-  // latest rug asked for waits. Drawn pictures are kept for the session.
+  // worker replaces it (so no large pictures ship with the app). One drawing at a time, the most recently asked-for
+  // rug first; drawn pictures are kept for the session.
   const previews = (() => {
-    const cache = new Map(), want = new Map();
-    let worker = null, busy = false, next = null, broken = false;
+    const cache = new Map(), want = new Map();   // rug -> callback, in the order they were asked for
+    let worker = null, busy = null, broken = false;
     function start() {
       if (worker || broken) return !!worker;
       try { worker = new Worker('rugworker.js'); } catch { broken = true; return false; }
       worker.onmessage = ({ data }) => {
-        busy = false;
+        const cb = want.get(data.key);
+        want.delete(data.key);
+        busy = null;
         if (data.blob) {
           const url = URL.createObjectURL(data.blob);
           cache.set(data.key, url);
           while (cache.size > 60) { const [k, u] = cache.entries().next().value; cache.delete(k); URL.revokeObjectURL(u); }
-          want.get(data.key)?.(url);
+          cb?.(url);
         }
-        want.delete(data.key);
-        if (next) { const k = next; next = null; draw(k); }
+        pump();
       };
-      worker.onerror = () => { broken = true; worker = null; busy = false; };
+      worker.onerror = () => { broken = true; worker = null; busy = null; };
       return true;
     }
-    function draw(k) {
-      if (!start()) return;
-      if (busy) { next = k; return; }
-      busy = true;
-      worker.postMessage({ key: k, w: 960, h: 608 });
+    function pump() {
+      if (busy || !want.size || !start()) return;
+      busy = [...want.keys()].pop();
+      worker.postMessage({ key: busy, w: 960, h: 608 });
     }
     return {
-      // calls back with the sharp picture's URL, now if it was drawn before, else when it's ready
+      // calls back with the sharp picture's URL: now if it was drawn before (returns true), else when it's ready
       get(k, cb) {
         if (cache.has(k)) { cb(cache.get(k)); return true; }
-        want.set(k, cb); draw(k); return false;
+        want.delete(k); want.set(k, cb); pump(); return false;
       },
+      // no longer needed (unless it's being drawn already)
+      drop(k) { if (busy !== k) want.delete(k); },
     };
   })();
 
@@ -241,6 +243,7 @@
         const b = el.querySelector(`[data-style="${k}"]`);
         if (!b) return;
         if (room.shown !== k) {
+          if (room.shown) previews.drop(room.shown);
           room.shown = k;
           const sharp = previews.get(k, (url) => { if (room.shown === k) img.src = url; });
           if (!sharp) img.src = `./thumbs/${k}.webp`;

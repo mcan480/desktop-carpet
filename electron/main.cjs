@@ -1007,6 +1007,9 @@ async function runSmoke() {
   console.log('SMOKE after unlock rugVisible', win.isVisible());
   fs.appendFileSync(path.join(out, 'smoke.txt'), `rugVisible ${win.isVisible()}\n`);
   await shot(panel, 'panel-active.png');
+  // the showroom pictures are drawn by the worker (blob:), not the small thumbnails (file:)
+  const previews = await panel.webContents.executeJavaScript("[...document.querySelectorAll('.showcase-rug img')].map((i) => i.src.slice(0, 5)).join(',')").catch((e) => 'error ' + e.message);
+  fs.appendFileSync(path.join(out, 'smoke.txt'), `previews ${previews}\n`);
   await shot(win, 'rug.png');
   rugCommand('style', 'gorunmez');
   await wait(3500);
