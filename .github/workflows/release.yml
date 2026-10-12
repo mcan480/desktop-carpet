@@ -65,7 +65,10 @@ jobs:
         run: npm install --no-audit --no-fund
 
       - name: Build app
-        run: node build.cjs
+        shell: bash
+        run: |
+          set -o pipefail
+          node build.cjs 2>&1 | tee "$RUNNER_TEMP/smoke-build.log"
 
       # Start the packaged app the way users get it and make sure the panel and the rug come up.
       - name: Launch test
@@ -113,7 +116,7 @@ jobs:
         run: |
           D="$RUNNER_TEMP/shots-repo"; rm -rf "$D"; mkdir -p "$D"; cd "$D"
           git init -q; git checkout -q -b ci-shots-windows
-          cp -R "$RUNNER_TEMP/smoke/." . 2>/dev/null || true; cp "$RUNNER_TEMP/smoke.log" "$RUNNER_TEMP/smoke-patched.log" . 2>/dev/null || true
+          cp -R "$RUNNER_TEMP/smoke/." . 2>/dev/null || true; for f in smoke.log smoke-patched.log smoke-build.log; do cp "$RUNNER_TEMP/$f" . 2>/dev/null || true; done
           git add -A; git -c user.name=ci -c user.email=ci@localhost commit -qm "windows launch test ${{ github.sha }}" || exit 0
           git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" ci-shots-windows
 
@@ -235,7 +238,9 @@ jobs:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-        run: node build.cjs mac
+        run: |
+          set -o pipefail
+          node build.cjs mac 2>&1 | tee "$RUNNER_TEMP/smoke-build.log"
 
       - name: Launch test
         run: |
