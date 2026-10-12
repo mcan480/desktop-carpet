@@ -112,7 +112,7 @@ async function buildMac() {
     for (const arch of ['arm64', 'x64']) {
       const dir = path.join('dist', `thin-${arch}`), thin = path.join(dir, 'Desktop Carpet.app'), tzip = path.join('dist', `DesktopCarpet-Mac-${arch}.zip`);
       fs.rmSync(dir, { recursive: true, force: true }); fs.rmSync(tzip, { force: true });
-      run('ditto', ['--arch', arch, appPath, thin]);
+      run('ditto', ['--arch', arch === 'x64' ? 'x86_64' : arch, appPath, thin]);   // (named like Node's process.arch)
       run('codesign', ['--force', '--deep', '--sign', '-', thin]);
       run('codesign', ['--verify', '--deep', '--strict', thin]);
       run('ditto', ['-c', '-k', '--sequesterRsrc', '--keepParent', thin, tzip]);
