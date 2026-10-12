@@ -20,7 +20,7 @@ A rug for your desktop. Grab it, lift a corner and sweep your files under it.
 - **Full update** (new Electron, or `SHELL_REV` raised): the Windows installer, or the Mac app for that processor.
 
 ## Layout
-- `app/` the 3D rug (cloth physics `cloth.js`, patterns `rugTexture.js`, site designs `siteRugs.js`; `rugWorker.js` draws the panel's large previews)
+- `app/` the 3D rug (cloth physics `cloth.js`, patterns `rugTexture.js`, site designs `siteRugs.js`)
 - `panel/` control panel UI and translations (`i18n.js`)
 - `electron/` main process: `boot.cjs` (starts the installed app or an app update), `main.cjs` (license, menus, updates)
 - `installer/` NSIS installer

@@ -45,10 +45,22 @@ button,input{font:inherit;color:inherit}
 
 /* Two columns: the license and settings on the left, the rugs on the right. Each scrolls on its own. */
 .layout{display:grid;grid-template-columns:330px minmax(0,1fr);gap:18px;padding:18px 18px 6px;min-height:0;overflow:hidden}
-.side{display:grid;gap:16px;align-content:start;min-height:0;overflow:auto;padding:4px 10px 14px 4px;scrollbar-width:thin;scrollbar-color:rgba(34,19,12,.42) transparent}
+.side{display:grid;gap:16px;align-content:start;min-height:0;overflow:auto;padding:4px 10px 14px 4px}
 .side .keyform{flex-direction:column}
 .side .keyform .btn{width:100%}
-.gallery{min-height:0;overflow:auto;align-content:start;scrollbar-width:thin;scrollbar-color:rgba(242,230,204,.3) transparent}
+.gallery{min-height:0;overflow:auto;align-content:start}
+
+/* Scrollbars: no arrows, no track, just a slim rounded thumb (dark on the wooden floor, light on the dark panels). */
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-button{display:none;width:0;height:0}
+::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent}
+::-webkit-scrollbar-thumb{border:3.5px solid transparent;border-radius:6px;background:rgba(34,19,12,.34) padding-box}
+::-webkit-scrollbar-thumb:hover{background-color:rgba(34,19,12,.55)}
+::-webkit-scrollbar-thumb:active{background-color:rgba(34,19,12,.7)}
+.gallery::-webkit-scrollbar-track{margin:8px 0}
+.gallery::-webkit-scrollbar-thumb,.panel ::-webkit-scrollbar-thumb{background-color:rgba(242,230,204,.2)}
+.gallery::-webkit-scrollbar-thumb:hover,.panel ::-webkit-scrollbar-thumb:hover{background-color:rgba(242,230,204,.36)}
+.gallery::-webkit-scrollbar-thumb:active,.panel ::-webkit-scrollbar-thumb:active{background-color:var(--saffron)}
 
 /* License label (woven ivory tag with a stitched border) */
 .label{position:relative;background-color:var(--ivory);padding:24px 22px 22px;transform:rotate(-.6deg);display:grid;gap:12px;
@@ -138,29 +150,8 @@ h2{margin:0 0 8px;font:600 .84rem/1.3 var(--f-body);color:var(--saffron)}
 .badge{font:600 .56rem/1 var(--f-mono);font-style:normal;letter-spacing:.12em;padding:4px 6px 3px;border-radius:3px;color:var(--ink);
   background:linear-gradient(110deg,#9fe3ff,#e2d4ff,#fff1c2) 0 0/200% 100%;animation:shimmer 6s linear infinite}
 .special-text small{font:400 .86rem/1.4 var(--f-body);color:rgba(242,230,204,.78);white-space:normal}
-/* Seasonal drops (Halloween): their own little shelf under the patterns, in pumpkin colours. */
-.season{grid-column:1/-1;margin-top:6px;padding:9px 10px 10px;border-radius:7px;background:linear-gradient(180deg,rgba(224,118,31,.14),rgba(75,35,102,.18));
-  outline:1.5px dashed rgba(224,118,31,.55);outline-offset:-1.5px}
-.season h3{display:flex;align-items:center;gap:7px;margin:0 0 8px;font:600 .64rem/1.3 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:#f09a4a}
-.season h3 svg{width:17px;height:17px;flex:none}
-.season-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-/* USA pack: flag colours, its slogan under the title, four to a row */
-.season.americas{background:linear-gradient(180deg,rgba(37,52,94,.34),rgba(140,36,48,.2));outline-color:rgba(239,227,198,.45)}
-.season.americas h3{color:#efe3c6}
-.swatches .country-tabs{display:flex;gap:8px;margin:0 0 14px}
-.swatches .country-tabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:6px 4px;border-radius:6px;border:1px solid rgba(239,227,198,.22);
-  background:rgba(0,0,0,.2);color:rgba(239,227,198,.8);font:600 .84rem/1 var(--f-body);cursor:pointer;transition:background .15s,border-color .15s;padding:9px 6px}
-.swatches .country-tabs button svg{width:18px;height:12px;flex:none;border-radius:1.5px}
-.swatches .country-tabs button:hover{border-color:rgba(239,227,198,.5)}
-.swatches .country-tabs button[aria-selected="true"]{background:rgba(239,227,198,.15);border-color:rgba(239,227,198,.75);color:#fff}
-.swatches .country-tabs button:focus-visible{outline:2px solid var(--saffron);outline-offset:2px}
-.season.persia{background:linear-gradient(180deg,rgba(168,67,47,.24),rgba(31,45,74,.34));outline-color:rgba(239,226,196,.45)}
-.season.persia h3{color:#efe2c4;margin-bottom:2px}
-.season.persia h3 svg{width:20px;height:14px}
-.season-tag{margin:0 0 14px;font:italic 500 .92rem/1.35 var(--f-body);color:rgba(239,227,198,.85)}
-.season-row.usa-row{grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:16px 12px}
 @keyframes shimmer{to{background-position:300% 0}}
-@media (prefers-reduced-motion:reduce){.swatches .special::before,.badge{animation:none}.shelves button.shelf-featured:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){.swatches .special::before,.badge{animation:none}}
 
 .seg{display:flex;border:1.5px solid rgba(242,230,204,.35);border-radius:4px;overflow:hidden}
 .seg button{flex:1;background:none;border:0;padding:.7em .2em;color:var(--ivory);font:600 .84rem/1 var(--f-body);cursor:pointer}
@@ -219,130 +210,77 @@ h2{margin:0 0 8px;font:600 .84rem/1.3 var(--f-body);color:var(--saffron)}
 .langrow select{font:600 .7rem/1 var(--f-mono);color:var(--ink);background:rgba(242,230,204,.85);border:0;border-radius:4px;padding:.45em .5em;cursor:pointer;max-width:150px}
 .foot{flex-wrap:wrap;row-gap:6px}
 
-/* Collection shelf: one tab per collection, each with its cover rug */
-.gallery{padding:18px}
-.shelves{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
-.shelves button{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;padding:8px 6px 7px;border-radius:8px;border:1.5px solid rgba(242,230,204,.16);
-  background:rgba(242,230,204,.05);color:rgba(242,230,204,.86);font:600 .8rem/1.15 var(--f-body);text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
-.shelves img{width:54px;aspect-ratio:1.58;object-fit:cover;border-radius:2px;flex:none;box-shadow:0 4px 8px -4px #000}
+/* ---------- The rug gallery ----------
+   One dark floor for every pack, so the rugs carry the colour. Selection always looks the same: a saffron fringe under
+   the pack, a filled chip for the country, a saffron edge and a check on the rug. A pack's own colours only show in the
+   woven band over its name. */
+.gallery{padding:0 18px 18px}
+.gallery > .lock{margin-top:16px}
+
+/* Pack tabs: the cover rug and the name; the chosen one lifts and gets a fringe. Stays at the top while you scroll. */
+.shelves{position:sticky;top:0;z-index:5;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;margin:0 -18px;padding:14px 12px 0;
+  background:var(--ink);box-shadow:0 1px 0 rgba(242,230,204,.1),0 12px 14px -12px rgba(0,0,0,.8)}
+.shelves button{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0;padding:6px 2px 17px;border:0;border-radius:6px 6px 0 0;
+  background:none;color:rgba(242,230,204,.56);font:600 .76rem/1.15 var(--f-body);text-align:center;cursor:pointer;transition:color .15s,background .15s}
+.shelves img{width:62px;max-width:100%;aspect-ratio:1.58;object-fit:cover;border-radius:2px;flex:none;box-shadow:0 7px 10px -6px #000;
+  opacity:.72;filter:saturate(.7) brightness(.9);transition:opacity .18s,filter .18s,transform .22s cubic-bezier(.2,.8,.3,1.3)}
 .shelves span{min-width:0;overflow-wrap:break-word}
-.shelves button:hover{border-color:rgba(242,230,204,.42)}
-.shelves button[aria-selected="true"]{background:var(--ivory);border-color:var(--ivory);color:var(--ink)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:16px 12px}
-.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.shelves button:hover{color:rgba(242,230,204,.88);background:rgba(242,230,204,.04)}
+.shelves button:hover img{opacity:.9;filter:none}
+.shelves button[aria-selected="true"]{color:var(--ivory)}
+.shelves button[aria-selected="true"] img{opacity:1;filter:none;transform:translateY(-3px) rotate(-4deg) scale(1.08)}
+/* the fringe: a short edge with threads hanging from it */
+.shelves button::after{content:"";position:absolute;left:24%;right:24%;bottom:3px;height:9px;opacity:0;transform:scaleX(.4);transition:opacity .18s,transform .22s;
+  background:linear-gradient(var(--saffron),var(--saffron)) 0 0/100% 2px no-repeat,repeating-linear-gradient(90deg,var(--saffron) 0 1.5px,transparent 1.5px 4px) 0 2px/100% 7px no-repeat}
+.shelves button[aria-selected="true"]::after{opacity:1;transform:none}
+.shelves .badge{position:absolute;top:1px;left:calc(50% + 14px);padding:3px 5px 2px;font-size:.5rem;box-shadow:0 2px 4px rgba(0,0,0,.45)}
 
-/* Persia: a vitrine. Indigo ground with a faint lattice, a madder frame between gold lines with a dotted gold stitch,
-   the chosen rug hung large. The tab on the shelf is gilded to match. */
-.shelves .shelf-persia{background:linear-gradient(160deg,#26325e,#18203a);border-color:rgba(201,160,80,.75);color:#e8c77a}
-.shelves .shelf-persia:hover{border-color:#e0b866}
-.shelves .shelf-persia[aria-selected="true"]{background:linear-gradient(160deg,#2e3d72,#1b2443);border-color:#e0b866;color:#f6e6bd;box-shadow:0 0 0 1px #e0b866}
-.persia-room{position:relative;padding:26px 26px 24px;border-radius:8px;background-color:#18203a;
-  background-image:repeating-conic-gradient(from 45deg,rgba(201,160,80,.075) 0 25%,transparent 0 50%);background-size:26px 26px;
-  box-shadow:inset 0 0 0 2px #c9a050,inset 0 0 0 11px #6e1d1f,inset 0 0 0 13px #c9a050}
-.persia-room::before{content:"";position:absolute;inset:5px;border:2px dotted rgba(232,199,122,.8);border-radius:6px;pointer-events:none}
-.showcase{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;align-items:center;margin:2px 0 22px}
-.showcase-rug{margin:0}
-.showcase-rug img{display:block;width:100%;aspect-ratio:1.58;object-fit:cover;border-radius:3px;transform:rotate(-1.2deg);
-  box-shadow:0 22px 30px -16px rgba(0,0,0,.95),0 0 0 1px rgba(0,0,0,.4)}
-.showcase-text{display:grid;gap:10px;align-content:center}
-.showcase-text h3{margin:0;font:400 2.1rem/1.04 var(--f-display);color:#f6e6bd;text-wrap:balance}
-.showcase-origin{display:flex;align-items:center;gap:7px;font:600 .95rem/1.2 var(--f-body);color:#e0b866}
-.showcase-origin svg{width:11px;height:15px;flex:none}
-.showcase-tag{font:italic 500 .92rem/1.45 var(--f-body);color:rgba(246,230,189,.78);max-width:28ch}
-.room-grid{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px 12px}
-.persia-room .room-grid button{color:#f1e2bd}
-.persia-room .room-grid button[aria-checked="true"] img{outline-color:#e0b866}
-.persia-room .room-grid button[aria-checked="true"] span{color:#e0b866}
+/* Pack heading: the woven band in the pack's colours, the name, how many rugs, its line */
+.coll{--a1:var(--madder);--a2:#1e274d;--a3:var(--ivory);--a4:var(--saffron)}
+.coll[data-coll="mediterranean"]{--a1:#c4572e;--a2:#1f5fa8;--a3:#f5ead6;--a4:#f2c430}
+.coll[data-coll="halloween"]{--a1:#e0761f;--a2:#4b2366;--a3:#f2e6cc;--a4:#9bc53d}
+.coll[data-coll="americas"]{--a1:#b5312b;--a2:#25345e;--a3:#efe3c6;--a4:#e8b448}
+.coll[data-coll="persia"]{--a1:#6e1d1f;--a2:#26325e;--a3:#e8c77a;--a4:#c9a050}
+.coll[data-coll="turkiye"]{--a1:#1f3f8f;--a2:#2a9d9a;--a3:#f4f0e6;--a4:#c43a2c}
+.coll[data-coll="eastasia"]{--a1:#b02a24;--a2:#17151b;--a3:#d6a446;--a4:#e98fb0}
+.pack-head{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:4px 16px;margin:22px 0 16px;padding-top:20px}
+.pack-head::before{content:"";position:absolute;top:0;left:0;right:0;height:10px;border-radius:1.5px;box-shadow:0 2px 0 rgba(0,0,0,.35);
+  background:
+    repeating-linear-gradient(90deg,rgba(0,0,0,.2) 0 1px,transparent 1px 3px),
+    linear-gradient(var(--a3),var(--a3)) 0 0/100% 1.5px no-repeat,linear-gradient(var(--a3),var(--a3)) 0 100%/100% 1.5px no-repeat,
+    linear-gradient(var(--a4),var(--a4)) 0 50%/100% 1px no-repeat,
+    repeating-linear-gradient(90deg,var(--a1) 0 34px,var(--a2) 34px 46px)}
+.pack-head h3{display:flex;align-items:center;gap:10px;min-width:0;margin:0;font:400 1.6rem/1.08 var(--f-display);color:var(--ivory);text-wrap:balance}
+.pack-head h3 .badge{font-size:.56rem}
+.pack-count{margin:0 0 5px;font:500 .66rem/1 var(--f-mono);letter-spacing:.04em;color:rgba(242,230,204,.55);white-space:nowrap}
+.pack-tag{grid-column:1/-1;font:italic 500 .88rem/1.4 var(--f-body);color:rgba(242,230,204,.7)}
 
-/* The featured (newest) pack: a wide tab across the top of the shelf, three of its rugs fanned out, the name, a NEW
-   badge and its line. */
-.shelves button.shelf-featured{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:18px;padding:10px 18px 10px 14px;
-  border-radius:9px;text-align:left;transition:box-shadow .15s,transform .15s}
-.shelves button.shelf-featured:hover{transform:translateY(-1px)}
-.shelves button.shelf-featured:focus-visible{outline:2px solid var(--saffron);outline-offset:3px}
-.shelf-fan{position:relative;display:block;width:132px;height:58px}
-.shelves .shelf-fan img{position:absolute;top:8px;width:70px;border-radius:2px;box-shadow:0 6px 10px -5px rgba(0,0,0,.75)}
-.shelf-fan img:nth-child(1){left:0;transform:rotate(-9deg)}
-.shelf-fan img:nth-child(2){left:31px;top:4px;transform:rotate(3deg);z-index:1}
-.shelf-fan img:nth-child(3){left:62px;transform:rotate(-3deg)}
-.shelf-feature{display:grid;gap:3px;min-width:0}
-.shelf-title{display:flex;align-items:center;gap:9px}
-.shelf-title b{font:400 1.45rem/1.05 var(--f-display)}
-.shelf-featured small{font:italic 500 .86rem/1.35 var(--f-body)}
+/* Countries: chips; the chosen one filled */
+.swatches .country-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 6px}
+.swatches .country-tabs button{display:inline-flex;align-items:center;gap:7px;padding:7px 14px 7px 11px;border-radius:999px;border:1px solid rgba(242,230,204,.2);
+  background:none;color:rgba(242,230,204,.78);font:600 .8rem/1 var(--f-body);cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.swatches .country-tabs button svg{width:18px;height:12px;flex:none;border-radius:1.5px}
+.coll[data-coll="eastasia"] .country-tabs button svg,.coll[data-coll="mediterranean"] .country-tabs button svg{width:16px;height:16px;border-radius:0}
+.swatches .country-tabs button:hover{border-color:rgba(242,230,204,.5);color:var(--ivory)}
+.swatches .country-tabs button[aria-selected="true"]{background:var(--ivory);border-color:var(--ivory);color:var(--ink)}
+.season-tag{margin:12px 0 0;font:italic 500 .86rem/1.4 var(--f-body);color:rgba(242,230,204,.7)}
 
-/* Mediterranean: limewash with a faint ripple of sea, framed in terracotta and sea blue. */
-.shelves button.shelf-med{border:0;color:#1d3f78;background-color:#f5ead6;
-  background-image:radial-gradient(circle at 50% 0,transparent 0 7px,rgba(31,95,168,.11) 7px 8px,transparent 8px);background-size:20px 10px;
-  box-shadow:inset 0 0 0 2px #c4572e,inset 0 0 0 4px #f5ead6,inset 0 0 0 6px #1f5fa8}
-.shelves button.shelf-med:hover{box-shadow:inset 0 0 0 2px #c4572e,inset 0 0 0 4px #f5ead6,inset 0 0 0 6px #1f5fa8,0 10px 18px -12px #000}
-.shelves button.shelf-med[aria-selected="true"]{background-color:#fbf4e6;box-shadow:inset 0 0 0 2px #c4572e,inset 0 0 0 4px #fbf4e6,inset 0 0 0 6px #1f5fa8,0 0 0 2px #c4572e}
-.shelf-med .shelf-title b{color:#1d3f78}
-.shelf-med .badge{color:#fff;background:linear-gradient(110deg,#c4572e,#e8904a,#c4572e) 0 0/200% 100%}
-.shelf-med small{color:#5a4636}
+/* Shelves inside a pack (patterns, picture rugs) */
+.room-shelf{display:flex;align-items:center;gap:12px;margin:24px 0 14px;font:600 .8rem/1.2 var(--f-body);color:rgba(242,230,204,.78)}
+.room-shelf::after{content:"";flex:1;height:1px;background:rgba(242,230,204,.13)}
+.country > .grid:first-child,.country > .season-tag + .grid{margin-top:18px}
 
-/* East Asia: black lacquer inlaid with a faint wave of mother-of-pearl, a vermilion frame with a gold line. */
-.shelves button.shelf-eastasia{border:0;color:#f3e6c4;background-color:#17151b;
-  background-image:radial-gradient(circle at 50% 100%,transparent 0 7px,rgba(214,200,238,.09) 7px 8px,transparent 8px 10px,rgba(190,226,214,.08) 10px 11px,transparent 11px);background-size:24px 12px;
-  box-shadow:inset 0 0 0 2px #c8322a,inset 0 0 0 4px #17151b,inset 0 0 0 5px #d6a446}
-.shelves button.shelf-eastasia:hover{box-shadow:inset 0 0 0 2px #c8322a,inset 0 0 0 4px #17151b,inset 0 0 0 5px #d6a446,0 10px 18px -12px #000}
-.shelves button.shelf-eastasia[aria-selected="true"]{background-color:#1f1c24;box-shadow:inset 0 0 0 2px #e0483a,inset 0 0 0 4px #1f1c24,inset 0 0 0 5px #f0c060,0 0 0 2px #e0483a}
-.shelf-eastasia .shelf-title b{color:#f6e8c4}
-.shelf-eastasia .badge{color:#fff;background:linear-gradient(110deg,#c8322a,#e8604a,#c8322a) 0 0/200% 100%}
-.shelf-eastasia small{color:rgba(243,230,196,.78)}
-
-/* Türkiye on the shelf: glazed white like an İznik tile. */
-.shelves .shelf-turkiye{background:#f4f0e6;border-color:#2a9d9a;color:#1f3f8f}
-.shelves .shelf-turkiye:hover{border-color:#1f3f8f}
-.shelves .shelf-turkiye[aria-selected="true"]{background:#fbf8f1;border-color:#c43a2c;color:#1f3f8f;box-shadow:0 0 0 1px #c43a2c}
-
-/* ...and its room: white glaze with a faint tile grid, framed in cobalt and turquoise with a white stitch. */
-.turkiye-room{position:relative;padding:26px 26px 24px;border-radius:8px;color:#1a2a55;background-color:#f4f0e6;
-  background-image:linear-gradient(rgba(31,63,143,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(31,63,143,.07) 1px,transparent 1px);background-size:46px 46px;background-position:-1px -1px;
-  box-shadow:inset 0 0 0 3px #1f3f8f,inset 0 0 0 10px #2a9d9a,inset 0 0 0 12px #1f3f8f}
-.turkiye-room::before{content:"";position:absolute;inset:5px;border:2px dotted rgba(244,240,230,.9);border-radius:6px;pointer-events:none}
-.turkiye-room .showcase-text h3{color:#1f3f8f}
-.turkiye-room .showcase-origin{color:#c43a2c}
-.turkiye-room .showcase-tag{color:#3a4a6a}
-.room-shelf{display:flex;align-items:center;gap:10px;margin:20px 0 12px;font:600 .82rem/1.2 var(--f-body);color:#1f3f8f}
-.room-shelf::after{content:"";flex:1;height:1.5px;background:linear-gradient(90deg,rgba(31,63,143,.35),rgba(31,63,143,0))}
-.turkiye-room .showcase + .room-shelf{margin-top:4px}
-.turkiye-room .room-grid button{color:#1a2a55}
-.turkiye-room .room-grid button[aria-checked="true"] img{outline-color:#c43a2c}
-.turkiye-room .room-grid button[aria-checked="true"] span{color:#c43a2c}
-
-/* East Asia room: black lacquer with a faint mother-of-pearl wave, a vermilion frame between gold lines. */
-.eastasia-room{position:relative;padding:26px 26px 24px;border-radius:8px;color:#f3e6c4;background-color:#17151b;
-  background-image:radial-gradient(circle at 50% 100%,transparent 0 9px,rgba(214,200,238,.06) 9px 10px,transparent 10px 13px,rgba(190,226,214,.05) 13px 14px,transparent 14px);background-size:32px 16px;
-  box-shadow:inset 0 0 0 2px #d6a446,inset 0 0 0 10px #b02a24,inset 0 0 0 12px #d6a446}
-.eastasia-room::before{content:"";position:absolute;inset:5px;border:2px dotted rgba(240,192,96,.7);border-radius:6px;pointer-events:none}
-.eastasia-room .showcase-text h3{color:#f6e8c4}
-.eastasia-room .showcase-origin{color:#f07a5a}
-.eastasia-room .showcase-tag{color:rgba(243,230,196,.75)}
-.eastasia-room .country-tabs{margin:0 0 4px}
-.eastasia-room .country-tabs button svg{width:16px;height:16px;border-radius:0}
-.eastasia-room .room-shelf{color:#f0c060}
-.eastasia-room .room-shelf::after{background:linear-gradient(90deg,rgba(240,192,96,.45),rgba(240,192,96,0))}
-.eastasia-room .room-grid button{color:#efe2c4}
-.eastasia-room .room-grid button[aria-checked="true"] img{outline-color:#e0483a}
-.eastasia-room .room-grid button[aria-checked="true"] span{color:#f07a5a}
-
-/* Mediterranean room: limewash with a faint ripple of sea, a sea-blue frame between terracotta lines, a white stitch. */
-.med-room{position:relative;padding:26px 26px 24px;border-radius:8px;color:#2a2a3a;background-color:#f5ead6;
-  background-image:radial-gradient(circle at 50% 0,transparent 0 10px,rgba(31,95,168,.07) 10px 11.5px,transparent 11.5px);background-size:28px 14px;
-  box-shadow:inset 0 0 0 3px #c4572e,inset 0 0 0 10px #1f5fa8,inset 0 0 0 12px #c4572e}
-.med-room::before{content:"";position:absolute;inset:5px;border:2px dotted rgba(245,234,214,.9);border-radius:6px;pointer-events:none}
-.med-room .showcase-text h3{color:#1d3f78}
-.med-room .showcase-origin{color:#c4572e}
-.med-room .country-tabs{margin:0 0 4px}
-.med-room .country-tabs button{background:rgba(255,255,255,.55);border-color:rgba(29,63,120,.25);color:#1d3f78}
-.med-room .country-tabs button:hover{border-color:rgba(29,63,120,.6)}
-.med-room .country-tabs button[aria-selected="true"]{background:#1f5fa8;border-color:#1f5fa8;color:#fff}
-.med-room .country-tabs button svg{width:16px;height:16px;border-radius:0}
-.med-room .room-shelf{color:#1f5fa8}
-.med-room .room-shelf::after{background:linear-gradient(90deg,rgba(31,95,168,.4),rgba(31,95,168,0))}
-.med-room .room-grid button{color:#2a2a3a}
-.med-room .room-grid button[aria-checked="true"] img{outline-color:#c4572e}
-.med-room .room-grid button[aria-checked="true"] span{color:#c4572e}
+/* The rugs: big enough to see, the name under it, and the town it's from when we know it */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:22px 16px}
+.swatches .grid button,.results-grid button{position:relative;gap:0;align-content:start}
+.swatches .grid img,.results-grid img{margin-bottom:9px}
+.tile-from{display:block;margin-top:2px;font:500 .7rem/1.3 var(--f-body);color:rgba(242,230,204,.52)}
+.swatches button[aria-checked="true"] .tile-from{color:rgba(216,154,46,.75)}
+/* the rug that's down now: a saffron check on its corner */
+.swatches .grid button[aria-checked="true"]::after,.results-grid button[aria-checked="true"]::after{content:"";position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;
+  background:var(--saffron) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.3 5 8.7l4.6-5' fill='none' stroke='%2322130c' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/13px no-repeat;
+  box-shadow:0 0 0 3px var(--ink),0 3px 6px rgba(0,0,0,.5)}
+.swatches .special{margin:0 0 24px}
 
 /* Search in the title bar: a dark inset field, the shortcut on the right until you start typing. */
 .find{-webkit-app-region:no-drag;position:relative;flex:0 1 340px;min-width:0;margin:0 auto;display:flex;align-items:center;height:28px;border-radius:5px;
@@ -409,23 +347,17 @@ h2{margin:0 0 8px;font:600 .84rem/1.3 var(--f-body);color:var(--saffron)}
 .gallery.searching .shelves,.gallery.searching #swatches,.gallery.searching #patternNote{display:none}
 .results{display:grid;gap:14px}
 .results-head{font:600 .86rem/1.4 var(--f-body);color:var(--saffron)}
-.results-grid{display:grid}
-.results-grid small{display:block;margin-top:2px;font:500 .72rem/1.3 var(--f-body);color:rgba(242,230,204,.6)}
-.results-grid button[aria-checked="true"] small{color:rgba(216,154,46,.8)}
+.results{margin-top:18px}
 .results-grid mark{background:none;color:inherit;text-decoration:underline;text-decoration-color:var(--saffron);text-decoration-thickness:2px;text-underline-offset:3px}
 
 /* Narrow window: one column, the page scrolls as a whole */
 @media (max-width:860px){
   .layout{grid-template-columns:1fr;grid-auto-rows:max-content;overflow:auto}
   .side,.gallery{overflow:visible;min-height:auto}
-  .shelves{grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}
-  .shelves button{padding:7px 3px 6px;font-size:.72rem}
-  .shelves img{width:44px}
-  .showcase{grid-template-columns:1fr}
-  .shelf-fan{width:108px;height:50px}
-  .shelves .shelf-fan img{width:58px}
-  .shelf-fan img:nth-child(2){left:25px}
-  .shelf-fan img:nth-child(3){left:50px}
+  .shelves{position:static;gap:0}
+  .shelves button{font-size:.68rem}
+  .shelves img{width:46px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
   .swatches .special{grid-template-columns:110px 1fr}
 }
 @media (max-width:640px){.brand span{display:none}}

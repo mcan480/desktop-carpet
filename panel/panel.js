@@ -16,6 +16,14 @@
     $$('[data-t]').forEach((el) => { const v = T[el.dataset.t]; if (typeof v === 'string') el.textContent = v; });
     $$('[data-tp]').forEach((el) => { const v = T[el.dataset.tp]; if (typeof v === 'string') el.placeholder = v; });
     $('#findInput').placeholder = T.searchPh(RUG_COUNT);
+    $$('.coll[data-coll]').forEach((c) => { c.querySelector('.pack-count').textContent = T.found(new Set([...c.querySelectorAll('[data-style]')].map((b) => b.dataset.style)).size); });
+    $$('#swatches .grid button[data-style]').forEach((b) => {
+      const from = T['o_' + b.dataset.style] || '';
+      let el = b.querySelector('.tile-from');
+      if (!from) { el?.remove(); return; }
+      if (!el) { el = document.createElement('small'); el.className = 'tile-from'; b.append(el); }
+      el.textContent = from;
+    });
     index = null;
     if ($('#findInput').value.trim()) runSearch();
   }
@@ -130,11 +138,13 @@
       const coll = btn?.closest('.coll'), home = btn?.closest('.country');
       if (coll) showColl(coll.dataset.coll);
       if (home) showCountry(home.dataset.country);
-      for (const room of rooms) if (btn && room.el.contains(btn)) room.pick = r.style;
       // A new pack gets the gallery once: the first time the panel opens after it arrives, it opens on that pack.
       if (featured && !featuredSeen) { featuredSeen = true; showColl(featured); try { localStorage.setItem('dc-featured', featured); } catch {} }
-      // outside the showrooms (where it hangs large), bring the rug in use into view
-      else if (btn && !btn.closest('.showroom') && !btn.closest('[hidden]')) btn.scrollIntoView({ block: 'nearest', behavior: first ? 'auto' : 'smooth' });
+      // bring the rug in use into view (below the tabs, which stay on top)
+      else if (btn && !btn.closest('[hidden]') && !$('.gallery').classList.contains('searching')) {
+        const g = $('.gallery'), top = btn.getBoundingClientRect().top - g.getBoundingClientRect().top, tabs = $('.shelves').offsetHeight;
+        if (top < tabs + 8 || top + btn.offsetHeight > g.clientHeight - 8) g.scrollTo({ top: g.scrollTop + top - tabs - 70, behavior: first ? 'auto' : 'smooth' });
+      }
       if (btn) remember(r.style);
     }
     // On your desktop
@@ -155,7 +165,6 @@
       }));
     }
     list.querySelectorAll('button').forEach((b) => { b.disabled = !unlocked || !allowed(b.dataset.k); });
-    for (const room of rooms) if (!room.hover) room.show(room.pick);
     $('#patternNote').hidden = !expiredPaid;
     $$('#sizeSeg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === r.size)));
     $$('#weightSeg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === r.weight)));
@@ -225,83 +234,8 @@
     $$('.coll[data-coll]').forEach((p) => { p.hidden = p.dataset.coll !== c; });
   }
   $$('.shelves [data-coll]').forEach((t) => t.addEventListener('click', () => { showColl(t.dataset.coll); $('.gallery').scrollTop = 0; }));
-  // Large showroom pictures: the small thumbnail shows at once, then a sharp one drawn from the rug's own code in a
-  // worker replaces it (so no large pictures ship with the app). One drawing at a time, the most recently asked-for
-  // rug first; drawn pictures are kept for the session.
-  const previews = (() => {
-    const cache = new Map(), want = new Map();   // rug -> callbacks, in the order they were asked for
-    let worker = null, busy = null, broken = false;
-    function start() {
-      if (worker || broken) return !!worker;
-      try { worker = new Worker('rugworker.js'); } catch { broken = true; return false; }
-      worker.onmessage = ({ data }) => {
-        const cbs = want.get(data.key);
-        want.delete(data.key);
-        busy = null;
-        if (data.blob) {
-          const url = URL.createObjectURL(data.blob);
-          cache.set(data.key, url);
-          while (cache.size > 60) { const [k, u] = cache.entries().next().value; cache.delete(k); URL.revokeObjectURL(u); }
-          cbs?.forEach((cb) => cb(url));
-        }
-        pump();
-      };
-      worker.onerror = () => { broken = true; worker = null; busy = null; };
-      return true;
-    }
-    function pump() {
-      if (busy || !want.size || !start()) return;
-      busy = [...want.keys()].pop();
-      worker.postMessage({ key: busy, w: 960, h: 608 });
-    }
-    return {
-      // calls back with the sharp picture's URL: now if it was drawn before (returns true), else when it's ready
-      get(k, cb) {
-        if (cache.has(k)) { cb(cache.get(k)); return true; }
-        const cbs = want.get(k) || new Set();
-        want.delete(k); cbs.add(cb); want.set(k, cbs); pump(); return false;
-      },
-      // this one no longer needs it (nor does anyone else: then it isn't drawn, unless it's being drawn already)
-      drop(k, cb) {
-        const cbs = want.get(k);
-        if (!cbs) return;
-        cbs.delete(cb);
-        if (!cbs.size && busy !== k) want.delete(k);
-      },
-    };
-  })();
-
-  // Showrooms (Persia, Türkiye, East Asia, Mediterranean): the rug in use there (or the last one picked) hangs large, with the town it comes
-  // from; pointing at another one previews it.
-  const rooms = $$('.showroom').map((el) => {
-    const btns = [...el.querySelectorAll('[data-style]')], img = el.querySelector('.showcase-rug img');
-    const room = {
-      el, pick: btns[0]?.dataset.style, hover: false, shown: null,
-      got(url) { img.src = url; },
-      show(k) {
-        const b = el.querySelector(`[data-style="${k}"]`);
-        if (!b) return;
-        if (room.shown !== k) {
-          if (room.shown) previews.drop(room.shown, room.got);
-          room.shown = k;
-          if (!previews.get(k, room.got)) img.src = `./thumbs/${k}.webp`;
-        }
-        el.querySelector('.showcase-text h3').textContent = b.querySelector('span').textContent;
-        el.querySelector('.showcase-origin span').textContent = T['o_' + k] || T[b.closest('.country')?.dataset.country] || '';
-      },
-    };
-    btns.forEach((b) => {
-      b.addEventListener('pointerenter', () => { room.hover = true; room.show(b.dataset.style); });
-      b.addEventListener('focus', () => room.show(b.dataset.style));
-    });
-    el.querySelectorAll('.room-grid').forEach((g) => {
-      g.addEventListener('pointerleave', () => { room.hover = false; room.show(room.pick); });
-      g.addEventListener('focusout', () => { if (!room.hover) room.show(room.pick); });
-    });
-    return room;
-  });
-  // The featured pack is the wide tab on the shelf.
-  const featured = $('.shelves .shelf-featured')?.dataset.coll;
+  // The newest pack (its tab says NEW).
+  const featured = $('.shelves [data-new]')?.dataset.coll;
   let featuredSeen = true;
   try { featuredSeen = localStorage.getItem('dc-featured') === featured; } catch {}
   // Packs with countries (Americas, East Asia, Mediterranean): one country at a time, each pack keeping its own choice.
@@ -311,17 +245,7 @@
     scope.querySelectorAll('.country-tabs [data-country]').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.country === c)));
     scope.querySelectorAll('.country[data-country]').forEach((p) => { p.hidden = p.dataset.country !== c; });
   }
-  $$('.country-tabs [data-country]').forEach((t) => t.addEventListener('click', () => {
-    showCountry(t.dataset.country);
-    // in a showroom, the big rug follows the country: the one in use if it's from there, else the country's first
-    const room = rooms.find((r) => r.el.contains(t));
-    const panel = room?.el.querySelector(`.country[data-country="${t.dataset.country}"]`);
-    if (room && panel) {
-      const using = st?.rug?.style;
-      room.pick = panel.querySelector(`[data-style="${using}"]`) ? using : panel.querySelector('[data-style]').dataset.style;
-      room.show(room.pick);
-    }
-  }));
+  $$('.country-tabs [data-country]').forEach((t) => t.addEventListener('click', () => showCountry(t.dataset.country)));
   $$('#sizeSeg button').forEach((b) => b.addEventListener('click', () => dc.rug('size', b.dataset.v)));
   $$('#weightSeg button').forEach((b) => b.addEventListener('click', () => dc.rug('weight', b.dataset.v)));
   $('#tShow').addEventListener('change', (e) => dc.rug(e.target.checked ? 'show' : 'hide'));
@@ -406,8 +330,8 @@
     $('#resultsGrid').replaceChildren(...hits.map((it) => {
       const b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'radio'); b.dataset.style = it.k;
       const img = document.createElement('img'); img.src = `./thumbs/${it.k}.webp`; img.alt = '';
-      const label = nameWithMark(it, words), small = document.createElement('small'); small.textContent = it.from;
-      label.append(small); b.append(img, label);
+      const small = document.createElement('small'); small.className = 'tile-from'; small.textContent = it.from;
+      b.append(img, nameWithMark(it, words), small);
       b.addEventListener('click', () => dc.rug('style', it.k));
       return b;
     }));

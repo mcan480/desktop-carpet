@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'">
 <title>Desktop Carpet</title>
 <link rel="stylesheet" href="./panel.css">
 </head>
@@ -177,7 +177,7 @@
     </section>
   </aside>
 
-  <!-- The rugs: one collection at a time, picked from the shelf of tabs on top -->
+  <!-- The rugs: one pack at a time, picked from the tabs on top -->
   <section class="panel gallery" aria-labelledby="galleryTitle">
     <h2 class="sr" id="galleryTitle" data-t="pattern">Pattern</h2>
       <div class="lock" id="lockNote" hidden><span data-t="locked">Activate a license to lay down the carpet.</span></div>
@@ -187,24 +187,18 @@
       <div class="grid results-grid swatches group" id="resultsGrid" role="radiogroup" aria-labelledby="resultsHead"></div>
     </div>
     <nav class="shelves" role="tablist">
-      <!-- The newest pack is featured: a wide tab across the top of the shelf -->
-      <button type="button" role="tab" data-coll="mediterranean" aria-selected="false" class="shelf-featured shelf-med">
-        <span class="shelf-fan" aria-hidden="true"><img src="./thumbs/limon.webp" alt=""><img src="./thumbs/santorini.webp" alt=""><img src="./thumbs/flamenko.webp" alt=""></span>
-        <span class="shelf-feature">
-          <span class="shelf-title"><b data-t="mediterranean">Mediterranean</b><i class="badge" data-t="newBadge">NEW</i></span>
-          <small data-t="medTag">Sun, salt and terracotta, one rug at a time.</small>
-        </span>
-      </button>
+      <button type="button" role="tab" data-coll="mediterranean" data-new aria-selected="false"><img src="./thumbs/santorini.webp" alt=""><span data-t="mediterranean">Mediterranean</span><i class="badge" data-t="newBadge">NEW</i></button>
       <button type="button" role="tab" data-coll="classics" aria-selected="true"><img src="./thumbs/tabriz.webp" alt=""><span data-t="classics">Classics</span></button>
       <button type="button" role="tab" data-coll="halloween" aria-selected="false"><img src="./thumbs/balkabagi.webp" alt=""><span data-t="halloween">Halloween</span></button>
       <button type="button" role="tab" data-coll="americas" aria-selected="false"><img src="./thumbs/kartpostal.webp" alt=""><span data-t="americas">Americas</span></button>
-      <button type="button" role="tab" data-coll="persia" aria-selected="false" class="shelf-persia"><img src="./thumbs/heriz.webp" alt=""><span data-t="persia">Persia</span></button>
-      <button type="button" role="tab" data-coll="turkiye" aria-selected="false" class="shelf-turkiye"><img src="./thumbs/kapadokya.webp" alt=""><span data-t="turkiye">Türkiye</span></button>
-      <button type="button" role="tab" data-coll="eastasia" aria-selected="false" class="shelf-eastasia"><img src="./thumbs/kaplan.webp" alt=""><span data-t="eastAsia">East Asia</span></button>
+      <button type="button" role="tab" data-coll="persia" aria-selected="false"><img src="./thumbs/heriz.webp" alt=""><span data-t="persia">Persia</span></button>
+      <button type="button" role="tab" data-coll="turkiye" aria-selected="false"><img src="./thumbs/kapadokya.webp" alt=""><span data-t="turkiye">Türkiye</span></button>
+      <button type="button" role="tab" data-coll="eastasia" aria-selected="false"><img src="./thumbs/kaplan.webp" alt=""><span data-t="eastAsia">East Asia</span></button>
     </nav>
 
     <div class="swatches group" id="swatches" role="radiogroup">
       <div class="coll" data-coll="classics" role="tabpanel">
+        <header class="pack-head"><h3><span data-t="classics">Classics</span></h3><p class="pack-count"></p></header>
           <button type="button" role="radio" data-style="gorunmez" class="special">
             <img src="./thumbs/gorunmez.webp" alt="">
             <span class="special-text">
@@ -222,14 +216,16 @@
       </div>
 
       <div class="coll" data-coll="halloween" role="tabpanel" hidden>
-        <div class="grid grid-3">
+        <header class="pack-head"><h3><span data-t="halloween">Halloween</span></h3><p class="pack-count"></p></header>
+        <div class="grid">
             <button type="button" role="radio" data-style="balkabagi"><img src="./thumbs/balkabagi.webp" alt=""><span data-t="s_balkabagi">Pumpkin Patch</span></button>
             <button type="button" role="radio" data-style="orumcek"><img src="./thumbs/orumcek.webp" alt=""><span data-t="s_orumcek">Spider Web</span></button>
             <button type="button" role="radio" data-style="hayalet"><img src="./thumbs/hayalet.webp" alt=""><span data-t="s_hayalet">Ghost Night</span></button>
         </div>
       </div>
 
-      <div class="coll americas" data-coll="americas" role="tabpanel" hidden>
+      <div class="coll" data-coll="americas" role="tabpanel" hidden>
+        <header class="pack-head"><h3><span data-t="americas">Americas</span></h3><p class="pack-count"></p></header>
           <div class="country-tabs" role="tablist">
             <button type="button" role="tab" data-country="usa" aria-selected="true"><svg viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" rx="1.5" fill="#efe3c6"/><g fill="#b5312b"><rect y="0" width="20" height="2"/><rect y="4" width="20" height="2"/><rect y="8" width="20" height="2"/><rect y="12" width="20" height="2"/></g><rect width="9" height="8" fill="#25345e"/><g fill="#efe3c6"><circle cx="2.2" cy="2" r=".7"/><circle cx="4.5" cy="2" r=".7"/><circle cx="6.8" cy="2" r=".7"/><circle cx="3.3" cy="4" r=".7"/><circle cx="5.6" cy="4" r=".7"/><circle cx="2.2" cy="6" r=".7"/><circle cx="4.5" cy="6" r=".7"/><circle cx="6.8" cy="6" r=".7"/></g></svg><span data-t="usa">USA</span></button>
             <button type="button" role="tab" data-country="canada" aria-selected="false"><svg viewBox="0 0 20 10" aria-hidden="true"><rect width="20" height="10" rx="1.2" fill="#c8302f"/><rect x="5" width="10" height="10" fill="#f3ece0"/><path fill="#c8302f" d="M10 1.4l.7 1.3.8-.4-.3 1.9 1-.9.2.7 1.2-.2-.4 1.2.5.3-1.9 1.4.2.6-1.8-.2v1.7h-.4V6.4l-1.8.2.2-.6-1.9-1.4.5-.3-.4-1.2 1.2.2.2-.7 1 .9-.3-1.9.8.4z"/></svg><span data-t="canada">Canada</span></button>
@@ -237,7 +233,7 @@
           </div>
           <div class="country" data-country="usa" role="tabpanel">
             <p class="season-tag" data-t="usaTag">Coast to coast, one rug at a time.</p>
-            <div class="season-row usa-row">
+            <div class="grid">
               <button type="button" role="radio" data-style="yildizlar"><img src="./thumbs/yildizlar.webp" alt=""><span data-t="s_yildizlar">Stars & Stripes</span></button>
               <button type="button" role="radio" data-style="mesa"><img src="./thumbs/mesa.webp" alt=""><span data-t="s_mesa">Desert Mesa</span></button>
               <button type="button" role="radio" data-style="yorgan"><img src="./thumbs/yorgan.webp" alt=""><span data-t="s_yorgan">Log Cabin Quilt</span></button>
@@ -256,7 +252,7 @@
           </div>
           <div class="country" data-country="canada" role="tabpanel" hidden>
             <p class="season-tag" data-t="canadaTag">From sea to sea, one rug at a time.</p>
-            <div class="season-row usa-row">
+            <div class="grid">
               <button type="button" role="radio" data-style="akcaagac"><img src="./thumbs/akcaagac.webp" alt=""><span data-t="s_akcaagac">Maple Leaf</span></button>
               <button type="button" role="radio" data-style="yaprak"><img src="./thumbs/yaprak.webp" alt=""><span data-t="s_yaprak">Maple Leaf Quilt</span></button>
               <button type="button" role="radio" data-style="kayalik"><img src="./thumbs/kayalik.webp" alt=""><span data-t="s_kayalik">Rocky Mountains</span></button>
@@ -273,7 +269,7 @@
           </div>
           <div class="country" data-country="mexico" role="tabpanel" hidden>
             <p class="season-tag" data-t="mexicoTag">Desert to jungle, one rug at a time.</p>
-            <div class="season-row usa-row">
+            <div class="grid">
               <button type="button" role="radio" data-style="sarape"><img src="./thumbs/sarape.webp" alt=""><span data-t="s_sarape">Sarape</span></button>
               <button type="button" role="radio" data-style="greca"><img src="./thumbs/greca.webp" alt=""><span data-t="s_greca">Greca</span></button>
               <button type="button" role="radio" data-style="cini"><img src="./thumbs/cini.webp" alt=""><span data-t="s_cini">Blue Tile</span></button>
@@ -290,17 +286,10 @@
           </div>
       </div>
 
-      <!-- Persia: a showroom. The chosen rug (or the one under the pointer) hangs large in a framed vitrine. -->
-      <div class="coll showroom persia-room" data-coll="persia" role="tabpanel" hidden>
-        <div class="showcase">
-          <figure class="showcase-rug"><img src="./thumbs/heriz.webp" alt=""></figure>
-          <div class="showcase-text">
-            <h3>Heriz</h3>
-            <p class="showcase-origin"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 6 3.6a2.4 2.4 0 0 1 0 4.8z" fill="currentColor"/></svg><span>East Azerbaijan</span></p>
-            <p class="showcase-tag" data-t="persiaTag">From the carpet capital, knot by knot.</p>
-          </div>
-        </div>
-        <div class="grid room-grid">
+      <!-- Persia -->
+      <div class="coll" data-coll="persia" role="tabpanel" hidden>
+        <header class="pack-head"><h3><span data-t="persia">Persia</span></h3><p class="pack-count"></p><p class="pack-tag" data-t="persiaTag"></p></header>
+        <div class="grid">
           <button type="button" role="radio" data-style="heriz"><img src="./thumbs/heriz.webp" alt=""><span data-t="s_heriz">Heriz</span></button>
           <button type="button" role="radio" data-style="bahce"><img src="./thumbs/bahce.webp" alt=""><span data-t="s_bahce">Paradise Garden</span></button>
           <button type="button" role="radio" data-style="av"><img src="./thumbs/av.webp" alt=""><span data-t="s_av">Hunting Scene</span></button>
@@ -316,18 +305,11 @@
         </div>
       </div>
 
-      <!-- Türkiye: an İznik-tile room. The chosen rug hangs large; the knotted carpets and the picture rugs on two shelves. -->
-      <div class="coll showroom turkiye-room" data-coll="turkiye" role="tabpanel" hidden>
-        <div class="showcase">
-          <figure class="showcase-rug"><img src="./thumbs/usak.webp" alt=""></figure>
-          <div class="showcase-text">
-            <h3>Ushak Medallion</h3>
-            <p class="showcase-origin"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 6 3.6a2.4 2.4 0 0 1 0 4.8z" fill="currentColor"/></svg><span>Uşak</span></p>
-            <p class="showcase-tag" data-t="turkiyeTag">Between two continents, one rug at a time.</p>
-          </div>
-        </div>
+      <!-- Türkiye: the knotted carpets and the picture rugs on two shelves -->
+      <div class="coll" data-coll="turkiye" role="tabpanel" hidden>
+        <header class="pack-head"><h3><span data-t="turkiye">Türkiye</span></h3><p class="pack-count"></p><p class="pack-tag" data-t="turkiyeTag"></p></header>
         <h4 class="room-shelf" data-t="turkiyeKnot">Anatolian carpets</h4>
-        <div class="grid room-grid">
+        <div class="grid">
           <button type="button" role="radio" data-style="usak"><img src="./thumbs/usak.webp" alt=""><span data-t="s_usak">Ushak Medallion</span></button>
           <button type="button" role="radio" data-style="lotto"><img src="./thumbs/lotto.webp" alt=""><span data-t="s_lotto">Lotto</span></button>
           <button type="button" role="radio" data-style="bergama"><img src="./thumbs/bergama.webp" alt=""><span data-t="s_bergama">Bergama</span></button>
@@ -337,7 +319,7 @@
           <button type="button" role="radio" data-style="iznik"><img src="./thumbs/iznik.webp" alt=""><span data-t="s_iznik">Iznik Tulips</span></button>
         </div>
         <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
-        <div class="grid room-grid">
+        <div class="grid">
           <button type="button" role="radio" data-style="turkiyekart"><img src="./thumbs/turkiyekart.webp" alt=""><span data-t="s_turkiyekart">Greetings from Türkiye</span></button>
           <button type="button" role="radio" data-style="kapadokya"><img src="./thumbs/kapadokya.webp" alt=""><span data-t="s_kapadokya">Cappadocia Balloons</span></button>
           <button type="button" role="radio" data-style="bogaz"><img src="./thumbs/bogaz.webp" alt=""><span data-t="s_bogaz">Bosphorus Ferry</span></button>
@@ -346,15 +328,9 @@
         </div>
       </div>
 
-      <!-- East Asia: a black-lacquer room with a vermilion frame. The chosen rug hangs large; a tab for each country. -->
-      <div class="coll showroom eastasia-room" data-coll="eastasia" role="tabpanel" hidden>
-        <div class="showcase">
-          <figure class="showcase-rug"><img src="./thumbs/bojagi.webp" alt=""></figure>
-          <div class="showcase-text">
-            <h3>Bojagi</h3>
-            <p class="showcase-origin"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 6 3.6a2.4 2.4 0 0 1 0 4.8z" fill="currentColor"/></svg><span>Korea</span></p>
-          </div>
-        </div>
+      <!-- East Asia: a tab for each country -->
+      <div class="coll" data-coll="eastasia" role="tabpanel" hidden>
+        <header class="pack-head"><h3><span data-t="eastAsia">East Asia</span></h3><p class="pack-count"></p><p class="pack-tag" data-t="eastAsiaTag"></p></header>
         <div class="country-tabs" role="tablist">
           <button type="button" role="tab" data-country="korea" aria-selected="true"><svg viewBox="0 0 16 16" aria-hidden="true"><g fill="#e98fb0"><circle cx="8" cy="3.6" r="3"/><circle cx="12.2" cy="6.6" r="3"/><circle cx="10.6" cy="11.6" r="3"/><circle cx="5.4" cy="11.6" r="3"/><circle cx="3.8" cy="6.6" r="3"/></g><circle cx="8" cy="8" r="2.6" fill="#b8324a"/></svg><span data-t="korea">Korea</span></button>
           <button type="button" role="tab" data-country="japan" aria-selected="false"><svg viewBox="0 0 18 14" aria-hidden="true"><path d="M0 13 6.6 3h4.8L18 13z" fill="#6a82b0"/><path d="M5.1 5.3 6.6 3h4.8l1.5 2.3-1.6 1-1.4-1.1-1 1.1-1-1.1-1.4 1.1z" fill="#f4f2ec"/></svg><span data-t="japan">Japan</span></button>
@@ -362,7 +338,7 @@
         </div>
         <div class="country" data-country="korea" role="tabpanel">
           <h4 class="room-shelf" data-t="asiaKnot">Patterns and textiles</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="bojagi"><img src="./thumbs/bojagi.webp" alt=""><span data-t="s_bojagi">Bojagi</span></button>
               <button type="button" role="radio" data-style="saekdong"><img src="./thumbs/saekdong.webp" alt=""><span data-t="s_saekdong">Saekdong Stripes</span></button>
               <button type="button" role="radio" data-style="seladon"><img src="./thumbs/seladon.webp" alt=""><span data-t="s_seladon">Celadon Cranes</span></button>
@@ -372,7 +348,7 @@
               <button type="button" role="radio" data-style="sipjang"><img src="./thumbs/sipjang.webp" alt=""><span data-t="s_sipjang">Ten Longevities</span></button>
           </div>
           <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="kaplan"><img src="./thumbs/kaplan.webp" alt=""><span data-t="s_kaplan">Magpie and Tiger</span></button>
               <button type="button" role="radio" data-style="hanok"><img src="./thumbs/hanok.webp" alt=""><span data-t="s_hanok">Hanok</span></button>
               <button type="button" role="radio" data-style="seul"><img src="./thumbs/seul.webp" alt=""><span data-t="s_seul">Seoul at Night</span></button>
@@ -384,7 +360,7 @@
         </div>
         <div class="country" data-country="japan" role="tabpanel" hidden>
           <h4 class="room-shelf" data-t="asiaKnot">Patterns and textiles</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="seigaiha"><img src="./thumbs/seigaiha.webp" alt=""><span data-t="s_seigaiha">Seigaiha Waves</span></button>
               <button type="button" role="radio" data-style="asanoha"><img src="./thumbs/asanoha.webp" alt=""><span data-t="s_asanoha">Asanoha</span></button>
               <button type="button" role="radio" data-style="boro"><img src="./thumbs/boro.webp" alt=""><span data-t="s_boro">Boro</span></button>
@@ -394,7 +370,7 @@
               <button type="button" role="radio" data-style="zen"><img src="./thumbs/zen.webp" alt=""><span data-t="s_zen">Zen Garden</span></button>
           </div>
           <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="fuji"><img src="./thumbs/fuji.webp" alt=""><span data-t="s_fuji">Fuji and Sakura</span></button>
               <button type="button" role="radio" data-style="kyoto"><img src="./thumbs/kyoto.webp" alt=""><span data-t="s_kyoto">Kyoto Lane</span></button>
               <button type="button" role="radio" data-style="japonkart"><img src="./thumbs/japonkart.webp" alt=""><span data-t="s_japonkart">Greetings from Japan</span></button>
@@ -406,7 +382,7 @@
         </div>
         <div class="country" data-country="china" role="tabpanel" hidden>
           <h4 class="room-shelf" data-t="asiaKnot">Patterns and textiles</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="porselen"><img src="./thumbs/porselen.webp" alt=""><span data-t="s_porselen">Blue and White</span></button>
               <button type="button" role="radio" data-style="bulut"><img src="./thumbs/bulut.webp" alt=""><span data-t="s_bulut">Lucky Clouds</span></button>
               <button type="button" role="radio" data-style="artdeco"><img src="./thumbs/artdeco.webp" alt=""><span data-t="s_artdeco">Shanghai Deco</span></button>
@@ -417,7 +393,7 @@
               <button type="button" role="radio" data-style="mahjong"><img src="./thumbs/mahjong.webp" alt=""><span data-t="s_mahjong">Mahjong</span></button>
           </div>
           <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="panda"><img src="./thumbs/panda.webp" alt=""><span data-t="s_panda">Panda</span></button>
               <button type="button" role="radio" data-style="seddicin"><img src="./thumbs/seddicin.webp" alt=""><span data-t="s_seddicin">The Great Wall</span></button>
               <button type="button" role="radio" data-style="cinkart"><img src="./thumbs/cinkart.webp" alt=""><span data-t="s_cinkart">Greetings from China</span></button>
@@ -428,15 +404,9 @@
         </div>
       </div>
 
-      <!-- Mediterranean: a limewashed room framed in terracotta and sea blue. The chosen rug hangs large; a tab for each country. -->
-      <div class="coll showroom med-room" data-coll="mediterranean" role="tabpanel" hidden>
-        <div class="showcase">
-          <figure class="showcase-rug"><img src="./thumbs/majolika.webp" alt=""></figure>
-          <div class="showcase-text">
-            <h3>Majolica</h3>
-            <p class="showcase-origin"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 6 3.6a2.4 2.4 0 0 1 0 4.8z" fill="currentColor"/></svg><span>Italy</span></p>
-          </div>
-        </div>
+      <!-- Mediterranean: a tab for each country -->
+      <div class="coll" data-coll="mediterranean" role="tabpanel" hidden>
+        <header class="pack-head"><h3><span data-t="mediterranean">Mediterranean</span><i class="badge" data-t="newBadge">NEW</i></h3><p class="pack-count"></p><p class="pack-tag" data-t="medTag"></p></header>
         <div class="country-tabs" role="tablist">
           <button type="button" role="tab" data-country="italy" aria-selected="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.6 10.2c-.6-3.4 2-6.6 5.6-7 1.3-.1 2.4.2 3.3.8l1.5-.6-.5 1.5c.6.9.9 2 .8 3.2-.4 3.4-3.5 6-7 5.8-1.2-.1-2.2-.5-2.9-1.2l-1.4.4.5-1.4c.1-.5.1-1 .1-1.5z" fill="#f2c430"/><path d="M8.8 3.2C8.6 1.6 9.8.4 11.6.4c.2 1.6-1 2.8-2.8 2.8z" fill="#4f8a3a"/></svg><span data-t="italy">Italy</span></button>
           <button type="button" role="tab" data-country="greece" aria-selected="false"><svg viewBox="0 0 14 16" aria-hidden="true"><path d="M5 .6h4v1.6c0 .5.3.9.8 1.1C12 4.3 13 6.6 13 8.8c0 3-2.2 5.6-4.4 6.6H5.4C3.2 14.4 1 11.8 1 8.8c0-2.2 1-4.5 3.2-5.5.5-.2.8-.6.8-1.1z" fill="#c86a32"/><path d="M1.6 7.4h10.8v2H1.6z" fill="#1c1714"/><path d="M4.2 3.4C2.2 3 1.6 4.8 2.2 6.4M9.8 3.4c2-.4 2.6 1.4 2 3" stroke="#c86a32" stroke-width="1.2" fill="none"/></svg><span data-t="greece">Greece</span></button>
@@ -445,7 +415,7 @@
         </div>
         <div class="country" data-country="italy" role="tabpanel">
           <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="majolika"><img src="./thumbs/majolika.webp" alt=""><span data-t="s_majolika">Majolica</span></button>
               <button type="button" role="radio" data-style="limon"><img src="./thumbs/limon.webp" alt=""><span data-t="s_limon">Amalfi Lemons</span></button>
               <button type="button" role="radio" data-style="damask"><img src="./thumbs/damask.webp" alt=""><span data-t="s_damask">Venetian Damask</span></button>
@@ -456,7 +426,7 @@
               <button type="button" role="radio" data-style="sicilya"><img src="./thumbs/sicilya.webp" alt=""><span data-t="s_sicilya">Sicilian Cart</span></button>
           </div>
           <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="venedik"><img src="./thumbs/venedik.webp" alt=""><span data-t="s_venedik">Venice</span></button>
               <button type="button" role="radio" data-style="toskana"><img src="./thumbs/toskana.webp" alt=""><span data-t="s_toskana">Tuscany</span></button>
               <button type="button" role="radio" data-style="cinqueterre"><img src="./thumbs/cinqueterre.webp" alt=""><span data-t="s_cinqueterre">Cinque Terre</span></button>
@@ -469,7 +439,7 @@
         </div>
         <div class="country" data-country="greece" role="tabpanel" hidden>
           <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="menderes"><img src="./thumbs/menderes.webp" alt=""><span data-t="s_menderes">Meander</span></button>
               <button type="button" role="radio" data-style="amfora"><img src="./thumbs/amfora.webp" alt=""><span data-t="s_amfora">Amphora</span></button>
               <button type="button" role="radio" data-style="zeytin"><img src="./thumbs/zeytin.webp" alt=""><span data-t="s_zeytin">Olive Branch</span></button>
@@ -480,7 +450,7 @@
               <button type="button" role="radio" data-style="kirlangic"><img src="./thumbs/kirlangic.webp" alt=""><span data-t="s_kirlangic">Swallow Fresco</span></button>
           </div>
           <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="santorini"><img src="./thumbs/santorini.webp" alt=""><span data-t="s_santorini">Santorini</span></button>
               <button type="button" role="radio" data-style="akropolis"><img src="./thumbs/akropolis.webp" alt=""><span data-t="s_akropolis">The Acropolis</span></button>
               <button type="button" role="radio" data-style="liman"><img src="./thumbs/liman.webp" alt=""><span data-t="s_liman">Fishing Harbor</span></button>
@@ -493,7 +463,7 @@
         </div>
         <div class="country" data-country="spain" role="tabpanel" hidden>
           <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="azulejo"><img src="./thumbs/azulejo.webp" alt=""><span data-t="s_azulejo">Azulejo</span></button>
               <button type="button" role="radio" data-style="flamenko"><img src="./thumbs/flamenko.webp" alt=""><span data-t="s_flamenko">Flamenco</span></button>
               <button type="button" role="radio" data-style="manton"><img src="./thumbs/manton.webp" alt=""><span data-t="s_manton">Manila Shawl</span></button>
@@ -504,7 +474,7 @@
               <button type="button" role="radio" data-style="kastanyet"><img src="./thumbs/kastanyet.webp" alt=""><span data-t="s_kastanyet">Castanets</span></button>
           </div>
           <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="elhamra"><img src="./thumbs/elhamra.webp" alt=""><span data-t="s_elhamra">The Alhambra</span></button>
               <button type="button" role="radio" data-style="avlu"><img src="./thumbs/avlu.webp" alt=""><span data-t="s_avlu">Andalusian Patio</span></button>
               <button type="button" role="radio" data-style="paella"><img src="./thumbs/paella.webp" alt=""><span data-t="s_paella">Paella</span></button>
@@ -517,7 +487,7 @@
         </div>
         <div class="country" data-country="france" role="tabpanel" hidden>
           <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="provence"><img src="./thumbs/provence.webp" alt=""><span data-t="s_provence">Provençal Print</span></button>
               <button type="button" role="radio" data-style="tomette"><img src="./thumbs/tomette.webp" alt=""><span data-t="s_tomette">Tomette Tiles</span></button>
               <button type="button" role="radio" data-style="cigale"><img src="./thumbs/cigale.webp" alt=""><span data-t="s_cigale">Cicadas</span></button>
@@ -526,7 +496,7 @@
               <button type="button" role="radio" data-style="moustiers"><img src="./thumbs/moustiers.webp" alt=""><span data-t="s_moustiers">Moustiers Faience</span></button>
           </div>
           <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
-          <div class="grid room-grid">
+          <div class="grid">
               <button type="button" role="radio" data-style="lavanta"><img src="./thumbs/lavanta.webp" alt=""><span data-t="s_lavanta">Lavender Fields</span></button>
               <button type="button" role="radio" data-style="riviera"><img src="./thumbs/riviera.webp" alt=""><span data-t="s_riviera">Riviera</span></button>
               <button type="button" role="radio" data-style="aycicegi"><img src="./thumbs/aycicegi.webp" alt=""><span data-t="s_aycicegi">Sunflowers</span></button>

@@ -38,7 +38,7 @@ const common = (extraIgnore) => ({
   dir: '.', name: 'Desktop Carpet', electronVersion: ELECTRON, out: 'dist', overwrite: true, prune: true,
   asar: { unpack: '**/*.node' }, appVersion: pkg.version, appCopyright: 'Desktop Carpet',
   ignore: [/^\/dist/, /^\/build\.cjs/, /^\/pack\.cjs/, /^\/installer/, /^\/sign/, /^\/release-notes/, /^\/\.github/,
-           /^\/app\/(main|cloth|rugTexture|siteRugs|rugWorker|workerShim)\.js$/, /^\/app\/vendor/,
+           /^\/app\/(main|cloth|rugTexture|siteRugs)\.js$/, /^\/app\/vendor/,
            /node_modules\/(three|esbuild|@esbuild|resedit|pe-library|@fontsource|@electron)/, ...extraIgnore],
 });
 
@@ -166,7 +166,6 @@ async function buildPatch(version, out, compress) {
 (async () => {
   const esbuild = require('esbuild');
   esbuild.buildSync({ entryPoints: ['app/main.js'], bundle: true, format: 'iife', minify: true, outfile: 'app/bundle.js' });
-  esbuild.buildSync({ entryPoints: ['app/rugWorker.js'], bundle: true, format: 'iife', minify: true, outfile: 'panel/rugworker.js' });
   fs.mkdirSync('dist', { recursive: true });
   if (PATCH_ONLY) { await buildPatch(pkg.version, `DesktopCarpet-Patch-${SHELL}`, true); return; }
   await buildPatch('99.0.0', 'smoke-patch', false);
