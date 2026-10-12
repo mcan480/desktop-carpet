@@ -56,6 +56,19 @@ export const STYLES = {
   sokak:     { name: 'Renkli Sokak',        mexico: 'street', hooked: true },
   trajinera: { name: 'Trajinera',           mexico: 'trajinera', hooked: true },
   tulum:     { name: 'Tulum Plajı',         mexico: 'tulum', hooked: true },
+  // Persia pack: knotted rugs from the carpet heartland
+  heriz:     { name: 'Heriz',               persia: 'heriz' },
+  bahce:     { name: 'Cennet Bahçesi',      persia: 'garden' },
+  av:        { name: 'Av Sahnesi',          persia: 'hunt' },
+  hayat:     { name: 'Hayat Ağacı',         persia: 'tree' },
+  buta:      { name: 'Buta',                persia: 'boteh' },
+  bahtiyari: { name: 'Bahtiyari',           persia: 'bakhtiari' },
+  gabbe:     { name: 'Kaşkay Gabbe',        persia: 'gabbeh' },
+  nain:      { name: 'Nain',                persia: 'nain' },
+  vazo:      { name: 'Kirman Vazo',         persia: 'vase' },
+  herati:    { name: 'Herati',              persia: 'herati' },
+  kum:       { name: 'Kum İpeği',           persia: 'qom', silk: true },
+  turkmen:   { name: 'Türkmen Gülü',        persia: 'turkmen' },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -1980,6 +1993,443 @@ function mexicoTulum(ctx, W, H) {
   palm(W * 0.78, H * 0.92, 40 * u, -0.4); palm(W * 0.9, H * 0.94, 46 * u, -0.25); palm(W * 0.66, H * 0.9, 28 * u, 0.3);
 }
 
+// ---------- Persia pack ----------
+// Knotted Persian rugs from the carpet heartland (Tabriz was named World Carpet Weaving City in 2015): each one drawn on
+// a fine knot grid, so florals and figures keep the stepped edges of a hand-knotted rug.
+
+// Classic Persian border: dark outer guard, a thin light guard line, the main band with rosettes on a running vine,
+// a second guard, then the field. Returns the field in knots.
+function persBorder(x, cols, rows, C, bw = 17) {
+  x.fillStyle = C.guard; x.fillRect(0, 0, cols, rows);
+  x.fillStyle = C.border; x.fillRect(3, 3, cols - 6, rows - 6);
+  const line = (o, col) => { x.fillStyle = col; x.fillRect(o, o, cols - 2 * o, 1); x.fillRect(o, rows - 1 - o, cols - 2 * o, 1); x.fillRect(o, o, 1, rows - 2 * o); x.fillRect(cols - 1 - o, o, 1, rows - 2 * o); };
+  // reciprocal dots in the outer guard
+  x.fillStyle = C.guard2; for (let i = 3; i < cols - 3; i += 3) { x.fillRect(i, 1, 1, 1); x.fillRect(i, rows - 2, 1, 1); } for (let i = 3; i < rows - 3; i += 3) { x.fillRect(1, i, 1, 1); x.fillRect(cols - 2, i, 1, 1); }
+  line(2, C.guard2); line(bw - 3, C.guard2); line(bw - 2, C.guard); line(bw - 1, C.guard);
+  // running vine along the band centre, rosettes and small palmettes on it
+  const m = bw / 2 + 0.5, amp = bw * 0.16;
+  x.strokeStyle = C.vine; x.lineWidth = 1.2;
+  const side = (x0, y0, len, horiz) => {
+    const { n, d } = evenSteps(len, 14);
+    x.beginPath();
+    for (let t = 0; t <= len; t += 0.5) { const o = Math.sin((t / d) * Math.PI * 2) * amp; const px = horiz ? x0 + t : x0 + o, py = horiz ? y0 + o : y0 + t; t ? x.lineTo(px, py) : x.moveTo(px, py); }
+    x.stroke();
+    for (let k = 0; k <= n; k++) {
+      const t = k * d, px = horiz ? x0 + t : x0, py = horiz ? y0 : y0 + t;
+      rosette(x, px, py, bw * 0.3, 8, k % 2 ? C.r1 : C.r2, C.r3, C.border);
+      if (k < n) { const t2 = t + d / 2, o = Math.sin(Math.PI) * amp; palmette(x, horiz ? x0 + t2 : x0 + o, horiz ? y0 + o : y0 + t2, bw * 0.22, horiz ? (k % 2 ? 0 : Math.PI) : (k % 2 ? Math.PI / 2 : -Math.PI / 2), C.r3, C.r1); }
+    }
+  };
+  side(m, m, cols - 2 * m, true); side(m, rows - m, cols - 2 * m, true); side(m, m, rows - 2 * m, false); side(cols - m, m, rows - 2 * m, false);
+  x.fillStyle = C.field; x.fillRect(bw, bw, cols - 2 * bw, rows - 2 * bw);
+  return { fx: bw, fy: bw, fw: cols - 2 * bw, fh: rows - 2 * bw };
+}
+
+// A polygon star with alternating long and short points; `ang` spins it.
+function persStar(x, cx, cy, rx, ry, points, inner, col, ang = 0) {
+  x.fillStyle = col; x.beginPath();
+  for (let i = 0; i < points * 2; i++) { const a = ang + (i * Math.PI) / points, r = i % 2 ? inner : 1; const px = cx + Math.cos(a) * rx * r, py = cy + Math.sin(a) * ry * r; i ? x.lineTo(px, py) : x.moveTo(px, py); }
+  x.closePath(); x.fill();
+}
+// A round medallion with scalloped lobes.
+function persLobed(x, cx, cy, rx, ry, lobes, depth, col) {
+  x.fillStyle = col; x.beginPath();
+  for (let i = 0; i <= 360; i += 2) { const a = (i * Math.PI) / 180, r = 1 + depth * Math.abs(Math.cos((a * lobes) / 2)) - depth / 2; const px = cx + Math.cos(a) * rx * r, py = cy + Math.sin(a) * ry * r; i ? x.lineTo(px, py) : x.moveTo(px, py); }
+  x.closePath(); x.fill();
+}
+// A spiral vine with leaves and a blossom at its heart.
+function persSpiral(x, cx, cy, r, turns, dir, C) {
+  x.strokeStyle = C.vine2 || C.vine; x.lineWidth = 1;
+  x.beginPath();
+  for (let t = 0; t <= 1; t += 0.01) { const a = dir * t * turns * Math.PI * 2, rr = r * (1 - t * 0.85); const px = cx + Math.cos(a) * rr, py = cy + Math.sin(a) * rr; t ? x.lineTo(px, py) : x.moveTo(px, py); }
+  x.stroke();
+  for (let k = 1; k < 5; k++) { const t = k / 5, a = dir * t * turns * Math.PI * 2, rr = r * (1 - t * 0.85); leaf(x, cx + Math.cos(a) * rr, cy + Math.sin(a) * rr, r * 0.4, a + dir * 0.9, C.leaf); }
+  rosette(x, cx, cy, r * 0.32, 6, C.bloom, C.bloom2, C.leaf);
+}
+
+// Heriz: a bold angular medallion with pendants, corner spandrels and stiff angular leaves on a rust field.
+function persHeriz(ctx, W, H) {
+  const C = { guard: '#2b1a17', guard2: '#d9c7a0', border: '#1f2d4a', vine: '#d9c7a0', r1: '#b9473a', r2: '#e2b45a', r3: '#7aa6a0',
+    field: '#a8432f', field2: '#963a28', navy: '#1f2d4a', ivory: '#efe2c4', sky: '#7aa6a0', gold: '#e2b45a', dark: '#2b1a17', green: '#4f7a52' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = persBorder(x, cols, rows, C, 15);
+    for (let y = fy; y < fy + fh; y++) if (Math.floor((y - fy) / 7) % 3 === 1) { x.fillStyle = C.field2; x.fillRect(fx, y, fw, 1); } // abrash
+    const cx = fx + fw / 2, cy = fy + fh / 2;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // corner spandrels: quarter stars
+    for (const [sx, sy] of [[fx, fy], [fx + fw, fy], [fx, fy + fh], [fx + fw, fy + fh]]) { persStar(x, sx, sy, fw * 0.19, fh * 0.32, 8, 0.86, C.navy, 0); persStar(x, sx, sy, fw * 0.13, fh * 0.22, 8, 0.86, C.ivory, 0); persStar(x, sx, sy, fw * 0.07, fh * 0.12, 8, 0.86, C.r1, 0); }
+    // angular leaves and little crosses scattered in the field
+    for (const [px, py] of [[0.2, 0.5], [0.8, 0.5], [0.33, 0.18], [0.67, 0.18], [0.33, 0.82], [0.67, 0.82], [0.12, 0.3], [0.88, 0.3], [0.12, 0.7], [0.88, 0.7]]) {
+      const X = fx + fw * px, Y = fy + fh * py;
+      x.fillStyle = C.ivory; x.fillRect(X - 3, Y - 1, 7, 3); x.fillRect(X - 1, Y - 3, 3, 7);
+      x.fillStyle = C.gold; x.fillRect(X - 1, Y - 1, 3, 3);
+      x.strokeStyle = C.green; x.lineWidth = 1.4; x.beginPath(); x.moveTo(X + 4, Y + 4); x.lineTo(X + 8, Y + 8); x.lineTo(X + 8, Y + 11); x.moveTo(X - 4, Y - 4); x.lineTo(X - 8, Y - 8); x.lineTo(X - 11, Y - 8); x.stroke();
+    }
+    // medallion: angular star in three layers, pendants above and below
+    x.fillStyle = C.navy; x.fillRect(cx - 1.5, fy + 2, 3, fh - 4);
+    for (const dy of [-1, 1]) { persStar(x, cx, cy + dy * fh * 0.42, fw * 0.05, fh * 0.07, 4, 0.5, C.navy, Math.PI / 4); persStar(x, cx, cy + dy * fh * 0.42, fw * 0.025, fh * 0.035, 4, 0.5, C.gold, Math.PI / 4); }
+    persStar(x, cx, cy, fw * 0.24, fh * 0.42, 8, 0.66, C.navy, Math.PI / 8);
+    persStar(x, cx, cy, fw * 0.17, fh * 0.3, 8, 0.66, C.ivory, Math.PI / 8);
+    persStar(x, cx, cy, fw * 0.11, fh * 0.2, 8, 0.66, C.r1, Math.PI / 8);
+    persStar(x, cx, cy, fw * 0.05, fh * 0.09, 4, 0.5, C.gold, Math.PI / 4);
+    x.fillStyle = C.navy; x.fillRect(cx - 1, cy - 1, 2, 2);
+    // hooked tendrils from the medallion's points
+    x.strokeStyle = C.sky; x.lineWidth = 1.4;
+    for (let k = 0; k < 8; k++) { const a = Math.PI / 8 + (k * Math.PI) / 4, ex = cx + Math.cos(a) * fw * 0.24, ey = cy + Math.sin(a) * fh * 0.42; x.beginPath(); x.moveTo(ex, ey); x.lineTo(ex + Math.cos(a) * 5, ey + Math.sin(a) * 5); x.lineTo(ex + Math.cos(a) * 5 + (Math.cos(a) > 0 ? 3 : -3), ey + Math.sin(a) * 5); x.stroke(); }
+    x.restore();
+  });
+}
+
+// Garden carpet (chahar bagh): four gardens split by water channels, trees and flower beds, fish in the water,
+// a pavilion over the pool in the middle.
+function persGarden(ctx, W, H) {
+  const C = { guard: '#2a1f1a', guard2: '#d8c69c', border: '#7a2a24', vine: '#d8c69c', r1: '#e2b45a', r2: '#efe5cc', r3: '#3f6b3a',
+    field: '#e7dcc0', water: '#3d6f9e', water2: '#6a9ccc', bed: '#3f6b3a', bed2: '#567f45', tree: '#22432a', trunk: '#6a4a2c',
+    flower: '#c0392b', flower2: '#e2b45a', fish: '#e9862a', ivory: '#efe5cc', pav: '#b9473a' };
+  weavePicture(ctx, W, H, 130, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = persBorder(x, cols, rows, C, 15);
+    const cx = fx + fw / 2, cy = fy + fh / 2, ch = 7;
+    // channels: the central cross and a channel round the edge
+    const water = (X, Y, w, h) => { x.fillStyle = C.water; x.fillRect(X, Y, w, h); x.fillStyle = C.water2; if (w > h) for (let i = X + 1; i < X + w - 2; i += 4) { x.fillRect(i, Y + h / 2 - 1, 2, 1); x.fillRect(i + 2, Y + h / 2, 2, 1); } else for (let j = Y + 1; j < Y + h - 2; j += 4) { x.fillRect(X + w / 2 - 1, j, 1, 2); x.fillRect(X + w / 2, j + 2, 1, 2); } };
+    water(fx, fy, fw, 5); water(fx, fy + fh - 5, fw, 5); water(fx, fy, 5, fh); water(fx + fw - 5, fy, 5, fh);
+    water(fx, cy - ch / 2, fw, ch); water(cx - ch / 2, fy, ch, fh);
+    // fish in the channels
+    for (const [px, py, f] of [[0.18, 0, 1], [0.34, 0, -1], [0.66, 0, 1], [0.82, 0, -1]]) { const X = fx + fw * px, Y = cy; x.fillStyle = C.fish; x.beginPath(); x.ellipse(X, Y, 2.6, 1.2, 0, 0, Math.PI * 2); x.fill(); x.beginPath(); x.moveTo(X - f * 2.4, Y); x.lineTo(X - f * 4.4, Y - 1.4); x.lineTo(X - f * 4.4, Y + 1.4); x.fill(); }
+    // the four gardens, each four beds with a tree and flowers
+    const qw = (fw - 10 - ch) / 2, qh = (fh - 10 - ch) / 2;
+    for (const [qx, qy] of [[fx + 5, fy + 5], [cx + ch / 2, fy + 5], [fx + 5, cy + ch / 2], [cx + ch / 2, cy + ch / 2]]) {
+      for (let j = 0; j < 2; j++) for (let i = 0; i < 2; i++) {
+        const bx = qx + 2 + i * qw / 2, by = qy + 2 + j * qh / 2, bw = qw / 2 - 4, bh = qh / 2 - 4, k = i + j * 2;
+        x.fillStyle = (i + j) % 2 ? C.bed : C.bed2; x.fillRect(bx, by, bw, bh);
+        const tx = bx + bw / 2, ty = by + bh / 2;
+        if (k % 2 === 0) { x.fillStyle = C.tree; for (let s = 0; s < 3; s++) { x.beginPath(); x.moveTo(tx, ty - bh * 0.42 + s * bh * 0.18); x.lineTo(tx + bw * 0.12 + s, ty - bh * 0.1 + s * bh * 0.18); x.lineTo(tx - bw * 0.12 - s, ty - bh * 0.1 + s * bh * 0.18); x.fill(); } x.fillStyle = C.trunk; x.fillRect(tx - 0.5, ty + bh * 0.25, 1.2, bh * 0.15); }
+        else { x.fillStyle = C.trunk; x.fillRect(tx - 0.6, ty, 1.4, bh * 0.4); x.fillStyle = C.tree; x.beginPath(); x.arc(tx, ty - bh * 0.05, Math.min(bw, bh) * 0.3, 0, Math.PI * 2); x.fill(); x.fillStyle = C.flower; for (let f = 0; f < 6; f++) { const a = f * 1.05; x.fillRect(tx + Math.cos(a) * bw * 0.16, ty - bh * 0.05 + Math.sin(a) * bh * 0.16, 1.2, 1.2); } }
+        x.fillStyle = C.flower2; for (const [ex, ey] of [[bx + 2, by + 2], [bx + bw - 3, by + 2], [bx + 2, by + bh - 3], [bx + bw - 3, by + bh - 3]]) x.fillRect(ex, ey, 1.4, 1.4);
+      }
+    }
+    // pool and pavilion in the middle
+    x.fillStyle = C.water2; x.fillRect(cx - 10, cy - 8, 20, 16);
+    x.fillStyle = C.ivory; x.fillRect(cx - 7, cy - 5, 14, 10);
+    persStar(x, cx, cy, 6, 4.6, 8, 0.82, C.pav, Math.PI / 8);
+    rosette(x, cx, cy, 3, 8, C.flower2, C.ivory, C.pav);
+  });
+}
+
+// Hunting carpet: riders, deer, lions and birds among scrolling vines on a deep red field, around a small medallion.
+function persHunt(ctx, W, H) {
+  const C = { guard: '#1c1714', guard2: '#d9c39a', border: '#1e3355', vine: '#d9c39a', r1: '#9e2f2a', r2: '#d8a442', r3: '#ecdcbc',
+    field: '#9e2f2a', field2: '#8e2a26', ivory: '#ecdcbc', navy: '#1e3355', gold: '#d8a442', green: '#4f7a52', brown: '#6a4630', dark: '#1c1714', sky: '#86a8c0',
+    vine2: '#c9973c', leaf: '#4f7a52', bloom: '#ecdcbc', bloom2: '#d8a442' };
+  weavePicture(ctx, W, H, 140, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = persBorder(x, cols, rows, C, 16);
+    for (let y = fy; y < fy + fh; y++) if (Math.floor((y - fy) / 9) % 3 === 2) { x.fillStyle = C.field2; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    for (const [px, py, r, d] of [[0.1, 0.18, 9, 1], [0.9, 0.18, 9, -1], [0.1, 0.82, 9, -1], [0.9, 0.82, 9, 1], [0.5, 0.12, 7, 1], [0.5, 0.88, 7, -1], [0.3, 0.5, 7, 1], [0.7, 0.5, 7, -1]]) persSpiral(x, fx + fw * px, fy + fh * py, r, 1.6, d, C);
+    const cx = fx + fw / 2, cy = fy + fh / 2;
+    persLobed(x, cx, cy, fw * 0.1, fh * 0.2, 12, 0.18, C.navy); persLobed(x, cx, cy, fw * 0.07, fh * 0.14, 12, 0.18, C.ivory); rosette(x, cx, cy, fh * 0.07, 8, C.gold, C.navy, C.field);
+    const s = fh / 100;
+    const fig = (px, py, flip, draw) => { x.save(); x.translate(fx + fw * px, fy + fh * py); x.scale(flip, 1); draw(); x.restore(); };
+    const rider = () => {
+      x.strokeStyle = C.ivory; x.lineWidth = 1.6 * s; x.lineCap = 'round';
+      x.beginPath(); x.moveTo(5 * s, 2 * s); x.lineTo(9 * s, 7 * s); x.moveTo(3 * s, 2 * s); x.lineTo(4 * s, 7.5 * s); x.moveTo(-5 * s, 2 * s); x.lineTo(-9 * s, 6 * s); x.moveTo(-3 * s, 2 * s); x.lineTo(-5 * s, 7.5 * s); x.moveTo(-6.5 * s, -0.5 * s); x.lineTo(-10 * s, 2 * s); x.stroke();
+      x.fillStyle = C.ivory; x.beginPath(); x.ellipse(0, 0, 7 * s, 3.2 * s, 0, 0, Math.PI * 2); x.fill();
+      x.beginPath(); x.moveTo(5 * s, -1 * s); x.lineTo(9 * s, -6 * s); x.lineTo(10.5 * s, -5 * s); x.lineTo(7 * s, 1 * s); x.fill();
+      x.beginPath(); x.ellipse(10.5 * s, -5.5 * s, 2.4 * s, 1.2 * s, 0.6, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.navy; x.fillRect(-1.4 * s, -7.5 * s, 2.8 * s, 5 * s); x.beginPath(); x.arc(0, -9 * s, 1.5 * s, 0, Math.PI * 2); x.fill();
+      x.strokeStyle = C.gold; x.lineWidth = 0.9 * s; x.beginPath(); x.moveTo(1 * s, -6 * s); x.lineTo(12 * s, -10 * s); x.stroke();
+    };
+    const deer = () => {
+      x.strokeStyle = C.gold; x.lineWidth = 1.2 * s; x.lineCap = 'round';
+      x.beginPath(); x.moveTo(3 * s, 1 * s); x.lineTo(6 * s, 6 * s); x.moveTo(-3 * s, 1 * s); x.lineTo(-6 * s, 6 * s); x.moveTo(1.5 * s, 1 * s); x.lineTo(2 * s, 6 * s); x.moveTo(-1.5 * s, 1 * s); x.lineTo(-2.5 * s, 6 * s); x.stroke();
+      x.fillStyle = C.gold; x.beginPath(); x.ellipse(0, 0, 5 * s, 2.2 * s, 0, 0, Math.PI * 2); x.fill();
+      x.beginPath(); x.moveTo(3.5 * s, -1 * s); x.lineTo(6 * s, -5 * s); x.lineTo(7.5 * s, -4.5 * s); x.lineTo(5 * s, 0.5 * s); x.fill();
+      x.beginPath(); x.ellipse(7.4 * s, -5 * s, 1.8 * s, 0.9 * s, 0.4, 0, Math.PI * 2); x.fill();
+      x.strokeStyle = C.ivory; x.lineWidth = 0.7 * s; x.beginPath(); x.moveTo(6.5 * s, -5.5 * s); x.lineTo(5 * s, -9 * s); x.moveTo(5.6 * s, -7.5 * s); x.lineTo(4 * s, -8 * s); x.moveTo(7 * s, -5.5 * s); x.lineTo(8 * s, -9 * s); x.stroke();
+    };
+    const lion = () => {
+      x.strokeStyle = C.gold; x.lineWidth = 1.6 * s; x.lineCap = 'round';
+      x.beginPath(); x.moveTo(4 * s, 1 * s); x.lineTo(7 * s, 5.5 * s); x.moveTo(-4 * s, 1 * s); x.lineTo(-7 * s, 5.5 * s); x.moveTo(-6 * s, -1 * s); x.quadraticCurveTo(-10 * s, -2 * s, -9 * s, -6 * s); x.stroke();
+      x.fillStyle = C.gold; x.beginPath(); x.ellipse(0, 0, 6 * s, 2.6 * s, 0, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.brown; x.beginPath(); x.arc(6 * s, -2.4 * s, 3.4 * s, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.gold; x.beginPath(); x.arc(7 * s, -2.4 * s, 1.8 * s, 0, Math.PI * 2); x.fill();
+    };
+    const bird = () => {
+      x.fillStyle = C.sky; x.beginPath(); x.ellipse(0, 0, 3 * s, 1.4 * s, 0, 0, Math.PI * 2); x.fill();
+      x.beginPath(); x.moveTo(-1 * s, -0.5 * s); x.lineTo(1 * s, -4.5 * s); x.lineTo(2 * s, -0.5 * s); x.fill();
+      x.beginPath(); x.moveTo(-2.5 * s, 0); x.lineTo(-5 * s, -1.2 * s); x.lineTo(-5 * s, 1.2 * s); x.fill();
+      x.fillStyle = C.ivory; x.beginPath(); x.arc(3 * s, -0.6 * s, 1 * s, 0, Math.PI * 2); x.fill();
+    };
+    for (const f of [1, -1]) {
+      const at = (p) => (f > 0 ? p : 1 - p);
+      fig(at(0.2), 0.36, f, rider); fig(at(0.36), 0.28, f, deer);
+      fig(at(0.18), 0.66, f, lion); fig(at(0.34), 0.74, f, deer);
+      fig(at(0.4), 0.88, f, bird); fig(at(0.08), 0.5, f, bird);
+    }
+    x.restore();
+  });
+}
+
+// Tree of life: a flowering tree rising from a vase, birds on its branches, cypresses at the sides, on ivory.
+function persTree(ctx, W, H) {
+  const C = { guard: '#2a1c1a', guard2: '#d6c39a', border: '#8e2a26', vine: '#d6c39a', r1: '#1f2d4a', r2: '#d9a440', r3: '#ece0c2',
+    field: '#ece0c2', field2: '#e3d5b4', trunk: '#6a4630', leaf: '#4f7a52', leaf2: '#2f5a3a', bloom: '#b9473a', bloom2: '#d9a440', navy: '#1f2d4a', sky: '#5c86b0', vase: '#1f2d4a' };
+  weavePicture(ctx, W, H, 140, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = persBorder(x, cols, rows, C, 16);
+    for (let y = fy; y < fy + fh; y++) if (Math.floor((y - fy) / 8) % 4 === 3) { x.fillStyle = C.field2; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const cx = fx + fw / 2, base = fy + fh - 6, top = fy + 6;
+    // ground and small flowers
+    x.fillStyle = C.leaf2; x.fillRect(fx, base, fw, 6);
+    for (let i = 0; i < 18; i++) { const X = fx + 4 + i * (fw - 8) / 17; x.fillStyle = C.leaf; x.fillRect(X, base - 3, 1, 3); x.fillStyle = i % 2 ? C.bloom : C.bloom2; x.fillRect(X - 1, base - 5, 3, 2); }
+    // cypresses at the sides
+    for (const sx of [fx + 10, fx + fw - 10]) { x.fillStyle = C.leaf2; x.beginPath(); x.ellipse(sx, base - fh * 0.38, 5, fh * 0.38, 0, 0, Math.PI * 2); x.fill(); x.fillStyle = C.leaf; x.beginPath(); x.ellipse(sx - 1, base - fh * 0.38, 2.4, fh * 0.32, 0, 0, Math.PI * 2); x.fill(); }
+    // the vase
+    x.fillStyle = C.vase; x.beginPath(); x.moveTo(cx - 6, base); x.quadraticCurveTo(cx - 10, base - 8, cx - 4, base - 12); x.lineTo(cx + 4, base - 12); x.quadraticCurveTo(cx + 10, base - 8, cx + 6, base); x.fill();
+    x.fillStyle = C.bloom2; x.fillRect(cx - 7, base - 7, 14, 1.5); x.fillRect(cx - 5, base - 13, 10, 1.5);
+    // trunk and symmetric branches with leaves, blossoms and birds
+    x.strokeStyle = C.trunk; x.lineCap = 'round'; x.lineWidth = 3; x.beginPath(); x.moveTo(cx, base - 12); x.lineTo(cx, top + 6); x.stroke();
+    const levels = 6;
+    for (let k = 0; k < levels; k++) {
+      const t0 = (k + 1) / (levels + 1), by = base - 16 - k * (fh - 34) / levels, reach = fw * 0.3 * Math.sin(Math.PI * (0.25 + t0 * 0.75)) + 6, lift = 12 + k;
+      for (const d of [-1, 1]) {
+        x.lineWidth = 2.4 - k * 0.25; x.beginPath(); x.moveTo(cx, by); x.quadraticCurveTo(cx + d * reach * 0.7, by + 1, cx + d * reach, by - lift); x.stroke();
+        for (let l = 1; l <= 6; l++) {
+          const t = l / 7, lx = cx + d * reach * (0.7 * 2 * t * (1 - t) + t * t), ly = by + 2 * t * (1 - t) - lift * t * t;
+          leaf(x, lx, ly, 7, d > 0 ? -1.2 + t * 0.4 : Math.PI + 1.2 - t * 0.4, l % 2 ? C.leaf : C.leaf2);
+          leaf(x, lx, ly, 6, d > 0 ? 0.5 : Math.PI - 0.5, l % 2 ? C.leaf2 : C.leaf);
+          if (l === 3) { x.fillStyle = C.bloom; x.beginPath(); x.arc(lx, ly + 3.5, 2, 0, Math.PI * 2); x.fill(); x.fillStyle = C.bloom2; x.fillRect(lx - 0.5, ly + 1, 1, 1); } // a pomegranate
+        }
+        rosette(x, cx + d * reach, by - lift, 4, 8, k % 2 ? C.bloom : C.bloom2, C.field, C.navy);
+        if (k % 2 === 0) { // a bird on the branch
+          const bx = cx + d * reach * 0.55, byy = by - lift * 0.3 - 3;
+          x.fillStyle = k % 4 ? C.sky : C.navy; x.beginPath(); x.ellipse(bx, byy - 2, 3.2, 1.7, 0, 0, Math.PI * 2); x.fill();
+          x.beginPath(); x.arc(bx + d * 2.8, byy - 3.6, 1.4, 0, Math.PI * 2); x.fill();
+          x.beginPath(); x.moveTo(bx - d * 2.4, byy - 2); x.lineTo(bx - d * 5.4, byy - 4.4); x.lineTo(bx - d * 5, byy - 1); x.fill();
+          x.fillStyle = C.bloom2; x.fillRect(bx + d * 3.9 - 0.5, byy - 3.8, 1.3, 0.9);
+        }
+      }
+    }
+    rosette(x, cx, top + 5, 4.5, 10, C.bloom, C.bloom2, C.navy);
+    x.restore();
+  });
+}
+
+// Boteh: rows of paisley teardrops, facing alternate ways row by row, on a madder-red field.
+function persBoteh(ctx, W, H) {
+  const C = { guard: '#1d1a24', guard2: '#d9c7a0', border: '#1f2d4a', vine: '#d9c7a0', r1: '#b9473a', r2: '#e2b45a', r3: '#efe2c4',
+    field: '#9e2f2a', field2: '#8e2926', navy: '#1f2d4a', ivory: '#efe2c4', gold: '#e2b45a', green: '#4f7a52', sky: '#7aa6c0', pink: '#d97a7a' };
+  weavePicture(ctx, W, H, 130, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = persBorder(x, cols, rows, C, 15);
+    for (let y = fy; y < fy + fh; y++) if (Math.floor((y - fy) / 6) % 4 === 2) { x.fillStyle = C.field2; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const boteh = (cx, cy, h, flip, c1, c2, c3) => {
+      x.save(); x.translate(cx, cy); x.scale(flip * h, h);
+      const shape = () => { x.beginPath(); x.moveTo(-0.3, 0.2); x.bezierCurveTo(-0.34, -0.25, 0.05, -0.5, 0.22, -0.56); x.bezierCurveTo(0.32, -0.6, 0.34, -0.46, 0.24, -0.42); x.bezierCurveTo(0.12, -0.36, 0.3, -0.06, 0.3, 0.2); x.arc(0, 0.2, 0.3, 0, Math.PI); x.closePath(); };
+      x.fillStyle = c1; shape(); x.fill();
+      x.save(); x.translate(0.02, 0.04); x.scale(0.66, 0.66); x.fillStyle = c2; shape(); x.fill(); x.restore();
+      x.fillStyle = c3; x.beginPath(); x.arc(0, 0.16, 0.1, 0, Math.PI * 2); x.fill();
+      x.restore();
+    };
+    const sets = [[C.navy, C.ivory, C.field], [C.ivory, C.gold, C.navy], [C.gold, C.green, C.ivory], [C.green, C.pink, C.ivory], [C.sky, C.navy, C.gold]];
+    const nr = 4, nc = 9, dh = fh / nr, dw = fw / nc;
+    for (let r = 0; r < nr; r++) for (let c = 0; c < nc + 1; c++) {
+      const X = fx + (c + (r % 2 ? 0 : 0.5)) * dw, Y = fy + (r + 0.55) * dh, s = sets[(c + r * 2) % sets.length];
+      boteh(X, Y, dh * 0.82, r % 2 ? -1 : 1, s[0], s[1], s[2]);
+      x.fillStyle = C.gold; const fxp = X + dw / 2, fyp = Y - dh * 0.05; for (const [dx, dy] of [[0, -1.6], [0, 1.6], [-1.6, 0], [1.6, 0]]) x.fillRect(fxp + dx - 0.6, fyp + dy - 0.6, 1.2, 1.2);
+    }
+    x.restore();
+  });
+}
+
+// Bakhtiari garden panels (khesti): a grid of tiles, each its own colour with a cypress, a willow, a flowering shrub,
+// a rosette, a bird or a vase.
+function persBakhtiari(ctx, W, H) {
+  const C = { guard: '#2a1c18', guard2: '#d8c69c', border: '#7a2a24', vine: '#d8c69c', r1: '#1f2d4a', r2: '#d9a440', r3: '#ecdcbc',
+    field: '#ecdcbc', red: '#9e3a2e', navy: '#1f2d4a', gold: '#d9a440', green: '#3f6b4a', rust: '#c0603a', ivory: '#ecdcbc', dark: '#2a1c18', sky: '#7aa6c0', leaf: '#5f8a4a' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = persBorder(x, cols, rows, C, 14);
+    const nc = 6, nr = 4, tw = fw / nc, th = fh / nr;
+    const bgs = [C.red, C.ivory, C.navy, C.gold, C.green, C.rust];
+    const fgFor = (bg) => (bg === C.ivory || bg === C.gold ? [C.navy, C.red, C.green] : [C.ivory, C.gold, C.leaf]);
+    const motifs = [
+      (cx, cy, s, f) => { x.fillStyle = f[2]; x.beginPath(); x.ellipse(cx, cy, s * 0.18, s * 0.42, 0, 0, Math.PI * 2); x.fill(); x.fillStyle = f[0]; x.fillRect(cx - 0.5, cy + s * 0.36, 1.2, s * 0.12); }, // cypress
+      (cx, cy, s, f) => { x.strokeStyle = f[2]; x.lineWidth = 1; for (let k = -3; k <= 3; k++) { x.beginPath(); x.moveTo(cx, cy - s * 0.3); x.quadraticCurveTo(cx + k * s * 0.08, cy - s * 0.32, cx + k * s * 0.12, cy + s * 0.3); x.stroke(); } x.fillStyle = f[0]; x.fillRect(cx - 0.6, cy - s * 0.4, 1.4, s * 0.8); }, // willow
+      (cx, cy, s, f) => { x.fillStyle = f[2]; x.fillRect(cx - 0.6, cy - s * 0.1, 1.2, s * 0.45); for (const [dx, dy] of [[0, -0.28], [-0.2, -0.08], [0.2, -0.08], [-0.14, 0.14], [0.14, 0.14]]) rosette(x, cx + dx * s, cy + dy * s, s * 0.1, 6, f[1], f[0], f[2]); }, // flowering shrub
+      (cx, cy, s, f) => { persStar(x, cx, cy, s * 0.36, s * 0.36, 8, 0.6, f[0], Math.PI / 8); rosette(x, cx, cy, s * 0.18, 8, f[1], f[2], f[0]); }, // rosette
+      (cx, cy, s, f) => { x.fillStyle = f[0]; x.beginPath(); x.ellipse(cx, cy, s * 0.22, s * 0.12, 0, 0, Math.PI * 2); x.fill(); x.beginPath(); x.arc(cx + s * 0.2, cy - s * 0.1, s * 0.08, 0, Math.PI * 2); x.fill(); x.beginPath(); x.moveTo(cx - s * 0.18, cy); x.lineTo(cx - s * 0.36, cy - s * 0.12); x.lineTo(cx - s * 0.34, cy + s * 0.06); x.fill(); x.fillStyle = f[1]; x.fillRect(cx + s * 0.27, cy - s * 0.11, 1.4, 0.8); x.fillStyle = f[2]; x.fillRect(cx - s * 0.3, cy + s * 0.2, s * 0.6, 1); }, // bird
+      (cx, cy, s, f) => { x.fillStyle = f[0]; x.beginPath(); x.moveTo(cx - s * 0.12, cy + s * 0.36); x.quadraticCurveTo(cx - s * 0.26, cy + s * 0.1, cx - s * 0.08, cy - s * 0.02); x.lineTo(cx + s * 0.08, cy - s * 0.02); x.quadraticCurveTo(cx + s * 0.26, cy + s * 0.1, cx + s * 0.12, cy + s * 0.36); x.fill(); for (const [dx, dy] of [[0, -0.26], [-0.16, -0.16], [0.16, -0.16]]) rosette(x, cx + dx * s, cy + dy * s, s * 0.09, 6, f[1], f[2], f[0]); }, // vase
+    ];
+    for (let j = 0; j < nr; j++) for (let i = 0; i < nc; i++) {
+      const X = fx + i * tw, Y = fy + j * th, bg = bgs[(i + j * 2) % bgs.length];
+      x.fillStyle = bg; x.fillRect(X, Y, tw, th);
+      x.fillStyle = C.dark; x.fillRect(X, Y, tw, 1); x.fillRect(X, Y, 1, th);
+      motifs[(i * 2 + j) % motifs.length](X + tw / 2, Y + th / 2, Math.min(tw, th), fgFor(bg));
+    }
+    x.fillStyle = C.dark; x.fillRect(fx, fy + fh - 1, fw, 1); x.fillRect(fx + fw - 1, fy, 1, fh);
+  });
+}
+
+// Qashqai gabbeh: thick, coarse and plain. A saffron field with soft bands of abrash, a few goats and a tree.
+function persGabbeh(ctx, W, H) {
+  const C = { field: '#d9862a', field2: '#cc7a24', field3: '#e39538', indigo: '#2c3a5e', ivory: '#efe2c4', red: '#a8382c', brown: '#4a3020', green: '#4f7a3a', dark: '#2a1c14' };
+  weavePicture(ctx, W, H, 64, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.indigo; x.fillRect(0, 0, cols, rows);
+    x.fillStyle = C.ivory; for (let i = 1; i < cols - 1; i += 3) { x.fillRect(i, 1, 1, 1); x.fillRect(i, rows - 2, 1, 1); } for (let j = 1; j < rows - 1; j += 3) { x.fillRect(1, j, 1, 1); x.fillRect(cols - 2, j, 1, 1); }
+    const fx = 3, fy = 3, fw = cols - 6, fh = rows - 6;
+    for (let y = fy; y < fy + fh; y++) { const b = Math.floor((y - fy) / 5) % 5; x.fillStyle = b === 1 ? C.field2 : b === 3 ? C.field3 : C.field; x.fillRect(fx, y, fw, 1); }
+    // stepped stripes at the two ends
+    for (const [X, d] of [[fx, 1], [fx + fw - 1, -1]]) { x.fillStyle = C.red; x.fillRect(X + d * 2 - (d < 0 ? 1 : 0), fy, 2, fh); x.fillStyle = C.ivory; x.fillRect(X + d * 5 - (d < 0 ? 0 : 0), fy, 1, fh); x.fillStyle = C.indigo; for (let y = fy; y < fy + fh; y += 4) x.fillRect(X + d * 7, y, 1, 2); }
+    // a tree
+    const tx = fx + fw * 0.7, ty = fy + fh * 0.62;
+    x.fillStyle = C.brown; x.fillRect(tx - 0.5, ty - 2, 1.5, 9);
+    x.fillStyle = C.green; for (const [dx, dy, r] of [[0, -6, 3.4], [-3, -3, 2.6], [3, -3, 2.6]]) { x.beginPath(); x.arc(tx + dx, ty + dy, r, 0, Math.PI * 2); x.fill(); }
+    // goats
+    const goat = (gx, gy, col, flip) => {
+      x.fillStyle = col; x.fillRect(gx - 3, gy - 2, 6, 3);
+      x.fillRect(gx + flip * 3 - (flip < 0 ? 2 : 0), gy - 4, 2, 2);
+      x.fillRect(gx - 3, gy + 1, 1, 3); x.fillRect(gx + 2, gy + 1, 1, 3);
+      x.fillRect(gx + flip * 4 - (flip < 0 ? 1 : 0), gy - 6, 1, 2);
+    };
+    goat(fx + fw * 0.3, fy + fh * 0.45, C.dark, 1); goat(fx + fw * 0.42, fy + fh * 0.62, C.ivory, 1); goat(fx + fw * 0.52, fy + fh * 0.36, C.dark, -1);
+    // two small diamonds
+    for (const [X, Y] of [[fx + fw * 0.22, fy + fh * 0.75], [fx + fw * 0.84, fy + fh * 0.26]]) { x.fillStyle = C.ivory; x.beginPath(); x.moveTo(X, Y - 4); x.lineTo(X + 4, Y); x.lineTo(X, Y + 4); x.lineTo(X - 4, Y); x.fill(); x.fillStyle = C.red; x.fillRect(X - 1, Y - 1, 2, 2); }
+  });
+}
+
+// Nain: ivory and blues, fine and light. Scrolling vines all over the field, a lobed medallion with pendants.
+function persNain(ctx, W, H) {
+  const C = { guard: '#1f2f55', guard2: '#efe6d2', border: '#e3d6bb', vine: '#4f78a8', r1: '#1f2f55', r2: '#4f78a8', r3: '#efe6d2',
+    field: '#efe6d2', navy: '#1f2f55', blue: '#4f78a8', sky: '#9db9d6', beige: '#c9b28a', brown: '#6a4a30', green: '#7e9a7a',
+    vine2: '#4f78a8', leaf: '#7e9a7a', bloom: '#4f78a8', bloom2: '#efe6d2' };
+  weavePicture(ctx, W, H, 150, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = persBorder(x, cols, rows, C, 16);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    for (let j = 0; j < 4; j++) for (let i = 0; i < 7; i++) persSpiral(x, fx + (i + (j % 2 ? 0.5 : 0)) * fw / 6.5, fy + (j + 0.5) * fh / 4, 7.5, 1.4, (i + j) % 2 ? 1 : -1, C);
+    const cx = fx + fw / 2, cy = fy + fh / 2;
+    // corner spandrels
+    for (const [sx, sy] of [[fx, fy], [fx + fw, fy], [fx, fy + fh], [fx + fw, fy + fh]]) { persLobed(x, sx, sy, fw * 0.17, fh * 0.3, 10, 0.2, C.navy); persLobed(x, sx, sy, fw * 0.12, fh * 0.21, 10, 0.2, C.sky); }
+    // pendants and medallion
+    for (const d of [-1, 1]) { persLobed(x, cx, cy + d * fh * 0.4, fw * 0.035, fh * 0.07, 6, 0.3, C.navy); x.fillStyle = C.blue; x.fillRect(cx - 0.6, cy + d * fh * 0.2 - (d < 0 ? fh * 0.14 : 0), 1.2, fh * 0.14); }
+    persLobed(x, cx, cy, fw * 0.2, fh * 0.34, 16, 0.14, C.navy);
+    persLobed(x, cx, cy, fw * 0.17, fh * 0.29, 16, 0.14, C.field);
+    for (let k = 0; k < 8; k++) { const a = (k * Math.PI) / 4; palmette(x, cx + Math.cos(a) * fw * 0.1, cy + Math.sin(a) * fh * 0.17, 4, a + Math.PI / 2, C.blue, C.sky); }
+    persLobed(x, cx, cy, fw * 0.12, fh * 0.2, 12, 0.18, C.sky);
+    for (let k = 0; k < 12; k++) { const a = (k * Math.PI) / 6; leaf(x, cx + Math.cos(a) * fw * 0.04, cy + Math.sin(a) * fh * 0.07, fw * 0.06, a, k % 2 ? C.blue : C.navy); }
+    persLobed(x, cx, cy, fw * 0.045, fh * 0.08, 8, 0.25, C.navy);
+    rosette(x, cx, cy, 4, 8, C.field, C.blue, C.sky);
+    x.restore();
+  });
+}
+
+// Kerman vase carpet: a lattice of vines on navy, a vase of flowers or a big palmette in every cell.
+function persVase(ctx, W, H) {
+  const C = { guard: '#1a1a26', guard2: '#d9c39a', border: '#9e2f2a', vine: '#d9c39a', r1: '#1f2d4a', r2: '#d8a442', r3: '#ecdcbc',
+    field: '#1f2d4a', lattice: '#c9973c', red: '#b5392e', ivory: '#ecdcbc', gold: '#d8a442', pink: '#d98a8a', green: '#4f7a52', sky: '#7aa6c0' };
+  weavePicture(ctx, W, H, 140, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = persBorder(x, cols, rows, C, 16);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const nc = 6, nr = 3, cw = fw / nc, chh = fh / nr;
+    x.strokeStyle = C.lattice; x.lineWidth = 1.1;
+    for (let k = -nr; k <= nc + nr; k++) { x.beginPath(); x.moveTo(fx + k * cw, fy); x.lineTo(fx + (k + nr) * cw, fy + fh); x.stroke(); x.beginPath(); x.moveTo(fx + k * cw, fy + fh); x.lineTo(fx + (k + nr) * cw, fy); x.stroke(); }
+    for (let j = 0; j <= nr; j++) for (let i = 0; i <= nc; i++) rosette(x, fx + i * cw, fy + j * chh, 3, 6, C.gold, C.red, C.field); // nodes
+    for (let j = 0; j < nr; j++) for (let i = 0; i < nc; i++) {
+      const X = fx + (i + 0.5) * cw, Y = fy + (j + 0.5) * chh;
+      if ((i + j) % 2 === 0) { // vase with a spray of flowers
+        x.fillStyle = C.red; x.beginPath(); x.moveTo(X - 3, Y + chh * 0.32); x.quadraticCurveTo(X - 6, Y + chh * 0.15, X - 2, Y + chh * 0.06); x.lineTo(X + 2, Y + chh * 0.06); x.quadraticCurveTo(X + 6, Y + chh * 0.15, X + 3, Y + chh * 0.32); x.fill();
+        x.strokeStyle = C.green; x.lineWidth = 0.9; for (const a of [-0.9, -0.45, 0, 0.45, 0.9]) { x.beginPath(); x.moveTo(X, Y + chh * 0.06); x.quadraticCurveTo(X + Math.sin(a) * 4, Y - chh * 0.1, X + Math.sin(a) * 9, Y - Math.cos(a) * chh * 0.26); x.stroke(); }
+        for (const [a, col] of [[-0.9, C.pink], [-0.45, C.ivory], [0, C.gold], [0.45, C.ivory], [0.9, C.pink]]) rosette(x, X + Math.sin(a) * 9, Y - Math.cos(a) * chh * 0.26, 2.6, 6, col, C.red, C.field);
+      } else { palmette(x, X, Y + 2, chh * 0.24, 0, C.red, C.ivory); rosette(x, X, Y - chh * 0.08, 2.8, 8, C.gold, C.field, C.ivory); leaf(x, X - 3, Y + 4, 6, Math.PI + 0.5, C.green); leaf(x, X + 3, Y + 4, 6, -0.5, C.green); }
+    }
+    x.restore();
+  });
+}
+
+// Herati: the "fish" pattern all over a navy field, a rosette in each diamond with four curling leaves round it,
+// and a small red diamond medallion at the centre.
+function persHerati(ctx, W, H) {
+  const C = { guard: '#1b1a24', guard2: '#d9c7a0', border: '#9e2f2a', vine: '#d9c7a0', r1: '#1f2d4a', r2: '#e2b45a', r3: '#efe2c4',
+    field: '#1f2d4a', red: '#a8382c', ivory: '#efe2c4', gold: '#e2b45a', green: '#5f8a5a', sky: '#7aa6c0' };
+  weavePicture(ctx, W, H, 140, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = persBorder(x, cols, rows, C, 16);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const dw = 22, dh = 20;
+    for (let j = -1; j <= fh / dh + 1; j++) for (let i = -1; i <= fw / dw + 1; i++) {
+      const cx = fx + i * dw + (j % 2 ? dw / 2 : 0), cy = fy + j * dh;
+      // diamond outline of fine vine
+      x.strokeStyle = C.gold; x.lineWidth = 0.8; x.beginPath(); x.moveTo(cx, cy - dh * 0.42); x.lineTo(cx + dw * 0.42, cy); x.lineTo(cx, cy + dh * 0.42); x.lineTo(cx - dw * 0.42, cy); x.closePath(); x.stroke();
+      // four leaves curling round it
+      for (let k = 0; k < 4; k++) { const a = (k * Math.PI) / 2 + Math.PI / 4; leaf(x, cx + Math.cos(a) * dw * 0.18, cy + Math.sin(a) * dh * 0.18, dw * 0.34, a + Math.PI / 2.6, k % 2 ? C.green : C.sky); }
+      rosette(x, cx, cy, 3.4, 8, (i + j) % 2 ? C.red : C.ivory, C.gold, C.field);
+    }
+    const mx = fx + fw / 2, my = fy + fh / 2;
+    const dia = (rx, ry, col) => { x.fillStyle = col; x.beginPath(); x.moveTo(mx, my - ry); x.lineTo(mx + rx, my); x.lineTo(mx, my + ry); x.lineTo(mx - rx, my); x.closePath(); x.fill(); };
+    dia(fw * 0.17, fh * 0.32, C.ivory); dia(fw * 0.15, fh * 0.28, C.red); dia(fw * 0.08, fh * 0.15, C.ivory); dia(fw * 0.065, fh * 0.12, C.field); rosette(x, mx, my, 4, 8, C.gold, C.ivory, C.red);
+    x.restore();
+  });
+}
+
+// Qom silk: pale colours with a sheen. A big lobed medallion full of flowers on ivory, sage spandrels.
+function persQom(ctx, W, H) {
+  const C = { guard: '#4a5f7a', guard2: '#f1e9d8', border: '#a9c0a0', vine: '#c47e7a', r1: '#e2b7ad', r2: '#f1e9d8', r3: '#6a9a98',
+    field: '#f1e9d8', blush: '#e2b7ad', sage: '#a9c0a0', teal: '#6a9a98', gold: '#d9b56a', rose: '#c47e7a', blue: '#4a5f7a',
+    vine2: '#d9b56a', leaf: '#a9c0a0', bloom: '#c47e7a', bloom2: '#f1e9d8' };
+  weavePicture(ctx, W, H, 150, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = persBorder(x, cols, rows, C, 16);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    for (let j = 0; j < 4; j++) for (let i = 0; i < 7; i++) persSpiral(x, fx + (i + (j % 2 ? 0.5 : 0)) * fw / 6.5, fy + (j + 0.5) * fh / 4, 7, 1.3, (i + j) % 2 ? 1 : -1, C);
+    for (const [sx, sy] of [[fx, fy], [fx + fw, fy], [fx, fy + fh], [fx + fw, fy + fh]]) { persLobed(x, sx, sy, fw * 0.18, fh * 0.32, 12, 0.16, C.sage); persLobed(x, sx, sy, fw * 0.12, fh * 0.22, 12, 0.16, C.field); rosette(x, sx, sy, fh * 0.1, 10, C.rose, C.gold, C.sage); }
+    const cx = fx + fw / 2, cy = fy + fh / 2;
+    persLobed(x, cx, cy, fw * 0.25, fh * 0.42, 16, 0.12, C.teal);
+    persLobed(x, cx, cy, fw * 0.23, fh * 0.39, 16, 0.12, C.blush);
+    for (let k = 0; k < 16; k++) { const a = (k * Math.PI) / 8; leaf(x, cx + Math.cos(a) * fw * 0.08, cy + Math.sin(a) * fh * 0.13, fw * 0.08, a, k % 2 ? C.sage : C.teal); }
+    for (let k = 0; k < 8; k++) { const a = (k * Math.PI) / 4 + Math.PI / 8; rosette(x, cx + Math.cos(a) * fw * 0.17, cy + Math.sin(a) * fh * 0.29, 3.6, 8, k % 2 ? C.rose : C.gold, C.field, C.teal); }
+    persLobed(x, cx, cy, fw * 0.07, fh * 0.12, 8, 0.3, C.field);
+    rosette(x, cx, cy, 5, 10, C.rose, C.gold, C.teal);
+    x.restore();
+  });
+  // silk sheen: a soft diagonal shimmer over the whole rug
+  const g = ctx.createLinearGradient(0, 0, W, H);
+  g.addColorStop(0, 'rgba(255,255,255,.14)'); g.addColorStop(0.35, 'rgba(255,255,255,0)'); g.addColorStop(0.65, 'rgba(255,255,255,.1)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+}
+
+// Turkmen gul: rows of quartered octagonal guls joined by fine lines on madder red, smaller guls between them.
+function persTurkmen(ctx, W, H) {
+  const C = { guard: '#2a1414', guard2: '#d9c7a0', border: '#7e2222', vine: '#d9c7a0', r1: '#1f2340', r2: '#efe2c4', r3: '#d87a3a',
+    field: '#8e2626', field2: '#822222', navy: '#1f2340', ivory: '#efe2c4', orange: '#d87a3a', dark: '#2a1414', green: '#4f7a52' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = persBorder(x, cols, rows, C, 14);
+    for (let y = fy; y < fy + fh; y++) if (Math.floor((y - fy) / 6) % 4 === 1) { x.fillStyle = C.field2; x.fillRect(fx, y, fw, 1); }
+    const nc = 5, nr = 3, gw = fw / nc, gh = fh / nr;
+    // lines joining the guls
+    x.fillStyle = C.dark; for (let j = 0; j < nr; j++) x.fillRect(fx, fy + (j + 0.5) * gh - 0.5, fw, 1); for (let i = 0; i < nc; i++) x.fillRect(fx + (i + 0.5) * gw - 0.5, fy, 1, fh);
+    const oct = (cx, cy, rx, ry, col) => { x.fillStyle = col; x.beginPath(); for (let k = 0; k < 8; k++) { const a = Math.PI / 8 + (k * Math.PI) / 4; const px = cx + Math.cos(a) * rx, py = cy + Math.sin(a) * ry; k ? x.lineTo(px, py) : x.moveTo(px, py); } x.closePath(); x.fill(); };
+    for (let j = 0; j < nr; j++) for (let i = 0; i < nc; i++) {
+      const cx = fx + (i + 0.5) * gw, cy = fy + (j + 0.5) * gh, rx = gw * 0.4, ry = gh * 0.34;
+      oct(cx, cy, rx, ry, C.ivory); oct(cx, cy, rx - 1.4, ry - 1.4, C.dark);
+      // quarters in alternating colours
+      const q = [[C.field, C.navy], [C.navy, C.field]];
+      for (const [sx, sy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+        x.save(); x.beginPath(); x.rect(sx < 0 ? cx - rx : cx, sy < 0 ? cy - ry : cy, rx, ry); x.clip();
+        oct(cx, cy, rx - 2.4, ry - 2.4, q[(sx * sy > 0) ? 0 : 1][0]);
+        // a little stepped motif in each quarter
+        const mx = cx + sx * rx * 0.42, my = cy + sy * ry * 0.42;
+        x.fillStyle = C.ivory; x.fillRect(mx - 2, my - 0.5, 4, 1); x.fillRect(mx - 0.5, my - 2, 1, 4);
+        x.fillStyle = C.orange; x.fillRect(mx - 0.5, my - 0.5, 1, 1);
+        x.restore();
+      }
+      x.fillStyle = C.dark; x.fillRect(cx - rx + 2, cy - 0.5, 2 * rx - 4, 1); x.fillRect(cx - 0.5, cy - ry + 2, 1, 2 * ry - 4);
+      persStar(x, cx, cy, 3.4, 3.4, 4, 0.5, C.orange, Math.PI / 4); x.fillStyle = C.ivory; x.fillRect(cx - 0.5, cy - 0.5, 1, 1);
+    }
+    // minor guls on the crossing points between
+    for (let j = 0; j <= nr; j++) for (let i = 0; i <= nc; i++) {
+      const cx = fx + i * gw, cy = fy + j * gh;
+      if (i === 0 || j === 0 || i === nc || j === nr) continue;
+      persStar(x, cx, cy, gw * 0.12, gh * 0.12, 4, 0.55, C.navy, Math.PI / 4); persStar(x, cx, cy, gw * 0.07, gh * 0.07, 4, 0.55, C.ivory, Math.PI / 4); x.fillStyle = C.orange; x.fillRect(cx - 0.5, cy - 0.5, 1.4, 1.4);
+    }
+  });
+}
+
 // ---------- USA pack: woven, pieced and knotted rugs (restored from the earlier drafts) ----------
 // Dashed stitching around a rectangle; each side starts and ends on a stitch, so the corners join up.
 function stitchRect(ctx, x, y, w, h, step, thick, color) {
@@ -2551,11 +3001,23 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.mexico === 'street') mexicoStreet(ctx, W, H);
   else if (P.mexico === 'trajinera') mexicoTrajinera(ctx, W, H);
   else if (P.mexico === 'tulum') mexicoTulum(ctx, W, H);
+  else if (P.persia === 'heriz') persHeriz(ctx, W, H);
+  else if (P.persia === 'garden') persGarden(ctx, W, H);
+  else if (P.persia === 'hunt') persHunt(ctx, W, H);
+  else if (P.persia === 'tree') persTree(ctx, W, H);
+  else if (P.persia === 'boteh') persBoteh(ctx, W, H);
+  else if (P.persia === 'bakhtiari') persBakhtiari(ctx, W, H);
+  else if (P.persia === 'gabbeh') persGabbeh(ctx, W, H);
+  else if (P.persia === 'nain') persNain(ctx, W, H);
+  else if (P.persia === 'vase') persVase(ctx, W, H);
+  else if (P.persia === 'herati') persHerati(ctx, W, H);
+  else if (P.persia === 'qom') persQom(ctx, W, H);
+  else if (P.persia === 'turkmen') persTurkmen(ctx, W, H);
   else if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
   else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
-  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : P.mexico ? MEXICO_FRAME : undefined); else addWeave(ctx, W, H, seed);
+  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : P.mexico ? MEXICO_FRAME : undefined); else addWeave(ctx, W, H, seed, P.silk ? 12 : 26);
 
   // Back side: same pattern, faded and flattened.
   const b = document.createElement('canvas');
