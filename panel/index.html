@@ -14,13 +14,13 @@
   </div>
 </header>
 
-<main>
+<main class="layout" id="controls">
+  <aside class="side">
   <div class="upd" id="updBar" hidden role="status">
     <span id="updText"></span>
     <button type="button" class="btn" id="updBtn" data-t="updInstall">Restart and update</button>
   </div>
 
-  <!-- License label: content switches with the license state -->
   <section class="label" id="license" aria-live="polite">
     <p class="eyebrow" id="licEyebrow">License</p>
 
@@ -95,35 +95,98 @@
     </div>
   </section>
 
-  <!-- Rug controls: disabled while there is no license -->
-  <section class="panel" id="controls">
-    <div class="lock" id="lockNote" hidden><span data-t="locked">Activate a license to lay down the carpet.</span></div>
+    <section class="panel settings" id="settings">
+      <div class="group sizes">
+        <div>
+          <h2 data-t="size">Size</h2>
+          <div class="seg" id="sizeSeg">
+            <button type="button" data-v="kucuk" data-t="small">Small</button>
+            <button type="button" data-v="orta" data-t="medium">Medium</button>
+            <button type="button" data-v="buyuk" data-t="large">Large</button>
+          </div>
+        </div>
+        <div>
+          <h2 data-t="weight">Weight</h2>
+          <div class="seg" id="weightSeg">
+            <button type="button" data-v="hafif" data-t="light">Light</button>
+            <button type="button" data-v="normal" data-t="normal">Normal</button>
+            <button type="button" data-v="agir" data-t="heavy">Heavy</button>
+          </div>
+        </div>
+      </div>
+      <div class="group">
+        <label class="toggle"><input type="checkbox" id="tShow"><span data-t="showRug">Show the carpet</span></label>
+        <label class="toggle"><input type="checkbox" id="tTop"><span data-t="onTop">Keep it above windows</span></label>
+        <label class="toggle"><input type="checkbox" id="tLogin"><span data-t="login">Start with Windows</span></label>
+      </div>
+      <div class="row rowgroup">
+        <button type="button" class="btn small" id="flattenBtn" data-t="flatten">Flatten</button>
+        <button type="button" class="btn small" id="centerBtn" data-t="center">Bring to center</button>
+      </div>
+      <details class="tips">
+        <summary data-t="tipsTitle">How to use it</summary>
+        <ul>
+          <li data-t="tip1">Grab the carpet anywhere and drag. The edge lifts, let go and it drops.</li>
+          <li data-t="tip2">Drag files next to it, then pull the carpet over them.</li>
+          <li data-t="tip3">Double-click flattens it. Scroll over it to turn it, Ctrl + scroll to resize.</li>
+          <li data-t="tip4">Right-click the carpet or the tray icon for quick options.</li>
+        </ul>
+      </details>
+      <details class="tips report" id="report">
+        <summary data-t="reportTitle">Report a problem</summary>
+        <form id="reportForm" novalidate>
+          <p class="note" data-t="reportLead">Tell us what went wrong. We'll reply by email.</p>
+          <textarea id="reportText" rows="4" maxlength="3500" data-tp="reportPh" placeholder="What happened? What were you doing when it happened?"></textarea>
+          <input id="reportEmail" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com">
+          <p class="fine" data-t="reportFine">Your app version, system and license key are sent with it so we can help.</p>
+          <div class="row">
+            <button type="submit" class="btn small" id="reportGo" data-t="reportSend">Send</button>
+            <button type="button" class="linkish" id="reportWeb" data-url="contact" data-t="reportWeb" hidden>Open the contact page</button>
+          </div>
+          <p class="msg" id="reportMsg" role="status" hidden></p>
+        </form>
+      </details>
+    </section>
+  </aside>
 
-    <div class="group">
-      <h2 data-t="pattern">Pattern</h2>
-      <div class="swatches" id="swatches" role="radiogroup">
-        <button type="button" role="radio" data-style="tabriz"><img src="./thumbs/tabriz.webp" alt=""><span data-t="s_tabriz">Tabriz After Midnight</span></button>
-        <button type="button" role="radio" data-style="klasik"><img src="./thumbs/klasik.webp" alt=""><span data-t="s_klasik">Madder Red</span></button>
-        <button type="button" role="radio" data-style="lacivert"><img src="./thumbs/lacivert.webp" alt=""><span data-t="s_lacivert">Midnight</span></button>
-        <button type="button" role="radio" data-style="zumrut"><img src="./thumbs/zumrut.webp" alt=""><span data-t="s_zumrut">Emerald</span></button>
-        <button type="button" role="radio" data-style="kilim"><img src="./thumbs/kilim.webp" alt=""><span data-t="s_kilim">Kilim</span></button>
-        <button type="button" role="radio" data-style="gorunmez" class="special">
-          <img src="./thumbs/gorunmez.webp" alt="">
-          <span class="special-text">
-            <span class="special-name"><b data-t="s_gorunmez">Invisible</b><i class="badge" data-t="newBadge">NEW</i></span>
-            <small data-t="invisTag">Shows what's behind it, so the icons under it vanish.</small>
-          </span>
-        </button>
-        <div class="season" role="presentation">
-          <h3><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 5.2c-1.2-.9-3.6-1-5.3.5C2.6 7.6 2.6 13 4.8 15c1.7 1.6 3.9 1.3 5.2.6 1.3.7 3.5 1 5.2-.6 2.2-2 2.2-7.4.1-9.3-1.7-1.5-4.1-1.4-5.3-.5z" fill="#e0761f"/><path d="M10 5.4V2.6" stroke="#5a3a1a" stroke-width="1.6" stroke-linecap="round"/><path d="M6.6 9.6l1.4-1.6 1.4 1.6zM10.6 9.6l1.4-1.6 1.4 1.6zM6.4 12.2c1.1 1.3 2.3 1.7 3.6 1.7s2.5-.4 3.6-1.7" fill="#22130c" stroke="#22130c" stroke-width=".9" stroke-linejoin="round"/></svg><span data-t="halloween">Halloween</span></h3>
-          <div class="season-row">
+  <!-- The rugs: one collection at a time, picked from the shelf of tabs on top -->
+  <section class="panel gallery" aria-labelledby="galleryTitle">
+    <h2 class="sr" id="galleryTitle" data-t="pattern">Pattern</h2>
+      <div class="lock" id="lockNote" hidden><span data-t="locked">Activate a license to lay down the carpet.</span></div>
+    <nav class="shelves" role="tablist">
+      <button type="button" role="tab" data-coll="classics" aria-selected="true"><img src="./thumbs/tabriz.webp" alt=""><span data-t="classics">Classics</span></button>
+      <button type="button" role="tab" data-coll="halloween" aria-selected="false"><img src="./thumbs/balkabagi.webp" alt=""><span data-t="halloween">Halloween</span></button>
+      <button type="button" role="tab" data-coll="americas" aria-selected="false"><img src="./thumbs/kartpostal.webp" alt=""><span data-t="americas">Americas</span></button>
+      <button type="button" role="tab" data-coll="persia" aria-selected="false" class="shelf-persia"><img src="./thumbs/heriz.webp" alt=""><span data-t="persia">Persia</span></button>
+    </nav>
+
+    <div class="swatches group" id="swatches" role="radiogroup">
+      <div class="coll" data-coll="classics" role="tabpanel">
+          <button type="button" role="radio" data-style="gorunmez" class="special">
+            <img src="./thumbs/gorunmez.webp" alt="">
+            <span class="special-text">
+              <span class="special-name"><b data-t="s_gorunmez">Invisible</b><i class="badge" data-t="newBadge">NEW</i></span>
+              <small data-t="invisTag">Shows what's behind it, so the icons under it vanish.</small>
+            </span>
+          </button>
+        <div class="grid">
+          <button type="button" role="radio" data-style="tabriz"><img src="./thumbs/tabriz.webp" alt=""><span data-t="s_tabriz">Tabriz After Midnight</span></button>
+          <button type="button" role="radio" data-style="klasik"><img src="./thumbs/klasik.webp" alt=""><span data-t="s_klasik">Madder Red</span></button>
+          <button type="button" role="radio" data-style="lacivert"><img src="./thumbs/lacivert.webp" alt=""><span data-t="s_lacivert">Midnight</span></button>
+          <button type="button" role="radio" data-style="zumrut"><img src="./thumbs/zumrut.webp" alt=""><span data-t="s_zumrut">Emerald</span></button>
+          <button type="button" role="radio" data-style="kilim"><img src="./thumbs/kilim.webp" alt=""><span data-t="s_kilim">Kilim</span></button>
+        </div>
+      </div>
+
+      <div class="coll" data-coll="halloween" role="tabpanel" hidden>
+        <div class="grid grid-3">
             <button type="button" role="radio" data-style="balkabagi"><img src="./thumbs/balkabagi.webp" alt=""><span data-t="s_balkabagi">Pumpkin Patch</span></button>
             <button type="button" role="radio" data-style="orumcek"><img src="./thumbs/orumcek.webp" alt=""><span data-t="s_orumcek">Spider Web</span></button>
             <button type="button" role="radio" data-style="hayalet"><img src="./thumbs/hayalet.webp" alt=""><span data-t="s_hayalet">Ghost Night</span></button>
-          </div>
         </div>
-        <div class="season americas" role="presentation">
-          <h3><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.2" fill="#2c4f8a"/><path d="M6.2 4.6c1.6-.4 3.3.3 3.6 1.6.3 1.2-.9 1.6-.7 2.8.2 1.1 1.5 1.3 1.4 2.5-.1 1.4-1.6 1.8-1.4 3.2.1.8.6 1.3.1 1.8-.6.5-1.7-.4-2.2-1.4-.7-1.5-.2-2.9-1-4.1-.7-1-2.1-1.3-2.2-2.6-.1-1.6 1.2-3.4 2.4-3.8z" fill="#7fb36a"/><circle cx="10" cy="10" r="8.2" fill="none" stroke="#efe3c6" stroke-width="1.1"/></svg><span data-t="americas">Americas</span></h3>
+      </div>
+
+      <div class="coll americas" data-coll="americas" role="tabpanel" hidden>
           <div class="country-tabs" role="tablist">
             <button type="button" role="tab" data-country="usa" aria-selected="true"><svg viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" rx="1.5" fill="#efe3c6"/><g fill="#b5312b"><rect y="0" width="20" height="2"/><rect y="4" width="20" height="2"/><rect y="8" width="20" height="2"/><rect y="12" width="20" height="2"/></g><rect width="9" height="8" fill="#25345e"/><g fill="#efe3c6"><circle cx="2.2" cy="2" r=".7"/><circle cx="4.5" cy="2" r=".7"/><circle cx="6.8" cy="2" r=".7"/><circle cx="3.3" cy="4" r=".7"/><circle cx="5.6" cy="4" r=".7"/><circle cx="2.2" cy="6" r=".7"/><circle cx="4.5" cy="6" r=".7"/><circle cx="6.8" cy="6" r=".7"/></g></svg><span data-t="usa">USA</span></button>
             <button type="button" role="tab" data-country="canada" aria-selected="false"><svg viewBox="0 0 20 10" aria-hidden="true"><rect width="20" height="10" rx="1.2" fill="#c8302f"/><rect x="5" width="10" height="10" fill="#f3ece0"/><path fill="#c8302f" d="M10 1.4l.7 1.3.8-.4-.3 1.9 1-.9.2.7 1.2-.2-.4 1.2.5.3-1.9 1.4.2.6-1.8-.2v1.7h-.4V6.4l-1.8.2.2-.6-1.9-1.4.5-.3-.4-1.2 1.2.2.2-.7 1 .9-.3-1.9.8.4z"/></svg><span data-t="canada">Canada</span></button>
@@ -182,83 +245,35 @@
               <button type="button" role="radio" data-style="tulum"><img src="./thumbs/tulum.webp" alt=""><span data-t="s_tulum">Tulum Beach</span></button>
             </div>
           </div>
-        </div>
-        <div class="season persia" role="presentation">
-          <h3><svg viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" rx="1.2" fill="#1f2d4a"/><rect x="1.6" y="1.6" width="16.8" height="10.8" fill="#a8432f"/><path d="M10 3l4.2 4-4.2 4-4.2-4z" fill="#efe2c4"/><path d="M10 5l2 2-2 2-2-2z" fill="#1f2d4a"/><circle cx="10" cy="7" r=".8" fill="#e2b45a"/></svg><span data-t="persia">Persia</span></h3>
-          <p class="season-tag" data-t="persiaTag">From the carpet capital, knot by knot.</p>
-          <div class="season-row usa-row">
-            <button type="button" role="radio" data-style="heriz"><img src="./thumbs/heriz.webp" alt=""><span data-t="s_heriz">Heriz</span></button>
-            <button type="button" role="radio" data-style="bahce"><img src="./thumbs/bahce.webp" alt=""><span data-t="s_bahce">Paradise Garden</span></button>
-            <button type="button" role="radio" data-style="av"><img src="./thumbs/av.webp" alt=""><span data-t="s_av">Hunting Scene</span></button>
-            <button type="button" role="radio" data-style="hayat"><img src="./thumbs/hayat.webp" alt=""><span data-t="s_hayat">Tree of Life</span></button>
-            <button type="button" role="radio" data-style="buta"><img src="./thumbs/buta.webp" alt=""><span data-t="s_buta">Boteh</span></button>
-            <button type="button" role="radio" data-style="bahtiyari"><img src="./thumbs/bahtiyari.webp" alt=""><span data-t="s_bahtiyari">Bakhtiari</span></button>
-            <button type="button" role="radio" data-style="gabbe"><img src="./thumbs/gabbe.webp" alt=""><span data-t="s_gabbe">Qashqai Gabbeh</span></button>
-            <button type="button" role="radio" data-style="nain"><img src="./thumbs/nain.webp" alt=""><span data-t="s_nain">Nain</span></button>
-            <button type="button" role="radio" data-style="vazo"><img src="./thumbs/vazo.webp" alt=""><span data-t="s_vazo">Kerman Vase</span></button>
-            <button type="button" role="radio" data-style="herati"><img src="./thumbs/herati.webp" alt=""><span data-t="s_herati">Herati</span></button>
-            <button type="button" role="radio" data-style="kum"><img src="./thumbs/kum.webp" alt=""><span data-t="s_kum">Qom Silk</span></button>
-            <button type="button" role="radio" data-style="turkmen"><img src="./thumbs/turkmen.webp" alt=""><span data-t="s_turkmen">Turkmen Gul</span></button>
+      </div>
+
+      <!-- Persia: a showroom. The chosen rug (or the one under the pointer) hangs large in a framed vitrine. -->
+      <div class="coll persia-room" data-coll="persia" role="tabpanel" hidden>
+        <div class="showcase">
+          <figure class="showcase-rug"><img id="showImg" src="./thumbs/lg/heriz.webp" alt=""></figure>
+          <div class="showcase-text">
+            <h3 id="showName">Heriz</h3>
+            <p class="showcase-origin"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 6 3.6a2.4 2.4 0 0 1 0 4.8z" fill="currentColor"/></svg><span id="showOrigin">Heriz</span></p>
+            <p class="showcase-tag" data-t="persiaTag">From the carpet capital, knot by knot.</p>
           </div>
         </div>
+        <div class="grid persia-grid">
+          <button type="button" role="radio" data-style="heriz"><img src="./thumbs/heriz.webp" alt=""><span data-t="s_heriz">Heriz</span></button>
+          <button type="button" role="radio" data-style="bahce"><img src="./thumbs/bahce.webp" alt=""><span data-t="s_bahce">Paradise Garden</span></button>
+          <button type="button" role="radio" data-style="av"><img src="./thumbs/av.webp" alt=""><span data-t="s_av">Hunting Scene</span></button>
+          <button type="button" role="radio" data-style="hayat"><img src="./thumbs/hayat.webp" alt=""><span data-t="s_hayat">Tree of Life</span></button>
+          <button type="button" role="radio" data-style="buta"><img src="./thumbs/buta.webp" alt=""><span data-t="s_buta">Boteh</span></button>
+          <button type="button" role="radio" data-style="bahtiyari"><img src="./thumbs/bahtiyari.webp" alt=""><span data-t="s_bahtiyari">Bakhtiari</span></button>
+          <button type="button" role="radio" data-style="gabbe"><img src="./thumbs/gabbe.webp" alt=""><span data-t="s_gabbe">Qashqai Gabbeh</span></button>
+          <button type="button" role="radio" data-style="nain"><img src="./thumbs/nain.webp" alt=""><span data-t="s_nain">Nain</span></button>
+          <button type="button" role="radio" data-style="vazo"><img src="./thumbs/vazo.webp" alt=""><span data-t="s_vazo">Kerman Vase</span></button>
+          <button type="button" role="radio" data-style="herati"><img src="./thumbs/herati.webp" alt=""><span data-t="s_herati">Herati</span></button>
+          <button type="button" role="radio" data-style="kum"><img src="./thumbs/kum.webp" alt=""><span data-t="s_kum">Qom Silk</span></button>
+          <button type="button" role="radio" data-style="turkmen"><img src="./thumbs/turkmen.webp" alt=""><span data-t="s_turkmen">Turkmen Gul</span></button>
+        </div>
       </div>
+    </div>
       <p class="note" id="patternNote" hidden data-t="expiredPattern">Renew to unlock every pattern.</p>
-    </div>
-
-    <div class="group two">
-      <div>
-        <h2 data-t="size">Size</h2>
-        <div class="seg" id="sizeSeg">
-          <button type="button" data-v="kucuk" data-t="small">Small</button>
-          <button type="button" data-v="orta" data-t="medium">Medium</button>
-          <button type="button" data-v="buyuk" data-t="large">Large</button>
-        </div>
-      </div>
-      <div>
-        <h2 data-t="weight">Weight</h2>
-        <div class="seg" id="weightSeg">
-          <button type="button" data-v="hafif" data-t="light">Light</button>
-          <button type="button" data-v="normal" data-t="normal">Normal</button>
-          <button type="button" data-v="agir" data-t="heavy">Heavy</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="group">
-      <label class="toggle"><input type="checkbox" id="tShow"><span data-t="showRug">Show the carpet</span></label>
-      <label class="toggle"><input type="checkbox" id="tTop"><span data-t="onTop">Keep it above windows</span></label>
-      <label class="toggle"><input type="checkbox" id="tLogin"><span data-t="login">Start with Windows</span></label>
-    </div>
-
-    <div class="row">
-      <button type="button" class="btn small" id="flattenBtn" data-t="flatten">Flatten</button>
-      <button type="button" class="btn small" id="centerBtn" data-t="center">Bring to center</button>
-    </div>
-
-    <details class="tips">
-      <summary data-t="tipsTitle">How to use it</summary>
-      <ul>
-        <li data-t="tip1">Grab the carpet anywhere and drag. The edge lifts, let go and it drops.</li>
-        <li data-t="tip2">Drag files next to it, then pull the carpet over them.</li>
-        <li data-t="tip3">Double-click flattens it. Scroll over it to turn it, Ctrl + scroll to resize.</li>
-        <li data-t="tip4">Right-click the carpet or the tray icon for quick options.</li>
-      </ul>
-    </details>
-
-    <details class="tips report" id="report">
-      <summary data-t="reportTitle">Report a problem</summary>
-      <form id="reportForm" novalidate>
-        <p class="note" data-t="reportLead">Tell us what went wrong. We'll reply by email.</p>
-        <textarea id="reportText" rows="4" maxlength="3500" data-tp="reportPh" placeholder="What happened? What were you doing when it happened?"></textarea>
-        <input id="reportEmail" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com">
-        <p class="fine" data-t="reportFine">Your app version, system and license key are sent with it so we can help.</p>
-        <div class="row">
-          <button type="submit" class="btn small" id="reportGo" data-t="reportSend">Send</button>
-          <button type="button" class="linkish" id="reportWeb" data-url="contact" data-t="reportWeb" hidden>Open the contact page</button>
-        </div>
-        <p class="msg" id="reportMsg" role="status" hidden></p>
-      </form>
-    </details>
   </section>
 </main>
 

@@ -444,7 +444,8 @@ function openPanel() {
   }
   if (IS_MAC) app.dock?.show();
   panel = new BrowserWindow({
-    width: 460, height: Math.min(820, screen.getPrimaryDisplay().workArea.height - 40), minWidth: 420, minHeight: 560, show: false, title: 'Desktop Carpet',
+    width: Math.min(1020, screen.getPrimaryDisplay().workArea.width - 60), height: Math.min(780, screen.getPrimaryDisplay().workArea.height - 40),
+    minWidth: 440, minHeight: 560, show: false, title: 'Desktop Carpet',
     backgroundColor: '#c4925c', icon: path.join(__dirname, 'icon.png'), autoHideMenuBar: true,
     ...(IS_MAC
       ? { titleBarStyle: 'hidden', trafficLightPosition: { x: 14, y: 13 } }

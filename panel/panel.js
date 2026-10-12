@@ -90,7 +90,15 @@
       b.setAttribute('aria-checked', String(b.dataset.style === r.style));
       b.disabled = expiredPaid && b.dataset.style !== 'klasik';
     });
-    if (r.style !== shownStyle) { shownStyle = r.style; const home = $(`.country [data-style="${r.style}"]`)?.closest('.country'); if (home) showCountry(home.dataset.country); }
+    if (r.style !== shownStyle) {
+      shownStyle = r.style;
+      const btn = $(`#swatches [data-style="${r.style}"]`);
+      const coll = btn?.closest('.coll'), home = btn?.closest('.country');
+      if (coll) showColl(coll.dataset.coll);
+      if (home) showCountry(home.dataset.country);
+      if (btn?.closest('.persia-grid')) persiaPick = r.style;
+    }
+    if (!persiaHover) showcase(persiaPick);
     $('#patternNote').hidden = !expiredPaid;
     $$('#sizeSeg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === r.size)));
     $$('#weightSeg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === r.weight)));
@@ -153,8 +161,32 @@
 
   // ---- rug controls ----
   $$('#swatches button[data-style]').forEach((b) => b.addEventListener('click', () => dc.rug('style', b.dataset.style)));
-  // Americas pack: one country at a time. Opens on the country of the rug in use.
+  // The gallery shows one collection at a time; it opens on the collection of the rug in use.
   let shownStyle = null;
+  function showColl(c) {
+    $$('.shelves [data-coll]').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.coll === c)));
+    $$('.coll[data-coll]').forEach((p) => { p.hidden = p.dataset.coll !== c; });
+  }
+  $$('.shelves [data-coll]').forEach((t) => t.addEventListener('click', () => { showColl(t.dataset.coll); $('.gallery').scrollTop = 0; }));
+  // Persia showroom: the rug in use (or the last Persian one) hangs large; pointing at another previews it.
+  let persiaPick = 'heriz', persiaHover = false;
+  function showcase(k) {
+    const b = $(`.persia-grid [data-style="${k}"]`);
+    if (!b) return;
+    const src = `./thumbs/lg/${k}.webp`;
+    if (!$('#showImg').src.endsWith(src.slice(1))) $('#showImg').src = src;
+    $('#showName').textContent = b.querySelector('span').textContent;
+    $('#showOrigin').textContent = T['o_' + k] || '';
+  }
+  $$('.persia-grid [data-style]').forEach((b) => {
+    const k = b.dataset.style;
+    b.addEventListener('pointerenter', () => { persiaHover = true; showcase(k); });
+    b.addEventListener('focus', () => showcase(k));
+  });
+  $('.persia-grid').addEventListener('pointerleave', () => { persiaHover = false; showcase(persiaPick); });
+  $('.persia-grid').addEventListener('focusout', () => { if (!persiaHover) showcase(persiaPick); });
+  [...new Set($$('.persia-grid [data-style]').map((b) => b.dataset.style))].forEach((k) => { const i = new Image(); i.src = `./thumbs/lg/${k}.webp`; });
+  // Americas pack: one country at a time.
   function showCountry(c) {
     $$('.country-tabs [data-country]').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.country === c)));
     $$('.country[data-country]').forEach((p) => { p.hidden = p.dataset.country !== c; });
