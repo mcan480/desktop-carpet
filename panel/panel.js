@@ -107,9 +107,11 @@
       const coll = btn?.closest('.coll'), home = btn?.closest('.country');
       if (coll) showColl(coll.dataset.coll);
       if (home) showCountry(home.dataset.country);
-      if (btn?.closest('.persia-grid')) persiaPick = r.style;
+      for (const room of rooms) if (btn && room.el.contains(btn)) room.pick = r.style;
+      // A new pack gets the gallery once: the first time the panel opens after it arrives, it opens on that pack.
+      if (featured && !featuredSeen) { featuredSeen = true; showColl(featured); try { localStorage.setItem('dc-featured', featured); } catch {} }
     }
-    if (!persiaHover) showcase(persiaPick);
+    for (const room of rooms) if (!room.hover) room.show(room.pick);
     $('#patternNote').hidden = !expiredPaid;
     $$('#sizeSeg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === r.size)));
     $$('#weightSeg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === r.weight)));
@@ -179,24 +181,36 @@
     $$('.coll[data-coll]').forEach((p) => { p.hidden = p.dataset.coll !== c; });
   }
   $$('.shelves [data-coll]').forEach((t) => t.addEventListener('click', () => { showColl(t.dataset.coll); $('.gallery').scrollTop = 0; }));
-  // Persia showroom: the rug in use (or the last Persian one) hangs large; pointing at another previews it.
-  let persiaPick = 'heriz', persiaHover = false;
-  function showcase(k) {
-    const b = $(`.persia-grid [data-style="${k}"]`);
-    if (!b) return;
-    const src = `./thumbs/lg/${k}.webp`;
-    if (!$('#showImg').src.endsWith(src.slice(1))) $('#showImg').src = src;
-    $('#showName').textContent = b.querySelector('span').textContent;
-    $('#showOrigin').textContent = T['o_' + k] || '';
-  }
-  $$('.persia-grid [data-style]').forEach((b) => {
-    const k = b.dataset.style;
-    b.addEventListener('pointerenter', () => { persiaHover = true; showcase(k); });
-    b.addEventListener('focus', () => showcase(k));
+  // Showrooms (Persia, Türkiye): the rug in use there (or the last one picked) hangs large, with the town it comes
+  // from; pointing at another one previews it.
+  const rooms = $$('.showroom').map((el) => {
+    const btns = [...el.querySelectorAll('[data-style]')], img = el.querySelector('.showcase-rug img');
+    const room = {
+      el, pick: btns[0]?.dataset.style, hover: false,
+      show(k) {
+        const b = el.querySelector(`[data-style="${k}"]`);
+        if (!b) return;
+        const src = `./thumbs/lg/${k}.webp`;
+        if (!img.src.endsWith(src.slice(1))) img.src = src;
+        el.querySelector('.showcase-text h3').textContent = b.querySelector('span').textContent;
+        el.querySelector('.showcase-origin span').textContent = T['o_' + k] || '';
+      },
+    };
+    btns.forEach((b) => {
+      b.addEventListener('pointerenter', () => { room.hover = true; room.show(b.dataset.style); });
+      b.addEventListener('focus', () => room.show(b.dataset.style));
+      const i = new Image(); i.src = `./thumbs/lg/${b.dataset.style}.webp`;
+    });
+    el.querySelectorAll('.room-grid').forEach((g) => {
+      g.addEventListener('pointerleave', () => { room.hover = false; room.show(room.pick); });
+      g.addEventListener('focusout', () => { if (!room.hover) room.show(room.pick); });
+    });
+    return room;
   });
-  $('.persia-grid').addEventListener('pointerleave', () => { persiaHover = false; showcase(persiaPick); });
-  $('.persia-grid').addEventListener('focusout', () => { if (!persiaHover) showcase(persiaPick); });
-  [...new Set($$('.persia-grid [data-style]').map((b) => b.dataset.style))].forEach((k) => { const i = new Image(); i.src = `./thumbs/lg/${k}.webp`; });
+  // The featured pack is the wide tab on the shelf.
+  const featured = $('.shelves .shelf-turkiye')?.dataset.coll;
+  let featuredSeen = true;
+  try { featuredSeen = localStorage.getItem('dc-featured') === featured; } catch {}
   // Americas pack: one country at a time.
   function showCountry(c) {
     $$('.country-tabs [data-country]').forEach((t) => t.setAttribute('aria-selected', String(t.dataset.country === c)));

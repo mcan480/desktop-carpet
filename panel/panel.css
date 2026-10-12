@@ -159,7 +159,7 @@ h2{margin:0 0 8px;font:600 .84rem/1.3 var(--f-body);color:var(--saffron)}
 .season-tag{margin:0 0 14px;font:italic 500 .92rem/1.35 var(--f-body);color:rgba(239,227,198,.85)}
 .season-row.usa-row{grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:16px 12px}
 @keyframes shimmer{to{background-position:300% 0}}
-@media (prefers-reduced-motion:reduce){.swatches .special::before,.badge{animation:none}}
+@media (prefers-reduced-motion:reduce){.swatches .special::before,.badge{animation:none}.shelves button.shelf-turkiye:hover{transform:none}}
 
 .seg{display:flex;border:1.5px solid rgba(242,230,204,.35);border-radius:4px;overflow:hidden}
 .seg button{flex:1;background:none;border:0;padding:.7em .2em;color:var(--ivory);font:600 .84rem/1 var(--f-body);cursor:pointer}
@@ -242,10 +242,46 @@ h2{margin:0 0 8px;font:600 .84rem/1.3 var(--f-body);color:var(--saffron)}
 .showcase-origin{display:flex;align-items:center;gap:7px;font:600 .95rem/1.2 var(--f-body);color:#e0b866}
 .showcase-origin svg{width:11px;height:15px;flex:none}
 .showcase-tag{font:italic 500 .92rem/1.45 var(--f-body);color:rgba(246,230,189,.78);max-width:28ch}
-.persia-grid{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px 12px}
-.persia-grid button{color:#f1e2bd}
-.persia-grid button[aria-checked="true"] img{outline-color:#e0b866}
-.persia-grid button[aria-checked="true"] span{color:#e0b866}
+.room-grid{grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px 12px}
+.persia-room .room-grid button{color:#f1e2bd}
+.persia-room .room-grid button[aria-checked="true"] img{outline-color:#e0b866}
+.persia-room .room-grid button[aria-checked="true"] span{color:#e0b866}
+
+/* Türkiye, the featured pack. On the shelf: a wide tab across the top, glazed white like an İznik tile with a cobalt
+   and turquoise edge, three of its rugs fanned out, the name, a NEW badge and its line. */
+.shelves button.shelf-turkiye{grid-column:1/-1;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:18px;padding:10px 18px 10px 14px;border-radius:9px;
+  border:0;color:#1f3f8f;background-color:#f4f0e6;
+  background-image:radial-gradient(circle at 0 0,rgba(42,157,154,.16) 0 7px,transparent 7.5px),radial-gradient(circle at 100% 100%,rgba(42,157,154,.16) 0 7px,transparent 7.5px),
+    radial-gradient(circle,rgba(31,63,143,.13) 0 2px,transparent 2.5px);background-size:22px 22px,22px 22px,22px 22px;background-position:0 0,0 0,11px 11px;
+  box-shadow:inset 0 0 0 2px #1f3f8f,inset 0 0 0 5px #2a9d9a,inset 0 0 0 6px #1f3f8f;transition:box-shadow .15s,transform .15s}
+.shelves button.shelf-turkiye:hover{transform:translateY(-1px);box-shadow:inset 0 0 0 2px #1f3f8f,inset 0 0 0 5px #2a9d9a,inset 0 0 0 6px #1f3f8f,0 10px 18px -12px #000}
+.shelves button.shelf-turkiye[aria-selected="true"]{background-color:#fbf8f1;box-shadow:inset 0 0 0 2px #c43a2c,inset 0 0 0 5px #2a9d9a,inset 0 0 0 6px #1f3f8f,0 0 0 2px #c43a2c}
+.shelves button.shelf-turkiye:focus-visible{outline:2px solid var(--saffron);outline-offset:3px}
+.shelf-fan{position:relative;display:block;width:132px;height:58px}
+.shelves .shelf-fan img{position:absolute;top:8px;width:70px;border-radius:2px;box-shadow:0 6px 10px -5px rgba(0,0,0,.75)}
+.shelf-fan img:nth-child(1){left:0;transform:rotate(-9deg)}
+.shelf-fan img:nth-child(2){left:31px;top:4px;transform:rotate(3deg);z-index:1}
+.shelf-fan img:nth-child(3){left:62px;transform:rotate(-3deg)}
+.shelf-feature{display:grid;gap:3px;min-width:0}
+.shelf-title{display:flex;align-items:center;gap:9px}
+.shelf-title b{font:400 1.45rem/1.05 var(--f-display);color:#1f3f8f}
+.shelf-turkiye .badge{color:#fff;background:linear-gradient(110deg,#c43a2c,#e66a46,#c43a2c) 0 0/200% 100%}
+.shelf-turkiye small{font:italic 500 .86rem/1.35 var(--f-body);color:#3a4a6a}
+
+/* ...and its room: white glaze with a faint tile grid, framed in cobalt and turquoise with a white stitch. */
+.turkiye-room{position:relative;padding:26px 26px 24px;border-radius:8px;color:#1a2a55;background-color:#f4f0e6;
+  background-image:linear-gradient(rgba(31,63,143,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(31,63,143,.07) 1px,transparent 1px);background-size:46px 46px;background-position:-1px -1px;
+  box-shadow:inset 0 0 0 3px #1f3f8f,inset 0 0 0 10px #2a9d9a,inset 0 0 0 12px #1f3f8f}
+.turkiye-room::before{content:"";position:absolute;inset:5px;border:2px dotted rgba(244,240,230,.9);border-radius:6px;pointer-events:none}
+.turkiye-room .showcase-text h3{color:#1f3f8f}
+.turkiye-room .showcase-origin{color:#c43a2c}
+.turkiye-room .showcase-tag{color:#3a4a6a}
+.room-shelf{display:flex;align-items:center;gap:10px;margin:20px 0 12px;font:600 .82rem/1.2 var(--f-body);color:#1f3f8f}
+.room-shelf::after{content:"";flex:1;height:1.5px;background:linear-gradient(90deg,rgba(31,63,143,.35),rgba(31,63,143,0))}
+.turkiye-room .showcase + .room-shelf{margin-top:4px}
+.turkiye-room .room-grid button{color:#1a2a55}
+.turkiye-room .room-grid button[aria-checked="true"] img{outline-color:#c43a2c}
+.turkiye-room .room-grid button[aria-checked="true"] span{color:#c43a2c}
 
 /* Narrow window: one column, the page scrolls as a whole */
 @media (max-width:860px){
@@ -253,5 +289,9 @@ h2{margin:0 0 8px;font:600 .84rem/1.3 var(--f-body);color:var(--saffron)}
   .side,.gallery{overflow:visible;min-height:auto}
   .shelves{grid-template-columns:repeat(2,minmax(0,1fr))}
   .showcase{grid-template-columns:1fr}
+  .shelf-fan{width:108px;height:50px}
+  .shelves .shelf-fan img{width:58px}
+  .shelf-fan img:nth-child(2){left:25px}
+  .shelf-fan img:nth-child(3){left:50px}
   .swatches .special{grid-template-columns:110px 1fr}
 }

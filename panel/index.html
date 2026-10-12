@@ -155,6 +155,14 @@
     <h2 class="sr" id="galleryTitle" data-t="pattern">Pattern</h2>
       <div class="lock" id="lockNote" hidden><span data-t="locked">Activate a license to lay down the carpet.</span></div>
     <nav class="shelves" role="tablist">
+      <!-- The newest pack is featured: a wide tab across the top of the shelf -->
+      <button type="button" role="tab" data-coll="turkiye" aria-selected="false" class="shelf-turkiye">
+        <span class="shelf-fan" aria-hidden="true"><img src="./thumbs/usak.webp" alt=""><img src="./thumbs/kapadokya.webp" alt=""><img src="./thumbs/iznik.webp" alt=""></span>
+        <span class="shelf-feature">
+          <span class="shelf-title"><b data-t="turkiye">Türkiye</b><i class="badge" data-t="newBadge">NEW</i></span>
+          <small data-t="turkiyeTag">Between two continents, one rug at a time.</small>
+        </span>
+      </button>
       <button type="button" role="tab" data-coll="classics" aria-selected="true"><img src="./thumbs/tabriz.webp" alt=""><span data-t="classics">Classics</span></button>
       <button type="button" role="tab" data-coll="halloween" aria-selected="false"><img src="./thumbs/balkabagi.webp" alt=""><span data-t="halloween">Halloween</span></button>
       <button type="button" role="tab" data-coll="americas" aria-selected="false"><img src="./thumbs/kartpostal.webp" alt=""><span data-t="americas">Americas</span></button>
@@ -249,16 +257,16 @@
       </div>
 
       <!-- Persia: a showroom. The chosen rug (or the one under the pointer) hangs large in a framed vitrine. -->
-      <div class="coll persia-room" data-coll="persia" role="tabpanel" hidden>
+      <div class="coll showroom persia-room" data-coll="persia" role="tabpanel" hidden>
         <div class="showcase">
-          <figure class="showcase-rug"><img id="showImg" src="./thumbs/lg/heriz.webp" alt=""></figure>
+          <figure class="showcase-rug"><img src="./thumbs/lg/heriz.webp" alt=""></figure>
           <div class="showcase-text">
-            <h3 id="showName">Heriz</h3>
-            <p class="showcase-origin"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 6 3.6a2.4 2.4 0 0 1 0 4.8z" fill="currentColor"/></svg><span id="showOrigin">Heriz</span></p>
+            <h3>Heriz</h3>
+            <p class="showcase-origin"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 6 3.6a2.4 2.4 0 0 1 0 4.8z" fill="currentColor"/></svg><span>East Azerbaijan</span></p>
             <p class="showcase-tag" data-t="persiaTag">From the carpet capital, knot by knot.</p>
           </div>
         </div>
-        <div class="grid persia-grid">
+        <div class="grid room-grid">
           <button type="button" role="radio" data-style="heriz"><img src="./thumbs/heriz.webp" alt=""><span data-t="s_heriz">Heriz</span></button>
           <button type="button" role="radio" data-style="bahce"><img src="./thumbs/bahce.webp" alt=""><span data-t="s_bahce">Paradise Garden</span></button>
           <button type="button" role="radio" data-style="av"><img src="./thumbs/av.webp" alt=""><span data-t="s_av">Hunting Scene</span></button>
@@ -271,6 +279,35 @@
           <button type="button" role="radio" data-style="herati"><img src="./thumbs/herati.webp" alt=""><span data-t="s_herati">Herati</span></button>
           <button type="button" role="radio" data-style="kum"><img src="./thumbs/kum.webp" alt=""><span data-t="s_kum">Qom Silk</span></button>
           <button type="button" role="radio" data-style="turkmen"><img src="./thumbs/turkmen.webp" alt=""><span data-t="s_turkmen">Turkmen Gul</span></button>
+        </div>
+      </div>
+
+      <!-- Türkiye: an İznik-tile room. The chosen rug hangs large; the knotted carpets and the picture rugs on two shelves. -->
+      <div class="coll showroom turkiye-room" data-coll="turkiye" role="tabpanel" hidden>
+        <div class="showcase">
+          <figure class="showcase-rug"><img src="./thumbs/lg/usak.webp" alt=""></figure>
+          <div class="showcase-text">
+            <h3>Ushak Medallion</h3>
+            <p class="showcase-origin"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 6 3.6a2.4 2.4 0 0 1 0 4.8z" fill="currentColor"/></svg><span>Uşak</span></p>
+          </div>
+        </div>
+        <h4 class="room-shelf" data-t="turkiyeKnot">Anatolian carpets</h4>
+        <div class="grid room-grid">
+          <button type="button" role="radio" data-style="usak"><img src="./thumbs/usak.webp" alt=""><span data-t="s_usak">Ushak Medallion</span></button>
+          <button type="button" role="radio" data-style="lotto"><img src="./thumbs/lotto.webp" alt=""><span data-t="s_lotto">Lotto</span></button>
+          <button type="button" role="radio" data-style="bergama"><img src="./thumbs/bergama.webp" alt=""><span data-t="s_bergama">Bergama</span></button>
+          <button type="button" role="radio" data-style="yagcibedir"><img src="./thumbs/yagcibedir.webp" alt=""><span data-t="s_yagcibedir">Yağcıbedir</span></button>
+          <button type="button" role="radio" data-style="selcuklu"><img src="./thumbs/selcuklu.webp" alt=""><span data-t="s_selcuklu">Seljuk</span></button>
+          <button type="button" role="radio" data-style="hereke"><img src="./thumbs/hereke.webp" alt=""><span data-t="s_hereke">Hereke Silk</span></button>
+          <button type="button" role="radio" data-style="iznik"><img src="./thumbs/iznik.webp" alt=""><span data-t="s_iznik">Iznik Tulips</span></button>
+        </div>
+        <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+        <div class="grid room-grid">
+          <button type="button" role="radio" data-style="turkiyekart"><img src="./thumbs/turkiyekart.webp" alt=""><span data-t="s_turkiyekart">Greetings from Türkiye</span></button>
+          <button type="button" role="radio" data-style="kapadokya"><img src="./thumbs/kapadokya.webp" alt=""><span data-t="s_kapadokya">Cappadocia Balloons</span></button>
+          <button type="button" role="radio" data-style="bogaz"><img src="./thumbs/bogaz.webp" alt=""><span data-t="s_bogaz">Bosphorus Ferry</span></button>
+          <button type="button" role="radio" data-style="pamukkale"><img src="./thumbs/pamukkale.webp" alt=""><span data-t="s_pamukkale">Pamukkale</span></button>
+          <button type="button" role="radio" data-style="nazar"><img src="./thumbs/nazar.webp" alt=""><span data-t="s_nazar">Nazar Bead</span></button>
         </div>
       </div>
     </div>
