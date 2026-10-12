@@ -92,6 +92,12 @@ export const STYLES = {
   hanok:     { name: 'Hanok Çatıları',      korea: 'hanok', hooked: true },
   seul:      { name: 'Seul Gecesi',         korea: 'seoul', hooked: true },
   korekart:  { name: 'Kore’den Selamlar',   korea: 'postcard', fonts: true, hooked: true },
+  hangeul:   { name: 'Hangeul',             korea: 'hangeul' },
+  najeon:    { name: 'Sedef Kakma',         korea: 'najeon' },
+  sipjang:   { name: 'On Uzun Ömür',        korea: 'longevity' },
+  yeondeung: { name: 'Lotus Fenerleri',     korea: 'lanterns', hooked: true },
+  bibimbap:  { name: 'Bibimbap',            korea: 'bibimbap', hooked: true },
+  jeju:      { name: 'Jeju Adası',          korea: 'jeju', hooked: true },
   // East Asia pack. Japan:
   seigaiha:  { name: 'Seigaiha',            japan: 'seigaiha' },
   asanoha:   { name: 'Asanoha',             japan: 'asanoha' },
@@ -101,6 +107,12 @@ export const STYLES = {
   fuji:      { name: 'Fuji ve Sakura',      japan: 'fuji', hooked: true },
   kyoto:     { name: 'Kyoto Sokağı',        japan: 'kyoto', hooked: true },
   japonkart: { name: 'Japonya’dan Selamlar', japan: 'postcard', fonts: true, hooked: true },
+  shibori:   { name: 'Shibori',             japan: 'shibori' },
+  zen:       { name: 'Zen Bahçesi',         japan: 'zen' },
+  buyukdalga:{ name: 'Büyük Dalga',         japan: 'wave', hooked: true },
+  manekineko:{ name: 'Maneki-neko',         japan: 'neko', hooked: true },
+  torii:     { name: 'Torii Yolu',          japan: 'torii', hooked: true },
+  sushi:     { name: 'Suşi',                japan: 'sushi', hooked: true },
   // East Asia pack. China:
   porselen:  { name: 'Mavi Beyaz Porselen', china: 'porcelain' },
   bulut:     { name: 'Uğurlu Bulutlar',     china: 'clouds' },
@@ -110,6 +122,12 @@ export const STYLES = {
   panda:     { name: 'Panda',               china: 'panda', hooked: true },
   seddicin:  { name: 'Çin Seddi',           china: 'wall', hooked: true },
   cinkart:   { name: 'Çin’den Selamlar',    china: 'postcard', fonts: true, hooked: true },
+  kagitkesim:{ name: 'Kağıt Kesme',         china: 'papercut' },
+  imparator: { name: 'İmparator Dalgaları', china: 'imperial' },
+  mahjong:   { name: 'Mahjong',             china: 'mahjong' },
+  fenerfest: { name: 'Fener Bayramı',       china: 'lanterns', hooked: true },
+  guilin:    { name: 'Guilin',              china: 'guilin', hooked: true },
+  dimsum:    { name: 'Dim Sum',             china: 'dimsum', hooked: true },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -3863,6 +3881,659 @@ const CHINA_SCENES = [
 ];
 function chnPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'CHINA', CHINA_SCENES); }
 
+
+// --- East Asia, second set ---
+
+// Hangeul strokes, in a unit box: polylines, or {c: [x, y, r]} for the circles.
+const JAMO = [
+  [[[0.15, 0.2], [0.8, 0.2], [0.8, 0.85]]],                                                                   // ㄱ
+  [[[0.2, 0.15], [0.2, 0.8], [0.85, 0.8]]],                                                                   // ㄴ
+  [[[0.85, 0.2], [0.2, 0.2], [0.2, 0.8], [0.85, 0.8]]],                                                       // ㄷ
+  [[[0.2, 0.18], [0.8, 0.18], [0.8, 0.5], [0.2, 0.5], [0.2, 0.82], [0.84, 0.82]]],                            // ㄹ
+  [[[0.2, 0.2], [0.8, 0.2], [0.8, 0.8], [0.2, 0.8], [0.2, 0.2]]],                                             // ㅁ
+  [[[0.2, 0.12], [0.2, 0.84], [0.8, 0.84], [0.8, 0.12]], [[0.2, 0.48], [0.8, 0.48]]],                         // ㅂ
+  [[[0.5, 0.15], [0.15, 0.85]], [[0.48, 0.42], [0.85, 0.85]]],                                                // ㅅ
+  [{ c: [0.5, 0.5, 0.32] }],                                                                                  // ㅇ
+  [[[0.15, 0.2], [0.85, 0.2]], [[0.5, 0.2], [0.15, 0.85]], [[0.48, 0.45], [0.85, 0.85]]],                     // ㅈ
+  [[[0.5, 0.04], [0.5, 0.18]], [[0.15, 0.3], [0.85, 0.3]], [[0.5, 0.3], [0.15, 0.9]], [[0.48, 0.55], [0.85, 0.9]]], // ㅊ
+  [[[0.15, 0.2], [0.8, 0.2], [0.8, 0.85]], [[0.15, 0.52], [0.8, 0.52]]],                                      // ㅋ
+  [[[0.85, 0.2], [0.2, 0.2], [0.2, 0.8], [0.85, 0.8]], [[0.2, 0.5], [0.8, 0.5]]],                             // ㅌ
+  [[[0.12, 0.2], [0.88, 0.2]], [[0.35, 0.2], [0.35, 0.8]], [[0.65, 0.2], [0.65, 0.8]], [[0.12, 0.8], [0.88, 0.8]]], // ㅍ
+  [[[0.38, 0.08], [0.62, 0.08]], [[0.15, 0.27], [0.85, 0.27]], { c: [0.5, 0.63, 0.22] }],                     // ㅎ
+  [[[0.4, 0.1], [0.4, 0.9]], [[0.4, 0.5], [0.78, 0.5]]],                                                      // ㅏ
+  [[[0.6, 0.1], [0.6, 0.9]], [[0.22, 0.5], [0.6, 0.5]]],                                                      // ㅓ
+  [[[0.1, 0.68], [0.9, 0.68]], [[0.5, 0.3], [0.5, 0.68]]],                                                    // ㅗ
+  [[[0.1, 0.32], [0.9, 0.32]], [[0.5, 0.32], [0.5, 0.72]]],                                                   // ㅜ
+];
+
+// Hangeul: the fourteen consonants and four vowels of the Korean alphabet, one to a tile, the tiles in the five
+// traditional colours (obangsaek), a border striped in the same five.
+function korHangeul(ctx, W, H) {
+  const C = { blue: '#2a5aa8', red: '#c8323a', yellow: '#f0c040', white: '#f2ece0', black: '#1e1e24', paper: '#e8dcc0' };
+  const tiles = [C.blue, C.red, C.yellow, C.white, C.black];
+  weavePicture(ctx, W, H, 110, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.black; x.fillRect(0, 0, cols, rows);
+    [C.blue, C.red, C.yellow, C.white].forEach((col, k) => { x.fillStyle = col; x.fillRect(3 + k, 3 + k, cols - 6 - 2 * k, rows - 6 - 2 * k); });
+    const fx = 8, fy = 8, fw = cols - 16, fh = rows - 16;
+    x.fillStyle = C.black; x.fillRect(fx - 1, fy - 1, fw + 2, fh + 2);
+    const nc = 6, nr = 3, tw = fw / nc, th = fh / nr;
+    for (let j = 0; j < nr; j++) for (let i = 0; i < nc; i++) {
+      const bg = tiles[(i + j * 2) % 5], ink = bg === C.yellow || bg === C.white ? C.black : C.white;
+      const a = Math.round(fx + i * tw), b = Math.round(fy + j * th), w = Math.round(fx + (i + 1) * tw) - a - 1, h = Math.round(fy + (j + 1) * th) - b - 1;
+      x.fillStyle = bg; x.fillRect(a, b, w, h);
+      const box = Math.min(w, h) * 0.66, ox = a + (w - box) / 2, oy = b + (h - box) / 2;
+      x.strokeStyle = ink; x.lineWidth = box * 0.13; x.lineCap = 'square'; x.lineJoin = 'miter';
+      for (const st of JAMO[j * nc + i]) {
+        x.beginPath();
+        if (st.c) x.arc(ox + st.c[0] * box, oy + st.c[1] * box, st.c[2] * box, 0, Math.PI * 2);
+        else st.forEach(([px, py], k) => (k ? x.lineTo(ox + px * box, oy + py * box) : x.moveTo(ox + px * box, oy + py * box)));
+        x.stroke();
+      }
+    }
+  });
+}
+
+// Najeon: mother-of-pearl inlaid in black lacquer. A scroll of chrysanthemums and leaves, every piece of shell
+// catching a different colour, inside a border of pearl lines and little diamonds.
+function korNajeon(ctx, W, H) {
+  const C = { black: '#111114', black2: '#19181e', pearl: '#eef0ea', pink: '#e6c4cf', mint: '#c2e4d4', lilac: '#c6c4ec', sky: '#b4d8ea', gold: '#b89a5a' };
+  const iri = [C.pearl, C.sky, C.mint, C.pearl, C.pink, C.lilac];
+  weavePicture(ctx, W, H, 130, Object.values(C), (x, cols, rows) => {
+    const col = (px, py) => iri[Math.floor((Math.sin(px * 0.05) + Math.cos(py * 0.07 + px * 0.012) + 2) * 1.5) % iri.length];
+    x.fillStyle = C.gold; x.fillRect(0, 0, cols, rows); x.fillStyle = C.black; x.fillRect(2, 2, cols - 4, rows - 4);
+    const line = (o) => { x.fillStyle = C.pearl; x.fillRect(o, o, cols - 2 * o, 1); x.fillRect(o, rows - 1 - o, cols - 2 * o, 1); x.fillRect(o, o, 1, rows - 2 * o); x.fillRect(cols - 1 - o, o, 1, rows - 2 * o); };
+    line(4); line(11);
+    const dia = (px, py) => { x.fillStyle = col(px, py); x.beginPath(); x.moveTo(px, py - 2.2); x.lineTo(px + 2.2, py); x.lineTo(px, py + 2.2); x.lineTo(px - 2.2, py); x.closePath(); x.fill(); };
+    for (const [len, put] of [[cols - 16, (a) => { dia(8 + a, 7.5); dia(8 + a, rows - 7.5); }], [rows - 16, (a) => { dia(7.5, 8 + a); dia(cols - 7.5, 8 + a); }]]) { const { n, d } = evenSteps(len, 7); for (let i = 0; i <= n; i++) put(i * d); }
+    const fx = 12, fy = 12, fw = cols - 24, fh = rows - 24;
+    for (let y = fy; y < fy + fh; y++) if (Math.floor((y - fy) / 9) % 3 === 1) { x.fillStyle = C.black2; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const nr = 3, P = fw / 3.5;
+    for (let j = 0; j < nr; j++) {
+      const y0 = fy + (j + 0.5) * fh / nr, A = (fh / nr) * 0.26, ph = j % 2 ? Math.PI : 0;
+      const vy = (px) => y0 + A * Math.sin(((px - fx) / P) * Math.PI * 2 + ph);
+      x.strokeStyle = C.pearl; x.lineWidth = 1.4; x.beginPath(); for (let px = fx - 2; px < fx + fw + 2; px += 1) px > fx - 2 ? x.lineTo(px, vy(px)) : x.moveTo(px, vy(px)); x.stroke();
+      for (let k = -1; k < 8; k++) {
+        const px = fx + P * (k * 0.5 + 0.25 - ph / (Math.PI * 4)), up = Math.sin(((px - fx) / P) * Math.PI * 2 + ph) > 0 ? 1 : -1, py = vy(px) + up * A * 0.25;
+        rosette(x, px, py, 7.5, 16, col(px, py), C.black, col(px + 9, py));
+        rosette(x, px, py, 4.2, 10, col(px + 20, py + 10), C.black, C.pearl);
+        const mx = px + P * 0.25, my = vy(mx);
+        leaf(x, mx, my, 12, -Math.PI / 2 - 0.5, col(mx, my - 6)); leaf(x, mx, my, 12, Math.PI / 2 + 0.5, col(mx + 5, my));
+      }
+    }
+    x.restore();
+  });
+}
+
+// Sipjangsaeng: the ten symbols of long life in one folk painting. The sun, clouds, blue-green mountains, water,
+// rocks, pines, a turtle, deer, cranes and the mushroom of immortality.
+function korLongevity(ctx, W, H) {
+  const C = { silk: '#efe2c0', silk2: '#e8d8b0', sun: '#d03a2a', cloud: '#f8f4ea', cloudline: '#b8a878', blue: '#2f5f8f', teal: '#3f8a8a', green: '#5a9a5a', mint: '#a8d0b0',
+    pine: '#2a5a3a', trunk: '#6a4a32', water: '#3a6aa8', deer: '#b8743a', black: '#1e1e22', red: '#c8302a', rock: '#8a8a90', turtle: '#5a7a3a', frame: '#7a2a24', frame2: '#d6b25a' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.frame; x.fillRect(0, 0, cols, rows); x.fillStyle = C.frame2; x.fillRect(3, 3, cols - 6, rows - 6); x.fillStyle = C.frame; x.fillRect(4, 4, cols - 8, rows - 8); x.fillStyle = C.frame2; x.fillRect(6, 6, cols - 12, rows - 12);
+    const fx = 7, fy = 7, fw = cols - 14, fh = rows - 14, X = (t) => fx + fw * t, Y = (t) => fy + fh * t;
+    for (let y = fy; y < fy + fh; y++) { x.fillStyle = Math.floor((y - fy) / 10) % 3 === 1 ? C.silk2 : C.silk; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    x.fillStyle = C.sun; x.beginPath(); x.arc(X(0.12), Y(0.18), fh * 0.1, 0, Math.PI * 2); x.fill();
+    const cloud = (cx, cy, s) => { for (const [dx, dy, r] of [[-1, 0.2, 0.7], [0, -0.2, 0.9], [1, 0.1, 0.75], [1.8, 0.35, 0.5], [-1.8, 0.35, 0.5]]) { x.fillStyle = C.cloudline; x.beginPath(); x.arc(cx + dx * s, cy + dy * s, r * s + 1, 0, Math.PI * 2); x.fill(); } for (const [dx, dy, r] of [[-1, 0.2, 0.7], [0, -0.2, 0.9], [1, 0.1, 0.75], [1.8, 0.35, 0.5], [-1.8, 0.35, 0.5]]) { x.fillStyle = C.cloud; x.beginPath(); x.arc(cx + dx * s, cy + dy * s, r * s, 0, Math.PI * 2); x.fill(); } };
+    cloud(X(0.38), Y(0.12), 5); cloud(X(0.66), Y(0.09), 6); cloud(X(0.88), Y(0.24), 4.4);
+    const peak = (cx, h, w) => {
+      const base = Y(0.68);
+      x.fillStyle = C.blue; x.beginPath(); x.moveTo(cx - w / 2, base); x.quadraticCurveTo(cx - w * 0.18, base - h * 0.55, cx, base - h); x.quadraticCurveTo(cx + w * 0.18, base - h * 0.55, cx + w / 2, base); x.closePath(); x.fill();
+      x.fillStyle = C.teal; x.beginPath(); x.moveTo(cx - w * 0.1, base); x.quadraticCurveTo(cx - w * 0.04, base - h * 0.55, cx, base - h); x.quadraticCurveTo(cx + w * 0.18, base - h * 0.55, cx + w / 2, base); x.closePath(); x.fill();
+      x.fillStyle = C.green; x.beginPath(); x.moveTo(cx - w * 0.36, base); x.quadraticCurveTo(cx - w * 0.1, base - h * 0.25, cx - w * 0.04, base - h * 0.45); x.lineTo(cx + w * 0.06, base - h * 0.3); x.quadraticCurveTo(cx + w * 0.2, base - h * 0.15, cx + w * 0.4, base); x.closePath(); x.fill();
+      x.strokeStyle = C.mint; x.lineWidth = 1; x.beginPath(); x.moveTo(cx, base - h); x.quadraticCurveTo(cx + w * 0.02, base - h * 0.5, cx + w * 0.12, base - h * 0.2); x.stroke();
+    };
+    peak(X(0.3), fh * 0.34, fw * 0.16); peak(X(0.8), fh * 0.32, fw * 0.15); peak(X(0.43), fh * 0.48, fw * 0.17); peak(X(0.67), fh * 0.46, fw * 0.17); peak(X(0.55), fh * 0.6, fw * 0.2);
+    // the ground and the water
+    x.fillStyle = C.green; x.beginPath(); x.moveTo(fx, Y(0.66)); x.quadraticCurveTo(X(0.5), Y(0.62), X(1), Y(0.67)); x.lineTo(X(1), Y(0.8)); x.lineTo(fx, Y(0.8)); x.fill();
+    x.fillStyle = C.mint; for (let k = 0; k < 18; k++) x.fillRect(X(((k * 37) % 100) / 100), Y(0.69 + (k % 4) * 0.025), 2, 1);
+    x.fillStyle = C.water; x.fillRect(fx, Y(0.8), fw, fh * 0.2);
+    x.strokeStyle = C.cloud; x.lineWidth = 1;
+    for (let r = 0; r < 3; r++) for (let k = -1; k < 14; k++) { const cx = X(k / 13) + (r % 2) * fw / 26, cy = Y(0.84 + r * 0.055); x.beginPath(); x.arc(cx, cy, 3.4, Math.PI * 1.05, Math.PI * 1.95); x.stroke(); }
+    // rocks and the turtle, bottom left
+    x.fillStyle = C.rock; x.beginPath(); x.ellipse(X(0.12), Y(0.82), fw * 0.08, fh * 0.07, 0, 0, Math.PI * 2); x.fill();
+    const tx = X(0.12), ty = Y(0.77);
+    x.fillStyle = C.turtle; x.beginPath(); x.ellipse(tx, ty, 7, 4.2, 0, 0, Math.PI * 2); x.fill();
+    x.beginPath(); x.ellipse(tx + 8, ty + 0.5, 2.4, 1.8, 0, 0, Math.PI * 2); x.fill();
+    for (const [dx, dy] of [[-5, 3], [4, 3.4]]) x.fillRect(tx + dx, ty + dy, 2, 2);
+    x.strokeStyle = C.mint; x.lineWidth = 0.7; x.beginPath(); x.moveTo(tx - 5, ty); x.lineTo(tx + 5, ty); x.moveTo(tx, ty - 3.6); x.lineTo(tx, ty + 3.6); x.stroke();
+    x.strokeStyle = C.cloud; x.lineWidth = 0.8; x.beginPath(); x.moveTo(tx - 7, ty - 1); x.bezierCurveTo(tx - 12, ty - 4, tx - 10, ty - 10, tx - 14, ty - 12); x.stroke();     // its long-life tail of mist
+    // pine on the right
+    x.strokeStyle = C.trunk; x.lineCap = 'round'; x.lineWidth = 4; x.beginPath(); x.moveTo(X(0.9), Y(0.82)); x.bezierCurveTo(X(0.86), Y(0.6), X(0.94), Y(0.45), X(0.86), Y(0.32)); x.stroke();
+    x.lineWidth = 2; x.beginPath(); x.moveTo(X(0.88), Y(0.5)); x.lineTo(X(0.78), Y(0.44)); x.stroke();
+    for (const [a, b, w] of [[0.86, 0.3, 9], [0.78, 0.42, 8], [0.93, 0.42, 7], [0.9, 0.56, 6]]) { x.fillStyle = C.pine; x.beginPath(); x.ellipse(X(a), Y(b), w, w * 0.45, 0, 0, Math.PI * 2); x.fill(); x.fillStyle = C.green; x.beginPath(); x.ellipse(X(a) - 1, Y(b) - w * 0.15, w * 0.7, w * 0.22, 0, 0, Math.PI * 2); x.fill(); }
+    // two deer on the meadow
+    const deer = (dx, dy, f, stag) => {
+      x.save(); x.translate(dx, dy); x.scale(f, 1);
+      x.strokeStyle = C.deer; x.lineWidth = 1.3; x.lineCap = 'round';
+      for (const lx of [-4, -2.6, 3, 4.4]) { x.beginPath(); x.moveTo(lx, 1); x.lineTo(lx + (lx > 0 ? 0.6 : -0.4), 7); x.stroke(); }
+      x.fillStyle = C.deer; x.beginPath(); x.ellipse(0, 0, 6, 3, 0, 0, Math.PI * 2); x.fill();
+      x.beginPath(); x.moveTo(4, -1); x.lineTo(7, -6); x.lineTo(9, -5.4); x.lineTo(6.6, 0.6); x.fill();
+      x.beginPath(); x.ellipse(8.6, -6.2, 2.4, 1.3, 0.4, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.cloud; for (const [sx, sy] of [[-3, -1], [0, -1.4], [2.6, -0.6], [-1.4, 0.8]]) x.fillRect(sx, sy, 1, 1);
+      if (stag) { x.strokeStyle = C.trunk; x.lineWidth = 0.8; x.beginPath(); x.moveTo(8, -7); x.lineTo(7, -11); x.moveTo(7.4, -9.4); x.lineTo(5.6, -10); x.moveTo(9, -7); x.lineTo(10.4, -10.6); x.stroke(); }
+      x.restore();
+    };
+    deer(X(0.36), Y(0.71), 1, true); deer(X(0.52), Y(0.73), -1, false);
+    // mushrooms of immortality by the deer
+    for (const [a, b] of [[0.45, 0.76], [0.47, 0.75], [0.62, 0.74]]) { x.fillStyle = C.red; x.beginPath(); x.ellipse(X(a), Y(b), 2.6, 1.6, 0, Math.PI, 0); x.fill(); x.fillStyle = C.trunk; x.fillRect(X(a) - 0.4, Y(b), 0.9, 2.4); }
+    // cranes
+    const cc = { white: C.cloud, black: C.black };
+    inlaidCrane(x, X(0.24), Y(0.36), 22, -0.25, cc); inlaidCrane(x, X(0.74), Y(0.2), 18, Math.PI + 0.2, cc);
+    x.fillStyle = C.red; x.fillRect(X(0.24) + 10, Y(0.36) - 3.4, 1.2, 1.2);
+    x.restore();
+  });
+}
+
+// The Lotus Lantern Festival: strings of paper lotus lanterns glowing over a temple at night.
+function korLanterns(ctx, W, H) {
+  const u = H / 100;
+  const sky = ctx.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#0d1236'); sky.addColorStop(1, '#2f2a66');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  // the temple roof at the bottom, its doors lit
+  const ry = H * 0.8;
+  ctx.fillStyle = '#f4c97a'; ctx.fillRect(W * 0.12, ry, W * 0.76, H - ry);
+  ctx.fillStyle = '#5a3424'; for (let k = 0; k <= 8; k++) ctx.fillRect(W * (0.12 + k * 0.095) - 1 * u, ry, 2 * u, H - ry);
+  ctx.fillStyle = '#2f6b5a'; ctx.fillRect(W * 0.1, ry - 3 * u, W * 0.8, 3.4 * u);
+  ctx.fillStyle = '#16151e'; ctx.beginPath(); ctx.moveTo(-W * 0.02, ry - 12 * u); ctx.quadraticCurveTo(W * 0.1, ry - 2 * u, W * 0.3, ry - 2.6 * u); ctx.lineTo(W * 0.7, ry - 2.6 * u); ctx.quadraticCurveTo(W * 0.9, ry - 2 * u, W * 1.02, ry - 12 * u); ctx.lineTo(W * 0.78, ry - 20 * u); ctx.lineTo(W * 0.22, ry - 20 * u); ctx.closePath(); ctx.fill();
+  const COLS = [['#f07a9a', '#fff0f4'], ['#f6c84a', '#fff6d0'], ['#e0403a', '#ffd8c8'], ['#5ab86a', '#e8ffe8'], ['#4a8ae0', '#e0eeff'], ['#f4f0e8', '#f8a8c0']];
+  const lantern = (cx, cy, r, [col, tip]) => {
+    ctx.fillStyle = 'rgba(255,200,120,.13)'; ctx.beginPath(); ctx.arc(cx, cy, r * 2, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = col; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+    for (let k = 0; k < 3; k++) {
+      const py = cy - r * 0.55 + k * r * 0.5, n = 3 + k, pw = (r * 1.9) / n, ph = r * 0.75;
+      for (let i = 0; i < n; i++) {
+        const px = cx - r * 0.95 + pw * (i + 0.5);
+        ctx.fillStyle = col; ctx.strokeStyle = 'rgba(0,0,0,.25)'; ctx.lineWidth = 0.4 * u;
+        ctx.beginPath(); ctx.moveTo(px - pw / 2, py + ph * 0.4); ctx.quadraticCurveTo(px - pw / 2, py - ph * 0.2, px, py - ph * 0.6); ctx.quadraticCurveTo(px + pw / 2, py - ph * 0.2, px + pw / 2, py + ph * 0.4); ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = tip; ctx.beginPath(); ctx.moveTo(px - pw * 0.18, py - ph * 0.36); ctx.lineTo(px, py - ph * 0.6); ctx.lineTo(px + pw * 0.18, py - ph * 0.36); ctx.closePath(); ctx.fill();
+      }
+    }
+    ctx.fillStyle = '#3f8a3a'; ctx.beginPath(); ctx.ellipse(cx, cy + r * 0.9, r * 0.6, r * 0.22, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#f4f0e8'; ctx.fillRect(cx - r * 0.18, cy + r, r * 0.36, r * 0.9); ctx.fillStyle = '#c8323a'; ctx.fillRect(cx - r * 0.06, cy + r * 1.1, r * 0.12, r * 0.6);
+  };
+  const strings = [[H * 0.08, 6, 7.4], [H * 0.3, 7, 6.2], [H * 0.5, 9, 5]];
+  strings.forEach(([y0, n, r], s) => {
+    const yAt = (px) => y0 + 7 * u * Math.sin((px / W) * Math.PI);
+    ctx.strokeStyle = '#6a5a7a'; ctx.lineWidth = 0.5 * u; ctx.beginPath(); for (let px = 0; px <= W; px += 2 * u) px ? ctx.lineTo(px, yAt(px)) : ctx.moveTo(px, yAt(px)); ctx.stroke();
+    for (let i = 0; i < n; i++) { const px = (W * (i + 0.5)) / n + (s % 2) * W / (2 * n) - W / (4 * n); lantern(px, yAt(px) + r * u * 1.4, r * u, COLS[(i + s * 2) % COLS.length]); }
+  });
+}
+
+// Bibimbap in a hot stone bowl, seen from above: rice under spinach, carrot, bean sprouts, mushrooms, courgette,
+// beef and bracken, a fried egg and a spoon of gochujang in the middle; side dishes, spoon and chopsticks.
+function korBibimbap(ctx, W, H) {
+  const u = H / 100, cx = W * 0.5, cy = H * 0.52;
+  ctx.fillStyle = '#7a4e30'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#6a4228'; for (let k = 0; k < 7; k++) ctx.fillRect(0, (H * k) / 7, W, 0.8 * u);
+  ctx.fillStyle = '#8a5c3a'; for (let k = 0; k < 30; k++) ctx.fillRect(((k * 41) % 100) / 100 * W, ((k * 23) % 100) / 100 * H, 9 * u, 0.5 * u);
+  // the trivet and the stone bowl
+  ctx.fillStyle = '#c49a62'; ctx.beginPath(); ctx.arc(cx, cy, 44 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#1e1c1e'; ctx.beginPath(); ctx.arc(cx, cy, 40 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#4a464c'; ctx.lineWidth = 1.6 * u; ctx.beginPath(); ctx.arc(cx, cy, 38 * u, 0, Math.PI * 2); ctx.stroke();
+  ctx.fillStyle = '#f4f0e6'; ctx.beginPath(); ctx.arc(cx, cy, 35 * u, 0, Math.PI * 2); ctx.fill();
+  // toppings in wedges
+  const T = [['#3f7a2a', '#2a5a1e'], ['#ee7a2a', '#f8a85a'], ['#f2e6b0', '#e8c860'], ['#6a4a2e', '#8a6a48'], ['#a8c86a', '#7aa04a'], ['#4a2a20', '#6a3e2c'], ['#8a6a3a', '#6a4e28']];
+  T.forEach(([c1, c2], k) => {
+    const a0 = -Math.PI / 2 + (k * Math.PI * 2) / T.length, a1 = a0 + (Math.PI * 2) / T.length;
+    ctx.fillStyle = c1; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, 31 * u, a0 + 0.05, a1 - 0.05); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = c2; ctx.lineWidth = 0.9 * u; ctx.lineCap = 'round';
+    for (let s = 0; s < 9; s++) { const a = a0 + 0.18 + ((a1 - a0 - 0.36) * s) / 8, r0 = (14 + (s % 3) * 5) * u; ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); ctx.lineTo(cx + Math.cos(a + 0.12) * (r0 + 7 * u), cy + Math.sin(a + 0.12) * (r0 + 7 * u)); ctx.stroke(); }
+  });
+  // the egg, the gochujang, sesame
+  ctx.fillStyle = '#fbf8f0'; ctx.beginPath(); for (let k = 0; k <= 16; k++) { const a = (k / 16) * Math.PI * 2, r = (13 + ((k * 7) % 3)) * u; k ? ctx.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r) : ctx.moveTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r); } ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#f6b822'; ctx.beginPath(); ctx.arc(cx - 1 * u, cy - 1 * u, 5.4 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#fbe08a'; ctx.beginPath(); ctx.arc(cx - 2.6 * u, cy - 2.6 * u, 1.6 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#c8281e'; ctx.beginPath(); ctx.ellipse(cx + 9 * u, cy + 8 * u, 5 * u, 3.6 * u, 0.5, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#f4ead0'; for (let k = 0; k < 26; k++) ctx.fillRect(cx + (((k * 37) % 50) - 25) * u, cy + (((k * 53) % 50) - 25) * u, 0.9 * u, 0.6 * u);
+  // side dishes and cutlery
+  const bowl = (bx, by, r, food, food2) => { ctx.fillStyle = '#f2efe8'; ctx.beginPath(); ctx.arc(bx, by, r, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = food; ctx.beginPath(); ctx.arc(bx, by, r * 0.72, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = food2; for (let k = 0; k < 6; k++) { const a = k * 1.1; ctx.beginPath(); ctx.ellipse(bx + Math.cos(a) * r * 0.36, by + Math.sin(a) * r * 0.36, r * 0.2, r * 0.1, a, 0, Math.PI * 2); ctx.fill(); } };
+  bowl(W * 0.13, H * 0.22, 12 * u, '#d8402a', '#f4e8c8'); bowl(W * 0.13, H * 0.78, 11 * u, '#e8d88a', '#a8c86a'); bowl(W * 0.86, H * 0.2, 10 * u, '#3f7a2a', '#a8d06a');
+  ctx.strokeStyle = '#c8ccd2'; ctx.lineCap = 'round'; ctx.lineWidth = 2 * u;
+  ctx.beginPath(); ctx.moveTo(W * 0.84, H * 0.42); ctx.lineTo(W * 0.84, H * 0.94); ctx.moveTo(W * 0.88, H * 0.42); ctx.lineTo(W * 0.88, H * 0.94); ctx.stroke();
+  ctx.lineWidth = 2.4 * u; ctx.beginPath(); ctx.moveTo(W * 0.93, H * 0.58); ctx.lineTo(W * 0.93, H * 0.94); ctx.stroke();
+  ctx.fillStyle = '#c8ccd2'; ctx.beginPath(); ctx.ellipse(W * 0.93, H * 0.5, 3.4 * u, 6 * u, 0, 0, Math.PI * 2); ctx.fill();
+}
+
+// Shibori: indigo cloth tie-dyed. Spider-web circles (kumo) across the middle, pole-wrapped storm stripes
+// (arashi) at both ends.
+function japShibori(ctx, W, H) {
+  const C = { deep: '#14234a', indigo: '#1f3870', mid: '#3f5f9a', pale: '#9ab2d6', white: '#e6edf4' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.indigo; x.fillRect(0, 0, cols, rows);
+    const band = Math.round(cols * 0.18);
+    for (let yy = 0; yy < rows; yy++) for (let xx = 0; xx < cols; xx++) {
+      if (xx >= band && xx < cols - band) continue;
+      const s = (xx + yy * 0.8 + 1.8 * Math.sin(yy * 0.25 + xx * 0.05)) / 3.4, k = Math.floor(s) % 4, f = s % 1;
+      x.fillStyle = k === 0 ? (f < 0.5 ? C.white : C.pale) : k === 2 ? C.mid : k === 3 ? C.deep : C.indigo;
+      x.fillRect(xx, yy, 1, 1);
+    }
+    x.fillStyle = C.pale; x.fillRect(band, 0, 1, rows); x.fillRect(cols - band - 1, 0, 1, rows);
+    const mx0 = band + 3, mw = cols - 2 * band - 6, nr = 3, nc = 4;
+    for (let j = 0; j < nr; j++) for (let i = 0; i < nc; i++) {
+      const cx = mx0 + (i + 0.5 + (j % 2 ? 0.25 : -0.25)) * mw / nc, cy = (j + 0.5) * rows / nr, R = Math.min(mw / nc, rows / nr) * 0.4;
+      x.fillStyle = C.mid; x.beginPath(); x.arc(cx, cy, R * 1.12, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.indigo; x.beginPath(); x.arc(cx, cy, R * 0.95, 0, Math.PI * 2); x.fill();
+      for (let k = 0; k < 18; k++) { const a = (k / 18) * Math.PI * 2; x.strokeStyle = k % 2 ? C.pale : C.white; x.lineWidth = 0.9; x.beginPath(); x.moveTo(cx + Math.cos(a) * R * 0.25, cy + Math.sin(a) * R * 0.25); x.lineTo(cx + Math.cos(a) * R * 0.98, cy + Math.sin(a) * R * 0.98); x.stroke(); }
+      x.strokeStyle = C.pale; x.lineWidth = 1.2; x.beginPath(); x.arc(cx, cy, R * 0.7, 0, Math.PI * 2); x.stroke();
+      x.fillStyle = C.white; x.beginPath(); x.arc(cx, cy, R * 0.28, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.mid; x.beginPath(); x.arc(cx, cy, R * 0.12, 0, Math.PI * 2); x.fill();
+    }
+  });
+}
+
+// A dry Zen garden seen from above: raked gravel in straight lines and in rings round three groups of rocks,
+// moss at their feet, two fallen maple leaves, a wooden veranda edge.
+function japZen(ctx, W, H) {
+  const C = { gravel: '#dcd8cc', line: '#aaa496', rock: '#6a6a70', rock2: '#8c8c92', rock3: '#46464c', moss: '#5a8a3a', moss2: '#3f6a2a', wood: '#5a3a24', wood2: '#7a5232', red: '#c8402a', orange: '#e0782a' };
+  weavePicture(ctx, W, H, 110, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.wood; x.fillRect(0, 0, cols, rows);
+    x.fillStyle = C.wood2; for (let k = 1; k < 6; k += 2) { x.fillRect(k, k, cols - 2 * k, 1); x.fillRect(k, rows - 1 - k, cols - 2 * k, 1); x.fillRect(k, k, 1, rows - 2 * k); x.fillRect(cols - 1 - k, k, 1, rows - 2 * k); }
+    const fx = 7, fy = 7, fw = cols - 14, fh = rows - 14;
+    const rocks = [[0.24, 0.42, 11, 7], [0.31, 0.5, 5, 3.4], [0.7, 0.28, 8, 5], [0.62, 0.7, 13, 7.5], [0.71, 0.74, 5, 3.6]].map(([a, b, rx, ry]) => [fx + fw * a, fy + fh * b, rx, ry]);
+    for (let yy = fy; yy < fy + fh; yy++) for (let xx = fx; xx < fx + fw; xx++) {
+      let d = Infinity;
+      for (const [cx, cy, rx, ry] of rocks) { const r = Math.hypot((xx + 0.5 - cx) / rx, (yy + 0.5 - cy) / ry); d = Math.min(d, (r - 1) * (rx + ry) / 2); }
+      let col = C.gravel;
+      if (d < 2.2) col = C.moss; else if (d < 16) col = Math.floor(d) % 3 === 0 ? C.line : C.gravel; else col = (yy - fy) % 3 === 1 ? C.line : C.gravel;
+      x.fillStyle = col; x.fillRect(xx, yy, 1, 1);
+    }
+    for (const [cx, cy, rx, ry] of rocks) {
+      x.fillStyle = C.rock3; x.beginPath(); x.ellipse(cx + 0.8, cy + 0.8, rx * 0.92, ry * 0.92, 0.2, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.rock; x.beginPath(); for (let k = 0; k < 9; k++) { const a = (k / 9) * Math.PI * 2, r = 0.82 + ((k * 7) % 4) * 0.05; k ? x.lineTo(cx + Math.cos(a) * rx * r, cy + Math.sin(a) * ry * r) : x.moveTo(cx + Math.cos(a) * rx * r, cy + Math.sin(a) * ry * r); } x.closePath(); x.fill();
+      x.fillStyle = C.rock2; x.beginPath(); x.ellipse(cx - rx * 0.25, cy - ry * 0.3, rx * 0.4, ry * 0.32, -0.3, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.moss2; x.fillRect(cx + rx * 0.3, cy + ry * 0.4, 2, 1);
+    }
+    const maple = (cx, cy, col, rot) => { x.save(); x.translate(cx, cy); x.rotate(rot); x.fillStyle = col; for (let k = 0; k < 5; k++) { const a = -Math.PI / 2 + ((k - 2) * Math.PI) / 4.2; x.beginPath(); x.moveTo(0, 0); x.lineTo(Math.cos(a - 0.25) * 2, Math.sin(a - 0.25) * 2); x.lineTo(Math.cos(a) * 4.4, Math.sin(a) * 4.4); x.lineTo(Math.cos(a + 0.25) * 2, Math.sin(a + 0.25) * 2); x.closePath(); x.fill(); } x.fillRect(-0.4, 0, 0.8, 2.4); x.restore(); };
+    maple(fx + fw * 0.44, fy + fh * 0.22, C.red, 0.4); maple(fx + fw * 0.86, fy + fh * 0.6, C.orange, -0.6);
+  });
+}
+
+// A great wave rising over small boats, Mount Fuji tiny in the distance: after the 1831 woodblock print, in its
+// Prussian blues on old paper.
+function japGreatWave(ctx, W, H) {
+  const u = H / 100, D = '#1f3a6a', M = '#3f6aa0', L = '#8ab0d0', F = '#f4f0e4';
+  ctx.fillStyle = '#e8dcc0'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#d6c9a8'; ctx.fillRect(0, 0, W, H * 0.12);
+  // Fuji, small and far
+  ctx.fillStyle = '#4a5a7a'; ctx.beginPath(); ctx.moveTo(W * 0.52, H * 0.84); ctx.lineTo(W * 0.62, H * 0.66); ctx.lineTo(W * 0.66, H * 0.66); ctx.lineTo(W * 0.76, H * 0.84); ctx.fill();
+  ctx.fillStyle = F; ctx.beginPath(); ctx.moveTo(W * 0.595, H * 0.705); ctx.lineTo(W * 0.62, H * 0.66); ctx.lineTo(W * 0.66, H * 0.66); ctx.lineTo(W * 0.685, H * 0.705); ctx.lineTo(W * 0.66, H * 0.69); ctx.lineTo(W * 0.64, H * 0.71); ctx.lineTo(W * 0.62, H * 0.69); ctx.closePath(); ctx.fill();
+  // the sea
+  ctx.fillStyle = M; ctx.fillRect(0, H * 0.84, W, H * 0.16);
+  const hump = (x0, x1, top, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(x0, H); ctx.quadraticCurveTo((x0 + x1) / 2, top, x1, H); ctx.fill(); };
+  hump(W * 0.4, W * 0.8, H * 0.66, D); hump(W * 0.5, W * 0.72, H * 0.76, M);
+  // the great wave
+  ctx.fillStyle = D; ctx.beginPath(); ctx.moveTo(0, H); ctx.lineTo(0, H * 0.58);
+  ctx.bezierCurveTo(W * 0.08, H * 0.3, W * 0.22, H * 0.1, W * 0.42, H * 0.12);
+  ctx.bezierCurveTo(W * 0.56, H * 0.13, W * 0.62, H * 0.24, W * 0.6, H * 0.36);
+  ctx.bezierCurveTo(W * 0.55, H * 0.3, W * 0.5, H * 0.27, W * 0.45, H * 0.3);
+  ctx.bezierCurveTo(W * 0.37, H * 0.36, W * 0.36, H * 0.6, W * 0.5, H * 0.9);
+  ctx.lineTo(W * 0.5, H); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = M; ctx.lineWidth = 4 * u; ctx.beginPath(); ctx.moveTo(W * 0.04, H * 0.6); ctx.bezierCurveTo(W * 0.12, H * 0.34, W * 0.24, H * 0.2, W * 0.4, H * 0.2); ctx.stroke();
+  ctx.strokeStyle = L; ctx.lineWidth = 1.2 * u; for (const o of [0, 6, 12]) { ctx.beginPath(); ctx.moveTo(W * 0.08 + o * u, H * 0.66); ctx.bezierCurveTo(W * 0.16 + o * u, H * 0.42, W * 0.26 + o * u, H * 0.3, W * 0.38, H * 0.27 + o * 0.5 * u); ctx.stroke(); }
+  // foam: a crest of white balls, claws hanging off the curl
+  const crest = (t) => { const p0 = [W * 0.22, H * 0.11], p1 = [W * 0.4, H * 0.06], p2 = [W * 0.58, H * 0.14], p3 = [W * 0.6, H * 0.36]; const m = 1 - t; return [m ** 3 * p0[0] + 3 * m * m * t * p1[0] + 3 * m * t * t * p2[0] + t ** 3 * p3[0], m ** 3 * p0[1] + 3 * m * m * t * p1[1] + 3 * m * t * t * p2[1] + t ** 3 * p3[1]]; };
+  for (let k = 0; k <= 22; k++) { const [px, py] = crest(k / 22); ctx.fillStyle = F; ctx.beginPath(); ctx.arc(px, py + 1.4 * u, (2.4 + (k % 2)) * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = L; ctx.beginPath(); ctx.arc(px + 0.8 * u, py + 2.4 * u, 0.9 * u, 0, Math.PI * 2); ctx.fill(); }
+  for (let k = 0; k < 7; k++) { const t = 0.68 + k * 0.045, [px, py] = crest(t); ctx.strokeStyle = F; ctx.lineWidth = 1.6 * u; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(px, py); ctx.quadraticCurveTo(px - 3 * u, py + 4 * u, px - 6 * u, py + 3 * u); ctx.stroke(); }
+  ctx.fillStyle = F; for (let k = 0; k < 26; k++) { const px = W * (0.4 + ((k * 31) % 30) / 100), py = H * (0.04 + ((k * 17) % 30) / 100); ctx.beginPath(); ctx.arc(px, py, 0.9 * u, 0, Math.PI * 2); ctx.fill(); }
+  // boats riding the slopes, rowers bent low
+  const boat = (bx, by, a, len) => { ctx.save(); ctx.translate(bx, by); ctx.rotate(a); ctx.fillStyle = '#e8d8b0'; ctx.beginPath(); ctx.moveTo(-len / 2, 0); ctx.quadraticCurveTo(0, 4 * u, len / 2, -1.6 * u); ctx.lineTo(len / 2 - 2 * u, 0.6 * u); ctx.quadraticCurveTo(0, 2.6 * u, -len / 2, 0); ctx.fill(); ctx.fillStyle = '#2a2a3a'; for (let k = 0; k < 6; k++) { ctx.beginPath(); ctx.arc(-len * 0.35 + k * len * 0.12, -0.4 * u, 1.1 * u, 0, Math.PI * 2); ctx.fill(); } ctx.restore(); };
+  boat(W * 0.25, H * 0.74, -0.5, 26 * u); boat(W * 0.84, H * 0.83, 0.15, 22 * u);
+  // a second wave on the right
+  ctx.fillStyle = D; ctx.beginPath(); ctx.moveTo(W, H); ctx.lineTo(W, H * 0.62); ctx.bezierCurveTo(W * 0.95, H * 0.56, W * 0.88, H * 0.58, W * 0.86, H * 0.66); ctx.bezierCurveTo(W * 0.85, H * 0.72, W * 0.8, H * 0.86, W * 0.74, H); ctx.closePath(); ctx.fill();
+  for (let k = 0; k < 6; k++) { ctx.fillStyle = F; ctx.beginPath(); ctx.arc(W * (0.87 + k * 0.024), H * (0.62 - Math.sin((k / 5) * Math.PI) * 0.03), 1.8 * u, 0, Math.PI * 2); ctx.fill(); }
+}
+
+// Maneki-neko: the beckoning cat, a calico with one paw raised, a red collar and bell, holding a gold coin, on a
+// purple cushion.
+function japManekiNeko(ctx, W, H) {
+  const u = H / 100, cx = W * 0.5, Wt = '#f8f4ec', B = '#1e1c20', O = '#e88a3a', P = '#f2a8b4';
+  ctx.fillStyle = '#c8302a'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#d8483a'; for (let j = 0; j < 6; j++) for (let i = 0; i < 10; i++) { const px = (i + (j % 2 ? 0.5 : 0) + 0.25) * W / 9.5, py = (j + 0.5) * H / 6; if (Math.abs(px - cx) > 34 * u) { ctx.beginPath(); ctx.ellipse(px, py, 2.6 * u, 3.6 * u, 0, 0, Math.PI * 2); ctx.fill(); } }
+  // cushion
+  ctx.fillStyle = '#6a3a8a'; roundRect(ctx, cx - 36 * u, H * 0.8, 72 * u, 16 * u, 5 * u); ctx.fill();
+  ctx.fillStyle = '#8a5aaa'; roundRect(ctx, cx - 34 * u, H * 0.8, 68 * u, 5 * u, 3 * u); ctx.fill();
+  ctx.fillStyle = '#e8b448'; for (const d of [-1, 1]) { ctx.beginPath(); ctx.arc(cx + d * 35 * u, H * 0.82, 2.4 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillRect(cx + d * 35 * u - 0.8 * u, H * 0.82, 1.6 * u, 6 * u); }
+  // body and raised paw
+  ctx.fillStyle = Wt; ctx.beginPath(); ctx.ellipse(cx, H * 0.66, 20 * u, 21 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = O; ctx.beginPath(); ctx.ellipse(cx - 13 * u, H * 0.72, 6 * u, 9 * u, 0.3, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = Wt; roundRect(ctx, cx + 20 * u, H * 0.14, 11 * u, 42 * u, 5.5 * u); ctx.fill(); ctx.fillStyle = '#e8ddd0'; ctx.fillRect(cx + 20 * u, H * 0.3, 11 * u, 0.8 * u);
+  ctx.fillStyle = P; for (const [dx, dy, r] of [[25.5, 19, 2.4], [22.6, 16, 1.2], [25.5, 15, 1.2], [28.4, 16, 1.2]]) { ctx.beginPath(); ctx.arc(cx + dx * u, H * dy / 100, r * u, 0, Math.PI * 2); ctx.fill(); }
+  // the koban coin held in the other paw
+  ctx.fillStyle = '#b8862a'; ctx.beginPath(); ctx.ellipse(cx - 6 * u, H * 0.68, 9.6 * u, 13.6 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#f0c654'; ctx.beginPath(); ctx.ellipse(cx - 6 * u, H * 0.68, 8.4 * u, 12.4 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#c8962e'; for (let k = -4; k <= 4; k++) ctx.fillRect(cx - 12 * u, H * 0.68 + k * 2.4 * u, 12 * u, 0.6 * u);
+  ctx.fillStyle = Wt; ctx.beginPath(); ctx.ellipse(cx - 1 * u, H * 0.7, 5 * u, 4 * u, 0, 0, Math.PI * 2); ctx.fill();
+  // head
+  const hy = H * 0.34;
+  for (const d of [-1, 1]) { ctx.fillStyle = d < 0 ? O : B; ctx.beginPath(); ctx.moveTo(cx + d * 17 * u, hy - 4 * u); ctx.lineTo(cx + d * 15 * u, hy - 19 * u); ctx.lineTo(cx + d * 5 * u, hy - 12 * u); ctx.fill(); ctx.fillStyle = P; ctx.beginPath(); ctx.moveTo(cx + d * 14.4 * u, hy - 6 * u); ctx.lineTo(cx + d * 14 * u, hy - 15 * u); ctx.lineTo(cx + d * 8 * u, hy - 11 * u); ctx.fill(); }
+  ctx.fillStyle = Wt; ctx.beginPath(); ctx.ellipse(cx, hy, 19 * u, 15.5 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = O; ctx.beginPath(); ctx.ellipse(cx - 11 * u, hy - 7 * u, 6.4 * u, 5 * u, -0.4, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = B; ctx.beginPath(); ctx.ellipse(cx + 12 * u, hy - 8 * u, 5 * u, 4 * u, 0.5, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = B; ctx.lineWidth = 1.4 * u; ctx.lineCap = 'round';
+  for (const d of [-1, 1]) { ctx.beginPath(); ctx.arc(cx + d * 7 * u, hy - 1 * u, 3.2 * u, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke(); }
+  ctx.fillStyle = P; ctx.beginPath(); ctx.moveTo(cx - 1.6 * u, hy + 3 * u); ctx.lineTo(cx + 1.6 * u, hy + 3 * u); ctx.lineTo(cx, hy + 5 * u); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(cx, hy + 5 * u); ctx.quadraticCurveTo(cx - 2 * u, hy + 7.4 * u, cx - 4 * u, hy + 6 * u); ctx.moveTo(cx, hy + 5 * u); ctx.quadraticCurveTo(cx + 2 * u, hy + 7.4 * u, cx + 4 * u, hy + 6 * u); ctx.stroke();
+  ctx.lineWidth = 0.6 * u; for (const d of [-1, 1]) for (const k of [-1, 0, 1]) { ctx.beginPath(); ctx.moveTo(cx + d * 8 * u, hy + 4 * u + k * u); ctx.lineTo(cx + d * 21 * u, hy + 2 * u + k * 2.4 * u); ctx.stroke(); }
+  // collar and bell
+  ctx.fillStyle = '#d8282a'; roundRect(ctx, cx - 15 * u, hy + 12.4 * u, 30 * u, 4 * u, 2 * u); ctx.fill();
+  ctx.fillStyle = '#f0c040'; ctx.beginPath(); ctx.arc(cx, hy + 18.6 * u, 3.6 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#9a6a1a'; ctx.fillRect(cx - 2.6 * u, hy + 18.4 * u, 5.2 * u, 0.8 * u); ctx.beginPath(); ctx.arc(cx, hy + 20.4 * u, 0.8 * u, 0, Math.PI * 2); ctx.fill();
+}
+
+// The path of a thousand torii at Fushimi Inari: vermilion gates one behind the other, a tunnel down the hill to
+// a bright opening.
+function japTorii(ctx, W, H) {
+  const u = H / 100, vx = W * 0.5, vy = H * 0.5;
+  ctx.fillStyle = '#1f3a24'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#2f5232'; for (let k = 0; k < 40; k++) { ctx.beginPath(); ctx.arc(((k * 37) % 100) / 100 * W, ((k * 53) % 100) / 100 * H, (4 + (k % 4) * 2) * u, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#fff2c8'; ctx.fillRect(vx - 4 * u, vy - 8 * u, 8 * u, 10 * u);
+  ctx.fillStyle = '#9a9286'; ctx.beginPath(); ctx.moveTo(vx - 3 * u, vy + 2 * u); ctx.lineTo(vx + 3 * u, vy + 2 * u); ctx.lineTo(W * 0.72, H); ctx.lineTo(W * 0.28, H); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#b4ab98'; for (let k = 1; k < 12; k++) { const t = 1 / (1 + (12 - k) * 0.45), y = vy + 2 * u + (H - vy) * t, hw = 3 * u + (W * 0.22 - 3 * u) * t; ctx.fillRect(vx - hw, y, hw * 2, 0.6 * u); }
+  const N = 16;
+  for (let k = N; k >= 0; k--) {
+    const z = 1 + k * 0.45, s = 1 / z, gy = vy + 2 * u + (H * 1.02 - vy - 2 * u) * s, gh = H * 0.98 * s, hw = W * 0.3 * s, pw = 6 * u * s, top = gy - gh;
+    const shade = k / N;
+    const ver = `rgb(${Math.round(226 - 60 * shade)},${Math.round(76 - 30 * shade)},${Math.round(40 - 14 * shade)})`;
+    for (const d of [-1, 1]) {
+      ctx.fillStyle = ver; ctx.fillRect(vx + d * hw - pw / 2, top + gh * 0.08, pw, gh * 0.92);
+      ctx.fillStyle = 'rgba(0,0,0,.18)'; ctx.fillRect(vx + d * hw + (d > 0 ? 0 : -pw / 2), top + gh * 0.08, pw / 2, gh * 0.92);
+      ctx.fillStyle = '#1a1414'; ctx.fillRect(vx + d * hw - pw * 0.6, gy - gh * 0.1, pw * 1.2, gh * 0.1);
+    }
+    ctx.fillStyle = ver; ctx.fillRect(vx - hw * 1.18, top + gh * 0.2, hw * 2.36, gh * 0.05);
+    ctx.fillStyle = ver; ctx.fillRect(vx - hw * 1.25, top + gh * 0.08, hw * 2.5, gh * 0.05);
+    ctx.fillStyle = '#1a1414'; ctx.beginPath(); ctx.moveTo(vx - hw * 1.42, top + gh * 0.02); ctx.quadraticCurveTo(vx, top + gh * 0.07, vx + hw * 1.42, top + gh * 0.02); ctx.lineTo(vx + hw * 1.34, top + gh * 0.085); ctx.lineTo(vx - hw * 1.34, top + gh * 0.085); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#1a1414'; ctx.fillRect(vx - pw * 0.4, top + gh * 0.12, pw * 0.8, gh * 0.08);
+  }
+}
+
+// Sushi on a wooden geta board, seen from above: salmon, tuna, prawn and tamago nigiri, maki rolls, ikura
+// gunkan, ginger and wasabi; soy sauce and chopsticks beside.
+function japSushi(ctx, W, H) {
+  const u = H / 100;
+  ctx.fillStyle = '#26262c'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#2e2e36'; for (let k = 0; k < 20; k++) ctx.fillRect(((k * 41) % 100) / 100 * W, ((k * 29) % 100) / 100 * H, 12 * u, 0.6 * u);
+  const bx = W * 0.07, by = H * 0.14, bw = W * 0.7, bh = H * 0.72;
+  ctx.fillStyle = '#9a6e42'; roundRect(ctx, bx + 1.4 * u, by + 1.6 * u, bw, bh, 3 * u); ctx.fill();
+  ctx.fillStyle = '#d8b07a'; roundRect(ctx, bx, by, bw, bh, 3 * u); ctx.fill();
+  ctx.fillStyle = '#c49a62'; for (let k = 1; k < 9; k++) ctx.fillRect(bx + 2 * u, by + (k * bh) / 9, bw - 4 * u, 0.5 * u);
+  const nigiri = (px, py, a, fish, stripe, kind) => {
+    ctx.save(); ctx.translate(px, py); ctx.rotate(a);
+    ctx.fillStyle = '#f6f2e8'; roundRect(ctx, -8 * u, -5 * u, 16 * u, 10 * u, 4.6 * u); ctx.fill();
+    ctx.fillStyle = fish; roundRect(ctx, -9.4 * u, -4.4 * u, 18.8 * u, 8.8 * u, 4 * u); ctx.fill();
+    if (stripe) { ctx.strokeStyle = stripe; ctx.lineWidth = 0.8 * u; for (let k = -3; k <= 3; k++) { ctx.beginPath(); ctx.moveTo(k * 2.6 * u - 1.6 * u, -4 * u); ctx.lineTo(k * 2.6 * u + 1.6 * u, 4 * u); ctx.stroke(); } }
+    if (kind === 'prawn') { ctx.fillStyle = '#e0503a'; ctx.beginPath(); ctx.moveTo(9 * u, 0); ctx.lineTo(13 * u, -3.4 * u); ctx.lineTo(13 * u, 3.4 * u); ctx.closePath(); ctx.fill(); }
+    if (kind === 'tamago') { ctx.fillStyle = '#1a2a1e'; ctx.fillRect(-2 * u, -5 * u, 4 * u, 10 * u); }
+    ctx.restore();
+  };
+  nigiri(W * 0.17, H * 0.3, -0.15, '#f08a4a', '#fbd0b0'); nigiri(W * 0.33, H * 0.3, -0.15, '#c8283a', '#e05a60');
+  nigiri(W * 0.17, H * 0.5, -0.15, '#f4a070', '#fbe6d8', 'prawn'); nigiri(W * 0.33, H * 0.5, -0.15, '#f4d050', null, 'tamago');
+  nigiri(W * 0.17, H * 0.7, -0.15, '#f08a4a', '#fbd0b0'); nigiri(W * 0.33, H * 0.7, -0.15, '#c8283a', '#e05a60');
+  const maki = (px, py, fill) => { ctx.fillStyle = '#1a1e1a'; ctx.beginPath(); ctx.arc(px, py, 6.4 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#f6f2e8'; ctx.beginPath(); ctx.arc(px, py, 5.2 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = fill; ctx.beginPath(); ctx.arc(px, py, 2.4 * u, 0, Math.PI * 2); ctx.fill(); };
+  for (let k = 0; k < 3; k++) { maki(W * 0.47, H * (0.3 + k * 0.17), ['#6ab04a', '#f08a4a', '#c8283a'][k]); maki(W * 0.56, H * (0.3 + k * 0.17), ['#f08a4a', '#c8283a', '#6ab04a'][k]); }
+  for (const py of [0.32, 0.56]) { const px = W * 0.67, yy = H * py; ctx.fillStyle = '#1a1e1a'; ctx.beginPath(); ctx.arc(px, yy, 6.6 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#ee6a1a'; for (let k = 0; k < 9; k++) { const a = k * 2.4, r = (k % 3) * 1.6 * u; ctx.beginPath(); ctx.arc(px + Math.cos(a) * r, yy + Math.sin(a) * r, 1.6 * u, 0, Math.PI * 2); ctx.fill(); } }
+  ctx.fillStyle = '#f4b8b0'; for (let k = 0; k < 5; k++) { ctx.beginPath(); ctx.ellipse(W * 0.66 + k * 0.8 * u, H * 0.76 - k * 0.6 * u, 4 * u, 2.4 * u, 0.4 + k * 0.3, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#8aba4a'; ctx.beginPath(); ctx.ellipse(W * 0.58, H * 0.78, 3.4 * u, 2.6 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#f2efe8'; ctx.beginPath(); ctx.arc(W * 0.87, H * 0.3, 8 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#3a1e14'; ctx.beginPath(); ctx.arc(W * 0.87, H * 0.3, 6 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#5a3424'; ctx.beginPath(); ctx.arc(W * 0.85, H * 0.28, 1.4 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#8a2a24'; ctx.lineCap = 'round'; ctx.lineWidth = 1.8 * u;
+  ctx.beginPath(); ctx.moveTo(W * 0.84, H * 0.5); ctx.lineTo(W * 0.9, H * 0.92); ctx.moveTo(W * 0.88, H * 0.49); ctx.lineTo(W * 0.93, H * 0.91); ctx.stroke();
+  ctx.fillStyle = '#5a5a62'; roundRect(ctx, W * 0.83, H * 0.56, 8 * u, 2.6 * u, 1.2 * u); ctx.fill();
+}
+
+// Jeju island: Hallasan above the sea, black lava-stone walls round fields of tangerine trees, rape flowers in
+// yellow along the road.
+function korJeju(ctx, W, H) {
+  const u = H / 100;
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.4); sky.addColorStop(0, '#5aa2dc'); sky.addColorStop(1, '#cfe8f4');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f7f9fb'; for (const [x, y, r] of [[0.15, 0.1, 5], [0.22, 0.08, 6], [0.8, 0.12, 5.5]]) { ctx.beginPath(); ctx.ellipse(W * x, H * y, r * u * 1.8, r * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // Hallasan: a long, gentle volcano with a little crater rim
+  ctx.fillStyle = '#5a7f9a'; ctx.beginPath(); ctx.moveTo(-W * 0.05, H * 0.42); ctx.quadraticCurveTo(W * 0.3, H * 0.3, W * 0.45, H * 0.17); ctx.lineTo(W * 0.55, H * 0.17); ctx.quadraticCurveTo(W * 0.7, H * 0.3, W * 1.05, H * 0.42); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#4a6e88'; ctx.fillRect(W * 0.46, H * 0.165, W * 0.08, 1.2 * u);
+  ctx.fillStyle = '#3f7a8f'; ctx.fillRect(0, H * 0.4, W, H * 0.05);
+  ctx.fillStyle = '#7ac0d0'; for (let k = 0; k < 10; k++) ctx.fillRect(((k * 37) % 100) / 100 * W, H * (0.41 + (k % 3) * 0.012), 6 * u, 0.5 * u);
+  // fields, each walled with black stone, tangerine trees in rows
+  ctx.fillStyle = '#6a9a4a'; ctx.fillRect(0, H * 0.45, W, H * 0.55);
+  const field = (x0, y0, x1, y1) => {
+    ctx.fillStyle = '#7aaa52'; ctx.fillRect(x0, y0, x1 - x0, y1 - y0);
+    const rows = Math.max(1, Math.round((y1 - y0) / (8 * u))), per = Math.max(2, Math.round((x1 - x0) / (9 * u)));
+    for (let r = 0; r < rows; r++) for (let c = 0; c < per; c++) {
+      const tx = x0 + ((c + 0.5) * (x1 - x0)) / per, ty = y0 + ((r + 0.6) * (y1 - y0)) / rows, s = (y1 - y0) / rows;
+      ctx.fillStyle = '#2f6a2a'; ctx.beginPath(); ctx.arc(tx, ty, s * 0.4, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#f08a1a'; for (const [dx, dy] of [[-0.18, -0.08], [0.16, 0.06], [-0.02, 0.2]]) { ctx.beginPath(); ctx.arc(tx + dx * s, ty + dy * s, 1.3 * u, 0, Math.PI * 2); ctx.fill(); }
+    }
+    ctx.strokeStyle = '#26242a'; ctx.lineWidth = 1.8 * u; ctx.strokeRect(x0, y0, x1 - x0, y1 - y0);
+    ctx.fillStyle = '#3e3c44'; for (let px = x0; px < x1; px += 2.4 * u) { ctx.beginPath(); ctx.arc(px, y0, 0.9 * u, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.arc(px, y1, 0.9 * u, 0, Math.PI * 2); ctx.fill(); }
+  };
+  field(W * 0.02, H * 0.48, W * 0.3, H * 0.62); field(W * 0.34, H * 0.47, W * 0.62, H * 0.6); field(W * 0.66, H * 0.48, W * 0.98, H * 0.62);
+  field(W * 0.02, H * 0.78, W * 0.38, H * 0.98); field(W * 0.62, H * 0.78, W * 0.98, H * 0.98);
+  // the road and its yellow verges
+  ctx.fillStyle = '#c9c1ae'; ctx.beginPath(); ctx.moveTo(0, H * 0.66); ctx.lineTo(W, H * 0.66); ctx.lineTo(W, H * 0.74); ctx.lineTo(W * 0.56, H * 0.74); ctx.lineTo(W * 0.54, H); ctx.lineTo(W * 0.46, H); ctx.lineTo(W * 0.44, H * 0.74); ctx.lineTo(0, H * 0.74); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#f6d23a'; for (let k = 0; k < 70; k++) { const px = ((k * 23) % 100) / 100 * W, py = k % 2 ? H * 0.645 : H * 0.755; if (Math.abs(px - W * 0.5) > 5 * u) { ctx.beginPath(); ctx.arc(px, py + ((k * 7) % 3) * 0.5 * u, 1.3 * u, 0, Math.PI * 2); ctx.fill(); } }
+  for (let k = 0; k < 24; k++) { const py = H * (0.76 + (k % 12) * 0.02), px = k < 12 ? W * 0.42 : W * 0.58; ctx.beginPath(); ctx.arc(px, py, 1.3 * u, 0, Math.PI * 2); ctx.fill(); }
+}
+
+// Chinese paper-cut: one sheet of red paper cut into a round window flower with a ring of petals and a sawtooth,
+// two fish swimming toward it, flower fans in the corners and a cut border, on cream.
+function chnPapercut(ctx, W, H) {
+  const C = { paper: '#f2e6cc', paper2: '#eadcbe', red: '#c81e28' };
+  weavePicture(ctx, W, H, 130, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.red; x.fillRect(0, 0, cols, rows);
+    // the border: a red band cut with little diamonds and a sawtooth on its inner edge
+    const bd = 12;
+    const dia = (px, py, r) => { x.fillStyle = C.paper; x.beginPath(); x.moveTo(px, py - r); x.lineTo(px + r * 0.7, py); x.lineTo(px, py + r); x.lineTo(px - r * 0.7, py); x.closePath(); x.fill(); };
+    for (const [len, put] of [[cols - 2 * bd, (a) => { dia(bd + a, 5, 2.6); dia(bd + a, rows - 5, 2.6); }], [rows - 2 * bd, (a) => { dia(5, bd + a, 2.6); dia(cols - 5, bd + a, 2.6); }]]) { const { n, d } = evenSteps(len, 7); for (let i = 0; i <= n; i++) put(i * d); }
+    const fx = bd, fy = bd, fw = cols - 2 * bd, fh = rows - 2 * bd;
+    for (let y = fy; y < fy + fh; y++) { x.fillStyle = Math.floor((y - fy) / 9) % 3 === 1 ? C.paper2 : C.paper; x.fillRect(fx, y, fw, 1); }
+    x.fillStyle = C.red;
+    for (const [len, put] of [[fw, (i, k) => { x.fillRect(fx + i, fy, 1, k); x.fillRect(fx + i, fy + fh - k, 1, k); }], [fh, (i, k) => { x.fillRect(fx, fy + i, k, 1); x.fillRect(fx + fw - k, fy + i, k, 1); }]]) for (let i = 0; i < len; i++) put(i, 1 + Math.abs((i % 6) - 3));
+    const cx = fx + fw / 2, cy = fy + fh / 2, R = fh * 0.4;
+    // the window flower
+    x.fillStyle = C.red; x.beginPath(); x.arc(cx, cy, R, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.paper;
+    for (let k = 0; k < 20; k++) { const a = (k / 20) * Math.PI * 2; x.save(); x.translate(cx + Math.cos(a) * R * 0.82, cy + Math.sin(a) * R * 0.82); x.rotate(a); x.beginPath(); x.ellipse(0, 0, R * 0.09, R * 0.045, 0, 0, Math.PI * 2); x.fill(); x.restore(); }
+    x.beginPath(); for (let k = 0; k <= 48; k++) { const a = (k / 48) * Math.PI * 2, r = R * (k % 2 ? 0.62 : 0.7); k ? x.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r) : x.moveTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r); } x.closePath(); x.fill();
+    x.fillStyle = C.red; x.beginPath(); x.arc(cx, cy, R * 0.56, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.paper; for (let k = 0; k < 8; k++) { const a = (k / 8) * Math.PI * 2; x.save(); x.translate(cx, cy); x.rotate(a); x.beginPath(); x.moveTo(0, -R * 0.14); x.quadraticCurveTo(R * 0.13, -R * 0.3, 0, -R * 0.48); x.quadraticCurveTo(-R * 0.13, -R * 0.3, 0, -R * 0.14); x.fill(); x.restore(); }
+    x.beginPath(); x.arc(cx, cy, R * 0.1, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.red; x.beginPath(); x.arc(cx, cy, R * 0.05, 0, Math.PI * 2); x.fill();
+    // fish either side, facing the flower
+    const fish = (px, py, f) => {
+      x.save(); x.translate(px, py); x.scale(f, 1);
+      const s = fh * 0.2;
+      x.fillStyle = C.red; x.beginPath(); x.moveTo(s, 0); x.bezierCurveTo(s * 0.6, -s * 0.55, -s * 0.5, -s * 0.5, -s * 0.8, 0); x.bezierCurveTo(-s * 0.5, s * 0.5, s * 0.6, s * 0.55, s, 0); x.fill();
+      x.beginPath(); x.moveTo(-s * 0.7, 0); x.quadraticCurveTo(-s * 1.0, -s * 0.2, -s * 1.35, -s * 0.55); x.lineTo(-s * 1.12, 0); x.lineTo(-s * 1.35, s * 0.55); x.quadraticCurveTo(-s * 1.0, s * 0.2, -s * 0.7, 0); x.closePath(); x.fill();
+      x.strokeStyle = C.paper; x.lineWidth = 1.1;
+      for (let r = 0; r < 3; r++) for (let k = 0; k < 3; k++) { const sx = -s * 0.35 + k * s * 0.28, sy = -s * 0.22 + r * s * 0.22; x.beginPath(); x.arc(sx, sy, s * 0.11, -Math.PI / 2, Math.PI / 2); x.stroke(); }
+      x.fillStyle = C.paper; x.beginPath(); x.arc(s * 0.58, -s * 0.08, s * 0.11, 0, Math.PI * 2); x.fill(); x.fillStyle = C.red; x.beginPath(); x.arc(s * 0.58, -s * 0.08, s * 0.045, 0, Math.PI * 2); x.fill();
+      x.strokeStyle = C.paper; x.lineWidth = 1.1; x.beginPath(); x.arc(s * 0.3, 0, s * 0.3, -Math.PI * 0.45, Math.PI * 0.45); x.stroke();
+      x.strokeStyle = C.paper; x.lineWidth = 1; for (const o of [-0.25, 0, 0.25]) { x.beginPath(); x.moveTo(-s * 0.9, o * s); x.lineTo(-s * 1.2, o * s * 1.8); x.stroke(); }
+      x.restore();
+    };
+    fish(fx + fw * 0.18, cy + 2, 1); fish(fx + fw * 0.82, cy + 2, -1);
+    // corner fans
+    for (const [sx, sy] of [[fx, fy], [fx + fw, fy], [fx, fy + fh], [fx + fw, fy + fh]]) {
+      x.fillStyle = C.red; x.beginPath(); x.arc(sx, sy, fh * 0.2, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.paper; for (let k = 0; k < 10; k++) { const a = (k / 10) * Math.PI * 2; x.save(); x.translate(sx, sy); x.rotate(a); x.beginPath(); x.moveTo(0, -fh * 0.06); x.quadraticCurveTo(fh * 0.04, -fh * 0.12, 0, -fh * 0.17); x.quadraticCurveTo(-fh * 0.04, -fh * 0.12, 0, -fh * 0.06); x.fill(); x.restore(); }
+    }
+  });
+}
+
+// The hem of an imperial robe: diagonal stripes of standing water (lishui) along the bottom, curling waves and
+// three rocky peaks rising from them, auspicious clouds above on imperial yellow.
+function chnImperial(ctx, W, H) {
+  const C = { yellow: '#e8b830', yellow2: '#dcac28', navy: '#1f2f6a', blue: '#3a5ab0', sky: '#7aa0dc', white: '#f4eee0', green: '#2f8a5a', lgreen: '#8ac080', red: '#c8323a', pink: '#f0a0a0', violet: '#6a4a9a' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.navy; x.fillRect(0, 0, cols, rows);
+    const fx = 4, fy = 4, fw = cols - 8, fh = rows - 8;
+    for (let y = fy; y < fy + fh; y++) { x.fillStyle = Math.floor((y - fy) / 8) % 3 === 1 ? C.yellow2 : C.yellow; x.fillRect(fx, y, fw, 1); }
+    // lishui: chevron stripes, pointing up toward the middle
+    const ly = fy + Math.round(fh * 0.72), seq = [C.blue, C.sky, C.white, C.green, C.lgreen, C.white, C.red, C.pink, C.white, C.violet, C.sky, C.white];
+    for (let yy = ly; yy < fy + fh; yy++) for (let xx = fx; xx < fx + fw; xx++) {
+      const s = Math.floor((Math.abs(xx - (fx + fw / 2)) + (yy - ly) * 1.1) / 2.2);
+      x.fillStyle = seq[s % seq.length]; x.fillRect(xx, yy, 1, 1);
+    }
+    // waves above the stripes: rows of curling crests
+    const wy = ly - 1;
+    for (let k = -1; k * 12 < fw + 12; k++) {
+      const cx = fx + k * 12 + 6;
+      x.fillStyle = C.blue; x.beginPath(); x.arc(cx, wy, 7, Math.PI, 0); x.fill();
+      x.strokeStyle = C.white; x.lineWidth = 1.2; x.beginPath(); x.arc(cx, wy, 5, Math.PI, Math.PI * 1.9); x.stroke();
+      x.beginPath(); x.arc(cx + 1.4, wy - 1, 2, Math.PI * 1.1, Math.PI * 2.4); x.stroke();
+      x.fillStyle = C.white; x.beginPath(); x.arc(cx + 4.6, wy - 4.4, 1.4, 0, Math.PI * 2); x.fill();
+    }
+    // three peaks
+    const peak = (cx, h, w) => {
+      const rock = (k, col) => { x.fillStyle = col; x.beginPath(); x.moveTo(cx - (w * k) / 2, wy); x.lineTo(cx - (w * k) * 0.42, wy - h * 0.5 * k); x.lineTo(cx - (w * k) * 0.18, wy - h * 0.62 * k); x.lineTo(cx, wy - h * k); x.lineTo(cx + (w * k) * 0.2, wy - h * 0.66 * k); x.lineTo(cx + (w * k) * 0.42, wy - h * 0.54 * k); x.lineTo(cx + (w * k) / 2, wy); x.closePath(); x.fill(); };
+      rock(1.1, C.white); rock(1, C.blue); rock(0.66, C.sky); rock(0.34, C.green);
+    };
+    peak(fx + fw / 2, fh * 0.38, fw * 0.16); peak(fx + fw * 0.2, fh * 0.26, fw * 0.12); peak(fx + fw * 0.8, fh * 0.26, fw * 0.12);
+    // clouds on the yellow
+    const cloud = (cx, cy, s, col) => {
+      for (const [dx, dy, r] of [[-0.6, 0.1, 0.42], [0, -0.2, 0.55], [0.6, 0.1, 0.42]]) { x.fillStyle = col; x.beginPath(); x.arc(cx + dx * s, cy + dy * s, r * s, 0, Math.PI * 2); x.fill(); }
+      x.fillStyle = col; roundRect(x, cx - s, cy, s * 2, s * 0.42, s * 0.2); x.fill();
+      x.strokeStyle = C.white; x.lineWidth = 1; for (const [dx, dy, r] of [[-0.6, 0.1, 0.42], [0, -0.2, 0.55], [0.6, 0.1, 0.42]]) { x.beginPath(); x.arc(cx + dx * s, cy + dy * s, r * s * 0.55, Math.PI * 0.8, Math.PI * 2.1); x.stroke(); }
+    };
+    for (const [a, b, s, col] of [[0.12, 0.2, 9, C.blue], [0.35, 0.14, 8, C.red], [0.62, 0.18, 9, C.green], [0.86, 0.15, 8, C.blue], [0.25, 0.42, 7, C.green], [0.72, 0.42, 7, C.red], [0.5, 0.1, 6, C.violet]]) cloud(fx + fw * a, fy + fh * b, s, col);
+  });
+}
+
+// Mahjong tiles on green felt: a hand of dots and bamboos laid out in two rows.
+function chnMahjong(ctx, W, H) {
+  const C = { felt: '#2f7a4a', felt2: '#2a7044', tile: '#f4efe0', edge: '#d8cfb8', back: '#3f9a6a', shadow: '#1f5a36', red: '#c8302a', blue: '#2a4a9a', green: '#2f8a4a', dark: '#1a2a2a' };
+  weavePicture(ctx, W, H, 140, Object.values(C), (x, cols, rows) => {
+    for (let y = 0; y < rows; y++) { x.fillStyle = Math.floor(y / 7) % 3 === 1 ? C.felt2 : C.felt; x.fillRect(0, y, cols, 1); }
+    x.fillStyle = C.dark; x.fillRect(0, 0, cols, 3); x.fillRect(0, rows - 3, cols, 3); x.fillRect(0, 0, 3, rows); x.fillRect(cols - 3, 0, 3, rows);
+    const n = 7, gap = 3, tw = Math.floor((cols - 16 - gap * (n - 1)) / n), th = Math.round(tw * 1.36);
+    const DOTS = { 1: [[0.5, 0.5]], 2: [[0.5, 0.27], [0.5, 0.73]], 3: [[0.27, 0.22], [0.5, 0.5], [0.73, 0.78]], 4: [[0.3, 0.27], [0.7, 0.27], [0.3, 0.73], [0.7, 0.73]], 5: [[0.28, 0.24], [0.72, 0.24], [0.5, 0.5], [0.28, 0.76], [0.72, 0.76]],
+      6: [[0.3, 0.2], [0.7, 0.2], [0.3, 0.5], [0.7, 0.5], [0.3, 0.8], [0.7, 0.8]], 8: [[0.3, 0.16], [0.7, 0.16], [0.3, 0.39], [0.7, 0.39], [0.3, 0.62], [0.7, 0.62], [0.3, 0.85], [0.7, 0.85]],
+      9: [[0.22, 0.2], [0.5, 0.2], [0.78, 0.2], [0.22, 0.5], [0.5, 0.5], [0.78, 0.5], [0.22, 0.8], [0.5, 0.8], [0.78, 0.8]] };
+    const tile = (a, b, kind, k) => {
+      x.fillStyle = C.shadow; roundRect(x, a + 1, b + 2, tw, th, 2); x.fill();
+      x.fillStyle = C.back; roundRect(x, a, b + 1.5, tw, th, 2); x.fill();
+      x.fillStyle = C.tile; roundRect(x, a, b, tw, th - 1, 2); x.fill();
+      x.strokeStyle = C.edge; x.lineWidth = 0.8; roundRect(x, a + 0.5, b + 0.5, tw - 1, th - 2, 2); x.stroke();
+      const ix = a + 2, iy = b + 2, iw = tw - 4, ih = th - 5;
+      if (kind === 'dot') {
+        const pts = DOTS[k], r = k === 1 ? iw * 0.36 : k >= 8 ? iw * 0.11 : iw * 0.14;
+        pts.forEach(([px, py], i) => { const cx = ix + px * iw, cy = iy + py * ih, ring = k === 1 ? C.green : [C.blue, C.green, C.red][(i + k) % 3]; x.fillStyle = ring; x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); x.fill(); x.fillStyle = C.tile; x.beginPath(); x.arc(cx, cy, r * 0.55, 0, Math.PI * 2); x.fill(); x.fillStyle = k === 1 ? C.red : ring; x.beginPath(); x.arc(cx, cy, r * 0.28, 0, Math.PI * 2); x.fill(); });
+      } else {
+        const per = k <= 3 ? k : 3, nrow = Math.ceil(k / 3);
+        for (let i = 0; i < k; i++) {
+          const r = Math.floor(i / 3), c = i % 3, inRow = Math.min(3, k - r * 3), cx = ix + ((c + 0.5) * iw) / Math.max(per, inRow), top = iy + (r * ih) / nrow + 1, hh = ih / nrow - 2;
+          const col = (k === 5 || k === 7 || k === 9) && i === Math.floor(k / 2) ? C.red : C.green;
+          x.fillStyle = col; x.fillRect(cx - 1, top, 2, hh); x.fillStyle = C.tile; x.fillRect(cx - 1, top + hh / 2, 2, 0.7);
+        }
+      }
+    };
+    const hand1 = [['dot', 1], ['dot', 2], ['dot', 3], ['dot', 5], ['dot', 6], ['dot', 8], ['dot', 9]];
+    const hand2 = [['bam', 2], ['bam', 3], ['bam', 4], ['bam', 5], ['bam', 6], ['bam', 8], ['bam', 9]];
+    const x0 = Math.round((cols - (n * tw + (n - 1) * gap)) / 2), y1 = Math.round(rows * 0.5 - th - 4), y2 = Math.round(rows * 0.5 + 4);
+    hand1.forEach(([k, v], i) => tile(x0 + i * (tw + gap), y1, k, v));
+    hand2.forEach(([k, v], i) => tile(x0 + i * (tw + gap), y2, k, v));
+  });
+}
+
+// The Lantern Festival: rows of red silk lanterns with gold tassels over a painted gateway, a full moon.
+function chnLanternFest(ctx, W, H) {
+  const u = H / 100;
+  const sky = ctx.createLinearGradient(0, 0, 0, H); sky.addColorStop(0, '#0e1438'); sky.addColorStop(1, '#2a2058');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#fbe9b0'; ctx.beginPath(); ctx.arc(W * 0.88, H * 0.64, 7 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#efd88f'; ctx.beginPath(); ctx.arc(W * 0.86, H * 0.62, 1.8 * u, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.arc(W * 0.9, H * 0.67, 1.3 * u, 0, Math.PI * 2); ctx.fill();
+  // the gateway (pailou): red posts, a blue-green beam, a tiled roof with lifted ends
+  const gx = W * 0.5, gb = H, gt = H * 0.7, gw = W * 0.44;
+  ctx.fillStyle = '#b8261e'; for (const d of [-1, -0.33, 0.33, 1]) ctx.fillRect(gx + d * gw / 2 - 2 * u, gt, 4 * u, gb - gt);
+  ctx.fillStyle = '#2f7a7a'; ctx.fillRect(gx - gw * 0.56, gt + 2 * u, gw * 1.12, 6 * u);
+  ctx.fillStyle = '#e8b448'; for (let k = 0; k < 12; k++) ctx.fillRect(gx - gw * 0.52 + (k * gw * 1.04) / 12, gt + 4 * u, gw * 0.05, 2 * u);
+  ctx.fillStyle = '#1e2a3a'; ctx.beginPath(); ctx.moveTo(gx - gw * 0.66, gt - 3 * u); ctx.quadraticCurveTo(gx - gw * 0.5, gt + 2 * u, gx - gw * 0.3, gt + 1.4 * u); ctx.lineTo(gx + gw * 0.3, gt + 1.4 * u); ctx.quadraticCurveTo(gx + gw * 0.5, gt + 2 * u, gx + gw * 0.66, gt - 3 * u); ctx.lineTo(gx + gw * 0.46, gt - 9 * u); ctx.lineTo(gx - gw * 0.46, gt - 9 * u); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#e8b448'; ctx.fillRect(gx - gw * 0.46, gt - 10 * u, gw * 0.92, 1.4 * u);
+  const lantern = (cx, cy, r) => {
+    ctx.fillStyle = 'rgba(255,120,60,.16)'; ctx.beginPath(); ctx.arc(cx, cy, r * 1.9, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e02a22'; ctx.beginPath(); ctx.ellipse(cx, cy, r, r * 0.82, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#a81a16'; ctx.lineWidth = Math.max(1, r * 0.08); for (const k of [-0.6, -0.2, 0.2, 0.6]) { ctx.beginPath(); ctx.ellipse(cx, cy, r * Math.abs(k) * 1.1 + r * 0.05, r * 0.82, 0, -Math.PI / 2, Math.PI / 2, k < 0); ctx.stroke(); }
+    ctx.fillStyle = '#ff6a3a'; ctx.beginPath(); ctx.ellipse(cx - r * 0.25, cy - r * 0.1, r * 0.25, r * 0.45, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e8b448'; ctx.fillRect(cx - r * 0.5, cy - r * 0.95, r, r * 0.22); ctx.fillRect(cx - r * 0.5, cy + r * 0.74, r, r * 0.22);
+    ctx.fillStyle = '#e8b448'; ctx.fillRect(cx - r * 0.12, cy + r * 0.96, r * 0.24, r * 0.3);
+    ctx.beginPath(); ctx.moveTo(cx - r * 0.24, cy + r * 1.24); ctx.lineTo(cx + r * 0.24, cy + r * 1.24); ctx.lineTo(cx + r * 0.16, cy + r * 1.9); ctx.lineTo(cx - r * 0.16, cy + r * 1.9); ctx.closePath(); ctx.fill();
+  };
+  const strings = [[H * 0.03, 5, 6.4], [H * 0.21, 7, 5.2], [H * 0.37, 9, 4]];
+  strings.forEach(([y0, n, r], s) => {
+    const yAt = (px) => y0 + 6 * u * Math.sin((px / W) * Math.PI);
+    ctx.strokeStyle = '#7a5a6a'; ctx.lineWidth = 0.5 * u; ctx.beginPath(); for (let px = 0; px <= W; px += 2 * u) px ? ctx.lineTo(px, yAt(px)) : ctx.moveTo(px, yAt(px)); ctx.stroke();
+    for (let i = 0; i < n; i++) { const px = (W * (i + 0.5)) / n; ctx.strokeStyle = '#7a5a6a'; ctx.beginPath(); ctx.moveTo(px, yAt(px)); ctx.lineTo(px, yAt(px) + r * 0.6 * u); ctx.stroke(); lantern(px, yAt(px) + r * 1.4 * u, r * u); }
+  });
+}
+
+// Guilin: the karst peaks along the Li River in the morning mist, a fisherman on a bamboo raft with his cormorant.
+function chnGuilin(ctx, W, H) {
+  const u = H / 100;
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.6); sky.addColorStop(0, '#f2d6c0'); sky.addColorStop(1, '#f6ecdc');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#fbe6c8'; ctx.beginPath(); ctx.arc(W * 0.7, H * 0.2, 6 * u, 0, Math.PI * 2); ctx.fill();
+  const water = H * 0.62;
+  const peaks = (list, col, refl) => list.forEach(([px, w, h]) => {
+    const cx = W * px, ww = w * u, hh = h * u;
+    const shape = (y0, dir) => { ctx.beginPath(); ctx.moveTo(cx - ww, y0); ctx.bezierCurveTo(cx - ww * 0.9, y0 - dir * hh * 0.7, cx - ww * 0.55, y0 - dir * hh, cx, y0 - dir * hh); ctx.bezierCurveTo(cx + ww * 0.55, y0 - dir * hh, cx + ww * 0.9, y0 - dir * hh * 0.7, cx + ww, y0); ctx.closePath(); };
+    ctx.fillStyle = col; shape(water, 1); ctx.fill();
+    ctx.fillStyle = refl; shape(water, -0.6); ctx.fill();
+  });
+  peaks([[0.08, 9, 34], [0.2, 7, 28], [0.33, 8, 40], [0.52, 7, 30], [0.62, 8, 36], [0.8, 9, 32], [0.93, 7, 26]], '#b8c4c8', '#c8d4d6');
+  peaks([[0.02, 10, 26], [0.16, 9, 32], [0.42, 10, 28], [0.72, 9, 30], [0.98, 10, 24]], '#7a9a8a', '#9ab4a8');
+  peaks([[-0.02, 14, 44], [0.26, 12, 22], [0.88, 14, 42]], '#3f6a4a', '#6a8a72');
+  // the river
+  ctx.fillStyle = 'rgba(160,190,196,.55)'; ctx.fillRect(0, water, W, H - water);
+  ctx.fillStyle = '#f2ecdc'; for (let k = 0; k < 24; k++) ctx.fillRect(((k * 41) % 100) / 100 * W, water + ((k * 13) % 36) * u, (6 + (k % 4) * 3) * u, 0.5 * u);
+  ctx.fillStyle = '#f6efe0'; ctx.fillRect(0, water - 1 * u, W, 1.4 * u);
+  // the raft, the fisherman, the lamp, the cormorant
+  const rx = W * 0.5, ry = H * 0.8;
+  ctx.fillStyle = '#8a6a3a'; ctx.beginPath(); ctx.moveTo(rx - 22 * u, ry); ctx.lineTo(rx + 20 * u, ry); ctx.quadraticCurveTo(rx + 25 * u, ry - 1 * u, rx + 26 * u, ry - 4 * u); ctx.lineTo(rx + 22 * u, ry + 3 * u); ctx.lineTo(rx - 22 * u, ry + 3 * u); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#6a4e28'; for (let k = 0; k < 5; k++) ctx.fillRect(rx - 22 * u, ry + k * 0.7 * u, 42 * u, 0.25 * u);
+  ctx.fillStyle = '#2a2a2e'; ctx.fillRect(rx - 2 * u, ry - 13 * u, 4 * u, 13 * u);
+  ctx.fillStyle = '#c8a86a'; ctx.beginPath(); ctx.moveTo(rx - 7 * u, ry - 13 * u); ctx.lineTo(rx, ry - 19 * u); ctx.lineTo(rx + 7 * u, ry - 13 * u); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = '#4a3a2a'; ctx.lineWidth = 0.8 * u; ctx.beginPath(); ctx.moveTo(rx + 2 * u, ry - 8 * u); ctx.lineTo(rx + 16 * u, ry - 20 * u); ctx.stroke();
+  ctx.fillStyle = '#e8b448'; ctx.fillRect(rx - 14 * u, ry - 6 * u, 3 * u, 4 * u);
+  ctx.fillStyle = '#1e1e22'; ctx.beginPath(); ctx.ellipse(rx + 14 * u, ry - 2 * u, 3.4 * u, 1.8 * u, -0.2, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(rx + 16 * u, ry - 3 * u); ctx.lineTo(rx + 17 * u, ry - 7 * u); ctx.lineTo(rx + 18.4 * u, ry - 7 * u); ctx.lineTo(rx + 17.4 * u, ry - 2.4 * u); ctx.fill();
+  ctx.fillStyle = '#e8b448'; ctx.fillRect(rx + 18.2 * u, ry - 7 * u, 1.6 * u, 0.6 * u);
+  ctx.fillStyle = 'rgba(60,50,40,.25)'; ctx.fillRect(rx - 22 * u, ry + 3 * u, 46 * u, 2 * u);
+}
+
+// Dim sum on a dark table, seen from above: bamboo steamers of har gow, siu mai and char siu bao, a plate of egg
+// tarts, tea in white cups, chopsticks.
+function chnDimSum(ctx, W, H) {
+  const u = H / 100;
+  ctx.fillStyle = '#3a2418'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#44291c'; for (let k = 0; k < 6; k++) ctx.fillRect(0, (H * (k + 0.5)) / 6, W, 0.7 * u);
+  const steamer = (cx, cy, r, fill) => {
+    ctx.fillStyle = '#9a7442'; ctx.beginPath(); ctx.arc(cx + 1 * u, cy + 1.4 * u, r, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#d8b67a'; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#b8955a'; ctx.lineWidth = 0.8 * u; ctx.beginPath(); ctx.arc(cx, cy, r * 0.88, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = '#c4a068'; ctx.beginPath(); ctx.arc(cx, cy, r * 0.84, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#b08c56'; ctx.lineWidth = 0.4 * u; for (let k = -6; k <= 6; k++) { ctx.beginPath(); ctx.moveTo(cx - r * 0.8, cy + k * r * 0.12); ctx.lineTo(cx + r * 0.8, cy + k * r * 0.12); ctx.stroke(); }
+    fill(cx, cy, r * 0.84);
+  };
+  const harGow = (cx, cy, s) => { ctx.fillStyle = '#efe6e0'; ctx.beginPath(); ctx.arc(cx, cy, s, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#f2b0a0'; ctx.beginPath(); ctx.arc(cx, cy + s * 0.15, s * 0.55, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 0.5 * u; for (let k = -2; k <= 2; k++) { ctx.beginPath(); ctx.moveTo(cx + k * s * 0.3, cy - s * 0.85); ctx.lineTo(cx + k * s * 0.22, cy - s * 0.1); ctx.stroke(); } };
+  const siuMai = (cx, cy, s) => { ctx.fillStyle = '#f2d06a'; ctx.beginPath(); ctx.arc(cx, cy, s, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#d88a6a'; ctx.beginPath(); ctx.arc(cx, cy, s * 0.7, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#ee6a1a'; ctx.beginPath(); ctx.arc(cx, cy, s * 0.22, 0, Math.PI * 2); ctx.fill(); };
+  const bao = (cx, cy, s) => { ctx.fillStyle = '#fbf8f2'; ctx.beginPath(); ctx.arc(cx, cy, s, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#b8322a'; for (let k = 0; k < 3; k++) { const a = (k * Math.PI * 2) / 3; ctx.beginPath(); ctx.ellipse(cx + Math.cos(a) * s * 0.18, cy + Math.sin(a) * s * 0.18, s * 0.26, s * 0.09, a, 0, Math.PI * 2); ctx.fill(); } };
+  const ring3 = (f) => (cx, cy, r) => { for (let k = 0; k < 3; k++) { const a = -Math.PI / 2 + (k * Math.PI * 2) / 3; f(cx + Math.cos(a) * r * 0.48, cy + Math.sin(a) * r * 0.48, r * 0.38); } };
+  const ring4 = (f) => (cx, cy, r) => { for (let k = 0; k < 4; k++) { const a = Math.PI / 4 + (k * Math.PI) / 2; f(cx + Math.cos(a) * r * 0.48, cy + Math.sin(a) * r * 0.48, r * 0.32); } };
+  steamer(W * 0.22, H * 0.34, 24 * u, ring4(harGow));
+  steamer(W * 0.47, H * 0.62, 26 * u, ring4(siuMai));
+  steamer(W * 0.72, H * 0.32, 24 * u, ring3(bao));
+  // egg tarts on a plate
+  ctx.fillStyle = '#f2efe8'; ctx.beginPath(); ctx.arc(W * 0.86, H * 0.76, 15 * u, 0, Math.PI * 2); ctx.fill();
+  for (let k = 0; k < 3; k++) { const a = -Math.PI / 2 + (k * Math.PI * 2) / 3, tx = W * 0.86 + Math.cos(a) * 7 * u, ty = H * 0.76 + Math.sin(a) * 7 * u; ctx.fillStyle = '#d8a050'; ctx.beginPath(); ctx.arc(tx, ty, 5.4 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#f6d24a'; ctx.beginPath(); ctx.arc(tx, ty, 3.8 * u, 0, Math.PI * 2); ctx.fill(); }
+  // tea
+  for (const [a, b] of [[0.12, 0.8], [0.24, 0.86]]) { ctx.fillStyle = '#f2efe8'; ctx.beginPath(); ctx.arc(W * a, H * b, 6 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#b07a2a'; ctx.beginPath(); ctx.arc(W * a, H * b, 4.4 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#2f7a9a'; ctx.beginPath(); ctx.arc(W * a, H * b, 6 * u, Math.PI * 1.1, Math.PI * 1.4); ctx.lineTo(W * a, H * b); ctx.fill(); }
+  ctx.strokeStyle = '#1a1414'; ctx.lineCap = 'round'; ctx.lineWidth = 1.6 * u;
+  ctx.beginPath(); ctx.moveTo(W * 0.62, H * 0.92); ctx.lineTo(W * 0.78, H * 0.56); ctx.moveTo(W * 0.64, H * 0.94); ctx.lineTo(W * 0.8, H * 0.58); ctx.stroke();
+}
+
 // ---------- USA pack: woven, pieced and knotted rugs (restored from the earlier drafts) ----------
 // Dashed stitching around a rectangle; each side starts and ends on a stitch, so the corners join up.
 function stitchRect(ctx, x, y, w, h, step, thick, color) {
@@ -4482,6 +5153,24 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.china === 'panda') chnPanda(ctx, W, H);
   else if (P.china === 'wall') chnGreatWall(ctx, W, H);
   else if (P.china === 'postcard') chnPostcard(ctx, W, H);
+  else if (P.korea === 'hangeul') korHangeul(ctx, W, H);
+  else if (P.korea === 'najeon') korNajeon(ctx, W, H);
+  else if (P.korea === 'longevity') korLongevity(ctx, W, H);
+  else if (P.korea === 'lanterns') korLanterns(ctx, W, H);
+  else if (P.korea === 'bibimbap') korBibimbap(ctx, W, H);
+  else if (P.korea === 'jeju') korJeju(ctx, W, H);
+  else if (P.japan === 'shibori') japShibori(ctx, W, H);
+  else if (P.japan === 'zen') japZen(ctx, W, H);
+  else if (P.japan === 'wave') japGreatWave(ctx, W, H);
+  else if (P.japan === 'neko') japManekiNeko(ctx, W, H);
+  else if (P.japan === 'torii') japTorii(ctx, W, H);
+  else if (P.japan === 'sushi') japSushi(ctx, W, H);
+  else if (P.china === 'papercut') chnPapercut(ctx, W, H);
+  else if (P.china === 'imperial') chnImperial(ctx, W, H);
+  else if (P.china === 'mahjong') chnMahjong(ctx, W, H);
+  else if (P.china === 'lanterns') chnLanternFest(ctx, W, H);
+  else if (P.china === 'guilin') chnGuilin(ctx, W, H);
+  else if (P.china === 'dimsum') chnDimSum(ctx, W, H);
   else if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
