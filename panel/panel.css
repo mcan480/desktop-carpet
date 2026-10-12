@@ -148,6 +148,9 @@ h2{margin:0 0 8px;font:600 .64rem/1.3 var(--f-mono);letter-spacing:.14em;text-tr
 .swatches .country-tabs button:hover{border-color:rgba(239,227,198,.5)}
 .swatches .country-tabs button[aria-selected="true"]{background:rgba(239,227,198,.15);border-color:rgba(239,227,198,.75);color:#fff}
 .swatches .country-tabs button:focus-visible{outline:2px solid var(--saffron);outline-offset:2px}
+.season.persia{background:linear-gradient(180deg,rgba(168,67,47,.24),rgba(31,45,74,.34));outline-color:rgba(239,226,196,.45)}
+.season.persia h3{color:#efe2c4;margin-bottom:2px}
+.season.persia h3 svg{width:20px;height:14px}
 .season-tag{margin:0 0 9px;font:italic 500 .78rem/1.3 var(--f-body);color:rgba(239,227,198,.85)}
 .season-row.usa-row{grid-template-columns:repeat(4,1fr);gap:8px 7px}
 .season-row.usa-row span{font-size:.6rem}
