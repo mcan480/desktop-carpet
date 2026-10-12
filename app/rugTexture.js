@@ -83,6 +83,33 @@ export const STYLES = {
   bogaz:     { name: 'Boğaz Vapuru',        turkiye: 'bosphorus', hooked: true },
   pamukkale: { name: 'Pamukkale',           turkiye: 'pamukkale', hooked: true },
   nazar:     { name: 'Nazar Boncuğu',       turkiye: 'nazar', hooked: true },
+  // East Asia pack. Korea:
+  bojagi:    { name: 'Bojagi',              korea: 'bojagi' },
+  saekdong:  { name: 'Saekdong',            korea: 'saekdong' },
+  seladon:   { name: 'Seladon Turnalar',    korea: 'celadon' },
+  dancheong: { name: 'Dancheong',           korea: 'dancheong' },
+  kaplan:    { name: 'Saksağan ve Kaplan',  korea: 'tiger', hooked: true },
+  hanok:     { name: 'Hanok Çatıları',      korea: 'hanok', hooked: true },
+  seul:      { name: 'Seul Gecesi',         korea: 'seoul', hooked: true },
+  korekart:  { name: 'Kore’den Selamlar',   korea: 'postcard', fonts: true, hooked: true },
+  // East Asia pack. Japan:
+  seigaiha:  { name: 'Seigaiha',            japan: 'seigaiha' },
+  asanoha:   { name: 'Asanoha',             japan: 'asanoha' },
+  boro:      { name: 'Boro',                japan: 'boro' },
+  koi:       { name: 'Koi Havuzu',          japan: 'koi' },
+  byobu:     { name: 'Altın Paravan',       japan: 'byobu' },
+  fuji:      { name: 'Fuji ve Sakura',      japan: 'fuji', hooked: true },
+  kyoto:     { name: 'Kyoto Sokağı',        japan: 'kyoto', hooked: true },
+  japonkart: { name: 'Japonya’dan Selamlar', japan: 'postcard', fonts: true, hooked: true },
+  // East Asia pack. China:
+  porselen:  { name: 'Mavi Beyaz Porselen', china: 'porcelain' },
+  bulut:     { name: 'Uğurlu Bulutlar',     china: 'clouds' },
+  artdeco:   { name: 'Şanghay Art Deco',    china: 'artdeco' },
+  ningxia:   { name: 'Ningxia Şakayık',     china: 'ningxia' },
+  bambu:     { name: 'Mürekkep Bambu',      china: 'bamboo' },
+  panda:     { name: 'Panda',               china: 'panda', hooked: true },
+  seddicin:  { name: 'Çin Seddi',           china: 'wall', hooked: true },
+  cinkart:   { name: 'Çin’den Selamlar',    china: 'postcard', fonts: true, hooked: true },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -3034,6 +3061,808 @@ function turkNazar(ctx, W, H) {
   for (const [x, y] of [[0.07, 0.12], [0.93, 0.12], [0.07, 0.88], [0.93, 0.88]]) bead(W * x, H * y, 4.6 * u);
 }
 
+
+// ---------- East Asia pack ----------
+// Korea, Japan and China: their own textiles and patterns knotted on a fine grid (bojagi, saekdong, celadon,
+// dancheong; seigaiha, boro, a gold-leaf screen, a koi pond; blue-and-white porcelain, auspicious clouds, pandas,
+// a dragon), and hooked pictures of each country.
+
+const KOREA_FRAME = { dark: '#1f2433', a: '#c8323a', b: '#2f6fb0', line: '#efe6d2' };
+const JAPAN_FRAME = { dark: '#1b1f33', a: '#c43a3a', b: '#d8a640', line: '#efe6d0' };
+const CHINA_FRAME = { dark: '#2a1416', a: '#c8302a', b: '#e8b23a', line: '#efe3c6' };
+
+// Pieced cloth: the area split again and again into rectangles of random proportions, each piece filled by
+// `piece(a, b, w, h)`, with a one-knot seam between neighbours.
+function piecework(x, a0, b0, w0, h0, seed, depth, piece, seam) {
+  const R = rng(seed);
+  const split = (a, b, w, h, d) => {
+    if (d <= 0 || (w < 10 && h < 8) || (d < 3 && R() < 0.3)) {
+      x.fillStyle = seam; x.fillRect(a, b, w, h);
+      piece(a + 1, b + 1, w - 1, h - 1, R);
+      return;
+    }
+    const vert = w / h > 1.3 ? true : w / h < 0.77 ? false : R() < 0.5, t = 0.3 + R() * 0.4;
+    if (vert) { const s = Math.round(w * t); split(a, b, s, h, d - 1); split(a + s, b, w - s, h, d - 1); }
+    else { const s = Math.round(h * t); split(a, b, w, s, d - 1); split(a, b + s, w, h - s, d - 1); }
+  };
+  split(a0, b0, w0, h0, depth);
+  x.fillStyle = seam; x.fillRect(a0, b0 + h0, w0 + 1, 1); x.fillRect(a0 + w0, b0, 1, h0 + 1);
+}
+
+// Bojagi: a Korean wrapping cloth pieced from leftover silk, every patch its own colour, light seams between them.
+function korBojagi(ctx, W, H) {
+  const C = { seam: '#f3ecdc', edge: '#2a2f45', jade: '#6aa58e', pink: '#e48aa0', indigo: '#3a4f8a', yellow: '#e9c46a', ivory: '#e3d7bd', red: '#c8463c',
+    violet: '#8a6aa8', sky: '#9cc6dc', green: '#5a8a4a', peach: '#f0a878' };
+  const fills = [C.jade, C.pink, C.indigo, C.yellow, C.ivory, C.red, C.violet, C.sky, C.green, C.peach];
+  weavePicture(ctx, W, H, 110, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.edge; x.fillRect(0, 0, cols, rows);
+    let last = -1;
+    piecework(x, 3, 3, cols - 7, rows - 7, 41, 9, (a, b, w, h, R) => {
+      let k; do { k = Math.floor(R() * fills.length); } while (k === last); last = k;
+      x.fillStyle = fills[k]; x.fillRect(a, b, w, h);
+      if (w > 9 && h > 7 && R() < 0.35) {                 // a triangle pieced into a corner, seam along the diagonal
+        let k2; do { k2 = Math.floor(R() * fills.length); } while (k2 === k);
+        const s = Math.min(w, h) * (0.5 + R() * 0.3), c = Math.floor(R() * 4), X = c % 2 ? a + w : a, Y = c > 1 ? b + h : b, dx = c % 2 ? -s : s, dy = c > 1 ? -s : s;
+        x.fillStyle = fills[k2]; x.beginPath(); x.moveTo(X, Y); x.lineTo(X + dx, Y); x.lineTo(X, Y + dy); x.closePath(); x.fill();
+        x.strokeStyle = C.seam; x.lineWidth = 1; x.beginPath(); x.moveTo(X + dx, Y); x.lineTo(X, Y + dy); x.stroke();
+      }
+    }, C.seam);
+  });
+}
+
+// Saekdong: the rainbow stripes of a Korean child's hanbok sleeve either side, a red silk panel with gold-leaf
+// flowers in the middle.
+function korSaekdong(ctx, W, H) {
+  const C = { red: '#d0393b', yellow: '#f2c53d', green: '#3a9a5a', pink: '#e9779a', blue: '#3a6fc0', white: '#f3eee2', purple: '#7a4fa0',
+    field: '#9e1f2c', gold: '#e3b448', navy: '#1f2a4a' };
+  weavePicture(ctx, W, H, 100, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.navy; x.fillRect(0, 0, cols, rows);
+    const seq = [C.red, C.yellow, C.green, C.pink, C.blue, C.white, C.purple], sw = 4;
+    const panel = Math.round(cols * 0.34), px0 = Math.round((cols - panel) / 2);
+    for (let i = 2; i < px0; i++) { const c = seq[Math.floor((i - 2) / sw) % seq.length]; x.fillStyle = c; x.fillRect(i, 2, 1, rows - 4); x.fillRect(cols - 1 - i, 2, 1, rows - 4); }
+    x.fillStyle = C.gold; x.fillRect(px0 - 1, 2, panel + 2, rows - 4);
+    x.fillStyle = C.field; x.fillRect(px0 + 1, 2, panel - 2, rows - 4);
+    const cx = px0 + panel / 2;
+    // gold leaf: three big flower roundels, little four-petal flowers between, a gold border line inside
+    x.strokeStyle = C.gold; x.lineWidth = 1; x.strokeRect(px0 + 3.5, 5.5, panel - 7, rows - 11);
+    for (let k = 0; k < 3; k++) {
+      const cy = 2 + (k + 0.5) * (rows - 4) / 3, r = panel * 0.3;
+      x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); x.stroke(); x.beginPath(); x.arc(cx, cy, r - 2, 0, Math.PI * 2); x.stroke();
+      for (let p = 0; p < 5; p++) { const a = -Math.PI / 2 + (p * Math.PI * 2) / 5; x.fillStyle = C.gold; x.beginPath(); x.ellipse(cx + Math.cos(a) * r * 0.42, cy + Math.sin(a) * r * 0.42, r * 0.3, r * 0.2, a, 0, Math.PI * 2); x.fill(); }
+      x.fillStyle = C.field; x.beginPath(); x.arc(cx, cy, r * 0.22, 0, Math.PI * 2); x.fill(); x.fillStyle = C.gold; x.beginPath(); x.arc(cx, cy, r * 0.12, 0, Math.PI * 2); x.fill();
+    }
+    for (let j = 0; j < 7; j++) for (const s of [-1, 1]) {
+      const fx = cx + s * panel * 0.34, fy = 2 + (j + 0.5) * (rows - 4) / 7;
+      x.fillStyle = C.gold; for (const [dx, dy] of [[0, -1.3], [0, 1.3], [-1.3, 0], [1.3, 0]]) { x.beginPath(); x.arc(fx + dx, fy + dy, 1, 0, Math.PI * 2); x.fill(); }
+    }
+  });
+}
+
+// A flying crane, white with black wing tips, neck and trailing legs, the way they are inlaid in Goryeo celadon.
+// Drawn flying to the right (+x) and rotated by `ang`: a long neck ahead, both wings swept back, legs trailing.
+function inlaidCrane(x, cx, cy, s, ang, C) {
+  x.save(); x.translate(cx, cy); x.rotate(ang);
+  const L = Math.max(1, s * 0.03);
+  x.strokeStyle = C.black; x.lineWidth = L; x.lineCap = 'round';
+  x.beginPath(); x.moveTo(-s * 0.14, 0); x.lineTo(-s * 0.62, s * 0.02); x.stroke();                     // legs trailing behind
+  const wing = (d) => {
+    x.fillStyle = C.white; x.beginPath(); x.moveTo(s * 0.04, 0); x.quadraticCurveTo(-s * 0.06, d * s * 0.2, -s * 0.36, d * s * 0.44); x.lineTo(-s * 0.3, d * s * 0.24); x.quadraticCurveTo(-s * 0.2, d * s * 0.08, -s * 0.14, 0); x.closePath(); x.fill();
+    x.fillStyle = C.black; x.beginPath(); x.moveTo(-s * 0.24, d * s * 0.31); x.lineTo(-s * 0.36, d * s * 0.44); x.lineTo(-s * 0.31, d * s * 0.25); x.closePath(); x.fill();
+  };
+  wing(-1); wing(1);
+  x.fillStyle = C.white; x.beginPath(); x.ellipse(-s * 0.04, 0, s * 0.15, s * 0.06, 0, 0, Math.PI * 2); x.fill();
+  x.strokeStyle = C.black; x.lineWidth = Math.max(1, s * 0.035); x.beginPath(); x.moveTo(s * 0.1, 0); x.lineTo(s * 0.4, 0); x.stroke();          // long black neck
+  x.fillStyle = C.white; x.beginPath(); x.arc(s * 0.42, 0, s * 0.04, 0, Math.PI * 2); x.fill();
+  x.strokeStyle = C.black; x.lineWidth = L; x.beginPath(); x.moveTo(s * 0.45, 0); x.lineTo(s * 0.54, 0); x.stroke();
+  x.restore();
+}
+// A little cloud of the inlaid kind: a curl with a tail.
+function inlaidCloud(x, cx, cy, s, flip, C) {
+  x.strokeStyle = C.white; x.lineWidth = Math.max(0.9, s * 0.18); x.lineCap = 'round';
+  x.beginPath(); x.arc(cx, cy, s * 0.5, Math.PI * 0.2, Math.PI * 1.75); x.stroke();
+  x.beginPath(); x.moveTo(cx + s * 0.4, cy + s * 0.3); x.quadraticCurveTo(cx + flip * s * 1.2, cy + s * 0.6, cx + flip * s * 1.8, cy + s * 0.2); x.stroke();
+  x.fillStyle = C.black; x.fillRect(cx - 0.5, cy - 0.5, 1, 1);
+}
+
+// Goryeo celadon: jade-green glaze with white-and-black inlaid cranes, inside roundels flying up and outside them
+// flying down, among little clouds; a band of cloud-collar heads round the edge.
+function korCeladon(ctx, W, H) {
+  const C = { field: '#9cc0aa', field2: '#94b9a2', deep: '#6f9a84', white: '#f1f0e6', black: '#2c3330', band: '#7fa892' };
+  weavePicture(ctx, W, H, 130, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = turkFrame(x, cols, rows, { guard: C.deep, guard2: C.white, band: C.band, field: C.field }, 16, 14, (x, w, d) => {
+      // a cloud-collar head (ruyi): a heart-like outline pointing into the rug
+      const m = w / 2;
+      x.strokeStyle = C.white; x.lineWidth = 1.3;
+      x.beginPath(); x.moveTo(m, d * 0.82); x.bezierCurveTo(m - w * 0.6, d * 0.5, m - w * 0.35, d * 0.05, m, d * 0.32); x.bezierCurveTo(m + w * 0.35, d * 0.05, m + w * 0.6, d * 0.5, m, d * 0.82); x.stroke();
+      x.fillStyle = C.black; x.fillRect(m - 0.5, d * 0.5, 1, 1);
+    }, (x, d) => { x.strokeStyle = C.white; x.lineWidth = 1.3; x.beginPath(); x.arc(d / 2, d / 2, d * 0.28, 0, Math.PI * 2); x.stroke(); x.fillStyle = C.black; x.fillRect(d / 2 - 0.5, d / 2 - 0.5, 1, 1); });
+    for (let y = fy; y < fy + fh; y++) if (Math.floor((y - fy) / 9) % 3 === 1) { x.fillStyle = C.field2; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const r = fh * 0.34, cy = fy + fh / 2, rings = [0.18, 0.82];
+    const clear = (px, py, m) => rings.every((p) => Math.hypot(px - (fx + fw * p), py - cy) > r + m);
+    for (let j = 0; j < 4; j++) for (let i = 0; i < 9; i++) { const px = fx + (i + (j % 2 ? 0.5 : 0)) * fw / 8.5, py = fy + (j + 0.5) * fh / 4; if (clear(px, py, 4) && Math.abs(px - (fx + fw / 2)) > 9) inlaidCloud(x, px, py, 2.8, (i + j) % 2 ? 1 : -1, C); }
+    // in the roundels cranes fly up, outside them down, as on the famous maebyeong vase
+    for (const p of rings) {
+      const cx = fx + fw * p;
+      x.strokeStyle = C.white; x.lineWidth = 1.8; x.beginPath(); x.arc(cx, cy, r, 0, Math.PI * 2); x.stroke();
+      x.strokeStyle = C.black; x.lineWidth = 1; x.beginPath(); x.arc(cx, cy, r - 2.4, 0, Math.PI * 2); x.stroke();
+      inlaidCrane(x, cx + 2, cy + 3, r * 1.45, -Math.PI / 2 - 0.45, C);
+      inlaidCloud(x, cx - r * 0.5, cy + r * 0.35, 2.6, 1, C); inlaidCloud(x, cx + r * 0.45, cy - r * 0.45, 2.6, -1, C);
+    }
+    inlaidCrane(x, fx + fw * 0.5, fy + fh * 0.42, fh * 0.5, Math.PI / 2 + 0.3, C);
+    inlaidCloud(x, fx + fw * 0.44, fy + fh * 0.78, 2.8, 1, C); inlaidCloud(x, fx + fw * 0.57, fy + fh * 0.84, 2.8, -1, C);
+    x.restore();
+  });
+}
+
+// Dancheong: the painted patterns under the eaves of Korean palaces. Layered flower medallions in red, yellow,
+// white and blues on a deep green ground, little four-petal knots between them, a border graded in steps of colour.
+function korDancheong(ctx, W, H) {
+  const C = { green: '#2f6b5a', dkgreen: '#1d4a40', red: '#b8322c', orange: '#e07a3a', yellow: '#f0c64a', white: '#f2efe4', lblue: '#8cc4cf', blue: '#2f6f9a', navy: '#1f3352', pink: '#e6a0a8' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    // graded border: red, white, light blue, blue, navy, then the field
+    const steps = [[0, 4, C.red], [4, 6, C.white], [6, 8, C.lblue], [8, 10, C.blue], [10, 12, C.navy], [12, 13, C.white]];
+    for (const [a, b, col] of steps) { x.fillStyle = col; x.fillRect(a, a, cols - 2 * a, rows - 2 * a); }
+    const fx = 13, fy = 13, fw = cols - 26, fh = rows - 26;
+    x.fillStyle = C.green; x.fillRect(fx, fy, fw, fh);
+    for (let i = 0; i < 2 * Math.round(fw / 8); i++) { const a = fx + i * 4; x.fillStyle = i % 2 ? C.red : C.yellow; x.fillRect(a, 1.5, 2, 1); x.fillRect(a, rows - 2.5, 2, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const nr = 2, nc = 4, cw = fw / nc, ch = fh / nr;
+    const medallion = (cx, cy, r) => {
+      const ring = (rr, n, cols, rot) => { cols.forEach((col, k) => { const s = 1 - k * 0.22; for (let p = 0; p < n; p++) { const a = rot + (p * Math.PI * 2) / n; x.fillStyle = col; x.beginPath(); x.ellipse(cx + Math.cos(a) * rr * 0.62, cy + Math.sin(a) * rr * 0.62, rr * 0.42 * s, rr * 0.24 * s, a, 0, Math.PI * 2); x.fill(); } }); };
+      ring(r, 12, [C.white, C.lblue, C.blue, C.navy], 0);
+      x.fillStyle = C.dkgreen; x.beginPath(); x.arc(cx, cy, r * 0.5, 0, Math.PI * 2); x.fill();
+      ring(r * 0.55, 8, [C.white, C.pink, C.red], Math.PI / 8);
+      x.fillStyle = C.yellow; x.beginPath(); x.arc(cx, cy, r * 0.2, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.orange; x.beginPath(); x.arc(cx, cy, r * 0.11, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.red; x.fillRect(cx - 0.6, cy - 0.6, 1.2, 1.2);
+    };
+    for (let j = 0; j < nr; j++) for (let i = 0; i < nc; i++) medallion(fx + (i + 0.5) * cw, fy + (j + 0.5) * ch, Math.min(cw, ch) * 0.46);
+    for (let j = 0; j <= nr; j++) for (let i = 0; i <= nc; i++) {
+      const cx = fx + i * cw, cy = fy + j * ch, s = Math.min(cw, ch) * 0.16;
+      for (let p = 0; p < 4; p++) { const a = (p * Math.PI) / 2 + Math.PI / 4; x.fillStyle = p % 2 ? C.red : C.yellow; x.beginPath(); x.ellipse(cx + Math.cos(a) * s * 0.6, cy + Math.sin(a) * s * 0.6, s * 0.55, s * 0.3, a, 0, Math.PI * 2); x.fill(); }
+      x.fillStyle = C.white; x.beginPath(); x.arc(cx, cy, s * 0.28, 0, Math.PI * 2); x.fill();
+    }
+    x.restore();
+  });
+}
+
+// Kkachi horangi: the magpie-and-tiger folk painting. A grinning tiger with goggle eyes under a pine, the magpie
+// on a branch above telling him the news.
+function korTiger(ctx, W, H) {
+  const u = H / 100;
+  ctx.fillStyle = '#efe2c4'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#e6d6b2'; for (const [x, y, r] of [[0.2, 0.2, 14], [0.55, 0.12, 10], [0.12, 0.7, 12], [0.6, 0.85, 16], [0.9, 0.6, 10]]) { ctx.beginPath(); ctx.ellipse(W * x, H * y, r * u * 1.6, r * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // pine tree on the right
+  ctx.strokeStyle = '#6a4a32'; ctx.lineCap = 'round';
+  ctx.lineWidth = 7 * u; ctx.beginPath(); ctx.moveTo(W * 0.93, H * 1.02); ctx.bezierCurveTo(W * 0.86, H * 0.7, W * 0.97, H * 0.45, W * 0.86, H * 0.12); ctx.stroke();
+  ctx.lineWidth = 3.4 * u; ctx.beginPath(); ctx.moveTo(W * 0.9, H * 0.42); ctx.quadraticCurveTo(W * 0.78, H * 0.36, W * 0.62, H * 0.4); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(W * 0.88, H * 0.2); ctx.quadraticCurveTo(W * 0.8, H * 0.14, W * 0.7, H * 0.16); ctx.stroke();
+  ctx.fillStyle = '#5a3c28'; for (let k = 0; k < 6; k++) ctx.fillRect(W * 0.9 + ((k * 3) % 4 - 2) * u, H * (0.5 + k * 0.08), 2.4 * u, 0.8 * u);
+  const needles = (x, y, w, h) => { ctx.fillStyle = '#2f5a3a'; ctx.beginPath(); ctx.ellipse(x, y, w, h, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#4f7f4a'; ctx.beginPath(); ctx.ellipse(x - w * 0.1, y - h * 0.35, w * 0.8, h * 0.45, 0, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = '#2f5a3a'; ctx.lineWidth = 0.6 * u; for (let k = -3; k <= 3; k++) { ctx.beginPath(); ctx.moveTo(x + k * w * 0.25, y - h * 0.7); ctx.lineTo(x + k * w * 0.27, y - h * 0.1); ctx.stroke(); } };
+  needles(W * 0.66, H * 0.36, 11 * u, 5 * u); needles(W * 0.78, H * 0.3, 9 * u, 4.4 * u); needles(W * 0.72, H * 0.13, 10 * u, 4.6 * u); needles(W * 0.88, H * 0.08, 9 * u, 4.2 * u); needles(W * 0.95, H * 0.3, 7 * u, 3.6 * u);
+  // the magpie on the branch, tail down to the left
+  const mx = W * 0.7, my = H * 0.3;
+  ctx.fillStyle = '#20263a'; ctx.beginPath(); ctx.moveTo(mx - 2 * u, my + 1 * u); ctx.lineTo(mx - 15 * u, my + 9 * u); ctx.lineTo(mx - 13 * u, my + 11 * u); ctx.lineTo(mx + 1 * u, my + 3 * u); ctx.fill();
+  ctx.fillStyle = '#1b1d24'; ctx.beginPath(); ctx.ellipse(mx + 2 * u, my - 1 * u, 6 * u, 3.6 * u, -0.3, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#f6f2e6'; ctx.beginPath(); ctx.ellipse(mx + 3 * u, my + 0.6 * u, 3.6 * u, 2 * u, -0.3, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#2f4a7a'; ctx.beginPath(); ctx.ellipse(mx, my - 1.6 * u, 3.4 * u, 1.8 * u, -0.3, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#1b1d24'; ctx.beginPath(); ctx.arc(mx + 7 * u, my - 3.6 * u, 2.6 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(mx + 9 * u, my - 4 * u); ctx.lineTo(mx + 12 * u, my - 3.4 * u); ctx.lineTo(mx + 9 * u, my - 2.8 * u); ctx.fill();
+  ctx.fillStyle = '#f6f2e6'; ctx.beginPath(); ctx.arc(mx + 7.6 * u, my - 4.2 * u, 0.7 * u, 0, Math.PI * 2); ctx.fill();
+  // the tiger
+  const tx = W * 0.34, O = '#e9a03a', Bk = '#22201e', Wt = '#f6efe0';
+  ctx.strokeStyle = O; ctx.lineWidth = 6 * u; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(tx + 26 * u, H * 0.74); ctx.bezierCurveTo(tx + 44 * u, H * 0.7, tx + 40 * u, H * 0.4, tx + 30 * u, H * 0.32); ctx.stroke();
+  ctx.strokeStyle = Bk; ctx.lineWidth = 6.2 * u; ctx.lineCap = 'butt';
+  for (const t of [0.25, 0.45, 0.65]) { const bx = (1 - t) ** 3 * (tx + 26 * u) + 3 * (1 - t) ** 2 * t * (tx + 44 * u) + 3 * (1 - t) * t * t * (tx + 40 * u) + t ** 3 * (tx + 30 * u); const by = (1 - t) ** 3 * H * 0.74 + 3 * (1 - t) ** 2 * t * H * 0.7 + 3 * (1 - t) * t * t * H * 0.4 + t ** 3 * H * 0.32; ctx.beginPath(); ctx.moveTo(bx - 1 * u, by - 0.6 * u); ctx.lineTo(bx + 1 * u, by + 0.6 * u); ctx.stroke(); }
+  ctx.fillStyle = Bk; ctx.beginPath(); ctx.arc(tx + 30 * u, H * 0.31, 2.2 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = O; ctx.beginPath(); ctx.ellipse(tx + 10 * u, H * 0.72, 26 * u, 19 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = Bk; ctx.lineWidth = 2.2 * u; ctx.lineCap = 'round';
+  for (let k = 0; k < 6; k++) { const sx = tx + (-6 + k * 6.5) * u; ctx.beginPath(); ctx.moveTo(sx, H * 0.56); ctx.quadraticCurveTo(sx + 3 * u, H * 0.62, sx - 1 * u, H * 0.68); ctx.stroke(); }
+  for (const lx of [-12, -2]) { ctx.fillStyle = O; roundRect(ctx, tx + lx * u, H * 0.62, 8 * u, 32 * u, 4 * u); ctx.fill(); ctx.strokeStyle = Bk; ctx.lineWidth = 1.8 * u; for (let k = 0; k < 3; k++) { ctx.beginPath(); ctx.moveTo(tx + lx * u, H * (0.72 + k * 0.06)); ctx.lineTo(tx + (lx + 4) * u, H * (0.73 + k * 0.06)); ctx.stroke(); } ctx.fillStyle = Wt; ctx.beginPath(); ctx.ellipse(tx + (lx + 4) * u, H * 0.94, 5.4 * u, 2.6 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  const hx = tx - 6 * u, hy = H * 0.4;
+  for (const d of [-1, 1]) { ctx.fillStyle = O; ctx.beginPath(); ctx.arc(hx + d * 14 * u, hy - 13 * u, 6 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = Bk; ctx.beginPath(); ctx.arc(hx + d * 14 * u, hy - 13 * u, 3.6 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = Wt; ctx.beginPath(); ctx.arc(hx + d * 14 * u, hy - 12 * u, 1.8 * u, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = O; ctx.beginPath(); ctx.ellipse(hx, hy, 20 * u, 17 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = Wt; for (const d of [-1, 1]) { ctx.beginPath(); ctx.ellipse(hx + d * 11 * u, hy + 8 * u, 9 * u, 7 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.strokeStyle = Bk; ctx.lineWidth = 1.8 * u;
+  for (const [a, b, c2] of [[-4, -15, -2], [0, -16, -3], [4, -15, -2]]) { ctx.beginPath(); ctx.moveTo(hx + a * u, hy + b * u); ctx.lineTo(hx + a * 1.1 * u, hy + (b + 5) * u); ctx.stroke(); }
+  for (const d of [-1, 1]) { ctx.beginPath(); ctx.moveTo(hx + d * 20 * u, hy - 4 * u); ctx.lineTo(hx + d * 14 * u, hy - 2 * u); ctx.moveTo(hx + d * 19 * u, hy + 1 * u); ctx.lineTo(hx + d * 14 * u, hy + 1.4 * u); ctx.stroke(); }
+  // goggle eyes, both looking up at the magpie
+  for (const d of [-1, 1]) { ctx.fillStyle = Wt; ctx.beginPath(); ctx.arc(hx + d * 7 * u, hy - 5 * u, 5.6 * u, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = Bk; ctx.lineWidth = 1.2 * u; ctx.stroke(); ctx.fillStyle = Bk; ctx.beginPath(); ctx.arc(hx + d * 7 * u + 2.4 * u, hy - 7.4 * u, 2.6 * u, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#c8605a'; ctx.beginPath(); ctx.moveTo(hx - 3 * u, hy + 2 * u); ctx.lineTo(hx + 3 * u, hy + 2 * u); ctx.lineTo(hx, hy + 5 * u); ctx.fill();
+  // the grin
+  ctx.fillStyle = '#8a2a2a'; ctx.beginPath(); ctx.moveTo(hx - 10 * u, hy + 8 * u); ctx.quadraticCurveTo(hx, hy + 18 * u, hx + 10 * u, hy + 8 * u); ctx.quadraticCurveTo(hx, hy + 11 * u, hx - 10 * u, hy + 8 * u); ctx.fill();
+  ctx.fillStyle = Wt; for (const d of [-1, 1]) { ctx.beginPath(); ctx.moveTo(hx + d * 7 * u, hy + 9 * u); ctx.lineTo(hx + d * 4.6 * u, hy + 9.4 * u); ctx.lineTo(hx + d * 5.6 * u, hy + 13 * u); ctx.fill(); }
+  ctx.strokeStyle = Bk; ctx.lineWidth = 0.6 * u; for (const d of [-1, 1]) for (const k of [-1, 0, 1]) { ctx.beginPath(); ctx.moveTo(hx + d * 9 * u, hy + 6 * u + k * u); ctx.lineTo(hx + d * 22 * u, hy + 4 * u + k * 2.6 * u); ctx.stroke(); }
+}
+
+// A hanok: the great curved tile roof with its lifted corners, a painted beam under the eaves, wooden posts and
+// paper lattice doors on a stone base; mountains behind and a persimmon tree hung with fruit in front.
+function korHanok(ctx, W, H) {
+  const u = H / 100, cx = W * 0.54;
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.55); sky.addColorStop(0, '#6f9ccc'); sky.addColorStop(0.75, '#f0c79c'); sky.addColorStop(1, '#f6d8b0');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#9a98b0'; ctx.beginPath(); ctx.moveTo(0, H * 0.5); for (let k = 0; k <= 30; k++) { const t = k / 30; ctx.lineTo(W * t, H * (0.26 + 0.07 * Math.sin(t * 5 + 0.5) + 0.04 * Math.sin(t * 13))); } ctx.lineTo(W, H * 0.5); ctx.fill();
+  ctx.fillStyle = '#7c7f99'; ctx.beginPath(); ctx.moveTo(0, H * 0.52); for (let k = 0; k <= 30; k++) { const t = k / 30; ctx.lineTo(W * t, H * (0.37 + 0.04 * Math.sin(t * 8 + 2))); } ctx.lineTo(W, H * 0.52); ctx.fill();
+  // stone base and steps
+  const base = H * 0.86, floor = H * 0.8;
+  ctx.fillStyle = '#b8ad9a'; ctx.fillRect(cx - W * 0.36, floor, W * 0.72, base - floor);
+  ctx.fillStyle = '#9d927e'; for (let k = 0; k < 14; k++) ctx.fillRect(cx - W * 0.36 + k * W * 0.052, floor + 1.4 * u, 0.6 * u, base - floor - 1.4 * u);
+  ctx.fillStyle = '#c9bfab'; ctx.fillRect(cx - 7 * u, base, 14 * u, 2.6 * u); ctx.fillRect(cx - 9 * u, base + 2.6 * u, 18 * u, 2.6 * u);
+  ctx.fillStyle = '#a99f8b'; ctx.fillRect(0, base + 5 * u, W, H);
+  // the walls: posts, doors with paper lattice
+  const wallTop = H * 0.52, wl = cx - W * 0.31, wr = cx + W * 0.31, bays = 5, bw = (wr - wl) / bays;
+  ctx.fillStyle = '#f2ead8'; ctx.fillRect(wl, wallTop, wr - wl, floor - wallTop);
+  for (let k = 0; k < bays; k++) {
+    const x0 = wl + k * bw + 1.6 * u, ww = bw - 3.2 * u, y0 = wallTop + 4 * u, hh = floor - y0 - 1 * u;
+    ctx.fillStyle = '#f7ecca'; ctx.fillRect(x0, y0, ww, hh);
+    ctx.fillStyle = '#8a5c3c'; for (let g = 0; g <= 4; g++) ctx.fillRect(x0 + (g * ww) / 4 - 0.3 * u, y0, 0.6 * u, hh); for (let g = 0; g <= 6; g++) ctx.fillRect(x0, y0 + (g * hh) / 6 - 0.3 * u, ww, 0.6 * u);
+    if (k === 2) { ctx.fillStyle = '#8a5c3c'; ctx.fillRect(x0 + ww / 2 - 0.5 * u, y0, 1 * u, hh); }
+  }
+  ctx.fillStyle = '#7a4a30'; for (let k = 0; k <= bays; k++) ctx.fillRect(wl + k * bw - 1.4 * u, wallTop, 2.8 * u, floor - wallTop);
+  // the painted beam under the eaves (dancheong): green with a band of colour
+  ctx.fillStyle = '#2f6b5a'; ctx.fillRect(wl - 2 * u, wallTop - 2 * u, wr - wl + 4 * u, 6 * u);
+  for (let k = 0; k < 16; k++) { const x0 = wl + k * (wr - wl) / 16 + 1 * u; ctx.fillStyle = ['#c8322a', '#f0c64a', '#f2efe4', '#3a7ab0'][k % 4]; ctx.fillRect(x0, wallTop - 0.6 * u, 2.4 * u, 2.6 * u); }
+  // rafter ends: a row of small round ends painted with rings
+  for (let k = 0; k < 26; k++) { const x0 = cx - W * 0.4 + k * W * 0.0315; ctx.fillStyle = '#2f6b5a'; ctx.beginPath(); ctx.arc(x0, wallTop - 3.6 * u, 1.3 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#f0c64a'; ctx.beginPath(); ctx.arc(x0, wallTop - 3.6 * u, 0.6 * u, 0, Math.PI * 2); ctx.fill(); }
+  // the roof: a gentle sag along the eave, corners swept up
+  const eaveY = wallTop - 5 * u, ridgeY = H * 0.2, halfE = W * 0.46, halfR = W * 0.2;
+  const tipY = eaveY - 13 * u, hip = (s) => [cx + s * (halfR + (halfE - halfR) * 0.35), eaveY - 5 * u];
+  const roof = () => { ctx.beginPath(); ctx.moveTo(cx - halfE, tipY); ctx.quadraticCurveTo(cx - halfE * 0.86, eaveY + 1 * u, cx - halfE * 0.5, eaveY + 1.4 * u); ctx.quadraticCurveTo(cx, eaveY + 2.8 * u, cx + halfE * 0.5, eaveY + 1.4 * u); ctx.quadraticCurveTo(cx + halfE * 0.86, eaveY + 1 * u, cx + halfE, tipY); ctx.quadraticCurveTo(...hip(1), cx + halfR, ridgeY + 3 * u); ctx.lineTo(cx - halfR, ridgeY + 3 * u); ctx.quadraticCurveTo(...hip(-1), cx - halfE, tipY); ctx.closePath(); };
+  ctx.fillStyle = '#4a5160'; roof(); ctx.fill();
+  ctx.save(); roof(); ctx.clip();
+  ctx.fillStyle = '#353b48'; for (let k = -40; k <= 40; k++) ctx.fillRect(cx + k * 1.9 * u - 0.45 * u, ridgeY, 0.9 * u, eaveY - ridgeY + 6 * u);
+  ctx.fillStyle = '#5c6474'; ctx.fillRect(cx - W, eaveY - 1.6 * u, 2 * W, 2.2 * u);
+  ctx.restore();
+  // the ridge, with its ends turned up
+  ctx.fillStyle = '#2c313c'; ctx.beginPath(); ctx.moveTo(cx - halfR - 3 * u, ridgeY - 3 * u); ctx.quadraticCurveTo(cx, ridgeY + 1 * u, cx + halfR + 3 * u, ridgeY - 3 * u); ctx.lineTo(cx + halfR + 2 * u, ridgeY + 4 * u); ctx.quadraticCurveTo(cx, ridgeY + 6 * u, cx - halfR - 2 * u, ridgeY + 4 * u); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#e8e2d6'; ctx.beginPath(); ctx.moveTo(cx - halfR, ridgeY + 2.6 * u); ctx.quadraticCurveTo(cx, ridgeY + 4.6 * u, cx + halfR, ridgeY + 2.6 * u); ctx.lineTo(cx + halfR, ridgeY + 3.6 * u); ctx.quadraticCurveTo(cx, ridgeY + 5.6 * u, cx - halfR, ridgeY + 3.6 * u); ctx.closePath(); ctx.fill();
+  // persimmon tree in front, on the left
+  ctx.strokeStyle = '#3e2a20'; ctx.lineCap = 'round'; ctx.lineWidth = 3.4 * u;
+  ctx.beginPath(); ctx.moveTo(W * 0.1, H); ctx.quadraticCurveTo(W * 0.13, H * 0.72, W * 0.1, H * 0.52); ctx.stroke();
+  ctx.lineWidth = 1.6 * u;
+  const br = [[0.11, 0.66, 0.02, 0.5], [0.1, 0.56, 0.17, 0.38], [0.1, 0.58, 0.04, 0.34], [0.12, 0.74, 0.22, 0.6], [0.105, 0.52, 0.11, 0.3]];
+  for (const [a, b, c, d] of br) { ctx.beginPath(); ctx.moveTo(W * a, H * b); ctx.lineTo(W * c, H * d); ctx.stroke(); }
+  for (const [a, b] of [[0.03, 0.5], [0.05, 0.45], [0.16, 0.4], [0.14, 0.44], [0.05, 0.36], [0.2, 0.62], [0.18, 0.65], [0.11, 0.33], [0.08, 0.42], [0.13, 0.36]]) { ctx.fillStyle = '#ee7a22'; ctx.beginPath(); ctx.arc(W * a, H * b, 2.2 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#4a6a3a'; ctx.fillRect(W * a - 0.6 * u, H * b - 2.6 * u, 1.2 * u, 0.9 * u); }
+}
+
+// Seoul at night: N Seoul Tower on Namsan, the towers of the city, and the rainbow fountain falling off the bridge
+// into the Han River.
+function korSeoul(ctx, W, H) {
+  const u = H / 100;
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.7); sky.addColorStop(0, '#0d1638'); sky.addColorStop(1, '#2c3c78');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#dfe6f6'; for (let k = 0; k < 24; k++) ctx.fillRect(((k * 73) % 100) / 100 * W, ((k * 37) % 40) / 100 * H, 0.7 * u, 0.7 * u);
+  // Namsan and the tower
+  ctx.fillStyle = '#1d3a30'; ctx.beginPath(); ctx.ellipse(W * 0.22, H * 0.66, W * 0.26, H * 0.24, 0, Math.PI, 0); ctx.fill(); ctx.fillStyle = '#25483a'; for (let k = 0; k < 14; k++) { ctx.beginPath(); ctx.arc(W * (0.02 + k * 0.03), H * (0.6 - Math.sin((k / 13) * Math.PI) * 0.16), 2.6 * u, 0, Math.PI * 2); ctx.fill(); }
+  const tx = W * 0.22, base = H * 0.42;
+  ctx.fillStyle = 'rgba(255,214,140,.25)'; ctx.beginPath(); ctx.arc(tx, H * 0.18, 9 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#d8e2f2'; ctx.fillRect(tx - 1.2 * u, H * 0.2, 2.4 * u, base - H * 0.2);
+  ctx.fillRect(tx - 2.2 * u, base - 2 * u, 4.4 * u, 2 * u);
+  ctx.fillStyle = '#eef3fb'; roundRect(ctx, tx - 4 * u, H * 0.17, 8 * u, 3.4 * u, 1.4 * u); ctx.fill(); roundRect(ctx, tx - 3.2 * u, H * 0.205, 6.4 * u, 1.8 * u, 0.8 * u); ctx.fill();
+  ctx.fillStyle = '#ffd27a'; ctx.fillRect(tx - 3.4 * u, H * 0.185, 6.8 * u, 0.7 * u);
+  ctx.fillStyle = '#c8d4e8'; ctx.fillRect(tx - 0.4 * u, H * 0.06, 0.8 * u, H * 0.11);
+  ctx.fillStyle = '#ff5a4a'; ctx.beginPath(); ctx.arc(tx, H * 0.06, 0.9 * u, 0, Math.PI * 2); ctx.fill();
+  // the city
+  for (let k = 0; k < 26; k++) {
+    const x = W * (0.42 + k * 0.023), bw = (3.6 + (k * 7) % 4) * u, bh = (12 + ((k * 13) % 19)) * u, y = H * 0.66 - bh;
+    ctx.fillStyle = k % 2 ? '#3a3f78' : '#4a4f8a'; ctx.fillRect(x, y, bw, bh);
+    ctx.fillStyle = k % 3 ? '#f6d58a' : '#cfe4ff'; for (let wy = y + 1.4 * u; wy < H * 0.65; wy += 2.2 * u) for (let wx = x + 0.7 * u; wx < x + bw - 0.8 * u; wx += 1.6 * u) if (((wx + wy) / u) % 3 > 1) ctx.fillRect(wx, wy, 0.7 * u, 0.9 * u);
+  }
+  ctx.fillStyle = '#121a36'; ctx.fillRect(0, H * 0.655, W, H * 0.02);
+  // the river
+  const river = ctx.createLinearGradient(0, H * 0.67, 0, H); river.addColorStop(0, '#24356a'); river.addColorStop(1, '#101a3a');
+  ctx.fillStyle = river; ctx.fillRect(0, H * 0.67, W, H * 0.33);
+  ctx.fillStyle = '#f6d58a'; for (let k = 0; k < 30; k++) ctx.fillRect(W * (0.3 + ((k * 29) % 70) / 100), H * (0.7 + (k % 6) * 0.03), 2.4 * u, 0.6 * u);
+  // the bridge, with the rainbow fountain pouring off its side
+  const by = H * 0.78;
+  ctx.fillStyle = '#3a4466'; ctx.fillRect(0, by, W, 2.6 * u);
+  ctx.fillStyle = '#5a6488'; for (let k = 0; k < 8; k++) ctx.fillRect(W * (0.04 + k * 0.13), by + 2.6 * u, 1.6 * u, 12 * u);
+  const rainbow = ['#ff4a5a', '#ff9a3a', '#ffe14a', '#5ad06a', '#4ab4ff', '#9a6aff'];
+  const bandW = 4.4 * u, n = Math.floor((W * 0.92) / bandW);
+  for (let k = 0; k < n; k++) {
+    const x0 = W * 0.04 + k * bandW;
+    ctx.fillStyle = rainbow[k % rainbow.length];
+    ctx.beginPath(); ctx.moveTo(x0, by + 2.6 * u); ctx.lineTo(x0 + bandW, by + 2.6 * u); ctx.lineTo(x0 + bandW + 1.6 * u, H); ctx.lineTo(x0 + 1.6 * u, H); ctx.closePath(); ctx.fill();
+  }
+  ctx.fillStyle = 'rgba(255,255,255,.4)'; ctx.fillRect(W * 0.04, H * 0.955, W * 0.94, 1.6 * u);
+}
+
+// Letter scenes for the Korean postcard.
+const KOREA_SCENES = [
+  (c, w, h) => { // a hanok roof against the sky
+    c.fillStyle = '#9cc6e4'; c.fillRect(0, 0, w, h); c.fillStyle = '#efe6d6'; c.fillRect(0, h * 0.62, w, h);
+    c.fillStyle = '#3d4452'; c.beginPath(); c.moveTo(-w * 0.1, h * 0.4); c.quadraticCurveTo(w * 0.2, h * 0.62, w * 0.5, h * 0.6); c.quadraticCurveTo(w * 0.8, h * 0.62, w * 1.1, h * 0.4); c.lineTo(w * 0.8, h * 0.22); c.lineTo(w * 0.2, h * 0.22); c.fill();
+    c.fillStyle = '#7a5236'; c.fillRect(w * 0.2, h * 0.62, w * 0.08, h); c.fillRect(w * 0.72, h * 0.62, w * 0.08, h);
+  },
+  (c, w, h) => { // mugunghwa, the rose of Sharon
+    c.fillStyle = '#4f8a4a'; c.fillRect(0, 0, w, h);
+    for (const [x, y] of [[0.5, 0.3], [0.5, 0.75]]) { c.fillStyle = '#e9a0c0'; for (let p = 0; p < 5; p++) { const a = (p * Math.PI * 2) / 5; c.beginPath(); c.arc(w * x + Math.cos(a) * w * 0.18, h * y + Math.sin(a) * w * 0.18, w * 0.17, 0, Math.PI * 2); c.fill(); } c.fillStyle = '#b8324a'; c.beginPath(); c.arc(w * x, h * y, w * 0.12, 0, Math.PI * 2); c.fill(); }
+  },
+  (c, w, h) => { const cols = ['#d0393b', '#f2c53d', '#3a9a5a', '#e9779a', '#3a6fc0', '#f3eee2', '#7a4fa0']; for (let i = 0; i < 9; i++) { c.fillStyle = cols[i % 7]; c.fillRect(0, (h * i) / 9, w, h / 9 + 1); } }, // saekdong stripes
+  (c, w, h) => { // Seoul at night
+    c.fillStyle = '#1a2654'; c.fillRect(0, 0, w, h); c.fillStyle = '#d8e2f2'; c.fillRect(w * 0.45, h * 0.08, w * 0.1, h * 0.5); c.fillRect(w * 0.3, h * 0.2, w * 0.4, h * 0.08);
+    c.fillStyle = '#232c56'; c.fillRect(0, h * 0.6, w, h); c.fillStyle = '#f6d58a'; for (let k = 0; k < 8; k++) c.fillRect(w * (0.1 + (k % 4) * 0.22), h * (0.68 + Math.floor(k / 4) * 0.14), w * 0.08, h * 0.05);
+  },
+  (c, w, h) => { // autumn mountains
+    c.fillStyle = '#8fc4e6'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#c8462e'; c.beginPath(); c.moveTo(-w * 0.2, h); c.lineTo(w * 0.4, h * 0.25); c.lineTo(w * 1.1, h); c.fill();
+    c.fillStyle = '#ee9a2a'; c.beginPath(); c.moveTo(w * 0.1, h); c.lineTo(w * 0.75, h * 0.45); c.lineTo(w * 1.3, h); c.fill();
+  },
+];
+function korPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'KOREA', KOREA_SCENES); }
+
+
+// Seigaiha: overlapping fans of concentric wave arcs, indigo and white, a few rows picked out in gold-ochre.
+function japSeigaiha(ctx, W, H) {
+  const C = { navy: '#1d2c55', indigo: '#2f4a85', blue: '#5a7fb8', white: '#eef0ec', gold: '#d6a446', edge: '#141c36' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.edge; x.fillRect(0, 0, cols, rows);
+    x.fillStyle = C.white; x.fillRect(3, 3, cols - 6, rows - 6); x.fillStyle = C.edge; x.fillRect(4, 4, cols - 8, rows - 8);
+    const fx = 6, fy = 6, fw = cols - 12, fh = rows - 12;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const R = 12, dy = R * 0.5;
+    for (let j = -2, row = 0; fy + j * dy - R < fy + fh; j++, row++) {
+      const gold = row % 7 === 4;
+      for (let i = -1; i * R * 2 < fw + 2 * R; i++) {
+        const cx = fx + i * 2 * R + (Math.abs(j) % 2 ? R : 0), cy = fy + j * dy + R;
+        const rings = gold ? [C.navy, C.gold, C.navy, C.gold, C.navy, C.gold] : [C.navy, C.white, C.indigo, C.white, C.blue, C.white];
+        rings.forEach((col, k) => { x.fillStyle = col; x.beginPath(); x.arc(cx, cy, R - k * 2, 0, Math.PI * 2); x.fill(); });
+      }
+    }
+    x.restore();
+  });
+}
+
+// Asanoha: the hemp-leaf star, a lattice of six-pointed stars of thin lines, white on indigo, a madder panel
+// across the middle like an obi.
+function japAsanoha(ctx, W, H) {
+  const C = { indigo: '#233a6e', line: '#e8ecef', red: '#b0303a', line2: '#f2d9b8', dark: '#121a33', gold: '#d6a446' };
+  weavePicture(ctx, W, H, 130, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.dark; x.fillRect(0, 0, cols, rows);
+    const fx = 4, fy = 4, fw = cols - 8, fh = rows - 8, band = [fy + fh * 0.36, fy + fh * 0.64];
+    x.fillStyle = C.indigo; x.fillRect(fx, fy, fw, fh);
+    x.fillStyle = C.red; x.fillRect(fx, band[0], fw, band[1] - band[0]);
+    x.fillStyle = C.gold; x.fillRect(fx, band[0] - 1, fw, 1); x.fillRect(fx, band[1], fw, 1);
+    const s = 24, h = s * Math.sqrt(3) / 2;
+    // a triangular grid; in every triangle three lines from its centre to the corners
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    x.lineWidth = 1;
+    for (let j = -1; j * h < fh + h; j++) for (let i = -1; i * s < fw + s; i++) {
+      const ox = fx + i * s + (j % 2 ? s / 2 : 0), oy = fy + j * h;
+      const tris = [[[ox, oy], [ox + s, oy], [ox + s / 2, oy + h]], [[ox + s, oy], [ox + s / 2, oy + h], [ox + s * 1.5, oy + h]]];
+      for (const t of tris) {
+        const mx = (t[0][0] + t[1][0] + t[2][0]) / 3, my = (t[0][1] + t[1][1] + t[2][1]) / 3;
+        x.strokeStyle = my > band[0] && my < band[1] ? C.line2 : C.line;
+        x.beginPath(); x.moveTo(t[0][0], t[0][1]); x.lineTo(t[1][0], t[1][1]); x.lineTo(t[2][0], t[2][1]); x.closePath(); x.stroke();
+        for (const p of t) { x.beginPath(); x.moveTo(mx, my); x.lineTo(p[0], p[1]); x.stroke(); }
+      }
+    }
+    x.restore();
+    x.fillStyle = C.gold; x.fillRect(fx, band[0] - 1, fw, 1); x.fillRect(fx, band[1], fw, 1);
+  });
+}
+
+// Boro: indigo cotton patched again and again, every patch its own shade, held down with rows of white sashiko
+// running stitch; one patch of rust and one of persimmon among the blues.
+function japBoro(ctx, W, H) {
+  const C = { i1: '#1b2a4e', i2: '#2a3f6e', i3: '#3d5a8e', i4: '#5a77a8', i5: '#7f98c0', i6: '#263552', rust: '#9a4a2e', kaki: '#c8783a', thread: '#d8dde2', seam: '#121a30' };
+  const blues = [C.i1, C.i2, C.i3, C.i4, C.i5, C.i6];
+  weavePicture(ctx, W, H, 110, Object.values(C), (x, cols, rows) => {
+    let n = 0;
+    piecework(x, 0, 0, cols - 1, rows - 1, 77, 6, (a, b, w, h, R) => {
+      n++; const col = n === 7 ? C.rust : n === 19 ? C.kaki : blues[Math.floor(R() * blues.length)];
+      x.fillStyle = col; x.fillRect(a, b, w, h);
+    }, C.seam);
+    // a few smaller patches sewn on top, a little crooked
+    const R = rng(91);
+    for (let k = 0; k < 7; k++) { const pw = 10 + R() * 16, ph = 8 + R() * 12, px = R() * (cols - pw), py = R() * (rows - ph); x.save(); x.translate(px + pw / 2, py + ph / 2); x.rotate((R() - 0.5) * 0.12); x.fillStyle = C.seam; x.fillRect(-pw / 2 - 1, -ph / 2 - 1, pw + 2, ph + 2); x.fillStyle = blues[(k * 2 + 1) % blues.length]; x.fillRect(-pw / 2, -ph / 2, pw, ph); x.restore(); }
+    // sashiko: rows of running stitch across the whole cloth, holding the layers together
+    x.fillStyle = C.thread;
+    for (let yy = 2, r = 0; yy < rows - 1; yy += 4, r++) for (let xx = (r % 2) * 2; xx < cols; xx += 4) x.fillRect(xx, yy, 2, 1);
+  });
+}
+
+// A koi pond seen from above: red-and-white and gold koi turning among lily pads, ripples, a lotus in bloom.
+function japKoi(ctx, W, H) {
+  const C = { water: '#1f4a5e', water2: '#255668', ripple: '#3f7a8a', pad: '#3f7a3a', pad2: '#5a9a4a', white: '#f4f0e6', red: '#d8402e', gold: '#eba43a', black: '#1a1a1a',
+    pink: '#e8a0b0', stone: '#8a8478', stone2: '#6f6a60' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.water; x.fillRect(0, 0, cols, rows);
+    for (let y = 0; y < rows; y++) if (Math.floor(y / 7) % 3 === 1) { x.fillStyle = C.water2; x.fillRect(0, y, cols, 1); }
+    // a rim of stones
+    const R = rng(5);
+    for (let k = 0; k < 90; k++) { const t = k / 90, side = Math.floor(t * 4), f = (t * 4) % 1; const [px, py] = side === 0 ? [f * cols, 0] : side === 1 ? [cols, f * rows] : side === 2 ? [cols - f * cols, rows] : [0, rows - f * rows]; x.fillStyle = k % 3 ? C.stone : C.stone2; x.beginPath(); x.ellipse(px, py, 4 + R() * 3, 3.4 + R() * 2, R() * 3, 0, Math.PI * 2); x.fill(); }
+    // ripples
+    x.strokeStyle = C.ripple; x.lineWidth = 0.9; for (const [px, py, r] of [[0.3, 0.3, 6], [0.7, 0.62, 8], [0.52, 0.2, 5]]) for (let k = 1; k <= 3; k++) { x.beginPath(); x.ellipse(cols * px, rows * py, r * k * 0.7, r * k * 0.45, 0, 0, Math.PI * 2); x.stroke(); }
+    // lily pads and a lotus
+    const pad = (px, py, r, a) => { x.fillStyle = C.pad; x.beginPath(); x.moveTo(px, py); x.arc(px, py, r, a + 0.35, a + Math.PI * 2 - 0.35); x.closePath(); x.fill(); x.fillStyle = C.pad2; x.beginPath(); x.moveTo(px, py); x.arc(px, py, r * 0.75, a + 0.5, a + Math.PI * 1.2); x.closePath(); x.fill(); };
+    for (const [px, py, r, a] of [[0.12, 0.22, 7, 0.4], [0.2, 0.32, 5, 2], [0.85, 0.2, 8, 3.5], [0.9, 0.75, 7, 1], [0.15, 0.8, 9, 5], [0.62, 0.86, 6, 2.6], [0.4, 0.12, 5, 4]]) pad(cols * px, rows * py, r, a);
+    const lx = cols * 0.17, ly = rows * 0.77; for (let p = 0; p < 8; p++) { const a = (p * Math.PI) / 4; x.fillStyle = p % 2 ? C.pink : C.white; x.beginPath(); x.ellipse(lx + Math.cos(a) * 2.6, ly + Math.sin(a) * 2.6, 2.6, 1.2, a, 0, Math.PI * 2); x.fill(); } x.fillStyle = C.gold; x.beginPath(); x.arc(lx, ly, 1.3, 0, Math.PI * 2); x.fill();
+    // koi: a curved body along a path, fins, a forked tail, patches
+    const koi = (px, py, s, ang, bend, base, patch, patch2) => {
+      x.save(); x.translate(px, py); x.rotate(ang);
+      const body = (t) => [t * s, Math.sin(t * Math.PI * 0.9) * bend * s], wid = (t) => s * 0.14 * Math.sin(Math.PI * Math.min(1, 0.15 + t * 0.95)) * (1 - t * 0.55);
+      const L = [], Rr = []; for (let k = 0; k <= 20; k++) { const t = k / 20, [bx, by] = body(t), w = wid(t); L.push([bx, by - w]); Rr.push([bx, by + w]); }
+      const outline = () => { x.beginPath(); L.forEach(([a, b], i) => (i ? x.lineTo(a, b) : x.moveTo(a, b))); for (let i = Rr.length - 1; i >= 0; i--) x.lineTo(Rr[i][0], Rr[i][1]); x.closePath(); };
+      const [tx, ty] = body(0.88);
+      x.fillStyle = base; x.beginPath(); x.moveTo(tx - s * 0.06, ty - s * 0.03); x.lineTo(tx + s * 0.26, ty - s * 0.16); x.lineTo(tx + s * 0.16, ty); x.lineTo(tx + s * 0.26, ty + s * 0.16); x.lineTo(tx - s * 0.06, ty + s * 0.03); x.closePath(); x.fill();
+      for (const d of [-1, 1]) { const [fx2, fy2] = body(0.28); x.beginPath(); x.ellipse(fx2, fy2 + d * s * 0.15, s * 0.09, s * 0.04, d * 0.6, 0, Math.PI * 2); x.fill(); }
+      x.fillStyle = base; outline(); x.fill();
+      x.save(); outline(); x.clip();
+      if (patch) { x.fillStyle = patch; for (const [t, r] of [[0.12, 0.13], [0.42, 0.11], [0.68, 0.08]]) { const [bx, by] = body(t); x.beginPath(); x.ellipse(bx, by, r * s, s * 0.11, 0, 0, Math.PI * 2); x.fill(); } }
+      if (patch2) { x.fillStyle = patch2; const [bx, by] = body(0.55); x.beginPath(); x.ellipse(bx, by - s * 0.05, s * 0.05, s * 0.04, 0, 0, Math.PI * 2); x.fill(); }
+      x.restore();
+      x.restore();
+    };
+    koi(cols * 0.3, rows * 0.45, 34, 0.25, 0.12, C.white, C.red, null);
+    koi(cols * 0.78, rows * 0.38, 30, Math.PI - 0.3, -0.14, C.gold, null, null);
+    koi(cols * 0.66, rows * 0.78, 28, -2.75, 0.16, C.white, C.red, C.black);
+    koi(cols * 0.45, rows * 0.26, 22, 0.1, -0.1, C.red, C.white, null);
+  });
+}
+
+// A gold-leaf folding screen: six panels of gold with drifting gold clouds, irises in indigo and violet rising
+// from a stream that winds across the panels.
+function japByobu(ctx, W, H) {
+  const C = { gold: '#d9ad55', gold2: '#c99a44', gold3: '#e6c070', hinge: '#4a3018', stream: '#2a4a7a', stream2: '#3f6a9a', iris: '#3a2f8a', iris2: '#6a5ab8', white: '#f2ece0', leaf: '#3f7a4a', leaf2: '#2f5f3a', frame: '#2a1a14' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.frame; x.fillRect(0, 0, cols, rows);
+    const fx = 4, fy = 4, fw = cols - 8, fh = rows - 8;
+    x.fillStyle = C.gold; x.fillRect(fx, fy, fw, fh);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // gold-leaf squares and clouds
+    for (let j = 0; j < fh; j += 8) for (let i = 0; i < fw; i += 8) if ((i / 8 + j / 8) % 3 === 0) { x.fillStyle = C.gold2; x.fillRect(fx + i, fy + j, Math.min(8, fw - i), Math.min(8, fh - j)); }
+    for (const [px, py, w] of [[0.15, 0.12, 30], [0.6, 0.08, 40], [0.85, 0.2, 26], [0.35, 0.22, 22]]) { x.fillStyle = C.gold3; for (let k = 0; k < 4; k++) { x.beginPath(); x.ellipse(fx + fw * px + k * w * 0.22, fy + fh * py + (k % 2) * 2, w * 0.18, 3.4, 0, 0, Math.PI * 2); x.fill(); } x.fillRect(fx + fw * px - w * 0.15, fy + fh * py, w * 0.95, 3); }
+    // the stream
+    x.fillStyle = C.stream; x.beginPath(); x.moveTo(fx, fy + fh * 0.9);
+    for (let k = 0; k <= 30; k++) { const t = k / 30; x.lineTo(fx + fw * t, fy + fh * (0.72 + 0.12 * Math.sin(t * 5.5 + 0.5))); }
+    x.lineTo(fx + fw, fy + fh); x.lineTo(fx, fy + fh); x.closePath(); x.fill();
+    x.strokeStyle = C.stream2; x.lineWidth = 1; for (let k = 0; k < 3; k++) { x.beginPath(); for (let t = 0; t <= 1; t += 0.02) { const px = fx + fw * t, py = fy + fh * (0.8 + k * 0.05 + 0.1 * Math.sin(t * 5.5 + 0.5)); t ? x.lineTo(px, py) : x.moveTo(px, py); } x.stroke(); }
+    // clumps of irises
+    const iris = (cx, base, hgt) => {
+      for (const [dx, lean] of [[-4, -0.25], [-1, -0.08], [2, 0.1], [5, 0.3]]) { x.fillStyle = dx % 2 ? C.leaf : C.leaf2; x.beginPath(); x.moveTo(cx + dx - 1, base); x.quadraticCurveTo(cx + dx + lean * hgt * 0.4, base - hgt * 0.5, cx + dx + lean * hgt * 0.7, base - hgt * 0.95); x.lineTo(cx + dx + 1, base); x.closePath(); x.fill(); }
+      for (const [dx, dy] of [[-3, 0.78], [3, 0.92], [0, 1.02]]) {
+        const fxp = cx + dx, fyp = base - hgt * dy;
+        x.strokeStyle = C.leaf2; x.lineWidth = 0.9; x.beginPath(); x.moveTo(fxp, fyp); x.lineTo(cx + dx * 0.3, base); x.stroke();
+        x.fillStyle = C.iris; x.beginPath(); x.ellipse(fxp - 2.4, fyp + 1.6, 2.6, 1.6, -0.5, 0, Math.PI * 2); x.fill(); x.beginPath(); x.ellipse(fxp + 2.4, fyp + 1.6, 2.6, 1.6, 0.5, 0, Math.PI * 2); x.fill();
+        x.fillStyle = C.iris2; x.beginPath(); x.ellipse(fxp, fyp - 1.6, 1.5, 2.6, 0, 0, Math.PI * 2); x.fill();
+        x.fillStyle = C.white; x.fillRect(fxp - 0.5, fyp + 0.4, 1, 1);
+      }
+    };
+    for (const [p, b, h] of [[0.08, 0.8, 34], [0.2, 0.86, 40], [0.33, 0.74, 30], [0.47, 0.82, 44], [0.62, 0.72, 32], [0.76, 0.8, 42], [0.9, 0.74, 34]]) iris(fx + fw * p, fy + fh * b, h);
+    x.restore();
+    // the hinges between the six panels
+    for (let k = 1; k < 6; k++) { const hx = Math.round(fx + (k * fw) / 6); x.fillStyle = C.hinge; x.fillRect(hx, fy, 1, fh); x.fillStyle = C.gold3; x.fillRect(hx + 1, fy, 1, fh); }
+  });
+}
+
+// Mount Fuji in spring: the snow-capped cone above a five-storey pagoda on the hillside, cherry blossom in front.
+function japFuji(ctx, W, H) {
+  const u = H / 100;
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.6); sky.addColorStop(0, '#6aa2d6'); sky.addColorStop(1, '#d6e8f2');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  // Fuji
+  const fx = W * 0.6, top = H * 0.14, base = H * 0.62;
+  ctx.fillStyle = '#5a6f9a'; ctx.beginPath(); ctx.moveTo(fx - W * 0.42, base); ctx.quadraticCurveTo(fx - W * 0.16, base - (base - top) * 0.55, fx - W * 0.05, top); ctx.lineTo(fx + W * 0.05, top); ctx.quadraticCurveTo(fx + W * 0.16, base - (base - top) * 0.55, fx + W * 0.42, base); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#f6f8fa'; ctx.beginPath(); ctx.moveTo(fx - W * 0.05, top); ctx.lineTo(fx + W * 0.05, top); ctx.quadraticCurveTo(fx + W * 0.1, top + 8 * u, fx + W * 0.13, top + 15 * u);
+  for (let k = 0; k <= 8; k++) { const t = k / 8; ctx.lineTo(fx + W * (0.13 - 0.26 * t), top + (15 + (k % 2 ? 5 : 0) - Math.sin(t * Math.PI) * 2) * u); }
+  ctx.quadraticCurveTo(fx - W * 0.1, top + 8 * u, fx - W * 0.05, top); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#e4eaf2'; ctx.beginPath(); ctx.moveTo(fx + W * 0.01, top); ctx.lineTo(fx + W * 0.05, top); ctx.quadraticCurveTo(fx + W * 0.1, top + 8 * u, fx + W * 0.13, top + 15 * u); ctx.lineTo(fx + W * 0.06, top + 17 * u); ctx.closePath(); ctx.fill();
+  // hills and the pagoda
+  ctx.fillStyle = '#3f6a4a'; ctx.beginPath(); ctx.moveTo(0, H * 0.7); ctx.quadraticCurveTo(W * 0.25, H * 0.5, W * 0.5, H * 0.66); ctx.quadraticCurveTo(W * 0.75, H * 0.6, W, H * 0.7); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill();
+  const px = W * 0.3, pb = H * 0.66;
+  for (let k = 0; k < 5; k++) {
+    const y = pb - k * 7 * u, w = (16 - k * 2) * u;
+    ctx.fillStyle = '#c8322a'; ctx.fillRect(px - w * 0.32, y - 5 * u, w * 0.64, 5 * u);
+    ctx.fillStyle = '#2b2a30'; ctx.beginPath(); ctx.moveTo(px - w * 0.62, y - 4.6 * u); ctx.quadraticCurveTo(px - w * 0.3, y - 5.6 * u, px, y - 7.2 * u); ctx.quadraticCurveTo(px + w * 0.3, y - 5.6 * u, px + w * 0.62, y - 4.6 * u); ctx.lineTo(px + w * 0.5, y - 3.6 * u); ctx.lineTo(px - w * 0.5, y - 3.6 * u); ctx.closePath(); ctx.fill();
+  }
+  ctx.fillStyle = '#2b2a30'; ctx.fillRect(px - 0.5 * u, pb - 46 * u, 1 * u, 12 * u);
+  // cherry blossom: branches across the bottom and top-left, blossom clouds
+  ctx.strokeStyle = '#4a2c2a'; ctx.lineCap = 'round';
+  for (const [a, b, c, d, w] of [[0, 0.95, 0.3, 0.82, 3], [0.18, 0.86, 0.36, 0.95, 1.8], [0, 0.1, 0.22, 0.2, 2.6], [0.12, 0.15, 0.2, 0.06, 1.6], [1, 0.9, 0.74, 0.86, 2.8]]) { ctx.lineWidth = w * u; ctx.beginPath(); ctx.moveTo(W * a, H * b); ctx.lineTo(W * c, H * d); ctx.stroke(); }
+  const blossom = (cx, cy, r) => { for (let k = 0; k < 9; k++) { const a = k * 2.4, rr = r * (0.3 + ((k * 37) % 10) / 14); ctx.fillStyle = k % 3 ? '#f4b6c6' : '#fbd8e2'; ctx.beginPath(); ctx.arc(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr * 0.7, r * 0.42, 0, Math.PI * 2); ctx.fill(); } };
+  for (const [a, b, r] of [[0.06, 0.9, 7], [0.18, 0.84, 8], [0.3, 0.82, 6], [0.36, 0.94, 6], [0.06, 0.12, 8], [0.18, 0.18, 7], [0.2, 0.06, 6], [0.8, 0.86, 7], [0.92, 0.9, 8]]) blossom(W * a, H * b, r * u);
+  ctx.fillStyle = '#fbd8e2'; for (let k = 0; k < 14; k++) ctx.fillRect(((k * 53) % 100) / 100 * W, ((k * 29) % 60 + 20) / 100 * H, 1.4 * u, 1 * u);
+}
+
+// A Kyoto lane at dusk: wooden machiya fronts with lattice, red paper lanterns lit along the eaves, stone paving.
+function japKyoto(ctx, W, H) {
+  const u = H / 100, vx = W * 0.5, vy = H * 0.42;
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.5); sky.addColorStop(0, '#2a3070'); sky.addColorStop(1, '#e88a6a');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  // a pagoda far away at the end of the lane
+  ctx.fillStyle = '#2a2240'; for (let k = 0; k < 5; k++) { const y = vy - k * 4.2 * u, w = (12 - k * 1.6) * u; ctx.beginPath(); ctx.moveTo(vx - w / 2, y); ctx.lineTo(vx, y - 2.4 * u); ctx.lineTo(vx + w / 2, y); ctx.fill(); ctx.fillRect(vx - w * 0.22, y, w * 0.44, 1.8 * u); } ctx.fillRect(vx - 0.4 * u, vy - 27 * u, 0.8 * u, 7 * u);
+  // the paving, converging to the end of the lane
+  ctx.fillStyle = '#5a5258'; ctx.beginPath(); ctx.moveTo(vx - 4 * u, vy); ctx.lineTo(vx + 4 * u, vy); ctx.lineTo(W * 0.85, H); ctx.lineTo(W * 0.15, H); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = '#7a7076'; ctx.lineWidth = 0.7 * u; for (let k = 1; k < 10; k++) { const t = Math.pow(k / 10, 1.8), y = vy + (H - vy) * t, hw = 4 * u + (W * 0.35 - 4 * u) * t; ctx.beginPath(); ctx.moveTo(vx - hw, y); ctx.lineTo(vx + hw, y); ctx.stroke(); }
+  // the houses on either side, in perspective
+  for (const s of [-1, 1]) {
+    const near = vx + s * W * 0.35, far = vx + s * 4 * u, edge = s < 0 ? 0 : W;
+    ctx.fillStyle = '#3a2620'; ctx.beginPath(); ctx.moveTo(far, vy - 6 * u); ctx.lineTo(near, H * 0.08); ctx.lineTo(edge, H * 0.04); ctx.lineTo(edge, H); ctx.lineTo(near, H); ctx.lineTo(far, vy + 0.5 * u); ctx.closePath(); ctx.fill();
+    // lattice
+    ctx.strokeStyle = '#6a4632'; ctx.lineWidth = 0.6 * u;
+    for (let k = 0; k <= 22; k++) { const t = k / 22, xx = far + (near - far) * Math.pow(t, 1.5), y0 = vy - 6 * u + (H * 0.32 - vy + 6 * u) * Math.pow(t, 1.5), y1 = vy + (H - vy) * Math.pow(t, 1.5); ctx.beginPath(); ctx.moveTo(xx, y0); ctx.lineTo(xx, y1); ctx.stroke(); }
+    // lit doorways
+    for (const t of [0.35, 0.62, 0.9]) { const tt = Math.pow(t, 1.5), xx = far + (near - far) * tt, w = (2 + 10 * tt) * u, y1 = vy + (H - vy) * tt, hgt = (4 + 30 * tt) * u; ctx.fillStyle = '#f2c27a'; ctx.fillRect(xx - (s < 0 ? w : 0), y1 - hgt, w, hgt); ctx.fillStyle = '#6a4632'; for (let g = 1; g < 4; g++) ctx.fillRect(xx - (s < 0 ? w : 0) + (g * w) / 4, y1 - hgt, 0.5 * u, hgt); }
+    // eaves
+    ctx.fillStyle = '#1e1a22'; ctx.beginPath(); ctx.moveTo(far, vy - 7 * u); ctx.lineTo(near + s * 2 * u, H * 0.26); ctx.lineTo(near + s * 2 * u, H * 0.31); ctx.lineTo(far, vy - 5 * u); ctx.closePath(); ctx.fill();
+    // red lanterns under the eaves
+    for (const t of [0.2, 0.4, 0.6, 0.8, 1]) { const tt = Math.pow(t, 1.5), xx = far + (near - far) * tt - s * 2 * u, yy = vy - 4 * u + (H * 0.34 - vy + 4 * u) * tt, r = (1 + 4.6 * tt) * u;
+      ctx.fillStyle = 'rgba(255,170,90,.12)'; ctx.beginPath(); ctx.arc(xx, yy + r, r * 1.6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#d8342a'; ctx.beginPath(); ctx.ellipse(xx, yy + r, r * 0.8, r * 1.1, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ff7a4a'; ctx.beginPath(); ctx.ellipse(xx - r * 0.2, yy + r * 0.9, r * 0.3, r * 0.6, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#1e1a22'; ctx.fillRect(xx - r * 0.5, yy - r * 0.2, r, r * 0.3); ctx.fillRect(xx - r * 0.5, yy + r * 1.95, r, r * 0.3); }
+  }
+}
+
+// Letter scenes for the Japanese postcard.
+const JAPAN_SCENES = [
+  (c, w, h) => { // Fuji
+    c.fillStyle = '#8cc0e6'; c.fillRect(0, 0, w, h); c.fillStyle = '#5a6f9a'; c.beginPath(); c.moveTo(-w * 0.2, h * 0.85); c.lineTo(w * 0.4, h * 0.2); c.lineTo(w * 0.6, h * 0.2); c.lineTo(w * 1.2, h * 0.85); c.fill();
+    c.fillStyle = '#f6f8fa'; c.beginPath(); c.moveTo(w * 0.27, h * 0.36); c.lineTo(w * 0.4, h * 0.2); c.lineTo(w * 0.6, h * 0.2); c.lineTo(w * 0.73, h * 0.36); c.fill(); c.fillStyle = '#3f6a4a'; c.fillRect(0, h * 0.84, w, h);
+  },
+  (c, w, h) => { c.fillStyle = '#f6c6d2'; c.fillRect(0, 0, w, h); for (let k = 0; k < 7; k++) { c.fillStyle = k % 2 ? '#e88aa2' : '#fbe4ea'; c.beginPath(); c.arc(w * (0.2 + (k % 3) * 0.3), h * (0.12 + k * 0.13), w * 0.15, 0, Math.PI * 2); c.fill(); } }, // sakura
+  (c, w, h) => { c.fillStyle = '#1d2c55'; c.fillRect(0, 0, w, h); c.strokeStyle = '#eef0ec'; c.lineWidth = w * 0.06; for (let j = 0; j < 5; j++) for (let i = 0; i < 2; i++) { c.beginPath(); c.arc(w * (i + (j % 2 ? 0.5 : 0)), h * j * 0.22 + w * 0.3, w * 0.28, Math.PI, 0); c.stroke(); } }, // waves
+  (c, w, h) => { c.fillStyle = '#f4f0e6'; c.fillRect(0, 0, w, h); c.fillStyle = '#c8322a'; c.beginPath(); c.arc(w * 0.5, h * 0.42, w * 0.32, 0, Math.PI * 2); c.fill(); }, // the red sun
+  (c, w, h) => { c.fillStyle = '#e88a6a'; c.fillRect(0, 0, w, h); c.fillStyle = '#c8322a'; c.fillRect(w * 0.1, h * 0.25, w * 0.8, h * 0.08); c.fillRect(w * 0.2, h * 0.38, w * 0.6, h * 0.06); c.fillRect(w * 0.24, h * 0.25, w * 0.1, h * 0.75); c.fillRect(w * 0.66, h * 0.25, w * 0.1, h * 0.75); }, // torii
+];
+function japPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'JAPAN', JAPAN_SCENES); }
+
+
+// A lotus flower seen from the side: a fan of pointed petals on a cup.
+function lotusBloom(x, cx, cy, s, c1, c2) {
+  for (const [a, k] of [[-1.1, 0.8], [1.1, 0.8], [-0.55, 0.95], [0.55, 0.95], [0, 1]]) {
+    x.save(); x.translate(cx, cy); x.rotate(a * 0.6); x.fillStyle = Math.abs(a) > 1 ? c2 : c1;
+    x.beginPath(); x.moveTo(0, 0); x.quadraticCurveTo(-s * 0.26 * k, -s * 0.4 * k, 0, -s * 0.9 * k); x.quadraticCurveTo(s * 0.26 * k, -s * 0.4 * k, 0, 0); x.fill(); x.restore();
+  }
+}
+
+// Blue-and-white porcelain: cobalt lotus scrolls all over a white glaze, a big lotus roundel in the middle, a band
+// of lotus-petal panels round the edge.
+function chnPorcelain(ctx, W, H) {
+  const C = { white: '#f2f2ee', white2: '#e8eaea', cobalt: '#1f3c8a', blue: '#4a6ab8', pale: '#9ab0dc', dark: '#16295e' };
+  weavePicture(ctx, W, H, 130, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = turkFrame(x, cols, rows, { guard: C.dark, guard2: C.white, band: C.white, field: C.white }, 16, 12, (x, w, d) => {
+      // a lotus-petal panel: a pointed arch outlined in cobalt with a blue heart
+      x.strokeStyle = C.cobalt; x.lineWidth = 1.2; x.beginPath(); x.moveTo(w * 0.1, d * 0.9); x.lineTo(w * 0.1, d * 0.5); x.quadraticCurveTo(w * 0.1, d * 0.12, w / 2, d * 0.08); x.quadraticCurveTo(w * 0.9, d * 0.12, w * 0.9, d * 0.5); x.lineTo(w * 0.9, d * 0.9); x.stroke();
+      x.fillStyle = C.blue; x.beginPath(); x.ellipse(w / 2, d * 0.55, w * 0.18, d * 0.22, 0, 0, Math.PI * 2); x.fill();
+    }, (x, d) => { x.fillStyle = C.cobalt; x.beginPath(); x.arc(d / 2, d / 2, d * 0.32, 0, Math.PI * 2); x.fill(); x.fillStyle = C.white; x.beginPath(); x.arc(d / 2, d / 2, d * 0.14, 0, Math.PI * 2); x.fill(); });
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // scrolls: S-curving stems with a lotus and leaves on each curl
+    const cx = fx + fw / 2, cy = fy + fh / 2, rr = fh * 0.4;
+    for (let j = 0; j < 3; j++) for (let i = 0; i < 7; i++) {
+      const px = fx + (i + 0.5 + (j % 2 ? 0.5 : 0)) * fw / 7, py = fy + (j + 0.5) * fh / 3;
+      if (Math.hypot(px - cx, (py - cy) * 1.2) < rr + 8) continue;
+      const d = (i + j) % 2 ? 1 : -1;
+      x.strokeStyle = C.cobalt; x.lineWidth = 1.2; x.beginPath(); x.moveTo(px - 12, py + d * 6); x.bezierCurveTo(px - 4, py + d * 12, px - 2, py - d * 10, px + 8, py - d * 6); x.bezierCurveTo(px + 13, py - d * 4, px + 12, py + d * 2, px + 8, py + d * 2); x.stroke();
+      lotusBloom(x, px - 2, py + 3, 9, C.cobalt, C.blue);
+      leaf(x, px + 8, py - d * 6, 7, d > 0 ? -0.6 : 0.6, C.blue); leaf(x, px - 12, py + d * 6, 6, Math.PI + 0.4 * d, C.pale);
+    }
+    // the roundel
+    x.fillStyle = C.cobalt; x.beginPath(); x.arc(cx, cy, rr + 2, 0, Math.PI * 2); x.fill();
+    x.fillStyle = C.white; x.beginPath(); x.arc(cx, cy, rr, 0, Math.PI * 2); x.fill();
+    x.strokeStyle = C.blue; x.lineWidth = 1; x.beginPath(); x.arc(cx, cy, rr - 3, 0, Math.PI * 2); x.stroke();
+    // a pond: water lines, leaves and three lotus flowers
+    x.strokeStyle = C.pale; x.lineWidth = 1; for (let k = 0; k < 4; k++) { x.beginPath(); for (let t = -1; t <= 1; t += 0.05) { const px = cx + t * rr * 0.8, py = cy + rr * (0.35 + k * 0.12) + Math.sin(t * 9 + k) * 1.2; t > -1 ? x.lineTo(px, py) : x.moveTo(px, py); } x.stroke(); }
+    for (const [dx, dy, s] of [[-0.42, 0.25, 0.3], [0.45, 0.2, 0.28], [0.05, 0.42, 0.24]]) { x.fillStyle = C.blue; x.beginPath(); x.ellipse(cx + dx * rr, cy + dy * rr, rr * s, rr * s * 0.42, dx * 0.6, 0, Math.PI * 2); x.fill(); x.strokeStyle = C.cobalt; x.lineWidth = 0.8; x.beginPath(); x.moveTo(cx + dx * rr, cy + dy * rr); x.lineTo(cx + dx * rr + rr * s * 0.8, cy + dy * rr); x.stroke(); }
+    for (const [dx, dy, s] of [[0, -0.05, 0.62], [-0.45, -0.1, 0.44], [0.46, -0.08, 0.42]]) { x.strokeStyle = C.cobalt; x.lineWidth = 1.1; x.beginPath(); x.moveTo(cx + dx * rr, cy + dy * rr); x.lineTo(cx + dx * rr * 0.9, cy + rr * 0.3); x.stroke(); lotusBloom(x, cx + dx * rr, cy + dy * rr, rr * s * 0.6, C.cobalt, C.blue); }
+    x.restore();
+  });
+}
+
+// Auspicious clouds: gold scrolling clouds (each a cluster of curls with a trailing tail) on Chinese red, a
+// gold fret border.
+function chnClouds(ctx, W, H) {
+  const C = { red: '#b81f24', red2: '#a51c21', gold: '#e8b448', gold2: '#c98f2a', cream: '#f4e2b0', dark: '#5a0e12' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.dark; x.fillRect(0, 0, cols, rows);
+    // key-fret border, laid out knot by knot
+    const b0 = 3, bd = 8;
+    x.fillStyle = C.red; x.fillRect(b0, b0, cols - 2 * b0, rows - 2 * b0);
+    const fret = (len, put) => { for (let i = 0; i < len; i++) { const u2 = i % 8; for (let j = 0; j < bd; j++) { let on = j === 0 || j === bd - 1; if (j >= 1 && j <= bd - 2) { if (u2 === 0 && j <= 5) on = true; if (j === 5 && u2 <= 4) on = true; if (u2 === 4 && j >= 3 && j <= 5) on = true; if (j === 3 && u2 >= 2 && u2 <= 4) on = true; if (u2 === 2 && j === 3) on = true; if (u2 === 6 && j >= 2 && j <= 6) on = true; if (j === 2 && u2 >= 6) on = true; } if (on) put(i, j); } } };
+    x.fillStyle = C.gold;
+    fret(cols - 2 * b0, (i, j) => { x.fillRect(b0 + i, b0 + j, 1, 1); x.fillRect(cols - 1 - b0 - i, rows - 1 - b0 - j, 1, 1); });
+    fret(rows - 2 * b0 - 2 * bd, (i, j) => { x.fillRect(b0 + j, rows - 1 - b0 - bd - i, 1, 1); x.fillRect(cols - 1 - b0 - j, b0 + bd + i, 1, 1); });
+    const fx = b0 + bd + 1, fy = fx, fw = cols - 2 * fx, fh = rows - 2 * fy;
+    for (let y = fy; y < fy + fh; y++) { x.fillStyle = Math.floor((y - fy) / 7) % 4 === 2 ? C.red2 : C.red; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // a cloud: a gold outline round three lobes, a spiral in each lobe, a scrolling tail
+    const cloud = (cx, cy, s, flip) => {
+      x.save(); x.translate(cx, cy); x.scale(flip, 1);
+      const lobes = [[-0.62, 0.05, 0.42], [0, -0.22, 0.55], [0.62, 0.05, 0.42]];
+      x.fillStyle = C.gold; for (const [a, b, r] of lobes) { x.beginPath(); x.arc(a * s, b * s, r * s + 2, 0, Math.PI * 2); x.fill(); }
+      roundRect(x, -s * 1.04, 0, s * 2.08, s * 0.48 + 2, s * 0.24); x.fill();
+      x.fillStyle = C.red; for (const [a, b, r] of lobes) { x.beginPath(); x.arc(a * s, b * s, r * s, 0, Math.PI * 2); x.fill(); }
+      roundRect(x, -s * 1.04 + 2, 2, s * 2.08 - 4, s * 0.48 - 2, s * 0.2); x.fill();
+      x.strokeStyle = C.gold; x.lineWidth = 1.6; x.lineCap = 'round';
+      for (const [a, b, r] of lobes) { x.beginPath(); for (let t = 0; t <= 1.7; t += 0.04) { const ang = -Math.PI / 2 + t * Math.PI * 2, rr = r * s * 0.78 * (1 - t / 2.1); const qx = a * s + Math.cos(ang) * rr, qy = b * s + Math.sin(ang) * rr; t ? x.lineTo(qx, qy) : x.moveTo(qx, qy); } x.stroke(); }
+      x.lineWidth = 2.6; x.beginPath(); x.moveTo(s * 1.0, s * 0.36); x.bezierCurveTo(s * 1.5, s * 0.4, s * 1.7, s * 0.05, s * 1.9, s * 0.25); x.stroke();
+      x.beginPath(); x.arc(s * 1.86, s * 0.12, s * 0.12, 0, Math.PI * 1.6); x.stroke();
+      x.restore();
+    };
+    for (const [px, py, s, f] of [[0.17, 0.27, 13, 1], [0.52, 0.2, 15, -1], [0.85, 0.3, 12, 1], [0.32, 0.62, 14, -1], [0.68, 0.7, 15, 1], [0.1, 0.84, 10, 1], [0.92, 0.82, 10, -1]]) cloud(fx + fw * px, fy + fh * py, s, f);
+    x.fillStyle = C.gold; for (const [px, py] of [[0.38, 0.4], [0.62, 0.45], [0.5, 0.88], [0.08, 0.5], [0.94, 0.55], [0.28, 0.08], [0.72, 0.1]]) { x.save(); x.translate(fx + fw * px, fy + fh * py); x.rotate(Math.PI / 4); x.fillRect(-1.6, -1.6, 3.2, 3.2); x.restore(); }
+    x.restore();
+  });
+}
+
+// Art Deco rug of 1920s Shanghai and Tianjin: a plum-purple field left mostly empty, a flowering branch of plum
+// blossom reaching in from one corner, a blue-and-white vase in the other, a plain border in two blues.
+function chnArtDeco(ctx, W, H) {
+  const C = { plum: '#4a2342', plum2: '#432040', border: '#2a4a7a', border2: '#7aa0c8', branch: '#2a1820', pink: '#f0a8b8', pink2: '#d86a8a', white: '#f2ece0', gold: '#e2b45a', teal: '#3f8a8a', blue: '#2a4a8a', green: '#4f7a52' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.border; x.fillRect(0, 0, cols, rows);
+    x.fillStyle = C.border2; x.fillRect(4, 4, cols - 8, rows - 8); x.fillStyle = C.border; x.fillRect(5, 5, cols - 10, rows - 10);
+    // a band of little gold "cash" coins round the border
+    x.fillStyle = C.gold; const ring = (cx, cy) => { x.beginPath(); x.arc(cx, cy, 2, 0, Math.PI * 2); x.fill(); x.fillStyle = C.border; x.fillRect(cx - 0.6, cy - 0.6, 1.2, 1.2); x.fillStyle = C.gold; };
+    for (const [len, put] of [[cols - 20, (a) => { ring(10 + a, 9.5); ring(10 + a, rows - 9.5); }], [rows - 20, (a) => { ring(9.5, 10 + a); ring(cols - 9.5, 10 + a); }]]) { const { n, d } = evenSteps(len, 9); for (let i = 0; i <= n; i++) put(i * d); }
+    const fx = 14, fy = 14, fw = cols - 28, fh = rows - 28;
+    x.fillStyle = C.border2; x.fillRect(fx - 1, fy - 1, fw + 2, fh + 2);
+    for (let y = fy; y < fy + fh; y++) { x.fillStyle = Math.floor((y - fy) / 10) % 3 === 1 ? C.plum2 : C.plum; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // the plum branch from the top left corner
+    x.strokeStyle = C.branch; x.lineCap = 'round';
+    const br = [[0, 0, 0.22, 0.35, 4], [0.22, 0.35, 0.42, 0.42, 3], [0.42, 0.42, 0.56, 0.36, 2], [0.22, 0.35, 0.3, 0.62, 2.4], [0.3, 0.62, 0.26, 0.8, 1.6], [0.12, 0.18, 0.28, 0.12, 2], [0.42, 0.42, 0.48, 0.56, 1.6]];
+    for (const [a, b, c, d, w] of br) { x.lineWidth = w; x.beginPath(); x.moveTo(fx + fw * a, fy + fh * b); x.lineTo(fx + fw * c, fy + fh * d); x.stroke(); }
+    const bloom = (px, py, r) => { for (let p = 0; p < 5; p++) { const a = (p * Math.PI * 2) / 5 - Math.PI / 2; x.fillStyle = C.pink; x.beginPath(); x.arc(px + Math.cos(a) * r * 0.55, py + Math.sin(a) * r * 0.55, r * 0.48, 0, Math.PI * 2); x.fill(); } x.fillStyle = C.pink2; x.beginPath(); x.arc(px, py, r * 0.3, 0, Math.PI * 2); x.fill(); x.fillStyle = C.gold; x.fillRect(px - 0.5, py - 0.5, 1, 1); };
+    for (const [a, b, r] of [[0.2, 0.3, 4.4], [0.3, 0.38, 3.6], [0.4, 0.45, 4], [0.55, 0.33, 3.4], [0.5, 0.42, 2.6], [0.29, 0.58, 3.8], [0.25, 0.76, 3], [0.33, 0.68, 2.4], [0.27, 0.12, 3.4], [0.15, 0.14, 2.6], [0.46, 0.54, 3], [0.08, 0.1, 3]]) bloom(fx + fw * a, fy + fh * b, r);
+    for (const [a, b] of [[0.36, 0.36], [0.47, 0.4], [0.24, 0.5], [0.58, 0.38]]) { x.fillStyle = C.pink2; x.beginPath(); x.arc(fx + fw * a, fy + fh * b, 1.4, 0, Math.PI * 2); x.fill(); }
+    // the vase, bottom right
+    const vx = fx + fw * 0.8, vb = fy + fh * 0.92, vh = fh * 0.46;
+    x.fillStyle = C.white; x.beginPath(); x.moveTo(vx - vh * 0.12, vb); x.bezierCurveTo(vx - vh * 0.36, vb - vh * 0.3, vx - vh * 0.3, vb - vh * 0.62, vx - vh * 0.08, vb - vh * 0.72); x.lineTo(vx - vh * 0.08, vb - vh * 0.9); x.lineTo(vx - vh * 0.12, vb - vh); x.lineTo(vx + vh * 0.12, vb - vh); x.lineTo(vx + vh * 0.08, vb - vh * 0.9); x.lineTo(vx + vh * 0.08, vb - vh * 0.72); x.bezierCurveTo(vx + vh * 0.3, vb - vh * 0.62, vx + vh * 0.36, vb - vh * 0.3, vx + vh * 0.12, vb); x.closePath(); x.fill();
+    x.strokeStyle = C.blue; x.lineWidth = 1.2; x.beginPath(); x.moveTo(vx - vh * 0.25, vb - vh * 0.5); x.lineTo(vx + vh * 0.25, vb - vh * 0.5); x.stroke();
+    lotusBloom(x, vx, vb - vh * 0.22, vh * 0.2, C.blue, C.teal);
+    x.fillStyle = C.blue; x.fillRect(vx - vh * 0.13, vb - vh * 0.99, vh * 0.26, 1.2);
+    // a stand
+    x.fillStyle = C.branch; x.fillRect(vx - vh * 0.2, vb, vh * 0.4, 2); x.fillRect(vx - vh * 0.18, vb + 2, 1.4, 2); x.fillRect(vx + vh * 0.18 - 1.4, vb + 2, 1.4, 2);
+    x.restore();
+  });
+}
+
+// Ningxia peony rug: an apricot field, a round blue peony medallion in the middle, a peony spray in each corner,
+// a wide fret border in blue.
+function chnNingxia(ctx, W, H) {
+  const C = { apricot: '#e2b06a', apricot2: '#d8a45e', blue: '#2a4a7a', blue2: '#5a7aa8', pale: '#a8bcd6', ivory: '#f2e6c8', rose: '#c8506a', rose2: '#e88a9a', green: '#5a7a4a', dark: '#1a2a4a' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.dark; x.fillRect(0, 0, cols, rows);
+    const b0 = 3, bd = 10;
+    x.fillStyle = C.blue; x.fillRect(b0, b0, cols - 2 * b0, rows - 2 * b0);
+    // a T-fret running round the border
+    x.fillStyle = C.pale;
+    const tfret = (len, put) => { for (let i = 0; i < len; i++) { const u2 = i % 10; for (let j = 1; j < bd - 1; j++) { let on = false; if (j === 2 || j === bd - 3) on = u2 !== 9 && u2 !== 0 ? (j === 2 ? u2 >= 1 && u2 <= 4 : u2 >= 5 && u2 <= 8) : false; if (u2 === 1 && j >= 2 && j <= bd - 5) on = true; if (u2 === 8 && j >= 4 && j <= bd - 3) on = true; if (j === bd - 5 && u2 >= 1 && u2 <= 3) on = true; if (j === 4 && u2 >= 6 && u2 <= 8) on = true; if (on) put(i, j); } } };
+    tfret(cols - 2 * b0, (i, j) => { x.fillRect(b0 + i, b0 + j, 1, 1); x.fillRect(cols - 1 - b0 - i, rows - 1 - b0 - j, 1, 1); });
+    tfret(rows - 2 * b0 - 2 * bd, (i, j) => { x.fillRect(b0 + j, rows - 1 - b0 - bd - i, 1, 1); x.fillRect(cols - 1 - b0 - j, b0 + bd + i, 1, 1); });
+    const fx = b0 + bd + 1, fy = fx, fw = cols - 2 * fx, fh = rows - 2 * fy;
+    x.fillStyle = C.ivory; x.fillRect(fx - 1, fy - 1, fw + 2, fh + 2);
+    for (let y = fy; y < fy + fh; y++) { x.fillStyle = Math.floor((y - fy) / 8) % 3 === 1 ? C.apricot2 : C.apricot; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const peony = (px, py, r, c1, c2, c3) => {
+      for (let ring = 0; ring < 3; ring++) { const rr = r * (1 - ring * 0.28), n = 8 - ring * 2; for (let p = 0; p < n; p++) { const a = (p * Math.PI * 2) / n + ring * 0.4; x.fillStyle = [c1, c2, c3][ring]; x.beginPath(); x.ellipse(px + Math.cos(a) * rr * 0.5, py + Math.sin(a) * rr * 0.5, rr * 0.42, rr * 0.3, a, 0, Math.PI * 2); x.fill(); } }
+      x.fillStyle = C.ivory; x.beginPath(); x.arc(px, py, r * 0.14, 0, Math.PI * 2); x.fill();
+    };
+    // the medallion
+    const cx = fx + fw / 2, cy = fy + fh / 2, rr = fh * 0.36;
+    x.fillStyle = C.blue; x.beginPath(); x.arc(cx, cy, rr, 0, Math.PI * 2); x.fill();
+    x.strokeStyle = C.pale; x.lineWidth = 1; x.beginPath(); x.arc(cx, cy, rr - 2, 0, Math.PI * 2); x.stroke();
+    for (let k = 0; k < 6; k++) { const a = (k * Math.PI) / 3; leaf(x, cx + Math.cos(a) * rr * 0.32, cy + Math.sin(a) * rr * 0.32, rr * 0.5, a, k % 2 ? C.green : C.blue2); }
+    peony(cx, cy, rr * 0.5, C.rose, C.rose2, C.ivory);
+    for (let k = 0; k < 6; k++) { const a = (k * Math.PI) / 3 + Math.PI / 6; peony(cx + Math.cos(a) * rr * 0.72, cy + Math.sin(a) * rr * 0.72, rr * 0.16, C.pale, C.ivory, C.rose2); }
+    // corner sprays
+    for (const [sx, sy] of [[fx, fy], [fx + fw, fy], [fx, fy + fh], [fx + fw, fy + fh]]) {
+      const ix = sx === fx ? 1 : -1, iy = sy === fy ? 1 : -1;
+      x.fillStyle = C.blue; x.beginPath(); x.moveTo(sx, sy); x.lineTo(sx + ix * fw * 0.16, sy); x.quadraticCurveTo(sx + ix * fw * 0.1, sy + iy * fh * 0.1, sx, sy + iy * fh * 0.3); x.closePath(); x.fill();
+      peony(sx + ix * fw * 0.05, sy + iy * fh * 0.1, fh * 0.08, C.rose, C.rose2, C.ivory);
+      leaf(x, sx + ix * fw * 0.05, sy + iy * fh * 0.1, fh * 0.12, Math.atan2(iy * 1, ix * 0.4), C.green);
+    }
+    // butterflies
+    for (const [a, b, f] of [[0.24, 0.5, 1], [0.76, 0.5, -1]]) { const px = fx + fw * a, py = fy + fh * b; for (const d of [-1, 1]) { x.fillStyle = C.blue2; x.beginPath(); x.ellipse(px + d * 3, py - 1.4, 3, 2.2, d * 0.5, 0, Math.PI * 2); x.fill(); x.fillStyle = C.rose; x.beginPath(); x.ellipse(px + d * 2.4, py + 2, 2, 1.4, -d * 0.5, 0, Math.PI * 2); x.fill(); } x.fillStyle = C.dark; x.fillRect(px - 0.5, py - 3, 1, 6); }
+    x.restore();
+  });
+}
+
+// An ink painting of bamboo on silk: dark and pale stalks with nodes, leaves in quick strokes, a red seal.
+function chnBamboo(ctx, W, H) {
+  const C = { silk: '#ece2c8', silk2: '#e2d6b8', ink: '#22302a', ink2: '#4f6a52', ink3: '#8aa08a', red: '#b8302a', mount: '#3a4a3a', mount2: '#c9b98a' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    x.fillStyle = C.mount; x.fillRect(0, 0, cols, rows); x.fillStyle = C.mount2; x.fillRect(4, 4, cols - 8, rows - 8);
+    const fx = 6, fy = 6, fw = cols - 12, fh = rows - 12;
+    for (let y = fy; y < fy + fh; y++) { x.fillStyle = Math.floor((y - fy) / 11) % 3 === 1 ? C.silk2 : C.silk; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const R = rng(12);
+    const stalk = (sx, lean, w, col) => {
+      let y = fy + fh + 2, px = sx; const seg = 14 + R() * 6;
+      while (y > fy - 10) {
+        const ny = y - seg, nx = px + lean * seg;
+        x.strokeStyle = col; x.lineWidth = w; x.lineCap = 'butt'; x.beginPath(); x.moveTo(px, y - 1); x.lineTo(nx, ny + 1); x.stroke();
+        x.fillStyle = C.silk; x.fillRect(nx - w / 2 - 0.5, ny, w + 1, 0.8); x.fillStyle = col; x.fillRect(nx - w / 2 - 1, ny - 1, w + 2, 1);   // node
+        y = ny; px = nx;
+      }
+    };
+    const leafy = (px, py, dir, col, n) => { for (let k = 0; k < n; k++) { const a = dir * (0.4 + k * 0.35) + (dir < 0 ? Math.PI : 0), len = 11 + R() * 6; x.fillStyle = col; x.save(); x.translate(px, py); x.rotate(a); x.beginPath(); x.moveTo(0, 0); x.quadraticCurveTo(len * 0.4, -len * 0.16, len, 0); x.quadraticCurveTo(len * 0.4, len * 0.1, 0, 0); x.fill(); x.restore(); } };
+    stalk(fx + fw * 0.66, 0.06, 3, C.ink3); stalk(fx + fw * 0.82, -0.03, 2.4, C.ink3);
+    stalk(fx + fw * 0.28, 0.09, 4, C.ink2); stalk(fx + fw * 0.52, -0.05, 4.4, C.ink);
+    for (const [a, b, d, col, n] of [[0.36, 0.3, 1, C.ink, 4], [0.32, 0.6, -1, C.ink2, 3], [0.5, 0.2, -1, C.ink, 4], [0.48, 0.5, 1, C.ink, 3], [0.7, 0.35, 1, C.ink3, 3], [0.8, 0.15, -1, C.ink3, 3], [0.26, 0.15, 1, C.ink2, 3], [0.55, 0.72, 1, C.ink2, 3]]) leafy(fx + fw * a, fy + fh * b, d, col, n);
+    // a column of writing would be too fine to knot; a red seal stands in for the signature
+    x.fillStyle = C.red; x.fillRect(fx + fw * 0.88, fy + fh * 0.7, 6, 6); x.fillStyle = C.silk; x.fillRect(fx + fw * 0.88 + 1, fy + fh * 0.7 + 1, 1, 4); x.fillRect(fx + fw * 0.88 + 3, fy + fh * 0.7 + 1, 2, 1); x.fillRect(fx + fw * 0.88 + 3, fy + fh * 0.7 + 3, 2, 1);
+    x.restore();
+  });
+}
+
+// A giant panda sitting in a bamboo grove, eating a stalk of bamboo.
+function chnPanda(ctx, W, H) {
+  const u = H / 100;
+  ctx.fillStyle = '#cfe6c8'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#b6d8ac'; ctx.fillRect(0, H * 0.4, W, H);
+  // bamboo behind
+  const stalk = (sx, w, col, top) => { ctx.fillStyle = col; ctx.fillRect(sx - w / 2, top, w, H - top); ctx.fillStyle = 'rgba(0,0,0,.18)'; for (let y = top + 12 * u; y < H; y += 14 * u) ctx.fillRect(sx - w / 2 - 0.4 * u, y, w + 0.8 * u, 1.2 * u); };
+  const leaves = (px, py, dir, col) => { ctx.fillStyle = col; for (let k = 0; k < 4; k++) { const a = dir * (0.3 + k * 0.3) + (dir < 0 ? Math.PI : 0), len = (7 + (k % 2) * 3) * u; ctx.save(); ctx.translate(px, py); ctx.rotate(a); ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(len * 0.4, -len * 0.2, len, 0); ctx.quadraticCurveTo(len * 0.4, len * 0.14, 0, 0); ctx.fill(); ctx.restore(); } };
+  for (const [x, w, c] of [[0.05, 3, '#8ab878'], [0.14, 2.4, '#9ac488'], [0.62, 2.6, '#8ab878'], [0.74, 3.2, '#9ac488'], [0.95, 2.4, '#8ab878']]) stalk(W * x, w * u, c, 0);
+  for (const [x, y, d] of [[0.05, 0.2, 1], [0.14, 0.38, -1], [0.62, 0.15, -1], [0.74, 0.32, 1], [0.95, 0.2, -1]]) leaves(W * x, H * y, d, '#7aa868');
+  for (const [x, w, c] of [[0.24, 4.4, '#4f8a3f'], [0.86, 4.6, '#4f8a3f']]) stalk(W * x, w * u, c, 0);
+  for (const [x, y, d] of [[0.24, 0.16, 1], [0.24, 0.5, -1], [0.86, 0.28, -1], [0.86, 0.6, 1]]) leaves(W * x, H * y, d, '#3f7a34');
+  // ground
+  ctx.fillStyle = '#7fae5e'; ctx.beginPath(); ctx.ellipse(W * 0.5, H * 1.02, W * 0.5, H * 0.18, 0, 0, Math.PI * 2); ctx.fill();
+  // the panda
+  const px = W * 0.5, B = '#1c1c20', Wt = '#f4f2ea';
+  ctx.fillStyle = Wt; ctx.beginPath(); ctx.ellipse(px, H * 0.74, 22 * u, 21 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = B; ctx.beginPath(); ctx.ellipse(px - 16 * u, H * 0.92, 9 * u, 7 * u, -0.3, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.ellipse(px + 16 * u, H * 0.92, 9 * u, 7 * u, 0.3, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#e8d0c0'; for (const d of [-1, 1]) { ctx.beginPath(); ctx.ellipse(px + d * 16 * u, H * 0.94, 4 * u, 3 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = B; ctx.beginPath(); ctx.ellipse(px, H * 0.56, 24 * u, 6.4 * u, 0, 0, Math.PI * 2); ctx.fill();          // shoulders band
+  // the arms, holding a bamboo stalk to the mouth
+  ctx.save(); ctx.translate(px + 6 * u, H * 0.5); ctx.rotate(-0.5); ctx.fillStyle = '#5f9a44'; ctx.fillRect(-1.6 * u, -26 * u, 3.2 * u, 46 * u); ctx.fillStyle = '#3f7a2e'; for (const yy of [-14, 2]) ctx.fillRect(-2 * u, yy * u, 4 * u, 1 * u); ctx.restore();
+  ctx.fillStyle = '#4f8a3f'; for (const [a, b, r] of [[0.66, 0.2, -0.6], [0.7, 0.24, 0.2], [0.64, 0.26, -1.2]]) { ctx.save(); ctx.translate(W * a, H * b); ctx.rotate(r); ctx.beginPath(); ctx.ellipse(0, 0, 6 * u, 1.8 * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
+  ctx.fillStyle = B; ctx.beginPath(); ctx.ellipse(px - 12 * u, H * 0.66, 7 * u, 12 * u, 0.6, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.ellipse(px + 13 * u, H * 0.6, 6.4 * u, 11 * u, -0.9, 0, Math.PI * 2); ctx.fill();
+  // head
+  const hy = H * 0.37;
+  for (const d of [-1, 1]) { ctx.fillStyle = B; ctx.beginPath(); ctx.arc(px + d * 13 * u, hy - 12 * u, 6 * u, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = Wt; ctx.beginPath(); ctx.ellipse(px, hy, 18 * u, 15 * u, 0, 0, Math.PI * 2); ctx.fill();
+  for (const d of [-1, 1]) { ctx.fillStyle = B; ctx.beginPath(); ctx.ellipse(px + d * 7 * u, hy - 1 * u, 4.4 * u, 6 * u, d * -0.5, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = Wt; ctx.beginPath(); ctx.arc(px + d * 6.4 * u, hy - 2 * u, 1.6 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = B; ctx.beginPath(); ctx.arc(px + d * 6.4 * u, hy - 2 * u, 0.8 * u, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = B; ctx.beginPath(); ctx.ellipse(px, hy + 5 * u, 2.8 * u, 1.8 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = B; ctx.lineWidth = 0.9 * u; ctx.beginPath(); ctx.moveTo(px, hy + 6.6 * u); ctx.lineTo(px, hy + 8.6 * u); ctx.quadraticCurveTo(px - 2.4 * u, hy + 10 * u, px - 4 * u, hy + 8.6 * u); ctx.moveTo(px, hy + 8.6 * u); ctx.quadraticCurveTo(px + 2.4 * u, hy + 10 * u, px + 4 * u, hy + 8.6 * u); ctx.stroke();
+  ctx.fillStyle = '#f0b0b8'; for (const d of [-1, 1]) { ctx.beginPath(); ctx.ellipse(px + d * 11 * u, hy + 6 * u, 2.4 * u, 1.4 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+}
+
+// The Great Wall winding over autumn hills at sunset, watchtowers on the ridges.
+function chnGreatWall(ctx, W, H) {
+  const u = H / 100;
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.6); sky.addColorStop(0, '#5a7ab8'); sky.addColorStop(0.6, '#f0a878'); sky.addColorStop(1, '#f8d494');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#ffe6a0'; ctx.beginPath(); ctx.arc(W * 0.78, H * 0.36, 6 * u, 0, Math.PI * 2); ctx.fill();
+  const far = (y0, amp, f, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, H); for (let k = 0; k <= 40; k++) { const t = k / 40; ctx.lineTo(W * t, H * (y0 - amp * (Math.sin(t * f) * 0.6 + Math.sin(t * f * 2.3 + 1) * 0.4))); } ctx.lineTo(W, H); ctx.fill(); };
+  far(0.42, 0.06, 7, '#9a8ab0'); far(0.5, 0.08, 5, '#b47a6a');
+  // the near hill, its ridge carrying the wall
+  const ridge = (t) => H * (0.6 - 0.1 * Math.sin(Math.PI * 2 * (t * 0.95) + 0.3) - 0.035 * Math.sin(Math.PI * 2 * t * 2.2 + 1));
+  ctx.fillStyle = '#c8682e'; ctx.beginPath(); ctx.moveTo(0, H); for (let k = 0; k <= 60; k++) ctx.lineTo((W * k) / 60, ridge(k / 60) + 1 * u); ctx.lineTo(W, H); ctx.fill();
+  ctx.fillStyle = '#a8501e'; ctx.beginPath(); ctx.moveTo(0, H); ctx.lineTo(0, H * 0.84); ctx.quadraticCurveTo(W * 0.3, H * 0.74, W * 0.55, H * 0.9); ctx.quadraticCurveTo(W * 0.8, H * 1.0, W, H * 0.82); ctx.lineTo(W, H); ctx.fill();
+  ctx.fillStyle = '#e8a03a'; for (let k = 0; k < 44; k++) { const t = ((k * 37) % 100) / 100; ctx.beginPath(); ctx.arc(W * t, ridge(t) + (6 + ((k * 23) % 40)) * u, (1.4 + (k % 3)) * u, 0, Math.PI * 2); ctx.fill(); }
+  // the wall along the ridge: a stone band, the walkway, crenellations
+  const pts = []; for (let k = 0; k <= 80; k++) { const t = k / 80; pts.push([W * t, ridge(t) - 1 * u]); }
+  ctx.lineJoin = 'round';
+  ctx.strokeStyle = '#7a6a54'; ctx.lineWidth = 6 * u; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a, b) : ctx.moveTo(a, b))); ctx.stroke();
+  ctx.strokeStyle = '#d2bf98'; ctx.lineWidth = 2.4 * u; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a, b - 1.6 * u) : ctx.moveTo(a, b - 1.6 * u))); ctx.stroke();
+  ctx.fillStyle = '#7a6a54'; pts.forEach(([a, b], i) => { if (i % 2 === 0) ctx.fillRect(a - 0.9 * u, b - 5.4 * u, 1.8 * u, 2.4 * u); });
+  // watchtowers on the high points: a square tower, crenellated, one arched door
+  for (const t of [0.08, 0.3, 0.6, 0.86]) {
+    const a = W * t, b = ridge(t) - 1 * u;
+    ctx.fillStyle = '#a8977c'; ctx.fillRect(a - 5 * u, b - 13 * u, 10 * u, 13 * u);
+    ctx.fillStyle = '#8a7a62'; ctx.fillRect(a + 1.4 * u, b - 13 * u, 3.6 * u, 13 * u);
+    ctx.fillStyle = '#7a6a54'; ctx.fillRect(a - 5.6 * u, b - 13.6 * u, 11.2 * u, 1.4 * u); for (let k = 0; k < 4; k++) ctx.fillRect(a - 5.6 * u + k * 3.2 * u, b - 16 * u, 1.8 * u, 2.6 * u);
+    ctx.fillStyle = '#3a2e24'; roundRect(ctx, a - 1.6 * u, b - 7.6 * u, 3.2 * u, 7 * u, 1.6 * u); ctx.fill();
+  }
+}
+
+// Letter scenes for the Chinese postcard.
+const CHINA_SCENES = [
+  (c, w, h) => { c.fillStyle = '#b81f24'; c.fillRect(0, 0, w, h); for (let k = 0; k < 3; k++) { const y = h * (0.18 + k * 0.32); c.fillStyle = '#e8b448'; c.fillRect(w * 0.44, y - h * 0.1, w * 0.12, h * 0.04); c.fillStyle = '#ff5a3a'; c.beginPath(); c.ellipse(w * 0.5, y + h * 0.04, w * 0.3, h * 0.11, 0, 0, Math.PI * 2); c.fill(); } }, // lanterns
+  (c, w, h) => { c.fillStyle = '#f2f2ee'; c.fillRect(0, 0, w, h); c.strokeStyle = '#1f3c8a'; c.lineWidth = w * 0.08; for (let k = 0; k < 4; k++) { c.beginPath(); c.arc(w * (k % 2 ? 0.7 : 0.3), h * (0.15 + k * 0.24), w * 0.2, 0, Math.PI * 1.5); c.stroke(); } }, // porcelain scrolls
+  (c, w, h) => { c.fillStyle = '#cfe6c8'; c.fillRect(0, 0, w, h); c.fillStyle = '#4f8a3f'; for (const x of [0.2, 0.55, 0.85]) c.fillRect(w * x, 0, w * 0.1, h); c.fillStyle = '#3f7a34'; for (let k = 0; k < 6; k++) c.fillRect(w * (0.15 + (k % 3) * 0.33), h * (0.12 + Math.floor(k / 3) * 0.4), w * 0.24, h * 0.04); }, // bamboo
+  (c, w, h) => { c.fillStyle = '#f0a878'; c.fillRect(0, 0, w, h); c.fillStyle = '#c8682e'; c.fillRect(0, h * 0.62, w, h); c.fillStyle = '#c9b490'; c.fillRect(0, h * 0.5, w, h * 0.08); for (let k = 0; k < 4; k++) c.fillRect(w * k * 0.28, h * 0.44, w * 0.12, h * 0.06); }, // wall
+  (c, w, h) => { c.fillStyle = '#4a2342'; c.fillRect(0, 0, w, h); for (let k = 0; k < 5; k++) { c.fillStyle = '#f0a8b8'; c.beginPath(); c.arc(w * (0.25 + (k % 2) * 0.5), h * (0.12 + k * 0.19), w * 0.16, 0, Math.PI * 2); c.fill(); } }, // plum blossom
+];
+function chnPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'CHINA', CHINA_SCENES); }
+
 // ---------- USA pack: woven, pieced and knotted rugs (restored from the earlier drafts) ----------
 // Dashed stitching around a rectangle; each side starts and ends on a stitch, so the corners join up.
 function stitchRect(ctx, x, y, w, h, step, thick, color) {
@@ -3629,11 +4458,35 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.turkiye === 'bosphorus') turkBosphorus(ctx, W, H);
   else if (P.turkiye === 'pamukkale') turkPamukkale(ctx, W, H);
   else if (P.turkiye === 'nazar') turkNazar(ctx, W, H);
+  else if (P.korea === 'bojagi') korBojagi(ctx, W, H);
+  else if (P.korea === 'saekdong') korSaekdong(ctx, W, H);
+  else if (P.korea === 'celadon') korCeladon(ctx, W, H);
+  else if (P.korea === 'dancheong') korDancheong(ctx, W, H);
+  else if (P.korea === 'tiger') korTiger(ctx, W, H);
+  else if (P.korea === 'hanok') korHanok(ctx, W, H);
+  else if (P.korea === 'seoul') korSeoul(ctx, W, H);
+  else if (P.korea === 'postcard') korPostcard(ctx, W, H);
+  else if (P.japan === 'seigaiha') japSeigaiha(ctx, W, H);
+  else if (P.japan === 'asanoha') japAsanoha(ctx, W, H);
+  else if (P.japan === 'boro') japBoro(ctx, W, H);
+  else if (P.japan === 'koi') japKoi(ctx, W, H);
+  else if (P.japan === 'byobu') japByobu(ctx, W, H);
+  else if (P.japan === 'fuji') japFuji(ctx, W, H);
+  else if (P.japan === 'kyoto') japKyoto(ctx, W, H);
+  else if (P.japan === 'postcard') japPostcard(ctx, W, H);
+  else if (P.china === 'porcelain') chnPorcelain(ctx, W, H);
+  else if (P.china === 'clouds') chnClouds(ctx, W, H);
+  else if (P.china === 'artdeco') chnArtDeco(ctx, W, H);
+  else if (P.china === 'ningxia') chnNingxia(ctx, W, H);
+  else if (P.china === 'bamboo') chnBamboo(ctx, W, H);
+  else if (P.china === 'panda') chnPanda(ctx, W, H);
+  else if (P.china === 'wall') chnGreatWall(ctx, W, H);
+  else if (P.china === 'postcard') chnPostcard(ctx, W, H);
   else if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
   else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
-  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : P.mexico ? MEXICO_FRAME : P.turkiye ? TURKIYE_FRAME : undefined); else addWeave(ctx, W, H, seed, P.silk ? 12 : 26);
+  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : P.mexico ? MEXICO_FRAME : P.turkiye ? TURKIYE_FRAME : P.korea ? KOREA_FRAME : P.japan ? JAPAN_FRAME : P.china ? CHINA_FRAME : undefined); else addWeave(ctx, W, H, seed, P.silk ? 12 : 26);
 
   // Back side: same pattern, faded and flattened.
   const b = document.createElement('canvas');
