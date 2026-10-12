@@ -51,6 +51,7 @@
       quit: 'Quit', openApp: 'Open Desktop Carpet…', lockedMenu: 'Activate a license to use the carpet',
       updReady: (v) => `Desktop Carpet ${v} is ready.`, updInstall: 'Restart and update', updMenu: (v) => `Install update ${v}`,
       updGetting: (v) => `Downloading Desktop Carpet ${v}…`, updClick: 'Click to restart and update.', updOf: (a, b) => `${a} of ${b}`, updQuick: 'Restarting takes a few seconds.', updSlow: 'Installing takes about a minute.', updInstalling: 'Updating…', updInstallingTo: (v) => `Installing Desktop Carpet ${v}`, updDone: 'Updated', updDoneTo: (v) => `You’re now on Desktop Carpet ${v}.`,
+      nowTitle: 'On your desktop', surprise: 'Surprise me', recent: 'Recent', details: 'Details', hideDetails: 'Hide details', clear: 'Clear', searchLabel: 'Search rugs', searchPh: (n) => `Search ${n} rugs`, found: (n) => (n === 1 ? '1 rug' : `${n} rugs`), noMatch: 'No rug by that name. Try a country or a city.',
       reasons: { not_found: "We couldn't find that key. Check for typos.", bad_key: "That doesn't look like a Desktop Carpet key (DC-XXXX-XXXX-XXXX-XXXX).", revoked: 'This key was cancelled. Contact us from the website.', not_activated: 'This computer is no longer activated. Enter the key again.', bad_signature: "The license server's answer couldn't be verified.", offline: "Can't reach the server. Check your internet and try again.", unknown: 'Something went wrong. Try again in a minute.', trial_used: 'This computer has already used its free trial. Pick a plan to keep the carpet.' },
     },
 
@@ -87,6 +88,7 @@
       quit: 'Çıkış', openApp: 'Desktop Carpet\'i aç…', lockedMenu: 'Halı için lisansını etkinleştir',
       updReady: (v) => `Desktop Carpet ${v} hazır.`, updInstall: 'Yeniden başlat ve güncelle', updMenu: (v) => `${v} güncellemesini kur`,
       updGetting: (v) => `Desktop Carpet ${v} indiriliyor…`, updClick: 'Yeniden başlatıp güncellemek için tıkla.', updOf: (a, b) => `${a} / ${b}`, updQuick: 'Yeniden başlatmak birkaç saniye sürer.', updSlow: 'Kurulum yaklaşık bir dakika sürer.', updInstalling: 'Güncelleniyor…', updInstallingTo: (v) => `Desktop Carpet ${v} kuruluyor`, updDone: 'Güncellendi', updDoneTo: (v) => `Artık Desktop Carpet ${v} kullanıyorsun.`,
+      nowTitle: 'Masaüstünde', surprise: 'Beni şaşırt', recent: 'Son kullanılanlar', details: 'Ayrıntılar', hideDetails: 'Ayrıntıları gizle', clear: 'Temizle', searchLabel: 'Halı ara', searchPh: (n) => `${n} halı içinde ara`, found: (n) => `${n} halı`, noMatch: 'Bu adla bir halı yok. Bir ülke ya da şehir dene.',
       reasons: { not_found: 'Bu anahtarı bulamadık. Yazım hatası olmasın.', bad_key: 'Bu bir Desktop Carpet anahtarına benzemiyor (DC-XXXX-XXXX-XXXX-XXXX).', revoked: 'Bu anahtar iptal edilmiş. Siteden bize yaz.', not_activated: 'Bu bilgisayar artık etkin değil. Anahtarı tekrar gir.', bad_signature: 'Lisans sunucusunun cevabı doğrulanamadı.', offline: 'Sunucuya ulaşılamıyor. İnternetini kontrol edip tekrar dene.', unknown: 'Bir şeyler ters gitti. Bir dakika sonra tekrar dene.', trial_used: 'Bu bilgisayarda deneme hakkı kullanıldı. Halını tutmak için bir plan seç.' },
     },
 
@@ -123,6 +125,7 @@
       quit: 'Salir', openApp: 'Abrir Desktop Carpet…', lockedMenu: 'Activa una licencia para usar la alfombra',
       updReady: (v) => `Desktop Carpet ${v} está lista.`, updInstall: 'Reiniciar y actualizar', updMenu: (v) => `Instalar la actualización ${v}`,
       updGetting: (v) => `Descargando Desktop Carpet ${v}…`, updClick: 'Haz clic para reiniciar y actualizar.', updOf: (a, b) => `${a} de ${b}`, updQuick: 'Reiniciar tarda unos segundos.', updSlow: 'La instalación tarda un minuto aproximadamente.', updInstalling: 'Actualizando…', updInstallingTo: (v) => `Instalando Desktop Carpet ${v}`, updDone: 'Actualizado', updDoneTo: (v) => `Ya tienes Desktop Carpet ${v}.`,
+      nowTitle: 'En tu escritorio', surprise: 'Sorpréndeme', recent: 'Recientes', details: 'Detalles', hideDetails: 'Ocultar detalles', clear: 'Borrar', searchLabel: 'Buscar alfombras', searchPh: (n) => `Buscar entre ${n} alfombras`, found: (n) => (n === 1 ? '1 alfombra' : `${n} alfombras`), noMatch: 'Ninguna alfombra se llama así. Prueba con un país o una ciudad.',
       reasons: { not_found: 'No encontramos esa clave. Revisa si hay errores.', bad_key: 'No parece una clave de Desktop Carpet (DC-XXXX-XXXX-XXXX-XXXX).', revoked: 'Esta clave fue cancelada. Escríbenos desde la web.', not_activated: 'Este equipo ya no está activado. Vuelve a introducir la clave.', bad_signature: 'No se pudo verificar la respuesta del servidor de licencias.', offline: 'No se puede conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.', unknown: 'Algo salió mal. Inténtalo de nuevo en un minuto.', trial_used: 'Este equipo ya usó su prueba gratuita. Elige un plan para conservar la alfombra.' },
     },
 
@@ -159,6 +162,7 @@
       quit: 'Beenden', openApp: 'Desktop Carpet öffnen…', lockedMenu: 'Aktiviere eine Lizenz, um den Teppich zu nutzen',
       updReady: (v) => `Desktop Carpet ${v} ist bereit.`, updInstall: 'Neu starten und aktualisieren', updMenu: (v) => `Update ${v} installieren`,
       updGetting: (v) => `Desktop Carpet ${v} wird geladen…`, updClick: 'Klicken, um neu zu starten und zu aktualisieren.', updOf: (a, b) => `${a} von ${b}`, updQuick: 'Der Neustart dauert nur ein paar Sekunden.', updSlow: 'Die Installation dauert etwa eine Minute.', updInstalling: 'Wird aktualisiert…', updInstallingTo: (v) => `Desktop Carpet ${v} wird installiert`, updDone: 'Aktualisiert', updDoneTo: (v) => `Du nutzt jetzt Desktop Carpet ${v}.`,
+      nowTitle: 'Auf dem Desktop', surprise: 'Überrasch mich', recent: 'Zuletzt', details: 'Details', hideDetails: 'Details ausblenden', clear: 'Löschen', searchLabel: 'Teppiche suchen', searchPh: (n) => `${n} Teppiche durchsuchen`, found: (n) => (n === 1 ? '1 Teppich' : `${n} Teppiche`), noMatch: 'Kein Teppich mit diesem Namen. Vielleicht ein Land oder eine Stadt?',
       reasons: { not_found: 'Diesen Schlüssel haben wir nicht gefunden. Prüfe auf Tippfehler.', bad_key: 'Das sieht nicht wie ein Desktop-Carpet-Schlüssel aus (DC-XXXX-XXXX-XXXX-XXXX).', revoked: 'Dieser Schlüssel wurde storniert. Schreib uns über die Website.', not_activated: 'Dieser Computer ist nicht mehr aktiviert. Gib den Schlüssel erneut ein.', bad_signature: 'Die Antwort des Lizenzservers konnte nicht überprüft werden.', offline: 'Server nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.', unknown: 'Etwas ist schiefgelaufen. Versuche es in einer Minute erneut.', trial_used: 'Auf diesem Computer wurde der kostenlose Test schon genutzt. Wähle einen Plan, um den Teppich zu behalten.' },
     },
 
@@ -195,6 +199,7 @@
       quit: 'Quitter', openApp: 'Ouvrir Desktop Carpet…', lockedMenu: 'Active une licence pour utiliser le tapis',
       updReady: (v) => `Desktop Carpet ${v} est prêt.`, updInstall: 'Redémarrer et mettre à jour', updMenu: (v) => `Installer la mise à jour ${v}`,
       updGetting: (v) => `Téléchargement de Desktop Carpet ${v}…`, updClick: 'Cliquez pour redémarrer et mettre à jour.', updOf: (a, b) => `${a} sur ${b}`, updQuick: 'Le redémarrage ne prend que quelques secondes.', updSlow: 'L’installation prend environ une minute.', updInstalling: 'Mise à jour…', updInstallingTo: (v) => `Installation de Desktop Carpet ${v}`, updDone: 'Mis à jour', updDoneTo: (v) => `Vous utilisez maintenant Desktop Carpet ${v}.`,
+      nowTitle: 'Sur le bureau', surprise: 'Au hasard', recent: 'Récents', details: 'Détails', hideDetails: 'Masquer les détails', clear: 'Effacer', searchLabel: 'Rechercher un tapis', searchPh: (n) => `Rechercher parmi ${n} tapis`, found: (n) => `${n} tapis`, noMatch: 'Aucun tapis de ce nom. Un pays ou une ville, peut-être ?',
       reasons: { not_found: 'Clé introuvable. Vérifie qu’il n’y a pas de faute de frappe.', bad_key: 'Ça ne ressemble pas à une clé Desktop Carpet (DC-XXXX-XXXX-XXXX-XXXX).', revoked: 'Cette clé a été annulée. Contacte-nous depuis le site.', not_activated: 'Cet ordinateur n’est plus activé. Saisis à nouveau la clé.', bad_signature: 'La réponse du serveur de licences n’a pas pu être vérifiée.', offline: 'Serveur injoignable. Vérifie ta connexion et réessaie.', unknown: 'Un problème est survenu. Réessaie dans une minute.', trial_used: 'Cet ordinateur a déjà utilisé son essai gratuit. Choisis une formule pour garder le tapis.' },
     },
 
@@ -231,6 +236,7 @@
       quit: 'Sair', openApp: 'Abrir o Desktop Carpet…', lockedMenu: 'Ative uma licença para usar o tapete',
       updReady: (v) => `O Desktop Carpet ${v} está pronto.`, updInstall: 'Reiniciar e atualizar', updMenu: (v) => `Instalar a atualização ${v}`,
       updGetting: (v) => `Baixando o Desktop Carpet ${v}…`, updClick: 'Clique para reiniciar e atualizar.', updOf: (a, b) => `${a} de ${b}`, updQuick: 'Reiniciar leva poucos segundos.', updSlow: 'A instalação leva cerca de um minuto.', updInstalling: 'Atualizando…', updInstallingTo: (v) => `Instalando o Desktop Carpet ${v}`, updDone: 'Atualizado', updDoneTo: (v) => `Agora você está no Desktop Carpet ${v}.`,
+      nowTitle: 'Na sua área de trabalho', surprise: 'Me surpreenda', recent: 'Recentes', details: 'Detalhes', hideDetails: 'Ocultar detalhes', clear: 'Limpar', searchLabel: 'Buscar tapetes', searchPh: (n) => `Buscar entre ${n} tapetes`, found: (n) => (n === 1 ? '1 tapete' : `${n} tapetes`), noMatch: 'Nenhum tapete com esse nome. Tente um país ou uma cidade.',
       reasons: { not_found: 'Não encontramos essa chave. Confira se há erros de digitação.', bad_key: 'Isso não parece uma chave do Desktop Carpet (DC-XXXX-XXXX-XXXX-XXXX).', revoked: 'Esta chave foi cancelada. Fale com a gente pelo site.', not_activated: 'Este computador não está mais ativado. Digite a chave de novo.', bad_signature: 'Não foi possível verificar a resposta do servidor de licenças.', offline: 'Não foi possível acessar o servidor. Verifique sua conexão e tente de novo.', unknown: 'Algo deu errado. Tente de novo em um minuto.', trial_used: 'Este computador já usou o teste grátis. Escolha um plano para manter o tapete.' },
     },
 
@@ -267,6 +273,7 @@
       quit: 'Esci', openApp: 'Apri Desktop Carpet…', lockedMenu: 'Attiva una licenza per usare il tappeto',
       updReady: (v) => `Desktop Carpet ${v} è pronto.`, updInstall: 'Riavvia e aggiorna', updMenu: (v) => `Installa l’aggiornamento ${v}`,
       updGetting: (v) => `Download di Desktop Carpet ${v}…`, updClick: 'Fai clic per riavviare e aggiornare.', updOf: (a, b) => `${a} di ${b}`, updQuick: 'Il riavvio richiede pochi secondi.', updSlow: 'L’installazione richiede circa un minuto.', updInstalling: 'Aggiornamento…', updInstallingTo: (v) => `Installazione di Desktop Carpet ${v}`, updDone: 'Aggiornato', updDoneTo: (v) => `Ora usi Desktop Carpet ${v}.`,
+      nowTitle: 'Sul desktop', surprise: 'Sorprendimi', recent: 'Recenti', details: 'Dettagli', hideDetails: 'Nascondi dettagli', clear: 'Cancella', searchLabel: 'Cerca tappeti', searchPh: (n) => `Cerca tra ${n} tappeti`, found: (n) => (n === 1 ? '1 tappeto' : `${n} tappeti`), noMatch: 'Nessun tappeto con questo nome. Prova con un paese o una città.',
       reasons: { not_found: 'Non abbiamo trovato questa chiave. Controlla gli errori di battitura.', bad_key: 'Non sembra una chiave di Desktop Carpet (DC-XXXX-XXXX-XXXX-XXXX).', revoked: 'Questa chiave è stata annullata. Scrivici dal sito.', not_activated: 'Questo computer non è più attivato. Inserisci di nuovo la chiave.', bad_signature: 'Non è stato possibile verificare la risposta del server delle licenze.', offline: 'Server non raggiungibile. Controlla la connessione e riprova.', unknown: 'Qualcosa è andato storto. Riprova tra un minuto.', trial_used: 'Questo computer ha già usato la prova gratuita. Scegli un piano per tenere il tappeto.' },
     },
 
@@ -303,6 +310,7 @@
       quit: 'Выход', openApp: 'Открыть Desktop Carpet…', lockedMenu: 'Активируйте лицензию, чтобы пользоваться ковром',
       updReady: (v) => `Desktop Carpet ${v} готов к установке.`, updInstall: 'Перезапустить и обновить', updMenu: (v) => `Установить обновление ${v}`,
       updGetting: (v) => `Загрузка Desktop Carpet ${v}…`, updClick: 'Нажмите, чтобы перезапустить и обновить.', updOf: (a, b) => `${a} из ${b}`, updQuick: 'Перезапуск займёт несколько секунд.', updSlow: 'Установка займёт около минуты.', updInstalling: 'Обновление…', updInstallingTo: (v) => `Устанавливается Desktop Carpet ${v}`, updDone: 'Обновлено', updDoneTo: (v) => `Теперь у вас Desktop Carpet ${v}.`,
+      nowTitle: 'Сейчас на рабочем столе', surprise: 'Удивите меня', recent: 'Недавние', details: 'Подробнее', hideDetails: 'Скрыть подробности', clear: 'Очистить', searchLabel: 'Поиск ковров', searchPh: (n) => `Поиск среди ковров: ${n}`, found: (n) => `Найдено: ${n}`, noMatch: 'Ковра с таким названием нет. Попробуйте страну или город.',
       reasons: { not_found: 'Такой ключ не найден. Проверьте, нет ли опечаток.', bad_key: 'Это не похоже на ключ Desktop Carpet (DC-XXXX-XXXX-XXXX-XXXX).', revoked: 'Этот ключ аннулирован. Напишите нам через сайт.', not_activated: 'Этот компьютер больше не активирован. Введите ключ ещё раз.', bad_signature: 'Не удалось проверить ответ сервера лицензий.', offline: 'Сервер недоступен. Проверьте подключение и попробуйте снова.', unknown: 'Что-то пошло не так. Попробуйте через минуту.', trial_used: 'На этом компьютере пробный период уже использован. Выберите тариф, чтобы сохранить ковёр.' },
     },
 
@@ -339,6 +347,7 @@
       quit: 'Zakończ', openApp: 'Otwórz Desktop Carpet…', lockedMenu: 'Aktywuj licencję, aby używać dywanu',
       updReady: (v) => `Desktop Carpet ${v} jest gotowy.`, updInstall: 'Uruchom ponownie i zaktualizuj', updMenu: (v) => `Zainstaluj aktualizację ${v}`,
       updGetting: (v) => `Pobieranie Desktop Carpet ${v}…`, updClick: 'Kliknij, aby uruchomić ponownie i zaktualizować.', updOf: (a, b) => `${a} z ${b}`, updQuick: 'Ponowne uruchomienie potrwa kilka sekund.', updSlow: 'Instalacja potrwa około minuty.', updInstalling: 'Aktualizowanie…', updInstallingTo: (v) => `Instalowanie Desktop Carpet ${v}`, updDone: 'Zaktualizowano', updDoneTo: (v) => `Masz teraz Desktop Carpet ${v}.`,
+      nowTitle: 'Na pulpicie', surprise: 'Zaskocz mnie', recent: 'Ostatnie', details: 'Szczegóły', hideDetails: 'Ukryj szczegóły', clear: 'Wyczyść', searchLabel: 'Szukaj dywanów', searchPh: (n) => `Szukaj wśród dywanów: ${n}`, found: (n) => `Znaleziono: ${n}`, noMatch: 'Nie ma dywanu o tej nazwie. Spróbuj kraju albo miasta.',
       reasons: { not_found: 'Nie znaleźliśmy tego klucza. Sprawdź, czy nie ma literówek.', bad_key: 'To nie wygląda na klucz Desktop Carpet (DC-XXXX-XXXX-XXXX-XXXX).', revoked: 'Ten klucz został anulowany. Napisz do nas przez stronę.', not_activated: 'Ten komputer nie jest już aktywowany. Wpisz klucz ponownie.', bad_signature: 'Nie udało się zweryfikować odpowiedzi serwera licencji.', offline: 'Brak połączenia z serwerem. Sprawdź internet i spróbuj ponownie.', unknown: 'Coś poszło nie tak. Spróbuj ponownie za minutę.', trial_used: 'Ten komputer wykorzystał już darmowy okres próbny. Wybierz plan, aby zatrzymać dywan.' },
     },
 
@@ -375,6 +384,7 @@
       quit: '終了', openApp: 'Desktop Carpet を開く…', lockedMenu: 'じゅうたんを使うにはライセンスを有効にしてください',
       updReady: (v) => `Desktop Carpet ${v} の準備ができました。`, updInstall: '再起動して更新', updMenu: (v) => `アップデート ${v} をインストール`,
       updGetting: (v) => `Desktop Carpet ${v} をダウンロード中…`, updClick: 'クリックすると再起動して更新します。', updOf: (a, b) => `${a} / ${b}`, updQuick: '再起動は数秒で終わります。', updSlow: 'インストールには1分ほどかかります。', updInstalling: 'アップデート中…', updInstallingTo: (v) => `Desktop Carpet ${v} をインストールしています`, updDone: 'アップデート完了', updDoneTo: (v) => `Desktop Carpet ${v} になりました。`,
+      nowTitle: 'デスクトップのじゅうたん', surprise: 'おまかせ', recent: '最近使ったもの', details: '詳細', hideDetails: '詳細を隠す', clear: 'クリア', searchLabel: 'じゅうたんを検索', searchPh: (n) => `${n} 枚のじゅうたんを検索`, found: (n) => `${n} 枚`, noMatch: 'その名前のじゅうたんはありません。国名や都市名で探してみてください。',
       reasons: { not_found: 'このキーが見つかりません。入力ミスがないか確認してください。', bad_key: 'Desktop Carpet のキーではないようです（DC-XXXX-XXXX-XXXX-XXXX）。', revoked: 'このキーは取り消されています。サイトからご連絡ください。', not_activated: 'このコンピューターは有効化されていません。もう一度キーを入力してください。', bad_signature: 'ライセンスサーバーの応答を検証できませんでした。', offline: 'サーバーに接続できません。接続を確認して再試行してください。', unknown: '問題が発生しました。少し待ってから再試行してください。', trial_used: 'このコンピューターでは無料お試しを使用済みです。じゅうたんを残すにはプランを選んでください。' },
     },
 
@@ -411,6 +421,7 @@
       quit: '退出', openApp: '打开 Desktop Carpet…', lockedMenu: '激活许可证后才能使用地毯',
       updReady: (v) => `Desktop Carpet ${v} 已准备就绪。`, updInstall: '重启并更新', updMenu: (v) => `安装更新 ${v}`,
       updGetting: (v) => `正在下载 Desktop Carpet ${v}…`, updClick: '点击即可重启并更新。', updOf: (a, b) => `${a} / ${b}`, updQuick: '重启只需几秒钟。', updSlow: '安装大约需要一分钟。', updInstalling: '正在更新…', updInstallingTo: (v) => `正在安装 Desktop Carpet ${v}`, updDone: '已更新', updDoneTo: (v) => `现在使用的是 Desktop Carpet ${v}。`,
+      nowTitle: '桌面上的地毯', surprise: '随机换一块', recent: '最近使用', details: '详情', hideDetails: '收起详情', clear: '清除', searchLabel: '搜索地毯', searchPh: (n) => `在 ${n} 块地毯中搜索`, found: (n) => `${n} 块地毯`, noMatch: '没有这个名字的地毯。试试国家或城市名。',
       reasons: { not_found: '找不到这个密钥，请检查是否输错。', bad_key: '这看起来不像 Desktop Carpet 密钥（DC-XXXX-XXXX-XXXX-XXXX）。', revoked: '此密钥已被取消，请通过网站联系我们。', not_activated: '这台电脑已不再激活，请重新输入密钥。', bad_signature: '无法验证许可证服务器的回复。', offline: '无法连接服务器，请检查网络后重试。', unknown: '出了点问题，请一分钟后重试。', trial_used: '这台电脑已经用过免费试用。选择一个方案即可保留地毯。' },
     },
 
@@ -447,6 +458,7 @@
       quit: '종료', openApp: 'Desktop Carpet 열기…', lockedMenu: '러그를 쓰려면 라이선스를 활성화하세요',
       updReady: (v) => `Desktop Carpet ${v} 준비 완료.`, updInstall: '다시 시작하고 업데이트', updMenu: (v) => `업데이트 ${v} 설치`,
       updGetting: (v) => `Desktop Carpet ${v} 다운로드 중…`, updClick: '클릭하면 다시 시작하고 업데이트합니다.', updOf: (a, b) => `${a} / ${b}`, updQuick: '다시 시작하는 데 몇 초면 됩니다.', updSlow: '설치에 약 1분이 걸립니다.', updInstalling: '업데이트 중…', updInstallingTo: (v) => `Desktop Carpet ${v} 설치 중`, updDone: '업데이트 완료', updDoneTo: (v) => `이제 Desktop Carpet ${v} 버전을 사용합니다.`,
+      nowTitle: '지금 바탕 화면에', surprise: '아무거나 고르기', recent: '최근 사용', details: '자세히', hideDetails: '접기', clear: '지우기', searchLabel: '러그 검색', searchPh: (n) => `러그 ${n}개 검색`, found: (n) => `러그 ${n}개`, noMatch: '그런 이름의 러그가 없습니다. 나라나 도시 이름으로 찾아보세요.',
       reasons: { not_found: '이 키를 찾을 수 없습니다. 오타가 없는지 확인하세요.', bad_key: 'Desktop Carpet 키가 아닌 것 같습니다 (DC-XXXX-XXXX-XXXX-XXXX).', revoked: '이 키는 취소되었습니다. 웹사이트로 문의해 주세요.', not_activated: '이 컴퓨터는 더 이상 활성화되어 있지 않습니다. 키를 다시 입력하세요.', bad_signature: '라이선스 서버의 응답을 확인할 수 없습니다.', offline: '서버에 연결할 수 없습니다. 연결을 확인하고 다시 시도하세요.', unknown: '문제가 발생했습니다. 잠시 후 다시 시도하세요.', trial_used: '이 컴퓨터는 이미 무료 체험을 사용했습니다. 러그를 유지하려면 플랜을 선택하세요.' },
     },
   };

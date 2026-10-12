@@ -38,17 +38,17 @@ button,input{font:inherit;color:inherit}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
 /* Title bar area: Windows draws its own buttons on the right (titleBarOverlay) */
-.bar{height:40px;display:flex;align-items:center;padding:0 140px 0 14px;background:var(--ink);color:var(--ivory);-webkit-app-region:drag}
+.bar{height:40px;display:flex;align-items:center;gap:16px;padding:0 140px 0 14px;background:var(--ink);color:var(--ivory);-webkit-app-region:drag}
 .mac .bar{padding:0 14px 0 84px}
-.brand{display:flex;align-items:center;gap:9px;font:400 1.06rem/1 var(--f-display);letter-spacing:.01em}
+.brand{display:flex;align-items:center;gap:9px;flex:none;font:400 1.06rem/1 var(--f-display);letter-spacing:.01em}
 .brand svg{width:30px;height:21px;transform:rotate(-6deg)}
 
 /* Two columns: the license and settings on the left, the rugs on the right. Each scrolls on its own. */
 .layout{display:grid;grid-template-columns:330px minmax(0,1fr);gap:18px;padding:18px 18px 6px;min-height:0;overflow:hidden}
-.side{display:grid;gap:16px;align-content:start;min-height:0;overflow:auto;padding:4px 10px 14px 4px;scrollbar-width:thin}
+.side{display:grid;gap:16px;align-content:start;min-height:0;overflow:auto;padding:4px 10px 14px 4px;scrollbar-width:thin;scrollbar-color:rgba(34,19,12,.42) transparent}
 .side .keyform{flex-direction:column}
 .side .keyform .btn{width:100%}
-.gallery{min-height:0;overflow:auto;align-content:start;scrollbar-width:thin}
+.gallery{min-height:0;overflow:auto;align-content:start;scrollbar-width:thin;scrollbar-color:rgba(242,230,204,.3) transparent}
 
 /* License label (woven ivory tag with a stitched border) */
 .label{position:relative;background-color:var(--ivory);padding:24px 22px 22px;transform:rotate(-.6deg);display:grid;gap:12px;
@@ -109,6 +109,7 @@ p{margin:0}
 .panel .linkish{color:var(--ivory)}
 .panel .note{color:rgba(242,230,204,.7)}
 .locked .group,.locked .rowgroup{opacity:.35;pointer-events:none}
+.locked .now-rug,.locked .recent,.locked .now h2{display:none}
 .lock{font-weight:600;font-size:.88rem;background:var(--madder);color:var(--ivory);padding:9px 12px;border-radius:4px;outline:1.5px dashed rgba(242,230,204,.5);outline-offset:-5px}
 h2{margin:0 0 8px;font:600 .84rem/1.3 var(--f-body);color:var(--saffron)}
 .group.sizes{display:grid;gap:14px}
@@ -343,6 +344,76 @@ h2{margin:0 0 8px;font:600 .84rem/1.3 var(--f-body);color:var(--saffron)}
 .med-room .room-grid button[aria-checked="true"] img{outline-color:#c4572e}
 .med-room .room-grid button[aria-checked="true"] span{color:#c4572e}
 
+/* Search in the title bar: a dark inset field, the shortcut on the right until you start typing. */
+.find{-webkit-app-region:no-drag;position:relative;flex:0 1 340px;min-width:0;margin:0 auto;display:flex;align-items:center;height:28px;border-radius:5px;
+  background:rgba(242,230,204,.08);box-shadow:inset 0 0 0 1px rgba(242,230,204,.16);transition:background .15s,box-shadow .15s}
+.find:hover{box-shadow:inset 0 0 0 1px rgba(242,230,204,.3)}
+.find:focus-within{background:rgba(242,230,204,.13);box-shadow:inset 0 0 0 1.5px var(--saffron)}
+.find-icon{position:absolute;left:9px;width:14px;height:14px;color:rgba(242,230,204,.6);pointer-events:none}
+.find input{flex:1;min-width:0;height:100%;border:0;background:none;padding:0 30px 0 30px;color:var(--ivory);font:500 .82rem/1 var(--f-body);user-select:text;outline:none}
+.find input::placeholder{color:rgba(242,230,204,.5)}
+.find input::-webkit-search-cancel-button{-webkit-appearance:none}
+.find-key{position:absolute;right:7px;font:600 .58rem/1 var(--f-mono);letter-spacing:.04em;color:rgba(242,230,204,.55);padding:3px 5px 2px;border-radius:3px;box-shadow:inset 0 0 0 1px rgba(242,230,204,.22);pointer-events:none}
+.find:focus-within .find-key,.find.has-q .find-key{display:none}
+.find-clear{position:absolute;right:4px;width:22px;height:22px;display:grid;place-items:center;padding:0;border:0;border-radius:4px;background:none;color:rgba(242,230,204,.75);cursor:pointer}
+.find-clear:hover{background:rgba(242,230,204,.12);color:var(--ivory)}
+.find-clear svg{width:11px;height:11px}
+
+/* Left column order: the license sits on top while it needs something from you (no key yet, a trial or plan running out,
+   a problem); once it's simply active it folds into a small tag under the rug. */
+.side > .upd{order:0}
+.side > .label{order:1}
+.side > .now{order:2}
+.side > .help{order:4}
+.side.lic-quiet > .label{order:3}
+
+/* On your desktop: the rug in use, drawn sharp, with its name and where it's from; then everything that changes it. */
+.now{gap:16px}
+.now h2{margin:0}
+.now h3{margin:0 0 7px;font:600 .76rem/1.3 var(--f-body);color:rgba(242,230,204,.6)}
+.now-rug{display:grid;grid-template-columns:128px minmax(0,1fr);gap:16px;align-items:center}
+.now-pic{margin:0}
+.now-pic img{display:block;width:100%;aspect-ratio:1.58;object-fit:cover;border-radius:3px;transform:rotate(-2deg);background:rgba(242,230,204,.06);
+  box-shadow:0 14px 18px -10px #000,0 0 0 1px rgba(0,0,0,.45)}
+.now-text{display:grid;gap:6px;justify-items:start;min-width:0}
+.now-text b{font:400 1.2rem/1.08 var(--f-display);color:var(--ivory);text-wrap:balance;overflow-wrap:anywhere}
+.now-origin{display:flex;align-items:center;gap:6px;font:600 .78rem/1.25 var(--f-body);color:var(--saffron)}
+.now-origin svg{width:9px;height:12px;flex:none}
+.now-origin span:empty{display:none}
+.now .dice{margin-top:4px;padding:.6em .8em}
+.dice svg{width:14px;height:14px;flex:none}
+.dice.rolling svg{animation:roll .55s cubic-bezier(.2,.8,.3,1)}
+@keyframes roll{to{transform:rotate(360deg)}}
+.recent-list{display:flex;gap:8px}
+.recent-list button{flex:0 0 48px;padding:0;border:0;background:none;cursor:pointer}
+.recent-list img{display:block;width:100%;aspect-ratio:1.58;object-fit:cover;border-radius:2px;box-shadow:0 6px 9px -6px #000;transition:transform .15s}
+.recent-list button:hover img{transform:translateY(-2px) rotate(-3deg)}
+.recent-list button:disabled{opacity:.35;cursor:default}
+.recent-list button:disabled:hover img{transform:none}
+.now .sizes{padding-top:16px;border-top:1.5px dashed rgba(242,230,204,.18)}
+.now .toggles{display:grid}
+.moves{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.moves .btn svg{width:15px;height:15px;flex:none}
+.help{gap:12px;padding:14px 16px}
+
+/* The license once it's active: a small tag with the key and the days left; the rest under "Details". */
+.label .more{display:none}
+.lic-quiet .label{padding:20px 20px 22px;gap:10px}
+.lic-quiet .label h1{display:none}
+.lic-quiet .label .more{display:inline-flex;align-items:center;gap:6px;justify-self:start;font-size:.72rem}
+.label .more svg{width:10px;height:6px;transition:transform .15s}
+.label .more[aria-expanded="true"] svg{transform:rotate(180deg)}
+.lic-quiet .label:not(.open) .facts,.lic-quiet .label:not(.open) .lic-actions{display:none}
+
+/* Search results: the shelves step aside; each rug shows where it's from. */
+.gallery.searching .shelves,.gallery.searching #swatches,.gallery.searching #patternNote{display:none}
+.results{display:grid;gap:14px}
+.results-head{font:600 .86rem/1.4 var(--f-body);color:var(--saffron)}
+.results-grid{display:grid}
+.results-grid small{display:block;margin-top:2px;font:500 .72rem/1.3 var(--f-body);color:rgba(242,230,204,.6)}
+.results-grid button[aria-checked="true"] small{color:rgba(216,154,46,.8)}
+.results-grid mark{background:none;color:inherit;text-decoration:underline;text-decoration-color:var(--saffron);text-decoration-thickness:2px;text-underline-offset:3px}
+
 /* Narrow window: one column, the page scrolls as a whole */
 @media (max-width:860px){
   .layout{grid-template-columns:1fr;grid-auto-rows:max-content;overflow:auto}
@@ -357,3 +428,5 @@ h2{margin:0 0 8px;font:600 .84rem/1.3 var(--f-body);color:var(--saffron)}
   .shelf-fan img:nth-child(3){left:50px}
   .swatches .special{grid-template-columns:110px 1fr}
 }
+@media (max-width:640px){.brand span{display:none}}
+@media (prefers-reduced-motion:reduce){.dice.rolling svg{animation:none}}

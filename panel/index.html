@@ -12,6 +12,14 @@
     <svg viewBox="0 0 40 28" aria-hidden="true"><rect x="1" y="1" width="38" height="26" rx="2" fill="#22130c"/><rect x="4" y="4" width="32" height="20" fill="#f2e6cc"/><rect x="6.5" y="6.5" width="27" height="15" fill="#8f1b1d"/><path d="M20 8.5 27 14l-7 5.5L13 14z" fill="#22130c"/><path d="M20 11 23.5 14 20 17 16.5 14z" fill="#f2e6cc"/><circle cx="20" cy="14" r="1.3" fill="#d89a2e"/></svg>
     <span>Desktop Carpet</span>
   </div>
+  <!-- Search every rug in every pack, from the title bar (Ctrl+F / ⌘F) -->
+  <div class="find" role="search">
+    <svg class="find-icon" viewBox="0 0 16 16" aria-hidden="true"><circle cx="6.8" cy="6.8" r="4.9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m10.4 10.4 4 4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+    <label class="sr" for="findInput" data-t="searchLabel">Search rugs</label>
+    <input id="findInput" type="search" autocomplete="off" spellcheck="false" placeholder="Search rugs" aria-controls="results">
+    <kbd class="find-key" id="findKey" aria-hidden="true">Ctrl F</kbd>
+    <button type="button" class="find-clear" id="findClear" hidden><span class="sr" data-t="clear">Clear</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m3 3 6 6M9 3 3 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  </div>
 </header>
 
 <main class="layout" id="controls">
@@ -22,6 +30,50 @@
     <p class="upd-sub" id="updSub"></p>
     <button type="button" class="btn" id="updBtn" data-t="updInstall">Restart and update</button>
   </div>
+
+  <!-- The rug that's on the desktop now, with everything that changes it -->
+  <section class="panel now" id="settings" aria-labelledby="nowTitle">
+    <h2 id="nowTitle" data-t="nowTitle">On your desktop</h2>
+    <div class="now-rug group">
+      <figure class="now-pic"><img id="nowImg" alt=""></figure>
+      <div class="now-text">
+        <b id="nowName"></b>
+        <span class="now-origin"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6zm0 8.4A2.4 2.4 0 1 1 6 3.6a2.4 2.4 0 0 1 0 4.8z" fill="currentColor"/></svg><span id="nowOrigin"></span></span>
+        <button type="button" class="btn small dice" id="surpriseBtn"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><g fill="currentColor"><circle cx="5.2" cy="5.2" r="1.25"/><circle cx="10.8" cy="5.2" r="1.25"/><circle cx="8" cy="8" r="1.25"/><circle cx="5.2" cy="10.8" r="1.25"/><circle cx="10.8" cy="10.8" r="1.25"/></g></svg><span data-t="surprise">Surprise me</span></button>
+      </div>
+    </div>
+    <div class="recent group" id="recentRow" hidden>
+      <h3 data-t="recent">Recent</h3>
+      <div class="recent-list" id="recentList"></div>
+    </div>
+    <div class="group sizes">
+      <div>
+        <h3 data-t="size">Size</h3>
+        <div class="seg" id="sizeSeg">
+          <button type="button" data-v="kucuk" data-t="small">Small</button>
+          <button type="button" data-v="orta" data-t="medium">Medium</button>
+          <button type="button" data-v="buyuk" data-t="large">Large</button>
+        </div>
+      </div>
+      <div>
+        <h3 data-t="weight">Weight</h3>
+        <div class="seg" id="weightSeg">
+          <button type="button" data-v="hafif" data-t="light">Light</button>
+          <button type="button" data-v="normal" data-t="normal">Normal</button>
+          <button type="button" data-v="agir" data-t="heavy">Heavy</button>
+        </div>
+      </div>
+    </div>
+    <div class="group toggles">
+      <label class="toggle"><input type="checkbox" id="tShow"><span data-t="showRug">Show the carpet</span></label>
+      <label class="toggle"><input type="checkbox" id="tTop"><span data-t="onTop">Keep it above windows</span></label>
+      <label class="toggle"><input type="checkbox" id="tLogin"><span data-t="login">Start with Windows</span></label>
+    </div>
+    <div class="rowgroup moves">
+      <button type="button" class="btn small" id="flattenBtn"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 11.5h13M3 8.5c2-2.2 3.4-2.2 5 0s3 2.2 5 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span data-t="flatten">Flatten</span></button>
+      <button type="button" class="btn small" id="centerBtn"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="5.2" y="5.8" width="5.6" height="4.4" rx=".6" fill="currentColor"/></svg><span data-t="center">Bring to center</span></button>
+    </div>
+  </section>
 
   <section class="label" id="license" aria-live="polite">
     <p class="eyebrow" id="licEyebrow">License</p>
@@ -60,13 +112,14 @@
         <code id="keyShown">DC-••••</code>
         <div class="key-row"><span id="keyState" class="ok">● <span data-t="active">Active</span></span><span id="keyDays"></span></div>
       </div>
-      <dl class="facts">
+      <button type="button" class="linkish more" id="licMore" aria-expanded="false" aria-controls="licFacts"><span data-t="details">Details</span><svg viewBox="0 0 10 6" aria-hidden="true"><path d="m1 1 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+      <dl class="facts" id="licFacts">
         <dt data-t="plan">Plan</dt><dd id="factPlan">—</dd>
         <dt data-t="until">Valid until</dt><dd id="factUntil">—</dd>
         <dt data-t="computers">Computers</dt><dd id="factDevices">—</dd>
       </dl>
       <p class="warn" id="soonWarn" hidden></p>
-      <div class="row">
+      <div class="row lic-actions">
         <button type="button" class="btn small" id="extendBtn" data-url="pricing">Add more time</button>
         <button type="button" class="btn small" id="removeBtn" data-t="remove">Remove this computer</button>
       </div>
@@ -97,34 +150,7 @@
     </div>
   </section>
 
-    <section class="panel settings" id="settings">
-      <div class="group sizes">
-        <div>
-          <h2 data-t="size">Size</h2>
-          <div class="seg" id="sizeSeg">
-            <button type="button" data-v="kucuk" data-t="small">Small</button>
-            <button type="button" data-v="orta" data-t="medium">Medium</button>
-            <button type="button" data-v="buyuk" data-t="large">Large</button>
-          </div>
-        </div>
-        <div>
-          <h2 data-t="weight">Weight</h2>
-          <div class="seg" id="weightSeg">
-            <button type="button" data-v="hafif" data-t="light">Light</button>
-            <button type="button" data-v="normal" data-t="normal">Normal</button>
-            <button type="button" data-v="agir" data-t="heavy">Heavy</button>
-          </div>
-        </div>
-      </div>
-      <div class="group">
-        <label class="toggle"><input type="checkbox" id="tShow"><span data-t="showRug">Show the carpet</span></label>
-        <label class="toggle"><input type="checkbox" id="tTop"><span data-t="onTop">Keep it above windows</span></label>
-        <label class="toggle"><input type="checkbox" id="tLogin"><span data-t="login">Start with Windows</span></label>
-      </div>
-      <div class="row rowgroup">
-        <button type="button" class="btn small" id="flattenBtn" data-t="flatten">Flatten</button>
-        <button type="button" class="btn small" id="centerBtn" data-t="center">Bring to center</button>
-      </div>
+    <section class="panel help">
       <details class="tips">
         <summary data-t="tipsTitle">How to use it</summary>
         <ul>
@@ -155,6 +181,11 @@
   <section class="panel gallery" aria-labelledby="galleryTitle">
     <h2 class="sr" id="galleryTitle" data-t="pattern">Pattern</h2>
       <div class="lock" id="lockNote" hidden><span data-t="locked">Activate a license to lay down the carpet.</span></div>
+    <!-- Search results: every rug that matches, from any pack -->
+    <div class="results" id="results" hidden>
+      <p class="results-head" id="resultsHead" role="status"></p>
+      <div class="grid results-grid swatches group" id="resultsGrid" role="radiogroup" aria-labelledby="resultsHead"></div>
+    </div>
     <nav class="shelves" role="tablist">
       <!-- The newest pack is featured: a wide tab across the top of the shelf -->
       <button type="button" role="tab" data-coll="mediterranean" aria-selected="false" class="shelf-featured shelf-med">

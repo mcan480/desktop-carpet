@@ -7,6 +7,7 @@
   const I18N = window.DC_I18N;
   I18N.setPlatform(dc.platform);
   if (dc.platform === 'darwin') document.documentElement.classList.add('mac');
+  $('#findKey').textContent = dc.platform === 'darwin' ? '⌘F' : 'Ctrl F';
 
   let T = I18N.strings('en'), lang = 'en', st = null, busy = false;
 
@@ -14,6 +15,9 @@
     document.documentElement.lang = lang;
     $$('[data-t]').forEach((el) => { const v = T[el.dataset.t]; if (typeof v === 'string') el.textContent = v; });
     $$('[data-tp]').forEach((el) => { const v = T[el.dataset.tp]; if (typeof v === 'string') el.placeholder = v; });
+    $('#findInput').placeholder = T.searchPh(RUG_COUNT);
+    index = null;
+    if ($('#findInput').value.trim()) runSearch();
   }
 
   const fmtDate = (iso) => {
@@ -69,6 +73,12 @@
     showView(view);
 
     $('#licEyebrow').textContent = T.license + (L.plan ? ` · ${T[L.plan] || L.plan}` : '');
+    // Simply active (nothing running out): the license folds into a small tag under the rug.
+    const soon = Number.isFinite(L.daysLeft) && L.daysLeft <= 3;
+    $('.side').classList.toggle('lic-quiet', view === 'active' && !soon);
+    const open = $('#license').classList.contains('open');
+    $('#licMore').setAttribute('aria-expanded', String(open));
+    $('#licMore span').textContent = open ? T.hideDetails : T.details;
 
     if (view === 'active') {
       $('#keyShown').textContent = maskKey(L.key) || 'DC-••••';
@@ -79,7 +89,6 @@
       $('#factPlan').textContent = T[L.plan] || L.plan || '—';
       $('#factUntil').textContent = L.expiresAt ? fmtDate(L.expiresAt) : '—';
       $('#factDevices').textContent = L.maxDevices ? `${L.devices ?? 1} / ${L.maxDevices}` : '—';
-      const soon = Number.isFinite(L.daysLeft) && L.daysLeft <= 3;
       $('#soonWarn').hidden = !soon;
       if (soon) $('#soonWarn').textContent = L.plan === 'trial' ? T.trialSoon(L.daysLeft) : T.soon(L.daysLeft);
       $('#extendBtn').textContent = L.plan === 'trial' ? T.choosePlan : T.extend;
@@ -109,11 +118,13 @@
     $('#controls').classList.toggle('locked', !unlocked);
     $('#lockNote').hidden = unlocked || L.state === 'checking';
     const r = st.rug || {};
-    $$('#swatches button[data-style]').forEach((b) => {
+    const allowed = (k) => !(expiredPaid && k !== 'klasik');
+    $$('.gallery button[data-style]').forEach((b) => {
       b.setAttribute('aria-checked', String(b.dataset.style === r.style));
-      b.disabled = expiredPaid && b.dataset.style !== 'klasik';
+      b.disabled = !allowed(b.dataset.style);
     });
     if (r.style !== shownStyle) {
+      const first = shownStyle === null;
       shownStyle = r.style;
       const btn = $(`#swatches [data-style="${r.style}"]`);
       const coll = btn?.closest('.coll'), home = btn?.closest('.country');
@@ -122,7 +133,28 @@
       for (const room of rooms) if (btn && room.el.contains(btn)) room.pick = r.style;
       // A new pack gets the gallery once: the first time the panel opens after it arrives, it opens on that pack.
       if (featured && !featuredSeen) { featuredSeen = true; showColl(featured); try { localStorage.setItem('dc-featured', featured); } catch {} }
+      // outside the showrooms (where it hangs large), bring the rug in use into view
+      else if (btn && !btn.closest('.showroom') && !btn.closest('[hidden]')) btn.scrollIntoView({ block: 'nearest', behavior: first ? 'auto' : 'smooth' });
+      if (btn) remember(r.style);
     }
+    // On your desktop
+    if (r.style && $('#nowImg').dataset.k !== r.style) { $('#nowImg').dataset.k = r.style; $('#nowImg').src = `./thumbs/${r.style}.webp`; }
+    $('#nowName').textContent = r.style ? nameOf(r.style) : '';
+    $('#nowOrigin').textContent = r.style ? whereFrom(r.style) : '';
+    $('#surpriseBtn').disabled = !unlocked || expiredPaid;
+    const rec = recent.filter((k) => k !== r.style).slice(0, 5);
+    $('#recentRow').hidden = !rec.length;
+    const list = $('#recentList');
+    if (list.dataset.keys !== rec.join(',') + '|' + lang) {
+      list.dataset.keys = rec.join(',') + '|' + lang;
+      list.replaceChildren(...rec.map((k) => {
+        const b = document.createElement('button'); b.type = 'button'; b.dataset.k = k; b.title = nameOf(k); b.setAttribute('aria-label', nameOf(k));
+        const img = document.createElement('img'); img.src = `./thumbs/${k}.webp`; img.alt = '';
+        b.append(img); b.addEventListener('click', () => dc.rug('style', k));
+        return b;
+      }));
+    }
+    list.querySelectorAll('button').forEach((b) => { b.disabled = !unlocked || !allowed(b.dataset.k); });
     for (const room of rooms) if (!room.hover) room.show(room.pick);
     $('#patternNote').hidden = !expiredPaid;
     $$('#sizeSeg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === r.size)));
@@ -197,20 +229,20 @@
   // worker replaces it (so no large pictures ship with the app). One drawing at a time, the most recently asked-for
   // rug first; drawn pictures are kept for the session.
   const previews = (() => {
-    const cache = new Map(), want = new Map();   // rug -> callback, in the order they were asked for
+    const cache = new Map(), want = new Map();   // rug -> callbacks, in the order they were asked for
     let worker = null, busy = null, broken = false;
     function start() {
       if (worker || broken) return !!worker;
       try { worker = new Worker('rugworker.js'); } catch { broken = true; return false; }
       worker.onmessage = ({ data }) => {
-        const cb = want.get(data.key);
+        const cbs = want.get(data.key);
         want.delete(data.key);
         busy = null;
         if (data.blob) {
           const url = URL.createObjectURL(data.blob);
           cache.set(data.key, url);
           while (cache.size > 60) { const [k, u] = cache.entries().next().value; cache.delete(k); URL.revokeObjectURL(u); }
-          cb?.(url);
+          cbs?.forEach((cb) => cb(url));
         }
         pump();
       };
@@ -226,10 +258,16 @@
       // calls back with the sharp picture's URL: now if it was drawn before (returns true), else when it's ready
       get(k, cb) {
         if (cache.has(k)) { cb(cache.get(k)); return true; }
-        want.delete(k); want.set(k, cb); pump(); return false;
+        const cbs = want.get(k) || new Set();
+        want.delete(k); cbs.add(cb); want.set(k, cbs); pump(); return false;
       },
-      // no longer needed (unless it's being drawn already)
-      drop(k) { if (busy !== k) want.delete(k); },
+      // this one no longer needs it (nor does anyone else: then it isn't drawn, unless it's being drawn already)
+      drop(k, cb) {
+        const cbs = want.get(k);
+        if (!cbs) return;
+        cbs.delete(cb);
+        if (!cbs.size && busy !== k) want.delete(k);
+      },
     };
   })();
 
@@ -239,14 +277,14 @@
     const btns = [...el.querySelectorAll('[data-style]')], img = el.querySelector('.showcase-rug img');
     const room = {
       el, pick: btns[0]?.dataset.style, hover: false, shown: null,
+      got(url) { img.src = url; },
       show(k) {
         const b = el.querySelector(`[data-style="${k}"]`);
         if (!b) return;
         if (room.shown !== k) {
-          if (room.shown) previews.drop(room.shown);
+          if (room.shown) previews.drop(room.shown, room.got);
           room.shown = k;
-          const sharp = previews.get(k, (url) => { if (room.shown === k) img.src = url; });
-          if (!sharp) img.src = `./thumbs/${k}.webp`;
+          if (!previews.get(k, room.got)) img.src = `./thumbs/${k}.webp`;
         }
         el.querySelector('.showcase-text h3').textContent = b.querySelector('span').textContent;
         el.querySelector('.showcase-origin span').textContent = T['o_' + k] || T[b.closest('.country')?.dataset.country] || '';
@@ -295,6 +333,97 @@
   $('#quitBtn').addEventListener('click', () => dc.quit());
   $('#langSel').addEventListener('change', (e) => dc.setting('lang', e.target.value));
   $('#updBtn').addEventListener('click', (e) => { e.target.disabled = true; dc.installUpdate(); });
+
+  $('#licMore').addEventListener('click', () => { $('#license').classList.toggle('open'); render(); });
+
+  // ---- what a rug is called and where it comes from ("Amalfi Lemons", "Italy · Mediterranean") ----
+  const RUG_COUNT = new Set($$('#swatches [data-style]').map((b) => b.dataset.style)).size;
+  function nameOf(k, S = T) { return S['s_' + k] || $(`#swatches [data-style="${k}"] span`)?.textContent || k; }
+  function whereFrom(k, S = T) {
+    return [...new Set(placesOf(k, S))].slice(0, 2).join(' · ');
+  }
+  // the town (if known), the country (in packs with countries), the pack
+  function placesOf(k, S = T) {
+    const b = $(`#swatches [data-style="${k}"]`);
+    if (!b) return [];
+    const country = b.closest('.country')?.dataset.country;
+    return [S['o_' + k], country && S[country], S[$(`.shelves [data-coll="${b.closest('.coll')?.dataset.coll}"] [data-t]`)?.dataset.t]].filter(Boolean);
+  }
+
+  // ---- the last few rugs used, to go back to one in a click (kept on this computer) ----
+  let recent = [];
+  try { recent = JSON.parse(localStorage.getItem('dc-recent') || '[]').filter((k) => typeof k === 'string'); } catch {}
+  function remember(k) {
+    recent = [k, ...recent.filter((x) => x !== k)].filter((x) => $(`#swatches [data-style="${x}"]`)).slice(0, 6);
+    try { localStorage.setItem('dc-recent', JSON.stringify(recent)); } catch {}
+  }
+
+  // ---- Surprise me: any rug you can use but the one that's down now (and not Invisible) ----
+  $('#surpriseBtn').addEventListener('click', () => {
+    const cur = st?.rug?.style;
+    const pool = [...new Set($$('#swatches button[data-style]').filter((b) => !b.disabled).map((b) => b.dataset.style))].filter((k) => k !== cur && k !== 'gorunmez');
+    if (!pool.length) return;
+    const btn = $('#surpriseBtn');
+    btn.classList.remove('rolling'); void btn.offsetWidth; btn.classList.add('rolling');
+    dc.rug('style', pool[Math.floor(Math.random() * pool.length)]);
+  });
+
+  // ---- search: by name, place, country or pack, in the panel's language or in English ----
+  const findInput = $('#findInput');
+  let index = null;
+  const fold = (x) => String(x || '').toLocaleLowerCase(lang).normalize('NFD').replace(/\p{M}/gu, '').replace(/ı/g, 'i');
+  function buildIndex() {
+    const EN = I18N.strings('en'), seen = new Set();
+    index = [];
+    $$('#swatches [data-style]').forEach((b) => {
+      const k = b.dataset.style;
+      if (seen.has(k)) return;
+      seen.add(k);
+      const name = nameOf(k), from = whereFrom(k);
+      index.push({ k, name, from, fname: fold(name), hay: fold([name, ...placesOf(k), nameOf(k, EN), ...placesOf(k, EN)].join(' | ')) });
+    });
+  }
+  function nameWithMark(it, words) {
+    const el = document.createElement('span');
+    const at = it.fname.length === it.name.length ? it.fname.indexOf(words[0]) : -1;
+    if (at < 0) { el.textContent = it.name; return el; }
+    const m = document.createElement('mark'); m.textContent = it.name.slice(at, at + words[0].length);
+    el.append(it.name.slice(0, at), m, it.name.slice(at + words[0].length));
+    return el;
+  }
+  function runSearch() {
+    const q = findInput.value.trim();
+    $('.find').classList.toggle('has-q', !!q);
+    $('#findClear').hidden = !q;
+    $('.gallery').classList.toggle('searching', !!q);
+    $('#results').hidden = !q;
+    if (!q) return;
+    if (!index) buildIndex();
+    const words = fold(q).split(/\s+/).filter(Boolean);
+    const rank = (it) => (it.fname.startsWith(words[0]) ? 0 : words.every((w) => it.fname.includes(w)) ? 1 : 2);
+    const hits = index.filter((it) => words.every((w) => it.hay.includes(w))).map((it, i) => [rank(it), i, it]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map((x) => x[2]);
+    $('#resultsHead').textContent = hits.length ? T.found(hits.length) : T.noMatch;
+    $('#resultsGrid').replaceChildren(...hits.map((it) => {
+      const b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'radio'); b.dataset.style = it.k;
+      const img = document.createElement('img'); img.src = `./thumbs/${it.k}.webp`; img.alt = '';
+      const label = nameWithMark(it, words), small = document.createElement('small'); small.textContent = it.from;
+      label.append(small); b.append(img, label);
+      b.addEventListener('click', () => dc.rug('style', it.k));
+      return b;
+    }));
+    $('.gallery').scrollTop = 0;
+    render();
+  }
+  findInput.addEventListener('input', runSearch);
+  findInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); if (findInput.value) { findInput.value = ''; runSearch(); } else findInput.blur(); }
+    else if (e.key === 'Enter') { e.preventDefault(); $('#resultsGrid button:not(:disabled)')?.click(); }
+    else if (e.key === 'ArrowDown') { const f = $('#resultsGrid button:not(:disabled)'); if (f) { e.preventDefault(); f.focus(); } }
+  });
+  $('#findClear').addEventListener('click', () => { findInput.value = ''; runSearch(); findInput.focus(); });
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase() === 'f') { e.preventDefault(); findInput.focus(); findInput.select(); }
+  });
 
   // ---- report a problem: goes to the contact inbox on desktopcarpet.com ----
   const rep = $('#report'), repText = $('#reportText'), repEmail = $('#reportEmail'), repGo = $('#reportGo'), repMsg = $('#reportMsg');
