@@ -69,6 +69,20 @@ export const STYLES = {
   herati:    { name: 'Herati',              persia: 'herati' },
   kum:       { name: 'Kum İpeği',           persia: 'qom', silk: true },
   turkmen:   { name: 'Türkmen Gülü',        persia: 'turkmen' },
+  // Türkiye pack. Knotted Anatolian rugs:
+  usak:      { name: 'Uşak Madalyon',       turkiye: 'usak' },
+  lotto:     { name: 'Lotto',               turkiye: 'lotto' },
+  bergama:   { name: 'Bergama',             turkiye: 'bergama' },
+  yagcibedir:{ name: 'Yağcıbedir',          turkiye: 'yagcibedir' },
+  selcuklu:  { name: 'Selçuklu',            turkiye: 'seljuk' },
+  hereke:    { name: 'Hereke İpeği',        turkiye: 'hereke', silk: true },
+  iznik:     { name: 'İznik Lalesi',        turkiye: 'iznik' },
+  // ...and hooked rugs:
+  turkiyekart:{ name: 'Türkiye’den Selamlar', turkiye: 'postcard', fonts: true, hooked: true },
+  kapadokya: { name: 'Kapadokya Balonları', turkiye: 'cappadocia', hooked: true },
+  bogaz:     { name: 'Boğaz Vapuru',        turkiye: 'bosphorus', hooked: true },
+  pamukkale: { name: 'Pamukkale',           turkiye: 'pamukkale', hooked: true },
+  nazar:     { name: 'Nazar Boncuğu',       turkiye: 'nazar', hooked: true },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -678,13 +692,17 @@ function halloweenGhost(ctx, W, H, seed) {
 // a national-park poster, a ballfield and a court seen from above, a diner floor with its neon, Route 66.
 
 // Display fonts for the lettering. They ship with the panel; the rug page loads them before drawing these rugs.
+// (Latin and Latin Extended subsets: the extended one has letters like the İ of TÜRKİYE.)
+const LATIN = 'U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212,U+FEFF,U+FFFD';
+const LATIN_EXT = 'U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF';
 export const RUG_FONTS = [
-  ['Shrikhand', 'shrikhand-latin-400-normal.woff2', '400'],
-  ['Instrument Sans', 'instrument-sans-latin-700-normal.woff2', '700'],
+  ['Shrikhand', 'shrikhand-latin-400-normal.woff2', '400', LATIN],
+  ['Instrument Sans', 'instrument-sans-latin-700-normal.woff2', '700', LATIN],
+  ['Instrument Sans', 'instrument-sans-latin-ext-700-normal.woff2', '700', LATIN_EXT],
 ];
 export async function loadRugFonts(base = '../panel/fonts/') {
-  await Promise.all(RUG_FONTS.map(async ([family, file, weight]) => {
-    try { const f = new FontFace(family, `url(${base}${file})`, { weight }); await f.load(); document.fonts.add(f); } catch {}
+  await Promise.all(RUG_FONTS.map(async ([family, file, weight, unicodeRange]) => {
+    try { const f = new FontFace(family, `url(${base}${file})`, { weight, unicodeRange }); await f.load(); document.fonts.add(f); } catch {}
   }));
 }
 const SCRIPT = '"Shrikhand", Georgia, serif', BLOCK = '700 1px "Instrument Sans", "Arial Black", Arial, sans-serif';
@@ -738,7 +756,7 @@ const SCENES = [
 
 // Large-letter postcard: "Greetings from AMERICA", every letter a little scene, over a blue sky and green hills.
 // Sized in loops of the finished hooked rug, so the script is thick enough to read once it's made of wool.
-function americaPostcard(ctx, W, H, word = 'AMERICA', scenes = SCENES) {
+function americaPostcard(ctx, W, H, word = 'AMERICA', scenes = SCENES, capRows = 22, baseRows = 48) {
   const { cols, rows } = hookedPictureLoops(W, H), Lx = W / cols, Ly = H / rows;
   ctx.fillStyle = '#f3ead6'; ctx.fillRect(0, 0, W, H);                       // card
   const px = 2 * Lx, py = 2 * Ly, pw = W - 2 * px, ph = H - 2 * py;
@@ -755,7 +773,7 @@ function americaPostcard(ctx, W, H, word = 'AMERICA', scenes = SCENES) {
 
   // AMERICA: tall block letters, each filled with a scene, with a cream outline and a navy extrusion. Built at full
   // width on its own canvas, then squeezed sideways to fit, like the condensed letters on the real cards.
-  const cap = 22 * Ly, base = 48 * Ly;
+  const cap = capRows * Ly, base = baseRows * Ly;
   const probe = document.createElement('canvas').getContext('2d'); probe.font = blockFont(100);
   const F = cap / (probe.measureText('M').actualBoundingBoxAscent / 100);
   probe.font = blockFont(F);
@@ -2430,6 +2448,592 @@ function persTurkmen(ctx, W, H) {
   });
 }
 
+// ---------- Türkiye pack ----------
+// Anatolia's own carpets, knotted on a fine grid: the Uşak medallion and Lotto carpets, Bergama, Yağcıbedir, the Seljuk
+// carpets of Konya, Hereke silk and İznik florals. Then hooked pictures of the country: a large-letter postcard,
+// balloons over Cappadocia, a ferry on the Bosphorus, the terraces of Pamukkale and the nazar bead.
+
+const TURKIYE_FRAME = { dark: '#1c2340', a: '#b8262c', b: '#2f9aa0', line: '#efe6d0' };
+
+// Repeat a unit round the four sides of a border band `d` knots deep and `o` knots in from the edge: whole units on
+// every side, evenly spaced between the corner squares. unit(x, w, d, i) draws one in local coordinates (along the
+// band to the right, into the rug downward); corner(x, d) fills a corner square the same way.
+function turkBand(x, cols, rows, o, d, step, unit, corner) {
+  const sides = [[o, o, 0, cols - 2 * o], [cols - o, o, Math.PI / 2, rows - 2 * o], [cols - o, rows - o, Math.PI, cols - 2 * o], [o, rows - o, -Math.PI / 2, rows - 2 * o]];
+  for (const [ox, oy, ang, len] of sides) {
+    x.save(); x.translate(ox, oy); x.rotate(ang);
+    const { n, d: w } = evenSteps(len - 2 * d, step);
+    for (let i = 0; i < n; i++) { const a = Math.round(d + i * w); x.save(); x.translate(a, 0); unit(x, Math.round(d + (i + 1) * w) - a, d, i); x.restore(); }
+    if (corner) { x.save(); corner(x, d); x.restore(); }
+    x.restore();
+  }
+}
+
+// Frame of an Anatolian rug: a dark outer guard with reciprocal dots, the main band, then a light line and a dark
+// guard. Returns the field in knots.
+function turkFrame(x, cols, rows, C, bw, step, unit, corner) {
+  x.fillStyle = C.guard; x.fillRect(0, 0, cols, rows);
+  x.fillStyle = C.guard2; for (let i = 3; i < cols - 3; i += 3) { x.fillRect(i, 1, 1, 1); x.fillRect(i, rows - 2, 1, 1); } for (let i = 3; i < rows - 3; i += 3) { x.fillRect(1, i, 1, 1); x.fillRect(cols - 2, i, 1, 1); }
+  const line = (o, col) => { x.fillStyle = col; x.fillRect(o, o, cols - 2 * o, 1); x.fillRect(o, rows - 1 - o, cols - 2 * o, 1); x.fillRect(o, o, 1, rows - 2 * o); x.fillRect(cols - 1 - o, o, 1, rows - 2 * o); };
+  x.fillStyle = C.band; x.fillRect(3, 3, cols - 6, rows - 6);
+  turkBand(x, cols, rows, 3, bw - 6, step, unit, corner);
+  line(2, C.guard2); line(bw - 3, C.guard2); line(bw - 2, C.guard); line(bw - 1, C.guard);
+  x.fillStyle = C.field; x.fillRect(bw, bw, cols - 2 * bw, rows - 2 * bw);
+  return { fx: bw, fy: bw, fw: cols - 2 * bw, fh: rows - 2 * bw };
+}
+
+// Uşak border: long cartouches with a gold arabesque inside, a star between them.
+function cartoucheUnit(C) {
+  return (x, w, d) => {
+    const p = d * 0.22, cw = w * 0.74, m = d / 2;
+    const hex = (k, col) => { x.fillStyle = col; x.beginPath(); x.moveTo(k * 0.8, m); x.lineTo(p + k, p * 0.7 + k * 0.7); x.lineTo(cw - p - k, p * 0.7 + k * 0.7); x.lineTo(cw - k * 0.8, m); x.lineTo(cw - p - k, d - p * 0.7 - k * 0.7); x.lineTo(p + k, d - p * 0.7 - k * 0.7); x.closePath(); x.fill(); };
+    hex(0, C.cart2); hex(1.3, C.cart);
+    x.strokeStyle = C.cart2; x.lineWidth = 0.9; x.beginPath();
+    for (let t = 0; t <= 1.0001; t += 0.04) { const px = p + t * (cw - 2 * p), py = m + Math.sin(t * Math.PI * 2) * d * 0.13; t ? x.lineTo(px, py) : x.moveTo(px, py); }
+    x.stroke();
+    const sx = cw + (w - cw) / 2;
+    persStar(x, sx, m, (w - cw) * 0.5, d * 0.34, 8, 0.55, C.cart2, 0);
+    x.fillStyle = C.cart; x.fillRect(sx - 0.8, m - 0.8, 1.6, 1.6);
+  };
+}
+
+// Running arabesque border: a zigzag vine with split leaves at every turn.
+function rumiUnit(C) {
+  return (x, w, d, i) => {
+    const t = d * 0.26, b = d * 0.74, s = i % 2 ? -1 : 1;
+    const y0 = s > 0 ? t : b, y1 = s > 0 ? b : t;
+    x.strokeStyle = C.vine; x.lineWidth = 1.3; x.beginPath(); x.moveTo(0, y0); x.lineTo(w / 2, y1); x.lineTo(w, y0); x.stroke();
+    leaf(x, w / 2, y1, d * 0.36, s > 0 ? -Math.PI * 0.75 : Math.PI * 0.75, C.leaf);
+    leaf(x, w / 2, y1, d * 0.36, s > 0 ? -Math.PI * 0.25 : Math.PI * 0.25, C.leaf);
+    x.fillStyle = C.bud; x.beginPath(); x.arc(w / 2, y1 + s * d * 0.06, d * 0.1, 0, Math.PI * 2); x.fill();
+  };
+}
+
+// Kufic border of the Seljuk carpets: tall letters standing on a running line, pairs of them knotted together
+// with a bar, hooked at the top; drawn knot by knot so they stay crisp.
+function kuficUnit(C) {
+  return (x, w, d, i) => {
+    const R = (a, b, ww, hh, col) => { x.fillStyle = col; x.fillRect(a, b, ww, hh); };
+    const top = 3, base = d - 4, a = Math.round(w * 0.22), b = Math.round(w * 0.62), t2 = top + (i % 2 ? 0 : 2);
+    R(0, base, w, 2, C.kufic);                                   // the running line
+    R(a, t2, 2, base - t2, C.kufic); R(b, t2, 2, base - t2, C.kufic);
+    const my = Math.round((t2 + base) / 2) - 1;
+    R(a, my, b - a + 2, 2, C.kufic);                             // the knot bar
+    R(a - 2, t2, 2, 2, C.kufic); R(b + 2, t2, 2, 2, C.kufic);    // hooked tops
+    R(a + 2, my - 3, b - a - 2, 2, C.kufic2);                    // a navy lozenge in the loop
+    R(w - 1, base - 4, 1, 4, C.kufic); R(w - 2, base - 4, 1, 1, C.kufic);   // a short stem between pairs
+  };
+}
+
+// Eight-pointed star of two squares, the commonest star of Anatolian weaving.
+function star8(x, cx, cy, r, col) {
+  x.fillStyle = col;
+  for (const a of [0, Math.PI / 4]) { x.beginPath(); for (let k = 0; k < 4; k++) { const t = a + Math.PI / 4 + (k * Math.PI) / 2; const px = cx + Math.cos(t) * r, py = cy + Math.sin(t) * r; k ? x.lineTo(px, py) : x.moveTo(px, py); } x.closePath(); x.fill(); }
+}
+
+// A stepped diamond `n` knots across with a hook on each tip, laid knot by knot.
+function hookDiamond(x, cx, cy, n, cols) {
+  cx = Math.round(cx); cy = Math.round(cy);
+  for (let dy = -n; dy <= n; dy++) { const w = n - Math.abs(dy); for (let dx = -w; dx <= w; dx++) { const ring = Math.abs(dx) + Math.abs(dy); x.fillStyle = cols[Math.floor((n - ring) / 2) % cols.length]; x.fillRect(cx + dx, cy + dy, 1, 1); } }
+  x.fillStyle = cols[0];
+  for (const [ox, oy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const hx = cx + ox * (n + 1), hy = cy + oy * (n + 1); x.fillRect(hx, hy, 1, 1); x.fillRect(hx + ox, hy + oy, 1, 1); x.fillRect(hx + ox + oy, hy + oy + ox, 1, 1); x.fillRect(hx + ox - oy, hy + oy - ox, 1, 1); }
+}
+
+// Ottoman flowers for the court carpets and İznik: a slender tulip with needle petals, a fan-shaped carnation,
+// and the long serrated saz leaf.
+function tulip(x, cx, cy, s, ang, petal, inner) {
+  x.save(); x.translate(cx, cy); x.rotate(ang);
+  x.fillStyle = petal; x.beginPath(); x.moveTo(0, 0);
+  x.bezierCurveTo(-s * 0.42, -s * 0.08, -s * 0.36, -s * 0.62, -s * 0.24, -s * 1.02);
+  x.quadraticCurveTo(-s * 0.13, -s * 0.66, 0, -s * 0.94);
+  x.quadraticCurveTo(s * 0.13, -s * 0.66, s * 0.24, -s * 1.02);
+  x.bezierCurveTo(s * 0.36, -s * 0.62, s * 0.42, -s * 0.08, 0, 0);
+  x.fill();
+  if (inner) { x.fillStyle = inner; x.beginPath(); x.ellipse(0, -s * 0.42, s * 0.08, s * 0.3, 0, 0, Math.PI * 2); x.fill(); }
+  x.restore();
+}
+function carnation(x, cx, cy, s, ang, petal, inner, calyx) {
+  x.save(); x.translate(cx, cy); x.rotate(ang);
+  x.fillStyle = calyx; x.beginPath(); x.moveTo(-s * 0.12, 0); x.lineTo(s * 0.12, 0); x.lineTo(s * 0.2, -s * 0.34); x.lineTo(-s * 0.2, -s * 0.34); x.closePath(); x.fill();
+  const fan = (r1, r2, col) => {
+    x.fillStyle = col; x.beginPath(); x.moveTo(-s * 0.16, -s * 0.32);
+    for (let k = 0; k <= 10; k++) { const a = Math.PI * (1.12 + (k / 10) * 0.76), r = k % 2 ? r2 : r1; x.lineTo(Math.cos(a) * r, -s * 0.34 + Math.sin(a) * r); }
+    x.lineTo(s * 0.16, -s * 0.32); x.closePath(); x.fill();
+  };
+  fan(s * 0.66, s * 0.54, petal); if (inner) fan(s * 0.4, s * 0.32, inner);
+  x.restore();
+}
+function sazLeaf(x, x0, y0, x1, y1, bend, wid, col, vein) {
+  const mx = (x0 + x1) / 2 - (y1 - y0) * bend, my = (y0 + y1) / 2 + (x1 - x0) * bend;
+  const P = (t) => [(1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * mx + t * t * x1, (1 - t) * (1 - t) * y0 + 2 * (1 - t) * t * my + t * t * y1];
+  const N = 28, L = [], R = [];
+  for (let k = 0; k <= N; k++) {
+    const t = k / N, [px, py] = P(t), [qx, qy] = P(Math.min(1, t + 0.01)), [rx, ry] = P(Math.max(0, t - 0.01));
+    let nx = -(qy - ry), ny = qx - rx; const l = Math.hypot(nx, ny) || 1; nx /= l; ny /= l;
+    const w = wid * Math.sin(Math.PI * Math.pow(t, 0.75));
+    const notch = k % 3 === 1 && t > 0.2 && t < 0.9 ? 0.55 : 1;           // serrations on the outer edge
+    L.push([px + nx * w * notch, py + ny * w * notch]); R.push([px - nx * w * 0.8, py - ny * w * 0.8]);
+  }
+  x.fillStyle = col; x.beginPath(); L.forEach(([a, b], i) => (i ? x.lineTo(a, b) : x.moveTo(a, b))); for (let i = R.length - 1; i >= 0; i--) x.lineTo(R[i][0], R[i][1]); x.closePath(); x.fill();
+  if (vein) { x.strokeStyle = vein; x.lineWidth = 0.8; x.beginPath(); for (let t = 0.06; t <= 0.86; t += 0.04) { const [a, b] = P(t); t > 0.07 ? x.lineTo(a, b) : x.moveTo(a, b); } x.stroke(); }
+}
+
+// Uşak medallion carpet: a great navy medallion with gold tracery on madder red, half medallions cut by the sides,
+// star medallions top and bottom, gold scrolls in between; cartouches in the border.
+function turkUsak(ctx, W, H) {
+  const C = { guard: '#1b1a26', guard2: '#e2b84a', band: '#1f2e55', cart: '#a3262b', cart2: '#e2b84a', field: '#a8282c', field2: '#9a2428',
+    navy: '#1f2e55', blue: '#5a80b4', ivory: '#efe2c4', gold: '#e2b84a', green: '#4f7a52',
+    vine: '#e2b84a', vine2: '#e2b84a', leaf: '#4f7a52', bloom: '#efe2c4', bloom2: '#5a80b4' };
+  weavePicture(ctx, W, H, 130, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = turkFrame(x, cols, rows, C, 17, 26, cartoucheUnit(C), (x, d) => rosette(x, d / 2, d / 2, d * 0.4, 8, C.gold, C.cart, C.navy));
+    for (let y = fy; y < fy + fh; y++) if (Math.floor((y - fy) / 8) % 3 === 2) { x.fillStyle = C.field2; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    for (let j = 0; j < 4; j++) for (let i = 0; i < 9; i++) persSpiral(x, fx + (i + (j % 2 ? 0.5 : 0)) * fw / 8, fy + (j + 0.5) * fh / 4, 6, 1.4, (i + j) % 2 ? 1 : -1, C);
+    const cx = fx + fw / 2, cy = fy + fh / 2;
+    const medallion = (mx, my, rx, ry) => {
+      for (const d of [-1, 1]) { x.fillStyle = C.gold; x.beginPath(); x.moveTo(mx - rx * 0.2, my + d * ry * 0.84); x.lineTo(mx, my + d * ry * 1.24); x.lineTo(mx + rx * 0.2, my + d * ry * 0.84); x.fill(); }
+      persLobed(x, mx, my, rx + 1.5, ry + 1.5, 14, 0.12, C.gold);
+      persLobed(x, mx, my, rx, ry, 14, 0.12, C.navy);
+      for (const d of [-1, 1]) { x.fillStyle = C.navy; x.beginPath(); x.moveTo(mx - rx * 0.12, my + d * ry * 0.84); x.lineTo(mx, my + d * ry * 1.14); x.lineTo(mx + rx * 0.12, my + d * ry * 0.84); x.fill(); }
+      x.strokeStyle = C.gold; x.lineWidth = 1; x.beginPath(); x.ellipse(mx, my, rx * 0.68, ry * 0.68, 0, 0, Math.PI * 2); x.stroke();
+      for (let k = 0; k < 8; k++) { const a = (k * Math.PI) / 4; palmette(x, mx + Math.cos(a) * rx * 0.68, my + Math.sin(a) * ry * 0.68, Math.min(rx, ry) * 0.2, a + Math.PI / 2, k % 2 ? C.ivory : C.blue, C.cart); }
+      persLobed(x, mx, my, rx * 0.38, ry * 0.38, 8, 0.25, C.cart);
+      persStar(x, mx, my, rx * 0.26, ry * 0.26, 8, 0.6, C.gold, Math.PI / 8);
+      rosette(x, mx, my, Math.min(rx, ry) * 0.16, 8, C.ivory, C.cart, C.navy);
+    };
+    medallion(cx, cy, fw * 0.17, fh * 0.36);
+    medallion(fx, cy, fw * 0.13, fh * 0.3); medallion(fx + fw, cy, fw * 0.13, fh * 0.3);
+    for (const [mx, my] of [[fx + fw * 0.25, fy], [fx + fw * 0.75, fy], [fx + fw * 0.25, fy + fh], [fx + fw * 0.75, fy + fh]]) {
+      persStar(x, mx, my, fw * 0.1, fh * 0.22, 8, 0.72, C.gold, Math.PI / 8); persStar(x, mx, my, fw * 0.088, fh * 0.195, 8, 0.72, C.navy, Math.PI / 8);
+      persLobed(x, mx, my, fw * 0.05, fh * 0.11, 8, 0.2, C.cart); rosette(x, mx, my, 3.4, 8, C.gold, C.ivory, C.navy);
+    }
+    x.restore();
+  });
+}
+
+// Lotto carpet: the yellow arabesque lattice on red (named after the painter who kept putting it in his pictures):
+// octagons and cruciform leaves on a grid, small diamonds where the leaves meet, and a rumi vine in the border.
+function turkLotto(ctx, W, H) {
+  const C = { guard: '#1b1a26', guard2: '#e6c048', band: '#1f3d52', vine: '#e6c048', leaf: '#e6c048', bud: '#b0302c',
+    field: '#b0302c', field2: '#a22b29', gold: '#e6c048', dark: '#1f2a44', blue: '#3f6aa0', green: '#4f7a52' };
+  weavePicture(ctx, W, H, 130, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = turkFrame(x, cols, rows, C, 16, 13, rumiUnit(C), (x, d) => { persStar(x, d / 2, d / 2, d * 0.42, d * 0.42, 8, 0.6, C.gold, Math.PI / 8); x.fillStyle = C.bud; x.fillRect(d / 2 - 1, d / 2 - 1, 2, 2); });
+    for (let y = fy; y < fy + fh; y++) if (Math.floor((y - fy) / 7) % 4 === 1) { x.fillStyle = C.field2; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const nr = 3, th = fh / nr, nc = Math.max(3, Math.round(fw / th)), tw = fw / nc;
+    const outlined = (path) => { path(); x.strokeStyle = C.dark; x.lineWidth = 2; x.stroke(); x.fillStyle = C.gold; x.fill(); };
+    const arm = (cx, cy, ex, ey, flip) => {
+      const dx = ex - cx, dy = ey - cy, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L, nx = -uy * flip, ny = ux * flip;
+      const P = (t, o) => [cx + ux * L * t + nx * o, cy + uy * L * t + ny * o];
+      const pts = [P(0.3, 1.5), P(0.56, 2.2), P(0.66, 4.2), P(0.74, 1.6), P(0.94, 0), P(0.6, -1.8), P(0.3, -1.5)];
+      outlined(() => { x.beginPath(); pts.forEach(([a, b], i) => (i ? x.lineTo(a, b) : x.moveTo(a, b))); x.closePath(); });
+    };
+    const oct = (cx, cy, r) => { x.beginPath(); for (let k = 0; k < 8; k++) { const a = Math.PI / 8 + (k * Math.PI) / 4; const px = cx + Math.cos(a) * r, py = cy + Math.sin(a) * r; k ? x.lineTo(px, py) : x.moveTo(px, py); } x.closePath(); };
+    const nodes = [];
+    for (let j = 0; j < nr; j++) for (let i = 0; i < nc; i++) {
+      const cx = fx + (i + 0.5) * tw, cy = fy + (j + 0.5) * th;
+      for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) arm(cx, cy, cx + sx * tw / 2, cy + sy * th / 2, sx * sy);
+      // the octagon with a blue cross in it
+      oct(cx, cy, Math.min(tw, th) * 0.24); x.strokeStyle = C.dark; x.lineWidth = 3.6; x.stroke(); x.strokeStyle = C.gold; x.lineWidth = 1.6; x.stroke();
+      x.fillStyle = C.blue; x.fillRect(cx - 3, cy - 1, 6, 2); x.fillRect(cx - 1, cy - 3, 2, 6);
+      x.fillStyle = C.gold; x.fillRect(cx - 0.6, cy - 0.6, 1.2, 1.2);
+      // kites between neighbours
+      for (const [kx, ky, hor] of [[cx + tw / 2, cy, 0], [cx, cy + th / 2, 1]]) {
+        const a = hor ? tw * 0.16 : tw * 0.07, b = hor ? th * 0.07 : th * 0.16;
+        outlined(() => { x.beginPath(); x.moveTo(kx - a, ky); x.lineTo(kx, ky - b); x.lineTo(kx + a, ky); x.lineTo(kx, ky + b); x.closePath(); });
+        x.fillStyle = C.green; x.fillRect(kx - 1, ky - 1, 2, 2);
+      }
+      nodes.push([cx - tw / 2, cy - th / 2], [cx + tw / 2, cy + th / 2], [cx + tw / 2, cy - th / 2], [cx - tw / 2, cy + th / 2]);
+    }
+    for (const [nx, ny] of nodes) { outlined(() => { x.beginPath(); x.moveTo(nx - 4, ny); x.lineTo(nx, ny - 4); x.lineTo(nx + 4, ny); x.lineTo(nx, ny + 4); x.closePath(); }); x.fillStyle = C.blue; x.fillRect(nx - 1, ny - 1, 2, 2); }
+    x.restore();
+  });
+}
+
+// Bergama: a bold village rug. A great stepped navy square with an ivory hooked octagon in it, hooked diamonds
+// either side, latch hooks and S motifs, and a red and ivory crenellated border between barber-pole stripes.
+function turkBergama(ctx, W, H) {
+  const C = { navy: '#1e2a52', ivory: '#efe2c4', red: '#a8282c', field2: '#982428', gold: '#e0a83a', green: '#3f7a4f', blue: '#5a86b8', dark: '#22181a' };
+  weavePicture(ctx, W, H, 100, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    R(0, 0, cols, rows, C.navy);
+    // colorAt(i, j, len) for the knot i along a side and j into the rug, on all four sides of a band `o` in
+    const four = (o, depth, colorAt) => {
+      for (const [len, map] of [[cols - 2 * o, (i, j) => [o + i, o + j]], [cols - 2 * o, (i, j) => [o + i, rows - 1 - o - j]], [rows - 2 * o, (i, j) => [o + j, o + i]], [rows - 2 * o, (i, j) => [cols - 1 - o - j, o + i]]])
+        for (let i = 0; i < len; i++) for (let j = 0; j < depth; j++) { const c = colorAt(i, j, len); if (c) { const [a, b] = map(i, j); R(a, b, 1, 1, c); } }
+    };
+    const pole = (o) => four(o, 3, (i, j) => [C.ivory, C.red, C.navy][Math.floor((i + j + 300) / 2) % 3]);
+    const bo = 5, bd = 10;
+    four(bo, bd, (i, j, len) => {
+      if (i < bd || i >= len - bd) return null;
+      const { d } = evenSteps(len - 2 * bd, 8), u = i - bd, k = Math.floor(u / d), ph = (u - k * d) / d;
+      const deep = ph >= 0.25 && ph < 0.75 ? 6 : 3;
+      if (j < deep) return Math.abs(ph - 0.5) < 0.1 && (j === 2 || j === 3) ? C.navy : C.red;
+      return (ph < 0.1 || ph > 0.9) && (j === 6 || j === 7) ? C.green : C.ivory;
+    });
+    for (const [a, b] of [[bo, bo], [cols - bo - bd, bo], [bo, rows - bo - bd], [cols - bo - bd, rows - bo - bd]]) { R(a, b, bd, bd, C.red); R(a + 3, b + 3, bd - 6, bd - 6, C.ivory); R(a + 4, b + 4, bd - 8, bd - 8, C.navy); }
+    pole(2); pole(bo + bd);
+    const fx = bo + bd + 3, fy = fx, fw = cols - 2 * fx, fh = rows - 2 * fy;
+    for (let y = fy; y < fy + fh; y++) R(fx, y, fw, 1, Math.floor((y - fy) / 6) % 4 === 3 ? C.field2 : C.red);
+    const cx = Math.round(fx + fw / 2), cy = Math.round(fy + fh / 2);
+    const sq = (r, cut, col) => { for (let dy = -r; dy <= r; dy++) { const hw = r - Math.max(0, Math.abs(dy) - (r - cut)); R(cx - hw, cy + dy, 2 * hw + 1, 1, col); } };
+    const r0 = Math.round(fh * 0.37);
+    for (let k = -r0 + 9; k <= r0 - 9; k += 4) {                 // latch hooks round the square
+      R(cx + k, cy - r0 - 2, 1, 2, C.ivory); R(cx + k + 1, cy - r0 - 2, 1, 1, C.ivory);
+      R(cx + k, cy + r0 + 1, 1, 2, C.ivory); R(cx + k + 1, cy + r0 + 2, 1, 1, C.ivory);
+      R(cx - r0 - 2, cy + k, 2, 1, C.ivory); R(cx - r0 - 2, cy + k + 1, 1, 1, C.ivory);
+      R(cx + r0 + 1, cy + k, 2, 1, C.ivory); R(cx + r0 + 2, cy + k + 1, 1, 1, C.ivory);
+    }
+    sq(r0, 8, C.navy); sq(r0 - 2, 7, C.gold); sq(r0 - 3, 7, C.navy);
+    sq(Math.round(r0 * 0.66), 6, C.ivory); sq(Math.round(r0 * 0.66) - 2, 5, C.green);
+    sq(Math.round(r0 * 0.42), 4, C.red);
+    star8(x, cx + 0.5, cy + 0.5, r0 * 0.3, C.gold); R(cx - 1, cy - 1, 3, 3, C.navy); R(cx, cy, 1, 1, C.ivory);
+    for (const [sx, sy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) hookDiamond(x, cx + sx * Math.round(r0 * 0.66), cy + sy * Math.round(r0 * 0.66), 3, [C.ivory, C.red]);
+    const S = (a, b, col) => { for (const [dx, dy] of [[0, 0], [1, 0], [5, 0], [6, 0], [0, 1], [2, 1], [4, 1], [6, 1], [2, 2], [3, 2], [4, 2], [3, 3], [3, 4]]) R(a + dx - 2, b + dy, 1, 1, col); }; // ram's horn
+    for (const s of [-1, 1]) {
+      const hx = cx + s * Math.round(fw * 0.37);
+      hookDiamond(x, hx, cy, Math.round(fh * 0.23), [C.ivory, C.navy, C.gold, C.red, C.blue]);
+      for (const dy of [-1, 1]) { star8(x, hx + 0.5, cy + dy * Math.round(fh * 0.38) + 0.5, 3.4, C.gold); R(hx, cy + dy * Math.round(fh * 0.38), 1, 1, C.red); }
+      for (const dy of [-1, 1]) S(cx + s * Math.round(fw * 0.47) - 1, cy + dy * Math.round(fh * 0.36) - 2, C.ivory);
+      for (const dy of [-1, 1]) S(cx + s * Math.round(fw * 0.22) - 1, cy + dy * Math.round(fh * 0.43) - 2, C.gold);
+    }
+  });
+}
+
+// Yağcıbedir: the dark rugs of the Balıkesir hills. A red stepped hexagon with an ivory star on a blue-black field,
+// octagons either side, little stars and crosses everywhere; stars and diamonds in a red border.
+function turkYagcibedir(ctx, W, H) {
+  const C = { guard: '#14141f', guard2: '#efe6d2', band: '#7e1f26', field: '#181b2e', field2: '#1f2338', red: '#8e2228', ivory: '#efe6d2', navy: '#2a3358', brown: '#6a3a2a', gold: '#d9a64a' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = turkFrame(x, cols, rows, C, 16, 12, (x, w, d, i) => {
+      if (i % 2 === 0) { star8(x, w / 2, d / 2, d * 0.36, C.ivory); persStar(x, w / 2, d / 2, d * 0.18, d * 0.18, 4, 0.5, C.red, Math.PI / 4); }
+      else { x.fillStyle = C.field; x.beginPath(); x.moveTo(w / 2, d * 0.12); x.lineTo(w * 0.92, d / 2); x.lineTo(w / 2, d * 0.88); x.lineTo(w * 0.08, d / 2); x.closePath(); x.fill(); x.fillStyle = C.gold; x.fillRect(w / 2 - 1, d / 2 - 1, 2, 2); }
+    }, (x, d) => { star8(x, d / 2, d / 2, d * 0.4, C.gold); x.fillStyle = C.field; x.fillRect(d / 2 - 1, d / 2 - 1, 2, 2); });
+    for (let y = fy; y < fy + fh; y++) if (Math.floor((y - fy) / 5) % 4 === 1) { x.fillStyle = C.field2; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // little stars and crosses on a grid
+    for (let j = 0; j < 7; j++) for (let i = 0; i < 13; i++) {
+      const px = fx + (i + (j % 2 ? 0.5 : 0)) * fw / 12.5, py = fy + (j + 0.5) * fh / 7;
+      if ((i + j) % 3 === 0) star8(x, px, py, 2.6, (i + j) % 2 ? C.ivory : C.red);
+      else if ((i + j) % 3 === 1) { x.fillStyle = (i % 2) ? C.ivory : C.gold; x.fillRect(px - 2, py - 0.5, 4, 1); x.fillRect(px - 0.5, py - 2, 1, 4); }
+      else { x.fillStyle = C.brown; x.fillRect(px - 1, py - 1, 2, 2); }
+    }
+    const cx = fx + fw / 2, cy = fy + fh / 2;
+    const hexa = (a, b, h, col) => { x.fillStyle = col; x.beginPath(); x.moveTo(cx - a, cy); x.lineTo(cx - b, cy - h); x.lineTo(cx + b, cy - h); x.lineTo(cx + a, cy); x.lineTo(cx + b, cy + h); x.lineTo(cx - b, cy + h); x.closePath(); x.fill(); };
+    const A = fw * 0.26, B = fw * 0.14, Hh = fh * 0.36;
+    hexa(A + 3.6, B + 2.4, Hh + 2.6, C.ivory); hexa(A, B, Hh, C.red);
+    hexa(A * 0.72, B * 0.66, Hh * 0.7, C.field);
+    star8(x, cx, cy, fh * 0.24, C.ivory); star8(x, cx, cy, fh * 0.16, C.red); star8(x, cx, cy, fh * 0.08, C.gold); x.fillStyle = C.field; x.fillRect(cx - 1, cy - 1, 2, 2);
+    for (const s of [-1, 1]) star8(x, cx + s * A * 0.62, cy, fh * 0.07, C.gold);
+    // octagons either side
+    for (const s of [-1, 1]) {
+      const ox = cx + s * fw * 0.4;
+      persStar(x, ox, cy, fh * 0.26, fh * 0.26, 8, 0.92, C.ivory, Math.PI / 8); persStar(x, ox, cy, fh * 0.23, fh * 0.23, 8, 0.92, C.navy, Math.PI / 8);
+      star8(x, ox, cy, fh * 0.17, C.red); star8(x, ox, cy, fh * 0.1, C.ivory); x.fillStyle = C.red; x.fillRect(ox - 1, cy - 1, 2, 2);
+    }
+    // quarter hexagons in the corners
+    for (const [qx, qy] of [[fx, fy], [fx + fw, fy], [fx, fy + fh], [fx + fw, fy + fh]]) { star8(x, qx, qy, fh * 0.2, C.red); star8(x, qx, qy, fh * 0.12, C.ivory); }
+    x.restore();
+  });
+}
+
+// Seljuk carpet of Konya: rows of small hooked octagons in two blues, and the great kufic border the Seljuk weavers
+// were known for.
+function turkSelcuklu(ctx, W, H) {
+  const C = { guard: '#1a1a2a', guard2: '#d9b871', band: '#8e3a2a', kufic: '#e3cc8e', kufic2: '#1f2f55', field: '#2f4f86', field2: '#2b497d', light: '#8fb0dc', navy: '#1a2950', ivory: '#ece0c2', red: '#8e3a2a' };
+  weavePicture(ctx, W, H, 110, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = turkFrame(x, cols, rows, C, 22, 13, kuficUnit(C), (x, d) => { star8(x, d / 2, d / 2, d * 0.4, C.kufic); star8(x, d / 2, d / 2, d * 0.2, C.navy); });
+    for (let y = fy; y < fy + fh; y++) if (Math.floor((y - fy) / 6) % 5 === 2) { x.fillStyle = C.field2; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const nr = 4, dh = fh / nr, nc = Math.round((fw / dh) * 1.1), dw = fw / nc;
+    for (let j = 0; j < nr; j++) for (let i = -1; i <= nc; i++) {
+      const cx = Math.round(fx + (i + 0.5 + (j % 2 ? 0.5 : 0)) * dw), cy = Math.round(fy + (j + 0.5) * dh), r = Math.round(Math.min(dw, dh) * 0.3);
+      const col = j % 2 ? C.light : C.navy, in2 = j % 2 ? C.navy : C.light;
+      for (let dy = -r; dy <= r; dy++) { const hw = r - Math.max(0, Math.abs(dy) - Math.round(r * 0.45)); R(cx - hw, cy + dy, 2 * hw + 1, 1, col); }
+      // latch hooks off the four sides
+      R(cx, cy - r - 2, 1, 2, col); R(cx, cy - r - 3, 3, 1, col); R(cx + 2, cy - r - 2, 1, 1, col);
+      R(cx, cy + r + 1, 1, 2, col); R(cx - 2, cy + r + 3, 3, 1, col); R(cx - 2, cy + r + 2, 1, 1, col);
+      R(cx - r - 2, cy, 2, 1, col); R(cx - r - 3, cy - 2, 1, 3, col); R(cx - r - 2, cy - 2, 1, 1, col);
+      R(cx + r + 1, cy, 2, 1, col); R(cx + r + 3, cy, 1, 3, col); R(cx + r + 2, cy + 2, 1, 1, col);
+      const r2 = Math.round(r * 0.6); for (let dy = -r2; dy <= r2; dy++) { const hw = r2 - Math.abs(dy); R(cx - hw, cy + dy, 2 * hw + 1, 1, in2); }
+      R(cx - 1, cy - 1, 3, 3, C.red); R(cx, cy, 1, 1, C.ivory);
+    }
+    x.restore();
+  });
+}
+
+// Hereke silk: an Ottoman court carpet on ruby silk. An ivory oval medallion ringed with saz leaves, tulips and
+// carnations, ivory corners, little sprays all over the field, and tulips and carnations on a vine in the border.
+function turkHereke(ctx, W, H) {
+  const C = { guard: '#2a1a1e', guard2: '#e6cf8a', band: '#efe4cc', field: '#8e1f2b', field2: '#861d29', gold: '#d8b25a', ivory: '#efe4cc',
+    teal: '#3f8a8a', navy: '#22305a', green: '#4f7a52', pink: '#d98a8a' };
+  weavePicture(ctx, W, H, 150, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = turkFrame(x, cols, rows, C, 19, 15, (x, w, d, i) => {
+      x.strokeStyle = C.gold; x.lineWidth = 0.9; x.beginPath(); for (let t = 0; t <= 1.0001; t += 0.05) { const px = t * w, py = d * 0.8 + Math.sin(t * Math.PI * 2) * d * 0.06; t ? x.lineTo(px, py) : x.moveTo(px, py); } x.stroke();
+      if (i % 2 === 0) tulip(x, w / 2, d * 0.84, d * 0.66, 0, C.field, C.pink); else carnation(x, w / 2, d * 0.84, d * 0.62, 0, C.navy, C.pink, C.green);
+      leaf(x, w / 2, d * 0.8, d * 0.3, -0.35, C.green); leaf(x, w / 2, d * 0.8, d * 0.3, Math.PI + 0.35, C.green);
+    }, (x, d) => rosette(x, d / 2, d / 2, d * 0.38, 8, C.field, C.gold, C.navy));
+    for (let y = fy; y < fy + fh; y++) if (Math.floor((y - fy) / 9) % 4 === 2) { x.fillStyle = C.field2; x.fillRect(fx, y, fw, 1); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const cx = fx + fw / 2, cy = fy + fh / 2, rx = fw * 0.2, ry = fh * 0.4;
+    // a fine gold ogee lattice, a spray in every compartment, kept clear of the medallion and the corners
+    const lc = 8, lw = fw / lc;
+    x.strokeStyle = C.gold; x.lineWidth = 0.8;
+    for (let k = 0; k <= lc; k++) for (const ph of [0, Math.PI]) { x.beginPath(); for (let y = fy; y <= fy + fh; y++) { const px = fx + k * lw + Math.sin(((y - fy) / fh) * Math.PI * 3 + ph) * lw * 0.5; y > fy ? x.lineTo(px, y) : x.moveTo(px, y); } x.stroke(); }
+    for (let j = 0; j < 3; j++) for (let i = 0; i <= lc; i++) {
+      const px = fx + (i + (j % 2 ? 0.5 : 0)) * lw, py = fy + ((2 * j + 1) / 6) * fh - 3;
+      if (((px - cx) / (rx + 7)) ** 2 + ((py - cy) / (ry + 5)) ** 2 < 1) continue;
+      if (Math.min(px - fx, fx + fw - px) < fw * 0.17 && Math.min(py - fy, fy + fh - py) < fh * 0.3) continue;
+      if ((i + j) % 2) tulip(x, px, py + 4, 8, (i % 3 - 1) * 0.3, C.gold, null); else carnation(x, px, py + 4, 8, (j % 3 - 1) * 0.3, C.ivory, C.pink, C.green);
+      leaf(x, px, py + 4, 5, -0.6, C.green); leaf(x, px, py + 4, 5, Math.PI + 0.6, C.green);
+    }
+    // corners
+    for (const [sx, sy] of [[fx, fy], [fx + fw, fy], [fx, fy + fh], [fx + fw, fy + fh]]) {
+      x.fillStyle = C.gold; x.beginPath(); x.ellipse(sx, sy, fw * 0.17 + 1.5, fh * 0.3 + 1.5, 0, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.ivory; x.beginPath(); x.ellipse(sx, sy, fw * 0.17, fh * 0.3, 0, 0, Math.PI * 2); x.fill();
+      const ix = sx === fx ? 1 : -1, iy = sy === fy ? 1 : -1;
+      sazLeaf(x, sx + ix * 3, sy + iy * fh * 0.22, sx + ix * fw * 0.13, sy + iy * 4, ix * iy * 0.22, 3, C.teal, C.ivory);
+      rosette(x, sx + ix * fw * 0.05, sy + iy * fh * 0.09, 5, 8, C.field, C.gold, C.navy);
+    }
+    // the medallion
+    for (const d of [-1, 1]) { x.fillStyle = C.gold; x.beginPath(); x.ellipse(cx, cy + d * (ry + 5), 6.5, 6.5, 0, 0, Math.PI * 2); x.fill(); x.fillStyle = C.ivory; x.beginPath(); x.ellipse(cx, cy + d * (ry + 5), 5, 5, 0, 0, Math.PI * 2); x.fill(); rosette(x, cx, cy + d * (ry + 5), 4, 8, C.field, C.gold, C.navy); }
+    persLobed(x, cx, cy, rx + 2.4, ry + 2.4, 20, 0.08, C.gold);
+    persLobed(x, cx, cy, rx, ry, 20, 0.08, C.ivory);
+    persLobed(x, cx, cy, rx * 0.86, ry * 0.86, 16, 0.1, C.gold); persLobed(x, cx, cy, rx * 0.86 - 1.1, ry * 0.86 - 1.1, 16, 0.1, C.ivory);
+    for (let k = 0; k < 4; k++) {
+      const a = (k * Math.PI) / 2 + Math.PI / 4, b = a + Math.PI / 2;
+      sazLeaf(x, cx + Math.cos(a) * rx * 0.72, cy + Math.sin(a) * ry * 0.72, cx + Math.cos(b) * rx * 0.68, cy + Math.sin(b) * ry * 0.68, 0.28, 3.4, C.teal, C.ivory);
+    }
+    for (let k = 0; k < 4; k++) { const a = (k * Math.PI) / 2; tulip(x, cx + Math.cos(a) * rx * 0.28, cy + Math.sin(a) * ry * 0.28, Math.min(rx, ry) * 0.5, a + Math.PI / 2, C.field, C.pink); }
+    for (let k = 0; k < 4; k++) { const a = (k * Math.PI) / 2 + Math.PI / 4; carnation(x, cx + Math.cos(a) * rx * 0.36, cy + Math.sin(a) * ry * 0.36, Math.min(rx, ry) * 0.3, a + Math.PI / 2, C.navy, C.pink, C.green); }
+    rosette(x, cx, cy, Math.min(rx, ry) * 0.22, 8, C.field, C.gold, C.navy);
+    x.restore();
+  });
+  // silk sheen
+  const g = ctx.createLinearGradient(0, 0, W, H);
+  g.addColorStop(0, 'rgba(255,255,255,.14)'); g.addColorStop(0.35, 'rgba(255,255,255,0)'); g.addColorStop(0.65, 'rgba(255,255,255,.1)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+}
+
+// İznik florals on a white ground, like the tile panels: three bouquets in cobalt vases (a coral tulip, carnations,
+// turquoise tulips, hyacinths and arching saz leaves), rosettes between them, and a cobalt border of white
+// rosettes and turquoise tulips.
+function turkIznik(ctx, W, H) {
+  const C = { guard: '#1a2a55', guard2: '#f4f0e6', band: '#1f3f8f', field: '#f4f0e6', field2: '#ece6d8', cobalt: '#1f3f8f', turq: '#2a9d9a', coral: '#c43a2c', green: '#3f7d4a', dark: '#1a2a55' };
+  weavePicture(ctx, W, H, 140, Object.values(C), (x, cols, rows) => {
+    const { fx, fy, fw, fh } = turkFrame(x, cols, rows, C, 17, 15, (x, w, d, i) => {
+      if (i % 2 === 0) rosette(x, w / 2, d / 2, d * 0.4, 8, C.field, C.coral, C.cobalt);
+      else tulip(x, w / 2, d * 0.84, d * 0.66, 0, C.turq, C.field);
+    }, (x, d) => rosette(x, d / 2, d / 2, d * 0.42, 8, C.turq, C.field, C.coral));
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const stem = (x0, y0, x1, y1, bend) => { x.strokeStyle = C.green; x.lineWidth = 1.5; x.beginPath(); x.moveTo(x0, y0); x.quadraticCurveTo((x0 + x1) / 2 + bend, (y0 + y1) / 2, x1, y1); x.stroke(); };
+    const bouquet = (bx, base, s) => {
+      const neck = base - s * 0.27;
+      for (const d of [-1, 1]) {
+        sazLeaf(x, bx, neck, bx + d * s * 0.4, neck - s * 0.42, d * 0.3, s * 0.06, C.green, C.field);
+        stem(bx, neck, bx + d * s * 0.2, neck - s * 0.45, d * s * 0.06); carnation(x, bx + d * s * 0.2, neck - s * 0.45, s * 0.17, d * 0.35, C.cobalt, C.coral, C.green);
+        stem(bx, neck, bx + d * s * 0.34, neck - s * 0.22, 0); tulip(x, bx + d * s * 0.34, neck - s * 0.22, s * 0.13, d * 0.9, C.turq, C.field);
+        // a hyacinth: little bells up its stem
+        stem(bx, neck, bx + d * s * 0.11, neck - s * 0.62, 0);
+        for (let b = 0; b < 7; b++) { const o = b % 2 ? -1 : 1, t = 0.36 + b * 0.036; x.fillStyle = b % 3 === 2 ? C.turq : C.cobalt; x.beginPath(); x.ellipse(bx + d * s * 0.11 * (t / 0.62) + o * 1.8, neck - s * t, 1.6, 1.1, o * 0.6, 0, Math.PI * 2); x.fill(); }
+      }
+      stem(bx, neck, bx, neck - s * 0.56, 0); tulip(x, bx, neck - s * 0.56, s * 0.2, 0, C.coral, C.field);
+      // the vase
+      // the vase: a small foot, a round body, a slim neck and a flared lip
+      x.fillStyle = C.cobalt; x.beginPath(); x.moveTo(bx - s * 0.06, base); x.lineTo(bx - s * 0.04, base - s * 0.03);
+      x.bezierCurveTo(bx - s * 0.2, base - s * 0.05, bx - s * 0.18, base - s * 0.17, bx - s * 0.04, base - s * 0.2);
+      x.lineTo(bx - s * 0.035, neck + s * 0.02); x.lineTo(bx - s * 0.08, neck); x.lineTo(bx + s * 0.08, neck); x.lineTo(bx + s * 0.035, neck + s * 0.02); x.lineTo(bx + s * 0.04, base - s * 0.2);
+      x.bezierCurveTo(bx + s * 0.18, base - s * 0.17, bx + s * 0.2, base - s * 0.05, bx + s * 0.04, base - s * 0.03); x.lineTo(bx + s * 0.06, base); x.closePath(); x.fill();
+      x.fillStyle = C.turq; x.fillRect(bx - s * 0.15, base - s * 0.13, s * 0.3, 2);
+      rosette(x, bx, base - s * 0.085, s * 0.035, 6, C.field, C.coral, C.cobalt);
+    };
+    bouquet(fx + fw * 0.5, fy + fh * 0.97, fh * 0.9);
+    for (const p of [0.16, 0.84]) bouquet(fx + fw * p, fy + fh * 0.97, fh * 0.74);
+    // cloud scrolls and rosettes between the bouquets
+    for (const p of [0.33, 0.67]) {
+      const bx = fx + fw * p;
+      rosette(x, bx, fy + fh * 0.58, 4.6, 8, C.turq, C.coral, C.field);
+      rosette(x, bx, fy + fh * 0.85, 3.4, 6, C.coral, C.cobalt, C.field);
+    }
+    x.restore();
+  });
+}
+
+// Letter scenes for the Türkiye postcard.
+const TURKIYE_SCENES = [
+  (c, w, h) => { // balloons over Cappadocia at sunrise
+    c.fillStyle = '#f29a68'; c.fillRect(0, 0, w, h); c.fillStyle = '#f7c98a'; c.fillRect(0, h * 0.5, w, h);
+    c.fillStyle = '#c9906a'; for (const [x0, ww, hh] of [[-0.1, 0.4, 0.3], [0.25, 0.3, 0.38], [0.55, 0.35, 0.28]]) { c.beginPath(); c.moveTo(w * x0, h); c.lineTo(w * (x0 + ww / 2), h * (1 - hh)); c.lineTo(w * (x0 + ww), h); c.fill(); }
+    c.fillStyle = '#c8323a'; c.beginPath(); c.arc(w * 0.32, h * 0.22, w * 0.16, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#2c4fa0'; c.beginPath(); c.arc(w * 0.72, h * 0.38, w * 0.12, 0, Math.PI * 2); c.fill();
+  },
+  (c, w, h) => { // Pamukkale's white terraces and pools
+    c.fillStyle = '#8cc8e8'; c.fillRect(0, 0, w, h);
+    for (let k = 0; k < 4; k++) { c.fillStyle = '#4fc1cf'; c.fillRect(0, h * (0.22 + k * 0.2), w, h * 0.09); c.fillStyle = '#f4f7f6'; c.fillRect(0, h * (0.31 + k * 0.2), w, h * 0.11); }
+  },
+  (c, w, h) => { // tulips
+    c.fillStyle = '#3f8a4a'; c.fillRect(0, 0, w, h);
+    for (let k = 0; k < 6; k++) { const x = w * (0.25 + (k % 2) * 0.5), y = h * (0.18 + Math.floor(k / 2) * 0.32); c.fillStyle = k % 3 ? '#d2343a' : '#f2c14a'; c.beginPath(); c.ellipse(x, y, w * 0.15, h * 0.1, 0, 0, Math.PI * 2); c.fill(); }
+  },
+  (c, w, h) => { // the Bosphorus at dusk, Galata Tower on the hill
+    c.fillStyle = '#f08a5a'; c.fillRect(0, 0, w, h * 0.55); c.fillStyle = '#2a3f7a'; c.fillRect(0, h * 0.55, w, h);
+    c.fillStyle = '#2a2440'; c.fillRect(0, h * 0.45, w, h * 0.12); c.fillRect(w * 0.4, h * 0.2, w * 0.24, h * 0.3); c.beginPath(); c.moveTo(w * 0.36, h * 0.22); c.lineTo(w * 0.52, h * 0.04); c.lineTo(w * 0.68, h * 0.22); c.fill();
+  },
+  (c, w, h) => { // the turquoise coast
+    c.fillStyle = '#8fd0ea'; c.fillRect(0, 0, w, h); c.fillStyle = '#25b3b8'; c.fillRect(0, h * 0.4, w, h * 0.35); c.fillStyle = '#f3e3bd'; c.fillRect(0, h * 0.75, w, h);
+  },
+  (c, w, h) => { // İznik tile
+    c.fillStyle = '#f4f0e6'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#1f3f8f'; c.beginPath(); c.arc(w * 0.5, h * 0.3, w * 0.32, 0, Math.PI * 2); c.fill(); c.beginPath(); c.arc(w * 0.5, h * 0.78, w * 0.32, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#c43a2c'; c.beginPath(); c.arc(w * 0.5, h * 0.3, w * 0.14, 0, Math.PI * 2); c.fill(); c.beginPath(); c.arc(w * 0.5, h * 0.78, w * 0.14, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#2a9d9a'; c.fillRect(0, h * 0.52, w, h * 0.06);
+  },
+  (c, w, h) => { const cols = ['#a8282c', '#e0a83a', '#1e2a52', '#efe2c4', '#a8282c', '#3f7a4f', '#1e2a52', '#e0a83a']; for (let i = 0; i < 8; i++) { c.fillStyle = cols[i]; c.fillRect(0, (h * i) / 8, w, h / 8 + 1); } }, // kilim stripes
+];
+function turkPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'TÜRKİYE', TURKIYE_SCENES, 19.5, 50); } // smaller capitals: room for the dots
+
+// Hot-air balloons rising over the fairy chimneys of Cappadocia at sunrise.
+function turkCappadocia(ctx, W, H) {
+  const u = H / 100, hz = H * 0.66;
+  const sky = ctx.createLinearGradient(0, 0, 0, hz); sky.addColorStop(0, '#2f4a8a'); sky.addColorStop(0.35, '#7a6aa8'); sky.addColorStop(0.68, '#ef8f74'); sky.addColorStop(1, '#f7c48a');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#ffe9b0'; ctx.beginPath(); ctx.arc(W * 0.6, hz - 2 * u, 7 * u, 0, Math.PI * 2); ctx.fill();
+  // the plateau far away
+  ctx.fillStyle = '#c48a74'; ctx.beginPath(); ctx.moveTo(0, hz); for (let k = 0; k <= 30; k++) { const t = k / 30; ctx.lineTo(W * t, hz - (3 + 2.4 * Math.sin(t * 9) + (k % 4 === 0 ? 1.2 : 0)) * u); } ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill();
+  ctx.fillStyle = '#b07a66'; ctx.fillRect(0, hz, W, H - hz);
+  const chimney = (cx, base, w, h, col, shade, cap, door) => {
+    const shape = () => { ctx.beginPath(); ctx.moveTo(cx - w / 2, base); ctx.quadraticCurveTo(cx - w * 0.3, base - h * 0.6, cx - w * 0.13, base - h); ctx.lineTo(cx + w * 0.13, base - h); ctx.quadraticCurveTo(cx + w * 0.3, base - h * 0.6, cx + w / 2, base); ctx.closePath(); };
+    ctx.fillStyle = col; shape(); ctx.fill();
+    ctx.save(); shape(); ctx.clip(); ctx.fillStyle = shade; ctx.fillRect(cx + w * 0.08, base - h, w, h); ctx.restore();
+    ctx.fillStyle = cap; ctx.beginPath(); ctx.ellipse(cx, base - h, w * 0.26, w * 0.13, 0, 0, Math.PI * 2); ctx.fill();
+    if (door) { ctx.fillStyle = '#4a2c24'; roundRect(ctx, cx - w * 0.08, base - h * 0.42, w * 0.14, h * 0.16, w * 0.07); ctx.fill(); ctx.fillRect(cx - w * 0.2, base - h * 0.7, w * 0.08, w * 0.08); }
+  };
+  // rocks in the middle distance, then the big ones in front
+  ctx.fillStyle = '#a8705a'; ctx.fillRect(0, hz + 3 * u, W, H);
+  for (const [x, h, w] of [[0.03, 12, 6], [0.1, 16, 7], [0.17, 10, 5], [0.36, 9, 5], [0.42, 13, 6], [0.49, 8, 4], [0.7, 10, 5], [0.77, 14, 7], [0.9, 17, 7], [0.97, 11, 5]]) chimney(W * x, hz + 6 * u, w * u, h * u, '#e2b892', '#c99a76', '#6a463c', h > 13);
+  ctx.fillStyle = '#9a6450'; ctx.fillRect(0, hz + 6 * u, W, H);
+  ctx.fillStyle = '#5f7a42'; for (let i = 0; i < 18; i++) { ctx.beginPath(); ctx.ellipse(((i * 61) % 100) / 100 * W, hz + (8 + (i * 7) % 12) * u, 2.6 * u, 1.4 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  for (const [x, h, w, d] of [[0.03, 36, 15, true], [0.13, 28, 12, false], [0.22, 21, 10, true], [0.3, 15, 8, false], [0.68, 17, 9, false], [0.76, 25, 11, true], [0.86, 38, 16, true], [0.96, 28, 12, false]]) chimney(W * x, H + 2 * u, w * u, h * u, '#f2d4b0', '#d9ab86', '#6a463c', d);
+  // balloons
+  const balloon = (bx, by, r, cols) => {
+    const env = () => { ctx.beginPath(); ctx.moveTo(bx - r * 0.34, by + r * 1.12); ctx.bezierCurveTo(bx - r * 1.25, by + r * 0.4, bx - r * 1.1, by - r * 1.02, bx, by - r * 1.02); ctx.bezierCurveTo(bx + r * 1.1, by - r * 1.02, bx + r * 1.25, by + r * 0.4, bx + r * 0.34, by + r * 1.12); ctx.closePath(); };
+    ctx.save(); env(); ctx.clip();
+    const n = 6; for (let k = n; k >= 1; k--) { ctx.fillStyle = cols[k % cols.length]; ctx.beginPath(); ctx.ellipse(bx, by + r * 0.05, r * 1.15 * (k / n), r * 1.3, 0, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = cols[0]; ctx.fillRect(bx - r * 1.3, by + r * 0.15, r * 2.6, r * 0.2);
+    ctx.fillStyle = 'rgba(40,20,40,.22)'; ctx.beginPath(); ctx.ellipse(bx + r * 0.85, by + r * 0.1, r * 0.55, r * 1.4, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+    ctx.strokeStyle = '#4a3020'; ctx.lineWidth = Math.max(1, r * 0.07);
+    ctx.beginPath(); ctx.moveTo(bx - r * 0.3, by + r * 1.12); ctx.lineTo(bx - r * 0.17, by + r * 1.42); ctx.moveTo(bx + r * 0.3, by + r * 1.12); ctx.lineTo(bx + r * 0.17, by + r * 1.42); ctx.stroke();
+    ctx.fillStyle = '#6a4428'; ctx.fillRect(bx - r * 0.2, by + r * 1.4, r * 0.4, r * 0.28);
+  };
+  const B = [[0.08, 0.44, 2.6, ['#2c4fa0', '#f4f0e6']], [0.62, 0.5, 2.4, ['#c8323a', '#f2c14a']], [0.44, 0.56, 2, ['#f2c14a', '#2f8a5a']], [0.95, 0.12, 3.6, ['#f2c14a', '#e2477a']],
+    [0.28, 0.4, 4.2, ['#c8323a', '#f4f0e6']], [0.36, 0.13, 5.4, ['#2c4fa0', '#f2c14a', '#f4f0e6']], [0.7, 0.18, 6.4, ['#2f8a5a', '#f2c14a']],
+    [0.17, 0.2, 7.8, ['#c8323a', '#f2c14a', '#ee7a2a']], [0.86, 0.32, 8.4, ['#6a3a8f', '#e2477a', '#f4f0e6']], [0.52, 0.3, 10.5, ['#ee7a2a', '#c8323a', '#f2c14a']]];
+  for (const [x, y, r, cols] of B) balloon(W * x, H * y, r * u, cols);
+}
+
+// A ferry crossing the Bosphorus at sunset: Galata Tower on the hill, the bridge to Asia, the Maiden's Tower on
+// its rock, gulls overhead.
+function turkBosphorus(ctx, W, H) {
+  const u = H / 100, hz = H * 0.56;
+  const sky = ctx.createLinearGradient(0, 0, 0, hz); sky.addColorStop(0, '#2a3a78'); sky.addColorStop(0.45, '#9a5f96'); sky.addColorStop(0.78, '#ef8a66'); sky.addColorStop(1, '#f8c27a');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, hz + 1);
+  ctx.fillStyle = '#ffe2a0'; ctx.beginPath(); ctx.arc(W * 0.6, hz - 1 * u, 7 * u, 0, Math.PI * 2); ctx.fill();
+  const water = ctx.createLinearGradient(0, hz, 0, H); water.addColorStop(0, '#6a5a96'); water.addColorStop(0.35, '#3a4682'); water.addColorStop(1, '#202c56');
+  ctx.fillStyle = water; ctx.fillRect(0, hz, W, H - hz);
+  // the sun on the water
+  for (let k = 0; k < 14; k++) { const y = hz + 1.5 * u + k * 2.6 * u, w = (16 - k) * 1.1 * u; ctx.fillStyle = k % 2 ? '#ef8a66' : '#f8c27a'; ctx.fillRect(W * 0.6 - w / 2 + ((k * 37) % 7 - 3) * u, y, w, 0.9 * u); }
+  // the Asian shore and the bridge
+  ctx.fillStyle = '#5c4878'; ctx.beginPath(); ctx.moveTo(W * 0.42, hz + 0.5 * u); for (let k = 0; k <= 24; k++) { const t = k / 24; ctx.lineTo(W * (0.42 + 0.58 * t), hz - (2 + 4 * Math.sin(t * 3.2) + (k % 3 ? 0 : 0.8)) * u); } ctx.lineTo(W, hz + 0.5 * u); ctx.fill();
+  ctx.fillStyle = '#f6c06a'; for (let k = 0; k < 16; k++) ctx.fillRect(W * (0.46 + k * 0.034), hz - (1.6 + (k * 7) % 3) * u, 0.8 * u, 0.8 * u);
+  const t1 = W * 0.5, t2 = W * 0.86, deck = hz - 3 * u, tt = deck - 18 * u;
+  ctx.strokeStyle = '#3d3160'; ctx.lineWidth = 1.3 * u; ctx.lineJoin = 'round';
+  ctx.beginPath(); ctx.moveTo(W * 0.36, deck + 1 * u); ctx.lineTo(t1, tt); ctx.quadraticCurveTo((t1 + t2) / 2, deck + 6 * u, t2, tt); ctx.lineTo(W * 1.02, deck + 2 * u); ctx.stroke();
+  ctx.fillStyle = '#3d3160'; ctx.fillRect(W * 0.36, deck, W * 0.66, 1.8 * u);
+  for (const t of [t1, t2]) { ctx.fillRect(t - 1.4 * u, tt, 2.8 * u, deck - tt + 3 * u); ctx.fillRect(t - 2 * u, tt + 3 * u, 4 * u, 1 * u); }
+  // the Maiden's Tower on its rock
+  const mx = W * 0.74, my = hz + 7 * u;
+  ctx.fillStyle = '#2e2448'; ctx.beginPath(); ctx.ellipse(mx, my, 8 * u, 1.8 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#ecd6b4'; ctx.fillRect(mx - 6 * u, my - 4 * u, 12 * u, 4 * u); ctx.fillRect(mx - 1.6 * u, my - 11 * u, 3.2 * u, 7 * u);
+  ctx.beginPath(); ctx.moveTo(mx - 2.2 * u, my - 11 * u); ctx.lineTo(mx, my - 15 * u); ctx.lineTo(mx + 2.2 * u, my - 11 * u); ctx.fill();
+  ctx.fillStyle = '#c99a72'; ctx.fillRect(mx - 6 * u, my - 4.6 * u, 12 * u, 0.8 * u);
+  // the European side: a hill of houses with Galata Tower
+  ctx.fillStyle = '#3a2d55'; ctx.beginPath(); ctx.moveTo(0, hz + 2 * u); ctx.lineTo(0, hz - 20 * u); ctx.quadraticCurveTo(W * 0.18, hz - 24 * u, W * 0.4, hz + 1 * u); ctx.lineTo(W * 0.4, hz + 2 * u); ctx.fill();
+  for (let k = 0; k < 22; k++) { const xx = (k / 22) * W * 0.38, top = hz - 20 * u * (1 - Math.pow(xx / (W * 0.4), 2)) - (3 + (k * 5) % 4) * u; ctx.fillStyle = '#3a2d55'; ctx.fillRect(xx, top, W * 0.022, hz - top); ctx.fillStyle = '#f6c06a'; if (k % 3 !== 1) ctx.fillRect(xx + 0.8 * u, top + 1.4 * u, 0.9 * u, 0.9 * u); }
+  const gx = W * 0.16, gb = hz - 22 * u;
+  ctx.fillStyle = '#2a2240'; ctx.fillRect(gx - 3 * u, gb - 16 * u, 6 * u, 18 * u); ctx.fillRect(gx - 3.8 * u, gb - 17.6 * u, 7.6 * u, 1.8 * u);
+  ctx.beginPath(); ctx.moveTo(gx - 3.4 * u, gb - 17.4 * u); ctx.lineTo(gx, gb - 27 * u); ctx.lineTo(gx + 3.4 * u, gb - 17.4 * u); ctx.fill();
+  ctx.fillStyle = '#f6c06a'; for (const dy of [-6, -11]) ctx.fillRect(gx - 0.6 * u, gb + dy * u, 1.2 * u, 1.8 * u); ctx.fillRect(gx - 2.6 * u, gb - 16 * u, 5.2 * u, 0.7 * u);
+  // the ferry, with its wake
+  const fx = W * 0.4, fy = H * 0.82, L = 64 * u;
+  ctx.fillStyle = '#e9e2d6'; for (let k = 0; k < 5; k++) ctx.fillRect(fx + L * 0.5 + k * 5 * u, fy + 3.2 * u + k * 0.8 * u, (10 - k) * u, 0.9 * u);
+  ctx.fillStyle = '#1b2440'; ctx.beginPath(); ctx.moveTo(fx - L / 2, fy); ctx.lineTo(fx + L / 2, fy); ctx.lineTo(fx + L * 0.44, fy + 4.6 * u); ctx.lineTo(fx - L * 0.44, fy + 4.6 * u); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#f3efe6'; ctx.fillRect(fx - L * 0.46, fy - 5.2 * u, L * 0.92, 5.2 * u); ctx.fillRect(fx - L * 0.34, fy - 9.6 * u, L * 0.68, 4.4 * u);
+  ctx.fillStyle = '#2a3550'; for (let k = 0; k < 15; k++) ctx.fillRect(fx - L * 0.42 + k * L * 0.058, fy - 3.8 * u, L * 0.034, 2 * u); for (let k = 0; k < 10; k++) ctx.fillRect(fx - L * 0.3 + k * L * 0.062, fy - 8.4 * u, L * 0.034, 1.8 * u);
+  ctx.fillStyle = '#c8323a'; ctx.fillRect(fx - L * 0.48, fy - 0.8 * u, L * 0.96, 0.8 * u);
+  ctx.fillStyle = '#e8b23a'; ctx.fillRect(fx - 2.4 * u, fy - 16 * u, 4.8 * u, 6.6 * u); ctx.fillStyle = '#1b1b22'; ctx.fillRect(fx - 2.4 * u, fy - 17.4 * u, 4.8 * u, 2 * u);
+  ctx.strokeStyle = '#2a3550'; ctx.lineWidth = 0.5 * u; ctx.beginPath(); ctx.moveTo(fx - L * 0.4, fy - 9.6 * u); ctx.lineTo(fx - L * 0.4, fy - 15 * u); ctx.moveTo(fx + L * 0.4, fy - 9.6 * u); ctx.lineTo(fx + L * 0.4, fy - 15 * u); ctx.stroke();
+  // gulls
+  const gull = (x, y, s) => { ctx.strokeStyle = '#f7f3ea'; ctx.lineWidth = Math.max(1.2, 0.9 * s * u); ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x - 3 * s * u, y); ctx.quadraticCurveTo(x - 1.5 * s * u, y - 1.8 * s * u, x, y); ctx.quadraticCurveTo(x + 1.5 * s * u, y - 1.8 * s * u, x + 3 * s * u, y); ctx.stroke(); };
+  for (const [x, y, s] of [[0.3, 0.16, 1.6], [0.38, 0.26, 1.1], [0.66, 0.14, 1.3], [0.8, 0.3, 0.9], [0.9, 0.18, 1.2], [0.2, 0.62, 1.8], [0.58, 0.66, 1.4]]) gull(W * x, H * y, s);
+}
+
+// The white travertine terraces of Pamukkale: rows of rounded basins, each holding a turquoise pool, white drips
+// hanging from their lips, the plain far below.
+function turkPamukkale(ctx, W, H) {
+  const u = H / 100, R = rng(23);
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.34); sky.addColorStop(0, '#3f8fd0'); sky.addColorStop(1, '#c4e6f4');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f7f9fb'; for (const [x, y, r] of [[0.2, 0.1, 5], [0.27, 0.08, 6.5], [0.74, 0.12, 5.5], [0.82, 0.1, 6.5]]) { ctx.beginPath(); ctx.ellipse(W * x, H * y, r * u * 1.8, r * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#8aa2b8'; ctx.beginPath(); ctx.moveTo(0, H * 0.3); for (let k = 0; k <= 20; k++) { const t = k / 20; ctx.lineTo(W * t, H * (0.23 + 0.03 * Math.sin(t * 7 + 1))); } ctx.lineTo(W, H * 0.32); ctx.lineTo(0, H * 0.32); ctx.fill();
+  ctx.fillStyle = '#7fa05a'; ctx.fillRect(0, H * 0.27, W, H * 0.08);
+  ctx.fillStyle = '#4f7a3f'; for (let i = 0; i < 30; i++) { ctx.beginPath(); ctx.arc(((i * 37) % 100) / 100 * W, H * (0.29 + ((i * 13) % 5) * 0.01), (1.6 + (i * 7) % 3) * u, 0, Math.PI * 2); ctx.fill(); }
+  const tiers = 4;
+  for (let k = 0; k < tiers; k++) {
+    const baseY = H * (0.4 + k * 0.15), depth = (3.5 + k * 1.6) * u;
+    ctx.fillStyle = '#eef3f2'; ctx.fillRect(0, baseY - depth - 1.4 * u, W, H);
+    let x0 = -R() * 18 * u;
+    while (x0 < W) {
+      const bw = (15 + k * 9) * u * (0.7 + R() * 0.7), x1 = x0 + bw, rimY = baseY + (R() - 0.5) * 2.4 * u, top = rimY - depth, dip = (2.4 + k * 1.2) * u * (0.8 + R() * 0.5);
+      ctx.fillStyle = '#c6d4d9'; for (let d = x0 + 2 * u; d < x1 - 2 * u; d += 2.8 * u) ctx.fillRect(d, rimY + dip * 1.2, 1.3 * u, (3 + R() * 6) * u * (0.5 + Math.sin((Math.PI * (d - x0)) / bw)));
+      const pool = ctx.createLinearGradient(0, top, 0, rimY + dip); pool.addColorStop(0, k < 2 ? '#8fe0e6' : '#7fdbe2'); pool.addColorStop(1, k < 2 ? '#4fbcd2' : '#2fa4c2');
+      const lip = (dy) => { ctx.beginPath(); ctx.moveTo(x1, rimY + dy); ctx.bezierCurveTo(x1 - bw * 0.1, rimY + 1.9 * dip + dy, x0 + bw * 0.1, rimY + 1.9 * dip + dy, x0, rimY + dy); };
+      ctx.fillStyle = pool; ctx.beginPath(); ctx.moveTo(x0, top); ctx.lineTo(x1, top); ctx.lineTo(x1, rimY); ctx.bezierCurveTo(x1 - bw * 0.1, rimY + 1.9 * dip, x0 + bw * 0.1, rimY + 1.9 * dip, x0, rimY); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = '#c4f0f2'; ctx.fillRect(x0 + bw * 0.2, top + 1.2 * u, bw * 0.4, 0.7 * u);
+      ctx.strokeStyle = '#c3d2d6'; ctx.lineWidth = 1 * u; lip(1.6 * u); ctx.stroke();
+      ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.9 * u; lip(0); ctx.stroke();
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(x1 - 0.8 * u, top - 1 * u, 1.6 * u, rimY - top + 1 * u);
+      x0 = x1;
+    }
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, baseY - depth - 1.4 * u, W, 1.3 * u);
+  }
+}
+
+// The nazar: a big blue bead to keep the evil eye away, ringed by a bracelet of small ones.
+function turkNazar(ctx, W, H) {
+  const u = H / 100, cx = W / 2, cy = H / 2;
+  ctx.fillStyle = '#f3ead6'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#9fd3da'; for (let j = 0; j < 9; j++) for (let i = 0; i < 15; i++) { const x = (i + (j % 2 ? 0.5 : 0) + 0.25) * W / 14.5, y = (j + 0.5) * H / 9; if (((x - cx) / (W * 0.42)) ** 2 + ((y - cy) / (H * 0.44)) ** 2 > 1) { ctx.beginPath(); ctx.arc(x, y, 1.1 * u, 0, Math.PI * 2); ctx.fill(); } }
+  const bead = (x, y, R) => {
+    ctx.fillStyle = '#1f3f9f'; ctx.beginPath(); ctx.arc(x, y, R, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#f7f4ee'; ctx.beginPath(); ctx.arc(x, y, R * 0.62, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#6fbde9'; ctx.beginPath(); ctx.arc(x, y, R * 0.45, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#12161f'; ctx.beginPath(); ctx.arc(x, y, R * 0.24, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#8aa6e6'; ctx.beginPath(); ctx.ellipse(x - R * 0.62, y - R * 0.55, R * 0.16, R * 0.09, -0.75, 0, Math.PI * 2); ctx.fill();
+  };
+  const rx = 60 * u, ry = 37 * u;
+  ctx.strokeStyle = '#6a4428'; ctx.lineWidth = 0.9 * u; ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2); ctx.stroke();
+  const n = 14;
+  for (let k = 0; k < n; k++) {
+    const a = (k / n) * Math.PI * 2, a2 = ((k + 0.5) / n) * Math.PI * 2;
+    ctx.fillStyle = '#d9a64a'; ctx.beginPath(); ctx.arc(cx + Math.cos(a2) * rx, cy + Math.sin(a2) * ry, 1.7 * u, 0, Math.PI * 2); ctx.fill();
+    bead(cx + Math.cos(a) * rx, cy + Math.sin(a) * ry, 6.2 * u);
+  }
+  bead(cx, cy, 25 * u);
+  for (const [x, y] of [[0.07, 0.12], [0.93, 0.12], [0.07, 0.88], [0.93, 0.88]]) bead(W * x, H * y, 4.6 * u);
+}
+
 // ---------- USA pack: woven, pieced and knotted rugs (restored from the earlier drafts) ----------
 // Dashed stitching around a rectangle; each side starts and ends on a stitch, so the corners join up.
 function stitchRect(ctx, x, y, w, h, step, thick, color) {
@@ -3013,11 +3617,23 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7) {
   else if (P.persia === 'herati') persHerati(ctx, W, H);
   else if (P.persia === 'qom') persQom(ctx, W, H);
   else if (P.persia === 'turkmen') persTurkmen(ctx, W, H);
+  else if (P.turkiye === 'usak') turkUsak(ctx, W, H);
+  else if (P.turkiye === 'lotto') turkLotto(ctx, W, H);
+  else if (P.turkiye === 'bergama') turkBergama(ctx, W, H);
+  else if (P.turkiye === 'yagcibedir') turkYagcibedir(ctx, W, H);
+  else if (P.turkiye === 'seljuk') turkSelcuklu(ctx, W, H);
+  else if (P.turkiye === 'hereke') turkHereke(ctx, W, H);
+  else if (P.turkiye === 'iznik') turkIznik(ctx, W, H);
+  else if (P.turkiye === 'postcard') turkPostcard(ctx, W, H);
+  else if (P.turkiye === 'cappadocia') turkCappadocia(ctx, W, H);
+  else if (P.turkiye === 'bosphorus') turkBosphorus(ctx, W, H);
+  else if (P.turkiye === 'pamukkale') turkPamukkale(ctx, W, H);
+  else if (P.turkiye === 'nazar') turkNazar(ctx, W, H);
   else if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
   else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
-  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : P.mexico ? MEXICO_FRAME : undefined); else addWeave(ctx, W, H, seed, P.silk ? 12 : 26);
+  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : P.mexico ? MEXICO_FRAME : P.turkiye ? TURKIYE_FRAME : undefined); else addWeave(ctx, W, H, seed, P.silk ? 12 : 26);
 
   // Back side: same pattern, faded and flattened.
   const b = document.createElement('canvas');
