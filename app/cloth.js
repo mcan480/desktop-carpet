@@ -9,7 +9,7 @@ const EXCL = 1;        // grid rings around a point that don't collide with it (
 const CCAP = 0.25;     // one contact moves a point at most this far per pass (no sudden jumps out of a tight fold)
 // The hand drags the rug at most this far per step (about 2000 px/s for the large rug): a rug can't be whipped
 // through a fold, and a fast flick doesn't fling it into a heap.
-const PINCAP = 1.0;
+const PINCAP = 0.5;
 // While held: parts of the rug in the air lose a little speed every step (so it doesn't whip round the hand and wad up),
 // and nothing rises more than this far above the hand.
 const AIR = 0.03;
@@ -43,6 +43,9 @@ export class Cloth {
     this.buildHash();
     this.buildTriangles();
   }
+
+  // How many points a rug of this size has with nx points across.
+  static count(width, height, nx) { return nx * Math.max(6, Math.round((nx - 1) * (height / width)) + 1); }
 
   idx(i, j) { return j * this.nx + i; }
 

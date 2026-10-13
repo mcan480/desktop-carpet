@@ -208,13 +208,33 @@ function makeMaterials(style) {
   };
 }
 
+// Points across the rug. Fewer points make the physics cheaper; 26 still folds smoothly at every size.
+const GRID = 26;
+
+// Where a rug saved with the old 40-point grid lay, and which way it pointed.
+function savedPlace(p) {
+  const n = p.length / 3, nx = 40, ny = n / nx;
+  if (!Number.isInteger(ny) || ny < 2) return null;
+  let x = 0, y = 0;
+  for (let i = 0; i < n; i++) { x += p[i * 3]; y += p[i * 3 + 1]; }
+  const a = ((ny / 2) | 0) * nx * 3, b = a + (nx - 1) * 3;
+  const angle = Math.atan2(p[b + 1] - p[a + 1], p[b] - p[a]);
+  return Number.isFinite(x + y + angle) ? { x: x / n, y: y / n, angle } : null;
+}
+
 function buildRug({ keepPose = true, saved = null } = {}) {
   let cx = W * 0.5, cy = H * 0.55, angle = 0;
   if (keepPose && cloth) { ({ x: cx, y: cy } = cloth.centroid()); angle = cloth.angle(); }
   const width = SIZES[state.size] || SIZES.orta;
-  cloth = new Cloth({ width, height: width / ASPECT, cx, cy, angle, nx: 40 });
+  // A pose saved with another grid (before 1.16.7 the rug had 40 points across): lay the rug flat where it was.
+  if (saved && saved.length % 3 === 0 && saved.length !== Cloth.count(width, width / ASPECT, GRID) * 3) {
+    const old = savedPlace(saved);
+    if (old) ({ x: cx, y: cy, angle } = old);
+    saved = null;
+  }
+  cloth = new Cloth({ width, height: width / ASPECT, cx, cy, angle, nx: GRID });
   cloth.setWeight(W8());
-  if (saved && saved.length === cloth.n * 3) {
+  if (saved) {
     cloth.pos.set(saved);
     cloth.prev.set(saved);
   }
