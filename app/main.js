@@ -428,6 +428,9 @@ let awake = false, still = 0, last = 0, acc = 0, checkTangle = false, restlessSi
 // Physics gets at most this much of a frame. On a computer that can't keep up the rug moves a little slower instead of
 // keeping a full-screen window busy (which makes the whole desktop feel stuck).
 const PHYSICS_BUDGET_MS = 6;
+// A rug settled higher than this (in grid spacings) is a wad, not a fold, and gets laid back out flat. The crease of a
+// rug folded in half stands about 4 high.
+const HEAP = 10;
 const DT = 1 / 120;
 
 function wake() {
@@ -496,7 +499,7 @@ function frame(now) {
   if (checkTangle && (still > 45 || overdue)) {
     // Let go and it settled as a heap (twisted round and round): lay it back out flat. A fold stays a fold.
     checkTangle = false;
-    if (cloth.maxHeight() > cloth.spacing * 4.5) { flatten(); requestAnimationFrame(frame); return; }
+    if (cloth.maxHeight() > cloth.spacing * HEAP) { flatten(); requestAnimationFrame(frame); return; }
   }
   if (overdue) { cloth.prev.set(cloth.pos); still = 46; }
   if (still > 45) {
@@ -571,7 +574,7 @@ if (!api) window.__dcCommand = command; // plain-browser preview: lets a test pa
   // A saved pose that's torn apart (1.16.2 could leave a rug like that): start again flat in the middle.
   // One left crumpled up in a heap: lay it flat where it is.
   if (saved?.pos && !poseIntact(cloth)) buildRug({ keepPose: false });
-  if (!saved?.pos || !poseIntact(cloth) || cloth.maxHeight() > cloth.spacing * 4.5) flatten();
+  if (!saved?.pos || !poseIntact(cloth) || cloth.maxHeight() > cloth.spacing * HEAP) flatten();
   applyHidden();
   ensureOnScreen();
   api?.reportState({ style: state.style, size: state.size, weight: state.weight });
