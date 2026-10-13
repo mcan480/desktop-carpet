@@ -362,7 +362,6 @@ function endGrab() {
   grab = null;
   cloth.releasePin();
   checkTangle = true;
-  releasedAt = performance.now();
   document.body.classList.remove('grabbing');
   setOver(!!hitTest(mouse.x, mouse.y));
   wake();
@@ -425,7 +424,7 @@ function center() {
 }
 
 // ---------- simulation loop (sleeps when still) ----------
-let awake = false, still = 0, last = 0, acc = 0, checkTangle = false, releasedAt = 0;
+let awake = false, still = 0, last = 0, acc = 0, checkTangle = false, restlessSince = 0;
 // Physics gets at most this much of a frame. On a computer that can't keep up the rug moves a little slower instead of
 // keeping a full-screen window busy (which makes the whole desktop feel stuck).
 const PHYSICS_BUDGET_MS = 6;
@@ -433,7 +432,8 @@ const DT = 1 / 120;
 
 function wake() {
   still = 0;
-  if (!awake) { awake = true; last = performance.now(); requestAnimationFrame(frame); }
+  restlessSince = performance.now();
+  if (!awake) { awake = true; last = restlessSince; requestAnimationFrame(frame); }
 }
 
 // Quality watch: while the rug is moving, keep an eye on the frame rate. If it stays under ~38 fps, step the
@@ -489,13 +489,16 @@ function frame(now) {
   syncGeometry();
   renderer.render(scene, camera);
 
+  if (grab) restlessSince = now;
   if (!grab && moved < 0.02) still++; else still = 0;
-  if (checkTangle && (still > 45 || now - releasedAt > 5000)) {
-    // Let go, and it settled as a heap, or passes through itself somewhere (a real rug can't), or is still moving
-    // 5 s later: lay it back out flat.
+  // Still twitching 6 s after the last touch: it has landed, let it rest where it is (folds and all).
+  const overdue = !grab && still <= 45 && now - restlessSince > 6000;
+  if (checkTangle && (still > 45 || overdue)) {
+    // Let go and it settled as a heap (twisted round and round): lay it back out flat. A fold stays a fold.
     checkTangle = false;
-    if (still <= 45 || cloth.maxHeight() > cloth.spacing * 4.5 || cloth.crossesItself()) { flatten(); requestAnimationFrame(frame); return; }
+    if (cloth.maxHeight() > cloth.spacing * 4.5) { flatten(); requestAnimationFrame(frame); return; }
   }
+  if (overdue) { cloth.prev.set(cloth.pos); still = 46; }
   if (still > 45) {
     awake = false;
     save();
@@ -568,7 +571,7 @@ if (!api) window.__dcCommand = command; // plain-browser preview: lets a test pa
   // A saved pose that's torn apart (1.16.2 could leave a rug like that): start again flat in the middle.
   // One left crumpled up in a heap: lay it flat where it is.
   if (saved?.pos && !poseIntact(cloth)) buildRug({ keepPose: false });
-  if (!saved?.pos || !poseIntact(cloth) || cloth.maxHeight() > cloth.spacing * 4.5 || cloth.crossesItself()) flatten();
+  if (!saved?.pos || !poseIntact(cloth) || cloth.maxHeight() > cloth.spacing * 4.5) flatten();
   applyHidden();
   ensureOnScreen();
   api?.reportState({ style: state.style, size: state.size, weight: state.weight });
