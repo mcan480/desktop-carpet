@@ -271,7 +271,7 @@
     const b = $(`#swatches [data-style="${k}"]`);
     if (!b) return [];
     const country = b.closest('.country')?.dataset.country;
-    return [S['o_' + k], country && S[country], S[$(`.shelves [data-coll="${b.closest('.coll')?.dataset.coll}"] [data-t]`)?.dataset.t]].filter(Boolean);
+    return [S['o_' + k], country && S[country], S[$(`.shelves [data-coll="${b.closest('.coll')?.dataset.coll}"] [data-t]`)?.dataset.t]].filter(Boolean).map((p) => p.replace(/\u00ad/g, '')); // soft hyphens are only for the narrow tabs
   }
 
   // ---- the last few rugs used, to go back to one in a click (kept on this computer) ----
@@ -295,7 +295,7 @@
   // ---- search: by name, place, country or pack, in the panel's language or in English ----
   const findInput = $('#findInput');
   let index = null;
-  const fold = (x) => String(x || '').toLocaleLowerCase(lang).normalize('NFD').replace(/\p{M}/gu, '').replace(/ı/g, 'i');
+  const fold = (x) => String(x || '').toLocaleLowerCase(lang).normalize('NFD').replace(/\p{M}/gu, '').replace(/ı/g, 'i').replace(/\u00ad/g, '');
   function buildIndex() {
     const EN = I18N.strings('en'), seen = new Set();
     index = [];

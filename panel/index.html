@@ -187,7 +187,8 @@
       <div class="grid results-grid swatches group" id="resultsGrid" role="radiogroup" aria-labelledby="resultsHead"></div>
     </div>
     <nav class="shelves" role="tablist">
-      <button type="button" role="tab" data-coll="mediterranean" data-new aria-selected="false"><img src="./thumbs/santorini.webp" alt=""><span data-t="mediterranean">Mediterranean</span><i class="badge" data-t="newBadge">NEW</i></button>
+      <button type="button" role="tab" data-coll="nordic" data-new aria-selected="false"><img src="./thumbs/fiyort.webp" alt=""><span data-t="nordic">Nordic</span><i class="badge" data-t="newBadge">NEW</i></button>
+      <button type="button" role="tab" data-coll="mediterranean" aria-selected="false"><img src="./thumbs/santorini.webp" alt=""><span data-t="mediterranean">Mediterranean</span></button>
       <button type="button" role="tab" data-coll="classics" aria-selected="true"><img src="./thumbs/tabriz.webp" alt=""><span data-t="classics">Classics</span></button>
       <button type="button" role="tab" data-coll="halloween" aria-selected="false"><img src="./thumbs/balkabagi.webp" alt=""><span data-t="halloween">Halloween</span></button>
       <button type="button" role="tab" data-coll="americas" aria-selected="false"><img src="./thumbs/kartpostal.webp" alt=""><span data-t="americas">Americas</span></button>
@@ -406,7 +407,7 @@
 
       <!-- Mediterranean: a tab for each country -->
       <div class="coll" data-coll="mediterranean" role="tabpanel" hidden>
-        <header class="pack-head"><h3><span data-t="mediterranean">Mediterranean</span><i class="badge" data-t="newBadge">NEW</i></h3><p class="pack-count"></p><p class="pack-tag" data-t="medTag"></p></header>
+        <header class="pack-head"><h3><span data-t="mediterranean">Mediterranean</span></h3><p class="pack-count"></p><p class="pack-tag" data-t="medTag"></p></header>
         <div class="country-tabs" role="tablist">
           <button type="button" role="tab" data-country="italy" aria-selected="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.6 10.2c-.6-3.4 2-6.6 5.6-7 1.3-.1 2.4.2 3.3.8l1.5-.6-.5 1.5c.6.9.9 2 .8 3.2-.4 3.4-3.5 6-7 5.8-1.2-.1-2.2-.5-2.9-1.2l-1.4.4.5-1.4c.1-.5.1-1 .1-1.5z" fill="#f2c430"/><path d="M8.8 3.2C8.6 1.6 9.8.4 11.6.4c.2 1.6-1 2.8-2.8 2.8z" fill="#4f8a3a"/></svg><span data-t="italy">Italy</span></button>
           <button type="button" role="tab" data-country="greece" aria-selected="false"><svg viewBox="0 0 14 16" aria-hidden="true"><path d="M5 .6h4v1.6c0 .5.3.9.8 1.1C12 4.3 13 6.6 13 8.8c0 3-2.2 5.6-4.4 6.6H5.4C3.2 14.4 1 11.8 1 8.8c0-2.2 1-4.5 3.2-5.5.5-.2.8-.6.8-1.1z" fill="#c86a32"/><path d="M1.6 7.4h10.8v2H1.6z" fill="#1c1714"/><path d="M4.2 3.4C2.2 3 1.6 4.8 2.2 6.4M9.8 3.4c2-.4 2.6 1.4 2 3" stroke="#c86a32" stroke-width="1.2" fill="none"/></svg><span data-t="greece">Greece</span></button>
@@ -507,6 +508,118 @@
               <button type="button" role="radio" data-style="mavisandalye"><img src="./thumbs/mavisandalye.webp" alt=""><span data-t="s_mavisandalye">Blue Chairs</span></button>
               <button type="button" role="radio" data-style="roussillon"><img src="./thumbs/roussillon.webp" alt=""><span data-t="s_roussillon">Roussillon</span></button>
               <button type="button" role="radio" data-style="camargue"><img src="./thumbs/camargue.webp" alt=""><span data-t="s_camargue">Camargue Horses</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nordic: a tab for each country -->
+      <div class="coll" data-coll="nordic" role="tabpanel" hidden>
+        <header class="pack-head"><h3><span data-t="nordic">Nordic</span><i class="badge" data-t="newBadge">NEW</i></h3><p class="pack-count"></p><p class="pack-tag" data-t="nordicTag"></p></header>
+        <div class="country-tabs" role="tablist">
+          <button type="button" role="tab" data-country="norway" aria-selected="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0.4L9.19 5.14L13.37 2.63L10.86 6.81L15.6 8L10.86 9.19L13.37 13.37L9.19 10.86L8 15.6L6.81 10.86L2.63 13.37L5.14 9.19L0.4 8L5.14 6.81L2.63 2.63L6.81 5.14z" fill="#4f86b8"/><circle cx="8" cy="8" r="1.7" fill="#c8402a"/></svg><span data-t="norway">Norway</span></button>
+          <button type="button" role="tab" data-country="sweden" aria-selected="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.6 6.2h7.6l.3-3.6c.6-1.2 1.8-1.7 3-1.3l2.9 2.3-.6 1.7-2-.2-.2 2v3.4L12 15.2H9.6l-.5-3H6.2l-.5 3H3.2l-.6-5.3-1.4-.7-.2-2.4z" fill="#d2442c"/><path d="M4.4 6.2h4.2v3H4.4z" fill="#2f7d4a"/><path d="M4.4 9.6h4.2" stroke="#f2e6cc" stroke-width=".8"/><circle cx="12.1" cy="2.9" r=".6" fill="#f2e6cc"/></svg><span data-t="sweden">Sweden</span></button>
+          <button type="button" role="tab" data-country="denmark" aria-selected="false"><svg viewBox="0 0 16 16" aria-hidden="true"><defs><clipPath id="dkHeart"><path d="M8 15 1.8 8.8A4.384 4.384 0 0 1 8 2.6a4.384 4.384 0 0 1 6.2 6.2z"/></clipPath></defs><g clip-path="url(#dkHeart)"><rect width="16" height="16" fill="#d23a32"/><g transform="rotate(45 8 8.8)" fill="#f6ead2"><rect x="-2.96" y="0.03" width="2.19" height="2.19"/><rect x="-2.96" y="4.42" width="2.19" height="2.19"/><rect x="-2.96" y="8.8" width="2.19" height="2.19"/><rect x="-2.96" y="13.18" width="2.19" height="2.19"/><rect x="-2.96" y="17.57" width="2.19" height="2.19"/><rect x="-0.77" y="-2.16" width="2.19" height="2.19"/><rect x="-0.77" y="2.22" width="2.19" height="2.19"/><rect x="-0.77" y="6.61" width="2.19" height="2.19"/><rect x="-0.77" y="10.99" width="2.19" height="2.19"/><rect x="-0.77" y="15.38" width="2.19" height="2.19"/><rect x="1.42" y="0.03" width="2.19" height="2.19"/><rect x="1.42" y="4.42" width="2.19" height="2.19"/><rect x="1.42" y="8.8" width="2.19" height="2.19"/><rect x="1.42" y="13.18" width="2.19" height="2.19"/><rect x="1.42" y="17.57" width="2.19" height="2.19"/><rect x="3.62" y="-2.16" width="2.19" height="2.19"/><rect x="3.62" y="2.22" width="2.19" height="2.19"/><rect x="3.62" y="6.61" width="2.19" height="2.19"/><rect x="3.62" y="10.99" width="2.19" height="2.19"/><rect x="3.62" y="15.38" width="2.19" height="2.19"/><rect x="5.81" y="0.03" width="2.19" height="2.19"/><rect x="5.81" y="4.42" width="2.19" height="2.19"/><rect x="5.81" y="8.8" width="2.19" height="2.19"/><rect x="5.81" y="13.18" width="2.19" height="2.19"/><rect x="5.81" y="17.57" width="2.19" height="2.19"/><rect x="8" y="-2.16" width="2.19" height="2.19"/><rect x="8" y="2.22" width="2.19" height="2.19"/><rect x="8" y="6.61" width="2.19" height="2.19"/><rect x="8" y="10.99" width="2.19" height="2.19"/><rect x="8" y="15.38" width="2.19" height="2.19"/><rect x="10.19" y="0.03" width="2.19" height="2.19"/><rect x="10.19" y="4.42" width="2.19" height="2.19"/><rect x="10.19" y="8.8" width="2.19" height="2.19"/><rect x="10.19" y="13.18" width="2.19" height="2.19"/><rect x="10.19" y="17.57" width="2.19" height="2.19"/><rect x="12.38" y="-2.16" width="2.19" height="2.19"/><rect x="12.38" y="2.22" width="2.19" height="2.19"/><rect x="12.38" y="6.61" width="2.19" height="2.19"/><rect x="12.38" y="10.99" width="2.19" height="2.19"/><rect x="12.38" y="15.38" width="2.19" height="2.19"/><rect x="14.58" y="0.03" width="2.19" height="2.19"/><rect x="14.58" y="4.42" width="2.19" height="2.19"/><rect x="14.58" y="8.8" width="2.19" height="2.19"/><rect x="14.58" y="13.18" width="2.19" height="2.19"/><rect x="14.58" y="17.57" width="2.19" height="2.19"/><rect x="16.77" y="-2.16" width="2.19" height="2.19"/><rect x="16.77" y="2.22" width="2.19" height="2.19"/><rect x="16.77" y="6.61" width="2.19" height="2.19"/><rect x="16.77" y="10.99" width="2.19" height="2.19"/><rect x="16.77" y="15.38" width="2.19" height="2.19"/></g></g></svg><span data-t="denmark">Denmark</span></button>
+          <button type="button" role="tab" data-country="finland" aria-selected="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 6V.8" stroke="#4f8a3a" stroke-width="1.1"/><g fill="#5a9a3a"><ellipse cx="5.4" cy="5.8" rx="2.6" ry="1.1" transform="rotate(20 5.4 5.8)"/><ellipse cx="10.6" cy="5.8" rx="2.6" ry="1.1" transform="rotate(-20 10.6 5.8)"/><ellipse cx="8" cy="4.6" rx="1.1" ry="2.2"/></g><g fill="#ec8a26"><circle cx="8" cy="7.9" r="2"/><circle cx="5.9" cy="9.2" r="2"/><circle cx="10.1" cy="9.2" r="2"/><circle cx="6.2" cy="11.7" r="2"/><circle cx="9.8" cy="11.7" r="2"/><circle cx="8" cy="13.3" r="2"/><circle cx="8" cy="10.5" r="2"/></g><g fill="#f8c464"><circle cx="7.4" cy="7.3" r=".55"/><circle cx="5.3" cy="8.6" r=".55"/><circle cx="9.5" cy="8.6" r=".55"/><circle cx="5.6" cy="11.1" r=".55"/><circle cx="9.2" cy="11.1" r=".55"/><circle cx="7.4" cy="12.7" r=".55"/><circle cx="7.4" cy="9.9" r=".55"/></g></svg><span data-t="finland">Finland</span></button>
+          <button type="button" role="tab" data-country="iceland" aria-selected="false"><svg viewBox="0 0 16 16" aria-hidden="true"><ellipse cx="7.2" cy="10.2" rx="4.8" ry="5.2" fill="#2a2e38"/><circle cx="9" cy="5.3" r="3.7" fill="#2a2e38"/><ellipse cx="9.6" cy="5.7" rx="2.6" ry="2.4" fill="#f4f1e8"/><ellipse cx="8.6" cy="11.4" rx="3" ry="3.5" fill="#f4f1e8"/><path d="M11.4 4.3 15.6 5.7 11.6 7.9z" fill="#e8642a"/><path d="M12.6 4.7v2.8" stroke="#f2b030" stroke-width=".7"/><circle cx="10.1" cy="5" r=".65" fill="#2a2e38"/><path d="M6 15.2h2.2M9.2 15.2h2.2" stroke="#e8642a" stroke-width="1.2"/></svg><span data-t="iceland">Iceland</span></button>
+        </div>
+        <div class="country" data-country="norway" role="tabpanel">
+          <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="selbu"><img src="./thumbs/selbu.webp" alt=""><span data-t="s_selbu">Selbu Rose</span></button>
+              <button type="button" role="radio" data-style="rosemaling"><img src="./thumbs/rosemaling.webp" alt=""><span data-t="s_rosemaling">Rosemaling</span></button>
+              <button type="button" role="radio" data-style="hardanger"><img src="./thumbs/hardanger.webp" alt=""><span data-t="s_hardanger">Hardanger Embroidery</span></button>
+              <button type="button" role="radio" data-style="setesdal"><img src="./thumbs/setesdal.webp" alt=""><span data-t="s_setesdal">Setesdal Sweater</span></button>
+              <button type="button" role="radio" data-style="somon"><img src="./thumbs/somon.webp" alt=""><span data-t="s_somon">Salmon</span></button>
+              <button type="button" role="radio" data-style="solje"><img src="./thumbs/solje.webp" alt=""><span data-t="s_solje">Sølje Brooches</span></button>
+          </div>
+          <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="fiyort"><img src="./thumbs/fiyort.webp" alt=""><span data-t="s_fiyort">The Fjord</span></button>
+              <button type="button" role="radio" data-style="lofoten"><img src="./thumbs/lofoten.webp" alt=""><span data-t="s_lofoten">Lofoten</span></button>
+              <button type="button" role="radio" data-style="bryggen"><img src="./thumbs/bryggen.webp" alt=""><span data-t="s_bryggen">Bryggen</span></button>
+              <button type="button" role="radio" data-style="vikinggemisi"><img src="./thumbs/vikinggemisi.webp" alt=""><span data-t="s_vikinggemisi">Viking Ship</span></button>
+              <button type="button" role="radio" data-style="vafler"><img src="./thumbs/vafler.webp" alt=""><span data-t="s_vafler">Heart Waffles</span></button>
+              <button type="button" role="radio" data-style="norvecart"><img src="./thumbs/norvecart.webp" alt=""><span data-t="s_norvecart">Greetings from Norway</span></button>
+          </div>
+        </div>
+        <div class="country" data-country="sweden" role="tabpanel" hidden>
+          <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="dalahast"><img src="./thumbs/dalahast.webp" alt=""><span data-t="s_dalahast">Dala Horses</span></button>
+              <button type="button" role="radio" data-style="kurbits"><img src="./thumbs/kurbits.webp" alt=""><span data-t="s_kurbits">Kurbits</span></button>
+              <button type="button" role="radio" data-style="lingon"><img src="./thumbs/lingon.webp" alt=""><span data-t="s_lingon">Lingonberries</span></button>
+              <button type="button" role="radio" data-style="midsommar"><img src="./thumbs/midsommar.webp" alt=""><span data-t="s_midsommar">Midsummer Wreath</span></button>
+              <button type="button" role="radio" data-style="skane"><img src="./thumbs/skane.webp" alt=""><span data-t="s_skane">Skåne Embroidery</span></button>
+              <button type="button" role="radio" data-style="kraftor"><img src="./thumbs/kraftor.webp" alt=""><span data-t="s_kraftor">Crayfish</span></button>
+          </div>
+          <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="stuga"><img src="./thumbs/stuga.webp" alt=""><span data-t="s_stuga">Red Cottage</span></button>
+              <button type="button" role="radio" data-style="majstang"><img src="./thumbs/majstang.webp" alt=""><span data-t="s_majstang">Midsummer</span></button>
+              <button type="button" role="radio" data-style="skargard"><img src="./thumbs/skargard.webp" alt=""><span data-t="s_skargard">The Archipelago</span></button>
+              <button type="button" role="radio" data-style="gamlastan"><img src="./thumbs/gamlastan.webp" alt=""><span data-t="s_gamlastan">Gamla Stan</span></button>
+              <button type="button" role="radio" data-style="fika"><img src="./thumbs/fika.webp" alt=""><span data-t="s_fika">Fika</span></button>
+              <button type="button" role="radio" data-style="isveckart"><img src="./thumbs/isveckart.webp" alt=""><span data-t="s_isveckart">Greetings from Sweden</span></button>
+          </div>
+        </div>
+        <div class="country" data-country="denmark" role="tabpanel" hidden>
+          <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="kalpler"><img src="./thumbs/kalpler.webp" alt=""><span data-t="s_kalpler">Woven Hearts</span></button>
+              <button type="button" role="radio" data-style="dugum"><img src="./thumbs/dugum.webp" alt=""><span data-t="s_dugum">Sailor’s Knots</span></button>
+              <button type="button" role="radio" data-style="moderne"><img src="./thumbs/moderne.webp" alt=""><span data-t="s_moderne">Danish Modern</span></button>
+              <button type="button" role="radio" data-style="sild"><img src="./thumbs/sild.webp" alt=""><span data-t="s_sild">Herring</span></button>
+              <button type="button" role="radio" data-style="kehribar"><img src="./thumbs/kehribar.webp" alt=""><span data-t="s_kehribar">Amber</span></button>
+              <button type="button" role="radio" data-style="kugu"><img src="./thumbs/kugu.webp" alt=""><span data-t="s_kugu">Swans</span></button>
+          </div>
+          <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="nyhavn"><img src="./thumbs/nyhavn.webp" alt=""><span data-t="s_nyhavn">Nyhavn</span></button>
+              <button type="button" role="radio" data-style="smorrebrod"><img src="./thumbs/smorrebrod.webp" alt=""><span data-t="s_smorrebrod">Smørrebrød</span></button>
+              <button type="button" role="radio" data-style="wienerbrod"><img src="./thumbs/wienerbrod.webp" alt=""><span data-t="s_wienerbrod">Danish Bakery</span></button>
+              <button type="button" role="radio" data-style="bisiklet"><img src="./thumbs/bisiklet.webp" alt=""><span data-t="s_bisiklet">Copenhagen Bikes</span></button>
+              <button type="button" role="radio" data-style="monsklint"><img src="./thumbs/monsklint.webp" alt=""><span data-t="s_monsklint">Møns Klint</span></button>
+              <button type="button" role="radio" data-style="danimarkakart"><img src="./thumbs/danimarkakart.webp" alt=""><span data-t="s_danimarkakart">Greetings from Denmark</span></button>
+          </div>
+        </div>
+        <div class="country" data-country="finland" role="tabpanel" hidden>
+          <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="ryijy"><img src="./thumbs/ryijy.webp" alt=""><span data-t="s_ryijy">Ryijy</span></button>
+              <button type="button" role="radio" data-style="himmeli"><img src="./thumbs/himmeli.webp" alt=""><span data-t="s_himmeli">Himmeli</span></button>
+              <button type="button" role="radio" data-style="tuohi"><img src="./thumbs/tuohi.webp" alt=""><span data-t="s_tuohi">Birch Bark</span></button>
+              <button type="button" role="radio" data-style="lakka"><img src="./thumbs/lakka.webp" alt=""><span data-t="s_lakka">Cloudberries</span></button>
+              <button type="button" role="radio" data-style="karjala"><img src="./thumbs/karjala.webp" alt=""><span data-t="s_karjala">Karelian Embroidery</span></button>
+              <button type="button" role="radio" data-style="lumikide"><img src="./thumbs/lumikide.webp" alt=""><span data-t="s_lumikide">Snow Crystals</span></button>
+          </div>
+          <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="binjarvi"><img src="./thumbs/binjarvi.webp" alt=""><span data-t="s_binjarvi">A Thousand Lakes</span></button>
+              <button type="button" role="radio" data-style="sauna"><img src="./thumbs/sauna.webp" alt=""><span data-t="s_sauna">Lakeside Sauna</span></button>
+              <button type="button" role="radio" data-style="laponya"><img src="./thumbs/laponya.webp" alt=""><span data-t="s_laponya">Lapland</span></button>
+              <button type="button" role="radio" data-style="tramvay"><img src="./thumbs/tramvay.webp" alt=""><span data-t="s_tramvay">Helsinki Tram</span></button>
+              <button type="button" role="radio" data-style="piirakka"><img src="./thumbs/piirakka.webp" alt=""><span data-t="s_piirakka">Karelian Pies</span></button>
+              <button type="button" role="radio" data-style="finlandiyakart"><img src="./thumbs/finlandiyakart.webp" alt=""><span data-t="s_finlandiyakart">Greetings from Finland</span></button>
+          </div>
+        </div>
+        <div class="country" data-country="iceland" role="tabpanel" hidden>
+          <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="lopapeysa"><img src="./thumbs/lopapeysa.webp" alt=""><span data-t="s_lopapeysa">Lopapeysa</span></button>
+              <button type="button" role="radio" data-style="bazalt"><img src="./thumbs/bazalt.webp" alt=""><span data-t="s_bazalt">Basalt Columns</span></button>
+              <button type="button" role="radio" data-style="lundi"><img src="./thumbs/lundi.webp" alt=""><span data-t="s_lundi">Puffins</span></button>
+              <button type="button" role="radio" data-style="koyun"><img src="./thumbs/koyun.webp" alt=""><span data-t="s_koyun">Icelandic Sheep</span></button>
+              <button type="button" role="radio" data-style="lav"><img src="./thumbs/lav.webp" alt=""><span data-t="s_lav">Lava and Moss</span></button>
+              <button type="button" role="radio" data-style="laufabraud"><img src="./thumbs/laufabraud.webp" alt=""><span data-t="s_laufabraud">Leaf Bread</span></button>
+          </div>
+          <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="gayzer"><img src="./thumbs/gayzer.webp" alt=""><span data-t="s_gayzer">The Geyser</span></button>
+              <button type="button" role="radio" data-style="skogafoss"><img src="./thumbs/skogafoss.webp" alt=""><span data-t="s_skogafoss">Skógafoss</span></button>
+              <button type="button" role="radio" data-style="karakum"><img src="./thumbs/karakum.webp" alt=""><span data-t="s_karakum">Black Sand Beach</span></button>
+              <button type="button" role="radio" data-style="jokulsarlon"><img src="./thumbs/jokulsarlon.webp" alt=""><span data-t="s_jokulsarlon">Glacier Lagoon</span></button>
+              <button type="button" role="radio" data-style="reykjavik"><img src="./thumbs/reykjavik.webp" alt=""><span data-t="s_reykjavik">Reykjavík Roofs</span></button>
+              <button type="button" role="radio" data-style="izlandakart"><img src="./thumbs/izlandakart.webp" alt=""><span data-t="s_izlandakart">Greetings from Iceland</span></button>
           </div>
         </div>
       </div>
