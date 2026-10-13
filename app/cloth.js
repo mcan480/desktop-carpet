@@ -10,6 +10,10 @@ const CCAP = 0.25;     // one contact moves a point at most this far per pass (n
 // The hand drags the rug at most this far per step (about 2000 px/s for the large rug): a rug can't be whipped
 // through a fold, and a fast flick doesn't fling it into a heap.
 const PINCAP = 1.0;
+// While held: parts of the rug in the air lose a little speed every step (so it doesn't whip round the hand and wad up),
+// and nothing rises more than this far above the hand.
+const AIR = 0.03;
+const ZCAP = 0.6;
 
 export class Cloth {
   constructor({ width, height, cx, cy, angle = 0, nx = 40 }) {
@@ -108,7 +112,7 @@ export class Cloth {
 
   // Soft grab: each solver iteration pulls the grabbed particle a fraction `k`
   // of the way to the cursor, so the rest of the rug's weight resists it.
-  setPin(i, x, y, z, k = 0.3, carry = false) {
+  setPin(i, x, y, z, k = 0.3) {
     const was = this.pin && this.pin.i === i ? this.pin : null;
     if (!was) this.buildGrab(i);
     // where the hand was at the last step
@@ -117,10 +121,7 @@ export class Cloth {
     // a rug can't be whipped faster than this: the hand drags it at most PINCAP spacings per step
     const dx = x - fx, dy = y - fy, dz = z - fz, d = Math.hypot(dx, dy, dz), cap = this.spacing * PINCAP;
     if (d > cap) { const f = cap / d; x = fx + dx * f; y = fy + dy * f; z = fz + dz * f; }
-    // Held in the middle, the whole rug slides along with the hand (only the spot under it lifts a little), the way a
-    // rug moves when you pull it by the middle. Held near an edge, it's cloth: the edge lifts, folds, drags the rest.
-    if (carry && was) { const mx = x - was.x, my = y - was.y; if (mx || my) this.translate(mx, my); }
-    this.pin = { i, x, y, z, k, carry };
+    this.pin = { i, x, y, z, k };
   }
 
   // What a hand holds: the grabbed point plus a small patch around it that follows with a smooth falloff, so a
@@ -164,9 +165,10 @@ export class Cloth {
     // Integrate
     for (let p = 0; p < n; p++) {
       const k = p * 3;
-      let vx = (pos[k] - prev[k]) * damping;
-      let vy = (pos[k + 1] - prev[k + 1]) * damping;
-      let vz = (pos[k + 2] - prev[k + 2]) * damping;
+      const dmp = this.pin && pos[k + 2] > this.floorZ + 0.6 ? damping * (1 - AIR) : damping;
+      let vx = (pos[k] - prev[k]) * dmp;
+      let vy = (pos[k + 1] - prev[k + 1]) * dmp;
+      let vz = (pos[k + 2] - prev[k + 2]) * dmp;
       const sp = Math.sqrt(vx * vx + vy * vy + vz * vz);
       if (sp > maxMove) { const f = maxMove / sp; vx *= f; vy *= f; vz *= f; }
       prev[k] = pos[k]; prev[k + 1] = pos[k + 1]; prev[k + 2] = pos[k + 2];
@@ -186,7 +188,6 @@ export class Cloth {
         const kq = ids[q], w = ws[q];
         pos[kq] += ex * w; pos[kq + 1] += ey * w; pos[kq + 2] += ez * w;
       }
-      if (pin.carry) return;
       // keep every particle within reach of the hand
       const px = pos[k], py = pos[k + 1], pz = pos[k + 2], reach = this.grabReach;
       for (let p = 0, kp = 0; p < n; p++, kp += 3) {
@@ -220,6 +221,7 @@ export class Cloth {
         const k = p * 3 + 2;
         if (pos[k] < this.floorZ) pos[k] = this.floorZ;
       }
+      if (pin) { const top = pin.z + this.spacing * ZCAP; for (let p = 0; p < n; p++) { const k = p * 3 + 2; if (pos[k] > top) pos[k] = top; } }
     }
     applyPin();
     this.resolveContacts();

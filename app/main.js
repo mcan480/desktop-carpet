@@ -287,8 +287,6 @@ function screenToPlane(mx, my, z) {
 
 // ---------- interaction ----------
 let grab = null; // { i, z, offX, offY }
-const CARRY_BAND = 0.2;   // the outer fifth of the rug on each side is "the edge"
-const CARRY_LIFT = 28;    // how high the spot under the hand rises while the rug slides
 let over = false;
 let mouse = { x: -1, y: -1 };
 
@@ -352,11 +350,7 @@ function startGrab(mx, my) {
     if (d < bd) { bd = d; best = c; }
   }
   const k = best * 3;
-  // Held in the middle part, the rug slides along as a whole; held near an edge or a corner, that edge lifts and the
-  // rug drags, folds and sweeps like cloth.
-  const gi = best % cloth.nx / (cloth.nx - 1), gj = Math.floor(best / cloth.nx) / (cloth.ny - 1);
-  const carry = gi > CARRY_BAND && gi < 1 - CARRY_BAND && gj > CARRY_BAND && gj < 1 - CARRY_BAND;
-  grab = { i: best, z: cloth.pos[k + 2], startZ: cloth.pos[k + 2], t: 0, x: cloth.pos[k], y: cloth.pos[k + 1], at: performance.now(), carry };
+  grab = { i: best, z: cloth.pos[k + 2], startZ: cloth.pos[k + 2], t: 0, x: cloth.pos[k], y: cloth.pos[k + 1], at: performance.now() };
   document.body.classList.add('grabbing');
   api?.setIgnoreMouse(false);
   wake();
@@ -482,12 +476,12 @@ function frame(now) {
       const w = W8();
       grab.t = Math.min(1, grab.t + DT * 4);
       const ease = 1 - Math.pow(1 - grab.t, 3);
-      grab.z = grab.startZ + ((grab.carry ? Math.min(w.lift, CARRY_LIFT) : w.lift) - grab.startZ) * ease;
+      grab.z = grab.startZ + (w.lift - grab.startZ) * ease;
       const target = screenToPlane(mouse.x, mouse.y, grab.z);
       const f = 1 - Math.exp(-DT * w.follow);
       grab.x += (target.x - grab.x) * f;
       grab.y += (target.y - grab.y) * f;
-      cloth.setPin(grab.i, grab.x, grab.y, grab.z, w.pin, grab.carry);
+      cloth.setPin(grab.i, grab.x, grab.y, grab.z, w.pin);
     }
     moved = Math.max(moved, cloth.step(DT));
     acc -= DT;
