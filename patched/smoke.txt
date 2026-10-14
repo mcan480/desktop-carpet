@@ -1,0 +1,5 @@
+version 99.0.0 patch 99.0.0 shell e44.7.0-k3.3.2-s1
+koffi ok
+rugVisible true
+gallery rugs 321 search 16
+wallpaper {"src":"C:\\Users\\runneradmin\\AppData\\Roaming\\Microsoft\\Windows\\Themes\\TranscodedWallpaper","mode":"fill","bytes":112551,"anchor":0.5}
