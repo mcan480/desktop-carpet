@@ -159,6 +159,16 @@ export class Cloth {
     this.pin = null;
   }
 
+  // A rug that was let go a moment ago is coming to rest: every point keeps only `k` of its sideways speed (falling
+  // isn't slowed down).
+  settle(k) {
+    const { pos, prev } = this;
+    for (let i = 0; i < pos.length; i += 3) {
+      prev[i] = pos[i] - (pos[i] - prev[i]) * k;
+      prev[i + 1] = pos[i + 1] - (pos[i + 1] - prev[i + 1]) * k;
+    }
+  }
+
   step(dt) {
     const { pos, prev, invMass, n } = this;
     const g = this.gravity * dt * dt;

@@ -370,7 +370,7 @@ function startGrab(mx, my) {
     if (d < bd) { bd = d; best = c; }
   }
   const k = best * 3;
-  grab = { i: best, z: cloth.pos[k + 2], startZ: cloth.pos[k + 2], t: 0, x: cloth.pos[k], y: cloth.pos[k + 1], at: performance.now() };
+  grab = { i: best, z: cloth.pos[k + 2], startZ: cloth.pos[k + 2], t: 0, x: cloth.pos[k], y: cloth.pos[k + 1], speed: 0, at: performance.now() };
   document.body.classList.add('grabbing');
   api?.setIgnoreMouse(false);
   wake();
@@ -444,7 +444,7 @@ function center() {
 }
 
 // ---------- simulation loop (sleeps when still) ----------
-let awake = false, still = 0, last = 0, acc = 0, checkTangle = false, restlessSince = 0;
+let awake = false, still = 0, last = 0, acc = 0, checkTangle = false, restlessSince = 0, calmSince = 0;
 // Physics gets at most this much of a frame. On a computer that can't keep up the rug moves a little slower instead of
 // keeping a full-screen window busy (which makes the whole desktop feel stuck).
 const PHYSICS_BUDGET_MS = 6;
@@ -452,6 +452,12 @@ const PHYSICS_BUDGET_MS = 6;
 // rug folded in half stands about 4 high.
 const HEAP = 10;
 const DT = 1 / 120;
+// While dragging: at this hand speed (px/s) the held point is carried LOW_MAX lower than its usual lift.
+const LOW_SPEED = 1500, LOW_MAX = 0.6;
+// Let go: after SETTLE_AFTER ms the rug's sideways motion dies away quickly (each step keeps SETTLE_KEEP of it; falling
+// isn't slowed), so a fold that is still rolling over or a rug that is still turning comes to a stop. It counts as
+// landed once nothing moves more than CALM px a step for CALM_MS, and REST_BY ms after the last touch at the latest.
+const SETTLE_AFTER = 800, SETTLE_KEEP = 0.6, CALM = 0.5, CALM_MS = 300, REST_BY = 3000;
 
 function wake() {
   still = 0;
@@ -490,7 +496,7 @@ function frame(now) {
   if (acc < DT) { requestAnimationFrame(frame); return; }
   if (grab || still < 10) watchFps(interval);
   let moved = 0, steps = 0;
-  const t0 = performance.now();
+  const t0 = performance.now(), settling = !grab && now - restlessSince > SETTLE_AFTER;
   while (acc >= DT) {
     // A slow frame shouldn't snowball into more and more catch-up steps: run at most 3 (and only while there's time
     // left in the budget), then drop the rest.
@@ -499,13 +505,18 @@ function frame(now) {
       const w = W8();
       grab.t = Math.min(1, grab.t + DT * 4);
       const ease = 1 - Math.pow(1 - grab.t, 3);
-      grab.z = grab.startZ + (w.lift - grab.startZ) * ease;
+      // A hand moving fast carries the rug lower: it drags the rug along instead of waving it about, which folded
+      // parts of it over that were never touched.
+      const low = Math.min(LOW_MAX, grab.speed / LOW_SPEED);
+      grab.z = grab.startZ + (w.lift * (1 - low) - grab.startZ) * ease;
       const target = screenToPlane(mouse.x, mouse.y, grab.z);
       const f = 1 - Math.exp(-DT * w.follow);
+      const ox = grab.x, oy = grab.y;
       grab.x += (target.x - grab.x) * f;
       grab.y += (target.y - grab.y) * f;
+      grab.speed += (Math.hypot(grab.x - ox, grab.y - oy) / DT - grab.speed) * 0.08;
       cloth.setPin(grab.i, grab.x, grab.y, grab.z, w.pin);
-    }
+    } else if (settling) cloth.settle(SETTLE_KEEP);
     moved = Math.max(moved, cloth.step(DT));
     acc -= DT;
   }
@@ -514,8 +525,10 @@ function frame(now) {
 
   if (grab) restlessSince = now;
   if (!grab && moved < 0.02) still++; else still = 0;
-  // Still twitching 6 s after the last touch: it has landed, let it rest where it is (folds and all).
-  const overdue = !grab && still <= 45 && now - restlessSince > 6000;
+  // Barely moving a while after the last touch, or still going 3 s after it: it has landed, let it rest where it is
+  // (folds and all) instead of creeping and turning on.
+  if (grab || moved >= CALM || now - restlessSince < SETTLE_AFTER) calmSince = now;
+  const overdue = !grab && still <= 45 && (now - restlessSince > REST_BY || now - calmSince > CALM_MS);
   if (checkTangle && (still > 45 || overdue)) {
     // Let go and it settled as a heap (twisted round and round): lay it back out flat. A fold stays a fold.
     checkTangle = false;
