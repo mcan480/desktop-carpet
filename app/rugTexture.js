@@ -261,6 +261,90 @@ export const STYLES = {
   jokulsarlon:{ name: 'Buzul Lagünü',      iceland: 'lagoon', hooked: true },
   reykjavik: { name: 'Reykjavik Çatıları', iceland: 'reykjavik', hooked: true },
   izlandakart:{ name: 'İzlanda’dan Selamlar', iceland: 'postcard', fonts: true, hooked: true },
+  licitar:   { name: 'Licitar Kalpleri',   croatia: 'licitar' },
+  konavle:   { name: 'Konavle Nakışı',     croatia: 'konavle' },
+  dalmacyali:{ name: 'Dalmaçyalılar',      croatia: 'dalmatians' },
+  kravat:    { name: 'Hırvat Kravatı',     croatia: 'cravats' },
+  sibenik:   { name: 'Şibenik Düğmeleri',  croatia: 'buttons' },
+  paglace:   { name: 'Pag Danteli',        croatia: 'paglace' },
+  dubrovnik: { name: 'Dubrovnik',          croatia: 'dubrovnik', hooked: true },
+  plitvice:  { name: 'Plitvice Gölleri',   croatia: 'plitvice', hooked: true },
+  zlatnirat: { name: 'Zlatni Rat',         croatia: 'goldenhorn', hooked: true },
+  dolac:     { name: 'Dolac Pazarı',       croatia: 'dolac', hooked: true },
+  kornati:   { name: 'Kornati Adaları',    croatia: 'kornati', hooked: true },
+  hirvatkart:{ name: 'Hırvatistan’dan Selamlar', croatia: 'postcard', fonts: true, hooked: true },
+  bakir:     { name: 'Saraybosna Bakırcıları', bosnia: 'copper' },
+  konjic:    { name: 'Konjic Oyması',      bosnia: 'woodcarving' },
+  zlatovez:  { name: 'Altın Sırma Nakışı', bosnia: 'goldwork' },
+  fildzan:   { name: 'Fildžan Fincanları', bosnia: 'coffeecups' },
+  grozd:     { name: 'Hersek Üzümleri',    bosnia: 'grapes' },
+  pita:      { name: 'Boşnak Pitası',      bosnia: 'pita' },
+  starimost: { name: 'Mostar Köprüsü',     bosnia: 'oldbridge', hooked: true },
+  bascarsija:{ name: 'Başçarşı',           bosnia: 'bascarsija', hooked: true },
+  jajce:     { name: 'Pliva Değirmenleri', bosnia: 'watermills', hooked: true },
+  cevapi:    { name: 'Ćevapi',             bosnia: 'cevapi', hooked: true },
+  lukomir:   { name: 'Lukomir Köyü',       bosnia: 'lukomir', hooked: true },
+  saraybosnakart:{ name: 'Saraybosna’dan Selamlar', bosnia: 'postcard', fonts: true, hooked: true },
+  sljiva:    { name: 'Erikler',            serbia: 'plums' },
+  opanak:    { name: 'Opanak Çarıkları',   serbia: 'opanci' },
+  venci:     { name: 'Kırmızı Biberler',   serbia: 'peppers' },
+  zlakusa:   { name: 'Zlakusa Çömlekleri', serbia: 'pottery' },
+  kolo:      { name: 'Kolo',               serbia: 'kolo' },
+  sumadija:  { name: 'Şumadija Nakışı',    serbia: 'embroidery' },
+  kalemegdan:{ name: 'Kalemegdan',         serbia: 'kalemegdan', hooked: true },
+  drina:     { name: 'Drina’daki Ev',      serbia: 'drinahouse', hooked: true },
+  derdap:    { name: 'Đerdap Boğazı',      serbia: 'irongates', hooked: true },
+  sargan:    { name: 'Şargan Sekizi',      serbia: 'eighttrain', hooked: true },
+  zlatibor:  { name: 'Zlatibor Tepeleri',  serbia: 'zlatibor', hooked: true },
+  sirbistankart:{ name: 'Sırbistan’dan Selamlar', serbia: 'postcard', fonts: true, hooked: true },
+  troyan:    { name: 'Troyan Çömlekleri',  bulgaria: 'troyan' },
+  martenitsa:{ name: 'Martenitsa',         bulgaria: 'martenitsa' },
+  trakya:    { name: 'Trakya Altını',      bulgaria: 'thracian' },
+  kukeri:    { name: 'Kukeri Çanları',     bulgaria: 'bells' },
+  gulyagi:   { name: 'Gül Yağı Şişeleri',  bulgaria: 'roseoil' },
+  tryavna:   { name: 'Tryavna Güneşi',     bulgaria: 'carvedsun' },
+  gulvadisi: { name: 'Gül Vadisi',         bulgaria: 'rosevalley', hooked: true },
+  plovdiv:   { name: 'Plovdiv Eski Şehir', bulgaria: 'plovdiv', hooked: true },
+  yedigoller:{ name: 'Yedi Göller',        bulgaria: 'sevenlakes', hooked: true },
+  belogradcik:{ name: 'Belogradçik Kayaları', bulgaria: 'belogradchik', hooked: true },
+  yogurt:    { name: 'Bulgar Yoğurdu',     bulgaria: 'yogurt', hooked: true },
+  bulgaristankart:{ name: 'Bulgaristan’dan Selamlar', bulgaria: 'postcard', fonts: true, hooked: true },
+  xhubleta:  { name: 'Xhubleta',          albania: 'xhubleta' },
+  qeleshe:   { name: 'Qeleshe',           albania: 'qeleshe' },
+  cifteli:   { name: 'Çifteli',           albania: 'cifteli' },
+  tascati:   { name: 'Taş Çatılar',       albania: 'slateroofs' },
+  incir:     { name: 'İncirler',          albania: 'figs' },
+  pelikan:   { name: 'Pelikanlar',        albania: 'pelicans' },
+  gjirokaster:{ name: 'Gjirokastër',      albania: 'gjirokaster', hooked: true },
+  berat:     { name: 'Berat Pencereleri', albania: 'berat', hooked: true },
+  mavigoz:   { name: 'Mavi Göz',          albania: 'blueeye', hooked: true },
+  ksamil:    { name: 'Ksamil Adaları',    albania: 'ksamil', hooked: true },
+  theth:     { name: 'Theth Vadisi',      albania: 'theth', hooked: true },
+  arnavutlukkart:{ name: 'Arnavutluk’tan Selamlar', albania: 'postcard', fonts: true, hooked: true },
+  kumsise:   { name: 'Kum Şişeleri',        jordan: 'sandbottles' },
+  dallah:    { name: 'Dallah ve Fincanlar', jordan: 'dallah' },
+  karasusen: { name: 'Kara Süsen',          jordan: 'blackiris' },
+  oriks:     { name: 'Arap Oriksleri',      jordan: 'oryx' },
+  bedevi:    { name: 'Bedevi Gümüşü',       jordan: 'silver' },
+  hurma:     { name: 'Hurmalar',            jordan: 'dates' },
+  petra:     { name: 'Petra Hazine',        jordan: 'petra', hooked: true },
+  vadirum:   { name: 'Wadi Rum',            jordan: 'wadirum', hooked: true },
+  oludeniz:  { name: 'Ölü Deniz',           jordan: 'deadsea', hooked: true },
+  ceras:     { name: 'Ceraş',               jordan: 'jerash', hooked: true },
+  akabe:     { name: 'Akabe Mercanları',    jordan: 'aqaba', hooked: true },
+  urdunkart: { name: 'Ürdün’den Selamlar',  jordan: 'postcard', fonts: true, hooked: true },
+  zellij:    { name: 'Zellij',             morocco: 'zellij' },
+  fasfener:  { name: 'Fas Fenerleri',      morocco: 'lanterns' },
+  babuc:     { name: 'Babuşlar',           morocco: 'babouches' },
+  baharat:   { name: 'Baharat Tepeleri',   morocco: 'spices' },
+  tajin:     { name: 'Tajin Kapları',      morocco: 'tagines' },
+  zouak:     { name: 'Sedir Tavan',        morocco: 'paintedwood' },
+  sefsavan:  { name: 'Şefşavan',           morocco: 'chefchaouen', hooked: true },
+  marakes:   { name: 'Marakeş Çarşısı',    morocco: 'souk', hooked: true },
+  sahra:     { name: 'Sahra Develeri',     morocco: 'sahara', hooked: true },
+  aitbenhaddou:{ name: 'Ait Benhaddou',    morocco: 'kasbah', hooked: true },
+  fesboya:   { name: 'Fes Boyahaneleri',   morocco: 'tannery', hooked: true },
+  faskart:   { name: 'Fas’tan Selamlar',   morocco: 'postcard', fonts: true, hooked: true },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -11862,6 +11946,7630 @@ const ICELAND_SCENES = [
 // Postcard: "Greetings from ICELAND", every letter a little Icelandic scene.
 function icePostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'ICELAND', ICELAND_SCENES); }
 
+// ---------- Balkan pack. Croatia ----------
+const CROATIA_FRAME = { dark: '#16303a', a: '#cf6a3c', b: '#43b8b4', line: '#f2ead8' };
+
+// The outline of a plump heart round (cx, cy), `s` knots from the middle to each side, its point at the bottom:
+// a list of points evenly spaced along the edge (about two to a knot).
+function croHeartPts(cx, cy, s) {
+  const segs = [[[0, 0.95], [-0.28, 0.68], [-1.0, 0.28], [-1.0, -0.28]], [[-1.0, -0.28], [-1.0, -0.86], [-0.24, -0.98], [0, -0.52]],
+    [[0, -0.52], [0.24, -0.98], [1.0, -0.86], [1.0, -0.28]], [[1.0, -0.28], [1.0, 0.28], [0.28, 0.68], [0, 0.95]]];
+  const raw = [];
+  for (const [a, b, c, d] of segs) for (let k = 0; k < 60; k++) {
+    const t = k / 60, m = 1 - t, f = (i) => m * m * m * a[i] + 3 * m * m * t * b[i] + 3 * m * t * t * c[i] + t * t * t * d[i];
+    raw.push([cx + f(0) * s, cy + f(1) * s]);
+  }
+  const out = [raw[0]]; let acc = 0;
+  for (let i = 1; i <= raw.length; i++) { const p = raw[i % raw.length], q = raw[i - 1]; acc += Math.hypot(p[0] - q[0], p[1] - q[1]); if (acc >= 0.5) { out.push(p); acc = 0; } }
+  return out;
+}
+// The same heart as a path on `c`, ready to fill or stroke.
+function croHeart(c, cx, cy, s) { c.beginPath(); croHeartPts(cx, cy, s).forEach(([a, b], i) => (i ? c.lineTo(a, b) : c.moveTo(a, b))); c.closePath(); }
+
+// Licitar hearts: glossy red gingerbread hearts from Zagreb, trimmed with white icing scallops, sugar flowers and a
+// little round mirror, hanging on ribbons from twisted cords in two rows on cream, in a green border of small hearts.
+function croLicitar(ctx, W, H) {
+  const C = { cream: '#f3e7cc', cream2: '#e6d5b2', shadow: '#cdb68c', red: '#c8202a', red2: '#8a1420', red3: '#ea5848', white: '#fbf6ec', yellow: '#f2c230', green: '#3f9a48', green2: '#1d5232', silver: '#c6cfd8', grey: '#6d7884', sky: '#8fd0ea' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => R(Math.round(a - 0.5), Math.round(b - 0.5), 1, 1, col);
+    // the border: green band with a row of little red hearts, yellow and red guard lines, flowers in the corners
+    R(0, 0, cols, rows, C.green2);
+    const B = 12;
+    for (const [o, col] of [[1, C.yellow], [B - 2, C.yellow], [B - 1, C.red]]) { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); }
+    const mini = ['.##.##.', '#######', '#######', '.#####.', '..###..', '...#...'];
+    const miniHeart = (cx, cy) => { for (let j = 0; j < 6; j++) for (let i = 0; i < 7; i++) if (mini[j][i] === '#') R(cx - 3 + i, cy - 3 + j, 1, 1, C.red); R(cx - 2, cy - 2, 1, 1, C.white); };
+    const dotFlower = (cx, cy) => { R(cx - 1, cy - 1, 2, 2, C.yellow); R(cx - 1, cy - 1, 1, 1, C.white); };
+    const mid = Math.floor((B - 1) / 2);
+    for (const [len, at] of [[cols - 2 * B, (a) => [[B + a, mid], [B + a, rows - 1 - mid]]], [rows - 2 * B, (a) => [[mid, B + a], [cols - 1 - mid, B + a]]]]) {
+      const { n, d } = evenSteps(len, 11);
+      for (let i = 0; i < n; i++) {
+        for (const [a, b] of at((i + 0.5) * d)) miniHeart(Math.round(a), Math.round(b));
+        if (i) for (const [a, b] of at(i * d)) dotFlower(Math.round(a), Math.round(b));
+      }
+    }
+    for (const [cx, cy] of [[mid, mid], [cols - 1 - mid, mid], [mid, rows - 1 - mid], [cols - 1 - mid, rows - 1 - mid]]) {
+      for (let dy = -3; dy <= 3; dy++) for (let dx = -3; dx <= 3; dx++) { const d = Math.hypot(dx, dy); if (d <= 3.3) R(cx + dx, cy + dy, 1, 1, d > 2.2 ? C.red : d > 1.2 ? C.white : C.yellow); }
+    }
+    // the cream field with a faint lattice of little sugar dots
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    R(fx, fy, fw, fh, C.cream);
+    for (let j = fy + 3; j < fy + fh - 1; j += 6) for (let i = fx + 3 + ((j - fy - 3) % 12 ? 3 : 0); i < fx + fw - 1; i += 6) R(i, j, 1, 1, C.cream2);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // two rows of five hearts, each row hanging from a twisted cord that swags between little bows
+    const n = 5, step = fw / n, s = 15.5;
+    const rowsY = [fy + fh * 0.3, fy + fh * 0.775];
+    const hearts = [];
+    rowsY.forEach((hy, r) => {
+      const cordY = Math.round(hy - s * 1.42);
+      for (let t = -0.5; t <= n + 0.5; t += 0.01) {
+        const px = fx + step * (t + 0.5), sag = Math.sin(((t % 1) + 1) % 1 * Math.PI) * 4.2, py = cordY + sag;
+        const tw = Math.floor((px + py) / 2) % 2;
+        P(px, py, tw ? C.yellow : C.green); P(px, py + 1, tw ? C.green : C.green2);
+      }
+      for (let i = 0; i < n; i++) hearts.push([fx + step * (i + 0.5), hy, s, r * n + i, cordY]);
+    });
+    for (const [hx, hy, hs, k, cordY] of hearts) {
+      const rib = [C.yellow, C.green, C.red][k % 3], top = Math.round(hy - hs * 0.55);
+      // the ribbon from the bow down to the heart, and the bow on the cord
+      R(Math.round(hx) - 1, cordY, 2, top - cordY + 1, rib);
+      R(Math.round(hx), cordY, 1, top - cordY + 1, rib === C.yellow ? C.white : rib === C.green ? C.yellow : C.red3);
+      sweInk(x, rib, (c) => { for (const sg of [-1, 1]) { c.beginPath(); c.moveTo(hx, cordY + 0.5); c.lineTo(hx + sg * 4.5, cordY - 2); c.lineTo(hx + sg * 4.5, cordY + 3); c.closePath(); c.fill(); c.beginPath(); c.moveTo(hx, cordY + 0.5); c.lineTo(hx + sg * 3, cordY + 5.5); c.lineTo(hx + sg * 1.2, cordY + 5.5); c.closePath(); c.fill(); } });
+      R(Math.round(hx) - 1, cordY, 2, 1, C.red2);
+      // shadow on the cloth, the deep red body, the bright face, the gloss
+      sweInk(x, C.shadow, (c) => { croHeart(c, hx + 1.8, hy + 1.8, hs); c.fill(); });
+      sweInk(x, C.red2, (c) => { croHeart(c, hx, hy, hs); c.fill(); });
+      sweInk(x, C.red, (c) => { croHeart(c, hx - 0.8, hy - 0.9, hs * 0.92); c.fill(); });
+      sweInk(x, C.red3, (c) => { c.beginPath(); c.ellipse(hx - hs * 0.58, hy - hs * 0.46, hs * 0.3, hs * 0.12, -0.85, 0, Math.PI * 2); c.fill(); });
+      R(Math.round(hx - hs * 0.68), Math.round(hy - hs * 0.42), 1, 1, C.white); R(Math.round(hx - hs * 0.5), Math.round(hy - hs * 0.64), 1, 1, C.white);
+      // the icing: a scalloped white rim inside the edge, a coloured sugar bead in every scallop
+      const ring = croHeartPts(hx - 0.8, hy - 0.2, hs * 0.66), ns = Math.round(ring.length / 12), sl = ring.length / ns;
+      const pt = (q) => ring[Math.floor(q + ring.length * 0.5 - sl / 2) % ring.length];
+      sweInk(x, C.white, (c) => {
+        c.lineWidth = 1.1; c.beginPath();
+        for (let i = 0; i < ns; i++) {
+          const [ax, ay] = pt(i * sl), [bx, by] = pt((i + 1) * sl), [mx, my] = pt((i + 0.5) * sl);
+          const ix = mx - (hx - mx) * 0.2, iy = my - (hy - my) * 0.2;
+          c.moveTo(ax, ay); c.quadraticCurveTo(2 * ix - (ax + bx) / 2, 2 * iy - (ay + by) / 2, bx, by);
+        }
+        c.stroke();
+      });
+      for (let i = 0; i < ns; i++) {
+        const [mx, my] = pt((i + 0.5) * sl), [ax, ay] = pt(i * sl);
+        R(Math.round(mx - (hx - mx) * 0.06 - 0.5), Math.round(my - (hy - my) * 0.06 - 0.5), 1, 1, i % 2 ? C.yellow : C.green);
+      }
+      // the middle: a round mirror in a ring of white beads, or a big sugar flower on two leaves
+      if (k % 2 === 0) {
+        sweInk(x, C.white, (c) => { c.lineWidth = 1.2; c.beginPath(); c.arc(hx - 0.3, hy - 0.3, 5.4, 0, Math.PI * 2); c.stroke(); for (let q = 0; q < 4; q++) { const a = (q / 4) * Math.PI * 2 + Math.PI / 4; c.beginPath(); c.arc(hx - 0.3 + Math.cos(a) * 7.2, hy - 0.3 + Math.sin(a) * 7.2, 1.1, 0, Math.PI * 2); c.fill(); } });
+        for (let q = 0; q < 4; q++) { const a = (q / 4) * Math.PI * 2; R(Math.round(hx - 0.8 + Math.cos(a) * 7), Math.round(hy - 0.8 + Math.sin(a) * 7), 1, 1, q % 2 ? C.green : C.yellow); }
+        sweInk(x, C.grey, (c) => { c.beginPath(); c.arc(hx, hy, 4.2, 0, Math.PI * 2); c.fill(); });
+        sweInk(x, C.silver, (c) => { c.beginPath(); c.arc(hx - 0.5, hy - 0.5, 3.3, 0, Math.PI * 2); c.fill(); });
+        sweInk(x, C.sky, (c) => { c.beginPath(); c.moveTo(hx - 3, hy + 0.6); c.lineTo(hx + 0.6, hy - 3); c.lineTo(hx + 2, hy - 1.6); c.lineTo(hx - 1.6, hy + 2); c.closePath(); c.fill(); });
+        R(Math.round(hx) - 2, Math.round(hy) - 2, 1, 1, C.white);
+      } else {
+        sweInk(x, C.green, (c) => { for (const sg of [-1, 1]) { c.beginPath(); c.ellipse(hx + sg * 5, hy + 3.2, 3.2, 1.4, sg * 0.5, 0, Math.PI * 2); c.fill(); } });
+        sweInk(x, C.white, (c) => { for (let q = 0; q < 6; q++) { const a = (q / 6) * Math.PI * 2 - Math.PI / 2; c.beginPath(); c.arc(hx + Math.cos(a) * 3, hy - 0.5 + Math.sin(a) * 3, 1.6, 0, Math.PI * 2); c.fill(); } });
+        sweInk(x, C.yellow, (c) => { c.beginPath(); c.arc(hx, hy - 0.5, 1.5, 0, Math.PI * 2); c.fill(); });
+      }
+    }
+    x.restore();
+  });
+}
+
+// Konavle embroidery: the front of a Konavle blouse in counted silk on white linen. Two square chest panels worked in
+// fine bands round a radiating satin rosette, in deep red, gold, black and green, either side of the neck opening
+// with its two silk tassels; a band of little rosettes along the collar and the hem, a border of red and black teeth.
+function croKonavle(ctx, W, H) {
+  const C = { linen: '#f2ede0', linen2: '#e8e1d0', red: '#a8182a', red2: '#741020', gold: '#e2a83c', gold2: '#a8741e', black: '#1c1618', green: '#3e7c40', green2: '#22502a' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const P = (a, b, col) => { if (col) { x.fillStyle = col; x.fillRect(a, b, 1, 1); } };
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    // linen with its threads showing
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) P(i, j, (i % 6 === 1 && j % 3 === 0) || (j % 6 === 4 && i % 3 === 2) ? C.linen2 : C.linen);
+    // lay a pattern in rings round a rectangle: fn(e, a, k) gets the depth in from the nearest edge, the position
+    // along that edge (from its middle) and the side's length, and returns a colour or null; the corners mitre
+    const rings = (x0, y0, w, h, depth, fn) => {
+      for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
+        const ex = Math.min(i, w - 1 - i), ey = Math.min(j, h - 1 - j), e = Math.min(ex, ey);
+        if (e >= depth) continue;
+        const onSide = ey < ex, a = onSide ? i - (w - 1) / 2 : j - (h - 1) / 2;
+        P(x0 + i, y0 + j, ex === ey ? fn(e, null, 0) : fn(e, a, onSide ? w : h));
+      }
+    };
+    // two-colour teeth: red triangles from the outside, black from the inside, `d` deep and `p` knots a tooth
+    const teeth = (e, a, e0, d, p, out, inn) => { if (a === null) return C.black; const t = Math.abs(((a % p) + p) % p - p / 2) / (p / 2); return (e - e0) < Math.round(d * t) ? out : inn; };
+    // the border
+    rings(0, 0, cols, rows, 10, (e, a) => {
+      if (e === 0 || e === 9) return C.black;
+      if (e === 8) return C.gold;
+      if (e >= 2 && e <= 6) return teeth(e, a, 2, 5, 10, C.red, C.black);
+      return C.linen;
+    });
+    // a little eight-point star: a square and a diamond laid over each other, a ring of a second colour, a gold heart
+    const rosette = (cx, cy, r, petal, petal2, heart) => {
+      for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) {
+        const m = Math.max(Math.abs(dx), Math.abs(dy)), d = Math.abs(dx) + Math.abs(dy);
+        if (m > r - 1 && d > r) continue;
+        if (m <= r - 1 || d <= r) P(cx + dx, cy + dy, m <= 1 ? (d === 0 ? heart : petal2) : petal);
+      }
+    };
+    const fx = 10, fy = 10, fw = cols - 20, fh = rows - 20;
+    // the collar and the hem: little rosettes on a running stitch between rows of small teeth
+    const band = (y0, h) => {
+      for (let i = fx + 2; i < fx + fw - 2; i++) {
+        P(i, y0, C.black); P(i, y0 + h - 1, C.black);
+        const t = (i - fx) % 4; P(i, y0 + 1, t < 2 ? C.red : null); P(i, y0 + h - 2, t < 2 ? C.red : null);
+        if (t === 0) { P(i, y0 + 2, C.red); P(i, y0 + h - 3, C.red); }
+      }
+      const cy = y0 + Math.floor(h / 2), { n, d } = evenSteps(fw - 6, 9);
+      for (let i = fx + 3; i < fx + fw - 3; i += 2) P(i, cy, C.gold2);
+      for (let i = 0; i < n; i++) { const cx = Math.round(fx + 3 + (i + 0.5) * d); rosette(cx, cy, 3, i % 2 ? C.green : C.red, i % 2 ? C.green2 : C.red2, C.gold); P(cx - 4, cy - 1, C.black); P(cx + 4, cy + 1, C.black); }
+    };
+    band(fy + 2, 9);
+    band(fy + fh - 11, 9);
+    // the chest panels: rings of teeth, dots, little diamonds and satin triangles round a radiating rosette, the
+    // diagonals stitched in black
+    const gap = 26, pw = Math.floor((fw - 8 - gap) / 2), py0 = fy + 14, ph = fh - 28;
+    for (const side of [0, 1]) {
+      const px0 = side ? fx + 4 + pw + gap : fx + 4, cx = px0 + (pw - 1) / 2, cy = py0 + (ph - 1) / 2;
+      rings(px0, py0, pw, ph, 99, (e, a, len) => {
+        if (a === null) return e > 25 ? null : e % 2 ? C.gold : C.black;
+        if (e === 0) return C.black;
+        if (e <= 4) return teeth(e, a, 1, 4, 6, C.red, C.black);
+        if (e === 5) return C.gold;
+        if (e === 6) return ((a % 2) + 2) % 2 ? C.linen : C.black;
+        if (e >= 8 && e <= 10) { const k = Math.floor(a / 6), q = Math.abs(a - k * 6 - 2.5), up = ((k % 2) + 2) % 2, dep = up ? e - 8 : 10 - e; return q <= 2.6 - dep ? (up ? C.green : C.red) : null; }
+        if (e === 12) return C.black;
+        if (e >= 13 && e <= 17) { const t = ((a % 6) + 6) % 6, h = 5 - Math.abs(t - 2.5) * 2; return (17 - e) < h ? ((((a % 3) + 3) % 3) ? C.red : C.red2) : C.black; }
+        if (e === 18) return C.gold;
+        if (e === 19 || e === 21) return null;
+        if (e === 20) return ((a % 3) + 3) % 3 === 0 ? C.green : null;
+        if (e === 22) return C.black;
+        return null;
+      });
+      // the rosette: sixteen satin petals in red and gold with black outlines, a green ring, a gold heart
+      const r0 = Math.min(pw, ph) / 2 - 23.5;
+      for (let py = Math.floor(cy - r0 - 1); py <= Math.ceil(cy + r0 + 1); py++) for (let px = Math.floor(cx - r0 - 1); px <= Math.ceil(cx + r0 + 1); px++) {
+        const ex = px - cx, ey = py - cy, d = Math.hypot(ex, ey);
+        if (d > r0) continue;
+        const NP = 12, ang = Math.atan2(ey, ex), f = ((ang / (Math.PI * 2)) * NP + NP) % NP, k = Math.floor(f), seg = f - k;
+        let col;
+        if (d > r0 - 1) col = C.black;
+        else if (d > r0 * 0.4) {
+          const w = 1 - Math.abs(seg - 0.5) * 2, lim = (d - r0 * 0.4) / (r0 * 0.6);
+          col = w < 0.12 + lim * 0.62 ? (d > r0 - 2.2 ? C.red2 : C.gold) : C.red;
+        } else if (d > r0 * 0.4 - 1.2) col = C.black;
+        else if (d > r0 * 0.2) col = C.green;
+        else col = d < 1 ? C.black : C.gold;
+        P(px, py, col);
+      }
+      for (let k = 0; k < 12; k++) { const ang = (k / 12) * Math.PI * 2 + Math.PI / 12; P(Math.round(cx + Math.cos(ang) * (r0 + 1.6)), Math.round(cy + Math.sin(ang) * (r0 + 1.6)), k % 2 ? C.green : C.red); }
+      for (const [sx, sy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+        const qx = Math.round(cx + sx * (r0 + 1.5)), qy = Math.round(cy + sy * (r0 + 1.5));
+        for (let j = 0; j < 3; j++) for (let i = 0; i < 3 - j; i++) P(qx - sx * i, qy - sy * j, j + i === 2 ? C.gold : C.red);
+      }
+    }
+    // the neck opening: a column of small rosettes, and the two silk tassels hanging from the collar
+    const ox = Math.round(fx + fw / 2) - 0.5;
+    for (let yy = py0; yy < py0 + ph; yy++) { P(Math.round(ox - 10), yy, (yy % 2) ? C.red : null); P(Math.round(ox + 10), yy, (yy % 2) ? C.red : null); }
+    { const { n, d } = evenSteps(ph - 30, 9); for (let i = 0; i < n; i++) rosette(Math.round(ox), Math.round(py0 + 30 + (i + 0.5) * d), 3, i % 2 ? C.green : C.red, i % 2 ? C.green2 : C.red2, C.gold); }
+    for (const sx of [-4.5, 4.5]) {
+      const tx = Math.round(ox + sx), t0 = fy + 11;
+      for (let yy = t0; yy < t0 + 6; yy++) P(tx, yy, C.gold2);
+      for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) if (Math.abs(dx) + Math.abs(dy) <= 2) P(tx + dx, t0 + 8 + dy, Math.abs(dx) + Math.abs(dy) === 2 ? C.red2 : C.gold);
+      for (let dx = -3; dx <= 3; dx++) for (let dy = 0; dy < 16 - Math.abs(dx) * (dx % 2 ? 1 : 2); dy++) P(tx + dx, t0 + 11 + dy, dy === 0 ? C.black : (dx + 3) % 3 === 0 ? C.red2 : (dx + 3) % 3 === 1 ? C.red : C.gold);
+    }
+  });
+}
+
+// A Dalmatian in a unit box (x 0..1 nose to the right, y 0..0.72 with the feet at 0.72): stretched out running,
+// gathered mid-stride, or sitting. Each part is a path filled on `c`: the white body, the black ear and nose, the
+// red collar, the pink tongue.
+const croDog = (() => {
+  const runBody = (legs) => (c) => {
+    c.beginPath(); c.ellipse(0.44, 0.3, 0.25, 0.115, -0.05, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.ellipse(0.6, 0.3, 0.12, 0.135, 0.2, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.ellipse(0.27, 0.31, 0.1, 0.115, 0.3, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.moveTo(0.6, 0.2); c.lineTo(0.74, 0.06); c.lineTo(0.84, 0.12); c.lineTo(0.72, 0.33); c.closePath(); c.fill();
+    c.beginPath(); c.ellipse(0.8, 0.09, 0.075, 0.062, 0, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.moveTo(0.82, 0.045); c.lineTo(0.97, 0.095); c.lineTo(0.96, 0.15); c.lineTo(0.8, 0.155); c.closePath(); c.fill();
+    c.lineCap = 'round'; c.lineJoin = 'round'; c.lineWidth = 0.052;
+    for (const L of legs) { c.beginPath(); L.forEach(([a, b], i) => (i ? c.lineTo(a, b) : c.moveTo(a, b))); c.stroke(); }
+    c.lineWidth = 0.032; c.beginPath(); c.moveTo(0.2, 0.25); c.quadraticCurveTo(0.1, 0.2, 0.02, 0.11); c.stroke();
+  };
+  const head = { ear(c) { c.beginPath(); c.ellipse(0.775, 0.115, 0.036, 0.066, 0.5, 0, Math.PI * 2); c.fill(); },
+    nose(c) { c.beginPath(); c.arc(0.962, 0.11, 0.024, 0, Math.PI * 2); c.fill(); c.beginPath(); c.arc(0.838, 0.072, 0.016, 0, Math.PI * 2); c.fill(); },
+    collar(c) { c.lineWidth = 0.04; c.beginPath(); c.moveTo(0.69, 0.13); c.lineTo(0.77, 0.22); c.stroke(); },
+    tongue(c) { c.beginPath(); c.ellipse(0.9, 0.175, 0.032, 0.02, 0.4, 0, Math.PI * 2); c.fill(); } };
+  const shift = (o, dx, dy) => Object.fromEntries(Object.entries(o).map(([k, f]) => [k, (c) => { c.save(); c.translate(dx, dy); f(c); c.restore(); }]));
+  return {
+    run: { body: runBody([[[0.66, 0.36], [0.8, 0.43], [0.94, 0.45]], [[0.62, 0.38], [0.74, 0.5], [0.88, 0.56]], [[0.28, 0.36], [0.16, 0.42], [0.03, 0.46]], [[0.24, 0.36], [0.16, 0.48], [0.07, 0.58]]]), ...head },
+    gather: { body: runBody([[[0.64, 0.38], [0.6, 0.5], [0.5, 0.58]], [[0.6, 0.38], [0.66, 0.52], [0.6, 0.64]], [[0.28, 0.38], [0.38, 0.5], [0.46, 0.6]], [[0.25, 0.38], [0.3, 0.52], [0.4, 0.66]]]), ...head },
+    sit: {
+      body(c) {
+        c.beginPath(); c.ellipse(0.36, 0.56, 0.15, 0.14, 0, 0, Math.PI * 2); c.fill();
+        c.beginPath(); c.moveTo(0.3, 0.46); c.quadraticCurveTo(0.4, 0.22, 0.5, 0.16); c.lineTo(0.62, 0.24); c.quadraticCurveTo(0.63, 0.4, 0.58, 0.46); c.closePath(); c.fill();
+        c.beginPath(); c.moveTo(0.5, 0.2); c.lineTo(0.56, 0.05); c.lineTo(0.66, 0.08); c.lineTo(0.63, 0.28); c.closePath(); c.fill();
+        c.beginPath(); c.ellipse(0.61, 0.07, 0.075, 0.062, 0, 0, Math.PI * 2); c.fill();
+        c.beginPath(); c.moveTo(0.63, 0.025); c.lineTo(0.78, 0.075); c.lineTo(0.77, 0.13); c.lineTo(0.61, 0.135); c.closePath(); c.fill();
+        c.lineCap = 'round'; c.lineWidth = 0.055;
+        for (const [a, d] of [[0.535, 0.535], [0.6, 0.615]]) { c.beginPath(); c.moveTo(a, 0.4); c.lineTo(d, 0.7); c.stroke(); }
+        c.beginPath(); c.ellipse(0.42, 0.695, 0.1, 0.03, 0, 0, Math.PI * 2); c.fill();
+        c.lineWidth = 0.034; c.beginPath(); c.moveTo(0.23, 0.64); c.quadraticCurveTo(0.1, 0.71, 0.03, 0.62); c.stroke();
+      },
+      ...shift(head, -0.19, -0.015),
+    },
+  };
+})();
+
+// Dalmatians: white dogs with black spots and floppy black ears, running and sitting in staggered rows all over a sea
+// blue ground with paw prints and red balls, inside a spotty white border between ochre and red stripes.
+function croDalmatians(ctx, W, H) {
+  const C = { blue: '#2c6ca6', blue2: '#245c90', blue3: '#3d7fb8', white: '#f6f3ec', grey: '#a9b0bc', black: '#1a1a1e', red: '#c8302e', pink: '#e7838a', ochre: '#dca244', ochre2: '#9e6a24', navy: '#182a44' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    // the border: navy edge, ochre stripe, a white band with black spots of all sizes, a red stripe
+    R(0, 0, cols, rows, C.navy);
+    const frame = (o, col) => { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); };
+    R(2, 2, cols - 4, rows - 4, C.ochre); R(4, 4, cols - 8, rows - 8, C.white);
+    const sp = rng(5), BSPOT = [['##', '##'], ['###', '###'], ['.##', '###', '##.'], ['##', '##', '##'], ['##.', '###', '###'], ['.##', '###', '###']];
+    const bspot = (px, py, t) => BSPOT[t].forEach((row, j) => [...row].forEach((ch, i) => { if (ch === '#' && py + j >= 4 && py + j < rows - 4 && px + i >= 4 && px + i < cols - 4 && (py + j < 9 || py + j >= rows - 9 || px + i < 9 || px + i >= cols - 9)) R(px + i, py + j, 1, 1, C.black); }));
+    for (let t = 4; t < cols - 6; t += 4 + Math.floor(sp() * 4)) { bspot(t, 4 + Math.floor(sp() * 3), Math.floor(sp() * BSPOT.length)); bspot(cols - 4 - t, rows - 7 - Math.floor(sp() * 2), Math.floor(sp() * BSPOT.length)); }
+    for (let t = 9; t < rows - 10; t += 4 + Math.floor(sp() * 4)) { bspot(4 + Math.floor(sp() * 2), t, Math.floor(sp() * BSPOT.length)); bspot(cols - 7 - Math.floor(sp() * 2), rows - 4 - t, Math.floor(sp() * BSPOT.length)); }
+    R(9, 9, cols - 18, rows - 18, C.red); frame(9, C.ochre2);
+    const B = 11, fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    R(fx, fy, fw, fh, C.blue);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // a soft lattice of paw prints in a deeper blue, and here and there a red ball
+    const paw = (px, py, col) => { R(px, py + 1, 3, 2, col); R(px - 1, py - 1, 1, 1, col); R(px + 1, py - 2, 1, 1, col); R(px + 3, py - 1, 1, 1, col); };
+    for (let j = 0; j < 9; j++) for (let i = 0; i < 18; i++) paw(Math.round(fx + 5 + i * 11 + (j % 2) * 5.5), Math.round(fy + 6 + j * 12), C.blue2);
+    // three rows of dogs, staggered, facing each way, running and sitting
+    const S = 34, dogs = [];
+    const plan = [['run', 1], ['sit', -1], ['gather', 1], ['sit', 1], ['gather', -1], ['sit', -1], ['run', -1], ['sit', 1], ['run', 1], ['sit', -1], ['gather', 1], ['sit', 1]];
+    for (let r = 0; r < 3; r++) {
+      const by = fy + 4 + (r + 1) * (fh - 8) / 3 - 2, n = 4, step = fw / n;
+      for (let i = 0; i < n; i++) {
+        const [pose, dir] = plan[(r * 4 + i + (r % 2) * 2) % plan.length];
+        const cx = fx + step * (i + 0.5) + (r % 2 ? step * 0.14 : -step * 0.04);
+        dogs.push([pose, dir, cx, by + (pose === 'sit' ? 0 : -2 + ((i * 5 + r * 3) % 4)), pose === 'sit' ? S : S * 1.1, r * 10 + i]);
+      }
+    }
+    const each = (cb) => (c) => { for (const [pose, dir, cx, by, sc, k] of dogs) { c.save(); c.translate(cx, by); c.scale(dir * sc, sc); c.translate(pose === 'sit' ? -0.42 : -0.5, -0.72 + (pose === 'run' ? 0.05 : 0)); cb(c, croDog[pose], k); c.restore(); } };
+    sweInk(x, C.blue2, each((c, D) => { c.save(); c.translate(0.012, 0.02); D.body(c); c.restore(); }));
+    sweInk(x, C.grey, (c) => each((c2, D) => { c2.save(); c2.translate(0.008, 0.012); D.body(c2); c2.restore(); })(c));
+    sweInk(x, C.white, each((c, D) => D.body(c)));
+    // spots: random black dots, only where they land on a dog
+    // spots: little round clusters of knots (never a plus shape), spread evenly over each dog
+    const SPOT = [['##', '##'], ['###', '###'], ['##', '##', '##'], ['##.', '###', '###'], ['.##', '###', '##.'], ['##'], ['#', '#'], ['###', '.##']];
+    const mask = document.createElement('canvas'); mask.width = cols; mask.height = rows;
+    const mc = mask.getContext('2d'); mc.fillStyle = mc.strokeStyle = '#000'; each((c2, D) => D.body(c2))(mc);
+    const md = mc.getImageData(0, 0, cols, rows).data, on = (a, b) => a >= 0 && b >= 0 && a < cols && b < rows && md[(b * cols + a) * 4 + 3] >= 128;
+    for (const [pose, dir, cx, by, sc, k] of dogs) {
+      const sr = rng(100 + k), ox = pose === 'sit' ? 0.42 : 0.5, oy = 0.72 - (pose === 'run' ? 0.05 : 0), placed = [];
+      for (let q = 0; q < 400 && placed.length < 17; q++) {
+        const px = Math.round(cx + dir * sc * (sr() - ox)), py = Math.round(by + sc * (sr() * 0.72 - oy)), t = Math.floor(sr() * SPOT.length);
+        if (!on(px, py) || !on(px + 1, py + 1) || placed.some(([a, b]) => Math.abs(a - px) + Math.abs(b - py) < 5)) continue;
+        placed.push([px, py]);
+        SPOT[t].forEach((row, j) => [...row].forEach((ch, i) => { if (ch === '#' && on(px + i, py + j)) R(px + i, py + j, 1, 1, C.black); }));
+      }
+    }
+    sweInk(x, C.black, each((c, D) => { D.ear(c); D.nose(c); }));
+    sweInk(x, C.red, each((c, D) => D.collar(c)));
+    sweInk(x, C.pink, each((c, D, k) => { if (k % 3 !== 1) D.tongue(c); }));
+    // red balls bouncing between the dogs
+    for (let i = 0; i < dogs.length - 1; i++) {
+      const [, , ax, ay, , k] = dogs[i], [, , bx2] = dogs[i + 1];
+      if (k % 10 === 3 || (i + k) % 3 === 2) continue;
+      const bx = (ax + bx2) / 2 + ((k % 2) ? 2 : -2), byy = ay - 3 - (k % 3) * 5;
+      sweInk(x, C.red, (c) => { c.beginPath(); c.arc(bx, byy, 2.6, 0, Math.PI * 2); c.fill(); });
+      R(Math.round(bx - 1.5), Math.round(byy - 1.5), 1, 1, C.pink);
+    }
+    x.restore();
+  });
+}
+// Cravats: two brass rails on dark wood, each hung with silk neckties in jewel colours, every tie with its own
+// pattern (regimental stripes, polka dots, small checks, paisley, foulard, pin dots, plaid), in a navy silk
+// border with little gold diamonds.
+function croCravats(ctx, W, H) {
+  const C = { wood: '#4a2c1c', wood2: '#5e3a24', wood3: '#2e1a12', brass: '#c9973a', brass2: '#f0cf72', brass3: '#7a5418', ruby: '#b0182c', burgundy: '#6a1226', sapphire: '#2a5ab8', navy: '#18244c', emerald: '#1f8a5a', forest: '#134a34', gold: '#e8b838', cream: '#f2ead6', amethyst: '#6a3a9a' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { if (col) R(a, b, 1, 1, col); };
+    const frame = (o, col) => { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); };
+    // the border: dark wood edge, a navy silk band with gold diamonds and ruby dots, brass lines
+    R(0, 0, cols, rows, C.wood3); R(2, 2, cols - 4, rows - 4, C.navy); frame(2, C.brass); frame(9, C.brass); frame(10, C.wood3);
+    const dia = (cx, cy) => { for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const d = Math.abs(dx) + Math.abs(dy); if (d <= 2) P(cx + dx, cy + dy, d === 2 ? C.gold : d === 1 ? C.brass : C.ruby); } };
+    for (const [len, at] of [[cols - 24, (t) => [[12 + t, 5.5], [12 + t, rows - 6.5]]], [rows - 24, (t) => [[5.5, 12 + t], [cols - 6.5, 12 + t]]]]) {
+      const { n, d } = evenSteps(len, 8);
+      for (let i = 0; i <= n; i++) for (const [a, b] of at(i * d)) { dia(Math.round(a), Math.round(b)); }
+      for (let i = 0; i < n; i++) for (const [a, b] of at((i + 0.5) * d)) P(Math.round(a), Math.round(b), C.cream);
+    }
+    for (const [a, b] of [[5, 5], [cols - 7, 5], [5, rows - 7], [cols - 7, rows - 7]]) { R(a - 2, b - 2, 6, 6, C.brass); R(a - 1, b - 1, 4, 4, C.brass2); R(a, b, 2, 2, C.ruby); }
+    // the wood: horizontal boards with grain and seams
+    const B = 11, fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B, gr = rng(17);
+    R(fx, fy, fw, fh, C.wood);
+    for (let j = fy; j < fy + fh; j++) {
+      if ((j - fy) % 13 === 12) { R(fx, j, fw, 1, C.wood3); continue; }
+      for (let i = fx; i < fx + fw; i++) { const g = Math.sin(i * 0.11 + j * 0.9 + Math.sin(i * 0.031 + j) * 3); if (g > 0.86) P(i, j, C.wood2); }
+    }
+    // the ties: each one a pattern function of (across, down) in knots from its top centre
+    const pats = [
+      (u, v) => { const t = ((u + v) % 7 + 7) % 7; return t < 2 ? C.gold : t === 4 ? C.ruby : C.navy; },                                    // regimental stripes
+      (u, v) => { const a = ((u + 20) % 5 + 5) % 5, b = ((v + (Math.floor((u + 20) / 5) % 2 ? 3 : 0)) % 6 + 6) % 6; return a >= 1 && a <= 2 && b >= 1 && b <= 2 && v > 1 ? C.cream : C.emerald; }, // polka dots
+      (u, v) => (Math.floor((u + 20) / 2) + Math.floor(v / 2)) % 2 ? C.amethyst : C.navy,                                                    // small checks
+      (u, v) => { const a = ((u + 21) % 6 + 6) % 6, b = ((v + (Math.floor((u + 21) / 6) % 2) * 4) % 8 + 8) % 8; return (a === 1 && b >= 1 && b <= 3) || (a === 2 && b >= 2 && b <= 4) || (a === 3 && b === 4) ? C.gold : (a === 2 && b === 1) ? C.cream : C.burgundy; }, // paisley sprigs
+      (u, v) => { const a = ((u + 20) % 5 + 5) % 5, b = ((v + (Math.floor((u + 20) / 5) % 2) * 2) % 5 + 5) % 5; return a < 2 && b < 2 ? (a === 1 && b === 1 ? C.ruby : C.gold) : C.sapphire; }, // foulard squares
+      (u, v) => ((u + 20) % 3 === 0 && v % 3 === 1) || ((u + 21) % 3 === 0 && v % 3 === 2 && false) ? C.cream : C.navy,                       // pin dots
+      (u, v) => { const a = ((u + 20) % 8 + 8) % 8, b = (v % 8 + 8) % 8; return a === 3 || b === 3 ? C.gold : a < 2 || b < 2 ? C.forest : C.emerald; }, // plaid
+      (u, v) => { const t = ((u - v) % 6 + 6) % 6; return t < 4 ? C.ruby : t === 4 ? C.gold : C.navy; },                                     // stripes the other way
+      (u, v) => { const a = ((u + 20) % 4 + 4) % 4, b = ((v + 2) % 4 + 4) % 4; return (a === 1 || a === 2) && (b === 1 || b === 2) ? C.gold : C.burgundy; }, // big dots
+      (u, v) => { const t = ((u + v) % 5 + 5) % 5; return t === 0 ? C.sapphire : C.navy; },                                                    // twill
+      (u, v) => { const a = ((u + 20) % 6 + 6) % 6, b = ((v + 3 * (Math.floor((u + 20) / 6) % 2)) % 6 + 6) % 6; return (a === 2 && b === 2) || (a === 3 && b === 2) || (a === 2 && b === 3) ? C.cream : (a === 3 && b === 3) ? C.ruby : C.amethyst; }, // little flowers
+    ];
+    const dark = { [C.navy]: C.wood3, [C.ruby]: C.burgundy, [C.emerald]: C.forest, [C.burgundy]: C.wood3, [C.sapphire]: C.navy, [C.amethyst]: C.navy, [C.forest]: C.wood3, [C.cream]: C.brass, [C.gold]: C.brass };
+    const ties = [];
+    const rail = (ry) => {
+      R(fx, ry, fw, 1, C.brass2); R(fx, ry + 1, fw, 1, C.brass); R(fx, ry + 2, fw, 1, C.brass3);
+      for (const bx of [fx + 2, fx + fw - 4]) { R(bx - 1, ry - 2, 4, 7, C.brass3); R(bx, ry - 1, 2, 5, C.brass); R(bx, ry - 1, 1, 1, C.brass2); }
+    };
+    const rowY = [fy + 6, fy + 57], n = 11, step = (fw - 10) / n;
+    rowY.forEach((ry, r) => { for (let i = 0; i < n; i++) ties.push([Math.round(fx + 5 + step * (i + 0.5)), ry, 41 + ((i * 3 + r) % 4), (i * 4 + r * 5) % pats.length]); });
+    for (const ry of rowY) R(fx, ry + 3, fw, 1, C.wood3);
+    for (const [tx, ry, L, pi] of ties) {
+      const pat = pats[pi], top = ry + 3;
+      const half = (v) => (v < L - 5 ? 2.5 + (v / (L - 5)) * 2.7 : 5.2 * (L - v) / 5);
+      // a shadow on the wood, then the blade
+      for (let v = 0; v <= L; v++) { const w = half(v); for (let u = Math.ceil(-w); u <= Math.floor(w); u++) P(tx + u + 1, top + v + 1, C.wood3); }
+      for (let v = 0; v <= L; v++) { const w = half(v); for (let u = Math.ceil(-w); u <= Math.floor(w); u++) P(tx + u, top + v, u === Math.floor(w) && v > 2 ? (dark[pat(u, v)] || pat(u, v)) : pat(u, v)); }
+      // the fold over the rail
+      for (let u = -2; u <= 2; u++) { P(tx + u, ry - 1, Math.abs(u) === 2 ? null : dark[pat(u, 0)] || pat(u, 0)); P(tx + u, ry, pat(u, 0)); P(tx + u, ry + 1, pat(u, 1)); P(tx + u, ry + 2, dark[pat(u, 2)] || pat(u, 2)); }
+    }
+    rail(rowY[0] - 1 + 0); rail(rowY[1] - 1 + 0);
+    // the ties go over the rails: the fold lies on top of the brass, rounded at the top, shaded underneath
+    for (const [tx, ry, L, pi] of ties) {
+      const pat = pats[pi], dk = (u, v) => dark[pat(u, v)] || pat(u, v);
+      for (let u = -1; u <= 1; u++) P(tx + u, ry - 3, dk(u, 0));
+      for (let u = -2; u <= 2; u++) { P(tx + u, ry - 2, Math.abs(u) === 2 ? dk(u, 0) : pat(u, 0)); P(tx + u, ry - 1, pat(u, 1)); P(tx + u, ry, pat(u, 2)); P(tx + u, ry + 1, dk(u, 3)); }
+      P(tx + 3, ry - 1, C.wood3); P(tx + 3, ry, C.wood3);
+    }
+  });
+}
+// Šibenik buttons: round silver filigree buttons (a ball with a filigree net over its top, a ring of little granules
+// round its middle and a knob) in a neat grid on deep red wool with a stitched lattice, a few in gold, in a gold cord.
+function croButtons(ctx, W, H) {
+  const C = { red: '#8a1424', red2: '#7a1020', red3: '#520a16', s1: '#eef1f4', s2: '#b8c0ca', s3: '#7c8590', s4: '#3c424a', g1: '#f8e08a', g2: '#d8a844', g3: '#9a6e26', g4: '#5a3e16', wine: '#36080e' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => R(a, b, 1, 1, col);
+    const SIL = [C.s1, C.s2, C.s3, C.s4], GLD = [C.g1, C.g2, C.g3, C.g4];
+    // the wool: deep red with a fine twill
+    R(0, 0, cols, rows, C.wine);
+    for (let j = 1; j < rows - 1; j++) for (let i = 1; i < cols - 1; i++) P(i, j, (i + j) % 4 === 0 ? C.red2 : C.red);
+    // the braided cord: a wine edge, then a plait of gold strands
+    const B = 9;
+    // the cord: two strands twisted together, each turn lit on one side and shaded on the other
+    for (let j = 1; j < rows - 1; j++) for (let i = 1; i < cols - 1; i++) {
+      const ex = Math.min(i, cols - 1 - i), ey = Math.min(j, rows - 1 - j), e = Math.min(ex, ey);
+      if (e > 6) continue;
+      if (e === 1 || e === 6) { P(i, j, C.g4); continue; }
+      const along = ey < ex ? (j < rows / 2 ? i : -i) : (i < cols / 2 ? -j : j), t = (((along + (e - 2)) % 5) + 5) % 5;
+      P(i, j, t === 0 ? C.g4 : t === 1 ? C.g3 : t === 2 ? C.g2 : C.g1);
+    }
+    for (const [a, b] of [[1, 1], [cols - 8, 1], [1, rows - 8], [cols - 8, rows - 8]]) { R(a, b, 7, 7, C.g3); R(a + 1, b + 1, 5, 5, C.g2); R(a + 2, b + 2, 3, 3, C.g1); P(a + 3, b + 3, C.wine); }
+    for (let i = B - 1; i < cols - B + 1; i++) { P(i, B - 1, C.red3); P(i, rows - B, C.red3); }
+    for (let j = B - 1; j < rows - B + 1; j++) { P(B - 1, j, C.red3); P(cols - B, j, C.red3); }
+    // a ball lit from the top left, knot by knot, in four tones
+    const ball = (cx, cy, r, M) => {
+      for (let py = Math.floor(cy - r - 1); py <= Math.ceil(cy + r); py++) for (let px = Math.floor(cx - r - 1); px <= Math.ceil(cx + r); px++) {
+        const ex = px + 0.5 - cx, ey = py + 0.5 - cy, d = Math.hypot(ex, ey); if (d > r) continue;
+        const l = -(ex * 0.6 + ey * 0.8) / r + (1 - d / r) * 0.5;
+        P(px, py, l > 0.55 ? M[0] : l > 0.05 ? M[1] : l > -0.45 ? M[2] : M[3]);
+      }
+    };
+    // a button seen a little from above: a ball lit from the top left, its upper half a filigree net of bright wire
+    // with the dark hollow showing through, a ring of granules round the middle, polished silver below, a knob on top
+    const PA = 0.8, PP = [0, -Math.sin(PA), Math.cos(PA)], PV = [0, PP[2], -PP[1]], LL = [-0.5, -0.62, 0.6], LN = Math.hypot(...LL);
+    const toneAt = (n, M) => { const l = (n[0] * LL[0] + n[1] * LL[1] + n[2] * LL[2]) / LN; return l > 0.82 ? M[0] : l > 0.45 ? M[1] : l > 0.05 ? M[2] : M[3]; };
+    const onBall = (lat, lon) => [Math.cos(lat) * Math.cos(lon), Math.cos(lat) * Math.sin(lon) * PV[1] + Math.sin(lat) * PP[1], Math.cos(lat) * Math.sin(lon) * PV[2] + Math.sin(lat) * PP[2]];
+    const button = (cx, cy, r, M) => {
+      for (let py = Math.floor(cy - r); py <= Math.ceil(cy + r + 3); py++) for (let px = Math.floor(cx - r); px <= Math.ceil(cx + r + 3); px++) { if (Math.hypot(px + 0.5 - cx - 1.8, py + 0.5 - cy - 2.4) <= r) P(px, py, C.red3); }
+      for (let py = Math.floor(cy - r - 1); py <= Math.ceil(cy + r); py++) for (let px = Math.floor(cx - r - 1); px <= Math.ceil(cx + r); px++) {
+        const ex = (px + 0.5 - cx) / r, ey = (py + 0.5 - cy) / r, d2 = ex * ex + ey * ey; if (d2 > 1) continue;
+        const n = [ex, ey, Math.sqrt(1 - d2)], t = toneAt(n, M), lat = Math.asin(n[1] * PP[1] + n[2] * PP[2]), lon = Math.atan2(n[1] * PV[1] + n[2] * PV[2], n[0]);
+        let col = t;
+        if (lat > 0.16 && lat < 1.2) {
+          const a = (lon / (Math.PI * 2)) * 9, u = ((a + lat * 2.8) % 1 + 1) % 1, v = ((a - lat * 2.8) % 1 + 1) % 1;
+          const wire = Math.min(u, 1 - u) < 0.15 || Math.min(v, 1 - v) < 0.13 || Math.abs(lat - 0.18) < 0.05;
+          col = wire ? t : t === M[0] || t === M[1] ? M[2] : M[3];
+        }
+        if (d2 > 0.86 && col !== M[0]) col = M[3];
+        P(px, py, col);
+      }
+      // the granules round the middle, the front ones only, each outlined in dark
+      const ng = 18;
+      for (const pass of [0, 1]) for (let k = 0; k < ng; k++) {
+        const q = onBall(0, (k / ng) * Math.PI * 2); if (q[2] < 0.3) continue;
+        const gx = cx + q[0] * r * 0.95, gy = cy + q[1] * r * 0.95;
+        if (pass === 0) { for (let py = Math.floor(gy - 3); py <= gy + 3; py++) for (let px = Math.floor(gx - 3); px <= gx + 3; px++) if (Math.hypot(px + 0.5 - gx, py + 0.5 - gy) <= 2.25) P(px, py, M[3]); }
+        else ball(gx, gy, 1.7, M);
+      }
+      // the knob, on a little collar
+      const k0 = onBall(1.35, Math.PI / 2), kx = cx + k0[0] * r, ky = cy + k0[1] * r;
+      for (let py = Math.floor(ky - 4); py <= ky + 4; py++) for (let px = Math.floor(kx - 5); px <= kx + 5; px++) { const e = Math.hypot((px + 0.5 - kx) / 1.25, py + 0.5 - ky); if (e <= 3.3) P(px, py, e > 2.4 ? M[2] : M[3]); }
+      ball(kx, ky - 1.4, 2.6, M);
+    };
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B, nc = 5, nr = 3, sx = fw / nc, sy = fh / nr, r = 15.3;
+    const gold = new Set(['1,0', '1,2', '1,4']);
+    // a lattice stitched in darker red across the wool, little gold knots where its threads cross
+    for (let j = fy; j < fy + fh; j++) for (let i = fx; i < fx + fw; i++) { const u = ((i - fx) + (j - fy)) % 12, v = (((i - fx) - (j - fy)) % 12 + 12) % 12; if ((u === 0 || v === 0) && (i + j) % 2 === 0) P(i, j, C.red3); if (u === 0 && v === 0) { P(i, j, C.g2); } }
+    for (let j = 0; j < nr; j++) for (let i = 0; i < nc; i++) button(fx + sx * (i + 0.5) - 0.6, fy + sy * (j + 0.5) + 0.2, r, gold.has(j + ',' + i) ? GLD : SIL);
+  });
+}
+// Pag lace: round needle-lace wheels in white thread on deep blue velvet: one big wheel in the middle (a rim of
+// picot teeth, rays of little triangles between spokes, a twelve-point star worked in mesh, a smaller star inside),
+// smaller wheels round it joined by picot bars, a scalloped lace edging round the rug.
+function croPagLace(ctx, W, H) {
+  const C = { blue: '#1d3c74', blue2: '#162f5c', blue3: '#12264a', white: '#f6f2e6', ivory: '#d6cfbc', thread: '#7f95bd' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const img = []; for (let j = 0; j < rows; j++) img.push(new Array(cols).fill(null));
+    const P = (a, b, col) => { if (a >= 0 && b >= 0 && a < cols && b < rows && col) img[b][a] = col; };
+    // a lace wheel: fn(d, ang) for each knot within R of the centre, d in knots, returning true for thread
+    const wheel = (cx, cy, R, fn) => {
+      for (let py = Math.floor(cy - R - 1); py <= Math.ceil(cy + R + 1); py++) for (let px = Math.floor(cx - R - 1); px <= Math.ceil(cx + R + 1); px++) {
+        const ex = px + 0.5 - cx, ey = py + 0.5 - cy, d = Math.hypot(ex, ey); if (d > R + 0.2) continue;
+        const v = fn(d, Math.atan2(ey, ex), px, py); if (v) P(px, py, v === 2 ? C.ivory : C.white);
+      }
+    };
+    const frac = (v) => ((v % 1) + 1) % 1, tri = (v) => Math.abs(frac(v) - 0.5) * 2; // 0 at the middle of a cell, 1 at its edges
+    // the rim: a ring of thread with little picot teeth standing out of it
+    const rim = (d, ang, R, n) => (d > R - 2.5 ? (R - d) / 2.5 * 0.6 > tri((ang / (Math.PI * 2)) * n + 0.5) : d > R - 3.6);
+    // a ring of rays: thin spokes, a triangle hanging in from the outer ring between each pair, eyelets across the
+    // middle, a small triangle standing out from the inner ring at the foot of every spoke
+    const rays = (d, ang, r0, r1, n) => {
+      const f = (ang / (Math.PI * 2)) * n, sp = tri(f), arc = (Math.PI * 2 * d) / n;
+      if (sp > 1 - 0.95 / arc) return true;
+      const hIn = (r1 - r0) * 0.5, hOut = (r1 - r0) * 0.38;
+      if (d > r1 - hIn && sp < 0.62 * (1 - (r1 - d) / hIn)) return true;
+      if (d < r0 + hOut && (1 - sp) < 0.55 * (1 - (d - r0) / hOut)) return true;
+      return false;
+    };
+    // a star of n points between two radii, worked in mesh with a solid outline
+    const star = (d, ang, r0, r1, n, px, py) => {
+      const lim = r0 + (r1 - r0) * (1 - tri((ang / (Math.PI * 2)) * n));
+      if (d > lim + 0.2) return false;
+      if (d > lim - 1.1) return true;
+      return (px + py) % 2 === 0 ? 2 : false;
+    };
+    // a sun: fine spokes from a ring round a solid heart
+    const sun = (d, ang, R, n) => d < 1.8 || Math.abs(d - 3.4) < 0.6 || (d > R - 1.1 ? true : d > 3.6 && tri((ang / (Math.PI * 2)) * n) > 1 - 0.95 / ((Math.PI * 2 * d) / n));
+    // the big wheel
+    const cx = cols / 2, cy = rows / 2, RB = 48;
+    wheel(cx, cy, RB, (d, a, px, py) => {
+      if (d > RB - 3.6) return rim(d, a, RB, 50);
+      if (d > RB - 17.1) return d < RB - 16 ? true : rays(d, a, RB - 16, RB - 3.6, 30);
+      if (d > RB - 30.5) return star(d, a, RB - 30.5, RB - 17.1, 12, px, py);
+      if (d > RB - 31.6) return true;
+      if (d > RB - 33.5) return tri((a / (Math.PI * 2)) * 24) < 0.35 && d > RB - 32.6;
+      if (d > RB - 34.6) return true;
+      if (d < 2.6) return true;
+      if (d < 3.8) return false;
+      if (d < 4.9) return true;
+      return star(d, a, 4.9, RB - 35.2, 8, px, py);
+    });
+    // the smaller wheels in the corners, and little ones at the sides
+    const smalls = [];
+    for (const sx of [-1, 1]) for (const sy of [-1, 1]) smalls.push([cx + sx * (cols / 2 - 33), cy + sy * (rows / 2 - 31), 21]);
+    for (const sx of [-1, 1]) smalls.push([cx + sx * (cols / 2 - 26), cy, 11]);
+    for (const [wx, wy, R] of smalls) {
+      if (R > 15) wheel(wx, wy, R, (d, a, px, py) => d > R - 3.6 ? rim(d, a, R, 22) : d > R - 11 ? (d < R - 9.9 ? true : rays(d, a, R - 9.9, R - 3.6, 18)) : d > R - 12.2 ? false : star(d, a, 1.5, R - 12.2, 8, px, py) || d < 1.6);
+      else if (R > 9) wheel(wx, wy, R, (d, a, px, py) => d > R - 3.6 ? rim(d, a, R, 12) : d > R - 4.6 ? false : d < 1.6 || star(d, a, 2, R - 4.6, 6, px, py));
+      else wheel(wx, wy, R, (d, a) => d > R - 3 ? rim(d, a, R, 10) : d < 1.5 || (d < R - 3.8 && tri((a / (Math.PI * 2)) * 6) > 0.7));
+    }
+    // picot bars joining the small wheels to the big one: a thread with little loops along it
+    const bar = (x0, y0, x1, y1) => { const n = Math.ceil(Math.hypot(x1 - x0, y1 - y0) * 2); for (let k = 0; k <= n; k++) { const t = k / n, px = Math.floor(x0 + (x1 - x0) * t), py = Math.floor(y0 + (y1 - y0) * t); if (!img[py]?.[px]) P(px, py, C.white); if (k % 10 === 5 && !img[py - 1]?.[px] && !img[py + 1]?.[px]) { P(px, py - 1, C.ivory); P(px, py + 1, C.ivory); } } };
+    for (const [wx, wy, R] of smalls) {
+      const dx = cx - wx, dy = cy - wy, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
+      if (R > 15 || R > 9) bar(wx + ux * (R - 0.5), wy + uy * (R - 0.5), cx - ux * (RB - 0.5), cy - uy * (RB - 0.5));
+    }
+    for (const sy of [-1, 1]) for (const sx of [-1, 1]) { const a = smalls[(sx < 0 ? 0 : 2) + (sy < 0 ? 0 : 1)], b = smalls[4 + (sx < 0 ? 0 : 1)]; bar(a[0], a[1] + sy * -a[2] + sy * 0.5, b[0], b[1] + sy * b[2]); }
+    // the velvet: deep blue with a soft pile, the lace laid on it with a shadow
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) { x.fillStyle = ((i * 7 + j * 3) % 11 === 0) ? C.blue2 : C.blue; x.fillRect(i, j, 1, 1); }
+    // the edging: a darker band, a scalloped lace border with picots, a thread line inside it
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) { const e = Math.min(i, j, cols - 1 - i, rows - 1 - j); if (e < 2) { x.fillStyle = C.blue3; x.fillRect(i, j, 1, 1); } }
+    const edge = (len, at) => {
+      const { n, d } = evenSteps(len, 8);
+      for (let k = 0; k < n; k++) {
+        const c0 = (k + 0.5) * d;
+        for (let t = -d / 2; t <= d / 2; t += 0.25) { const h = Math.sqrt(Math.max(0, (d / 2) ** 2 - t * t)) * 0.9; const [a, b] = at(c0 + t, 3 + h); P(Math.floor(a), Math.floor(b), C.white); }
+        const [pa, pb] = at(c0, 3 + d / 2 * 0.9 + 1.5); P(Math.floor(pa), Math.floor(pb), C.white);
+        const [qa, qb] = at(c0, 4.5); P(Math.floor(qa), Math.floor(qb), C.ivory);
+      }
+      for (let t = 0; t < len; t += 0.5) { const [a, b] = at(t, 2.5); P(Math.floor(a), Math.floor(b), C.white); }
+    };
+    edge(cols - 4, (t, o) => [2 + t, o]); edge(cols - 4, (t, o) => [2 + t, rows - 1 - o + 1]);
+    edge(rows - 4, (t, o) => [o, 2 + t]); edge(rows - 4, (t, o) => [cols - 1 - o + 1, 2 + t]);
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) if (img[j][i] && !img[j + 1]?.[i + 1] && i + 1 < cols && j + 1 < rows) { x.fillStyle = C.blue3; x.fillRect(i + 1, j + 1, 1, 1); }
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) if (img[j][i]) { x.fillStyle = img[j][i]; x.fillRect(i, j, 1, 1); }
+  });
+}
+// Dubrovnik from above the sea: the old town's massive pale sea walls with round towers and bastions rising out of the
+// water, a crowd of orange roofs climbing behind them to the land walls and the great round tower, the bare mountain
+// behind, the old harbour with small boats on the right, the fortress on its rock on the left, a wooded island below.
+function croDubrovnik(ctx, W, H) {
+  const u = H / 100, R = rng(41);
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const path = (pts) => { ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); };
+  const stone = '#ebe3cf', stone2 = '#cfc3a8', stone3 = '#a39578', notch = '#7d705a';
+  // sky, then the bare limestone mountain with scrub and a road zigzagging up it
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.25); sky.addColorStop(0, '#6aa2d6'); sky.addColorStop(1, '#d2e4ee');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H * 0.3);
+  ctx.fillStyle = '#f6f8f8'; for (const [a, b, r] of [[0.14, 0.05, 3], [0.18, 0.04, 4], [0.22, 0.055, 2.6], [0.78, 0.06, 2.8], [0.82, 0.05, 3.6]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, r * 1.8 * u, r * 0.75 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  poly([[0, 0.7], [0, 0.17], [0.12, 0.13], [0.3, 0.09], [0.5, 0.075], [0.68, 0.09], [0.85, 0.12], [1, 0.16], [1, 0.7]], '#9a9a80');
+  poly([[0, 0.7], [0, 0.22], [0.2, 0.18], [0.42, 0.16], [0.62, 0.17], [0.8, 0.2], [1, 0.23], [1, 0.7]], '#8a8f70');
+  ctx.fillStyle = '#6f7e58'; for (let k = 0; k < 90; k++) { ctx.beginPath(); ctx.ellipse(W * R(), H * (0.12 + R() * 0.5), (1 + R() * 1.6) * u, (0.7 + R()) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.strokeStyle = '#c8c0a8'; ctx.lineWidth = 1 * u; ctx.beginPath(); ctx.moveTo(W * 0.62, H * 0.2); ctx.lineTo(W * 0.86, H * 0.16); ctx.lineTo(W * 0.7, H * 0.13); ctx.lineTo(W * 0.9, H * 0.1); ctx.stroke();
+  // the sea
+  const sea = ctx.createLinearGradient(0, H * 0.6, 0, H); sea.addColorStop(0, '#2a7fae'); sea.addColorStop(1, '#1d5a92');
+  ctx.fillStyle = sea; ctx.fillRect(0, H * 0.66, W, H);
+  // the suburb on the right above the harbour, with gardens
+  poly([[0.78, 0.68], [0.8, 0.36], [0.9, 0.29], [1.01, 0.26], [1.01, 0.68]], '#7d8a5c');
+  const house = (hx, hy, w, h, c) => { ctx.fillStyle = '#e6dcc6'; ctx.fillRect(hx, hy, w, h * 0.7); ctx.fillStyle = c; ctx.fillRect(hx - 0.6 * u, hy - h * 0.45, w + 1.2 * u, h * 0.5); ctx.fillStyle = mixHex(c, '#ffe2bc', 0.2); ctx.fillRect(hx - 0.6 * u, hy - h * 0.45, w + 1.2 * u, h * 0.22); ctx.fillStyle = mixHex(c, '#3a1a0a', 0.3); ctx.fillRect(hx + w - 1 * u, hy, 1 * u, h); };
+  const roofCols = ['#d86a3a', '#c85c30', '#e27c46', '#cf6236', '#b9532c', '#e08a52', '#c46a3c', '#d27448'];
+  for (const [a, b] of [[0.82, 0.38], [0.88, 0.34], [0.95, 0.31], [0.85, 0.46], [0.92, 0.42], [0.98, 0.39], [0.81, 0.54], [0.89, 0.52], [0.96, 0.49], [0.93, 0.59]]) house(W * a, H * b, (4 + R() * 2.5) * u, 4 * u, roofCols[Math.floor(R() * 8)]);
+  ctx.fillStyle = '#3f6a34'; for (let k = 0; k < 12; k++) { ctx.beginPath(); ctx.arc(W * (0.8 + R() * 0.2), H * (0.32 + R() * 0.3), (1.4 + R()) * u, 0, Math.PI * 2); ctx.fill(); }
+  // the town behind its walls: rows of houses climbing from the sea walls to the land walls, each row a strip of
+  // pale fronts with dark windows under a row of tiled roofs, smaller as they go up the slope
+  const tx0 = 0.16, tx1 = 0.8;
+  ctx.save(); path([[tx0, 0.62], [tx0 + 0.01, 0.32], [0.3, 0.26], [0.5, 0.23], [0.66, 0.24], [tx1 - 0.02, 0.28], [tx1, 0.62]]); ctx.clip();
+  ctx.fillStyle = '#6a4e38'; ctx.fillRect(0, 0, W, H);
+  for (let y = H * 0.22, k = 0; y < H * 0.62; k++) {
+    const sc = 0.6 + (y / H - 0.22) * 1.2, rh = 3.6 * u * sc, fh = 1.8 * u * sc;
+    let x = W * tx0 - R() * 6 * u;
+    while (x < W * tx1) {
+      const w = (4 + R() * 5) * u * sc, c = roofCols[Math.floor(R() * roofCols.length)], dy = (R() - 0.5) * 1.2 * u;
+      ctx.fillStyle = R() < 0.25 ? '#e2d6bc' : '#ece4d0'; ctx.fillRect(x, y + rh + dy, w, fh);
+      if (w > 6.5 * u && R() < 0.5) { ctx.fillStyle = '#5a5048'; ctx.fillRect(x + w * 0.45, y + rh + dy + fh * 0.2, 1.2 * u, fh * 0.8); }
+      ctx.fillStyle = mixHex(c, '#ffe2bc', 0.2); ctx.fillRect(x, y + dy, w, rh * 0.5);
+      ctx.fillStyle = c; ctx.fillRect(x, y + dy + rh * 0.5, w, rh * 0.5);
+      ctx.fillStyle = mixHex(c, '#4a1a08', 0.35); ctx.fillRect(x + w - 0.6 * u, y + dy, 0.6 * u, rh);
+      x += w + (R() < 0.15 ? 1 * u : 0);
+    }
+    y += rh + fh * 0.55;
+  }
+  ctx.fillStyle = '#4f7a3e'; for (const [a, b, r] of [[0.36, 0.4, 2.4], [0.56, 0.33, 2], [0.68, 0.47, 2.2], [0.42, 0.52, 1.8], [0.22, 0.44, 2]]) { ctx.beginPath(); ctx.arc(W * a, H * b, r * u, 0, Math.PI * 2); ctx.fill(); }
+  ctx.restore();
+  // the land walls along the top of the town, the great round tower on the left
+  const wallTop = [[tx0, 0.32], [0.3, 0.26], [0.5, 0.23], [0.66, 0.24], [tx1 - 0.02, 0.28]];
+  ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  ctx.strokeStyle = stone3; ctx.lineWidth = 3.6 * u; ctx.beginPath(); wallTop.forEach(([a, b], i) => (i ? ctx.lineTo(W * a, H * b + 0.6 * u) : ctx.moveTo(W * a, H * b + 0.6 * u))); ctx.stroke();
+  ctx.strokeStyle = stone; ctx.lineWidth = 2.4 * u; ctx.beginPath(); wallTop.forEach(([a, b], i) => (i ? ctx.lineTo(W * a, H * b) : ctx.moveTo(W * a, H * b))); ctx.stroke();
+  const roundTower = (cx, base, r, h) => {
+    ctx.fillStyle = stone2; ctx.fillRect(cx - r, base - h, 2 * r, h);
+    ctx.fillStyle = stone; ctx.fillRect(cx - r, base - h, r * 1.1, h);
+    ctx.fillStyle = stone3; ctx.fillRect(cx + r * 0.55, base - h, r * 0.45, h);
+    ctx.fillStyle = stone; ctx.beginPath(); ctx.ellipse(cx, base - h, r, r * 0.35, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = stone2; ctx.beginPath(); ctx.ellipse(cx, base - h, r * 0.7, r * 0.22, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = notch; for (let k = 0; k < 7; k++) ctx.fillRect(cx - r + (k + 0.3) * (2 * r / 7), base - h + r * 0.2, r * 0.13, 1.2 * u);
+  };
+  roundTower(W * 0.28, H * 0.31, 5.6 * u, 12 * u);
+  // the sea walls: tall pale faces stepping along the shore, battlements on top, bastions and towers standing out
+  const face = (x0, x1, top, bot, lit) => {
+    ctx.fillStyle = lit ? stone : stone2; ctx.fillRect(x0, top, x1 - x0, bot - top);
+    ctx.fillStyle = stone3; ctx.fillRect(x0, bot - 2 * u, x1 - x0, 2 * u);
+    ctx.fillStyle = mixHex(lit ? stone : stone2, '#8a7a5a', 0.25); for (let yy = top + 3 * u; yy < bot - 2 * u; yy += 3 * u) ctx.fillRect(x0, yy, x1 - x0, 0.5 * u);
+    ctx.fillStyle = notch; for (let xx = x0 + 0.6 * u; xx < x1 - 0.8 * u; xx += 2.2 * u) ctx.fillRect(xx, top, 1 * u, 1 * u);
+  };
+  const sw = [[0.12, 0.55, 0.69], [0.22, 0.57, 0.7], [0.36, 0.56, 0.7], [0.5, 0.58, 0.71], [0.62, 0.57, 0.7], [0.72, 0.59, 0.71]];
+  sw.forEach(([a, top], i) => { const x1 = i < sw.length - 1 ? sw[i + 1][0] : 0.8; face(W * a, W * x1, H * top, H * 0.72, i % 2 === 0); });
+  // bastions: square ones with a shaded side, a round one
+  const bastion = (cx, w, top, bot) => { ctx.fillStyle = stone3; ctx.fillRect(cx + w * 0.5, top + 0.8 * u, 1.6 * u, bot - top); face(cx - w / 2, cx + w / 2, top, bot, true); ctx.fillStyle = stone2; ctx.fillRect(cx + w * 0.3, top + 1 * u, w * 0.2, bot - top - 1 * u); };
+  bastion(W * 0.2, 7 * u, H * 0.52, H * 0.73); bastion(W * 0.46, 6 * u, H * 0.535, H * 0.735); bastion(W * 0.66, 6.5 * u, H * 0.54, H * 0.73);
+  roundTower(W * 0.33, H * 0.735, 4 * u, 15 * u);
+  // the fortress at the harbour mouth on the right, the harbour with its breakwater and boats
+  const fx0 = W * 0.76, fx1 = W * 0.86;
+  ctx.fillStyle = stone3; ctx.fillRect(fx1, H * 0.48, 1.8 * u, H * 0.24); face(fx0, fx1, H * 0.47, H * 0.73, true); ctx.fillStyle = stone2; ctx.fillRect(fx0 + (fx1 - fx0) * 0.7, H * 0.48, (fx1 - fx0) * 0.3, H * 0.23);
+  
+  ctx.fillStyle = '#2f8cac'; ctx.fillRect(W * 0.86, H * 0.58, W * 0.15, H * 0.15);
+  ctx.fillStyle = stone2; ctx.fillRect(W * 0.86, H * 0.575, W * 0.15, 1.8 * u); ctx.fillStyle = stone3; ctx.fillRect(W * 0.86, H * 0.575 + 1.8 * u, W * 0.15, 0.8 * u);
+  ctx.fillStyle = '#5aa8c4'; for (let k = 0; k < 6; k++) ctx.fillRect(W * (0.87 + R() * 0.12), H * (0.6 + R() * 0.1), 2.4 * u, 0.7 * u);
+  const boat = (bx, by, len, hull) => { ctx.fillStyle = 'rgba(20,50,70,.35)'; ctx.fillRect(bx - len * 0.45, by + 1.4 * u, len * 0.9, 1 * u); ctx.fillStyle = hull; ctx.beginPath(); ctx.moveTo(bx - len / 2, by - 1.4 * u); ctx.lineTo(bx + len / 2, by - 1.8 * u); ctx.lineTo(bx + len * 0.38, by + 1.4 * u); ctx.lineTo(bx - len * 0.4, by + 1.4 * u); ctx.fill(); ctx.fillStyle = hull === '#f4f2ea' ? '#2f5a8a' : '#f4f2ea'; ctx.fillRect(bx - len / 2, by - 1.8 * u, len, 0.9 * u); ctx.fillStyle = '#f4f2ea'; ctx.fillRect(bx - len * 0.2, by - 3.4 * u, len * 0.34, 1.8 * u); };
+  boat(W * 0.905, H * 0.635, 8 * u, '#f4f2ea'); boat(W * 0.965, H * 0.66, 7 * u, '#2f5a8a'); boat(W * 0.92, H * 0.695, 7.5 * u, '#c8402e');
+  ctx.fillStyle = stone3; ctx.fillRect(W * 0.885, H * 0.725 + 0.8 * u, W * 0.13, 2 * u); ctx.fillStyle = stone; ctx.fillRect(W * 0.885, H * 0.725, W * 0.13, 2 * u);
+  // the fortress on its rock on the left, beyond a little cove
+  poly([[-0.01, 0.76], [-0.01, 0.5], [0.04, 0.46], [0.09, 0.52], [0.11, 0.74]], '#b4a990'); poly([[0.03, 0.74], [0.06, 0.6], [0.1, 0.62], [0.11, 0.74]], '#9c917a');
+  poly([[-0.01, 0.56], [-0.01, 0.38], [0.065, 0.37], [0.075, 0.54]], stone); poly([[0.055, 0.38], [0.075, 0.38], [0.08, 0.54], [0.065, 0.55]], stone3);
+  ctx.fillStyle = notch; for (let xx = 0; xx < W * 0.065; xx += 2.2 * u) ctx.fillRect(xx, H * 0.37, 1 * u, 1 * u);
+
+  // rocks and surf along the foot of the walls
+  ctx.fillStyle = '#b4a990'; for (let k = 0; k < 30; k++) { ctx.beginPath(); ctx.ellipse(W * (0.08 + R() * 0.78), H * (0.725 + R() * 0.02), (1.6 + R() * 2.4) * u, (0.8 + R() * 0.6) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#eef4f4'; for (let k = 0; k < 26; k++) ctx.fillRect(W * (0.06 + R() * 0.82), H * (0.745 + R() * 0.015), (1.6 + R() * 3) * u, 0.9 * u);
+  ctx.fillStyle = '#5a9ac4'; for (let k = 0; k < 40; k++) ctx.fillRect(W * R(), H * (0.78 + R() * 0.2), (2 + R() * 3.5) * u, 0.8 * u);
+  // a sailboat crossing
+  ctx.fillStyle = '#f8f8f4'; ctx.beginPath(); ctx.moveTo(W * 0.56, H * 0.8); ctx.lineTo(W * 0.56, H * 0.89); ctx.lineTo(W * 0.6, H * 0.89); ctx.fill();
+  ctx.fillStyle = '#e2e4e0'; ctx.beginPath(); ctx.moveTo(W * 0.555, H * 0.82); ctx.lineTo(W * 0.555, H * 0.89); ctx.lineTo(W * 0.53, H * 0.89); ctx.fill();
+  ctx.fillStyle = '#2a3440'; ctx.fillRect(W * 0.525, H * 0.89, W * 0.08, 1.6 * u); ctx.fillStyle = '#9cc4dc'; ctx.fillRect(W * 0.6, H * 0.915, W * 0.05, 0.8 * u);
+  // the wooded island in the foreground corner
+  poly([[-0.01, 1.01], [-0.01, 0.82], [0.06, 0.8], [0.14, 0.83], [0.22, 0.88], [0.3, 0.95], [0.34, 1.01]], '#cfc6b2');
+  poly([[-0.01, 1.01], [-0.01, 0.84], [0.06, 0.825], [0.13, 0.85], [0.2, 0.9], [0.27, 0.96], [0.3, 1.01]], '#4f7a3e');
+  for (let k = 0; k < 16; k++) { const a = R() * 0.24, b = 0.86 + R() * 0.12; if (b < 0.84 + a * 0.5) continue; ctx.fillStyle = R() < 0.5 ? '#2f5528' : '#3f6a34'; ctx.beginPath(); ctx.ellipse(W * a, H * b, (2.4 + R() * 1.6) * u, (1.6 + R()) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+}
+
+// Plitvice: terraced turquoise and emerald lakes stepping down a wooded valley through pale travertine barriers, each
+// barrier pouring over in a row of small white waterfalls, a wooden boardwalk zigzagging across the lower lake with
+// a few walkers, autumn woods of orange, gold, red and green all round.
+function croPlitvice(ctx, W, H) {
+  const u = H / 100, R = rng(73);
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  // sky and the far wooded ridge
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.16); sky.addColorStop(0, '#8ab8de'); sky.addColorStop(1, '#e2eef0');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H * 0.2);
+  const autumn = ['#d8742a', '#e8a032', '#c8452a', '#9a3a26', '#e2c03a', '#6f8a34', '#4a6a2c', '#b8862a'];
+  const crowns = (x0, x1, y0, y1, n, r0, r1, dark) => { for (let k = 0; k < n; k++) { const a = x0 + R() * (x1 - x0), b = y0 + R() * (y1 - y0), r = (r0 + R() * (r1 - r0)) * u; ctx.fillStyle = dark && R() < 0.3 ? '#2f4a2a' : autumn[Math.floor(R() * autumn.length)]; ctx.beginPath(); ctx.ellipse(W * a, H * b, r, r * 0.85, 0, 0, Math.PI * 2); ctx.fill(); } };
+  poly([[0, 0.3], [0, 0.12], [0.15, 0.1], [0.32, 0.12], [0.5, 0.09], [0.7, 0.11], [0.86, 0.09], [1, 0.12], [1, 0.3]], '#7a7a4a');
+  crowns(0, 1, 0.1, 0.24, 140, 1.4, 2.4, true);
+  // the lakes, top to bottom, each with its shore and the barrier at its lower edge
+  const lakes = [
+    { y0: 0.2, y1: 0.3, l0: 0.3, r0: 0.68, l1: 0.24, r1: 0.74, c0: '#3a9a7c', c1: '#2f8a70' },
+    { y0: 0.3, y1: 0.5, l0: 0.2, r0: 0.78, l1: 0.1, r1: 0.88, c0: '#4cc4b4', c1: '#2aa6a0' },
+    { y0: 0.5, y1: 0.74, l0: 0.06, r0: 0.92, l1: -0.02, r1: 1.02, c0: '#40bcc0', c1: '#2496a6' },
+    { y0: 0.74, y1: 1.01, l0: -0.02, r0: 1.02, l1: -0.02, r1: 1.02, c0: '#38b8c0', c1: '#1c7a98' },
+  ];
+  // the banks: woods running down both sides of the valley
+  poly([[0, 1], [0, 0.18], [0.3, 0.19], [0.24, 0.3], [0.1, 0.48], [0.0, 0.66]], '#5a6a34');
+  poly([[1, 1], [1, 0.18], [0.68, 0.19], [0.75, 0.3], [0.9, 0.48], [1, 0.66]], '#5a6a34');
+  for (const L of lakes) {
+    const g = ctx.createLinearGradient(0, H * L.y0, 0, H * L.y1); g.addColorStop(0, L.c0); g.addColorStop(1, L.c1);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(W * L.l0, H * L.y0);
+    for (let t = 0; t <= 1.001; t += 0.05) ctx.lineTo(W * (L.l0 + (L.r0 - L.l0) * t), H * (L.y0 + Math.sin(t * 9 + L.y0 * 20) * 0.006));
+    ctx.lineTo(W * L.r1, H * L.y1); ctx.lineTo(W * L.l1, H * L.y1); ctx.closePath(); ctx.fill();
+    // light on the water and the shadow of the far bank
+    ctx.fillStyle = mixHex(L.c0, '#ffffff', 0.35); for (let k = 0; k < 10 + L.y0 * 30; k++) { const t = R(), yy = L.y0 + 0.02 + R() * (L.y1 - L.y0 - 0.03); ctx.fillRect(W * (L.l0 + (L.r0 - L.l0) * t), H * yy, (2 + R() * 3) * u, 0.7 * u); }
+    ctx.fillStyle = mixHex(L.c0, '#1a4a40', 0.35); ctx.fillRect(W * L.l0, H * L.y0, W * (L.r0 - L.l0), 1 * u);
+  }
+  // travertine barriers between the lakes: a curving mossy lip with shrubs, a pale face below it, and cascades of
+  // white water of every width pouring down the face into a foam of spray
+  const barrier = (y, x0, x1, h, amp, n) => {
+    const top = (t) => H * y + Math.sin(t * Math.PI) * amp * u + Math.sin(t * 13) * 0.5 * u;
+    ctx.fillStyle = '#d6c9a4'; ctx.beginPath();
+    for (let t = 0; t <= 1.001; t += 0.02) ctx.lineTo(W * (x0 + (x1 - x0) * t), top(t));
+    for (let t = 1; t >= -0.001; t -= 0.02) ctx.lineTo(W * (x0 + (x1 - x0) * t), top(t) + h * u);
+    ctx.fill();
+    ctx.fillStyle = '#b4a47e'; for (let t = 0; t <= 1; t += 0.025) ctx.fillRect(W * (x0 + (x1 - x0) * t), top(t) + h * (0.35 + R() * 0.4) * u, (1.2 + R() * 2) * u, 0.8 * u);
+    for (let k = 0; k < n; k++) {
+      const t = (k + 0.15 + R() * 0.7) / n, fx = W * (x0 + (x1 - x0) * t), w = (1.4 + R() * (R() < 0.3 ? 4 : 1.8)) * u, ty = top(t);
+      const bw = w * 1.7, by = ty + h * u + 0.6 * u;
+      ctx.fillStyle = '#f6fafa'; ctx.beginPath(); ctx.moveTo(fx, ty - 0.3 * u); ctx.lineTo(fx + w, ty - 0.3 * u); ctx.lineTo(fx + w / 2 + bw / 2, by); ctx.lineTo(fx + w / 2 - bw / 2, by); ctx.fill();
+      ctx.fillStyle = '#b4e2e6'; ctx.fillRect(fx + w * 0.55, ty + 0.6 * u, Math.max(0.7 * u, w * 0.18), h * u * 0.8);
+      ctx.fillStyle = '#f6fafa'; for (let q = 0; q < 3; q++) { ctx.beginPath(); ctx.ellipse(fx + w / 2 + (q - 1) * bw * 0.45 + (R() - 0.5) * u, by + (0.3 + R() * 0.6) * u, (0.9 + R() * 0.9) * u + bw * 0.15, (0.8 + R() * 0.4) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+      ctx.fillStyle = '#a8dce0'; ctx.fillRect(fx + w / 2 - bw * 0.7, by + 1.4 * u, bw * 1.4, 0.7 * u);
+    }
+    ctx.fillStyle = '#5f8a3a'; for (let t = 0; t <= 1; t += 0.01) if (R() < 0.5) { ctx.beginPath(); ctx.ellipse(W * (x0 + (x1 - x0) * t), top(t) - 0.3 * u, (1 + R() * 1.5) * u, (0.8 + R() * 0.6) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+    for (let k = 0; k < n / 3; k++) { const t = R(), sx = W * (x0 + (x1 - x0) * t); ctx.fillStyle = autumn[Math.floor(R() * autumn.length)]; ctx.beginPath(); ctx.ellipse(sx, top(t) - 1.6 * u, (1.6 + R()) * u, (1.4 + R() * 0.6) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  };
+  barrier(0.27, 0.25, 0.73, 3.2, 1.2, 8);
+  barrier(0.45, 0.12, 0.86, 5, 2.4, 12);
+  barrier(0.68, -0.01, 1.01, 6.4, 3.4, 15);
+  // woods on the banks: big autumn crowns, some dark firs, crowding down to the water
+  crowns(0, 0.28, 0.18, 0.5, 70, 2, 3.6, true); crowns(0.72, 1, 0.18, 0.5, 70, 2, 3.6, true);
+  crowns(0, 0.08, 0.45, 0.72, 30, 2.6, 4.2, true); crowns(0.92, 1, 0.45, 0.72, 30, 2.6, 4.2, true);
+  const fir = (fx, fy, h) => { ctx.fillStyle = '#28442a'; ctx.beginPath(); ctx.moveTo(fx, fy - h); ctx.lineTo(fx + h * 0.28, fy); ctx.lineTo(fx - h * 0.28, fy); ctx.fill(); };
+  for (const [a, b, h] of [[0.04, 0.42, 10], [0.12, 0.36, 8], [0.22, 0.26, 6], [0.95, 0.4, 10], [0.86, 0.33, 8], [0.78, 0.25, 6], [0.02, 0.62, 11], [0.98, 0.6, 11]]) fir(W * a, H * b, h * u);
+  // the boardwalk: pale planks on posts, zigzagging across the lower lake and along under the barrier
+  const walk = [[-0.02, 0.6], [0.24, 0.545], [0.5, 0.63], [0.78, 0.55], [1.02, 0.6]];
+  ctx.lineJoin = 'round'; ctx.lineCap = 'butt';
+  const stroke = (pts, col, w, dy) => { ctx.strokeStyle = col; ctx.lineWidth = w * u; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(W * a, H * b + dy * u) : ctx.moveTo(W * a, H * b + dy * u))); ctx.stroke(); };
+  stroke(walk, 'rgba(20,70,70,.35)', 3, 1.6);
+  stroke(walk, '#7a5a34', 3.2, 0.6);
+  stroke(walk, '#d6b47a', 2.4, 0);
+  ctx.fillStyle = '#7a5a34'; for (let i = 0; i < walk.length - 1; i++) { const [a, b] = walk[i], [c, d] = walk[i + 1]; for (let t = 0.1; t < 1; t += 0.12) ctx.fillRect(W * (a + (c - a) * t), H * (b + (d - b) * t) + 1.4 * u, 0.8 * u, 2.4 * u); }
+  // walkers on the boardwalk
+  const walker = (a, b, coat) => { const px = W * a, py = H * b; ctx.fillStyle = '#2e3440'; ctx.fillRect(px - 0.6 * u, py - 1.4 * u, 1.2 * u, 2 * u); ctx.fillStyle = coat; ctx.fillRect(px - 0.9 * u, py - 4 * u, 1.8 * u, 2.8 * u); ctx.fillStyle = '#e8c8a8'; ctx.beginPath(); ctx.arc(px, py - 4.8 * u, 0.9 * u, 0, Math.PI * 2); ctx.fill(); };
+  walker(0.16, 0.565, '#c8402e'); walker(0.19, 0.56, '#2f5a9a'); walker(0.62, 0.595, '#e8b830'); walker(0.88, 0.575, '#3f8a4a');
+  // ducks and fish shadows in the clear front lake, the travertine shelves showing through the water
+  ctx.fillStyle = '#7ad2cc'; for (let k = 0; k < 8; k++) { ctx.beginPath(); ctx.ellipse(W * (0.1 + R() * 0.8), H * (0.82 + R() * 0.15), (5 + R() * 6) * u, (1.2 + R()) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#1f7a86'; for (const [a, b] of [[0.3, 0.88], [0.34, 0.9], [0.62, 0.85], [0.7, 0.93]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, 1.8 * u, 0.6 * u, 0.2, 0, Math.PI * 2); ctx.fill(); }
+  // autumn branches overhanging the front corners
+  crowns(-0.04, 0.12, 0.84, 1.02, 18, 3, 5, false); crowns(0.9, 1.04, 0.82, 1.02, 18, 3, 5, false);
+}
+// Zlatni Rat: the horn-shaped pebble beach of Brač seen from the hill, pointing out into turquoise water with a spine
+// of pines down its middle, bright umbrellas dotted along both shores, a sailboat and windsurfers in the deep blue
+// channel, the long blue mountains of the next island across it, pine woods along the near shore.
+function croZlatniRat(ctx, W, H) {
+  const u = H / 100, R = rng(29);
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.2); sky.addColorStop(0, '#5f9cd8'); sky.addColorStop(0.6, '#bcd8ee'); sky.addColorStop(1, '#eef6f8');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H * 0.22);
+  ctx.fillStyle = '#f6f8f8'; for (const [a, b, r] of [[0.2, 0.05, 3], [0.24, 0.04, 4], [0.28, 0.055, 2.6], [0.7, 0.07, 2.6], [0.74, 0.06, 3.2]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, r * 1.8 * u, r * 0.7 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // the island across the channel: long blue mountains, a paler ridge behind, a hint of villages at the shore
+  poly([[0, 0.24], [0, 0.14], [0.08, 0.12], [0.18, 0.08], [0.27, 0.1], [0.36, 0.075], [0.46, 0.1], [0.58, 0.085], [0.7, 0.11], [0.8, 0.095], [0.9, 0.12], [1, 0.11], [1, 0.24]], '#7890a8');
+  poly([[0, 0.24], [0, 0.17], [0.1, 0.155], [0.22, 0.14], [0.34, 0.16], [0.48, 0.145], [0.62, 0.165], [0.76, 0.15], [0.9, 0.17], [1, 0.165], [1, 0.24]], '#4f6a6a');
+  ctx.fillStyle = '#5f7c72'; for (let k = 0; k < 14; k++) { const a = R(); ctx.beginPath(); ctx.moveTo(W * a, H * 0.2); ctx.lineTo(W * (a + 0.015), H * (0.13 + R() * 0.03)); ctx.lineTo(W * (a + 0.03), H * 0.2); ctx.fill(); }
+  ctx.fillStyle = '#ece6d6'; for (const a of [0.16, 0.18, 0.2, 0.6, 0.62, 0.64, 0.66, 0.9]) ctx.fillRect(W * a, H * 0.215, 2.2 * u, 1.6 * u);
+  ctx.fillStyle = '#c8603a'; for (const a of [0.16, 0.2, 0.62, 0.66]) ctx.fillRect(W * a, H * 0.205, 2.2 * u, 1 * u);
+  // the channel: deep blue far off, brighter nearer
+  const sea = ctx.createLinearGradient(0, H * 0.23, 0, H); sea.addColorStop(0, '#1d4f8e'); sea.addColorStop(0.5, '#1f68a8'); sea.addColorStop(1, '#2a86b8');
+  ctx.fillStyle = sea; ctx.fillRect(0, H * 0.23, W, H);
+  ctx.fillStyle = '#4f8ac0'; for (let k = 0; k < 90; k++) ctx.fillRect(W * R(), H * (0.26 + R() * 0.6), (2 + R() * 3.5) * u, 0.8 * u);
+  // the horn: from a broad base on the shore it narrows to a point that bends to the right
+  const hA = [[0.22, 0.95], [0.28, 0.81], [0.36, 0.69], [0.46, 0.585], [0.56, 0.505], [0.665, 0.445], [0.76, 0.41]];
+  const hB = [[0.62, 0.95], [0.575, 0.81], [0.57, 0.69], [0.6, 0.6], [0.66, 0.53], [0.735, 0.48], [0.8, 0.455]];
+  const horn = [...hA, [0.83, 0.41], [0.865, 0.42], [0.875, 0.445], ...hB.slice().reverse()];
+  const hornPath = () => { ctx.beginPath(); horn.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); };
+  // the turquoise shallows round it, paler near the shore
+  ctx.lineJoin = 'round';
+  for (const [w, col] of [[15, '#2a98c0'], [10, '#33b0c4'], [6, '#52c8ca'], [2.8, '#96e0d6']]) { hornPath(); ctx.strokeStyle = col; ctx.lineWidth = w * u; ctx.stroke(); }
+  hornPath(); ctx.fillStyle = '#f0e4c6'; ctx.fill();
+  // wet pebbles at the water's edge, darker on the shaded side
+  hornPath(); ctx.strokeStyle = '#d6c6a0'; ctx.lineWidth = 1.4 * u; ctx.stroke();
+  // the pines down the spine
+  const mid = (i) => [(hA[i][0] + hB[i][0]) / 2, (hA[i][1] + hB[i][1]) / 2];
+  const spine = (t) => { const f = t * 6, i = Math.min(5, Math.floor(f)), g = f - i, p0 = mid(i), p1 = mid(i + 1); return [W * (p0[0] + (p1[0] - p0[0]) * g), H * (p0[1] + (p1[1] - p0[1]) * g)]; };
+  const halfW = (t) => { const f = t * 6, i = Math.min(5, Math.floor(f)), g = f - i, w = (k) => Math.hypot((hB[k][0] - hA[k][0]) * W, (hB[k][1] - hA[k][1]) * H) / 2; return w(i) + (w(i + 1) - w(i)) * g; };
+  // the pine wood along the spine: wide at the base, thinning out towards the tip, which is bare pebbles
+  for (const [n, cols3, dr] of [[170, ['#2a4f28', '#2f5a2c'], 1], [60, ['#3f7036', '#4a7c3c'], 0.7], [20, ['#6a9a50'], 0.5]]) for (let k = 0; k < n; k++) {
+    const t = 0.04 + Math.pow(R(), 1.3) * 0.7, [sx, sy] = spine(t), [qx, qy] = spine(Math.min(1, t + 0.02)), L = Math.hypot(qx - sx, qy - sy) || 1;
+    const nx = -(qy - sy) / L, ny = (qx - sx) / L, w = halfW(t) * 0.42 * (1 - Math.max(0, t - 0.5) / 0.3), o = (R() * 2 - 1) * w;
+    ctx.fillStyle = cols3[Math.floor(R() * cols3.length)]; ctx.beginPath(); ctx.ellipse(sx + nx * o, sy + ny * o - (1 - dr) * 1.2 * u, (1.3 + R() * 1.2) * u * dr, (1.1 + R() * 0.9) * u * dr, 0, 0, Math.PI * 2); ctx.fill();
+  }
+  // umbrellas in rows along both shores, between the pines and the water
+  const cols2 = ['#e8402e', '#f2c030', '#2f6fd0', '#f4f2ea', '#e87a2a', '#2fa06a', '#d23a7a'];
+  for (let t = 0.12; t < 0.95; t += 0.03) for (const sd of [-1, 1]) {
+    if (R() < 0.25) continue;
+    const f = Math.min(5.999, t * 6), i = Math.floor(f), g = f - i, a0 = [hA[i][0] + (hA[i + 1][0] - hA[i][0]) * g, hA[i][1] + (hA[i + 1][1] - hA[i][1]) * g], b0 = [hB[i][0] + (hB[i + 1][0] - hB[i][0]) * g, hB[i][1] + (hB[i + 1][1] - hB[i][1]) * g];
+    const k = sd < 0 ? 0.1 + R() * 0.16 : 0.9 - R() * 0.16, px = W * (a0[0] + (b0[0] - a0[0]) * k), py = H * (a0[1] + (b0[1] - a0[1]) * k);
+    if (halfW(t) < 3 * u) continue;
+    ctx.fillStyle = cols2[Math.floor(R() * cols2.length)]; ctx.beginPath(); ctx.arc(px, py, (1.4 + R() * 0.5) * u, 0, Math.PI * 2); ctx.fill();
+  }
+  // the near shore: pine woods, a pale promenade
+  poly([[-0.01, 1.01], [-0.01, 0.8], [0.08, 0.82], [0.2, 0.87], [0.32, 0.9], [0.68, 0.9], [0.8, 0.86], [0.92, 0.81], [1.01, 0.79], [1.01, 1.01]], '#d8ccb0');
+  poly([[-0.01, 1.01], [-0.01, 0.82], [0.08, 0.84], [0.2, 0.89], [0.32, 0.93], [0.68, 0.93], [0.8, 0.885], [0.92, 0.835], [1.01, 0.815], [1.01, 1.01]], '#3f6a34');
+  for (let k = 0; k < 70; k++) { const a = R(), b = 0.86 + R() * 0.14; if (b < 0.8 + Math.abs(a - 0.5) * -0.1 + (Math.abs(a - 0.5) < 0.2 ? 0.08 : 0)) continue; ctx.fillStyle = R() < 0.5 ? '#2f5528' : '#4f7a3e'; ctx.beginPath(); ctx.ellipse(W * a, H * b, (2 + R() * 2.4) * u, (1.5 + R() * 1.2) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // a sailboat and windsurfers in the channel, a motorboat drawing its wake
+  const sail = (sx, sy, k, c1, c2) => { ctx.fillStyle = '#9cc4dc'; ctx.fillRect(sx - 4 * u * k, sy + 1.2 * u, 5 * u * k, 0.7 * u); ctx.fillStyle = c1; ctx.beginPath(); ctx.moveTo(sx, sy - 7 * u * k); ctx.lineTo(sx + 3.6 * u * k, sy - 0.6 * u); ctx.lineTo(sx, sy - 0.6 * u); ctx.fill(); ctx.fillStyle = c2; ctx.beginPath(); ctx.moveTo(sx - 0.5 * u, sy - 5.6 * u * k); ctx.lineTo(sx - 0.5 * u, sy - 0.6 * u); ctx.lineTo(sx - 3 * u * k, sy - 0.6 * u); ctx.fill(); ctx.fillStyle = '#f4f2ea'; ctx.fillRect(sx - 3.4 * u * k, sy - 0.6 * u, 7 * u * k, 1.4 * u); };
+  sail(W * 0.3, H * 0.44, 1.5, '#f8f8f4', '#e6e8e4'); sail(W * 0.6, H * 0.3, 0.8, '#f8f8f4', '#e6e8e4');
+  const surf = (sx, sy, col) => { ctx.fillStyle = '#9cc4dc'; ctx.fillRect(sx - 6 * u, sy + 1 * u, 5 * u, 0.8 * u); ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(sx - 0.4 * u, sy - 6.4 * u); ctx.quadraticCurveTo(sx + 4 * u, sy - 3 * u, sx + 0.8 * u, sy); ctx.lineTo(sx - 0.6 * u, sy); ctx.fill(); ctx.fillStyle = '#f4f2ea'; ctx.fillRect(sx - 2.2 * u, sy, 4.4 * u, 1 * u); };
+  surf(W * 0.9, H * 0.58, '#f2c030'); surf(W * 0.8, H * 0.68, '#e8402e'); surf(W * 0.16, H * 0.5, '#2fa06a');
+  ctx.strokeStyle = '#d8eef4'; ctx.lineWidth = 1 * u; ctx.beginPath(); ctx.moveTo(W * 0.12, H * 0.68); ctx.lineTo(W * 0.02, H * 0.74); ctx.moveTo(W * 0.12, H * 0.68); ctx.lineTo(W * 0.04, H * 0.66); ctx.stroke();
+  ctx.fillStyle = '#f4f2ea'; ctx.beginPath(); ctx.ellipse(W * 0.125, H * 0.677, 2.2 * u, 1.2 * u, -0.4, 0, Math.PI * 2); ctx.fill();
+}
+// Dolac market in Zagreb seen from above: rows of round red parasols over the stalls, the tables in front of each row
+// heaped with crates of tomatoes, peppers, oranges, lemons, cabbages, plums, grapes and flowers, small figures walking
+// the aisles, the old facades and tiled roofs of the square along the top behind a row of trees.
+function croDolac(ctx, W, H) {
+  const u = H / 100, R = rng(57);
+  // the square: warm grey paving in big slabs
+  ctx.fillStyle = '#cfc6b4'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#bdb3a0'; for (let x = 0; x < W; x += 10 * u) ctx.fillRect(x, 0, 0.6 * u, H); for (let y = 0; y < H; y += 8 * u) ctx.fillRect(0, y, W, 0.6 * u);
+  // the old houses round the top of the square: tiled roofs, then pastel facades with tall shuttered windows
+  const facades = ['#e8c87a', '#e2a46a', '#e4dcc8', '#d4a8a0', '#b4c8a8', '#ecdcb8', '#d8b090', '#c0ccd4'];
+  let x0 = -2 * u, k0 = 0;
+  while (x0 < W) {
+    const w = (15 + R() * 10) * u, fc = facades[k0 % facades.length], fh = 13 * u, rc = ['#b8542e', '#a8482a', '#c4683a', '#9a4426'][k0 % 4];
+    ctx.fillStyle = rc; ctx.fillRect(x0, 0, w, 6 * u);
+    ctx.fillStyle = mixHex(rc, '#ffe0c0', 0.18); for (let q = 0; q < w; q += 2.4 * u) ctx.fillRect(x0 + q, 0, 1.2 * u, 5 * u);
+    ctx.fillStyle = mixHex(rc, '#3a1a0a', 0.35); ctx.fillRect(x0, 5 * u, w, 1.2 * u);
+    ctx.fillStyle = fc; ctx.fillRect(x0, 6.2 * u, w, fh);
+    ctx.fillStyle = mixHex(fc, '#3a2a1a', 0.2); ctx.fillRect(x0 + w - 0.8 * u, 6.2 * u, 0.8 * u, fh);
+    const nw = Math.max(2, Math.round(w / (6 * u)));
+    for (let i = 0; i < nw; i++) { const wx = x0 + (w / nw) * (i + 0.5); ctx.fillStyle = ['#3f6a4a', '#6a4a34', '#3f5a72'][k0 % 3]; ctx.fillRect(wx - 2.4 * u, 8.4 * u, 4.8 * u, 4.6 * u); ctx.fillStyle = '#3a404a'; ctx.fillRect(wx - 1.1 * u, 8.4 * u, 2.2 * u, 4.6 * u); }
+    ctx.fillStyle = '#4a3a30'; ctx.beginPath(); ctx.moveTo(x0 + w / 2 - 2 * u, 19.2 * u); ctx.lineTo(x0 + w / 2 - 2 * u, 16.4 * u); ctx.arc(x0 + w / 2, 16.4 * u, 2 * u, Math.PI, 0); ctx.lineTo(x0 + w / 2 + 2 * u, 19.2 * u); ctx.fill();
+    ctx.fillStyle = mixHex(fc, '#3a2a1a', 0.12); ctx.fillRect(x0, 14 * u, w, 0.6 * u);
+    x0 += w; k0++;
+  }
+  ctx.fillStyle = '#8a8070'; ctx.fillRect(0, 19.2 * u, W, 1.4 * u);
+  for (let k = 0; k < 8; k++) { const tx = W * (0.04 + k * 0.132) + (R() - 0.5) * 3 * u, ty = 22 * u; ctx.fillStyle = 'rgba(60,50,40,.3)'; ctx.beginPath(); ctx.ellipse(tx + 2 * u, ty + 3 * u, 5 * u, 2.6 * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#3f6a34'; ctx.beginPath(); ctx.arc(tx, ty, 4.8 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#5a8a44'; ctx.beginPath(); ctx.arc(tx - 1.4 * u, ty - 1.4 * u, 2.8 * u, 0, Math.PI * 2); ctx.fill(); }
+  // produce: each crate a box of one kind of fruit or vegetable, drawn as little round heaps
+  const produce = [['#d8302a', '#f06048'], ['#e8862a', '#f8b04a'], ['#f2d040', '#faf0a0'], ['#4f8a34', '#86c25a'], ['#5a2450', '#8a4a7a'], ['#2f6a2a', '#d8302a'], ['#7ab040', '#c8e070'], ['#8a5a2a', '#c09050'], ['#e85a8a', '#f8e8f0']];
+  const crate = (cx, cy, w, h) => {
+    ctx.fillStyle = '#7a5a38'; ctx.fillRect(cx - w / 2, cy - h / 2, w, h);
+    const [c1, c2] = produce[Math.floor(R() * produce.length)];
+    ctx.fillStyle = c1; ctx.fillRect(cx - w / 2 + 0.5 * u, cy - h / 2 + 0.5 * u, w - 1 * u, h - 1 * u);
+    ctx.fillStyle = c2; for (let q = 0; q < 4; q++) ctx.fillRect(cx - w / 2 + 0.8 * u + R() * (w - 2.4 * u), cy - h / 2 + 0.7 * u + R() * (h - 2.2 * u), 0.9 * u, 0.9 * u);
+  };
+  const person = (px, py, coat) => { ctx.fillStyle = 'rgba(60,50,40,.35)'; ctx.beginPath(); ctx.ellipse(px + 1.6 * u, py + 1.8 * u, 2.2 * u, 1.2 * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = coat; ctx.beginPath(); ctx.ellipse(px, py, 2.4 * u, 1.8 * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = ['#3a2a20', '#d8a860', '#6a4a30', '#e8e0d0'][Math.floor(R() * 4)]; ctx.beginPath(); ctx.arc(px, py - 0.4 * u, 1.3 * u, 0, Math.PI * 2); ctx.fill(); if (R() < 0.4) { ctx.fillStyle = '#c8a050'; ctx.fillRect(px + 2 * u, py - 0.2 * u, 1.6 * u, 1.6 * u); } };
+  const coats = ['#2f5a9a', '#3f8a4a', '#e8b830', '#7a3a8a', '#2e3440', '#f2ece0', '#c86a2a', '#4a7ab0'];
+  const parasol = (px, py, rad, faded) => {
+    ctx.fillStyle = 'rgba(70,50,40,.4)'; ctx.beginPath(); ctx.ellipse(px + 1.8 * u, py + 2.4 * u, rad, rad * 0.8, 0, 0, Math.PI * 2); ctx.fill();
+    const N = 8;
+    for (let q = 0; q < N; q++) {
+      const a0 = (q / N) * Math.PI * 2, a1 = a0 + Math.PI * 2 / N, lit = Math.cos((a0 + a1) / 2 + Math.PI * 0.75);
+      const sh = [['#ec5040', '#d23430', '#b82828', '#9c2022'], ['#f06a4a', '#dc4a3a', '#c43a30', '#a82e28']][faded ? 1 : 0];
+      ctx.fillStyle = lit > 0.5 ? sh[0] : lit > -0.1 ? sh[1] : lit > -0.7 ? sh[2] : sh[3];
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.ellipse(px, py, rad, rad * 0.8, 0, a0, a1); ctx.closePath(); ctx.fill();
+    }
+        ctx.fillStyle = '#6a1616'; ctx.beginPath(); ctx.arc(px, py, 1.1 * u, 0, Math.PI * 2); ctx.fill();
+  };
+  // four rows of stalls, from the back; each row: an aisle with shoppers, the tables, the parasols over them
+  const rows = [[0.33, 8.6, 8], [0.585, 9.4, 7], [0.845, 10.2, 7]];
+  rows.forEach(([ry, radU, n], r) => {
+    const py = H * ry, rad = radU * u, off = (r % 2 ? 0.5 : 0.15) + R() * 0.1;
+    // the stalls: a long run of tables heaped with crates; the parasols cover the back, the front shows
+    ctx.fillStyle = '#e6dfd0'; ctx.fillRect(0, py - 0.5 * rad, W, rad * 1.5);
+    ctx.fillStyle = '#9c907c'; ctx.fillRect(0, py + rad, W, 0.9 * u);
+    for (let cy = py - 0.3 * rad; cy < py + rad - 1.6 * u; cy += 4 * u) for (let cx = 1 * u + R() * 3 * u + ((cy / u) % 2) * 2 * u; cx < W; cx += 6 * u) crate(cx, cy + 1.8 * u, 5.4 * u, 3.4 * u);
+    // shoppers in the aisle in front
+    for (let k = 0; k < 8; k++) person(W * ((k + 0.2 + R() * 0.6) / 8), py + rad + (3 + R() * 2.6) * u, coats[Math.floor(R() * coats.length)]);
+    for (let i = -1; i < n + 1; i++) { if ((i * 7 + r * 3) % 9 === 4) continue; parasol(W * ((i + off) / n) + (R() - 0.5) * 3 * u, py - rad * 0.2 + (R() - 0.5) * 1.4 * u, rad * (0.94 + R() * 0.1), R() < 0.25); }
+  });
+  // a flower seller's buckets at the end of the front row
+  for (let k = 0; k < 6; k++) { const bx = W * (0.05 + k * 0.03), by = H * 0.995; ctx.fillStyle = '#5a8a44'; ctx.beginPath(); ctx.arc(bx, by - 1.6 * u, 1.8 * u, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = ['#e85a8a', '#f2d040', '#f6f0e6', '#e8402e', '#9a5ad0', '#f08a3a'][k]; for (let q = 0; q < 4; q++) { ctx.beginPath(); ctx.arc(bx + (R() - 0.5) * 2.4 * u, by - 1.6 * u + (R() - 0.5) * 2.4 * u, 0.9 * u, 0, Math.PI * 2); ctx.fill(); } }
+}
+
+// Kornati: bare limestone islands, rounded humps of pale grey-white rock with thin green scrub and dry-stone walls,
+// one behind another on a deep blue sea, a rocky shore with turquoise shallows in front, sailboats with white sails,
+// a calm sunny sky with a few small clouds.
+function croKornati(ctx, W, H) {
+  const u = H / 100, R = rng(83);
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.34); sky.addColorStop(0, '#4f8fd0'); sky.addColorStop(1, '#cfe4f2');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H * 0.36);
+  ctx.fillStyle = '#fbfcfc'; for (const [a, b, r] of [[0.12, 0.08, 3], [0.155, 0.07, 4], [0.19, 0.085, 2.6], [0.58, 0.12, 2.4], [0.61, 0.11, 3.2], [0.86, 0.06, 3], [0.9, 0.05, 3.8]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, r * 1.8 * u, r * 0.7 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#fff4c8'; ctx.beginPath(); ctx.arc(W * 0.74, H * 0.1, 4.4 * u, 0, Math.PI * 2); ctx.fill();
+  const sea = ctx.createLinearGradient(0, H * 0.32, 0, H); sea.addColorStop(0, '#1c4a8a'); sea.addColorStop(0.5, '#1f5c9e'); sea.addColorStop(1, '#2470ae');
+  ctx.fillStyle = sea; ctx.fillRect(0, H * 0.32, W, H);
+  ctx.fillStyle = '#4a82c0'; for (let k = 0; k < 60; k++) ctx.fillRect(W * R(), H * (0.35 + R() * 0.6), (2 + R() * 4) * u, 0.7 * u);
+  // an island: a smooth hump of pale rock, lit on the left and shaded on the right, a fringe of scrub along its foot
+  // and patches higher up, dry-stone walls running over it, a pale band of bare rock at the waterline
+  const island = (cx, base, w, h, peak, seed, scrub, walls) => {
+    const r = rng(seed), pts = [];
+    for (let k = 0; k <= 40; k++) { const t = k / 40, e = t < peak ? t / peak : (1 - t) / (1 - peak); pts.push([cx - w / 2 + w * t, base - h * Math.pow(Math.sin(e * Math.PI / 2), 1.6) * (1 + Math.sin(t * 17 + seed) * 0.03)]); }
+    const px = cx - w / 2 + w * peak;
+    const shape = () => { ctx.beginPath(); ctx.moveTo(pts[0][0], base); pts.forEach(([x, y]) => ctx.lineTo(x, y)); ctx.lineTo(pts[40][0], base); ctx.closePath(); };
+    shape(); ctx.fillStyle = '#c6c0b0'; ctx.fill();
+    ctx.save(); shape(); ctx.clip();
+    ctx.fillStyle = '#ece8dc'; ctx.beginPath(); ctx.moveTo(cx - w / 2, base); ctx.lineTo(cx - w / 2, base - h); ctx.lineTo(px + w * 0.02, base - h * 1.1); ctx.lineTo(px - w * 0.12, base); ctx.fill();
+    ctx.fillStyle = '#ddd8ca'; ctx.beginPath(); ctx.moveTo(px - w * 0.12, base); ctx.lineTo(px + w * 0.02, base - h * 1.1); ctx.lineTo(px + w * 0.12, base - h); ctx.lineTo(px + w * 0.02, base); ctx.fill();
+    ctx.fillStyle = '#a8a292'; for (let k = 0; k < 4; k++) { const t = 0.55 + r() * 0.4, x = cx - w / 2 + w * t; ctx.beginPath(); ctx.moveTo(x, pts[Math.round(t * 40)][1] + 1 * u); ctx.lineTo(x + 1.6 * u, base); ctx.lineTo(x - 1.2 * u, base); ctx.fill(); }
+    // scrub: a ragged fringe along the foot, patches higher up
+    for (let k = 0; k < scrub; k++) { const t = 0.03 + r() * 0.94, x = cx - w / 2 + w * t, top = pts[Math.round(t * 40)][1], low = r() < 0.65, y = low ? base - (1 + r() * 0.22 * (base - top) / u) * u : top + (0.15 + r() * 0.5) * (base - top); ctx.fillStyle = r() < 0.5 ? '#6f8a4a' : '#56723c'; ctx.beginPath(); ctx.ellipse(x, y, (1.2 + r() * 2.2) * u, (0.8 + r() * 0.8) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+    // dry-stone walls running over the slope
+    ctx.strokeStyle = '#9a9482'; ctx.lineWidth = 0.9 * u;
+    for (let k = 0; k < walls; k++) { const t = 0.2 + r() * 0.6, x = cx - w / 2 + w * t; ctx.beginPath(); ctx.moveTo(x, pts[Math.round(t * 40)][1] + 0.8 * u); ctx.quadraticCurveTo(x + (r() - 0.5) * 8 * u, (pts[Math.round(t * 40)][1] + base) / 2, x + (r() - 0.5) * 10 * u, base); ctx.stroke(); }
+    ctx.restore();
+    ctx.fillStyle = '#f4f2ea'; ctx.fillRect(cx - w * 0.36, base - 0.7 * u, w * 0.72, 1 * u);
+    ctx.fillStyle = 'rgba(200,206,200,.25)'; for (let k = 0; k < 3; k++) ctx.fillRect(cx - w * 0.4 + k * 1.6 * u, base + 1.2 * u + k * 1.8 * u, w * 0.8 - k * 3.2 * u, 0.9 * u);
+  };
+  // far islands first, then nearer ones, rounded humps one behind another
+  island(W * 0.1, H * 0.335, W * 0.28, 5 * u, 0.5, 1, 8, 0);
+  island(W * 0.42, H * 0.335, W * 0.3, 7 * u, 0.6, 2, 10, 1);
+  island(W * 0.82, H * 0.34, W * 0.42, 8 * u, 0.4, 3, 12, 1);
+  island(W * 0.26, H * 0.49, W * 0.46, 17 * u, 0.42, 4, 40, 2);
+  island(W * 0.78, H * 0.54, W * 0.4, 21 * u, 0.55, 5, 44, 2);
+  island(W * 0.54, H * 0.6, W * 0.2, 8 * u, 0.45, 6, 16, 1);
+  island(W * 0.9, H * 0.84, W * 0.42, 14 * u, 0.62, 7, 40, 2);
+  island(W * 0.6, H * 0.7, W * 0.14, 4.6 * u, 0.5, 8, 8, 0);
+  // the near island in the foreground: a rocky slope on the left with scrub, a cove of turquoise shallows
+  const near = [[0, 0.66], [0.05, 0.68], [0.1, 0.72], [0.16, 0.78], [0.22, 0.85], [0.28, 0.91], [0.34, 0.96], [0.4, 1.0], [0.46, 1.04], [1, 1.04]];
+  ctx.fillStyle = '#5ac8cc'; ctx.beginPath(); ctx.moveTo(0, H); near.forEach(([a, b]) => ctx.lineTo(W * a, H * (b - 0.05))); ctx.lineTo(W, H); ctx.fill();
+  ctx.fillStyle = '#94e0d6'; ctx.beginPath(); ctx.moveTo(0, H); near.forEach(([a, b]) => ctx.lineTo(W * a, H * (b - 0.02))); ctx.lineTo(W, H); ctx.fill();
+  ctx.fillStyle = '#b4ae9e'; ctx.beginPath(); ctx.moveTo(0, H); near.forEach(([a, b]) => ctx.lineTo(W * a, H * b)); ctx.lineTo(W, H); ctx.fill();
+  ctx.fillStyle = '#dcd7c9'; ctx.beginPath(); ctx.moveTo(0, H); near.forEach(([a, b]) => ctx.lineTo(W * (a - 0.02), H * (b + 0.02))); ctx.lineTo(W, H); ctx.fill();
+  ctx.fillStyle = '#c4beae'; for (let k = 0; k < 14; k++) { const a = R() * 0.3, lim = near.find(([q]) => q >= a + 0.02)[1]; const b = lim + 0.04 + R() * Math.max(0, 1 - lim - 0.04); ctx.fillRect(W * a, H * b, (3 + R() * 5) * u, (1.2 + R() * 1.2) * u); ctx.fillStyle = '#eeeae0'; ctx.fillRect(W * a, H * b - 0.8 * u, (3 + R() * 4) * u, 0.8 * u); ctx.fillStyle = '#c4beae'; }
+  ctx.fillStyle = '#a8a292'; for (let k = 0; k < 30; k++) { const a = R() * 0.4, lim = near.find(([q]) => q >= a)[1]; const b = lim + 0.03 + R() * (1 - lim); ctx.beginPath(); ctx.ellipse(W * a, H * b, (1.4 + R() * 3) * u, (0.6 + R() * 1) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  for (let k = 0; k < 40; k++) { const a = R() * 0.34, lim = near.find(([q]) => q >= a)[1]; const b = lim + 0.04 + R() * (1 - lim); ctx.fillStyle = R() < 0.5 ? '#6f8a4a' : '#56723c'; ctx.beginPath(); ctx.ellipse(W * a, H * b, (1.4 + R() * 2.6) * u, (0.9 + R()) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.strokeStyle = '#9a9482'; ctx.lineWidth = 1 * u; ctx.beginPath(); ctx.moveTo(W * 0.0, H * 0.76); ctx.quadraticCurveTo(W * 0.08, H * 0.84, W * 0.1, H * 1.0); ctx.stroke();
+  // two sailboats with white sails, their reflections and wakes
+  const sail = (sx, sy, k, lean) => {
+    ctx.fillStyle = 'rgba(240,244,246,.35)'; ctx.fillRect(sx - 4 * u * k, sy + 1.6 * u, 8 * u * k, 0.9 * u); ctx.fillRect(sx - 2.6 * u * k, sy + 3.2 * u, 5 * u * k, 0.8 * u);
+    ctx.fillStyle = '#9cc4dc'; ctx.fillRect(sx - 11 * u * k, sy + 1 * u, 7 * u * k, 0.7 * u);
+    ctx.fillStyle = '#fafaf6'; ctx.beginPath(); ctx.moveTo(sx + lean * u, sy - 12 * u * k); ctx.lineTo(sx + 5.6 * u * k, sy - 1 * u); ctx.lineTo(sx, sy - 1 * u); ctx.fill();
+    ctx.fillStyle = '#e4e6e2'; ctx.beginPath(); ctx.moveTo(sx - 0.6 * u + lean * u, sy - 10 * u * k); ctx.lineTo(sx - 0.6 * u, sy - 1 * u); ctx.lineTo(sx - 4.6 * u * k, sy - 1 * u); ctx.fill();
+    ctx.fillStyle = '#f4f2ea'; ctx.beginPath(); ctx.moveTo(sx - 5.6 * u * k, sy - 1 * u); ctx.lineTo(sx + 6.4 * u * k, sy - 1 * u); ctx.lineTo(sx + 5 * u * k, sy + 1 * u); ctx.lineTo(sx - 4.4 * u * k, sy + 1 * u); ctx.fill();
+    ctx.fillStyle = '#2a4a7a'; ctx.fillRect(sx - 4.8 * u * k, sy + 0.2 * u, 10.6 * u * k, 0.7 * u);
+  };
+  sail(W * 0.48, H * 0.85, 1.35, 0.8); sail(W * 0.42, H * 0.6, 0.85, 0.5); sail(W * 0.74, H * 0.62, 0.6, 0.3);
+}
+// Little scenes for the postcard letters, laid out in the band a letter shows (about 0.26 to 0.92 of the canvas).
+const croY = (h, t) => h * (0.26 + 0.66 * t);
+const CROATIA_SCENES = [
+  (c, w, h) => { // Dubrovnik: rows of orange roofs above a pale wall on blue sea
+    const Y = (t) => croY(h, t);
+    c.fillStyle = '#7a4a30'; c.fillRect(0, 0, w, h);
+    const cols = ['#e07a44', '#c85c30', '#ec9050', '#b8502c'];
+    for (let r = -1; r < 6; r++) for (let k = -1; k < 5; k++) { const x0 = w * (k * 0.3 + (r % 2 ? 0.15 : 0)), y0 = Y(r * 0.13); c.fillStyle = cols[(r * 3 + k + 8) % 4]; c.fillRect(x0, y0, w * 0.28, Y(0.065) - Y(0)); c.fillStyle = '#9a4224'; c.fillRect(x0, y0 + Y(0.065) - Y(0), w * 0.28, Y(0.055) - Y(0)); }
+    c.fillStyle = '#ece4d0'; c.fillRect(0, Y(0.66), w, Y(0.16) - Y(0)); c.fillStyle = '#b8ac90'; c.fillRect(0, Y(0.8), w, Y(0.04) - Y(0));
+    c.fillStyle = '#2a6aa8'; c.fillRect(0, Y(0.84), w, h);
+  },
+  (c, w, h) => { // a licitar heart on cream
+    const Y = (t) => croY(h, t);
+    c.fillStyle = '#f2e6c8'; c.fillRect(0, 0, w, h);
+    croHeart(c, w * 0.52, Y(0.56), w * 0.86); c.fillStyle = '#8a1420'; c.fill();
+    croHeart(c, w * 0.5, Y(0.54), w * 0.8); c.fillStyle = '#d0222c'; c.fill();
+    croHeart(c, w * 0.5, Y(0.56), w * 0.52); c.strokeStyle = '#fbf6ec'; c.lineWidth = w * 0.08; c.stroke();
+    c.fillStyle = '#f2c230'; c.beginPath(); c.arc(w * 0.5, Y(0.56), w * 0.13, 0, Math.PI * 2); c.fill();
+  },
+  (c, w, h) => { // Plitvice: turquoise pools stepping down over pale ledges with white falls, autumn woods above
+    const Y = (t) => croY(h, t);
+    c.fillStyle = '#d8742a'; c.fillRect(0, 0, w, Y(0.12)); c.fillStyle = '#4f7a3e'; c.fillRect(0, Y(0.12), w, Y(0.12) - Y(0));
+    c.fillStyle = '#3aa8a0'; c.fillRect(0, Y(0.24), w, Y(0.22) - Y(0)); c.fillStyle = '#46c4c0'; c.fillRect(0, Y(0.52), w, Y(0.2) - Y(0)); c.fillStyle = '#2a9ab8'; c.fillRect(0, Y(0.78), w, h);
+    c.fillStyle = '#e2d6b4'; c.fillRect(0, Y(0.46), w, Y(0.06) - Y(0)); c.fillRect(0, Y(0.72), w, Y(0.06) - Y(0));
+    c.fillStyle = '#ffffff'; for (const x of [0.12, 0.42, 0.72]) { c.fillRect(w * x, Y(0.44), w * 0.12, Y(0.1) - Y(0)); c.fillRect(w * (x + 0.12), Y(0.7), w * 0.12, Y(0.1) - Y(0)); }
+  },
+  (c, w, h) => { // Dalmatian spots
+    const Y = (t) => croY(h, t);
+    c.fillStyle = '#f6f3ec'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#1a1a1e'; for (const [a, b, r] of [[0.2, 0.08, 0.1], [0.62, 0.02, 0.08], [0.82, 0.22, 0.09], [0.4, 0.3, 0.11], [0.1, 0.46, 0.08], [0.7, 0.5, 0.1], [0.32, 0.66, 0.09], [0.88, 0.72, 0.08], [0.55, 0.84, 0.1], [0.15, 0.92, 0.08], [0.5, 0.16, 0.06], [0.95, 0.4, 0.06]]) { c.beginPath(); c.ellipse(w * a, Y(b), w * r, w * r * 0.85, 0.4, 0, Math.PI * 2); c.fill(); }
+  },
+  (c, w, h) => { // Dolac: red parasols seen from above over the stalls
+    const Y = (t) => croY(h, t);
+    c.fillStyle = '#d2c8b4'; c.fillRect(0, 0, w, h);
+    for (let r = 0; r < 4; r++) for (let k = -1; k < 4; k++) {
+      const cx = w * (k * 0.42 + (r % 2 ? 0.21 : 0) + 0.12), cy = Y(0.06 + r * 0.29), R0 = w * 0.19;
+      c.fillStyle = '#9c2022'; c.beginPath(); c.arc(cx + R0 * 0.12, cy + R0 * 0.12, R0, 0, Math.PI * 2); c.fill();
+      c.fillStyle = '#d63430'; c.beginPath(); c.arc(cx, cy, R0, 0, Math.PI * 2); c.fill();
+      c.fillStyle = '#ee5a44'; c.beginPath(); c.moveTo(cx, cy); c.arc(cx, cy, R0, Math.PI, Math.PI * 1.5); c.fill();
+    }
+  },
+  (c, w, h) => { // a silk tie: navy with gold stripes on the bias
+    c.fillStyle = '#1c2a5a'; c.fillRect(0, 0, w, h);
+    c.strokeStyle = '#e8b838'; c.lineWidth = w * 0.22; for (let k = -6; k < 10; k++) { c.beginPath(); c.moveTo(-w, k * w * 0.9); c.lineTo(w * 2, k * w * 0.9 + w * 3); c.stroke(); }
+    c.strokeStyle = '#b0182c'; c.lineWidth = w * 0.08; for (let k = -6; k < 10; k++) { c.beginPath(); c.moveTo(-w, k * w * 0.9 + w * 0.3); c.lineTo(w * 2, k * w * 0.9 + w * 3.3); c.stroke(); }
+  },
+  (c, w, h) => { // Zlatni Rat: a pale pebble horn with pines pointing into turquoise water
+    const Y = (t) => croY(h, t);
+    c.fillStyle = '#1f62a6'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#3cbcc8'; c.beginPath(); c.moveTo(w * 0.05, h); c.quadraticCurveTo(w * 0.2, Y(0.3), w * 0.95, Y(0.1)); c.quadraticCurveTo(w * 0.55, Y(0.5), w * 0.95, h); c.fill();
+    c.fillStyle = '#f0e4c6'; c.beginPath(); c.moveTo(w * 0.2, h); c.quadraticCurveTo(w * 0.3, Y(0.4), w * 0.85, Y(0.2)); c.quadraticCurveTo(w * 0.55, Y(0.5), w * 0.8, h); c.fill();
+    c.fillStyle = '#2f5a2c'; c.beginPath(); c.moveTo(w * 0.42, h); c.quadraticCurveTo(w * 0.42, Y(0.55), w * 0.62, Y(0.38)); c.quadraticCurveTo(w * 0.55, Y(0.6), w * 0.62, h); c.fill();
+    c.fillStyle = '#e8402e'; c.beginPath(); c.arc(w * 0.32, Y(0.72), w * 0.06, 0, Math.PI * 2); c.fill(); c.fillStyle = '#f2c030'; c.beginPath(); c.arc(w * 0.7, Y(0.62), w * 0.06, 0, Math.PI * 2); c.fill();
+  },
+];
+// Postcard: "Greetings from CROATIA", every letter a little Croatian scene.
+function croPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'CROATIA', CROATIA_SCENES); }
+
+// ---------- Balkan pack. Bosnia and Herzegovina ----------
+const BOSNIA_FRAME = { dark: '#1e1410', a: '#1f7a5a', b: '#c8843e', line: '#f0e4cc' };
+
+// A turned vessel seen from the side, knot by knot: `half(t)` is its half-width at t (0 at the top, 1 at the
+// bottom) and `tone(nx, t, px, py)` its colour there, nx running from -1 at its left edge to 1 at its right.
+function bihLathe(x, cx, y0, y1, half, tone) {
+  for (let py = Math.floor(y0); py < y1; py++) {
+    const t = (py + 0.5 - y0) / (y1 - y0), hw = half(t);
+    if (!(hw > 0.3)) continue;
+    for (let px = Math.floor(cx - hw); px < cx + hw; px++) {
+      const nx = (px + 0.5 - cx) / hw;
+      if (Math.abs(nx) > 1) continue;
+      const c = tone(nx, t, px, py);
+      if (c) { x.fillStyle = c; x.fillRect(px, py, 1, 1); }
+    }
+  }
+}
+
+// A domed boss knot by knot in a ramp of tones (light first): light at the top left, dark at the bottom right.
+function bihDome(x, cx, cy, r, M) {
+  for (let dy = -Math.ceil(r); dy <= Math.ceil(r); dy++) for (let dx = -Math.ceil(r); dx <= Math.ceil(r); dx++) {
+    const px = Math.floor(cx) + dx, py = Math.floor(cy) + dy, ex = px + 0.5 - cx, ey = py + 0.5 - cy, d = Math.hypot(ex, ey);
+    if (d > r) continue;
+    const l = -(ex + ey) / (r * 1.414) + (1 - d / r) * 0.35, k = l > 0.45 ? 0 : l > -0.05 ? 1 : l > -0.5 ? 2 : 3;
+    x.fillStyle = M[Math.min(k, M.length - 1)]; x.fillRect(px, py, 1, 1);
+  }
+}
+
+// Coppersmiths' street in Sarajevo: a big round copper tray chased with arches, leafy cartouches and an
+// eight-petal rose, two small trays, a coffee pot and a lidded sugar bowl, glowing on deep teal inside a copper
+// band engraved with a running scroll and brass studs.
+function bihCopper(ctx, W, H) {
+  const C = { teal: '#1c4a4c', teal2: '#22585a', tealDk: '#102e30', cu1: '#f8cfa0', cu2: '#e39a5c', cu3: '#c06a34', cu4: '#8a4222', cu5: '#55261a', br1: '#f4da8e', br2: '#cfa242', br3: '#8e6a26' };
+  const M = [C.cu5, C.cu4, C.cu3, C.cu2, C.cu1], BR = [C.br1, C.br2, C.br3, C.cu5];
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(Math.floor(a), Math.floor(b), 1, 1); };
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const lv = (k) => M[Math.max(0, Math.min(4, k))];
+    // the border: a copper band between dark lines, beaded at its edges, a scroll engraved along it, brass studs
+    R(0, 0, cols, rows, C.tealDk);
+    R(1, 1, cols - 2, rows - 2, C.cu4);
+    R(2, 2, cols - 4, rows - 4, C.cu3);
+    R(10, 10, cols - 20, rows - 20, C.cu4);
+    R(11, 11, cols - 22, rows - 22, C.tealDk);
+    R(12, 12, cols - 24, rows - 24, C.br2);
+    const fx = 13, fy = 13, fw = cols - 26, fh = rows - 26;
+    R(fx, fy, fw, fh, C.teal);
+    for (const [len, at] of [[cols - 24, (s, o) => [12 + s, o]], [cols - 24, (s, o) => [12 + s, rows - 1 - o]], [rows - 24, (s, o) => [o, 12 + s]], [rows - 24, (s, o) => [cols - 1 - o, 12 + s]]]) {
+      for (let s = 0; s < len; s++) { if (s % 2 === 0) { P(...at(s, 2), C.cu2); P(...at(s, 9), C.cu2); } }
+      const { n, d } = evenSteps(len, 12);
+      // the engraved scroll: a wave from stud to stud with a curl and a bright dot in each bay
+      for (let s = 0; s <= len; s += 0.25) {
+        const ph = (s / d) * Math.PI, o = 5.5 + Math.sin(ph) * 1.9;
+        P(...at(s, o), C.cu5);
+      }
+      for (let i = 0; i < n; i++) {
+        const mid = (i + 0.5) * d, up = i % 2 ? -1 : 1;
+        P(...at(mid, 5.5 + up * 2.2), C.cu1); P(...at(mid - 1, 5.5 + up * 2.2), C.cu2);
+        P(...at(mid + 2, 5.5 - up * 1.2), C.cu1);
+      }
+      for (let i = 0; i <= n; i++) { const [a, b] = at(i * d, 5.5); bihDome(x, a + 0.5, b + 0.5, 2.4, BR); }
+    }
+    for (const [a, b] of [[6, 6], [cols - 6, 6], [6, rows - 6], [cols - 6, rows - 6]]) {
+      R(a - 5, b - 5, 10, 10, C.tealDk); R(a - 4, b - 4, 8, 8, C.cu4);
+      bihDome(x, a, b, 3.6, BR);
+      for (const [dx, dy] of [[-4, -4], [3, -4], [-4, 3], [3, 3]]) P(a + dx, b + dy, C.cu2);
+    }
+    // the teal ground: a faint lattice of small diamonds
+    for (let yy = fy; yy < fy + fh; yy++) for (let xx = fx; xx < fx + fw; xx++) {
+      const a = (xx - fx + yy - fy) % 12, b = (xx - fx - (yy - fy) + 1200) % 12;
+      if (a === 0 || b === 0) P(xx, yy, C.teal2);
+    }
+    // a round tray, knot by knot. Every knot gets a level on the copper ramp: the light falling from the top left,
+    // plus what the chasing does there (engraved lines sink to the darkest copper, raised parts catch the light,
+    // the punched ground speckles)
+    const tray = (cx, cy, Rr, big) => {
+      x.fillStyle = C.tealDk; x.beginPath(); x.arc(cx + 1.5, cy + 2.5, Rr + 0.3, 0, Math.PI * 2); x.fill();
+      const nArch = big ? 18 : 10;
+      for (let py = Math.floor(cy - Rr - 1); py <= cy + Rr + 1; py++) for (let px = Math.floor(cx - Rr - 1); px <= cx + Rr + 1; px++) {
+        const ex = px + 0.5 - cx, ey = py + 0.5 - cy, d = Math.hypot(ex, ey), a = Math.atan2(ey, ex);
+        if (d > Rr) continue;
+        const lit = -(ex * 0.6 + ey * 0.8) / Rr, base = lit > 0.05 ? 3 : lit > -0.6 ? 2 : 1;
+        const dot = px % 2 === 0 && py % 2 === 0 && base > 1 ? -1 : 0; // the punched ground
+        let k = base + dot;
+        if (d > Rr - 2.6) k = lit > 0.3 ? 4 : lit > -0.2 ? 3 : lit > -0.65 ? 2 : 1;            // the rolled rim
+        else if (d > Rr - 3.6) k = 0;                                                     // its shadow line
+        else if (big) {
+          if (d > Rr - 9.6) {                                                             // a ring of arches
+            const s = (((a / (Math.PI * 2)) * nArch) % 1 + 1) % 1, rr = (Rr - 3.6 - d) / 6, b = 0.92 * Math.pow(Math.sin(Math.PI * s), 0.7);
+            k = Math.abs(rr - b) < 0.17 ? 0 : rr < b ? base + 1 : base + dot;
+          } else if (d > Rr - 10.6) k = 0;
+          else if (d > Rr - 22) {                                                        // chased fluting: lobes that catch the light in turn
+            const n = 28, s = (((a / (Math.PI * 2)) * n) % 1 + 1) % 1, kk = Math.floor((((a / (Math.PI * 2)) * n) % n + n) % n), t = (d - (Rr - 22)) / 11.4;
+            const w = Math.sqrt(Math.max(0, 1 - Math.pow(Math.max(0, t - 0.55) / 0.45, 2)));
+            const side = Math.cos(a + Math.PI / 2 * 0) * -0.6 + Math.sin(a) * -0.8;
+            if (Math.abs(s - 0.5) * 2 > w - 0.12 || t < 0.06) k = 0;
+            else k = (s < 0.5) === (Math.sin(a * 1) * 0.8 + Math.cos(a) * 0.6 > 0) ? base + 1 : base;
+            if (k !== 0 && t > 0.2 && t < 0.8 && Math.abs(s - 0.5) < 0.1 && kk % 2 === 0) k = base + 1;
+          } else if (d > Rr - 23) k = 0;
+          else if (d > Rr - 24.4) k = (Math.round(a * (Rr - 23.7)) % 2) ? base + 1 : 0;   // a beaded ring
+          else if (d > Rr - 25.4) k = 0;
+          else {                                                                          // the rose in the middle
+            const r0 = Rr - 25.4, s8 = (((a / (Math.PI * 2)) * 8 + 0.25) % 1 + 1) % 1, s16 = (s8 + 0.5) % 1;
+            const w1 = 0.98 * Math.pow(Math.sin(Math.PI * s8), 0.32), w2 = 0.6 * Math.pow(Math.sin(Math.PI * s16), 0.6), q = d / r0;
+            if (d < 5.6) k = 0;
+            else if (q < w1) k = q > w1 - 0.09 || Math.min(s8, 1 - s8) * 2 * Math.PI * d / 8 < 0.6 ? 0 : Math.floor((((a / (Math.PI * 2)) * 8 + 0.25) % 8 + 8) % 8) % 2 ? base + 1 : 4;
+            else if (q < w2) k = q > w2 - 0.11 ? 0 : base;
+          }
+        } else {
+          if (d > Rr - 7) {
+            const s = (((a / (Math.PI * 2)) * nArch) % 1 + 1) % 1, rr = (Rr - 3.6 - d) / 3.4, b = 0.9 * Math.pow(Math.sin(Math.PI * s), 0.7);
+            k = Math.abs(rr - b) < 0.2 ? 0 : rr < b ? base + 1 : base + dot;
+          } else if (d > Rr - 8) k = 0;
+          else {
+            const n = 14, s = (((a / (Math.PI * 2)) * n) % 1 + 1) % 1, t = d / (Rr - 8), w = Math.sqrt(Math.max(0, 1 - Math.pow(Math.max(0, t - 0.5) / 0.5, 2)));
+            k = Math.abs(s - 0.5) * 2 > w - 0.14 ? 0 : (s < 0.5) === (Math.sin(a) * 0.8 + Math.cos(a) * 0.6 > 0) ? base + 1 : base;
+          }
+        }
+        P(px, py, lv(k));
+      }
+      if (big) bihDome(x, cx, cy, 4.4, BR); else bihDome(x, cx, cy, 2.6, BR);
+    };
+    const cx = cols / 2, cy = rows / 2;
+    // a džezva: a coffee pot with a flared lip and a long handle, engraved bands round its belly
+    const pot = (px0, base, h, flip) => {
+      const top = base - h, metal = (nx, t, px, py) => {
+        const s = nx * flip;
+        let k = s < -0.75 ? 2 : s < -0.25 ? 4 : s < 0.15 ? 3 : s < 0.6 ? 2 : 1;
+        if (t < 0.12) k = s < -0.3 ? 4 : s < 0.3 ? 3 : 2;
+        if (Math.abs(t - 0.36) < 0.025 || Math.abs(t - 0.88) < 0.025) k = 0;
+        if (t > 0.45 && t < 0.8) { const z = (px + 400) % 6, zz = z < 3 ? z : 6 - z; if (py - Math.round(top + h * 0.5) === zz || py - Math.round(top + h * 0.67) === 3 - zz) k = 0; }
+        return lv(k);
+      };
+      // the handle: a long flat bar from the neck, with a brass cap
+      for (let k = 0; k <= 15; k++) { const hx = px0 - flip * (6 + k), hy = top + 5 - k * 0.35; P(hx, hy, lv(k < 14 ? 3 : 2)); P(hx, hy + 1, lv(1)); }
+      bihDome(x, px0 - flip * 21.5, top + 0.7, 1.6, BR);
+      x.fillStyle = C.tealDk; x.fillRect(px0 - 8, base, 18, 2);
+      bihLathe(x, px0, top, base, (t) => (t < 0.1 ? 7 - t * 15 : t < 0.32 ? 5.4 - (t - 0.1) * 2 : 5 + 4 * Math.pow((t - 0.32) / 0.68, 0.7)), metal);
+      // the pouring lip
+      x.fillStyle = lv(3); x.beginPath(); x.moveTo(px0 + flip * 6, top + 0.5); x.lineTo(px0 + flip * 10, top - 1.5); x.lineTo(px0 + flip * 6, top + 2.5); x.fill();
+    };
+    // a lidded sugar bowl on a foot: a wide round belly, a low lid with a ring knob
+    const bowl = (px0, base, h) => {
+      const top = base - h;
+      x.fillStyle = C.tealDk; x.fillRect(px0 - 11, base, 25, 2);
+      const half = (t) => t < 0.08 ? 2.2 : t < 0.12 ? 1.2 : t < 0.3 ? 4 + 8 * Math.pow((t - 0.12) / 0.18, 0.5) : t < 0.35 ? 13 : t < 0.78 ? 13.5 * Math.sqrt(Math.max(0, 1 - Math.pow((t - 0.35) / 0.45, 2))) + 0.8 : t < 0.88 ? 4 : 8;
+      bihLathe(x, px0, top, base, half, (nx, t, px, py) => {
+        let k = nx < -0.75 ? 2 : nx < -0.25 ? 4 : nx < 0.2 ? 3 : nx < 0.62 ? 2 : 1;
+        if (t > 0.3 && t < 0.35) k = nx < -0.4 ? 3 : nx < 0.3 ? 2 : 1;
+        if (t > 0.35 && t < 0.38) k = 0;
+        if (t > 0.45 && t < 0.66) { const q = ((px - px0 + 40) % 5), r = py - Math.round(top + h * 0.555); if ((q === 0 && Math.abs(r) <= 2) || (Math.abs(r) === 3 && q !== 0)) k = 0; }
+        if (t > 0.78 && t < 0.88) k = nx < -0.2 ? 3 : 1;
+        if (t < 0.12) return BR[nx < -0.2 ? 0 : nx < 0.4 ? 1 : 2];
+        return lv(k);
+      });
+    };
+    tray(cx, cy, 44, true);
+    tray(fx + 18, fy + 22, 14, false);
+    tray(fx + fw - 18, fy + fh - 22, 14, false);
+    pot(fx + 27, fy + fh - 6, 30, 1);
+    bowl(fx + fw - 18, fy + 40, 26);
+  });
+}
+
+// Konjic woodcarving: the front of a walnut chest, its panels carved in relief: a big rosette in a beaded ring with
+// small rosettes and leafy curls in the corners, rosettes and lyre-shaped curls down the side panels, chip-carved
+// rails and a twisted rope moulding round it all. Drawn as a height map, lit from the top left knot by knot.
+function bihWoodcarving(ctx, W, H) {
+  const C = { w0: '#1b0f0a', w1: '#352014', w2: '#553420', w3: '#764a2c', w4: '#96623a', w5: '#ba8250', w6: '#ddac74' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    // the height map: 0 the cut-away ground, 1 a groove, 2 the carved surface, 3 raised higher
+    const hc = document.createElement('canvas'); hc.width = cols; hc.height = rows;
+    const h = hc.getContext('2d');
+    const G = ['#000000', '#505050', '#a0a0a0', '#f0f0f0'];
+    const fillR = (a, b, w, hh, lvl) => { h.fillStyle = G[lvl]; h.fillRect(a, b, w, hh); };
+    const disc = (a, b, r, lvl) => { h.fillStyle = G[lvl]; h.beginPath(); h.arc(a, b, r, 0, Math.PI * 2); h.fill(); };
+    const line = (pts, lw, lvl) => { h.strokeStyle = G[lvl]; h.lineWidth = lw; h.lineCap = 'round'; h.lineJoin = 'round'; h.beginPath(); pts.forEach(([a, b], i) => (i ? h.lineTo(a, b) : h.moveTo(a, b))); h.stroke(); };
+    // a leaf: a pointed lens from (a, b) along heading th, a groove down the middle
+    const leafH = (a, b, th, l, w, lvl = 2) => {
+      h.save(); h.translate(a, b); h.rotate(th);
+      h.fillStyle = G[lvl]; h.beginPath(); h.moveTo(0, 0); h.quadraticCurveTo(l * 0.45, -w * 1.3, l, 0); h.quadraticCurveTo(l * 0.45, w * 1.3, 0, 0); h.fill();
+      h.restore();
+      line([[a + Math.cos(th) * 1.2, b + Math.sin(th) * 1.2], [a + Math.cos(th) * l * 0.78, b + Math.sin(th) * l * 0.78]], 1, 1);
+    };
+    // a spiral curl: a stem that winds tighter and tighter, `turn` +1 or -1
+    const curl = (a, b, th, len, r0, turn) => {
+      const pts = [[a, b]]; let px = a, py = b, t = th;
+      for (let s = 0; s < len; s += 0.4) { const f = s / len; t += turn * 0.4 / (r0 * (1.15 - f)); px += Math.cos(t) * 0.4; py += Math.sin(t) * 0.4; pts.push([px, py]); }
+      return pts;
+    };
+    // a small flower: petals round a raised heart
+    const flower = (a, b, r, n, rot = 0) => {
+      for (let k = 0; k < n; k++) { const an = rot + (k / n) * Math.PI * 2; h.fillStyle = G[2]; h.beginPath(); h.ellipse(a + Math.cos(an) * r * 0.55, b + Math.sin(an) * r * 0.55, r * 0.5, r * 0.32, an, 0, Math.PI * 2); h.fill(); }
+      for (let k = 0; k < n; k++) { const an = rot + (k / n) * Math.PI * 2 + Math.PI / n; line([[a + Math.cos(an) * r * 0.3, b + Math.sin(an) * r * 0.3], [a + Math.cos(an) * r * 0.95, b + Math.sin(an) * r * 0.95]], 0.9, 0); }
+      disc(a, b, r * 0.34, 3);
+    };
+    fillR(0, 0, cols, rows, 0);
+    // the frame: rope moulding band, then flat rails and mullions round the sunk panels
+    const RO = 2, RD = 7, F0 = RO + RD + 1, PI0 = F0 + 7;
+    fillR(F0, F0, cols - 2 * F0, rows - 2 * F0, 2);
+    const pw = 30, mw = 6, px0 = PI0, py0 = PI0, ph = rows - 2 * PI0, cw = cols - 2 * PI0 - 2 * pw - 2 * mw;
+    const panels = [[px0, py0, pw, ph], [px0 + pw + mw, py0, cw, ph], [px0 + pw + mw + cw + mw, py0, pw, ph]];
+    for (const [a, b, w, hh] of panels) fillR(a, b, w, hh, 0);
+    // chip-carved teeth along the inner edge of the rails
+    const teeth = (a, b, w, hh) => {
+      h.fillStyle = G[1];
+      for (const [len, at] of [[w, (s) => [[a + s, b - 1], [a + s + 1.5, b - 3], [a + s + 3, b - 1]]], [w, (s) => [[a + s, b + hh + 1], [a + s + 1.5, b + hh + 3], [a + s + 3, b + hh + 1]]], [hh, (s) => [[a - 1, b + s], [a - 3, b + s + 1.5], [a - 1, b + s + 3]]], [hh, (s) => [[a + w + 1, b + s], [a + w + 3, b + s + 1.5], [a + w + 1, b + s + 3]]]]) {
+        const { n, d } = evenSteps(len - 3, 4.5);
+        for (let i = 0; i <= n; i++) { const tri = at(i * d); h.beginPath(); tri.forEach(([q, r], k) => (k ? h.lineTo(q, r) : h.moveTo(q, r))); h.closePath(); h.fill(); }
+      }
+    };
+    for (const p of panels) teeth(...p);
+    // a broad petal with a rounded tip, grooves down its middle and along both sides
+    const petal = (a, b, an, r0, r1, w, lvl) => {
+      const L = r1 - r0, ox = a + Math.cos(an) * r0, oy = b + Math.sin(an) * r0;
+      h.save(); h.translate(ox, oy); h.rotate(an);
+      h.fillStyle = G[lvl]; h.beginPath(); h.moveTo(0, -w * 0.35); h.bezierCurveTo(L * 0.45, -w * 1.05, L * 1.05, -w * 0.8, L, 0); h.bezierCurveTo(L * 1.05, w * 0.8, L * 0.45, w * 1.05, 0, w * 0.35); h.closePath(); h.fill();
+      h.strokeStyle = G[lvl - 1]; h.lineWidth = 0.9; h.lineCap = 'round';
+      if (L > 8) { h.beginPath(); h.moveTo(L * 0.12, 0); h.lineTo(L * 0.72, 0); h.stroke(); }
+
+      h.restore();
+    };
+    // a palmette fan: five lobed leaves spreading from a raised boss
+    const spray = (a, b, an, L) => {
+      for (const [d, f] of [[-0.95, 0.66], [0.95, 0.66], [-0.48, 0.86], [0.48, 0.86], [0, 1]]) petal(a, b, an + d, 1, L * f, L * 0.13 * (f + 0.3), 2);
+      disc(a, b, L * 0.2, 3); disc(a, b, L * 0.1, 2);
+    };
+    // a rosette: n rounded petals round a raised boss
+    const rosetteH = (a, b, r, n, rot) => {
+      for (let q = 0; q < n; q++) { const an = rot + (q / n) * Math.PI * 2; h.fillStyle = G[2]; h.beginPath(); h.ellipse(a + Math.cos(an) * r * 0.6, b + Math.sin(an) * r * 0.6, r * 0.42, r * 0.3, an, 0, Math.PI * 2); h.fill(); }
+      for (let q = 0; q < n; q++) { const an = rot + (q / n + 0.5 / n) * Math.PI * 2; line([[a + Math.cos(an) * r * 0.5, b + Math.sin(an) * r * 0.5], [a + Math.cos(an) * r * 1.05, b + Math.sin(an) * r * 1.05]], 1, 0); }
+      for (let q = 0; q < n; q++) { const an = rot + (q / n + 0.5 / n) * Math.PI * 2; h.fillStyle = G[3]; h.beginPath(); h.ellipse(a + Math.cos(an) * r * 0.32, b + Math.sin(an) * r * 0.32, r * 0.22, r * 0.16, an, 0, Math.PI * 2); h.fill(); }
+      disc(a, b, r * 0.2, 2); disc(a - 0.3, b - 0.3, r * 0.08, 3);
+    };
+    // the centre panel: a beaded ring round a many-petalled rosette, small rosettes and curls in the corners
+    const [cx0, cy0, cw0, ch0] = panels[1], ccx = cx0 + cw0 / 2, ccy = cy0 + ch0 / 2, rr = Math.min(cw0, ch0) / 2 - 2;
+    h.save(); h.beginPath(); h.rect(cx0, cy0, cw0, ch0); h.clip();
+    for (const [sx, sy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+      const ax = ccx + sx * (cw0 / 2 - 9), ay = ccy + sy * (ch0 / 2 - 9);
+      rosetteH(ax, ay, 8.5, 6, 0.3);
+      // a leafy curl running out each way along the panel's edges
+      for (const sd of [-1, 1]) {
+        const horiz = sd < 0, st = curl(horiz ? ax - sx * 7 : ax + sx * 1.5, horiz ? ay + sy * 1.5 : ay - sy * 7, horiz ? (sx > 0 ? Math.PI : 0) : (sy > 0 ? -Math.PI / 2 : Math.PI / 2), 15, 3.4, (horiz ? sx * sy : -sx * sy) > 0 ? 1 : -1);
+        line(st, 2.2, 2); const e = st[st.length - 1]; disc(e[0], e[1], 1.5, 3);
+        const m = st[Math.floor(st.length * 0.35)], m2 = st[Math.floor(st.length * 0.35) + 1];
+        leafH(m[0], m[1], Math.atan2(m2[1] - m[1], m2[0] - m[0]) + (horiz ? sy : sx) * 1.6 * (horiz ? -sx : sy) * -1, 6.5, 1.9);
+      }
+    }
+    h.restore();
+    disc(ccx, ccy, rr, 2); disc(ccx, ccy, rr - 3.4, 0);
+    for (let k = 0; k < 44; k++) { const an = (k / 44) * Math.PI * 2; disc(ccx + Math.cos(an) * (rr - 1.7), ccy + Math.sin(an) * (rr - 1.7), 1, 3); }
+    // the rosette: twelve broad outer petals, eight raised inner ones, a dotted boss
+    for (let k = 0; k < 12; k++) { const an = (k / 12) * Math.PI * 2; petal(ccx, ccy, an, 12, rr - 5.5, 6.4, 2); }
+    for (let k = 0; k < 8; k++) { const an = (k / 8) * Math.PI * 2 + Math.PI / 8; petal(ccx, ccy, an, 5, 20, 5.2, 3); }
+    disc(ccx, ccy, 7.6, 2); disc(ccx, ccy, 6, 3); h.strokeStyle = G[2]; h.lineWidth = 1; h.beginPath(); h.arc(ccx, ccy, 3.6, 0, Math.PI * 2); h.stroke(); disc(ccx, ccy, 1.4, 2);
+    for (let k = 0; k < 12; k++) { const an = (k / 12) * Math.PI * 2 + Math.PI / 12, l = 9; h.fillStyle = G[2]; h.save(); h.translate(ccx + Math.cos(an) * (rr - 5 - l), ccy + Math.sin(an) * (rr - 5 - l)); h.rotate(an); h.beginPath(); h.moveTo(0, 0); h.quadraticCurveTo(l * 0.5, -2.6, l, 0); h.quadraticCurveTo(l * 0.5, 2.6, 0, 0); h.fill(); h.restore(); }
+    // the side panels: three big rosettes, a pair of curling leaves between each two
+    for (const [a, b, w, hh] of [panels[0], panels[2]]) {
+      h.save(); h.beginPath(); h.rect(a, b, w, hh); h.clip();
+      const cxv = a + w / 2, n = 3, step = hh / n;
+      for (let k = 0; k <= n; k++) {
+        const y = b + k * step;
+        // a lyre of two curls back to back, each with a leaf
+        for (const sgn of [-1, 1]) {
+          const st = curl(cxv + sgn * 1, y + 6, -Math.PI / 2 + sgn * 0.25, 13, 2.9, sgn);
+          line(st, 2, 2); const e = st[st.length - 1]; disc(e[0], e[1], 1.3, 3);
+          const st2 = curl(cxv + sgn * 1, y - 6, Math.PI / 2 - sgn * 0.25, 13, 2.9, -sgn);
+          line(st2, 2, 2); const e2 = st2[st2.length - 1]; disc(e2[0], e2[1], 1.3, 3);
+          leafH(cxv, y, sgn > 0 ? 0 : Math.PI, w / 2 - 1, 2.2);
+        }
+        disc(cxv, y, 2.4, 3);
+        if (k < n) rosetteH(cxv, y + step / 2, Math.min(w / 2 - 2, step / 2 - 4.5), 8, k * 0.2);
+      }
+      h.restore();
+    }
+    // read the heights back and light them: an edge rising towards the top left catches the light, one falling
+    // away to the bottom right is in shade, and the cut ground just below a raised edge lies in its shadow
+    const hd = h.getImageData(0, 0, cols, rows).data, HT = new Uint8Array(cols * rows);
+    for (let i = 0; i < cols * rows; i++) HT[i] = Math.round(hd[i * 4] / 80);
+    const ht = (a, b) => (a < 0 || b < 0 || a >= cols || b >= rows ? 2 : HT[b * cols + a]);
+    const grain = rng(17);
+    const g2 = new Float32Array(rows); for (let j = 0; j < rows; j++) g2[j] = grain();
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+      const v = ht(i, j), up = Math.max(ht(i - 1, j - 1), ht(i, j - 1) - 0.5, ht(i - 1, j) - 0.5), dn = Math.min(ht(i + 1, j + 1), ht(i, j + 1) + 0.5, ht(i + 1, j) + 0.5);
+      let col;
+      if (v < up) col = v <= 1 ? C.w0 : C.w2;
+      else if (v > up + 0.4) col = v >= 3 ? C.w6 : v === 2 ? C.w5 : C.w4;
+      else if (v > dn + 0.4) col = v >= 3 ? C.w3 : C.w2;
+      else col = v === 0 ? ((i + j * 3) % 7 === 0 ? C.w0 : C.w1) : v === 1 ? C.w2 : v === 2 ? (g2[j] > 0.8 && (i * 7 + j) % 9 > 2 ? C.w3 : C.w4) : C.w5;
+      x.fillStyle = col; x.fillRect(i, j, 1, 1);
+    }
+    // the rope moulding: strands slanting round the frame, each lit across its width
+    const ropeCol = [C.w1, C.w3, C.w5, C.w6, C.w4, C.w3, C.w2];
+    const RP = (a, b, col) => { x.fillStyle = col; x.fillRect(a, b, 1, 1); };
+    for (let i = 0; i < cols; i++) for (let j = 0; j < RD; j++) { RP(i, RO + j, ropeCol[((i + j) % 7 + 7) % 7]); RP(i, rows - 1 - RO - j, ropeCol[((i - j) % 7 + 7) % 7]); }
+    for (let i = RO + RD; i < rows - RO - RD; i++) for (let j = 0; j < RD; j++) { RP(RO + j, i, ropeCol[((i + j) % 7 + 7) % 7]); RP(cols - 1 - RO - j, i, ropeCol[((i - j) % 7 + 7) % 7]); }
+    x.fillStyle = C.w0; x.fillRect(0, 0, cols, RO); x.fillRect(0, rows - RO, cols, RO); x.fillRect(0, 0, RO, rows); x.fillRect(cols - RO, 0, RO, rows);
+    x.fillStyle = C.w0; for (const o of [RO + RD]) { x.fillRect(o, o, cols - 2 * o, 1); x.fillRect(o, rows - 1 - o, cols - 2 * o, 1); x.fillRect(o, o, 1, rows - 2 * o); x.fillRect(cols - 1 - o, o, 1, rows - 2 * o); }
+    // corner blocks with a little carved flower
+    for (const [a, b] of [[RO, RO], [cols - RO - RD, RO], [RO, rows - RO - RD], [cols - RO - RD, rows - RO - RD]]) {
+      x.fillStyle = C.w1; x.fillRect(a, b, RD, RD);
+      const m = a + RD / 2, n = b + RD / 2;
+      x.fillStyle = C.w5; for (const [dx, dy] of [[0, -2], [-2, 0], [1, 0], [0, 1]]) x.fillRect(Math.floor(m + dx), Math.floor(n + dy), 1, 1);
+      x.fillStyle = C.w3; for (const [dx, dy] of [[0, 1.5], [1.5, 0]]) x.fillRect(Math.floor(m + dx), Math.floor(n + dy), 1, 1);
+      x.fillStyle = C.w6; x.fillRect(Math.floor(m) - 1, Math.floor(n) - 1, 1, 1);
+    }
+  });
+}
+// Gold-thread embroidery (zlatovez) on wine velvet, like an old Bosnian cushion: a big rose with silver petals in
+// a garland of leaves in the middle, scrolling tendrils with fishbone leaves, roses, blooms and buds to both sides,
+// sprays in the corners, silver spangles, and a border of gold cords with a laurel chain. Every gold shape is laid in satin stitches that run
+// across it, so the threads catch the light in stripes, and stands padded off the velvet.
+function bihGoldwork(ctx, W, H) {
+  const C = { v0: '#2a0912', v1: '#46101f', v2: '#5a1a2c', g0: '#fbe6a2', g1: '#e2b752', g2: '#b4872c', g3: '#6e4a16', s1: '#eef0f2', s2: '#9ea4ae' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(a, b, 1, 1); };
+    // the velvet: deep wine, its pile catching a soft sheen round the middle and darkening towards the edges
+    const vr = rng(5);
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+      const dx = (i - cols / 2) / (cols * 0.42), dy = (j - rows / 2) / (rows * 0.44), t = Math.hypot(dx, dy) + (vr() - 0.5) * 0.18;
+      P(i, j, t < 0.5 ? C.v2 : t < 1.02 ? C.v1 : C.v0);
+    }
+    // everything gold is first painted in key colours on a layer: the key says which way the stitches run
+    const lc = document.createElement('canvas'); lc.width = cols; lc.height = rows;
+    const L = lc.getContext('2d');
+    const K = { h: '#ff0000', d1: '#00ff00', v: '#0000ff', d2: '#ffff00', s: '#ff00ff', c: '#00ffff', m: '#ffffff' };
+    const keyFor = (phi) => [K.h, K.d1, K.v, K.d2][Math.round((((phi % Math.PI) + Math.PI) % Math.PI) / (Math.PI / 4)) % 4];
+    const pathFill = (key, draw) => { L.fillStyle = key; L.beginPath(); draw(); L.fill(); };
+    // a fishbone leaf: each half stitched slanting towards the tip, a dark vein down the middle
+    const leafG = (a, b, th, len, w) => {
+      for (const sd of [-1, 1]) pathFill(keyFor(th + sd * (Math.PI / 2 - 0.65)), () => {
+        L.save(); L.translate(a, b); L.rotate(th); L.moveTo(0, 0); L.quadraticCurveTo(len * 0.45, sd * w * 1.3, len, 0); L.lineTo(0, 0); L.restore();
+      });
+      L.strokeStyle = K.m; L.lineWidth = 0.8; L.beginPath(); L.moveTo(a + Math.cos(th) * len * 0.15, b + Math.sin(th) * len * 0.15); L.lineTo(a + Math.cos(th) * len * 0.8, b + Math.sin(th) * len * 0.8); L.stroke();
+    };
+    // a petal stitched straight across, from r0 to r1 out along angle an
+    const petalG = (a, b, an, r0, r1, w, key) => {
+      const l = r1 - r0;
+      pathFill(key || keyFor(an + Math.PI / 2), () => { L.save(); L.translate(a + Math.cos(an) * r0, b + Math.sin(an) * r0); L.rotate(an); L.moveTo(0, -w * 0.4); L.bezierCurveTo(l * 0.5, -w * 1.1, l * 1.05, -w * 0.7, l, 0); L.bezierCurveTo(l * 1.05, w * 0.7, l * 0.5, w * 1.1, 0, w * 0.4); L.closePath(); L.restore(); });
+    };
+    const cord = (pts, lw = 1.5) => { L.strokeStyle = K.c; L.lineWidth = lw; L.lineCap = 'round'; L.lineJoin = 'round'; L.beginPath(); pts.forEach(([a, b], i) => (i ? L.lineTo(a, b) : L.moveTo(a, b))); L.stroke(); };
+    const dot = (a, b, r, key) => { L.fillStyle = key; L.beginPath(); L.arc(a, b, r, 0, Math.PI * 2); L.fill(); };
+    // a five-petal bloom seen face on, a spangle in its heart
+    const bloom = (a, b, r, rot = 0) => {
+      for (let k = 0; k < 5; k++) petalG(a, b, rot + (k / 5) * Math.PI * 2, r * 0.15, r, r * 0.42);
+      for (let k = 0; k < 5; k++) { const q = rot + ((k + 0.5) / 5) * Math.PI * 2; L.strokeStyle = K.m; L.lineWidth = 0.9; L.beginPath(); L.moveTo(a + Math.cos(q) * r * 0.3, b + Math.sin(q) * r * 0.3); L.lineTo(a + Math.cos(q) * r * 0.95, b + Math.sin(q) * r * 0.95); L.stroke(); }
+      dot(a, b, r * 0.26, K.h); dot(a, b, Math.max(0.8, r * 0.1), K.s);
+    };
+    // a closed bud on the end of a stem pointing along an: a plump teardrop held in two sepals
+    const bud = (a, b, an, s) => {
+      pathFill(keyFor(an + Math.PI / 2), () => { L.save(); L.translate(a, b); L.rotate(an); L.moveTo(0, 0); L.bezierCurveTo(s * 0.1, -s * 0.55, s * 0.75, -s * 0.5, s, 0); L.bezierCurveTo(s * 0.75, s * 0.5, s * 0.1, s * 0.55, 0, 0); L.restore(); });
+      L.strokeStyle = K.m; L.lineWidth = 0.8; L.beginPath(); L.moveTo(a + Math.cos(an) * s * 0.35, b + Math.sin(an) * s * 0.35); L.lineTo(a + Math.cos(an) * s * 0.9, b + Math.sin(an) * s * 0.9); L.stroke();
+      leafG(a, b, an - 0.75, s * 0.6, s * 0.3); leafG(a, b, an + 0.75, s * 0.6, s * 0.3);
+      dot(a + Math.cos(an) * s * 0.55, b + Math.sin(an) * s * 0.55, 0.8, K.s);
+    };
+    // a rose seen from above: a ring of broad gold petals, then a padded heart wound with petal edges, a spangle
+    const rose = (a, b, r, rot = 0) => {
+      const n = r > 10 ? 10 : 8;
+      for (let k = 0; k < n; k++) petalG(a, b, rot + (k / n) * Math.PI * 2, r * 0.35, r, r * (n > 8 ? 0.32 : 0.38));
+      for (let k = 0; k < n; k++) { const q = rot + ((k + 0.5) / n) * Math.PI * 2; L.strokeStyle = K.m; L.lineWidth = 0.9; L.beginPath(); L.moveTo(a + Math.cos(q) * r * 0.55, b + Math.sin(q) * r * 0.55); L.lineTo(a + Math.cos(q) * r * 0.98, b + Math.sin(q) * r * 0.98); L.stroke(); }
+      dot(a, b, r * 0.58, K.m);
+      if (r > 10) {
+        // the big rose: an inner ring of silver petals round a padded gold heart
+        for (let k = 0; k < 6; k++) petalG(a, b, rot + ((k + 0.5) / 6) * Math.PI * 2, r * 0.12, r * 0.54, r * 0.24, K.s);
+        for (let k = 0; k < 6; k++) { const q = rot + (k / 6) * Math.PI * 2; L.strokeStyle = K.m; L.lineWidth = 0.9; L.beginPath(); L.moveTo(a + Math.cos(q) * r * 0.2, b + Math.sin(q) * r * 0.2); L.lineTo(a + Math.cos(q) * r * 0.55, b + Math.sin(q) * r * 0.55); L.stroke(); }
+        dot(a, b, r * 0.24, K.m); dot(a, b, r * 0.2, K.v); dot(a, b, r * 0.07, K.s);
+      } else { dot(a, b, r * 0.5, K.d2); L.strokeStyle = K.m; L.lineWidth = 0.8; L.beginPath(); L.arc(a, b, r * 0.3, 0.4, 4.2); L.stroke(); dot(a, b, r * 0.16, K.h); dot(a, b, Math.max(0.8, r * 0.06), K.s); }
+    };
+    // a path: a cubic curve through four points, then winding up into a curl. Points carry their heading.
+    const sweep = (p, curlLen, turn, r0) => {
+      const raw = [];
+      for (let k = 0; k <= 120; k++) { const t = k / 120, m = 1 - t; raw.push([m * m * m * p[0][0] + 3 * m * m * t * p[1][0] + 3 * m * t * t * p[2][0] + t * t * t * p[3][0], m * m * m * p[0][1] + 3 * m * m * t * p[1][1] + 3 * m * t * t * p[2][1] + t * t * t * p[3][1]]); }
+      const pts = raw.map((q, k) => { const a2 = raw[Math.min(k + 1, 120)], o = raw[Math.max(k - 1, 0)]; return [q[0], q[1], Math.atan2(a2[1] - o[1], a2[0] - o[0])]; });
+      let [px, py, th] = pts[pts.length - 1];
+      for (let q = 0.4; q < curlLen; q += 0.4) { const f = q / curlLen; th += turn * 0.4 / (r0 * (1 - 0.65 * f)); px += Math.cos(th) * 0.4; py += Math.sin(th) * 0.4; pts.push([px, py, th]); }
+      return pts;
+    };
+    const along = (pts, f) => pts[Math.min(pts.length - 1, Math.floor(f * (pts.length - 1)))];
+    const B = 15, fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B, cx = cols / 2, cy = rows / 2;
+    // the medallion: an oval garland of leaves round a big rose with leaves and buds
+    const ex = 27, ey = 33, ring = [];
+    for (let k = 0; k <= 200; k++) { const t = (k / 200) * Math.PI * 2; ring.push([cx + Math.cos(t) * ex, cy + Math.sin(t) * ey, Math.atan2(Math.cos(t) * ey, -Math.sin(t) * ex)]); }
+    cord(ring, 1.6);
+    for (let k = 0; k < 14; k++) { const [p, q, th] = ring[Math.floor((k / 14) * 200) + 4]; leafG(p, q, th - 0.75, 10, 4); leafG(p, q, th + 0.75, 10, 4); }
+    rose(cx, cy, 17);
+    // a bud above and below the rose, reaching out to the garland
+    bud(cx, cy - 17, -Math.PI / 2, 10); bud(cx, cy + 17, Math.PI / 2, 10);
+    // to each side: a low C-scroll out of the garland curling up round a rose, and a high one curling down round a
+    // bloom, both in fishbone leaves
+    for (const sx of [-1, 1]) {
+      const X = (d) => cx + sx * d;
+      const main = sweep([[X(ex - 1), cy + 7], [X(ex + 16), cy + 34], [X(ex + 46), cy + 30], [X(ex + 49), cy + 2]], 24, -sx, 7.5);
+      cord(main, 1.8);
+      for (const [f, sd, l] of [[0.1, 1, 12], [0.22, -1, 12], [0.36, 1, 13], [0.5, -1, 12], [0.64, 1, 10]]) { const [p, q, th] = along(main, f); leafG(p, q, th + sd * sx * 0.85, l, 4.4); }
+      rose(X(ex + 42.5), cy - 3, 7.5);
+      const up = sweep([[X(13), cy - ey + 2], [X(26), cy - ey - 11], [X(50), cy - ey - 9], [X(56), cy - 16]], 20, sx, 6.5);
+      cord(up, 1.6);
+      for (const [f, sd, l] of [[0.16, -1, 11], [0.32, 1, 11], [0.5, -1, 11]]) { const [p, q, th] = along(up, f); leafG(p, q, th + sd * sx * 0.85, l, 4); }
+      bloom(X(49), cy - 13.5, 6.5, 0.3);
+      // a bud on a short shoot above the high scroll
+      for (const [f, sd, pts] of [[0.42, -1, up]]) {
+        const [p, q, th] = along(pts, f), o = th + sd * sx * -1.15;
+        const shoot = sweep([[p, q], [p + Math.cos(o) * 3, q + Math.sin(o) * 3], [p + Math.cos(o + sd * sx * 0.3) * 6, q + Math.sin(o + sd * sx * 0.3) * 6], [p + Math.cos(o + sd * sx * 0.5) * 8, q + Math.sin(o + sd * sx * 0.5) * 8]], 0, 1, 5);
+        cord(shoot, 1.3); const e = along(shoot, 1); bud(e[0], e[1], e[2], 9);
+      }
+    }
+    // corner sprays: a curved stem from the corner with leaves and a carnation
+    for (const [sx, sy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+      const ax = sx < 0 ? fx + 1 : fx + fw - 2, ay = sy < 0 ? fy + 1 : fy + fh - 2;
+      const st = sweep([[ax, ay], [ax - sx * 8, ay - sy * 2], [ax - sx * 14, ay - sy * 7], [ax - sx * 16, ay - sy * 14]], 0, 1, 5);
+      cord(st, 1.5);
+      for (const [f, sd, l] of [[0.3, 1, 10], [0.55, -1, 10]]) { const [p, q, th] = along(st, f); leafG(p, q, th + sd * sx * sy * 0.85, l, 3.8); }
+      const e = along(st, 1); bud(e[0], e[1], e[2], 11);
+    }
+    // spangles: little silver sequins scattered in the open velvet
+    const sp = rng(31), spots = [];
+    for (let k = 0; k < 600 && spots.length < 22; k++) {
+      const a = fx + 3 + sp() * (fw - 6), b = fy + 3 + sp() * (fh - 6);
+      if (L.getImageData(Math.floor(a) - 3, Math.floor(b) - 3, 7, 7).data.some((v, i) => i % 4 === 3 && v > 0)) continue;
+      if (spots.some(([p, q]) => Math.hypot(p - a, q - b) < 9)) continue;
+      spots.push([a, b]);
+    }
+    for (const [a, b] of spots) { L.fillStyle = K.s; L.fillRect(Math.floor(a), Math.floor(b), 2, 2); }
+    // the border: gold cords either side of a dark velvet band, a vine with leaves running along it
+    for (const o of [4, 13]) { L.strokeStyle = K.c; L.lineWidth = 1.6; L.strokeRect(o + 0.5, o + 0.5, cols - 2 * o - 1, rows - 2 * o - 1); }
+    for (const [len, at] of [[cols - 18, (s, o) => [9 + s, 8.5 + o]], [cols - 18, (s, o) => [9 + s, rows - 8.5 - o]], [rows - 18, (s, o) => [8.5 + o, 9 + s]], [rows - 18, (s, o) => [cols - 8.5 - o, 9 + s]]]) {
+      const { n, d } = evenSteps(len, 7), pts = [];
+      for (let q = 0; q <= len; q += 0.4) pts.push(at(q, 0));
+      cord(pts, 1.2);
+      for (let i = 0; i < n; i++) {
+        const q0 = i * d + 1, [a, b] = at(q0, 0), [a2, b2] = at(q0 + 1, 0), th = Math.atan2(b2 - b, a2 - a);
+        leafG(a, b, th - 0.75, 5.2, 2.6); leafG(a, b, th + 0.75, 5.2, 2.6);
+        const [c, e] = at((i + 0.5) * d + 1.5, 0); dot(c, e, 0.9, K.s);
+      }
+    }
+    for (const [a, b] of [[8.5, 8.5], [cols - 8.5, 8.5], [8.5, rows - 8.5], [cols - 8.5, rows - 8.5]]) { L.clearRect(a - 4.5, b - 4.5, 9, 9); bloom(a, b, 4.6, 0.3); }
+    // stitch it: each key becomes stripes of thread; padded shapes get a bright edge to the top left and a dark one
+    // to the bottom right
+    const ld = L.getImageData(0, 0, cols, rows).data, keys = Object.values(K).map((h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16), h]);
+    const KM = new Array(cols * rows).fill(null);
+    for (let i = 0; i < cols * rows; i++) {
+      if (ld[i * 4 + 3] < 110) continue;
+      let best = null, bd = 1e9;
+      for (const kk of keys) { const e = (kk[0] - ld[i * 4]) ** 2 + (kk[1] - ld[i * 4 + 1]) ** 2 + (kk[2] - ld[i * 4 + 2]) ** 2; if (e < bd) { bd = e; best = kk[3]; } }
+      KM[i] = best;
+    }
+    const km = (a, b) => (a < 0 || b < 0 || a >= cols || b >= rows ? null : KM[b * cols + a]);
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+      const k = km(i, j); if (!k) continue;
+      const ul = km(i - 1, j - 1) && km(i, j - 1) && km(i - 1, j), dr = km(i + 1, j + 1) && km(i, j + 1) && km(i + 1, j);
+      let col;
+      if (k === K.c) col = (i + j) % 2 ? C.g1 : C.g2;
+      else if (k === K.m) col = C.g3;
+      else if (k === K.s) col = !dr ? C.s2 : C.s1;
+      else {
+        const ph = k === K.h ? j % 2 : k === K.v ? i % 2 : k === K.d1 ? ((i - j) % 3 + 3) % 3 : ((i + j) % 3);
+        col = !ul ? C.g0 : !dr ? C.g3 : ph === 0 ? C.g2 : C.g1;
+      }
+      P(i, j, col);
+    }
+  });
+}
+// Bosnian coffee: rows of little handle-less cups (fildžan) in engraved copper holders, long-handled džezva pots
+// and plates of rahat lokum, each row standing on the rim of a copper tray, on deep navy, inside a border of
+// lokum cubes and cups seen from above in the corners.
+function bihCoffeeCups(ctx, W, H) {
+  const C = { navy: '#1c2742', navy2: '#24345a', dark: '#111827', cu1: '#f6c492', cu2: '#d8874c', cu3: '#a65a2e', cu4: '#62301a', white: '#f7f3ea', grey: '#bfc0c4', coffee: '#3a2216', crema: '#a8743e', pink: '#ec8eaa', rose: '#b84a6a', green: '#94c46e', green2: '#5a8a4a' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(Math.floor(a), Math.floor(b), 1, 1); };
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(Math.floor(a), Math.floor(b), w, h); };
+    // a crisp ellipse, knot by knot (no blended edge colours)
+    const E = (cx, cy, rx, ry, col) => { for (let b = Math.floor(cy - ry); b <= cy + ry; b++) for (let a = Math.floor(cx - rx); a <= cx + rx; a++) if (((a + 0.5 - cx) / rx) ** 2 + ((b + 0.5 - cy) / ry) ** 2 <= 1) P(a, b, col); };
+    const metal = (nx) => (nx < -0.7 ? C.cu2 : nx < -0.15 ? C.cu1 : nx < 0.35 ? C.cu2 : nx < 0.75 ? C.cu3 : C.cu4);
+    // a lokum cube: its sugared top a shade lighter, its right side in shadow, a few grains of sugar
+    const cube = (a, b, w, h, col, top, side) => { R(a, b, w, h, col); R(a, b, w, 1, top); R(a + w - 1, b + 1, 1, h - 1, side); P(a + 1, b + 1 + ((a + b) % 2), C.white); };
+    const LOK = [[C.pink, C.white, C.rose], [C.white, C.white, C.grey], [C.green, C.white, C.green2]];
+    // a fildžan in its zarf: the white cup with a painted rim and a cup of coffee, in a copper holder on a foot
+    const fildzan = (cx, base, band) => {
+      bihLathe(x, cx, base - 3, base, (t) => 2 + 2.6 * t, (nx) => metal(nx));
+      bihLathe(x, cx, base - 13, base - 3, (t) => 6.4 - 4 * Math.pow(t, 1.6), (nx, t, px, py) => {
+        if (py === base - 13) return C.cu1;
+        if (t > 0.25 && t < 0.6 && (px + py) % 3 === 0) return C.cu4;
+        return metal(nx);
+      });
+      bihLathe(x, cx, base - 18, base - 13, (t) => 6.6 - t * 0.5, (nx, t, px, py) => (nx > 0.6 ? C.grey : py === base - 15 ? (px % 2 ? band : C.white) : C.white));
+      E(cx, base - 17.5, 6.6, 2, C.white); E(cx, base - 17.5, 5, 1.2, C.coffee);
+      P(cx - 3, base - 19, C.crema); P(cx - 2, base - 19, C.crema);
+    };
+    // a džezva: a copper pot flaring to its lip, with a long handle reaching out to the right
+    const dzezva = (cx, base) => {
+      for (let k = 0; k <= 10; k++) { P(cx + 5 + k, base - 15 - k * 0.42, C.cu2); P(cx + 5 + k, base - 14 - k * 0.42, C.cu4); }
+      P(cx + 16, base - 19.6, C.cu1); P(cx + 16, base - 18.6, C.cu3);
+      bihLathe(x, cx, base - 19, base, (t) => (t < 0.1 ? 6.2 - t * 12 : t < 0.32 ? 5 - (t - 0.1) * 2.5 : 4.5 + 3.3 * Math.pow((t - 0.32) / 0.68, 0.7)), (nx, t, px, py) => {
+        if (Math.abs(t - 0.38) < 0.03 || Math.abs(t - 0.86) < 0.03) return C.cu4;
+        if (t > 0.5 && t < 0.78) { const z = ((px % 4) + 4) % 4; if (py - Math.round(base - 9) === (z < 2 ? z : 4 - z)) return C.cu4; }
+        return metal(nx);
+      });
+      x.fillStyle = C.cu2; x.beginPath(); x.moveTo(cx - 5.5, base - 18.6); x.lineTo(cx - 9, base - 20.4); x.lineTo(cx - 5.5, base - 16.8); x.fill();
+      R(cx - 5, base - 19, 10, 1, C.cu1);
+    };
+    // a plate of rahat lokum: a pyramid of sugared cubes on a little copper plate
+    const lokum = (cx, base, k0) => {
+      E(cx, base - 1, 9.5, 2, C.cu4); E(cx, base - 1.8, 9.5, 1.5, C.cu1);
+      let k = k0;
+      for (const [row, n] of [[0, 3], [1, 2], [2, 1]]) for (let i = 0; i < n; i++) { const L = LOK[k++ % 3]; cube(Math.round(cx - n * 2.75 + i * 5.5), base - 7 - row * 5, 5, 5, ...L); }
+    };
+    // the border: dark edge, copper lines, a cream band with lokum cubes in turn, cups from above in the corners
+    R(0, 0, cols, rows, C.dark);
+    R(1, 1, cols - 2, rows - 2, C.cu2);
+    R(2, 2, cols - 4, rows - 4, C.cu4);
+    R(10, 10, cols - 20, rows - 20, C.cu2);
+    R(11, 11, cols - 22, rows - 22, C.dark);
+    const fx = 12, fy = 12, fw = cols - 24, fh = rows - 24;
+    R(fx, fy, fw, fh, C.navy);
+    for (const [len, at] of [[cols - 24, (s) => [12 + s, 3.5]], [cols - 24, (s) => [12 + s, rows - 8.5]], [rows - 24, (s) => [3.5, 12 + s]], [rows - 24, (s) => [cols - 8.5, 12 + s]]]) {
+      const { n, d } = evenSteps(len, 7.5);
+      for (let i = 0; i < n; i++) { const [a, b] = at((i + 0.5) * d - 2.5); cube(Math.round(a), Math.round(b), 5, 5, ...LOK[i % 3]); }
+    }
+    for (const [a, b] of [[6, 6], [cols - 6, 6], [6, rows - 6], [cols - 6, rows - 6]]) {
+      R(a - 4, b - 4, 9, 9, C.cu4);
+      x.fillStyle = C.cu2; x.beginPath(); x.arc(a + 0.5, b + 0.5, 4.3, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.white; x.beginPath(); x.arc(a + 0.5, b + 0.5, 3.3, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.coffee; x.beginPath(); x.arc(a + 0.5, b + 0.5, 2.2, 0, Math.PI * 2); x.fill();
+      P(a - 1, b - 1, C.crema);
+    }
+    // a faint lattice in the navy
+    for (let yy = fy; yy < fy + fh; yy++) for (let xx = fx; xx < fx + fw; xx++) if ((xx - fx) % 8 === 4 && (yy - fy) % 8 === 4) P(xx, yy, C.navy2);
+    // three rows of two trays: each tray an oval of copper seen from the front, with a pot, two cups and lokum on it
+    const tray = (cx, base, w) => {
+      E(cx + 1, base + 3, w / 2, 4.2, C.dark);
+      E(cx, base + 2, w / 2, 4.2, C.cu4);
+      E(cx, base, w / 2, 4.2, C.cu1);
+      E(cx, base + 0.4, w / 2 - 1.4, 3.1, C.cu3);
+      E(cx, base + 0.8, w / 2 - 3, 2.2, C.cu2);
+      for (let a = Math.round(cx - w / 2 + 6); a < cx + w / 2 - 6; a += 3) P(a, base + 3, C.cu2);
+    };
+    const nRow = 3, pitch = fh / nRow;
+    for (let r = 0; r < nRow; r++) {
+      const base = Math.round(fy + (r + 1) * pitch - 6);
+      for (const side of [0, 1]) {
+        const tw = fw / 2 - 6, tcx = fx + fw / 4 + (side ? fw / 2 : 0);
+        tray(tcx, base, tw);
+        const order = (r + side) % 2 ? ['l', 'c', 'p', 'c'] : ['c', 'p', 'l', 'c'];
+        order.forEach((kind, i) => {
+          const cx = Math.round(tcx - tw / 2 + 8 + i * (tw - 16) / 3);
+          if (kind === 'c') fildzan(cx, base, [C.rose, C.green2, C.cu3][(i + r + side) % 3]);
+          else if (kind === 'p') dzezva(cx - 3, base);
+          else lokum(cx, base, i + r + side);
+        });
+      }
+    }
+  });
+}
+// Herzegovina vines: a gnarled vine branch running across a sunlit ochre ground, big five-lobed leaves on it and
+// heavy bunches of dark purple and golden-green grapes hanging from it, tendrils curling, in a border of small
+// bunches on dark brown.
+function bihGrapes(ctx, W, H) {
+  const C = { o1: '#dda040', o2: '#eab85a', o3: '#c48630', p0: '#2c1634', p1: '#55285a', p2: '#844a8a', p3: '#c4a0cc', g0: '#56661c', g1: '#a2ae36', g2: '#d2d866', g3: '#f4f2b4', l0: '#2b5424', l1: '#4c8632', l2: '#80b448', b0: '#9c6c3c', b1: '#6e4624', b2: '#3c2414' };
+  const PUR = [C.p0, C.p1, C.p2, C.p3], GRN = [C.g0, C.g1, C.g2, C.g3];
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(Math.floor(a), Math.floor(b), 1, 1); };
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    // one grape knot by knot: a dark rim, the body shaded away from the light, a bright spot of bloom
+    const grape = (cx, cy, r, M, deep) => {
+      for (let b = Math.floor(cy - r - 1); b <= cy + r + 1; b++) for (let a = Math.floor(cx - r - 1); a <= cx + r + 1; a++) {
+        const ex = a + 0.5 - cx, ey = b + 0.5 - cy, d = Math.hypot(ex, ey);
+        if (d > r + 0.35) continue;
+        const l = -(ex * 0.7 + ey * 0.7) / r;
+        P(a, b, d > r - 0.6 ? M[0] : Math.hypot(ex + r * 0.38, ey + r * 0.38) < r * 0.32 ? M[3] : l > 0.1 - deep * 0.4 ? M[2] : M[1]);
+      }
+    };
+    // a bunch hanging from (cx, top): shoulders, then tapering to a point, grapes packed in staggered rows and
+    // drawn from the back so the front ones overlap
+    const bunch = (cx, top, len, wid, M, seed) => {
+      const r = rng(seed), g = [];
+      const rr = wid > 12 ? 2.6 : 1.9, sp = rr * 1.75, rowH = rr * 1.5;
+      for (let j = 0; j * rowH < len; j++) {
+        const t = (j * rowH) / len, half = wid / 2 * (t < 0.25 ? 0.75 + t : Math.pow(1 - (t - 0.25) / 0.75, 0.8)) + 0.3;
+        const n = Math.max(1, Math.round((2 * half) / sp));
+        for (let i = 0; i < n; i++) g.push([cx + (i - (n - 1) / 2) * sp + (j % 2 ? sp * 0.25 : -sp * 0.25) + (r() - 0.5) * 0.8, top + 2 + j * rowH + (r() - 0.5) * 0.8, (i / Math.max(1, n - 1))]);
+      }
+      R(cx, top - 3, 1, 5, C.b1);
+      g.sort((a, b) => a[1] - b[1]);
+      for (const [a, b, f] of g) grape(a, b, rr, M, f);
+    };
+    // a five-lobed vine leaf: lobes round a heart-shaped base, veins out to every lobe, the near half lit
+    const leafV = (cx, cy, R0, rot) => {
+      const shape = (k) => {
+        x.beginPath();
+        for (let q = 0; q <= 150; q++) {
+          const t = (q / 150) * Math.PI * 2, u = ((t - rot + Math.PI / 2) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI;
+          let rr = R0 * (0.74 + 0.2 * Math.pow(1 - Math.abs(Math.sin(2.5 * u)), 2) + 0.06 * (1 - Math.abs(Math.sin(9 * u))));
+          if (Math.abs(u) < 0.5) rr *= 0.3 + Math.abs(u) * 1.4;
+          const px = cx + Math.cos(t) * (rr + k), py = cy + Math.sin(t) * (rr + k); q ? x.lineTo(px, py) : x.moveTo(px, py);
+        }
+        x.closePath();
+      };
+      x.fillStyle = C.l0; shape(1); x.fill();
+      x.fillStyle = C.l1; shape(0); x.fill();
+      x.save(); shape(0); x.clip(); x.fillStyle = C.l2; x.beginPath(); x.moveTo(cx, cy); for (let q = 0; q <= 20; q++) { const t = rot + Math.PI / 2 + Math.PI * 0.15 + (q / 20) * Math.PI; x.lineTo(cx + Math.cos(t) * R0 * 1.4, cy + Math.sin(t) * R0 * 1.4); } x.fill(); x.restore();
+      x.strokeStyle = C.l0; x.lineWidth = 1; x.lineCap = 'round';
+      for (let k = 1; k < 5; k++) { const t = rot + Math.PI / 2 + k * 1.2566; x.beginPath(); x.moveTo(cx, cy); x.lineTo(cx + Math.cos(t) * R0 * 0.82, cy + Math.sin(t) * R0 * 0.82); x.stroke(); }
+    };
+    // a tendril: a thin green stalk that winds into a spiral
+    const tendril = (a, b, th, len, r0, turn) => {
+      let px = a, py = b, t = th; x.fillStyle = C.l1;
+      for (let q = 0; q < len; q += 0.3) { const f = q / len; t += turn * 0.3 / (r0 * (1.1 - f)); px += Math.cos(t) * 0.3; py += Math.sin(t) * 0.3; x.fillRect(Math.floor(px), Math.floor(py), 1, 1); }
+    };
+    // the border: dark brown band with small bunches and leaves taking turns, ochre and green lines
+    R(0, 0, cols, rows, C.b2);
+    for (const [o, col] of [[1, C.o3], [11, C.l1], [12, C.b2]]) { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); }
+    const fx = 13, fy = 13, fw = cols - 26, fh = rows - 26;
+    // the sunlit ground: lighter where the sun falls in the middle, a warm shadow round the edges
+    const gr = rng(9);
+    for (let j = fy; j < fy + fh; j++) for (let i = fx; i < fx + fw; i++) {
+      const t = Math.hypot((i - cols * 0.45) / (fw * 0.5), (j - rows * 0.55) / (fh * 0.62)) + (gr() - 0.5) * 0.16;
+      P(i, j, t < 0.62 ? C.o2 : t < 1.08 ? C.o1 : C.o3);
+    }
+    for (const [len, at, horiz] of [[cols - 26, (s) => [13 + s, 6], true], [cols - 26, (s) => [13 + s, rows - 6], true], [rows - 26, (s) => [6, 13 + s], false], [rows - 26, (s) => [cols - 6, 13 + s], false]]) {
+      const { n, d } = evenSteps(len, 9);
+      for (let i = 0; i < n; i++) {
+        const [a, b] = at((i + 0.5) * d), M = i % 2 ? GRN : PUR;
+        // a little bunch hanging from its stalk, a leaf at its shoulder
+        P(a, b - 4, C.b1); P(a + 1, b - 4, C.l1); P(a + 2, b - 4, C.l1); P(a + 1, b - 5, C.l2); P(a + 2, b - 3, C.l0);
+        for (const [dx, dy] of [[-2.2, -2.2], [0, -2.2], [2.2, -2.2], [-1.1, 0], [1.1, 0], [0, 2.2]]) grape(a + dx, b + dy + 0.8, 1.2, M, 0.5);
+      }
+    }
+    for (const [a, b] of [[6.5, 6.5], [cols - 6.5, 6.5], [6.5, rows - 6.5], [cols - 6.5, rows - 6.5]]) leafV(a, b, 4.6, 0);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const stroke = (pts, lw, col, dy = 0) => { x.strokeStyle = col; x.lineWidth = lw; x.lineCap = 'round'; x.lineJoin = 'round'; x.beginPath(); pts.forEach(([a, b], i) => (i ? x.lineTo(a, b + dy) : x.moveTo(a, b + dy))); x.stroke(); };
+    // a woody stem tapering from w0 to w1, bulging here and there, dark below and catching the light along its top
+    const wood = (pts, w0, w1) => {
+      const wr = (k) => { const t = k / (pts.length - 1); return (w0 + (w1 - w0) * t) * (1 + 0.16 * Math.sin(k * 0.23) * Math.sin(k * 0.071)) / 2; };
+      for (const [dx, dy, col, f] of [[0.5, 0.9, C.b2, 1.15], [0, 0, C.b1, 1], [-0.35, -0.45, C.b0, 0.42]]) {
+        x.fillStyle = col;
+        pts.forEach(([a, b], k) => { if (k % 2) return; x.beginPath(); x.arc(a + dx * wr(k), b + dy * wr(k), wr(k) * f, 0, Math.PI * 2); x.fill(); });
+      }
+      x.fillStyle = C.b2; pts.forEach(([a, b], k) => { if (k % 23 === 5) x.fillRect(Math.floor(a), Math.floor(b), 1, 1); });
+    };
+    // the vine: an old trunk rising from the bottom left, the main branch running across the top, a younger
+    // branch across the lower half
+    const branch = [], low = [], trunk = [];
+    const bez = (p, out) => { for (let k = 0; k <= 200; k++) { const t = k / 200, m = 1 - t; out.push([m * m * m * p[0][0] + 3 * m * m * t * p[1][0] + 3 * m * t * t * p[2][0] + t * t * t * p[3][0], m * m * m * p[0][1] + 3 * m * m * t * p[1][1] + 3 * m * t * t * p[2][1] + t * t * t * p[3][1]]); } };
+    bez([[fx + 4, fy + fh + 3], [fx + 20, fy + fh - 25], [fx + 2, fy + 40], [fx + 17, fy + 15]], trunk);
+    bez([[fx + 16, fy + 16], [fx + fw * 0.3, fy + 4], [fx + fw * 0.62, fy + 25], [fx + fw + 4, fy + 9]], branch);
+    bez([[fx + 11, fy + 52], [fx + fw * 0.25, fy + 44], [fx + fw * 0.55, fy + 66], [fx + fw * 0.86, fy + 54]], low);
+    const by = (pts, xx) => { let best = pts[0]; for (const q of pts) if (Math.abs(q[0] - xx) < Math.abs(best[0] - xx)) best = q; return best[1]; };
+    // leaves behind the branches
+    for (const [f, dy, r, rot] of [[0.13, -8, 12, 0.3], [0.3, -9, 13, -0.2], [0.5, -8, 12, 0.4], [0.68, -9, 13, -0.3], [0.86, -8, 12, 0.2], [0.99, -6, 11, -0.4]]) { const a = fx + fw * f; leafV(a, by(branch, a) + dy, r, rot); }
+    for (const [f, dy, r, rot] of [[0.26, -8, 10, -0.5], [0.46, -7, 10, 0.4], [0.66, -8, 10, -0.3], [0.86, -4, 9, 0.6]]) { const a = fx + fw * f; leafV(a, by(low, Math.min(a, fx + fw * 0.85)) + dy, r, rot); }
+    leafV(fx + 4, fy + 40, 10, -1.2); leafV(fx + 22, fy + fh - 10, 10, 0.9);
+    wood(trunk, 7, 4.6); wood(branch, 4.8, 2.2); wood(low, 4, 1.8);
+    // bunches hanging from both branches, purple and golden-green in turn
+    const B1 = [[0.17, 32, 18, PUR], [0.37, 36, 20, GRN], [0.57, 32, 18, PUR], [0.77, 35, 20, GRN], [0.95, 30, 17, PUR]];
+    const B2 = [[0.28, 24, 15, GRN], [0.48, 26, 16, PUR], [0.67, 24, 15, GRN]];
+    B1.forEach(([f, len, wid, M], k) => { const a = fx + fw * f; bunch(a, by(branch, a) + 3, len, wid, M, 40 + k); });
+    B2.forEach(([f, len, wid, M], k) => { const a = fx + fw * f; bunch(a, by(low, a) + 3, len, wid, M, 60 + k); });
+    // tendrils curling off the branches
+    for (const [f, side] of [[0.27, 1], [0.47, -1], [0.67, 1], [0.87, -1]]) { const a = fx + fw * f; tendril(a, by(branch, a) - 1, -Math.PI / 2 + side * 0.6, 14, 3, side); }
+    for (const [f, side] of [[0.38, -1], [0.58, 1]]) { const a = fx + fw * f; tendril(a, by(low, a) + 2, Math.PI / 2 + side * 0.5, 13, 2.6, side); }
+    { const e = low[low.length - 1]; tendril(e[0], e[1], 0.2, 18, 3.4, -1); }
+    x.restore();
+  });
+}
+// Bosnian pita from above: round copper pans of coiled pastry on a dark plank table: a big burek with one wedge
+// taken out to show the meat inside, pans of sirnica, krompiruša and zeljanica with wedges gone, a slice on a
+// plate, inside an embroidered border of red zigzags on cream.
+function bihPita(ctx, W, H) {
+  const C = { t0: '#1e130d', t1: '#3a2416', t2: '#4c301c', cu1: '#f2b884', cu2: '#c87a42', cu3: '#8a4a26', pa0: '#6e3a14', pa1: '#ad6626', pa2: '#dc9c46', pa3: '#f6d48c', meat: '#5c2618', cheese: '#f6efdc', spin: '#3f7432', potato: '#e8d27a', red: '#b4302a', cream: '#efe2c8' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(Math.floor(a), Math.floor(b), 1, 1); };
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const TAU = Math.PI * 2, wrap = (a) => ((a % TAU) + TAU) % TAU;
+    // the colour of coiled pita at polar (d, a) round the spiral's heart: the pastry tube winds outward S knots a
+    // turn, dark in the folds between turns, lit on the side facing the top left, flaked and browned in spots
+    const coil = (d, a, S, pale, px, py) => {
+      const v = (d - S * wrap(a) / TAU) / S, f = ((v % 1) + 1) % 1;
+      if (d < S * 0.55) return d < S * 0.3 ? C.pa1 : C.pa2;
+      if (f < 0.12 || f > 0.9) return C.pa0;
+      const lit = Math.cos(a + Math.PI * 0.75), b = 0.62 - Math.abs(f - 0.5) * 0.9 + (f - 0.5) * lit * 1.1 + (pale ? 0.12 : 0);
+      const n = ((px * 73856093) ^ (py * 19349663)) >>> 0, spot = (n % 23) / 23;
+      if (spot < 0.06) return pale ? C.pa2 : C.pa1;
+      return b > 0.7 ? C.pa3 : b > 0.38 ? C.pa2 : C.pa1;
+    };
+    // the cut face of a wedge: the coils in section, each a pastry ring round its filling
+    const face = (d, S, fill) => { const f = ((d / S) % 1 + 1) % 1; return f < 0.14 ? C.pa1 : f < 0.32 ? C.pa3 : fill; };
+    // a pan of pita: copper rim, the coil, cut lines from the middle, and missing wedges showing the pan
+    const pan = (cx, cy, rp, S, fill, pale, cuts, gone) => {
+      x.fillStyle = C.t0; x.beginPath(); x.arc(cx + 1.2, cy + 2, rp + 2.6, 0, TAU); x.fill();
+      for (let py = Math.floor(cy - rp - 3); py <= cy + rp + 3; py++) for (let px = Math.floor(cx - rp - 3); px <= cx + rp + 3; px++) {
+        const ex = px + 0.5 - cx, ey = py + 0.5 - cy, d = Math.hypot(ex, ey), a = Math.atan2(ey, ex);
+        if (d > rp + 2.6) continue;
+        const lit = Math.cos(a + Math.PI * 0.75);
+        if (d > rp + 1.2) { P(px, py, lit > 0.3 ? C.cu1 : lit > -0.4 ? C.cu2 : C.cu3); continue; }
+        if (d > rp) { P(px, py, lit > 0.3 ? C.cu3 : C.cu2); continue; }
+        const wa = wrap(a);
+        let col = coil(d, a, S, pale, px, py);
+        for (const [a0, a1] of gone) {
+          const inGap = a1 > a0 ? wa >= a0 && wa <= a1 : wa >= a0 || wa <= a1;
+          const e0 = Math.cos(a - a0) > 0 ? Math.abs(Math.sin(a - a0)) * d : 99, e1 = Math.cos(a - a1) > 0 ? Math.abs(Math.sin(a - a1)) * d : 99;
+          if (inGap) {
+            // the bare pan where the wedges were taken, a shadow cast along the cut on its lit side, crumbs
+            col = d > rp - 1.6 ? C.cu3 : C.cu2;
+            if (Math.min(e0, e1) < 1.6 && d > 1.5) col = C.cu3;
+            if ((px * 7 + py * 13) % 29 === 0 && d < rp - 2) col = C.pa2;
+          } else if (Math.min(e0, e1) < 1.5 && d > S * 0.5) {
+            // the cut edge: each coil of pastry sliced through, its filling showing inside
+            const f = (((d - S * wa / TAU) / S) % 1 + 1) % 1;
+            col = f > 0.3 && f < 0.75 ? fill : C.pa3;
+          }
+        }
+        for (const c of cuts) if (Math.cos(a - c) > 0 && Math.abs(Math.sin(a - c)) * d < 0.5 && d > S * 0.6 && col !== C.pa0 && col !== C.cu2 && col !== C.cu3) col = C.pa1;
+        P(px, py, col);
+      }
+    };
+    // a slice of pita lying on a plate: a wedge from its tip (tx, ty) out to its crust, pointing along ang and
+    // spanning `span`, the coils in arcs across it and the cut face showing the filling along one side
+    const slice = (tx, ty, rp, S, ang, span, fill) => {
+      for (let py = Math.floor(ty - rp - 2); py <= ty + rp + 2; py++) for (let px = Math.floor(tx - rp - 2); px <= tx + rp + 2; px++) {
+        const ex = px + 0.5 - tx, ey = py + 0.5 - ty, d = Math.hypot(ex, ey), da = Math.atan2(ey, ex) - ang, w = Math.atan2(Math.sin(da), Math.cos(da));
+        if (d > rp || Math.abs(w) > span / 2) continue;
+        const f = ((d / S) % 1 + 1) % 1, lit = -w;
+        let col = f < 0.14 || f > 0.9 ? C.pa0 : (0.6 - Math.abs(f - 0.5) + (f - 0.5) * 0.8) > 0.42 ? C.pa3 : f < 0.45 ? C.pa1 : C.pa2;
+        if ((span / 2 - w) * d < 3 && d > 2) col = face(d, S, fill);
+        if (d > rp - 1.2) col = C.pa1;
+        P(px, py, col);
+      }
+    };
+    // the border: an embroidered cloth edge, red zigzags and dots on cream between red lines
+    R(0, 0, cols, rows, C.t0);
+    R(1, 1, cols - 2, rows - 2, C.red);
+    R(2, 2, cols - 4, rows - 4, C.cream);
+    R(9, 9, cols - 18, rows - 18, C.red);
+    R(10, 10, cols - 20, rows - 20, C.t0);
+    for (const [len, at] of [[cols - 4, (s, o) => [2 + s, 2 + o]], [cols - 4, (s, o) => [2 + s, rows - 3 - o]], [rows - 4, (s, o) => [2 + o, 2 + s]], [rows - 4, (s, o) => [cols - 3 - o, 2 + s]]]) {
+      for (let s2 = 4; s2 < len - 4; s2++) {
+        const t = ((s2 - 4) % 6 + 6) % 6, z = t < 3 ? t : 6 - t;
+        P(...at(s2, 2 + z), C.red); P(...at(s2, 3 + z), C.red);
+        if (t === 0) P(...at(s2, 5.5), C.red);
+        if (t === 3) P(...at(s2, 1), C.red);
+      }
+    }
+    for (const [a, b] of [[2, 2], [cols - 9, 2], [2, rows - 9], [cols - 9, rows - 9]]) { R(a, b, 7, 7, C.cream); R(a + 1, b + 1, 5, 5, C.red); R(a + 2, b + 2, 3, 3, C.cream); P(a + 3, b + 3, C.red); }
+    // the table: dark planks with grain and a knot here and there
+    const fx = 11, fy = 11, fw = cols - 22, fh = rows - 22, tr = rng(12);
+    for (let j = fy; j < fy + fh; j++) {
+      const k = Math.floor((j - fy) / 11), jj = (j - fy) % 11;
+      for (let i = fx; i < fx + fw; i++) {
+        const g = Math.sin((i + k * 37) * 0.09 + Math.sin((i + k * 11) * 0.03) * 3 + jj * 0.7);
+        P(i, j, jj === 10 ? C.t0 : g > 0.82 ? C.t1 : (tr() < 0.03 ? C.t1 : C.t2));
+      }
+      if ((j - fy) % 11 === 10) for (let i = fx + (k * 41) % 50; i < fx + fw; i += 63) P(i, j - 1, C.t0);
+    }
+    // the pans and the plate
+    const cx = cols / 2, cy = rows / 2;
+    pan(cx, cy, 36, 5.6, C.meat, false, [], [[5.4, 6.25]]);
+    const sixths = [0, 1, 2, 3, 4, 5].map((k) => 0.3 + k * TAU / 6);
+    pan(fx + 22, fy + 22, 18.5, 4.4, C.cheese, true, [], []);
+    pan(fx + fw - 22, fy + 22, 18.5, 4.4, C.potato, false, sixths, [[sixths[3], sixths[4]]]);
+    pan(fx + fw - 22, fy + fh - 22, 18.5, 4.4, C.spin, false, sixths, [[sixths[0], sixths[2]]]);
+    // the plate: cream with a red rim, a slice of burek on it
+    const plx = fx + 22, ply = fy + fh - 22;
+    for (let py = ply - 22; py <= ply + 22; py++) for (let px = plx - 22; px <= plx + 22; px++) {
+      const d = Math.hypot(px + 0.5 - plx, py + 0.5 - ply), d2 = Math.hypot(px - 0.7 - plx, py - 1.5 - ply);
+      if (d <= 20) P(px, py, d > 17 && d < 18.2 ? C.red : C.cream); else if (d2 <= 20) P(px, py, C.t0);
+    }
+    slice(plx - 13, ply + 3, 27, 5.6, -0.12, 0.95, C.meat);
+  });
+}
+// The Old Bridge at Mostar: one high pale stone arch over the emerald Neretva, a stone tower at each end, stone
+// houses with grey slab roofs and green trees on the steep banks, limestone cliffs down to the water, mountains
+// behind, and a tiny diver dropping from the crown.
+function bihOldBridge(ctx, W, H) {
+  const u = H / 100, X = (v) => v * u, rnd = rng(77);
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.closePath(); ctx.fill(); };
+  const blob = (a, b, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(X(a), X(b), X(r), 0, Math.PI * 2); ctx.fill(); };
+  // sky and clouds
+  const sky = ctx.createLinearGradient(0, 0, 0, X(55)); sky.addColorStop(0, '#5a9cd6'); sky.addColorStop(1, '#d6eaf0');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  for (const [a, b, r] of [[20, 9, 3.2], [25, 8, 4.2], [30, 9.5, 3], [104, 7, 3], [110, 6, 4], [116, 7.5, 3.2], [140, 12, 2.6], [144, 11.5, 3.2]]) { ctx.fillStyle = '#f6f9fa'; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(r * 1.4), X(r * 0.8), 0, 0, Math.PI * 2); ctx.fill(); }
+  // the mountains behind: a long bare blue-grey ridge, then green foothills
+  poly([[0, 40], [0, 30], [14, 25], [30, 27], [48, 21], [64, 24], [80, 19], [98, 23], [116, 20], [134, 26], [150, 24], [158, 27], [158, 40]], '#8d9fb4');
+  poly([[48, 21], [64, 24], [80, 19], [76, 24], [62, 27], [52, 25]], '#a6b4c6');
+  poly([[0, 54], [0, 36], [20, 33], [40, 37], [58, 34], [79, 38], [100, 34], [122, 37], [142, 33], [158, 36], [158, 54]], '#6c8c64');
+  ctx.fillStyle = '#5a7c54'; for (let k = 0; k < 26; k++) blob(3 + k * 6.1, 38 + (k % 3) * 1.4, 1.8, '#5a7c54');
+  // a stone house: pale wall, small dark windows, a grey hipped roof of stone slabs
+  const house = (a, b, w, h, roofH, wall) => {
+    poly([[a - 1, b - h], [a + w * 0.22, b - h - roofH], [a + w * 0.78, b - h - roofH], [a + w + 1, b - h]], '#6e6c6a');
+    ctx.fillStyle = '#858380'; for (let k = 0; k < 3; k++) ctx.fillRect(X(a + w * 0.15), X(b - h - roofH * (0.3 + k * 0.3)), X(w * 0.7), X(0.5));
+    poly([[a, b - h], [a + w, b - h], [a + w, b], [a, b]], wall);
+    poly([[a + w - 1.2, b - h], [a + w, b - h], [a + w, b], [a + w - 1.2, b]], mixHex(wall, '#5a5048', 0.35));
+    // a row of windows with brown shutters under the eaves, a door below
+    const nw = Math.max(2, Math.round(w / 3.2));
+    for (let k = 0; k < nw; k++) { const wx = a + 0.8 + (k + 0.5) * (w - 2) / nw; ctx.fillStyle = '#6a4630'; ctx.fillRect(X(wx - 1), X(b - h + 1), X(2), X(1.8)); }
+    ctx.fillStyle = '#4a3428'; ctx.fillRect(X(a + w * 0.35), X(b - 2.4), X(1.8), X(2.4));
+  };
+  const trees = (list) => { for (const [a, b, r] of list) { blob(a + 0.6, b + 0.6, r, '#2f5a2a'); blob(a, b, r, '#4a8238'); blob(a - r * 0.3, b - r * 0.3, r * 0.5, '#6aa046'); } };
+  // the gorge upstream, seen through the arch: shaded rock walls and the river coming round the bend
+  poly([[40, 50], [60, 46], [79, 49], [98, 46], [118, 50], [118, 70], [40, 70]], '#6a8a5c');
+  poly([[44, 56], [62, 52], [72, 58], [70, 63], [44, 63]], '#a29e88');
+  poly([[114, 56], [96, 52], [86, 58], [88, 63], [114, 63]], '#94907c');
+  trees([[52, 50, 2.2], [60, 49, 2.4], [68, 51, 2], [92, 50, 2.2], [100, 49, 2.4], [107, 51, 2]]);
+  const far = ctx.createLinearGradient(0, X(59), 0, X(70)); far.addColorStop(0, '#4cb89c'); far.addColorStop(1, '#2a9a86');
+  ctx.fillStyle = far; ctx.beginPath(); ctx.moveTo(X(66), X(59)); ctx.lineTo(X(92), X(59)); ctx.lineTo(X(114), X(70)); ctx.lineTo(X(44), X(70)); ctx.fill();
+  // the river in front: emerald, deeper below
+  const sea = ctx.createLinearGradient(0, X(68), 0, H); sea.addColorStop(0, '#36b098'); sea.addColorStop(0.5, '#1f9282'); sea.addColorStop(1, '#126c64');
+  ctx.fillStyle = sea; ctx.fillRect(0, X(69), W, H - X(69));
+  // the banks: the old town on green slopes, then cliffs of grey limestone dropping to the water, with ledges of
+  // bushes; the left bank, then the right mirrored
+  const bank = (m) => {
+    const M = (pts) => pts.map(([a, ...r]) => [m ? 158 - a : a, ...r]);
+    poly(M([[0, 42], [16, 39], [32, 42], [44, 48], [50, 56], [50, 72], [0, 72]]), '#76984f');
+    for (const [a, b, w, h, rh, col] of [[0, 47, 12, 6, 4, '#ece4d2'], [14, 45.5, 11, 6, 4, '#f4eee0'], [-3, 56.5, 14, 7, 4.5, '#f4eee0'], [12, 55, 13, 6.5, 4.5, '#e6dcc8']]) house(m ? 158 - a - w : a, b, w, h, rh, col);
+    trees(M([[12.6, 46, 2.2], [26, 44, 2.6], [11.5, 57, 2.2], [26, 53, 2.4]]));
+    const cliff = M([[0, 57], [20, 56], [34, 54], [46, 55], [50, 62], [50, 72], [46, 74], [0, 74]]);
+    poly(cliff, '#b4a68c');
+    poly(M([[30, 57], [44, 56], [49, 63], [49, 72], [40, 72], [36, 63]]), '#958870');
+    ctx.fillStyle = '#d2c6ae'; for (const [a, b, l] of [[2, 61, 16], [8, 65.5, 20], [1, 69.5, 13], [20, 59, 12], [24, 67.5, 13]]) ctx.fillRect(X(m ? 158 - a - l : a), X(b), X(l), X(1));
+    ctx.fillStyle = '#857860'; for (const [a, b, l] of [[2, 62, 16], [8, 66.5, 20], [1, 70.5, 13], [20, 60, 12], [24, 68.5, 13]]) ctx.fillRect(X(m ? 158 - a - l : a), X(b), X(l), X(0.6));
+    trees(M([[5, 59.5, 1.8], [17, 64, 1.6], [31, 69, 1.6]]));
+  };
+  bank(false); bank(true);
+  // the towers at the ends of the bridge: stocky stone towers with low roofs of stone slabs
+  const tower = (a, top, w, base, round) => {
+    if (round) { const g = ctx.createLinearGradient(X(a), 0, X(a + w), 0); g.addColorStop(0, '#ddd0b4'); g.addColorStop(0.4, '#cbbc9e'); g.addColorStop(1, '#9c8c70'); ctx.fillStyle = g; ctx.fillRect(X(a), X(top), X(w), X(base - top)); }
+    else { poly([[a, top], [a + w * 0.68, top], [a + w * 0.68, base], [a, base]], '#d6c8ac'); poly([[a + w * 0.68, top], [a + w, top], [a + w, base], [a + w * 0.68, base]], '#9e8e72'); }
+    poly([[a - 1.2, top], [a + w * 0.25, top - 4], [a + w * 0.75, top - 4], [a + w + 1.2, top]], '#6a6662');
+    poly([[a + w * 0.5, top - 4], [a + w * 0.75, top - 4], [a + w + 1.2, top], [a + w * 0.5, top]], '#58544f');
+    ctx.fillStyle = '#3a3430'; ctx.fillRect(X(a + w * 0.36), X(top + 5), X(1.4), X(3.6));
+    ctx.fillStyle = '#b8ac94'; for (let k = 1; k < 5; k++) ctx.fillRect(X(a), X(top + k * (base - top) / 5), X(w), X(0.45));
+  };
+  tower(27, 35, 16, 58, true);
+  tower(115, 37, 15, 58, false);
+  // the bridge: a humped deck with low parapets over one pointed arch, a ring of lighter voussoirs round it, the
+  // shadowed underside of the vault just inside
+  const cx = 79, sp = 66, rise = 36, half = 30;
+  const intr = (xx) => { const q = Math.abs(xx - cx) / half; return q >= 1 ? sp : sp - rise * Math.pow(1 - Math.pow(q, 1.4), 0.6); };
+  const deck = (xx) => { const q = Math.min(1, Math.abs(xx - cx) / 39); return 52 - 25.5 * Math.pow(1 - Math.pow(q, 1.5), 0.85); };
+  const body = [];
+  for (let xx = 39; xx <= 119; xx += 0.5) body.push([xx, deck(xx)]);
+  body.push([119, 60], [109, 66], [109, 67]);
+  for (let xx = 109; xx >= 49; xx -= 0.5) body.push([xx, intr(xx)]);
+  body.push([49, 67], [49, 66], [39, 60]);
+  poly(body, '#d8ceb8');
+  // light on the left of the spandrels, a little shadow on the right
+  ctx.save(); ctx.beginPath(); body.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.closePath(); ctx.clip();
+  const lg = ctx.createLinearGradient(X(40), 0, X(118), 0); lg.addColorStop(0, 'rgba(255,250,236,.35)'); lg.addColorStop(0.5, 'rgba(255,250,236,0)'); lg.addColorStop(1, 'rgba(90,70,50,.18)');
+  ctx.fillStyle = lg; ctx.fillRect(0, 0, W, H);
+  // courses of stone in the spandrels
+  ctx.fillStyle = '#c2b69e'; for (let k = 0; k < 8; k++) ctx.fillRect(X(39), X(33 + k * 4), X(80), X(0.5));
+  ctx.restore();
+  // the voussoir ring
+  ctx.strokeStyle = '#ece4d2'; ctx.lineWidth = X(2.6); ctx.beginPath(); for (let xx = 49.5; xx <= 108.5; xx += 0.5) { const yy = intr(xx) - 1.4 * (1 - Math.abs(xx - cx) / half * 0.2); xx === 49.5 ? ctx.moveTo(X(xx), X(yy)) : ctx.lineTo(X(xx), X(yy)); } ctx.stroke();
+  ctx.strokeStyle = '#b6a88e'; ctx.lineWidth = X(0.5); ctx.beginPath(); for (let xx = 50; xx <= 108; xx += 0.5) { const yy = intr(xx) - 2.9; xx === 50 ? ctx.moveTo(X(xx), X(yy)) : ctx.lineTo(X(xx), X(yy)); } ctx.stroke();
+  // the underside of the vault, in shadow
+  ctx.strokeStyle = '#7e7464'; ctx.lineWidth = X(1.8); ctx.beginPath(); for (let xx = 50.5; xx <= 107.5; xx += 0.5) { const yy = intr(xx) + 0.8; xx === 50.5 ? ctx.moveTo(X(xx), X(yy)) : ctx.lineTo(X(xx), X(yy)); } ctx.stroke();
+  // the parapet: a pale coping along the deck with a shadow under it
+  ctx.strokeStyle = '#f2ecdc'; ctx.lineWidth = X(1.2); ctx.beginPath(); for (let xx = 39; xx <= 119; xx += 0.5) { const yy = deck(xx) + 0.5; xx === 39 ? ctx.moveTo(X(xx), X(yy)) : ctx.lineTo(X(xx), X(yy)); } ctx.stroke();
+  ctx.strokeStyle = '#a89a80'; ctx.lineWidth = X(0.6); ctx.beginPath(); for (let xx = 39; xx <= 119; xx += 0.5) { const yy = deck(xx) + 1.6; xx === 39 ? ctx.moveTo(X(xx), X(yy)) : ctx.lineTo(X(xx), X(yy)); } ctx.stroke();
+  // the abutments on the rock either side
+  poly([[39, 60], [49, 66], [49, 72], [36, 72], [36, 60]], '#c8bca4'); poly([[119, 60], [109, 66], [109, 72], [122, 72], [122, 60]], '#b8ac94');
+  // boulders along the water's edge
+  for (const [a, b, r, col] of [[4, 73, 3, '#d8d0bc'], [12, 74, 2.4, '#c2b8a2'], [26, 73.5, 3.2, '#d2c8b2'], [40, 73, 2.6, '#c8bea8'], [118, 73, 2.8, '#c8bea8'], [132, 74, 3, '#d8d0bc'], [146, 73.5, 2.6, '#c2b8a2'], [156, 74, 2.4, '#d2c8b2']]) { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(r * 1.5), X(r * 0.8), 0, Math.PI, 0); ctx.fill(); ctx.fillRect(X(a - r * 1.5), X(b), X(r * 3), X(0.8)); }
+  // the bridge mirrored in the river, broken into ripples
+  ctx.save(); ctx.beginPath(); ctx.rect(0, X(74.5), W, H); ctx.clip();
+  for (let k = 0; k < 9; k++) {
+    const yy = 76 + k * 2.6, back = 66 - (yy - 74) * 0.95;
+    if (back < 31) break;
+    const q = Math.pow(1 - Math.pow((sp - back) / rise, 1 / 0.6), 1 / 1.4), xL = cx - q * half, xR = cx + q * half;
+    ctx.fillStyle = 'rgba(214,236,222,.4)'; ctx.fillRect(X(xL - 9 + (k % 2) * 1.5), X(yy), X(9), X(1.2)); ctx.fillRect(X(xR - (k % 2) * 1.5), X(yy), X(9), X(1.2));
+  }
+  ctx.restore();
+  ctx.fillStyle = '#7fd0bc'; for (let k = 0; k < 26; k++) ctx.fillRect(X(((k * 37) % 150) + 4), X(78 + ((k * 13) % 20)), X(4 + (k % 3) * 2), X(0.7));
+  ctx.fillStyle = '#e8f6f0'; ctx.beginPath(); ctx.ellipse(X(80.5), X(80), X(3), X(0.8), 0, 0, Math.PI * 2); ctx.fill();
+  // the diver, arms spread, halfway down from the crown
+  // the diver, seen from the side, plunging head first with arms stretched out ahead
+  ctx.save(); ctx.translate(X(80), X(45)); ctx.rotate(Math.PI * 0.62);
+  ctx.fillStyle = '#f0c49c'; ctx.lineCap = 'round';
+  ctx.strokeStyle = '#f0c49c'; ctx.lineWidth = X(1.9); ctx.beginPath(); ctx.moveTo(X(-5.5), 0); ctx.lineTo(X(3), 0); ctx.stroke();
+  ctx.lineWidth = X(1.2); ctx.beginPath(); ctx.moveTo(X(3), X(-0.3)); ctx.lineTo(X(8), X(-0.6)); ctx.stroke();
+  ctx.beginPath(); ctx.arc(X(4.2), X(0.9), X(1.2), 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#d23a2a'; ctx.fillRect(X(-2.6), X(-1.1), X(2), X(2.2));
+  ctx.restore();
+}
+// Baščaršija, Sarajevo's old bazaar: a row of low wooden shops with their shutters folded up and down, copper
+// pots and trays on the counters and hanging inside, the wooden kiosk fountain on its stone step in the square,
+// pigeons on the cobbles and in the air, and green hills dotted with red roofs behind.
+function bihBascarsija(ctx, W, H) {
+  const u = H / 100, X = (v) => v * u, rnd = rng(23);
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.closePath(); ctx.fill(); };
+  const rect = (a, b, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(X(a), X(b), X(w), X(h)); };
+  const disc = (a, b, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(X(a), X(b), X(r), 0, Math.PI * 2); ctx.fill(); };
+  // sky and the green hills round the valley, little houses with red roofs scattered up them
+  const sky = ctx.createLinearGradient(0, 0, 0, X(30)); sky.addColorStop(0, '#5e9ed8'); sky.addColorStop(1, '#d4e8f0');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  for (const [a, b, r] of [[30, 6, 3], [35, 5, 4], [40, 6.5, 3], [118, 7, 2.6], [123, 6, 3.4]]) { ctx.fillStyle = '#f6f9fa'; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(r * 1.4), X(r * 0.8), 0, 0, Math.PI * 2); ctx.fill(); }
+  const hill = (pts, col) => poly([...pts, [158, 60], [0, 60]], col);
+  hill([[0, 18], [20, 13], [44, 16], [70, 11], [96, 15], [120, 10], [140, 14], [158, 12]], '#86a66c');
+  hill([[0, 25], [24, 21], [50, 24], [78, 20], [104, 23], [130, 19], [158, 22]], '#689456');
+  const hut = (a, b, s) => { rect(a, b, 4 * s, 2.6 * s, '#f2ece0'); poly([[a - 0.6, b], [a + 2 * s, b - 2 * s], [a + 4 * s + 0.6, b]], '#b4483a'); rect(a + 1.4 * s, b + 0.8 * s, 1.2 * s, 1.2 * s, '#6a5040'); };
+  for (const [a, b, s] of [[8, 20, 1.3], [34, 21, 1.3], [60, 17, 1.2], [96, 19, 1.3], [128, 18, 1.2], [20, 27, 1.4], [74, 26, 1.4], [110, 26, 1.4], [146, 24, 1.3]]) hut(a, b, s);
+  for (const [a, b] of [[30, 21], [64, 26], [80, 16], [118, 22], [152, 25], [4, 31], [122, 30]]) { disc(a, b, 1.8, '#3f6e3a'); disc(a - 0.5, b - 0.5, 0.9, '#5a8e4a'); }
+  // the row of shops: plastered fronts under wide tiled roofs; the shutters open, the top flap propped out as an
+  // awning, the bottom one let down as a counter laden with copper
+  const ground = 69;
+  const shops = [[-4, 30], [26, 28], [54, 32], [86, 28], [114, 26], [140, 26]];
+  shops.forEach(([a, w], k) => {
+    const roof = k % 2 ? '#9a4a34' : '#844030', wall = ['#efe4cc', '#e8dabc', '#f2eadb'][k % 3], rt = 30 + (k % 2) * 2, et = 42;
+    rect(a, et, w, ground - et, wall);
+    rect(a, et, 1.2, ground - et, '#5a3e2c'); rect(a + w - 1.2, et, 1.2, ground - et, '#5a3e2c');
+    // the opening, dark inside, copper trays hanging on the back wall and pots on a shelf
+    const door = k % 2 === 0, ox = a + (door ? 9 : 5), ow = w - (door ? 14 : 10), oy = et + 8, oh = 12;
+    if (door) { rect(a + 2.5, et + 6, 5, ground - et - 6, '#6a4630'); rect(a + 3.2, et + 7, 3.6, ground - et - 7, '#54361f'); disc(a + 6, et + 16, 0.5, '#d8a840'); }
+    rect(ox, oy, ow, oh, '#2e2018');
+    for (let i = 0; i < Math.floor(ow / 5.5); i++) { const cx = ox + 3 + i * 5.5; disc(cx, oy + 3.6, 2.5, (i + k) % 2 ? '#d8874c' : '#b8662e'); disc(cx - 0.7, oy + 2.9, 0.9, '#f2c08c'); }
+    rect(ox, oy + 9, ow, 0.8, '#5a3e2c');
+    for (let i = 0; i < Math.floor(ow / 4); i++) { const cx = ox + 2 + i * 4; poly([[cx - 1.3, oy + 9], [cx + 1.3, oy + 9], [cx + 0.9, oy + 6.4], [cx - 0.9, oy + 6.4]], (i + k) % 2 ? '#c8783e' : '#e8a060'); }
+    // the propped-up top flap: planks seen from below
+    poly([[ox - 1, oy], [ox + ow + 1, oy], [ox + ow + 3, oy - 4], [ox - 3, oy - 4]], '#8a5e3a');
+    ctx.fillStyle = '#6a4428'; for (let i = 1; i < 4; i++) ctx.fillRect(X(ox - 3 + i * (ow + 6) / 4), X(oy - 4), X(0.5), X(4));
+    // the let-down counter, laden with copper: pots, trays standing on edge, coffee sets
+    const cy0 = oy + oh;
+    poly([[ox - 1, cy0], [ox + ow + 1, cy0], [ox + ow + 3, cy0 + 2.6], [ox - 3, cy0 + 2.6]], '#9a6a40');
+    rect(ox - 3, cy0 + 2.6, ow + 6, 1, '#4a3022');
+    ctx.fillStyle = '#7a5234'; for (let i = 0; i < 3; i++) ctx.fillRect(X(a + 1.2), X(cy0 + 4.2 + i * 1.6), X(w - 2.4), X(0.5));
+    for (let i = 0; i < Math.floor((ow + 2) / 4.4); i++) {
+      const cx = ox + 1.6 + i * 4.4, t = (i + k) % 3;
+      if (t === 0) { poly([[cx - 1.6, cy0], [cx + 1.6, cy0], [cx + 1.1, cy0 - 3.4], [cx + 1.6, cy0 - 4], [cx - 1.6, cy0 - 4], [cx - 1.1, cy0 - 3.4]], '#d8874c'); rect(cx + 1.6, cy0 - 3.6, 2.2, 0.7, '#a65a2e'); }
+      else if (t === 1) { disc(cx, cy0 - 2.3, 2.3, '#e8a060'); disc(cx, cy0 - 2.3, 1.1, '#b8662e'); }
+      else { rect(cx - 1.4, cy0 - 2.4, 2.8, 2.4, '#c8783e'); rect(cx - 1.2, cy0 - 3.2, 2.4, 0.8, '#f4f0e6'); }
+    }
+    // the roof: a hipped roof of red tiles with wide eaves
+    poly([[a - 2.5, et + 1], [a + 5, rt], [a + w - 5, rt], [a + w + 2.5, et + 1]], roof);
+    poly([[a + w - 5, rt], [a + w + 2.5, et + 1], [a + w - 3, et + 1]], mixHex(roof, '#2a1810', 0.25));
+    ctx.fillStyle = mixHex(roof, '#2a1810', 0.4); for (let r = 1; r < 4; r++) { const y = rt + r * (et + 1 - rt) / 4, sh = (r / 4) * 7.5; ctx.fillRect(X(a + 5 - sh), X(y), X(w - 10 + sh * 2), X(0.6)); }
+    rect(a - 2.5, et + 1, w + 5, 1.2, '#3a2418');
+  });
+  // the square: cobbles in rows that open out towards us
+  const sq = ctx.createLinearGradient(0, X(ground), 0, H); sq.addColorStop(0, '#aea594'); sq.addColorStop(1, '#cbc2b0');
+  ctx.fillStyle = sq; ctx.fillRect(0, X(ground), W, H - X(ground));
+  ctx.fillStyle = '#968c7c';
+  for (let r = 0; r < 11; r++) { const y = ground + 2 + r * 3 + r * r * 0.06, w = 3 + r * 0.35; for (let k = -1; k < 160 / (w + 1); k++) ctx.fillRect(X(k * (w + 1) + (r % 2) * (w / 2)), X(y), X(w), X(0.6)); }
+  // the kiosk fountain: an octagonal wooden pavilion on stone steps, lattice windows, wide eaves, a low green roof
+  const kx = 112, kb = 94, kw = 28, bodyTop = 57;
+  ctx.fillStyle = 'rgba(60,50,40,.25)'; ctx.beginPath(); ctx.ellipse(X(kx + 6), X(kb + 1), X(kw * 0.9), X(3), 0, 0, Math.PI * 2); ctx.fill();
+  poly([[kx - kw / 2 - 8, kb], [kx + kw / 2 + 8, kb], [kx + kw / 2 + 5, kb - 3], [kx - kw / 2 - 5, kb - 3]], '#e6dfd2');
+  rect(kx - kw / 2 - 8, kb, kw + 16, 1.4, '#8a8274');
+  poly([[kx - kw / 2 - 4, kb - 3], [kx + kw / 2 + 4, kb - 3], [kx + kw / 2 + 2, kb - 6], [kx - kw / 2 - 2, kb - 6]], '#d2cabc');
+  poly([[kx - kw / 2, kb - 6], [kx + kw / 2, kb - 6], [kx + kw / 2, bodyTop], [kx - kw / 2, bodyTop]], '#74502e');
+  rect(kx - kw / 2, bodyTop, kw * 0.22, kb - 6 - bodyTop, '#5e3e24'); rect(kx + kw * 0.28, bodyTop, kw * 0.22, kb - 6 - bodyTop, '#4a301c');
+  for (const [a, w2] of [[kx - kw / 2 + 1, kw * 0.22 - 2], [kx - kw * 0.28 + 1, kw * 0.56 - 2], [kx + kw * 0.28 + 1, kw * 0.22 - 2]]) {
+    rect(a, bodyTop + 3, w2, 15, '#2a1c14');
+    ctx.fillStyle = '#c8b48a'; const nb = Math.max(1, Math.round(w2 / 4));
+    for (let i = 0; i <= nb; i++) ctx.fillRect(X(a + i * w2 / nb - 0.5), X(bodyTop + 3), X(1), X(15));
+    for (let j = 0; j <= 3; j++) ctx.fillRect(X(a), X(bodyTop + 3 + j * 4.8), X(w2), X(1));
+  }
+  rect(kx - kw / 2, bodyTop + 20, kw, 1, '#3e2818');
+  // the stone basin and its spout at the front
+  rect(kx - 7, kb - 13, 14, 7, '#d8d0c0'); rect(kx - 7, kb - 13, 14, 1.2, '#f0eadc'); rect(kx - 1, kb - 17, 2, 4, '#d8a840'); rect(kx - 1, kb - 13.6, 2, 0.8, '#9ad0e0');
+  // eaves and roof
+  poly([[kx - kw / 2 - 7, bodyTop + 1], [kx + kw / 2 + 7, bodyTop + 1], [kx + kw / 2 + 3, bodyTop - 3], [kx - kw / 2 - 3, bodyTop - 3]], '#3e2a1c');
+  rect(kx - kw / 2 - 7, bodyTop + 1, kw + 14, 1.2, '#2a1c12');
+  poly([[kx - kw / 2 - 3, bodyTop - 3], [kx + kw / 2 + 3, bodyTop - 3], [kx + 5, bodyTop - 12], [kx - 5, bodyTop - 12]], '#5a8a70');
+  poly([[kx + 1, bodyTop - 3], [kx + kw / 2 + 3, bodyTop - 3], [kx + 5, bodyTop - 12], [kx + 1, bodyTop - 12]], '#46705a');
+  ctx.fillStyle = '#3c6450'; for (let r = 1; r < 3; r++) { const y = bodyTop - 3 - r * 3, sh = r * 5.5; ctx.fillRect(X(kx - kw / 2 - 3 + sh), X(y), X(kw + 6 - sh * 2), X(0.6)); }
+  rect(kx - 5, bodyTop - 13, 10, 1.2, '#46705a');
+  disc(kx, bodyTop - 14.2, 1.6, '#c89a40');
+  // pigeons: on the cobbles, at the fountain, and a few in flight
+  const pigeon = (a, b, s, f) => {
+    ctx.fillStyle = '#7e8494'; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(2 * s), X(1.2 * s), 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#5a6070'; ctx.beginPath(); ctx.arc(X(a + f * 1.9 * s), X(b - 1 * s), X(0.9 * s), 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#a8aebc'; ctx.beginPath(); ctx.ellipse(X(a - f * 0.4 * s), X(b - 0.3 * s), X(1.2 * s), X(0.6 * s), 0, 0, Math.PI * 2); ctx.fill();
+    rect(a - f * 2.6 * s - 0.6, b - 0.3 * s, 1.2 * s, 0.7 * s, '#4e5462');
+  };
+  for (const [a, b, f] of [[18, 84, 1], [27, 89, -1], [36, 81, 1], [46, 92, 1], [54, 86, -1], [66, 95, 1], [74, 88, -1], [84, 93, 1], [10, 95, -1], [146, 96, 1], [150, 87, -1], [62, 79, 1]]) pigeon(a, b, 1.6, f);
+  const flying = (a, b, s) => { ctx.strokeStyle = '#5e6474'; ctx.lineWidth = X(1.1 * s); ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); ctx.moveTo(X(a - 3 * s), X(b - 1.4 * s)); ctx.quadraticCurveTo(X(a - 1.2 * s), X(b - 1.6 * s), X(a), X(b)); ctx.quadraticCurveTo(X(a + 1.2 * s), X(b - 1.6 * s), X(a + 3 * s), X(b - 1.4 * s)); ctx.stroke(); };
+  for (const [a, b] of [[66, 8], [76, 5], [84, 10]]) flying(a, b, 2);
+}
+// The watermills on the Pliva lakes: little wooden mill huts with steep shingle roofs standing on stilts across the
+// water in two rows, small white cascades tumbling between them, the calm lake behind mirroring wooded hills.
+function bihWatermills(ctx, W, H) {
+  const u = H / 100, X = (v) => v * u, rnd = rng(61);
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.closePath(); ctx.fill(); };
+  const rect = (a, b, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(X(a), X(b), X(w), X(h)); };
+  const disc = (a, b, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(X(a), X(b), X(r), 0, Math.PI * 2); ctx.fill(); };
+  // sky
+  const sky = ctx.createLinearGradient(0, 0, 0, X(26)); sky.addColorStop(0, '#6aa8d8'); sky.addColorStop(1, '#dcecef');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  for (const [a, b, r] of [[22, 7, 3], [27, 6, 4], [32, 7.5, 2.8], [128, 9, 2.6], [133, 8, 3.4]]) { ctx.fillStyle = '#f6f9fa'; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(r * 1.4), X(r * 0.8), 0, 0, Math.PI * 2); ctx.fill(); }
+  // wooded hills: a far blue-green ridge, then forest down to the lake, firs among round crowns
+  poly([[0, 30], [0, 18], [22, 13], [44, 17], [70, 11], [96, 16], [122, 12], [146, 17], [158, 15], [158, 30]], '#7c9c86');
+  poly([[0, 44], [0, 24], [18, 21], [40, 25], [62, 20], [86, 24], [110, 19], [134, 23], [158, 21], [158, 44]], '#3f6e3e');
+  for (let k = 0; k < 60; k++) {
+    const a = rnd() * 158, b = 24 + rnd() * 17;
+    if (k % 3 === 0) poly([[a - 2, b + 3], [a, b - 3.5], [a + 2, b + 3]], '#2c5230');
+    else { disc(a, b, 2.2, k % 2 ? '#4a7c40' : '#35633a'); disc(a - 0.6, b - 0.6, 1, '#5e9050'); }
+  }
+  // the lake: calm, the forest mirrored in it, a pale line along the far shore
+  const lake = ctx.createLinearGradient(0, X(41), 0, X(66)); lake.addColorStop(0, '#2e5a4a'); lake.addColorStop(1, '#3a7468');
+  ctx.fillStyle = lake; ctx.fillRect(0, X(41), W, X(30));
+  rect(0, 41, 158, 0.8, '#a8c8b8');
+  ctx.fillStyle = 'rgba(30,60,40,.45)'; for (let k = 0; k < 20; k++) ctx.fillRect(X((k * 37) % 150), X(43 + (k % 6) * 2.2), X(6 + (k % 4) * 2), X(1));
+  ctx.fillStyle = '#9cc8bc'; for (let k = 0; k < 14; k++) ctx.fillRect(X((k * 53) % 150 + 3), X(45 + (k % 6) * 2), X(4), X(0.5));
+  // the weir: a line of mills running back from the near left to the far right; in front of it the water has
+  // dropped into a lighter, foaming pool
+  const mills = [[25, 88, 1.45], [57, 77, 1.12], [83, 69, 0.9], [105, 63, 0.74], [123, 58.5, 0.62], [139, 55, 0.53], [153, 52.5, 0.46]];
+  const weirY = (xx) => { for (let k = 0; k < mills.length - 1; k++) { const [a, b] = mills[k], [c, d] = mills[k + 1]; if (xx <= c) return b + (d - b) * Math.max(0, (xx - a) / (c - a)); } return mills[mills.length - 1][1]; };
+  const lower = [];
+  for (let xx = 0; xx <= 158; xx += 1) lower.push([xx, weirY(xx) + 1]);
+  const pool = ctx.createLinearGradient(0, X(52), 0, H); pool.addColorStop(0, '#4cae98'); pool.addColorStop(0.5, '#33998a'); pool.addColorStop(1, '#1e7468');
+  ctx.fillStyle = pool; ctx.beginPath(); ctx.moveTo(0, H); lower.forEach(([a, b]) => ctx.lineTo(X(a), X(b))); ctx.lineTo(W, H); ctx.fill();
+  // the far bank on the right with trees, the near bank on the left with grass and a willow
+  poly([[118, 41], [158, 41], [158, 52], [146, 50], [132, 47], [122, 44]], '#4a7a44');
+  for (const [a, b, r] of [[128, 42, 3], [138, 41, 3.6], [150, 42, 3.2], [156, 46, 2.6]]) { disc(a, b, r, '#35633a'); disc(a - r * 0.3, b - r * 0.3, r * 0.5, '#4f8a48'); }
+  poly([[0, 70], [8, 72], [14, 78], [12, 90], [6, 100], [0, 100]], '#5a8c46');
+  poly([[0, 78], [6, 80], [9, 88], [4, 100], [0, 100]], '#4a7a3c');
+  // the willow on the left bank: a trunk and hanging curtains of leaves
+  rect(4, 50, 2.6, 26, '#4a3424'); rect(4, 50, 1, 26, '#6a4c34');
+  disc(5, 44, 8, '#58883c'); disc(9, 41, 5.5, '#6a9a44'); disc(0, 42, 5.5, '#4e7e36'); disc(6, 39, 4.5, '#7aaa50');
+  for (let k = 0; k < 11; k++) { const a = -5 + k * 2.1, len = 12 + ((k * 5) % 4) * 3, top = 42 + Math.abs(k - 5) * 0.8; ctx.fillStyle = k % 2 ? '#6a9a44' : '#4e7e36'; roundRect(ctx, X(a), X(top), X(1.9), X(len), X(0.9)); ctx.fill(); }
+  // reeds and a grassy corner at the bottom right
+  poly([[124, 100], [132, 94], [146, 92], [158, 90], [158, 100]], '#5a8c46');
+  ctx.fillStyle = '#3f6e34'; for (let k = 0; k < 9; k++) { const a = 130 + k * 3.2, h = 6 + (k % 3) * 2.5; ctx.fillRect(X(a), X(93 - h + (k % 2)), X(0.9), X(h)); }
+  ctx.fillStyle = '#6a4a2e'; for (const a of [133.5, 142, 150.5]) ctx.fillRect(X(a - 0.4), X(84), X(1.6), X(3.4));
+  // a mill hut seen a little from the side: a planked gable end towards us, the side wall going back, a steep
+  // shingled roof, all on a plank platform on stilts, the race of water shooting out beneath it
+  const hut = (cx, base, s, k) => {
+    const S = (v) => v * s, wall = ['#86603a', '#7a5434', '#8e683e'][k % 3], side = mixHex(wall, '#1a100a', 0.35), roof = ['#4a3a30', '#3e3028', '#54423a'][k % 3];
+    const fw = S(9), sw = S(6), wh = S(8), rh = S(9), pl = base - S(3.5), x0 = cx - fw / 2, top = pl - wh;
+    // the cascade: water spilling over the weir beside and under the hut, and the race shooting out
+    poly([[x0 - S(7), base - S(2)], [x0 + S(21), base - S(4)], [x0 + S(21), base + S(1.5)], [x0 - S(7), base + S(3.5)]], '#e6f2f0');
+    ctx.fillStyle = '#a8d4cc'; for (let q = 0; q < 9; q++) ctx.fillRect(X(x0 - S(6) + q * S(3.1)), X(base - S(1.6) - q * S(0.22)), X(Math.max(0.4, S(0.5))), X(S(3.6)));
+    for (let q = 0; q < 8; q++) disc(x0 - S(6) + q * S(3.6), base + S(3.3) - q * S(0.25), S(1.5), '#f6fbfb');
+    // stilts and platform
+    for (const dx of [0.5, 4.5, 8.5, 13]) rect(x0 + S(dx), pl, S(1), S(4), '#3a2618');
+    poly([[x0 - S(0.8), pl], [x0 + fw + S(0.4), pl], [x0 + fw + sw + S(0.4), pl - S(2)], [x0 + sw - S(0.8), pl - S(2)]], '#6a4a30');
+    rect(x0 - S(0.8), pl, fw + S(1.2), S(1), '#4a3220');
+    // the side wall, going back to the right
+    poly([[x0 + fw, pl], [x0 + fw + sw, pl - S(2)], [x0 + fw + sw, top - S(2)], [x0 + fw, top]], side);
+    // the gable end, planked, with a door
+    rect(x0, top, fw, wh, wall);
+    ctx.fillStyle = mixHex(wall, '#1a100a', 0.25); for (let q = 1; q < 4; q++) ctx.fillRect(X(x0 + q * fw / 4), X(top), X(Math.max(0.35, S(0.4))), X(wh));
+    rect(x0 + fw * 0.34, top + wh * 0.3, fw * 0.32, wh * 0.7, '#2a1a10');
+    poly([[x0 - S(0.3), top + S(0.3)], [x0 + fw / 2, top - rh * 0.88], [x0 + fw + S(0.3), top + S(0.3)]], wall);
+    // the roof: the side slope going back, steep, its shingles in rows; the eave over the gable
+    poly([[x0 + fw / 2, top - rh], [x0 + fw + S(1.4), top + S(0.8)], [x0 + fw + sw + S(1.4), top - S(1.2)], [x0 + fw / 2 + sw, top - rh - S(2)]], roof);
+    ctx.fillStyle = mixHex(roof, '#d8c0a0', 0.22); for (let r = 1; r < 4; r++) { const f = r / 4; ctx.beginPath(); ctx.moveTo(X(x0 + fw / 2 + (fw / 2 + S(1.4)) * f), X(top - rh + (rh + S(0.8)) * f)); ctx.lineTo(X(x0 + fw / 2 + sw + (fw / 2 + S(1.4)) * f), X(top - rh - S(2) + (rh + S(0.8)) * f)); ctx.lineWidth = X(Math.max(0.4, S(0.5))); ctx.strokeStyle = ctx.fillStyle; ctx.stroke(); }
+    ctx.strokeStyle = mixHex(roof, '#120a06', 0.35); ctx.lineWidth = X(S(1.4)); ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(X(x0 - S(1.4)), X(top + S(0.9))); ctx.lineTo(X(x0 + fw / 2), X(top - rh)); ctx.lineTo(X(x0 + fw + S(1.4)), X(top + S(0.9))); ctx.stroke();
+  };
+  for (let k = mills.length - 1; k >= 0; k--) hut(mills[k][0], mills[k][1], mills[k][2], k);
+  // foam and ripples in the pool, the huts mirrored dark in it
+  ctx.fillStyle = 'rgba(40,30,20,.28)'; mills.forEach(([a, b, s2]) => { for (let k = 0; k < 4; k++) ctx.fillRect(X(a - 5 * s2 + (k % 2)), X(b + 6 * s2 + k * 2.2 * s2), X((10 - k) * s2), X(1)); });
+  ctx.fillStyle = '#d8eeea'; for (let k = 0; k < 26; k++) { const a = (k * 37) % 150 + 4, b = weirY(a) + 7 + ((k * 7) % 14); if (b < 99) ctx.fillRect(X(a), X(b), X(3 + (k % 3) * 2), X(0.6)); }
+}
+// Ćevapi: a puffy somun split open like a pocket and seen at a slight angle, its top half lifted to show the soft
+// inside, little browned ćevapi lying in it and a few spilling out onto the olive-wood board, chopped white onion over
+// them and a spoon of kajmak; a bowl of ajvar, a green pepper and a glass of yogurt drink on the red kafana cloth.
+function bihCevapi(ctx, W, H) {
+  const u = H / 100, X = (v) => v * u, R = rng(19);
+  const disc = (a, b, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(X(a), X(b), X(r), 0, Math.PI * 2); ctx.fill(); };
+  const ell = (a, b, rx, ry, col, rot = 0) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(rx), X(ry), rot, 0, Math.PI * 2); ctx.fill(); };
+  const shadow = (a, b, rx, ry) => ell(a + 1.4, b + 2, rx, ry, 'rgba(50,10,10,.3)');
+  // the cloth: deep red with darker woven stripes
+  ctx.fillStyle = '#a8302a'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#8c2622'; for (let k = 0; k * 9 < 160; k++) { ctx.fillRect(X(k * 9 + 3), 0, X(1.4), H); } for (let k = 0; k * 9 < 100; k++) ctx.fillRect(0, X(k * 9 + 3), W, X(1.4));
+  ctx.fillStyle = '#c4483a'; for (let k = 0; k * 9 < 160; k++) for (let j = 0; j * 9 < 100; j++) ctx.fillRect(X(k * 9 + 7), X(j * 9 + 7), X(1), X(1));
+  // the board: pale wood with grain, a handle on the right with a hole
+  shadow(58, 51, 56, 45);
+  ctx.fillStyle = '#5e4a36'; roundRect(ctx, X(4), X(6), X(108), X(90), X(9)); ctx.fill(); roundRect(ctx, X(108), X(42), X(18), X(18), X(6)); ctx.fill();
+  ctx.fillStyle = '#a8916c'; roundRect(ctx, X(5), X(6.5), X(106), X(87.5), X(8.5)); ctx.fill(); roundRect(ctx, X(108), X(43), X(17), X(15.5), X(5.5)); ctx.fill();
+  ctx.strokeStyle = '#947c5a'; ctx.lineWidth = X(0.8);
+  for (let k = 0; k < 9; k++) { ctx.beginPath(); const y0 = 12 + k * 9.5; ctx.moveTo(X(8), X(y0)); ctx.bezierCurveTo(X(40), X(y0 - 2 + (k % 3)), X(70), X(y0 + 2), X(108), X(y0 + (k % 2) * 1.5)); ctx.stroke(); }
+  ctx.strokeStyle = '#baa47e'; ctx.lineWidth = X(0.6);
+  for (let k = 0; k < 9; k++) { ctx.beginPath(); const y0 = 16 + k * 9.5; ctx.moveTo(X(10), X(y0)); ctx.bezierCurveTo(X(36), X(y0 + 1), X(74), X(y0 - 2 + (k % 2)), X(106), X(y0)); ctx.stroke(); }
+  disc(119, 50.5, 2.4, '#a8302a');
+  // a ćevap: a short plump roll of grilled meat, rounded at both ends, dark where it is seared, lit along one side
+  const cevap = (a, b, len, w, ang) => {
+    ctx.save(); ctx.translate(X(a), X(b)); ctx.rotate(ang);
+    const cap = (dx, dy, l, ww, col) => { ctx.fillStyle = col; roundRect(ctx, X(-ww / 2 + dx), X(-l / 2 + dy), X(ww), X(l), X(ww / 2)); ctx.fill(); };
+    cap(0.7, 1.1, len + 0.6, w + 0.6, 'rgba(60,20,8,.45)');
+    cap(0, 0, len + 1.2, w + 1.2, '#3a1608');
+    cap(0, 0, len, w, '#7e3c1c');
+    cap(-w * 0.12, -0.2, len - 1.2, w * 0.62, '#a85a2c');
+    cap(-w * 0.22, -len * 0.06, len * 0.6, w * 0.24, '#d8975a');
+    ctx.fillStyle = '#3e1a0a'; for (const [dx, dy] of [[0.15, 0.25], [-0.1, -0.2], [0.2, -0.05]]) { ctx.beginPath(); ctx.arc(X(dx * w), X(dy * len), X(0.6), 0, Math.PI * 2); ctx.fill(); }
+    ctx.restore();
+  };
+  // the somun: a round puffy flatbread cut open along one side. Its top half is lifted at the back: we see the
+  // golden crust over the top and the pale crumb of its underside; the bottom half lies in front, its crumb
+  // holding the ćevapi, its thick crust rim along the front.
+  const cx = 56;
+  shadow(cx, 60, 41, 22);
+  ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, X(50)); ctx.clip();
+  ell(cx, 49, 40, 33, '#9a5222');                        // the crust of the lifted half, dark at its edge
+  ell(cx, 49, 38.6, 31.6, '#c4783a');
+  ell(cx - 3, 46, 33, 26, '#d8954c');                    // lit where it bulges
+  ell(cx - 8, 40, 18, 12, '#e6ae64');
+  ctx.fillStyle = '#f2dcb0'; for (let k = 0; k < 22; k++) { const t = R() * Math.PI, r = 0.55 + R() * 0.38; ctx.fillRect(X(cx - Math.cos(t) * 38 * r - 0.6), X(49 - Math.sin(t) * 31 * r - 0.5), X(1.3), X(1.1)); }
+  ell(cx, 51, 34.5, 17, '#e2c08a');                      // its underside: the crumb, shadowed deep inside the pocket
+  ell(cx, 52.5, 31, 13.5, '#ecd2a0');
+  ell(cx, 55, 26, 8, '#d6b07a');
+  ctx.restore();
+  // the bottom half: its crust side, then the top of its crumb
+  ell(cx, 63, 40.5, 18, '#9a5222');
+  ell(cx, 61.5, 40, 16.5, '#c27a3a');
+  ell(cx, 57, 37, 12.5, '#f0d8aa');
+  ell(cx, 52.5, 31, 5.5, '#c8a06a');                     // the deep fold at the back of the pocket
+  ell(cx, 51.5, 28, 3.6, '#a87e4c');
+  // the ćevapi in the pocket: back row first, then the front row, leaning this way and that
+  const back = [], front = [];
+  for (let k = 0; k < 4; k++) back.push([cx - 18 + k * 12 + (R() - 0.5) * 1.5, 52.5 + (R() - 0.5) * 1.2, 15 + R() * 1.5, 6.6, (k - 1.5) * 0.14 + (R() - 0.5) * 0.3]);
+  for (let k = 0; k < 3; k++) front.push([cx - 13 + k * 13 + (R() - 0.5) * 1.5, 59.5 + (R() - 0.5) * 1.5, 15 + R() * 1.5, 6.8, (k - 1) * 0.2 + (R() - 0.5) * 0.3]);
+  for (const c of back) cevap(...c);
+  for (const c of front) cevap(...c);
+  // the front rim of the bottom half, puffy and golden, hiding the near ends of the ćevapi a little
+  ctx.save(); ctx.beginPath(); ctx.ellipse(X(cx), X(61.5), X(40), X(16.5), 0, 0, Math.PI * 2); ctx.ellipse(X(cx), X(56.5), X(37.5), X(12), 0, 0, Math.PI * 2); ctx.clip('evenodd');
+  ctx.fillStyle = '#c27a3a'; ctx.fillRect(0, X(58), W, H);
+  ell(cx - 6, 72, 26, 4, '#d8954c'); ell(cx - 10, 71, 12, 2, '#e6ae64');
+  ctx.restore();
+  // a few spilled out onto the board in front
+  cevap(30, 83, 14.5, 6, 1.25); cevap(45, 86.5, 14, 6, 1.65); cevap(84, 82, 14.5, 6, -1.1);
+  // chopped white onion over the ćevapi and on the board
+  const onion = (a, b) => { ctx.fillStyle = '#d8ccdc'; ctx.fillRect(X(a + 0.5), X(b + 0.5), X(2.4), X(2.1)); ctx.fillStyle = '#fdfbf4'; ctx.fillRect(X(a), X(b), X(2.4), X(2.1)); };
+  for (let k = 0; k < 14; k++) onion(cx - 22 + R() * 38, 48 + R() * 14);
+  for (let k = 0; k < 6; k++) onion(24 + R() * 28, 80 + R() * 9);
+  for (let k = 0; k < 3; k++) onion(78 + R() * 10, 78 + R() * 8);
+  // a spoon of kajmak: a dollop on the ćevapi and the spoon resting in it, its handle over the rim
+  ctx.save(); ctx.translate(X(cx + 30), X(68)); ctx.rotate(-0.55);
+  ctx.fillStyle = 'rgba(60,20,8,.35)'; ctx.fillRect(X(-0.6), X(0.4), X(21), X(2.2));
+  ctx.fillStyle = '#8a929c'; ctx.fillRect(X(0), X(-1.1), X(20), X(2.2)); ctx.fillStyle = '#d4d8de'; ctx.fillRect(X(0), X(-1.1), X(20), X(1.2));
+  ctx.restore();
+  ell(cx + 22, 56.5, 8, 5.4, '#c0b28c');
+  ell(cx + 21.5, 55.5, 7.4, 4.8, '#f4ecd2');
+  ell(cx + 20, 54.2, 4, 2.4, '#fffbee');
+  ell(cx + 23.5, 57.5, 3.5, 1.6, '#e4d6b0');
+  // the bowl of ajvar: roasted red pepper relish, a spoon in it
+  const ax = 140, ay = 25;
+  shadow(ax, ay, 14, 14); disc(ax, ay, 14, '#f4f2ec'); disc(ax, ay, 12.4, '#d8d4ca'); disc(ax, ay, 11.6, '#f4f2ec');
+  disc(ax, ay, 10.6, '#c8442a'); disc(ax - 1, ay - 1, 8.6, '#d85a30');
+  ctx.fillStyle = '#9a2a1a'; const aj = rng(4); for (let k = 0; k < 16; k++) { const a = aj() * Math.PI * 2, r = aj() * 8; ctx.fillRect(X(ax + Math.cos(a) * r), X(ay + Math.sin(a) * r), X(1.2), X(1)); }
+  ctx.fillStyle = '#f08a50'; for (let k = 0; k < 8; k++) { const a = aj() * Math.PI * 2, r = aj() * 7; ctx.fillRect(X(ax + Math.cos(a) * r), X(ay + Math.sin(a) * r), X(1.2), X(0.8)); }
+  ctx.save(); ctx.translate(X(ax + 1), X(ay + 1)); ctx.rotate(0.6); ctx.fillStyle = '#8a929c'; ctx.beginPath(); ctx.ellipse(X(0.3), X(0.3), X(3.6), X(2.5), 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#d4d8de'; ctx.beginPath(); ctx.ellipse(0, 0, X(3.4), X(2.3), 0, 0, Math.PI * 2); ctx.fill(); ctx.fillRect(X(2.5), X(-0.9), X(16), X(1.8)); ctx.restore();
+  // the glass of yogurt drink: a ring of glass, the white drink inside, a few bubbles
+  const gx = 140, gy = 75;
+  ctx.fillStyle = 'rgba(50,10,10,.3)'; ctx.beginPath(); ctx.moveTo(X(gx), X(gy - 11)); ctx.lineTo(X(gx + 9), X(gy - 6)); ctx.lineTo(X(gx + 18), X(gy + 8)); ctx.lineTo(X(gx + 6), X(gy + 15)); ctx.lineTo(X(gx - 6), X(gy + 10)); ctx.fill();
+  disc(gx, gy, 12, '#8aa6b2'); disc(gx, gy, 10.6, '#cfe0e6'); disc(gx + 0.6, gy + 0.6, 9.2, '#f4f1e8'); disc(gx, gy, 8.4, '#fdfcf8');
+  ctx.strokeStyle = '#ffffff'; ctx.lineWidth = X(1.2); ctx.beginPath(); ctx.arc(X(gx), X(gy), X(11.3), Math.PI * 1.05, Math.PI * 1.55); ctx.stroke();
+  ctx.strokeStyle = '#e4e2da'; ctx.lineWidth = X(0.8); ctx.beginPath(); ctx.arc(X(gx), X(gy), X(6), 0, Math.PI * 2); ctx.stroke();
+  for (const [a, b] of [[-3, -4], [2, -5], [4, 1], [-4, 3]]) disc(gx + a, gy + b, 0.8, '#eceae2');
+  ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.ellipse(X(gx - 6), X(gy - 6), X(2.4), X(1), -0.8, 0, Math.PI * 2); ctx.fill();
+  // a long green pepper between them
+  ctx.save(); ctx.translate(X(138), X(50)); ctx.rotate(-0.25); ctx.scale(1.35, 1.35);
+  ctx.fillStyle = '#2e6a2a'; ctx.beginPath(); ctx.moveTo(X(-11), 0); ctx.quadraticCurveTo(X(-4), X(-3.4), X(8), X(-2.4)); ctx.quadraticCurveTo(X(10), X(0), X(8), X(2.4)); ctx.quadraticCurveTo(X(-4), X(3.4), X(-11), 0); ctx.fill();
+  ctx.fillStyle = '#5a9a3a'; ctx.beginPath(); ctx.ellipse(X(0), X(-1), X(7), X(0.9), 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#4a6a2a'; ctx.fillRect(X(8), X(-1), X(4), X(1.6));
+  ctx.restore();
+}
+// Lukomir, the highest village in the country: low stone houses under very steep roofs of dark wooden shingles,
+// huddled on a bare high plateau, sheep grazing in front, the ground breaking off into the canyon on the right,
+// bare mountains and a big sky with clouds.
+function bihLukomir(ctx, W, H) {
+  const u = H / 100, X = (v) => v * u, rnd = rng(43);
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.closePath(); ctx.fill(); };
+  const rect = (a, b, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(X(a), X(b), X(w), X(h)); };
+  const disc = (a, b, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(X(a), X(b), X(r), 0, Math.PI * 2); ctx.fill(); };
+  // the big sky with heaped clouds
+  const sky = ctx.createLinearGradient(0, 0, 0, X(50)); sky.addColorStop(0, '#3a7cc4'); sky.addColorStop(0.6, '#86b8e0'); sky.addColorStop(1, '#d4e6f0');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  const cloud = (a, b, s) => { for (const [dx, dy, r] of [[-6, 1, 3.6], [-2, -1.5, 4.6], [3, -2, 5], [7.5, 0.5, 3.8], [1, 1.5, 4.4]]) disc(a + dx * s, b + dy * s, r * s, '#f4f7fa'); ctx.fillStyle = '#d6e2ec'; ctx.fillRect(X(a - 9 * s), X(b + 2.6 * s), X(19 * s), X(1.6 * s)); };
+  cloud(28, 12, 1.2); cloud(84, 8, 0.9); cloud(130, 15, 1.1); cloud(60, 24, 0.6);
+  // bare mountains: a far blue range and a nearer grey-green one with rocky flanks
+  poly([[0, 46], [0, 34], [16, 30], [34, 33], [52, 26], [70, 31], [86, 28], [104, 33], [122, 27], [140, 32], [158, 29], [158, 46]], '#8a9ab4');
+  poly([[48, 28], [52, 26], [57, 28.5], [54, 29], [51, 28.5]], '#e8eef4'); poly([[119, 29], [122, 27], [126, 29.5], [122, 30]], '#e8eef4');
+  poly([[0, 50], [0, 40], [20, 37], [44, 41], [66, 36], [90, 40], [112, 37], [158, 43], [158, 50]], '#7e9068');
+  ctx.fillStyle = '#6c7c5c'; for (const [a, b, l] of [[8, 42, 10], [30, 42, 12], [70, 39, 9], [96, 42, 12]]) ctx.fillRect(X(a), X(b), X(l), X(0.8));
+  // the canyon on the right: the far wall of pale limestone dropping in sheer steps, grass along its rim, the
+  // gorge deep in shadow with a glint of the river at the bottom
+  poly([[102, 47], [126, 44.5], [158, 45.5], [158, 50], [102, 50]], '#8aa050');
+  const wallG = ctx.createLinearGradient(0, X(47), 0, X(92)); wallG.addColorStop(0, '#c6bea8'); wallG.addColorStop(0.55, '#a29a88'); wallG.addColorStop(1, '#6e6a62');
+  ctx.fillStyle = wallG; ctx.beginPath(); ctx.moveTo(X(102), X(48)); ctx.lineTo(X(158), X(48)); ctx.lineTo(X(158), X(92)); ctx.lineTo(X(110), X(92)); ctx.fill();
+  // buttresses of rock: sunlit faces and shadowed gullies between them, a few ledges
+  const bt = [[104, 0.9], [113, 1.1], [121, 0.8], [130, 1.2], [140, 0.9], [149, 1.1], [158, 1]];
+  for (let k = 0; k < bt.length - 1; k++) {
+    const [a] = bt[k], [b] = bt[k + 1], m = (a + b) / 2 + (k % 2 ? 1.5 : -1.5);
+    poly([[m, 49], [b, 50], [b - 2, 62 + (k % 3) * 4], [b + 1, 76], [b - 1, 90], [m + 1, 90], [m - 1, 72], [m + 1.5, 60]], '#867e70');
+    poly([[a + 0.5, 50], [m - 0.5, 49], [m + 1, 60], [m - 2, 72], [m, 90], [a + 2, 90], [a - 1, 70], [a + 1.5, 58]], '#c2baa6');
+  }
+  ctx.fillStyle = '#ddd6c4'; for (const [a, b, l] of [[106, 58, 8], [123, 66, 9], [141, 56, 7], [110, 74, 8], [132, 80, 9], [148, 70, 6]]) ctx.fillRect(X(a), X(b), X(l), X(0.9));
+  for (const [a, b, r] of [[122, 47.5, 1.8], [138, 46.5, 2], [151, 47, 1.6], [128, 60, 1.4], [146, 66, 1.4]]) { disc(a, b, r, '#4f7040'); disc(a - r * 0.3, b - r * 0.3, r * 0.5, '#6a8a50'); }
+  const gorge = ctx.createLinearGradient(0, X(80), 0, H); gorge.addColorStop(0, '#4c5258'); gorge.addColorStop(1, '#2e343c');
+  ctx.fillStyle = gorge; ctx.beginPath(); ctx.moveTo(X(112), X(84)); ctx.lineTo(X(158), X(86)); ctx.lineTo(X(158), H); ctx.lineTo(X(118), H); ctx.fill();
+  ctx.fillStyle = '#3f8a7c'; ctx.beginPath(); ctx.moveTo(X(128), X(96)); ctx.quadraticCurveTo(X(142), X(92), X(158), X(93)); ctx.lineTo(X(158), X(95)); ctx.quadraticCurveTo(X(142), X(94.5), X(130), X(98)); ctx.fill();
+  // the plateau: high pasture, golden green, darker towards us, breaking off at the canyon's edge
+  const plat = [[0, 48], [30, 46], [60, 47], [90, 48], [104, 50], [110, 56], [114, 64], [120, 74], [128, 86], [134, 100], [0, 100]];
+  const pg = ctx.createLinearGradient(0, X(46), 0, H); pg.addColorStop(0, '#b4bc6a'); pg.addColorStop(0.5, '#98ac56'); pg.addColorStop(1, '#7a9444');
+  ctx.fillStyle = pg; ctx.beginPath(); plat.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.closePath(); ctx.fill();
+  // the lip of the cliff: bare rock along the edge
+  ctx.strokeStyle = '#8a8270'; ctx.lineWidth = X(2.2); ctx.lineJoin = 'round'; ctx.beginPath(); plat.slice(3, 10).forEach(([a, b], i) => (i ? ctx.lineTo(X(a + 0.6), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.stroke();
+  ctx.strokeStyle = '#c8c0ae'; ctx.lineWidth = X(0.8); ctx.beginPath(); plat.slice(3, 10).forEach(([a, b], i) => (i ? ctx.lineTo(X(a - 0.6), X(b - 0.4)) : ctx.moveTo(X(a), X(b - 0.4)))); ctx.stroke();
+  // tufts and stones in the grass
+  for (let k = 0; k < 70; k++) { const a = rnd() * 112, b = 52 + rnd() * 46; if (a > 100 + (b - 50) * 0.6) continue; ctx.fillStyle = k % 5 ? '#6e8a3e' : '#c8c2b0'; ctx.fillRect(X(a), X(b), X(k % 5 ? 1.6 : 2), X(k % 5 ? 0.7 : 1.2)); }
+  // a dry stone wall wandering across the pasture
+  ctx.strokeStyle = '#a8a090'; ctx.lineWidth = X(1.4); ctx.beginPath(); ctx.moveTo(X(0), X(76)); ctx.quadraticCurveTo(X(30), X(70), X(54), X(74)); ctx.quadraticCurveTo(X(70), X(77), X(84), X(72)); ctx.stroke();
+  ctx.strokeStyle = '#d0c8b6'; ctx.lineWidth = X(0.5); ctx.beginPath(); ctx.moveTo(X(0), X(75.4)); ctx.quadraticCurveTo(X(30), X(69.4), X(54), X(73.4)); ctx.quadraticCurveTo(X(70), X(76.4), X(84), X(71.4)); ctx.stroke();
+  // the houses: low walls of grey stone, very steep hipped roofs of dark shingles, small windows
+  const house = (cx, base, w, wh, rh, gable) => {
+    rect(cx - w / 2, base - wh, w, wh, '#b2aa9a');
+    ctx.fillStyle = '#958d7e'; for (let k = 0; k < 3; k++) for (let q = 0; q < w / 3; q++) ctx.fillRect(X(cx - w / 2 + q * 3 + (k % 2) * 1.5), X(base - wh + 1 + k * (wh / 3)), X(2.2), X(0.5));
+    rect(cx + w / 2 - 1.4, base - wh, 1.4, wh, '#8c8476');
+    rect(cx - w * 0.3, base - wh * 0.8, 2.2, wh * 0.8, '#3a2a20');
+    const top = base - wh, ov = 1.6;
+    if (gable) poly([[cx - w / 2 - ov, top + 0.6], [cx, top - rh], [cx + w / 2 + ov, top + 0.6]], '#46342a');
+    else poly([[cx - w / 2 - ov, top + 0.6], [cx - w * 0.12, top - rh], [cx + w * 0.12, top - rh], [cx + w / 2 + ov, top + 0.6]], '#46342a');
+    // the shaded side of the roof and rows of shingles
+    poly([[cx + (gable ? 0 : w * 0.12), top - rh], [cx + w / 2 + ov, top + 0.6], [cx + w * 0.18, top + 0.6]], '#281c16');
+    ctx.fillStyle = '#6a5444'; for (let r = 1; r < 5; r++) { const f = r / 5, y = top - rh + rh * f, hw = (gable ? 0 : w * 0.12) + (w / 2 + ov - (gable ? 0 : w * 0.12)) * f; ctx.fillRect(X(cx - hw), X(y), X(hw * 1.1), X(0.5)); }
+    rect(cx - w / 2 - ov, top + 0.6, w + 2 * ov, 0.8, '#1e1612');
+  };
+  for (const [cx, base, w, wh, rh, g] of [[36, 53, 9, 5, 9.5, true], [52, 52, 10, 5, 10, false], [74, 53, 9, 5, 9.5, true], [90, 54, 8, 4.5, 8.5, false],
+    [22, 61, 13, 7, 13, false], [46, 62, 12, 6.5, 12.5, true], [67, 61, 14, 7, 13, false], [87, 63, 11, 6, 12, true],
+    [33, 71, 15, 8, 15, true], [58, 72, 16, 8, 15, false]]) house(cx, base, w, wh, rh, g);
+  // the sheep grazing in front
+  const sheep = (a, b, f, s = 1) => {
+    disc(a - 2 * s, b + 2.6 * s, 0.1, '#000');
+    ctx.fillStyle = '#2e2620'; for (const dx of [-2.2, -0.8, 1.4, 2.6]) ctx.fillRect(X(a + dx * s * f), X(b + 1.2 * s), X(0.7 * s), X(2.4 * s));
+    ctx.fillStyle = '#f4f0e6'; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(4 * s), X(2.6 * s), 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#dcd6c8'; ctx.beginPath(); ctx.ellipse(X(a + 0.6 * f), X(b + 1), X(3.2 * s), X(1.4 * s), 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fbf9f4'; for (const [dx, dy] of [[-1.6, -1.2], [0.6, -1.6], [2, -0.6]]) { ctx.beginPath(); ctx.arc(X(a + dx * s * f), X(b + dy * s), X(1.2 * s), 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = '#2e2620'; ctx.beginPath(); ctx.ellipse(X(a + 4.2 * s * f), X(b - 0.4 * s), X(1.4 * s), X(1.1 * s), f * 0.4, 0, Math.PI * 2); ctx.fill();
+  };
+  for (const [a, b, f, sz] of [[16, 84, 1, 1.2], [30, 90, -1, 1.3], [48, 85, 1, 1.15], [66, 92, 1, 1.35], [82, 86, -1, 1.15], [96, 93, -1, 1.25], [8, 93, 1, 1.3], [40, 79, -1, 1], [74, 79, 1, 1]]) sheep(a, b, f, sz);
+}
+// Little scenes for the postcard letters, each a few big shapes. A letter shows only the band of its canvas between
+// the top of the capitals and the baseline, about 0.26 to 0.92 of the height, so each is laid out in that band.
+const BOSNIA_SCENES = [
+  (c, w, h) => { // an engraved copper tray on teal
+    const Y = (t) => h * (0.26 + 0.66 * t), cx = w * 0.5, cy = Y(0.5), R = Y(0.62) - Y(0);
+    c.fillStyle = '#1c4a4c'; c.fillRect(0, 0, w, h);
+    const ring = (r, col) => { c.fillStyle = col; c.beginPath(); c.arc(cx, cy, r, 0, Math.PI * 2); c.fill(); };
+    ring(R, '#8a4222'); ring(R * 0.92, '#e39a5c'); ring(R * 0.78, '#c06a34'); ring(R * 0.6, '#f8cfa0'); ring(R * 0.45, '#c06a34'); ring(R * 0.18, '#f4da8e');
+  },
+  (c, w, h) => { // the old bridge: a pale stone arch over emerald water, in the evening light
+    const Y = (t) => h * (0.26 + 0.66 * t);
+    c.fillStyle = '#f2b878'; c.fillRect(0, 0, w, h); c.fillStyle = '#2fa890'; c.fillRect(0, Y(0.72), w, h);
+    c.fillStyle = '#f4ecdc'; c.beginPath(); c.moveTo(-w * 0.1, Y(0.75)); c.quadraticCurveTo(w * 0.5, Y(-0.25), w * 1.1, Y(0.75)); c.lineTo(w * 1.1, Y(0.4)); c.quadraticCurveTo(w * 0.5, Y(-0.52), -w * 0.1, Y(0.4)); c.fill();
+    c.fillStyle = '#b0a48c'; c.fillRect(0, Y(0.62), w * 0.12, Y(0.14) - Y(0)); c.fillRect(w * 0.88, Y(0.62), w * 0.12, Y(0.14) - Y(0));
+  },
+  (c, w, h) => { // the emerald Neretva between pale cliffs
+    const Y = (t) => h * (0.26 + 0.66 * t);
+    c.fillStyle = '#2aa088'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#d2c8b0'; c.beginPath(); c.moveTo(0, 0); c.lineTo(w * 0.28, 0); c.lineTo(w * 0.12, h); c.lineTo(0, h); c.fill(); c.beginPath(); c.moveTo(w, 0); c.lineTo(w * 0.78, 0); c.lineTo(w * 0.92, h); c.lineTo(w, h); c.fill();
+    c.fillStyle = '#8ad8c4'; for (let k = 0; k < 5; k++) c.fillRect(w * (0.3 + (k % 2) * 0.18), Y(0.1 + k * 0.2), w * 0.24, Y(0.04) - Y(0));
+  },
+  (c, w, h) => { // a mill hut on its stilts over a little cascade
+    const Y = (t) => h * (0.26 + 0.66 * t);
+    c.fillStyle = '#8ac0e4'; c.fillRect(0, 0, w, h); c.fillStyle = '#3f6e3e'; c.fillRect(0, Y(0.2), w, h);
+    c.fillStyle = '#3a9a8a'; c.fillRect(0, Y(0.78), w, h);
+    c.fillStyle = '#86603a'; c.fillRect(w * 0.22, Y(0.38), w * 0.56, Y(0.3) - Y(0));
+    c.fillStyle = '#3e3028'; c.beginPath(); c.moveTo(w * 0.1, Y(0.4)); c.lineTo(w * 0.5, Y(-0.02)); c.lineTo(w * 0.9, Y(0.4)); c.fill();
+    c.fillStyle = '#2a1a10'; c.fillRect(w * 0.42, Y(0.48), w * 0.16, Y(0.2) - Y(0));
+    c.fillStyle = '#eef6f4'; c.fillRect(0, Y(0.68), w, Y(0.12) - Y(0));
+  },
+  (c, w, h) => { // a bunch of purple grapes on ochre
+    const Y = (t) => h * (0.26 + 0.66 * t);
+    c.fillStyle = '#e2a844'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#4c8632'; c.beginPath(); c.ellipse(w * 0.5, Y(0.02), w * 0.5, Y(0.1) - Y(0), 0, 0, Math.PI * 2); c.fill();
+    const r = w * 0.17;
+    for (const [a, b] of [[0.2, 0.18], [0.5, 0.18], [0.8, 0.18], [0.35, 0.36], [0.65, 0.36], [0.2, 0.54], [0.5, 0.54], [0.8, 0.54], [0.35, 0.72], [0.65, 0.72], [0.5, 0.9]]) { c.fillStyle = '#3a1c42'; c.beginPath(); c.arc(w * a, Y(b), r, 0, Math.PI * 2); c.fill(); c.fillStyle = '#7a428a'; c.beginPath(); c.arc(w * a - r * 0.15, Y(b) - r * 0.15, r * 0.75, 0, Math.PI * 2); c.fill(); }
+  },
+  (c, w, h) => { // a coiled pita spiral, golden on its copper pan
+    const Y = (t) => h * (0.26 + 0.66 * t), cx = w * 0.5, cy = Y(0.5);
+    c.fillStyle = '#a65a2e'; c.fillRect(0, 0, w, h);
+    c.strokeStyle = '#e0a04a'; c.lineWidth = w * 0.2; c.lineCap = 'round'; c.beginPath();
+    for (let k = 0; k <= 200; k++) { const t = k / 200, a = t * Math.PI * 8, r = t * h * 0.5; k ? c.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r) : c.moveTo(cx, cy); }
+    c.stroke();
+    c.strokeStyle = '#f6d48c'; c.lineWidth = w * 0.06; c.stroke();
+  },
+  (c, w, h) => { // a Lukomir house: a very steep dark roof over a low stone wall, a golden sky
+    const Y = (t) => h * (0.26 + 0.66 * t);
+    c.fillStyle = '#f0d27a'; c.fillRect(0, 0, w, h); c.fillStyle = '#7e9a44'; c.fillRect(0, Y(0.82), w, h);
+    c.fillStyle = '#b2aa9a'; c.fillRect(w * 0.12, Y(0.6), w * 0.76, Y(0.24) - Y(0));
+    c.fillStyle = '#3e2e26'; c.beginPath(); c.moveTo(-w * 0.05, Y(0.62)); c.lineTo(w * 0.5, Y(-0.08)); c.lineTo(w * 1.05, Y(0.62)); c.fill();
+    c.fillStyle = '#281c16'; c.beginPath(); c.moveTo(w * 0.5, Y(-0.08)); c.lineTo(w * 1.05, Y(0.62)); c.lineTo(w * 0.55, Y(0.62)); c.fill();
+  },
+  (c, w, h) => { // a fildžan of coffee in its copper holder, on rose-pink like lokum
+    const Y = (t) => h * (0.26 + 0.66 * t);
+    c.fillStyle = '#e48aa6'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#c06a34'; c.beginPath(); c.moveTo(w * 0.12, Y(0.4)); c.lineTo(w * 0.88, Y(0.4)); c.lineTo(w * 0.62, Y(0.8)); c.lineTo(w * 0.38, Y(0.8)); c.fill();
+    c.fillRect(w * 0.42, Y(0.78), w * 0.16, Y(0.1) - Y(0)); c.fillRect(w * 0.26, Y(0.88), w * 0.48, Y(0.1) - Y(0));
+    c.fillStyle = '#f7f3ea'; c.fillRect(w * 0.12, Y(0.14), w * 0.76, Y(0.26) - Y(0));
+    c.fillStyle = '#3a2216'; c.beginPath(); c.ellipse(w * 0.5, Y(0.14), w * 0.32, Y(0.06) - Y(0), 0, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#b84a6a'; c.fillRect(w * 0.12, Y(0.28), w * 0.76, Y(0.04) - Y(0));
+  },
+];
+// Postcard: "Greetings from SARAJEVO", every letter a little Bosnian scene.
+function bihPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'SARAJEVO', BOSNIA_SCENES); }
+
+// ---------- Balkan pack. Serbia ----------
+const SERBIA_FRAME = { dark: '#24161f', a: '#7a2f5e', b: '#d9b878', line: '#f0e6d2' };
+
+// A plum seen side on, shaded knot by knot: dusty blue-purple skin, a dark rim on the shaded side, the crease down
+// one side, a pale powdery bloom on the lit shoulder. `C` needs plumD, plum, plumM, bloom, bloomL.
+function srbPlum(x, C, cx, cy, rx, ry, tilt, R) {
+  const c = Math.cos(tilt), s = Math.sin(tilt);
+  for (let b = Math.floor(cy - ry - 1); b <= Math.ceil(cy + ry + 1); b++) for (let a = Math.floor(cx - ry - 1); a <= Math.ceil(cx + ry + 1); a++) {
+    const dx = a + 0.5 - cx, dy = b + 0.5 - cy, px = dx * c + dy * s, py = -dx * s + dy * c;
+    const nx = px / rx, ny = py / ry, d = nx * nx + ny * ny;
+    if (d > 1) continue;
+    const lit = -(nx * 0.55 + ny * 0.83);
+    let col = C.plum;
+    if (lit > 0.3) col = C.plumM;
+    if ((nx + 0.32) ** 2 / 0.1 + (ny + 0.38) ** 2 / 0.07 < 1) col = C.bloom;
+    if ((nx + 0.36) ** 2 / 0.025 + (ny + 0.44) ** 2 / 0.02 < 1) col = C.bloomL;
+    if (rx > 3.5 && Math.abs(px - rx * (0.36 + 0.12 * ny * ny)) < 0.55 && Math.abs(ny) < 0.82) col = C.plumD;
+    if (d > 0.72 && nx * 0.6 + ny * 0.8 > 0.15) col = C.plumD;
+    if (col === C.plum && R && R() < 0.12) col = C.plumM;
+    x.fillStyle = col; x.fillRect(a, b, 1, 1);
+  }
+}
+
+// Plums: sprays of dusty blue-purple plums with a pale bloom, leaves and white blossom on brown twigs, all over a
+// deep orchard green, inside a wheat border with a chain of small plums and leaves and blossoms in the corners.
+function srbPlums(ctx, W, H) {
+  const C = { edge: '#2a1424', ground: '#1e3a27', ground2: '#244630', plumD: '#2a1d42', plum: '#45407a', plumM: '#5f5c98', bloom: '#9294c4', bloomL: '#c4c8e4',
+    leafD: '#2b5226', leaf: '#4b8636', leafL: '#86b64e', twig: '#5e3a24', white: '#f6f1e6', blush: '#e8cfcb', pink: '#e2a2b0', yellow: '#e8c040', wheat: '#e8d6a6', wheat2: '#cdb57c' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const R = rng(4242);
+    const Rc = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    // shapes gathered first, then laid down layer by layer (crisp knots), so neighbouring sprays overlap cleanly
+    const leaves = [], twigs = [], plums = [], flowers = [], buds = [];
+    const leafPath = (c, px, py, len, ang, half) => { c.save(); c.translate(px, py); c.rotate(ang); c.beginPath(); c.moveTo(0, 0); c.quadraticCurveTo(len * 0.42, -len * 0.42, len, 0); if (!half) c.quadraticCurveTo(len * 0.42, len * 0.42, 0, 0); c.closePath(); c.fill(); c.restore(); };
+    const paint = () => {
+      sweInk(x, C.leaf, (c) => { for (const [px, py, len, ang] of leaves) leafPath(c, px, py, len, ang, false); });
+      sweInk(x, C.leafL, (c) => { for (const [px, py, len, ang] of leaves) leafPath(c, px, py, len, ang, true); });
+      sweInk(x, C.twig, (c) => { for (const [pts, w0, w1] of twigs) for (let k = 0; k < pts.length - 1; k++) { c.lineWidth = w0 + (w1 - w0) * k / (pts.length - 1); c.beginPath(); c.moveTo(...pts[k]); c.lineTo(...pts[k + 1]); c.stroke(); } });
+      for (const [px, py, rx, ry, tl, seed] of plums) srbPlum(x, C, px, py, rx, ry, tl, seed ? rng(seed) : null);
+      sweInk(x, C.pink, (c) => { for (const [px, py, r] of buds) { c.beginPath(); c.ellipse(px, py, r * 0.8, r, 0, 0, Math.PI * 2); c.fill(); } });
+      sweInk(x, C.white, (c) => { for (const [px, py, r, rot] of flowers) { c.beginPath(); c.arc(px, py, r * 0.45, 0, Math.PI * 2); c.fill(); for (let k = 0; k < 5; k++) { const a = rot + (k * Math.PI * 2) / 5; c.beginPath(); c.arc(px + Math.cos(a) * r * 0.6, py + Math.sin(a) * r * 0.6, r * 0.43, 0, Math.PI * 2); c.fill(); } } });
+      // a faint blush line down the middle of each petal, so the five petals read
+      sweInk(x, C.blush, (c) => { c.lineWidth = 0.9; for (const [px, py, r, rot] of flowers) if (r > 4.5) for (let k = 0; k < 5; k++) { const a = rot + (k * Math.PI * 2) / 5; c.beginPath(); c.moveTo(px + Math.cos(a) * r * 0.35, py + Math.sin(a) * r * 0.35); c.lineTo(px + Math.cos(a) * r * 0.8, py + Math.sin(a) * r * 0.8); c.stroke(); } });
+      // the heart: a little pink ring of 2x2 knots with a yellow stamen knot, so it never makes a plus sign
+      for (const [px, py] of flowers) { const a = Math.round(px), b = Math.round(py); Rc(a - 1, b - 1, 2, 2, C.pink); Rc(a - 1, b - 1, 1, 1, C.yellow); }
+      leaves.length = twigs.length = plums.length = flowers.length = buds.length = 0;
+    };
+    // the border: dark edge, a wheat band carrying small plums and leaves, plum and green guard lines
+    const B = 15, mid = 7.5;
+    Rc(0, 0, cols, rows, C.edge);
+    Rc(2, 2, cols - 4, rows - 4, C.wheat);
+    x.fillStyle = C.wheat2; frameRect(x, 3, 3, cols - 6, rows - 6, 1);
+    x.fillStyle = C.plumD; frameRect(x, B - 3, B - 3, cols - 2 * B + 6, rows - 2 * B + 6, 1);
+    x.fillStyle = C.edge; frameRect(x, B - 1, B - 1, cols - 2 * B + 2, rows - 2 * B + 2, 1);
+    // along each side a row of small plums, each on its stalk with a leaf, the leaves turning left and right in turn
+    const vine = (len, at) => {
+      const { n, d } = evenSteps(len, 12);
+      for (let i = 0; i < n; i++) {
+        const [sx0, sy0] = at((i + 0.5) * d, -3.2), [px, py, ang] = at((i + 0.5) * d, 1), sg = i % 2 ? 1 : -1;
+        twigs.push([[[sx0, sy0], at((i + 0.5) * d, -1.8)], 1, 1]);
+        const [lx, ly] = at((i + 0.5) * d, -2.6);
+        leaves.push([lx, ly, 6.6, ang - Math.PI / 2 + sg * 1.42]);
+        plums.push([px, py, 2.8, 3.3, ang, 0]);
+      }
+    };
+    const side = (x0, y0, dx, dy, nx, ny) => (s, o) => [x0 + dx * s + nx * o, y0 + dy * s + ny * o, Math.atan2(ny, nx) - Math.PI / 2];
+    vine(cols - 2 * B, side(B, mid, 1, 0, 0, 1)); vine(cols - 2 * B, side(cols - B, rows - mid, -1, 0, 0, -1));
+    vine(rows - 2 * B, side(mid, rows - B, 0, -1, 1, 0)); vine(rows - 2 * B, side(cols - mid, B, 0, 1, -1, 0));
+    paint();
+    for (const [a, b] of [[mid, mid], [cols - mid, mid], [mid, rows - mid], [cols - mid, rows - mid]]) {
+      Rc(Math.round(a - 6), Math.round(b - 6), 12, 12, C.plumD);
+      for (const ang of [0.8, 2.35, 3.9, 5.5]) leaves.push([a, b, 6.4, ang]);
+      flowers.push([a, b, 4.6, -Math.PI / 2]);
+    }
+    paint();
+    // the field: orchard green with a little abrash
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    Rc(fx, fy, fw, fh, C.ground);
+    for (let k = 0; k < 120; k++) { const a = fx + Math.floor(R() * fw), b = fy + Math.floor(R() * fh); Rc(a, b, Math.min(3 + Math.floor(R() * 12), fx + fw - a), 1, C.ground2); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // a spray: a curving twig with leaves, three plums hanging under it, a sprig of blossom at its tip. Local units,
+    // flipped left-right when `f` is -1.
+    const spray = (ox, oy, f, seed) => {
+      const Q = (a, b) => [ox + f * a, oy + b];
+      const tw = [Q(-22, -1), Q(-9, -13), Q(7, -9), Q(19, -18)];
+      const bez = (t) => { const m = 1 - t; return [m * m * m * tw[0][0] + 3 * m * m * t * tw[1][0] + 3 * m * t * t * tw[2][0] + t * t * t * tw[3][0], m * m * m * tw[0][1] + 3 * m * m * t * tw[1][1] + 3 * m * t * t * tw[2][1] + t * t * t * tw[3][1]]; };
+      const A = (ang) => (f > 0 ? ang : Math.PI - ang);
+      for (const [t, ang, len] of [[0.04, -2.6, 15], [0.18, 1.5, 15], [0.3, -1.9, 14], [0.48, -0.9, 15], [0.62, 0.4, 14], [0.84, -2.2, 12], [0.97, 0.15, 11], [0.4, 0.75, 16]]) { const [px, py] = bez(t); leaves.push([px, py, len, A(ang)]); }
+      const pts = []; for (let k = 0; k <= 24; k++) pts.push(bez(k / 24));
+      twigs.push([pts, 2.6, 1.2]);
+      const [mx, my] = bez(0.62), side = []; for (let k = 0; k <= 8; k++) { const t = k / 8; side.push([mx + f * (5 * t - 2 * t * t), my - 12 * t]); }
+      twigs.push([side, 1.3, 1]);
+      const pl = [[-8, 5.5, 5.6, 7, 0.14], [3.5, 6.5, 5.4, 6.8, -0.12], [-2, 15, 5.5, 6.9, 0.04]];
+      for (const [a, b, , ry] of pl) { const [px, py] = Q(a, b - ry + 0.5), [tx, ty] = bez(0.3 + (a + 10) / 55); twigs.push([[[tx, ty], [px, py]], 1, 1]); }
+      pl.slice().reverse().forEach(([a, b, rx, ry, tl], k) => { const [px, py] = Q(a, b); plums.push([px, py, rx, ry, f * tl, seed + k]); });
+      const [ex, ey] = bez(1);
+      flowers.push([mx + f * 3, my - 13, 5.4, -1.3], [ex + f * 1.5, ey - 1, 4.8, -1.9], [mx + f * 9.5, my - 7, 4, -1.6]);
+      buds.push([ex - f * 6, ey - 4, 1.4], [mx - f * 2, my - 9, 1.2]);
+    };
+    const nx = 3, ny = 2, sx = fw / nx, sy = fh / ny;
+    for (let i = -1; i <= nx; i++) for (let j = -1; j <= ny; j++) {
+      const ox = fx + (i + 0.5) * sx, oy = fy + (j + 0.5 + (((i % 2) + 2) % 2 ? 0.5 : 0)) * sy + 1;
+      spray(ox, oy, i % 2 ? -1 : 1, 100 + i * 7 + j * 3);
+    }
+    paint();
+    // a few loose blossoms fallen into the open ground between the sprays
+    const img = x.getImageData(0, 0, cols, rows).data, g1 = rgbOf(C.ground), g2 = rgbOf(C.ground2);
+    const open = (a, b, r) => { for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) { const q = ((b + dy) * cols + a + dx) * 4, px = [img[q], img[q + 1], img[q + 2]]; if (!nearRgb(px, g1, 30) && !nearRgb(px, g2, 30)) return false; } return true; };
+    const Rb = rng(606);
+    for (let b = fy + 5; b < fy + fh - 5; b += 8) for (let a = fx + 5; a < fx + fw - 5; a += 8) {
+      const qa = Math.round(a + (Rb() - 0.5) * 4), qb = Math.round(b + (Rb() - 0.5) * 4);
+      if (Rb() < 0.7 && open(qa, qb, 4)) {
+        flowers.push([qa, qb, 3.2, Rb() * 6]);
+        for (let dy = -5; dy <= 5; dy++) for (let dx = -5; dx <= 5; dx++) img[((qb + dy) * cols + qa + dx) * 4] = 255; // mark the spot as taken
+      }
+    }
+    paint();
+    x.restore();
+  });
+}
+
+// Opanci: pairs of leather peasant shoes seen from above, their tops woven from strips of leather, the pointed toes
+// drawn up into a beak that curls back on itself, honey and dark brown pairs in two neat rows, a few with red wool
+// pompoms, on flax linen inside a plaited leather border with red pompoms in the corners.
+function srbOpanci(ctx, W, H) {
+  const C = { linen: '#dccdb0', linen2: '#d1c1a2', shadow: '#bca98a', edge: '#2a1a12', strap: '#4a2c1c', cream: '#efe4cc',
+    hon: '#c4843a', honL: '#e4b064', honD: '#8a5026', brn: '#6e4024', brnL: '#9c6438', brnD: '#40241a', sole: '#22150e', insole: '#b88c58',
+    red: '#b8302a', redD: '#7a1c1c', redL: '#e2644a' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const Rc = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(Math.round(a), Math.round(b), 1, 1); };
+    // the border: a dark band carrying a leather plait, a red wool line inside
+    const B = 13;
+    Rc(0, 0, cols, rows, C.edge);
+    x.fillStyle = C.cream; frameRect(x, 1, 1, cols - 2, rows - 2, 1);
+    // the plait: strands slanting one way in the outer half of the band and the other way in the inner half, each
+    // strand lit on one edge and shaded on the other, dark gaps between them
+    const plait = (len, at) => {
+      const { d } = evenSteps(len, 6);
+      for (let s = 0; s < len; s++) for (let o = -3; o <= 3; o++) {
+        const sc = (s + 0.5) * 6 / d, ph = o < 0 ? sc + o : sc - o + 3, f = ((ph % 6) + 6) % 6;
+        const [a, b] = at(s, o); P(a, b, f < 1 ? C.edge : f < 2.5 ? C.honL : f < 4.5 ? C.hon : C.honD);
+      }
+    };
+    plait(cols - 2 * B, (s, o) => [B + s, 6.5 + o]); plait(cols - 2 * B, (s, o) => [cols - 1 - B - s, rows - 7.5 - o]);
+    plait(rows - 2 * B, (s, o) => [6.5 + o, rows - 1 - B - s]); plait(rows - 2 * B, (s, o) => [cols - 7.5 - o, B + s]);
+    const pompom = (cx, cy, r) => {
+      sweInk(x, C.redD, (c) => { c.beginPath(); c.arc(cx + 0.4, cy + 0.4, r, 0, Math.PI * 2); c.fill(); });
+      sweInk(x, C.red, (c) => { c.beginPath(); c.arc(cx - 0.1, cy - 0.1, r * 0.86, 0, Math.PI * 2); c.fill(); });
+      sweInk(x, C.redL, (c) => { c.beginPath(); c.arc(cx - r * 0.38, cy - r * 0.38, r * 0.34, 0, Math.PI * 2); c.fill(); });
+    };
+    for (const [a, b] of [[6.5, 6.5], [cols - 6.5, 6.5], [6.5, rows - 6.5], [cols - 6.5, rows - 6.5]]) { Rc(a - 5, b - 5, 10, 10, C.strap); pompom(a, b, 3.8); }
+    x.fillStyle = C.red; frameRect(x, B - 1, B - 1, cols - 2 * B + 2, rows - 2 * B + 2, 1);
+    // the field: flax linen with a faint weave
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    Rc(fx, fy, fw, fh, C.linen);
+    const Rs = rng(77); for (let k = 0; k < 260; k++) { const a = fx + Math.floor(Rs() * fw), b = fy + Math.floor(Rs() * fh); Rc(a, b, Math.min(2 + Math.floor(Rs() * 7), fx + fw - a), 1, C.linen2); }
+    // one opanak from above, toe up, in local units: x across (big-toe side negative), y from the toe (0) to the heel (36)
+    const outline = (c) => {
+      c.beginPath(); c.moveTo(-1.2, 1);
+      c.bezierCurveTo(-6.6, 6, -7.2, 12, -6.6, 18); c.bezierCurveTo(-6, 26, -6.4, 32, -4.6, 35); c.quadraticCurveTo(0, 38.4, 4.6, 35);
+      c.bezierCurveTo(6.6, 31, 7, 24, 7, 16); c.bezierCurveTo(7, 9, 3.6, 3, -1.2, 1); c.closePath();
+    };
+    const shoe = (ox, oy, sx, sy, pal, pom) => {
+      const [base, light, dark] = pal;
+      const T = (c) => { c.translate(ox, oy); c.scale(sx, sy); };
+      const m = sweInk.m || (sweInk.m = document.createElement('canvas'));
+      m.width = cols; m.height = rows;
+      const mc = m.getContext('2d'); T(mc); outline(mc); mc.fill();
+      const md = mc.getImageData(0, 0, cols, rows).data, inS = (a, b) => a >= 0 && b >= 0 && a < cols && b < rows && md[(b * cols + a) * 4 + 3] > 110;
+      sweInk(x, C.shadow, (c) => { T(c); c.translate(1.2 * Math.sign(sx), 1.2 * Math.sign(sy)); outline(c); c.fill(); });
+      const x0 = Math.floor(Math.min(ox, ox + sx * 8) - 9), x1 = Math.ceil(Math.max(ox, ox + sx * 8) + 9), y0 = Math.floor(Math.min(oy, oy + sy * 38)) - 1, y1 = Math.ceil(Math.max(oy, oy + sy * 38)) + 1;
+      for (let b = y0; b <= y1; b++) for (let a = x0; a <= x1; a++) {
+        if (!inS(a, b)) continue;
+        const lx = (a + 0.5 - ox) / sx, ly = (b + 0.5 - oy) / sy;
+        const edge = !inS(a - 1, b) || !inS(a + 1, b) || !inS(a, b - 1) || !inS(a, b + 1);
+        // the opening: an oval over the heel half, the insole showing in it, a thong laced round its rim
+        const ex = lx / 4, ey = (ly - 28.6) / 6.4, e = ex * ex + ey * ey;
+        // lit from the upper left of the rug, whichever way the shoe faces
+        const lit = -((a + 0.5 - ox) / 7) * 0.8 - ((b + 0.5 - oy - sy * 18) / 18) * 0.3;
+        let col;
+        if (edge) col = C.sole;
+        else if (e < 0.72) col = ey < -0.35 + 0.2 * ex * ex ? C.sole : ey < -0.1 ? dark : C.insole;
+        else if (e < 1.25) col = (Math.round(Math.atan2(ey, ex) * 7) % 2) ? C.strap : dark;
+        else if (ly < 22.5) {
+          // the woven vamp: a lattice of leather strips over and under each other
+          const p1 = ((a + b) % 4 + 4) % 4, p2 = ((a - b) % 4 + 4) % 4;
+          col = p1 === 0 || p2 === 0 ? dark : (Math.floor((a + b) / 4) + Math.floor((a - b + 400) / 4)) % 2 ? light : base;
+        } else col = lit > 0.35 ? light : lit < -0.45 ? dark : base;
+        P(a, b, col);
+      }
+      // a row of stitches across the foot of the vamp
+      for (let k = -5; k <= 5; k += 2) { const a = Math.floor(ox + sx * k), b = Math.floor(oy + sy * 22.8); if (inS(a, b)) P(a, b, C.strap); }
+      // the beak: the leather drawn up at the toe and curled back into a ring over the toes
+      // the beak: the leather drawn up at the toe into a horn that bends back over the toes, thinning to its tip
+      const horn = [];
+      for (let k = 0; k <= 60; k++) {
+        const t = k / 60, th = Math.PI + t * Math.PI * 1.6, r = 3.7 * (1 - 0.45 * t);
+        horn.push([2.3 + Math.cos(th) * r, -1.6 + Math.sin(th) * r + (1 - t) ** 4 * 3.4, 1.05 - 0.55 * t]);
+      }
+      const hornAt = (c, grow) => { T(c); for (const [hx, hy, w] of horn) { c.beginPath(); c.arc(hx, hy, w + grow, 0, Math.PI * 2); c.fill(); } };
+      sweInk(x, C.sole, (c) => hornAt(c, 0.8));
+      sweInk(x, base, (c) => hornAt(c, 0));
+      sweInk(x, light, (c) => { T(c); c.lineWidth = 0.8; c.beginPath(); horn.slice(6, 36).forEach(([hx, hy, w], k) => (k ? c.lineTo(hx - w * 0.45, hy - w * 0.45) : c.moveTo(hx - w * 0.45, hy - w * 0.45))); c.stroke(); });
+      if (pom) pompom(ox + sx * 0.6, oy + sy * 7.2, 2.9);
+    };
+    // across the middle, a twisted leather thong strung with red wool pompoms between the pairs
+    const my = fy + fh / 2;
+    for (let a = fx + 3; a < fx + fw - 3; a++) { const ph = ((a - fx) % 4 + 4) % 4; P(a, my - 1, ph < 2 ? C.honL : C.honD); P(a, my, ph < 2 ? C.honD : C.hon); }
+    for (let i = 0; i <= 4; i++) pompom(fx + 3 + (fw - 6) * i / 4, my - 0.2, 2.5);
+    // two rows of four pairs, toes up in the top row and down in the bottom one
+    const HON = [C.hon, C.honL, C.honD], BRN = [C.brn, C.brnL, C.brnD];
+    const k = 0.91, n = 4;
+    for (let r = 0; r < 2; r++) {
+      const sy = r ? -k : k, oy = r ? fy + fh - 8.4 : fy + 8.4;
+      for (let i = 0; i < n; i++) {
+        const cx = fx + fw * (i + 0.5) / n, brown = (i + r) % 2, pom = (i + r) % 3 === 0;
+        // left shoe: big-toe side to the right; right shoe: mirrored
+        shoe(cx - 8.2, oy, -k, sy, brown ? BRN : HON, pom);
+        shoe(cx + 8.2, oy, k, sy, brown ? BRN : HON, pom);
+      }
+    }
+  });
+}
+
+// Venci: long garlands of bright red peppers hung out to dry on a whitewashed wall under a little wooden eave with
+// a row of curved roof tiles, each string a thick rope of glossy pods hanging from their green stems, their shadows
+// on the wall, inside a red sash border with a chain of white lozenges.
+function srbPeppers(ctx, W, H) {
+  const C = { wall: '#f3efe6', wall2: '#e6e0d4', shade: '#cfcbc6', red: '#cc2a1c', redD: '#7a140e', redB: '#a61c14', redL: '#f06a4a',
+    green: '#4f8a2a', greenD: '#2e5a1c', wood: '#6a4228', woodD: '#3a2416', woodL: '#9c6c40', tile: '#b8583a', tileD: '#7e3524', tileL: '#da8660',
+    cream: '#f2e6cc', dark: '#24140e' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const Rc = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(Math.round(a), Math.round(b), 1, 1); };
+    // the border: dark edge, a red sash with a running chain of small white lozenges, cream and green guards
+    const B = 12;
+    Rc(0, 0, cols, rows, C.dark);
+    Rc(2, 2, cols - 4, rows - 4, C.red);
+    x.fillStyle = C.redD; frameRect(x, 2, 2, cols - 4, rows - 4, 1);
+    const loz = (cx, cy, r) => { for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++) { const e = Math.abs(dx) + Math.abs(dy); if (e === r) P(cx + dx, cy + dy, C.cream); else if (e === 0) P(cx + dx, cy + dy, C.green); } };
+    const chain = (len, at) => {
+      const { n, d } = evenSteps(len, 9);
+      for (let i = 0; i <= n; i++) { const [cx, cy] = at(i * d); loz(cx, cy, 2); }
+      for (let i = 0; i < n; i++) { const [mx, my] = at((i + 0.5) * d); P(mx, my, C.cream); }
+    };
+    chain(cols - 2 * 14, (s) => [Math.round(14 + s), 5]); chain(cols - 2 * 14, (s) => [Math.round(14 + s), rows - 6]);
+    chain(rows - 2 * 14, (s) => [5, Math.round(14 + s)]); chain(rows - 2 * 14, (s) => [cols - 6, Math.round(14 + s)]);
+    for (const [a, b] of [[5, 5], [cols - 6, 5], [5, rows - 6], [cols - 6, rows - 6]]) { loz(a, b, 3); loz(a, b, 1); P(a, b, C.redD); }
+    x.fillStyle = C.redD; frameRect(x, B - 3, B - 3, cols - 2 * B + 6, rows - 2 * B + 6, 1);
+    x.fillStyle = C.cream; frameRect(x, B - 2, B - 2, cols - 2 * B + 4, rows - 2 * B + 4, 1);
+    x.fillStyle = C.greenD; frameRect(x, B - 1, B - 1, cols - 2 * B + 2, rows - 2 * B + 2, 1);
+    // the wall, whitewashed, with a little unevenness in the lime
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    Rc(fx, fy, fw, fh, C.wall);
+    const Rw = rng(9); for (let k = 0; k < 160; k++) { const a = fx + Math.floor(Rw() * fw), b = fy + 12 + Math.floor(Rw() * (fh - 12)); Rc(a, b, Math.min(2 + Math.floor(Rw() * 6), fx + fw - a), 1, C.wall2); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // the eave: a row of half-round roof tiles seen end on, the fascia board, rafter ends, the eave's shadow
+    Rc(fx, fy + 12, fw, 3, C.shade);
+    Rc(fx, fy, fw, 7, C.woodD);
+    const { n: nt, d: dt } = evenSteps(fw, 6);
+    sweInk(x, C.tile, (c) => { for (let i = 0; i <= nt; i++) { const cx = fx + i * dt; c.beginPath(); c.moveTo(cx - 2.4, fy); c.lineTo(cx - 2.4, fy + 3); c.quadraticCurveTo(cx - 2.4, fy + 5.8, cx, fy + 5.8); c.quadraticCurveTo(cx + 2.4, fy + 5.8, cx + 2.4, fy + 3); c.lineTo(cx + 2.4, fy); c.fill(); } });
+    sweInk(x, C.tileL, (c) => { for (let i = 0; i <= nt; i++) { const cx = fx + i * dt; c.beginPath(); c.ellipse(cx - 1, fy + 3.4, 0.9, 1.6, 0, 0, Math.PI * 2); c.fill(); } });
+    Rc(fx, fy, fw, 1, C.tileD);
+    Rc(fx, fy + 7, fw, 3, C.wood); Rc(fx, fy + 7, fw, 1, C.woodL); Rc(fx, fy + 10, fw, 1, C.woodD);
+    const { n: nr, d: dr } = evenSteps(fw, 12);
+    for (let i = 0; i < nr; i++) { const a = Math.round(fx + (i + 0.5) * dr) - 1; Rc(a, fy + 11, 3, 2, C.woodD); Rc(a, fy + 11, 2, 1, C.woodL); }
+    // the drying pole along under the eave
+    const py = fy + 16;
+    Rc(fx, py, fw, 2, C.wood); Rc(fx, py, fw, 1, C.woodL); Rc(fx, py + 2, fw, 1, C.shade);
+    // the garlands: peppers threaded through their stems on a string, hanging in tiers: a pod out to each side and
+    // one hanging straight down in front. Laid down tier by tier from the bottom up, each with its own dark outline,
+    // so every pod stands clear of the ones below it.
+    const R = rng(2024), ng = 7, tiers = [];
+    for (let g = 0; g < ng; g++) {
+      const gx = fx + fw * (g + 0.5) / ng, top = py + 4, n = [11, 13, 10, 12, 10, 13, 11][g];
+      Rc(Math.round(gx), py + 1, 1, top - py + 1, C.woodD);
+      for (let t = 0; t < n; t++) {
+        const y = top + t * 5.4, bx = gx + Math.sin(t * 0.7 + g * 2) * 0.6, last = t === n - 1;
+        const kind = () => (R() < 0.22 ? C.redB : C.red);
+        (tiers[t] = tiers[t] || []).push({ side: [[bx - 1.2, y, Math.PI / 2 + 0.78 + (R() - 0.5) * 0.3, 9 + R() * 1.5, kind()], [bx + 1.2, y + 0.6, Math.PI / 2 - 0.78 + (R() - 0.5) * 0.3, 9 + R() * 1.5, kind()]],
+          mid: [bx, y + 2.2, Math.PI / 2 + (R() - 0.5) * 0.2, last ? 10.5 : 8.5, kind()] });
+      }
+    }
+    const pod = (c, [bx, by, ang, len], grow, sh = 0) => {
+      const cs = Math.cos(ang), sn = Math.sin(ang);
+      c.beginPath();
+      for (let t = 0; t <= 1.001; t += 0.06) {
+        const w = (t < 0.22 ? 1.1 + t * 4.6 : 2.1 * (1 - (t - 0.22) / 0.78) ** 0.85 + 0.3) + grow;
+        const px = bx + cs * len * t + sh * 2.4, py2 = by + sn * len * t + t * t * 0.8 * Math.abs(cs) + sh * 1.6;
+        c.moveTo(px + w, py2); c.arc(px, py2, w, 0, Math.PI * 2);
+      }
+      c.fill();
+    };
+    const gloss = (c, [bx, by, ang, len]) => { const cs = Math.cos(ang), sn = Math.sin(ang), nx = -sn, ny = cs, o = nx < 0 ? 1 : -1; c.beginPath(); c.moveTo(bx + cs * len * 0.18 + nx * o * 1.1, by + sn * len * 0.18 + ny * o * 1.1); c.lineTo(bx + cs * len * 0.6 + nx * o * 0.7, by + sn * len * 0.6 + ny * o * 0.7); c.stroke(); };
+    // the garlands' shadows on the wall, cast down and to the right
+    sweInk(x, C.shade, (c) => { for (const T of tiers) for (const g of T) for (const p of [...g.side, g.mid]) pod(c, p, 0, 1); });
+    for (let t = 0; t < tiers.length; t++) for (const part of ['side', 'mid']) {
+      const list = tiers[t].flatMap((g) => (part === 'side' ? g.side : [g.mid]));
+      sweInk(x, C.redD, (c) => { for (const p of list) pod(c, p, 0.65); });
+      for (const col of [C.red, C.redB]) sweInk(x, col, (c) => { for (const p of list) if (p[4] === col) pod(c, p, 0); });
+      sweInk(x, C.redL, (c) => { c.lineWidth = 0.95; c.lineCap = 'round'; for (const p of list) gloss(c, p); });
+      // the green stem and cap where each pod hangs from the string
+      sweInk(x, C.greenD, (c) => { for (const [bx, by, ang] of list) { c.beginPath(); c.ellipse(bx + Math.cos(ang) * 0.6, by + Math.sin(ang) * 0.6, 1.25, 0.95, ang, 0, Math.PI * 2); c.fill(); } });
+      for (const [bx, by, ang] of list) P(Math.floor(bx + Math.cos(ang) * 0.4), Math.floor(by - 0.6), C.green);
+    }
+    x.restore();
+  });
+}
+
+// Zlakusa pottery: round-bellied unglazed pots, lidded cooking pots, a jug, a tall jar, cups and a stack of baking
+// dishes in warm terracotta blushed with smoke from the open fire, incised with simple bands and waves, standing on
+// two wooden shelves against a slate-blue wall, inside a terracotta border incised with a running wave.
+function srbPottery(ctx, W, H) {
+  const C = { wall: '#2c4a50', wall2: '#27434a', dark: '#1c1512', terL: '#e09a64', ter: '#c0703e', terM: '#9e522c', terD: '#76391e', smoke: '#4a2c20', soot: '#2a1c16',
+    inside: '#3a2018', wood: '#8a6240', woodL: '#b48a58', woodD: '#55391f', cream: '#ead8b8' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const Rc = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(Math.round(a), Math.round(b), 1, 1); };
+    // the border: dark edge, a terracotta band with an incised wave and impressed dots, cream and dark guard lines
+    const B = 12;
+    Rc(0, 0, cols, rows, C.dark);
+    Rc(2, 2, cols - 4, rows - 4, C.ter);
+    x.fillStyle = C.terM; frameRect(x, 2, 2, cols - 4, rows - 4, 1); frameRect(x, B - 4, B - 4, cols - 2 * B + 8, rows - 2 * B + 8, 1);
+    const band = (len, at) => {
+      const { d } = evenSteps(len, 10);
+      for (let s = 0; s < len; s++) {
+        const w = Math.round(1.7 * Math.sin((s / d) * Math.PI * 2));
+        const [a, b] = at(s, w); P(a, b, C.terD); const [a2, b2] = at(s, w - 1); P(a2, b2, C.terL);
+        const ph = ((s / d) % 1 + 1) % 1;
+        if (Math.abs(ph - 0.25) < 0.04 || Math.abs(ph - 0.75) < 0.04) { const [a3, b3] = at(s, ph < 0.5 ? 3.4 : -3.4); P(a3, b3, C.terD); }
+      }
+    };
+    band(cols - 2 * 6, (s, o) => [6 + s, 5 + o]); band(cols - 2 * 6, (s, o) => [cols - 7 - s, rows - 6 - o]);
+    band(rows - 2 * 6, (s, o) => [5 + o, rows - 7 - s]); band(rows - 2 * 6, (s, o) => [cols - 6 - o, 6 + s]);
+    for (const [a, b] of [[5, 5], [cols - 6, 5], [5, rows - 6], [cols - 6, rows - 6]]) { Rc(a - 3, b - 3, 7, 7, C.terD); Rc(a - 2, b - 2, 5, 5, C.terL); Rc(a - 1, b - 1, 3, 3, C.ter); P(a, b, C.terD); }
+    x.fillStyle = C.cream; frameRect(x, B - 2, B - 2, cols - 2 * B + 4, rows - 2 * B + 4, 1);
+    x.fillStyle = C.dark; frameRect(x, B - 1, B - 1, cols - 2 * B + 2, rows - 2 * B + 2, 1);
+    // the wall
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    Rc(fx, fy, fw, fh, C.wall);
+    const Rw = rng(31); for (let k = 0; k < 140; k++) { const a = fx + Math.floor(Rw() * fw), b = fy + Math.floor(Rw() * fh); Rc(a, b, Math.min(3 + Math.floor(Rw() * 10), fx + fw - a), 1, C.wall2); }
+    // the shelves: thick planks on brackets
+    const s1 = fy + Math.round(fh * 0.5) - 1, s2 = fy + fh - 6;
+    const shelf = (y) => {
+      Rc(fx, y, fw, 4, C.wood); Rc(fx, y, fw, 1, C.woodL); Rc(fx, y + 3, fw, 1, C.woodD); Rc(fx, y + 4, fw, 2, C.wall2);
+      for (const bx of [fx + 10, fx + fw - 13]) { Rc(bx, y + 4, 3, 5, C.woodD); Rc(bx + 3, y + 4, 1, 3, C.woodD); }
+    };
+    shelf(s1); shelf(s2);
+    // a pot: a profile (half-width against height) turned into a body, shaded knot by knot with light from the left,
+    // blushed with smoke, and incised with bands. `prof` is [t, r] pairs, t from rim (0) to foot (1), r as a fraction
+    // of the half-width w.
+    const pot = (cx, base, w, h, prof, deco, opt = {}) => {
+      const top = base - h, rAt = (t) => { for (let i = 1; i < prof.length; i++) if (t <= prof[i][0]) { const [t0, r0] = prof[i - 1], [t1, r1] = prof[i], f = (t - t0) / (t1 - t0), e = f * f * (3 - 2 * f); return (r0 + (r1 - r0) * e) * w; } return prof[prof.length - 1][1] * w; };
+      const seed = Math.round(cx * 7 + base);
+      const smoke = (a, b) => Math.sin(a * 0.31 + seed) * Math.cos(b * 0.27 + seed * 0.5) + Math.sin((a + b) * 0.17 + seed * 1.3) * 0.7;
+      // its shadow on the plank
+      Rc(Math.round(cx - w * 0.8), base, Math.round(w * 1.9), 1, C.woodD);
+      for (let b = Math.floor(top); b < base; b++) {
+        const t = (b + 0.5 - top) / h, r = rAt(t);
+        for (let a = Math.floor(cx - r); a <= Math.ceil(cx + r); a++) {
+          const dx = a + 0.5 - cx; if (Math.abs(dx) > r) continue;
+          const nx = dx / Math.max(r, 1), ny = t;
+          const sh = nx + (ny - 0.45) * 0.5 + (ny > 0.86 ? 0.5 : 0);                // light from the upper left
+          let k = sh < -0.5 ? 0 : sh < 0.12 ? 1 : sh < 0.66 ? 2 : 3;               // 0 light .. 3 dark
+          const sm = smoke(a, b) + (opt.smoky || 0);
+          if (sm > 1.35) k += 2; else if (sm > 0.85) k += 1;
+          let col = [C.terL, C.ter, C.terM, C.terD, C.smoke, C.soot][Math.min(5, k)];
+          for (const [dt, kind] of deco) {
+            const yy = top + dt * h;
+            if (kind === 'line' && Math.abs(b + 0.5 - yy) < 0.5) col = k >= 3 ? C.soot : C.terD;
+            if (kind === 'wave' && Math.abs(b + 0.5 - yy - 1.3 * Math.sin(a * 0.75)) < 0.55) col = k >= 3 ? C.soot : C.terD;
+            if (kind === 'dots' && Math.abs(b + 0.5 - yy) < 0.5 && ((a % 3) + 3) % 3 === 0) col = k >= 3 ? C.soot : C.terD;
+            if (kind === 'rib' && Math.abs(b + 0.5 - yy) < 0.5) col = C.terL;
+          }
+          P(a, b, col);
+        }
+      }
+      // the mouth: a dark opening inside a lit rim
+      const rw = rAt(0);
+      if (!opt.lid) {
+        sweInk(x, C.terL, (c) => { c.beginPath(); c.ellipse(cx, top + 0.6, rw + 0.6, 1.9, 0, 0, Math.PI * 2); c.fill(); });
+        sweInk(x, C.inside, (c) => { c.beginPath(); c.ellipse(cx + 0.3, top + 0.5, rw - 0.8, 1.1, 0, 0, Math.PI * 2); c.fill(); });
+      } else {
+        // a domed lid with a knob
+        sweInk(x, C.terM, (c) => { c.beginPath(); c.ellipse(cx, top + 0.8, rw + 1.4, 1.6, 0, 0, Math.PI * 2); c.fill(); });
+        sweInk(x, C.ter, (c) => { c.beginPath(); c.ellipse(cx, top + 0.4, rw + 0.8, opt.lid, 0, Math.PI, 0); c.fill(); });
+        sweInk(x, C.terL, (c) => { c.beginPath(); c.ellipse(cx - rw * 0.35, top - opt.lid * 0.45, rw * 0.3, opt.lid * 0.28, -0.3, 0, Math.PI * 2); c.fill(); });
+        sweInk(x, C.terD, (c) => { c.fillRect(cx - 1.5, top - opt.lid - 2, 3, 2.6); });
+        sweInk(x, C.ter, (c) => { c.fillRect(cx - 1.5, top - opt.lid - 2.2, 2, 1.4); });
+        for (let a = Math.round(cx - rw); a < cx + rw; a += 2) P(a, top - 0.6, C.terD);
+      }
+      // handles: small loops on the shoulders, or one big strap handle for a jug
+      if (opt.handles) for (const sg of [-1, 1]) sweInk(x, C.terM, (c) => { c.lineWidth = 1.6; c.beginPath(); c.arc(cx + sg * (rAt(opt.handles) + 0.4), top + opt.handles * h, 2.6, sg > 0 ? -Math.PI / 2 : Math.PI / 2, sg > 0 ? Math.PI / 2 : Math.PI * 1.5); c.stroke(); });
+      if (opt.jug) {
+        sweInk(x, C.terD, (c) => { c.lineWidth = 2.4; c.beginPath(); c.moveTo(cx + rAt(0.12) - 0.5, top + 0.12 * h); c.quadraticCurveTo(cx + w * 1.45, top + 0.1 * h, cx + rAt(0.5) - 0.6, top + 0.55 * h); c.stroke(); });
+        sweInk(x, C.ter, (c) => { c.lineWidth = 1.1; c.beginPath(); c.moveTo(cx + rAt(0.12) - 0.2, top + 0.12 * h - 0.6); c.quadraticCurveTo(cx + w * 1.38, top + 0.08 * h - 0.6, cx + rAt(0.5) - 0.2, top + 0.53 * h - 0.6); c.stroke(); });
+        sweInk(x, C.terL, (c) => { c.beginPath(); c.moveTo(cx - rw - 0.4, top - 0.4); c.lineTo(cx - rw - 3, top - 1.6); c.lineTo(cx - rw - 0.4, top + 1.8); c.fill(); });
+      }
+    };
+    // profiles
+    const BELLY = [[0, 0.62], [0.1, 0.56], [0.22, 0.78], [0.55, 1], [0.85, 0.82], [1, 0.58]];
+    const COOK = [[0, 0.8], [0.12, 0.76], [0.45, 1], [0.8, 0.9], [1, 0.66]];
+    const JUG = [[0, 0.42], [0.12, 0.38], [0.28, 0.45], [0.62, 1], [0.9, 0.82], [1, 0.62]];
+    const JAR = [[0, 0.58], [0.08, 0.52], [0.25, 0.86], [0.5, 1], [0.8, 0.86], [1, 0.62]];
+    const CUP = [[0, 0.92], [0.5, 1], [1, 0.74]];
+    const DISH = [[0, 1], [0.6, 0.95], [1, 0.82]];
+    // the top shelf: a jug, a lidded cooking pot, two cups, a round-bellied pot
+    const t1 = s1;
+    pot(fx + 16, t1, 9, 34, JUG, [[0.32, 'line'], [0.45, 'wave'], [0.58, 'line']], { jug: true });
+    pot(fx + 46, t1, 14, 24, COOK, [[0.22, 'line'], [0.3, 'dots'], [0.62, 'wave']], { lid: 4.5, handles: 0.25 });
+    pot(fx + 72, t1, 5.5, 11, CUP, [[0.3, 'line']], {});
+    pot(fx + 85, t1, 5.5, 11, CUP, [[0.3, 'wave']], { smoky: 0.4 });
+    pot(fx + 115, t1, 17, 33, BELLY, [[0.25, 'line'], [0.32, 'line'], [0.45, 'wave'], [0.62, 'dots']], { handles: 0.3 });
+    pot(fx + fw - 13, t1, 8, 16, COOK, [[0.3, 'line'], [0.5, 'line']], { smoky: 0.3 });
+    // the bottom shelf: a big pot, a stack of baking dishes, a tall jar, another lidded pot
+    const t2 = s2;
+    pot(fx + 20, t2, 17, 30, COOK, [[0.2, 'line'], [0.28, 'wave'], [0.55, 'line']], { lid: 5.5, handles: 0.22 });
+    for (let k = 0; k < 3; k++) pot(fx + 58, t2 - k * 6, 17 - k * 0.6, 6, DISH, [[0.4, 'dots']], { smoky: k * 0.25 });
+    pot(fx + 92, t2, 12, 38, JAR, [[0.2, 'line'], [0.27, 'line'], [0.4, 'wave'], [0.55, 'wave'], [0.72, 'line']], { handles: 0.18 });
+    pot(fx + 128, t2, 15, 27, BELLY, [[0.3, 'wave'], [0.42, 'dots'], [0.6, 'line']], { smoky: 0.2 });
+  });
+}
+
+// Charts for the kolo dancers, one string per row: k black, r red, w white, s skin, . ground. No faces.
+const SERBIA_WOMAN = [
+  '...rrr...',
+  '..rrrrr..',
+  '..rsssr..',
+  '..rsssr..',
+  '...rrr...',
+  '..wwwww..',
+  '.wkwwwkw.',
+  '.wkrwrkw.',
+  '..krwrk..',
+  '..kkkkk..',
+  '..wrrrw..',
+  '.wwrrrww.',
+  '.wwrkrww.',
+  '.wwrrrww.',
+  'wwwrrrwww',
+  'rrrrrrrrr',
+  '..kk.kk..',
+];
+const SERBIA_MAN = [
+  '...kkk...',
+  '..kkkkk..',
+  '..sssss..',
+  '..sssss..',
+  '...sss...',
+  '..wwwww..',
+  '.wkwwwkw.',
+  '.wkwwwkw.',
+  '..kwwwk..',
+  '..rrrrr..',
+  '..rrrrr..',
+  '..kk.kk..',
+  '..kk.kk..',
+  '..kk.kk..',
+  '..ww.ww..',
+  '..ww.ww..',
+  '.kkk.kkk.',
+];
+
+// Kolo: the circle dance as a folk pattern. A ring of small dancers in white, red and black, men and women in turn,
+// holding hands round a big red flower on golden ground; bands of dancers in a chain along the top and bottom
+// borders, a vine of red tulips up the sides.
+function srbKolo(ctx, W, H) {
+  const C = { gold: '#e2a832', gold2: '#d89c2a', green: '#2f5e3a', greenL: '#4f8a3a', meadow: '#8ab452', meadow2: '#7ea648', red: '#c0262a', redD: '#801818', black: '#1c181c', white: '#f6f0e4', skin: '#e8c2a0' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const Rc = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(Math.round(a), Math.round(b), 1, 1); };
+    const key = { k: C.black, r: C.red, w: C.white, s: C.skin };
+    // a dancer with its feet at (fx0, fy0): the chart, centred
+    const dancer = (cx, foot, chart) => { const x0 = Math.round(cx) - 4, y0 = Math.round(foot) - chart.length; chart.forEach((row, j) => { for (let i = 0; i < row.length; i++) if (row[i] !== '.') P(x0 + i, y0 + j, key[row[i]]); }); return [x0, y0]; };
+    // arms: white sleeves from each shoulder to the hand held with the neighbour, a skin-coloured knot for the hands
+    const arms = (list) => {
+      sweInk(x, C.white, (c) => { c.lineWidth = 1.15; c.lineCap = 'round'; for (const [a, b, hx, hy] of list) { c.beginPath(); c.moveTo(a, b); c.lineTo(hx, hy); c.stroke(); } });
+      for (const [, , hx, hy] of list) P(Math.floor(hx), Math.floor(hy), C.skin);
+    };
+    // the borders: black edge, green bands of dancers top and bottom, green side bands with tulips, red and white guards
+    const T = 22, S = 13;
+    Rc(0, 0, cols, rows, C.black);
+    Rc(2, 2, cols - 4, rows - 4, C.green);
+    x.fillStyle = C.red; frameRect(x, 2, 2, cols - 4, rows - 4, 1);
+    // dancer chains: men and women in turn, hands joined at shoulder height
+    for (const [foot] of [[T - 2], [rows - 3]]) {
+      const len = cols - 2 * S - 4, { n, d } = evenSteps(len, 13), list = [], pos = [];
+      for (let i = 0; i < n; i++) { const cx = S + 2 + (i + 0.5) * d; dancer(cx, foot, i % 2 ? SERBIA_MAN : SERBIA_WOMAN); pos.push(cx); }
+      for (let i = 0; i < n; i++) {
+        const sy = foot - 17 + 6.5, cx = pos[i];
+        const lh = i > 0 ? [(pos[i - 1] + cx) / 2 + 0.5, foot - 17 + 5] : [cx - 6, foot - 17 + 9];
+        const rh = i < n - 1 ? [(pos[i + 1] + cx) / 2 + 0.5, foot - 17 + 5] : [cx + 7, foot - 17 + 9];
+        list.push([cx - 3, sy, ...lh], [cx + 4, sy, ...rh]);
+      }
+      arms(list);
+    }
+    // the side bands: tulips stacked up the band, turning left and right in turn
+    for (const sx of [S / 2 + 0.5, cols - S / 2 - 0.5]) {
+      const len = rows - 2 * T, { n, d } = evenSteps(len, 12);
+      for (let i = 0; i < n; i++) {
+        const cy = T + (i + 0.5) * d, sg = i % 2 ? 1 : -1;
+        sweInk(x, C.greenL, (c) => { c.lineWidth = 1; c.beginPath(); c.moveTo(sx, cy + 5); c.lineTo(sx, cy - 1); c.stroke(); c.beginPath(); c.ellipse(sx + sg * 2.2, cy + 2.4, 2.4, 0.9, -sg * 0.6, 0, Math.PI * 2); c.fill(); });
+        sweInk(x, C.red, (c) => { c.beginPath(); c.moveTo(sx - 2.6, cy - 4.4); c.lineTo(sx - 1, cy - 2.6); c.lineTo(sx, cy - 4.8); c.lineTo(sx + 1, cy - 2.6); c.lineTo(sx + 2.6, cy - 4.4); c.quadraticCurveTo(sx + 2.6, cy, sx, cy); c.quadraticCurveTo(sx - 2.6, cy, sx - 2.6, cy - 4.4); c.fill(); });
+        P(Math.floor(sx), Math.floor(cy - 2), C.white);
+      }
+    }
+    for (const [a, b] of [[S / 2, T / 2], [cols - S / 2, T / 2], [S / 2, rows - T / 2], [cols - S / 2, rows - T / 2]]) {
+      sweInk(x, C.greenL, (c) => { for (const t of [-0.5, 0.5, Math.PI - 0.5, Math.PI + 0.5]) leaf(c, a, b, 5.6, t, '#000'); });
+      sweInk(x, C.red, (c) => { c.beginPath(); c.arc(a, b, 3.2, 0, Math.PI * 2); c.fill(); });
+      sweInk(x, C.redD, (c) => { for (let k = 0; k < 6; k++) { const t = (k / 6) * Math.PI * 2 + 0.5; c.fillRect(a + Math.cos(t) * 2.6 - 0.5, b + Math.sin(t) * 2.6 - 0.5, 1, 1); } });
+      sweInk(x, C.gold, (c) => { c.beginPath(); c.arc(a, b, 1.3, 0, Math.PI * 2); c.fill(); });
+    }
+    x.fillStyle = C.white; frameRect(x, S - 2, T - 2, cols - 2 * S + 4, rows - 2 * T + 4, 1);
+    x.fillStyle = C.red; frameRect(x, S - 1, T - 1, cols - 2 * S + 2, rows - 2 * T + 2, 1);
+    // the field: golden ground with a little abrash
+    const fx = S, fy = T, fw = cols - 2 * S, fh = rows - 2 * T;
+    Rc(fx, fy, fw, fh, C.gold);
+    const Rg = rng(5); for (let k = 0; k < 110; k++) { const a = fx + Math.floor(Rg() * fw), b = fy + Math.floor(Rg() * fh); Rc(a, b, Math.min(3 + Math.floor(Rg() * 10), fx + fw - a), 1, C.gold2); }
+    // the ring: dancers spaced evenly round an ellipse (by length along it), the far half first
+    const cx = cols / 2, ry = (fh - 21) / 2, cy = fy + 19 + ry, rx = fw / 2 - 12, N = 20;
+    const pts = []; let L = 0, prev = null;
+    for (let k = 0; k <= 720; k++) { const t = (k / 720) * Math.PI * 2, p = [cx + rx * Math.cos(t), cy + ry * Math.sin(t)]; if (prev) L += Math.hypot(p[0] - prev[0], p[1] - prev[1]); pts.push([p[0], p[1], L]); prev = p; }
+    const ring = []; for (let i = 0; i < N; i++) { const want = (i + 0.5) * L / N; const q = pts.find((p) => p[2] >= want); ring.push([q[0], q[1], i]); }
+    const shoulder = (d) => [d[0], d[1] - 10.5];
+    const ringArms = (sel) => {
+      const list = [];
+      for (const d of sel) {
+        const i = d[2], nb = ring[(i + 1) % N], pv = ring[(i + N - 1) % N];
+        const [sx, sy] = shoulder(d);
+        for (const [o, side] of [[nb, 1], [pv, -1]]) { const [ox, oy] = shoulder(o); list.push([sx + side * 3.5 - 0.5 + (side > 0 ? 1 : 0), sy, (sx + ox) / 2 + 0.5, (sy + oy) / 2 + 3.6]); }
+      }
+      arms(list);
+    };
+    // the dancing floor: a cream oval edged in red, the dancers standing round its rim
+    sweInk(x, C.green, (c) => { c.beginPath(); c.ellipse(cx, cy, rx + 2.2, ry + 2.2, 0, 0, Math.PI * 2); c.fill(); });
+    sweInk(x, C.meadow, (c) => { c.beginPath(); c.ellipse(cx, cy, rx + 1, ry + 1, 0, 0, Math.PI * 2); c.fill(); });
+    const Rm = rng(12); sweInk(x, C.meadow2, (c) => { for (let k = 0; k < 70; k++) { const t = Rm() * Math.PI * 2, r = Math.sqrt(Rm()) * 0.9; c.fillRect(cx + Math.cos(t) * rx * r, cy + Math.sin(t) * ry * r, 2 + Rm() * 4, 1); } });
+    // white field flowers scattered over the grass
+    for (let k = 0; k < 8; k++) {
+      const t = (k / 8) * Math.PI * 2 + 0.2, a = cx + Math.cos(t) * rx * 0.62, b = cy - 6 + Math.sin(t) * ry * 0.5;
+      sweInk(x, C.white, (c) => { for (let q = 0; q < 5; q++) { const u = (q / 5) * Math.PI * 2; c.beginPath(); c.arc(a + Math.cos(u) * 1.7, b + Math.sin(u) * 1.7, 1.2, 0, Math.PI * 2); c.fill(); } });
+      P(Math.floor(a), Math.floor(b), C.gold);
+    }
+    const far = ring.filter((d) => d[1] < cy), near = ring.filter((d) => d[1] >= cy);
+    ringArms(far); for (const d of far.sort((a, b) => a[1] - b[1])) dancer(d[0], d[1], d[2] % 2 ? SERBIA_MAN : SERBIA_WOMAN);
+    // the flower in the middle: green leaves, a ring of red petals edged dark, white and red heart
+    const mx = cx, my = cy - 7, mr = 17;
+    sweInk(x, C.green, (c) => { for (let k = 0; k < 8; k++) { const t = (k / 8) * Math.PI * 2 + Math.PI / 8; leaf(c, mx, my, mr * 1.45, t, '#000'); } });
+    sweInk(x, C.greenL, (c) => { c.lineWidth = 1; for (let k = 0; k < 8; k++) { const t = (k / 8) * Math.PI * 2 + Math.PI / 8; c.beginPath(); c.moveTo(mx + Math.cos(t) * mr * 0.5, my + Math.sin(t) * mr * 0.5); c.lineTo(mx + Math.cos(t) * mr * 1.3, my + Math.sin(t) * mr * 1.3); c.stroke(); } });
+    sweInk(x, C.redD, (c) => { for (let k = 0; k < 8; k++) { const t = (k / 8) * Math.PI * 2; c.beginPath(); c.ellipse(mx + Math.cos(t) * mr * 0.58, my + Math.sin(t) * mr * 0.58, mr * 0.46, mr * 0.33, t, 0, Math.PI * 2); c.fill(); } });
+    sweInk(x, C.red, (c) => { for (let k = 0; k < 8; k++) { const t = (k / 8) * Math.PI * 2; c.beginPath(); c.ellipse(mx + Math.cos(t) * mr * 0.56, my + Math.sin(t) * mr * 0.56, mr * 0.38, mr * 0.26, t, 0, Math.PI * 2); c.fill(); } });
+    // the heart: a ring of small white petals round a golden middle dotted with red seeds
+    sweInk(x, C.white, (c) => { for (let k = 0; k < 8; k++) { const t = (k / 8) * Math.PI * 2 + Math.PI / 8; c.beginPath(); c.ellipse(mx + Math.cos(t) * mr * 0.3, my + Math.sin(t) * mr * 0.3, mr * 0.2, mr * 0.13, t, 0, Math.PI * 2); c.fill(); } });
+    sweInk(x, C.gold, (c) => { c.beginPath(); c.arc(mx, my, mr * 0.22, 0, Math.PI * 2); c.fill(); });
+    Rc(Math.floor(mx), Math.floor(my), 2, 2, C.redD);
+    ringArms(near); for (const d of near.sort((a, b) => a[1] - b[1])) dancer(d[0], d[1], d[2] % 2 ? SERBIA_MAN : SERBIA_WOMAN);
+    // small flowers in the corners of the field
+    for (const [a, b] of [[fx + 7, fy + 6], [fx + fw - 8, fy + 6], [fx + 7, fy + fh - 7], [fx + fw - 8, fy + fh - 7]]) {
+      sweInk(x, C.green, (c) => { for (const t of [0.4, 2.0, 3.6, 5.2]) leaf(c, a, b, 6, t, '#000'); });
+      sweInk(x, C.red, (c) => { for (let k = 0; k < 5; k++) { const t = (k / 5) * Math.PI * 2 - Math.PI / 2; c.beginPath(); c.arc(a + Math.cos(t) * 2, b + Math.sin(t) * 2, 1.5, 0, Math.PI * 2); c.fill(); } });
+      P(Math.floor(a), Math.floor(b), C.white);
+    }
+  });
+}
+
+// Šumadija embroidery on white linen: a big folk rose in the middle of an oval wreath of leaves, carnations, tulips
+// and buds in red, deep blue, yellow and green, flowering vines curling out of the corners, and a stitched border
+// of a red zigzag with blue and yellow buds.
+function srbSumadija(ctx, W, H) {
+  const C = { linen: '#f4efe4', linen2: '#e8e0d0', red: '#c4262a', redD: '#7c1618', blue: '#22407e', blueL: '#5a7cc0', yellow: '#eab52e', green: '#3a7836', greenL: '#7eaa48' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const Rc = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(Math.round(a), Math.round(b), 1, 1); };
+    Rc(0, 0, cols, rows, C.linen);
+    const Rl = rng(3); for (let k = 0; k < 260; k++) { const a = Math.floor(Rl() * cols), b = Math.floor(Rl() * rows); Rc(a, b, 2 + Math.floor(Rl() * 6), 1, C.linen2); }
+    // shapes are collected per colour and inked at the end, in this order, so they come out crisp
+    const order = ['green', 'greenL', 'redD', 'red', 'blue', 'blueL', 'yellow'];
+    const ink = Object.fromEntries(order.map((k) => [k, []]));
+    const add = (col, f) => ink[col].push(f);
+    // shapes drawn in a local frame at (px, py) pointing along `ang` (local up = the pointing direction)
+    const at = (px, py, ang, f) => (c) => { c.translate(px, py); c.rotate(ang + Math.PI / 2); f(c); };
+    const leafAt = (px, py, len, ang, w = 0.4) => {
+      add('green', (c) => { c.translate(px, py); c.rotate(ang); c.beginPath(); c.moveTo(0, 0); c.quadraticCurveTo(len * 0.45, -len * w, len, 0); c.quadraticCurveTo(len * 0.45, len * w, 0, 0); c.fill(); });
+      add('greenL', (c) => { c.translate(px, py); c.rotate(ang); c.beginPath(); c.moveTo(len * 0.15, -0.3); c.quadraticCurveTo(len * 0.45, -len * w * 0.8, len * 0.85, -0.4); c.closePath(); c.fill(); });
+    };
+    const stem = (pts, lw = 1.2) => add('green', (c) => { c.lineWidth = lw; c.lineCap = 'round'; c.lineJoin = 'round'; c.beginPath(); pts.forEach(([a, b], i) => (i ? c.lineTo(a, b) : c.moveTo(a, b))); c.stroke(); });
+    // a carnation: a green calyx, a fan of rounded red lobes edged dark, a blue fan inside it, a yellow heart
+    const carnation = (px, py, ang, s) => {
+      const fan = (c, r, lobe, n) => { c.beginPath(); c.arc(0, -s * 0.5, r, Math.PI, 0); c.fill(); for (let k = 0; k < n; k++) { const t = Math.PI + (k + 0.5) / n * Math.PI; c.beginPath(); c.arc(Math.cos(t) * r, -s * 0.5 + Math.sin(t) * r, lobe, 0, Math.PI * 2); c.fill(); } };
+      add('green', at(px, py, ang, (c) => { c.beginPath(); c.moveTo(-s * 0.18, 0); c.lineTo(s * 0.18, 0); c.lineTo(s * 0.32, -s * 0.52); c.lineTo(-s * 0.32, -s * 0.52); c.fill(); }));
+      add('redD', at(px, py, ang, (c) => fan(c, s * 0.5, s * 0.24, 5)));
+      add('red', at(px, py, ang, (c) => fan(c, s * 0.43, s * 0.19, 5)));
+      add('blue', at(px, py, ang, (c) => fan(c, s * 0.28, s * 0.11, 3)));
+      add('yellow', at(px, py, ang, (c) => { c.beginPath(); c.arc(0, -s * 0.5, s * 0.12, Math.PI, 0); c.fill(); }));
+    };
+    // a tulip: two blue side petals, a tall red middle petal edged dark, a yellow heart, a green cup
+    const tulip = (px, py, ang, s) => {
+      add('green', at(px, py, ang, (c) => { c.beginPath(); c.ellipse(0, -s * 0.12, s * 0.2, s * 0.18, 0, 0, Math.PI * 2); c.fill(); }));
+      add('blue', at(px, py, ang, (c) => { for (const sg of [-1, 1]) { c.beginPath(); c.moveTo(0, -s * 0.15); c.quadraticCurveTo(sg * s * 0.62, -s * 0.2, sg * s * 0.5, -s * 0.98); c.quadraticCurveTo(sg * s * 0.18, -s * 0.6, 0, -s * 0.55); c.fill(); } }));
+      add('redD', at(px, py, ang, (c) => { c.beginPath(); c.moveTo(0, -s * 0.12); c.quadraticCurveTo(-s * 0.42, -s * 0.5, 0, -s * 1.12); c.quadraticCurveTo(s * 0.42, -s * 0.5, 0, -s * 0.12); c.fill(); }));
+      add('red', at(px, py, ang, (c) => { c.beginPath(); c.moveTo(0, -s * 0.22); c.quadraticCurveTo(-s * 0.3, -s * 0.52, 0, -s * 0.98); c.quadraticCurveTo(s * 0.3, -s * 0.52, 0, -s * 0.22); c.fill(); }));
+      add('yellow', at(px, py, ang, (c) => { c.fillRect(-0.8, -s * 0.5, 1.6, 2); }));
+    };
+    const bud = (px, py, ang, col) => {
+      add('green', at(px, py, ang, (c) => { c.beginPath(); c.moveTo(-2, -0.4); c.lineTo(2, -0.4); c.lineTo(0, 1.6); c.fill(); }));
+      add(col, at(px, py, ang, (c) => { c.beginPath(); c.moveTo(0, -4.6); c.quadraticCurveTo(2.4, -2.4, 1.8, -0.6); c.lineTo(-1.8, -0.6); c.quadraticCurveTo(-2.4, -2.4, 0, -4.6); c.fill(); }));
+    };
+    const rosetteAt = (px, py, r, n = 8) => {
+      add('redD', (c) => { for (let k = 0; k < n; k++) { const t = (k / n) * Math.PI * 2; c.beginPath(); c.ellipse(px + Math.cos(t) * r * 0.55, py + Math.sin(t) * r * 0.55, r * 0.5, r * 0.34, t, 0, Math.PI * 2); c.fill(); } });
+      add('red', (c) => { for (let k = 0; k < n; k++) { const t = (k / n) * Math.PI * 2; c.beginPath(); c.ellipse(px + Math.cos(t) * r * 0.55, py + Math.sin(t) * r * 0.55, r * 0.4, r * 0.25, t, 0, Math.PI * 2); c.fill(); } });
+      add('yellow', (c) => { c.beginPath(); c.arc(px, py, r * 0.3, 0, Math.PI * 2); c.fill(); });
+    };
+    // the border: red lines, a red zigzag with blue buds in the upper bays and yellow ones in the lower
+    const B = 14;
+    x.fillStyle = C.red; frameRect(x, 1, 1, cols - 2, rows - 2, 1); frameRect(x, B - 2, B - 2, cols - 2 * B + 4, rows - 2 * B + 4, 1);
+    x.fillStyle = C.blue; frameRect(x, B - 4, B - 4, cols - 2 * B + 8, rows - 2 * B + 8, 1);
+    const zig = (len, at2) => {
+      const { n, d } = evenSteps(len, 10);
+      for (let s = 0; s <= len; s += 0.25) { const ph = (s / d) % 1, o = 2.6 * (1 - 4 * Math.abs(ph - 0.5)); const [a, b] = at2(s, o); P(a, b, C.red); const [a2, b2] = at2(s, o + 1); P(a2, b2, C.red); }
+      for (let i = 0; i < n; i++) { const [a, b] = at2((i + 0.5) * d, -2.4), [a2, b2] = at2(i * d, 3.6); Rc(Math.round(a) - 1, Math.round(b) - 1, 2, 2, C.blue); if (i) Rc(Math.round(a2) - 1, Math.round(b2) - 1, 2, 2, C.yellow); }
+    };
+    const m = 5.5;
+    zig(cols - 2 * B, (s, o) => [B + s, m + o]); zig(cols - 2 * B, (s, o) => [B + s, rows - 1 - m - o]);
+    zig(rows - 2 * B, (s, o) => [m + o, B + s]); zig(rows - 2 * B, (s, o) => [cols - 1 - m - o, B + s]);
+    for (const [a, b] of [[m + 0.5, m + 0.5], [cols - m - 0.5, m + 0.5], [m + 0.5, rows - m - 0.5], [cols - m - 0.5, rows - m - 0.5]]) rosetteAt(a, b, 5.2, 6);
+    // the medallion: an oval wreath, thick with leaves, flowers set round it pointing outwards
+    const cx = cols / 2, cy = rows / 2, rx = 50, ry = 29;
+    const E = (t, k = 1) => [cx + rx * k * Math.cos(t), cy + ry * k * Math.sin(t)], N = (t) => Math.atan2(Math.sin(t) / ry, Math.cos(t) / rx);
+    const ring = []; for (let k = 0; k <= 200; k++) ring.push(E((k / 200) * Math.PI * 2)); stem(ring, 1.4);
+    for (let k = 0; k < 36; k++) { const t = (k / 36) * Math.PI * 2 + Math.PI / 36, [px, py] = E(t), na = N(t), tg = na + Math.PI / 2; leafAt(px, py, 9.5, tg + (k % 2 ? 0.55 : Math.PI - 0.55), 0.42); }
+    for (let k = 0; k < 8; k++) {
+      const t = (k / 8) * Math.PI * 2 + Math.PI / 8, [px, py] = E(t), na = N(t), q = [px + Math.cos(na) * 3, py + Math.sin(na) * 3];
+      stem([[px, py], q], 1.3);
+      if ([0, 3, 4, 7].includes(k)) carnation(...q, na, 16); else tulip(...q, na, 14);
+      { const t2 = t + Math.PI / 8, [bx, by] = E(t2); bud(bx, by, N(t2), k % 2 ? 'red' : 'blue'); }
+    }
+    // the rose: leaves round it, two rings of petals, a yellow heart
+    for (let k = 0; k < 10; k++) { const t = (k / 10) * Math.PI * 2 + 0.31; leafAt(cx + Math.cos(t) * 11, cy + Math.sin(t) * 9.5, 11, t, 0.36); }
+    add('redD', (c) => { c.beginPath(); c.ellipse(cx, cy, 15.4, 14, 0, 0, Math.PI * 2); c.fill(); });
+    add('red', (c) => { for (let k = 0; k < 10; k++) { const t = (k / 10) * Math.PI * 2; c.beginPath(); c.ellipse(cx + Math.cos(t) * 9.6, cy + Math.sin(t) * 8.7, 5, 2.3, t, 0, Math.PI * 2); c.fill(); } });
+    add('blue', (c) => { c.beginPath(); c.ellipse(cx, cy, 7.2, 6.6, 0, 0, Math.PI * 2); c.fill(); });
+    add('blueL', (c) => { for (let k = 0; k < 10; k++) { const t = (k / 10) * Math.PI * 2 + 0.31; c.beginPath(); c.ellipse(cx + Math.cos(t) * 4.8, cy + Math.sin(t) * 4.4, 1.7, 1.1, t, 0, Math.PI * 2); c.fill(); } });
+    add('yellow', (c) => { c.beginPath(); c.ellipse(cx, cy, 3.4, 3.1, 0, 0, Math.PI * 2); c.fill(); });
+    // a ring of small blue and yellow flowers round the rose, a pair of leaves between each two
+    for (let k = 0; k < 10; k++) {
+      const t = (k / 10) * Math.PI * 2 + 0.31, px = cx + Math.cos(t) * 24, py = cy + Math.sin(t) * 16.5, t2 = t + Math.PI / 10, lx = cx + Math.cos(t2) * 23, ly = cy + Math.sin(t2) * 16;
+      leafAt(lx, ly, 6, t2 + Math.PI / 2 + 0.3, 0.38); leafAt(lx, ly, 6, t2 - Math.PI / 2 - 0.3, 0.38);
+      add(k % 2 ? 'blue' : 'yellow', (c) => { for (let q = 0; q < 5; q++) { const u = (q / 5) * Math.PI * 2 + t; c.beginPath(); c.arc(px + Math.cos(u) * 1.9, py + Math.sin(u) * 1.9, 1.35, 0, Math.PI * 2); c.fill(); } });
+      add('red', (c) => { c.fillRect(Math.round(px) - 1, Math.round(py) - 1, 2, 2); });
+    }
+    // the corners: a vine arching round each corner, thick with leaves, a carnation in its middle pointing into the
+    // corner, a tulip at each end pointing along the border, buds between
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    for (const [sx, sy] of [[1, 1], [-1, 1], [1, -1], [-1, -1]]) {
+      const ox = sx > 0 ? fx : fx + fw, oy = sy > 0 ? fy : fy + fh, Q = (a, b) => [ox + sx * a, oy + sy * b];
+      const A = (dx, dy) => Math.atan2(sy * dy, sx * dx);
+      const R0 = 25, arc = []; for (let k = 0; k <= 40; k++) { const t = (k / 40) * Math.PI / 2; arc.push(Q(3 + R0 * 1.3 * Math.sin(t), 3 + R0 * Math.cos(t))); }
+      stem(arc, 1.4);
+      for (const t of [0.1, 0.24, 0.38, 0.62, 0.76, 0.9]) { const k = Math.round(t * 40), [px, py] = arc[k], [qx, qy] = arc[Math.min(40, k + 1)], tg = Math.atan2(qy - py, qx - px); leafAt(px, py, 8.5, tg + 0.6); leafAt(px, py, 8.5, tg - 0.6 + (t < 0.5 ? 0 : 0)); }
+      const [mx, my] = arc[20]; carnation(mx - sx * 1.5, my - sy * 1.5, A(-1, -1), 15);
+      tulip(...arc[40], A(1, 0), 12); tulip(...arc[0], A(0, 1), 12);
+      bud(...arc[10], A(-1, -0.4), 'blue'); bud(...arc[30], A(-0.4, -1), 'blue');
+    }
+    for (const col of order) sweInk(x, C[col], (c) => ink[col].forEach((f) => { c.save(); f(c); c.restore(); }));
+  });
+}
+
+// Kalemegdan at sunset: the old fortress walls with their towers and battlements running along the green ridge above
+// the meeting of the Sava and the Danube, the wide rivers shining with the evening sky, a river boat and a barge.
+function srbKalemegdan(ctx, W, H) {
+  const u = H / 100, wl = H * 0.6;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  // the sky: violet overhead, rose and orange to a pale gold at the horizon
+  const sky = ctx.createLinearGradient(0, 0, 0, wl); sky.addColorStop(0, '#45407e'); sky.addColorStop(0.32, '#9a4e86'); sky.addColorStop(0.6, '#e8765a'); sky.addColorStop(0.85, '#f6b45e'); sky.addColorStop(1, '#fbd88a');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, wl);
+  // the low sun and streaks of cloud lit from below
+  ctx.fillStyle = '#fde8a8'; ctx.beginPath(); ctx.arc(W * 0.8, wl - 7 * u, 6.5 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#f7a868'; for (const [a, b, w] of [[0.62, 0.3, 30], [0.86, 0.24, 24], [0.74, 0.4, 20], [0.95, 0.36, 14]]) { roundRect(ctx, W * a - w * u / 2, H * b, w * u, 2.2 * u, 1.1 * u); ctx.fill(); }
+  ctx.fillStyle = '#c86a8a'; for (const [a, b, w] of [[0.5, 0.16, 26], [0.78, 0.12, 30], [0.97, 0.18, 16]]) { roundRect(ctx, W * a - w * u / 2, H * b, w * u, 2 * u, 1 * u); ctx.fill(); }
+  // the far bank across the Danube: low, dusky, a line of trees
+  poly([[0.55, 0.6], [0.58, 0.575], [0.7, 0.57], [0.82, 0.575], [1, 0.565], [1, 0.6]], '#7a5070');
+  ctx.fillStyle = '#6a4466'; for (let k = 0; k < 22; k++) { ctx.beginPath(); ctx.ellipse(W * (0.6 + k * 0.019), H * 0.572, 1.6 * u, (1 + (k % 3) * 0.5) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // the water: the sky's colours in bands, darker towards us
+  const sea = ctx.createLinearGradient(0, wl, 0, H); sea.addColorStop(0, '#f2a868'); sea.addColorStop(0.18, '#c8708a'); sea.addColorStop(0.5, '#6a5a8e'); sea.addColorStop(1, '#3a3a6a');
+  ctx.fillStyle = sea; ctx.fillRect(0, wl, W, H - wl);
+  // the sun's path on the water
+  ctx.fillStyle = '#fde0a0'; for (let k = 0; k < 12; k++) { const w = (12 - k) * 1.3 * u + 3 * u; ctx.fillRect(W * 0.8 - w / 2 + ((k * 7) % 5 - 2) * u, wl + 1.5 * u + k * 3.2 * u, w, 1.2 * u); }
+  ctx.fillStyle = 'rgba(250,200,150,.55)'; for (let k = 0; k < 18; k++) ctx.fillRect(W * (((k * 37) % 90) / 100), wl + (4 + (k * 13) % 34) * u, (5 + (k % 3) * 3) * u, 0.8 * u);
+  // the ridge: a green hill rising from the rivers on the left, park trees along its crest
+  poly([[0, 0.22], [0.1, 0.22], [0.22, 0.24], [0.34, 0.28], [0.44, 0.35], [0.52, 0.44], [0.58, 0.53], [0.63, 0.6], [0, 0.6]], '#3a5a3a');
+  ctx.fillStyle = '#2e4a32'; for (const [a, b, r] of [[0.03, 0.215, 4.5], [0.09, 0.21, 5], [0.15, 0.22, 4.5], [0.21, 0.23, 5], [0.27, 0.25, 4.5], [0.33, 0.27, 4], [0.38, 0.3, 4]]) { ctx.beginPath(); ctx.arc(W * a, H * b, r * u, 0, Math.PI * 2); ctx.fill(); }
+  // stone: warm where the low sun catches it, cooler in the shade
+  const stone = '#d4a284', stoneL = '#eec6a0', stoneD = '#a07062', stoneS = '#7c5664', hole = '#3a2634';
+  // a stretch of wall from (x0, y0) to (x1, y1), `h` high, with merlons along the top
+  const wall = (x0, y0, x1, y1, h, face, top) => {
+    const X0 = x0 * W, Y0 = y0 * H, X1 = x1 * W, Y1 = y1 * H;
+    ctx.fillStyle = face; ctx.beginPath(); ctx.moveTo(X0, Y0); ctx.lineTo(X1, Y1); ctx.lineTo(X1, Y1 - h * u); ctx.lineTo(X0, Y0 - h * u); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = top; ctx.beginPath(); ctx.moveTo(X0, Y0 - h * u); ctx.lineTo(X1, Y1 - h * u); ctx.lineTo(X1, Y1 - h * u + 1.4 * u); ctx.lineTo(X0, Y0 - h * u + 1.4 * u); ctx.fill();
+    const len = Math.hypot(X1 - X0, Y1 - Y0), n = Math.max(1, Math.round(len / (4.4 * u)));
+    for (let k = 0; k < n; k++) { const t = (k + 0.3) / n, px = X0 + (X1 - X0) * t, py = Y0 + (Y1 - Y0) * t - h * u; ctx.fillRect(px - 1.4 * u, py - 3 * u, 2.8 * u, 3.2 * u); }
+    // courses of stone: broken horizontal joints across the face
+    ctx.fillStyle = stoneS; ctx.globalAlpha = 0.45;
+    for (let r = 1; r * 3.4 < h - 1.6; r++) for (let k = 0; k < n; k++) { const t0 = (k + (r % 2 ? 0.1 : 0.55)) / n, t1 = Math.min(1, t0 + 0.6 / n); ctx.beginPath(); ctx.moveTo(X0 + (X1 - X0) * t0, Y0 + (Y1 - Y0) * t0 - r * 3.4 * u); ctx.lineTo(X0 + (X1 - X0) * t1, Y0 + (Y1 - Y0) * t1 - r * 3.4 * u); ctx.lineTo(X0 + (X1 - X0) * t1, Y0 + (Y1 - Y0) * t1 - r * 3.4 * u + 0.9 * u); ctx.lineTo(X0 + (X1 - X0) * t0, Y0 + (Y1 - Y0) * t0 - r * 3.4 * u + 0.9 * u); ctx.fill(); }
+    ctx.globalAlpha = 1;
+  };
+  // a square tower: lit face and shaded side, merlons, two dark loopholes
+  const tower = (a, b, w, h) => {
+    const x0 = a * W - w * u / 2, y0 = b * H - h * u;
+    ctx.fillStyle = stoneD; ctx.fillRect(x0, y0, w * u, h * u);
+    ctx.fillStyle = stoneL; ctx.fillRect(x0, y0, w * u * 0.62, h * u);
+    ctx.fillStyle = '#f8dcb8'; ctx.fillRect(x0, y0, 1.6 * u, h * u);
+    ctx.fillStyle = stoneS; ctx.fillRect(x0 + w * u * 0.62, y0, 1 * u, h * u);
+    for (let k = 0; k < 3; k++) { ctx.fillStyle = k === 2 ? stoneD : stone; ctx.fillRect(x0 + k * (w - 3) / 2 * u, y0 - 3.4 * u, 3 * u, 3.6 * u); }
+    ctx.fillStyle = stoneL; ctx.fillRect(x0 - 0.6 * u, y0 - 0.4 * u, w * u + 1.2 * u, 1.4 * u);
+    ctx.fillStyle = hole; ctx.fillRect(a * W - 2 * u, y0 + h * u * 0.3, 2 * u, 5.4 * u);
+  };
+  // the upper fortress along the crest: a long wall, two towers and the arched gate between them
+  wall(0, 0.37, 0.36, 0.38, 11, stone, stoneL);
+  ctx.fillStyle = stoneD; ctx.fillRect(0, H * 0.37 - 1 * u, W * 0.36, 2.4 * u);
+  tower(0.07, 0.38, 13, 22); tower(0.27, 0.385, 12, 20);
+  ctx.fillStyle = stoneD; roundRect(ctx, W * 0.17 - 4 * u, H * 0.375 - 9 * u, 8 * u, 9 * u, [4 * u, 4 * u, 0, 0]); ctx.fill();
+  ctx.fillStyle = hole; roundRect(ctx, W * 0.17 - 2.8 * u, H * 0.375 - 7.6 * u, 5.6 * u, 7.6 * u, [2.8 * u, 2.8 * u, 0, 0]); ctx.fill();
+  // the slope below: grass and trees, the wall stepping down to the river, a bastion
+  poly([[0, 0.38], [0.36, 0.385], [0.36, 0.6], [0, 0.6]], '#52743f');
+  // the park's trees on the slope below the walls, lit from the sunset side
+  for (const [a, b, r] of [[0.03, 0.45, 4.4], [0.1, 0.43, 4], [0.17, 0.46, 4.6], [0.25, 0.44, 4], [0.32, 0.47, 4.4], [0.07, 0.5, 3.6], [0.21, 0.51, 3.8], [0.29, 0.53, 3.4]]) {
+    ctx.fillStyle = '#34543a'; ctx.beginPath(); ctx.arc(W * a, H * b, r * u, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#6e8a4a'; ctx.beginPath(); ctx.arc(W * a + r * 0.3 * u, H * b - r * 0.35 * u, r * 0.5 * u, 0, Math.PI * 2); ctx.fill();
+  }
+  wall(0.36, 0.39, 0.45, 0.47, 8, stone, stoneL);
+  wall(0.45, 0.47, 0.53, 0.55, 8, stone, stoneL);
+  poly([[0.36, 0.39], [0.53, 0.55], [0.56, 0.6], [0.36, 0.6]], stoneD);
+  poly([[0.36, 0.41], [0.52, 0.565], [0.52, 0.6], [0.36, 0.6]], '#3e5e3a');
+  tower(0.36, 0.395, 10, 17);
+  // the lower wall along the river bank, and the round tower standing by the water
+  // the river bank: trees and a promenade on the left, the old river wall with its water gate to the right
+  poly([[0, 0.53], [0.3, 0.55], [0.3, 0.6], [0, 0.6]], '#3a5a3a');
+  ctx.fillStyle = '#2e4a32'; for (const [a, b, r] of [[0.03, 0.53, 3.6], [0.09, 0.535, 4], [0.15, 0.54, 3.6], [0.21, 0.545, 4], [0.27, 0.55, 3.4]]) { ctx.beginPath(); ctx.arc(W * a, H * b, r * u, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#c8a088'; ctx.fillRect(0, wl - 1.6 * u, W * 0.3, 1.6 * u);
+  wall(0.29, 0.6, 0.5, 0.6, 8, stoneD, stone);
+  ctx.fillStyle = hole; for (const a of [0.34, 0.4]) { roundRect(ctx, W * a - 2.2 * u, wl - 5 * u, 4.4 * u, 5 * u, [2.2 * u, 2.2 * u, 0, 0]); ctx.fill(); }
+  const rt = W * 0.48, rw = 16 * u, rh = 25 * u;
+  const cyl = ctx.createLinearGradient(rt - rw / 2, 0, rt + rw / 2, 0); cyl.addColorStop(0, stoneL); cyl.addColorStop(0.3, stone); cyl.addColorStop(0.7, stoneD); cyl.addColorStop(1, stoneS);
+  ctx.fillStyle = cyl; ctx.fillRect(rt - rw / 2, wl - rh, rw, rh); ctx.beginPath(); ctx.ellipse(rt, wl, rw / 2, 1.6 * u, 0, 0, Math.PI); ctx.fill();
+  for (let k = 0; k < 4; k++) ctx.fillRect(rt - rw / 2 + k * (rw - 3 * u) / 3, wl - rh - 3.4 * u, 3 * u, 3.6 * u);
+  ctx.fillStyle = stoneD; ctx.fillRect(rt - rw / 2, wl - rh + 2 * u, rw, 1.2 * u);
+  ctx.fillStyle = hole; ctx.fillRect(rt - 2.4 * u, wl - rh + 7 * u, 2 * u, 5 * u); ctx.fillRect(rt - 2.4 * u, wl - 11 * u, 2 * u, 5 * u);
+  // reflections of the ridge and walls in the water, broken into ripples
+  ctx.globalAlpha = 0.45; ctx.fillStyle = '#3a3050';
+  for (let k = 0; k < 10; k++) ctx.fillRect(((k * 3) % 5) * u, wl + 1.5 * u + k * 2.8 * u, W * (0.58 - k * 0.035), 1.6 * u);
+  ctx.globalAlpha = 0.35; ctx.fillStyle = '#d8a888'; for (let k = 0; k < 5; k++) ctx.fillRect(W * 0.02 + ((k * 7) % 4) * u, wl + 2.5 * u + k * 3 * u, W * (0.46 - k * 0.05), 1.1 * u);
+  ctx.fillStyle = '#e8b890'; for (let k = 0; k < 6; k++) ctx.fillRect(W * 0.47 - 6 * u + ((k * 3) % 4) * u, wl + 2 * u + k * 3 * u, 12 * u - k * 1.4 * u, 1.3 * u);
+  ctx.globalAlpha = 1;
+  // a river cruise boat heading upstream: a long white hull, two decks of windows, an awning on top
+  const bx = W * 0.6, by = H * 0.75;
+  ctx.fillStyle = 'rgba(40,30,70,.4)'; ctx.fillRect(bx - 22 * u, by + 1.6 * u, 46 * u, 1.6 * u);
+  ctx.fillStyle = '#f6efe6'; ctx.beginPath(); ctx.moveTo(bx - 24 * u, by - 6 * u); ctx.lineTo(bx + 26 * u, by - 6 * u); ctx.lineTo(bx + 22 * u, by + 1.6 * u); ctx.lineTo(bx - 23 * u, by + 1.6 * u); ctx.fill();
+  ctx.fillStyle = '#2e3a5a'; ctx.fillRect(bx - 24 * u, by - 0.4 * u, 48 * u, 2 * u);
+  ctx.fillStyle = '#f6efe6'; ctx.fillRect(bx - 18 * u, by - 11 * u, 34 * u, 5.2 * u);
+  ctx.fillStyle = '#3a4a6a'; for (let k = 0; k < 11; k++) ctx.fillRect(bx - 21 * u + k * 4.2 * u, by - 4.4 * u, 2.4 * u, 1.8 * u); for (let k = 0; k < 7; k++) ctx.fillRect(bx - 16 * u + k * 4.4 * u, by - 9.6 * u, 2.6 * u, 2 * u);
+  ctx.fillStyle = '#4a6aa8'; ctx.fillRect(bx - 14 * u, by - 13.2 * u, 22 * u, 1.6 * u);
+  ctx.fillStyle = '#f2d8b8'; ctx.fillRect(bx - 18 * u, by - 11 * u, 34 * u, 0.9 * u);
+  // a barge low in the water nearer the bank, pushed by a little tug
+  const gx = W * 0.2, gy = H * 0.87;
+  ctx.fillStyle = 'rgba(30,24,60,.4)'; ctx.fillRect(gx - 16 * u, gy + 1.6 * u, 36 * u, 1.4 * u);
+  ctx.fillStyle = '#4a3a3e'; ctx.beginPath(); ctx.moveTo(gx - 18 * u, gy - 2.6 * u); ctx.lineTo(gx + 10 * u, gy - 2.6 * u); ctx.lineTo(gx + 10 * u, gy + 1.6 * u); ctx.lineTo(gx - 16 * u, gy + 1.6 * u); ctx.fill();
+  ctx.fillStyle = '#8a5a3a'; ctx.fillRect(gx - 15 * u, gy - 4.6 * u, 22 * u, 2 * u);
+  ctx.fillStyle = '#2a2a3a'; ctx.fillRect(gx + 10 * u, gy - 3 * u, 10 * u, 4.6 * u);
+  ctx.fillStyle = '#f2ece2'; ctx.fillRect(gx + 12 * u, gy - 8.4 * u, 6 * u, 5.4 * u); ctx.fillStyle = '#2e3a5a'; ctx.fillRect(gx + 13.2 * u, gy - 7.2 * u, 3.6 * u, 1.8 * u);
+  ctx.fillStyle = '#c8402a'; ctx.fillRect(gx + 12 * u, gy - 9.4 * u, 6 * u, 1 * u);
+  // two gulls
+  ctx.strokeStyle = '#f6e8e0'; ctx.lineWidth = 0.9 * u; ctx.lineCap = 'round';
+  for (const [a, b] of [[0.62, 0.2], [0.67, 0.24]]) { ctx.beginPath(); ctx.moveTo(W * a - 2.2 * u, H * b); ctx.quadraticCurveTo(W * a - 1 * u, H * b - 1.4 * u, W * a, H * b); ctx.quadraticCurveTo(W * a + 1 * u, H * b - 1.4 * u, W * a + 2.2 * u, H * b); ctx.stroke(); }
+}
+
+// The house on the Drina: a little wooden cabin perched on a bare rock in the middle of the green river, misty
+// forested hills fading behind, the house and rock mirrored in the still water, a wooden boat tied up below.
+function srbDrinaHouse(ctx, W, H) {
+  const u = H / 100, wl = H * 0.58;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const ridgeY = (t, y0, amp, f, ph) => H * (y0 - amp * (0.6 * Math.sin(t * f + ph) + 0.4 * Math.sin(t * f * 2.3 + ph * 1.7)));
+  const hills = (y0, amp, f, ph, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, wl + 1); for (let k = 0; k <= 80; k++) ctx.lineTo(W * k / 80, ridgeY(k / 80, y0, amp, f, ph)); ctx.lineTo(W, wl + 1); ctx.closePath(); ctx.fill(); };
+  const forest = (y0, amp, f, ph, col, step) => { ctx.fillStyle = col; for (let xx = 0; xx < W + step * u; xx += step * u) { const y = ridgeY(xx / W, y0, amp, f, ph); ctx.beginPath(); ctx.moveTo(xx - step * 0.6 * u, y + step * 0.8 * u); ctx.lineTo(xx, y - step * 1.2 * u); ctx.lineTo(xx + step * 0.6 * u, y + step * 0.8 * u); ctx.fill(); } };
+  // a soft early-morning sky: pale blue overhead, warm and hazy at the horizon
+  const sky = ctx.createLinearGradient(0, 0, 0, wl); sky.addColorStop(0, '#9cbcd0'); sky.addColorStop(0.45, '#d4dcd6'); sky.addColorStop(1, '#f2e2c2');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, wl);
+  // mountains behind mountains, each paler with distance, the nearer ones furred with forest, mist between them
+  ctx.fillStyle = '#f6f0dc'; for (const [a, b, r] of [[0.66, 0.1, 5], [0.71, 0.09, 6.5], [0.76, 0.105, 4.5], [0.22, 0.13, 4], [0.26, 0.12, 5]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, r * 1.9 * u, r * 0.75 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  hills(0.19, 0.08, 3, 0.6, '#8ea2b0');
+  ctx.fillStyle = 'rgba(242,240,232,.6)'; ctx.fillRect(0, H * 0.25, W, 3 * u);
+  hills(0.3, 0.07, 4.2, 2.2, '#6e8c88'); forest(0.3, 0.07, 4.2, 2.2, '#6e8c88', 2.4);
+  ctx.fillStyle = 'rgba(240,240,232,.55)'; ctx.fillRect(0, H * 0.36, W, 3 * u);
+  hills(0.41, 0.06, 5, 4.1, '#4e7664'); forest(0.41, 0.06, 5, 4.1, '#48705e', 2.8);
+  ctx.fillStyle = 'rgba(236,240,232,.5)'; ctx.fillRect(0, H * 0.5, W, 2.6 * u);
+  // the near banks: steep forest coming down to the water at both sides
+  poly([[0, 0.22], [0.05, 0.25], [0.1, 0.31], [0.16, 0.4], [0.22, 0.49], [0.27, 0.56], [0.3, 0.58], [0, 0.58]], '#2f5a3e');
+  poly([[1, 0.26], [0.94, 0.3], [0.88, 0.38], [0.82, 0.47], [0.77, 0.55], [0.74, 0.58], [1, 0.58]], '#2f5a3e');
+  const tree = (a, b, h, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(W * a, H * b - h * u); ctx.lineTo(W * a + h * 0.3 * u, H * b); ctx.lineTo(W * a - h * 0.3 * u, H * b); ctx.fill(); };
+  for (let k = 0; k < 10; k++) tree(0.01 + k * 0.029, 0.27 + k * 0.032, 11 + (k % 3) * 2.5, k % 2 ? '#22443a' : '#2a5440');
+  for (let k = 0; k < 9; k++) tree(0.99 - k * 0.03, 0.31 + k * 0.03, 11 + (k % 3) * 2.5, k % 2 ? '#22443a' : '#2a5440');
+  ctx.fillStyle = '#467446'; for (const [a, b, r] of [[0.04, 0.38, 4], [0.11, 0.45, 3.6], [0.19, 0.52, 3.2], [0.95, 0.42, 4], [0.87, 0.49, 3.4]]) { ctx.beginPath(); ctx.arc(W * a, H * b, r * u, 0, Math.PI * 2); ctx.fill(); }
+  // the river: green, the banks mirrored dark along its edges, lighter streaks of current
+  const river = ctx.createLinearGradient(0, wl, 0, H); river.addColorStop(0, '#62a28c'); river.addColorStop(0.35, '#2f7a6a'); river.addColorStop(1, '#1d5850');
+  ctx.fillStyle = river; ctx.fillRect(0, wl, W, H - wl);
+  ctx.globalAlpha = 0.5; ctx.fillStyle = '#1f4a3c'; for (let k = 0; k < 9; k++) { ctx.fillRect(0, wl + 1 * u + k * 2.6 * u, W * (0.3 - k * 0.025), 1.5 * u); ctx.fillRect(W * (0.74 + k * 0.025), wl + 1 * u + k * 2.6 * u, W, 1.5 * u); }
+  ctx.globalAlpha = 1;
+  // the rock: grey limestone, broad at the water and narrowing upwards, a lit face, a shaded face, cracks, moss
+  const rx = W * 0.475, base = H * 0.72;
+  poly([[0.38, 0.72], [0.395, 0.65], [0.41, 0.58], [0.42, 0.52], [0.432, 0.475], [0.52, 0.475], [0.535, 0.52], [0.55, 0.59], [0.56, 0.66], [0.575, 0.72]], '#857e72');
+  poly([[0.38, 0.72], [0.395, 0.65], [0.41, 0.58], [0.42, 0.52], [0.432, 0.475], [0.462, 0.475], [0.452, 0.55], [0.44, 0.63], [0.432, 0.72]], '#aea696');
+  poly([[0.422, 0.51], [0.434, 0.48], [0.455, 0.48], [0.448, 0.53], [0.43, 0.56]], '#cac2b2');
+  poly([[0.51, 0.48], [0.535, 0.52], [0.55, 0.59], [0.56, 0.66], [0.575, 0.72], [0.53, 0.72], [0.525, 0.62], [0.51, 0.54]], '#5e5850');
+  ctx.strokeStyle = '#5a554c'; ctx.lineWidth = 1 * u; for (const [a0, b0, a1, b1] of [[0.47, 0.5, 0.48, 0.6], [0.49, 0.57, 0.5, 0.68], [0.43, 0.62, 0.44, 0.69]]) { ctx.beginPath(); ctx.moveTo(W * a0, H * b0); ctx.lineTo(W * a1, H * b1); ctx.stroke(); }
+  ctx.fillStyle = '#4a6a3a'; for (const [a, b, r] of [[0.41, 0.6, 2], [0.545, 0.64, 2.2], [0.425, 0.68, 1.8], [0.495, 0.5, 1.6]]) { ctx.beginPath(); ctx.arc(W * a, H * b, r * u, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#d8ece4'; ctx.beginPath(); ctx.ellipse(rx, base + 0.6 * u, 19 * u, 1.8 * u, 0, 0, Math.PI * 2); ctx.fill();
+  // the house, seen a little from the side: a plank front wall wider than the rock top, propped on struts, the
+  // gable end turning away to the right, a dark shingle roof
+  const hb = H * 0.48, x0 = W * 0.39, x1 = W * 0.53, hh = 15 * u, gw = 10 * u, rise = 12 * u;
+  ctx.strokeStyle = '#3a281c'; ctx.lineWidth = 1.6 * u; for (const [a, b, c, d] of [[x0 + 1.4 * u, hb, W * 0.425, hb + 8 * u], [x1 + gw - 1.4 * u, hb - 1.4 * u, W * 0.535, hb + 8 * u]]) { ctx.beginPath(); ctx.moveTo(a, b); ctx.lineTo(c, d); ctx.stroke(); }
+  ctx.fillStyle = '#3a281c'; ctx.fillRect(x0 - 1 * u, hb - 0.4 * u, x1 - x0 + gw + 1 * u, 2 * u);
+  ctx.fillStyle = '#7a5234'; ctx.fillRect(x0, hb - hh, x1 - x0, hh);
+  ctx.fillStyle = '#946642'; for (let k = 0; k < 9; k++) ctx.fillRect(x0 + k * (x1 - x0) / 9, hb - hh, (x1 - x0) / 9 * 0.5, hh);
+  ctx.fillStyle = '#56381f'; ctx.beginPath(); ctx.moveTo(x1, hb); ctx.lineTo(x1 + gw, hb - 1.4 * u); ctx.lineTo(x1 + gw, hb - hh - 1.4 * u); ctx.lineTo(x1 + gw / 2, hb - hh - rise); ctx.lineTo(x1, hb - hh); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#684426'; for (let k = 0; k < 3; k++) ctx.fillRect(x1 + k * gw / 3, hb - hh - 1 * u, gw / 3 * 0.45, hh);
+  // a shuttered window in the front wall, a door in the gable end
+  ctx.fillStyle = '#d8c49a'; ctx.fillRect(x0 + 4.4 * u, hb - hh + 3.4 * u, 7.4 * u, 6.6 * u);
+  ctx.fillStyle = '#2a2220'; ctx.fillRect(x0 + 5.8 * u, hb - hh + 4.8 * u, 4.6 * u, 3.8 * u);
+  ctx.fillStyle = '#2a2220'; ctx.fillRect(x1 + gw / 2 - 2.2 * u, hb - hh + 2 * u, 4.4 * u, hh - 3.4 * u);
+  // the roof: its front slope from the eave up to the ridge, overhanging the gable, rows of shingles
+  ctx.fillStyle = '#4e4640'; ctx.beginPath(); ctx.moveTo(x0 - 3.4 * u, hb - hh + 1.4 * u); ctx.lineTo(x1 + 2 * u, hb - hh + 1.4 * u); ctx.lineTo(x1 + gw / 2 + 1.4 * u, hb - hh - rise - 0.8 * u); ctx.lineTo(x0 + 1.4 * u, hb - hh - rise - 0.8 * u); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#7a6e62'; for (let k = 0; k < 3; k++) { const t = (k + 0.6) / 3.4, y = hb - hh + 1.4 * u - (rise + 2.2 * u) * t; ctx.fillRect(x0 - 3.4 * u + 4.8 * u * t, y, (x1 - x0) + 5.4 * u + (gw / 2 - 5.4 * u) * t, 1.1 * u); }
+  ctx.fillStyle = '#968a7c'; ctx.fillRect(x0 + 1.4 * u, hb - hh - rise - 1.2 * u, x1 + gw / 2 - x0, 1.3 * u);
+  ctx.fillStyle = '#2e2622'; ctx.fillRect(x0 - 3.4 * u, hb - hh + 0.6 * u, x1 - x0 + 5.4 * u, 1.2 * u);
+  // a ladder down the rock to the water
+  ctx.fillStyle = '#5a3e28'; ctx.fillRect(W * 0.548, hb + 8 * u, 1 * u, base - hb - 8 * u); ctx.fillRect(W * 0.565, hb + 9 * u, 1 * u, base - hb - 9 * u);
+  for (let k = 0; k < 5; k++) ctx.fillRect(W * 0.548, hb + (11 + k * 5) * u, W * 0.018, 0.9 * u);
+  // the reflection of the rock and the house, broken into ripples
+  for (let k = 0; k < 9; k++) {
+    const y = base + 3.4 * u + k * 2.8 * u, w = (34 - k * 1.6) * u;
+    ctx.fillStyle = k < 4 ? 'rgba(80,80,72,.55)' : k < 7 ? 'rgba(80,52,36,.5)' : 'rgba(40,40,40,.45)';
+    ctx.fillRect(rx - w / 2 + ((k * 7) % 5 - 2) * u, y, w, 1.6 * u);
+  }
+  ctx.fillStyle = '#9cc8b8'; for (let k = 0; k < 16; k++) ctx.fillRect(W * (((k * 41) % 95) / 100), H * (0.62 + ((k * 13) % 36) / 100), (5 + (k % 3) * 3) * u, 0.8 * u);
+  // a wooden boat tied up in the current below
+  const bx = W * 0.7, by = H * 0.83;
+  ctx.fillStyle = 'rgba(16,50,44,.45)'; ctx.fillRect(bx - 11 * u, by + 2 * u, 22 * u, 1.4 * u);
+  ctx.fillStyle = '#5a3a24'; ctx.beginPath(); ctx.moveTo(bx - 13 * u, by - 3.4 * u); ctx.lineTo(bx + 12 * u, by - 3 * u); ctx.lineTo(bx + 8 * u, by + 2 * u); ctx.lineTo(bx - 9 * u, by + 2 * u); ctx.fill();
+  ctx.fillStyle = '#8a5e3a'; ctx.fillRect(bx - 12.4 * u, by - 3.6 * u, 24 * u, 1.2 * u);
+  ctx.strokeStyle = '#d8c8a0'; ctx.lineWidth = 0.7 * u; ctx.beginPath(); ctx.moveTo(bx - 12 * u, by - 3 * u); ctx.quadraticCurveTo(bx - 18 * u, by - 3 * u, W * 0.566, H * 0.715); ctx.stroke();
+}
+
+// The Iron Gates: looking down from high above into the Danube gorge in the evening, sheer limestone walls lit gold
+// on one side and in violet shade on the other, the wide river curving away between them into the sunset haze,
+// one small boat far below, bushes on the clifftop in front.
+function srbIronGates(ctx, W, H) {
+  const u = H / 100;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const clipPoly = (pts, f) => { ctx.save(); ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.clip(); f(); ctx.restore(); };
+  // the evening sky: lavender blue overhead, peach and gold low down, the sun sinking at the end of the gorge
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.44); sky.addColorStop(0, '#6474b2'); sky.addColorStop(0.45, '#c09cbc'); sky.addColorStop(0.8, '#f2bc8c'); sky.addColorStop(1, '#f8daa0');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#fdeab0'; ctx.beginPath(); ctx.arc(W * 0.6, H * 0.36, 5.5 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#f0b29c'; for (const [a, b, w] of [[0.48, 0.14, 26], [0.76, 0.1, 30], [0.64, 0.22, 18]]) { roundRect(ctx, W * a - w * u / 2, H * b, w * u, 2 * u, 1 * u); ctx.fill(); }
+  // far ridges in the haze where the gorge opens out
+  poly([[0.36, 0.46], [0.42, 0.37], [0.48, 0.39], [0.53, 0.35], [0.57, 0.4], [0.64, 0.38], [0.7, 0.34], [0.78, 0.46]], '#b49ab8');
+  poly([[0.4, 0.47], [0.46, 0.41], [0.52, 0.43], [0.56, 0.45], [0.62, 0.43], [0.7, 0.39], [0.76, 0.47]], '#9c86a8');
+  // the river: from the foot of the walls below us, curving away up the gorge into the light
+  const riv = [[0, 0.6], [0.14, 0.56], [0.28, 0.53], [0.4, 0.5], [0.5, 0.465], [0.56, 0.45], [0.62, 0.45], [0.66, 0.48], [0.72, 0.55], [0.8, 0.66], [0.88, 0.8], [0.94, 1], [0, 1]];
+  const water = ctx.createLinearGradient(0, H * 0.45, 0, H); water.addColorStop(0, '#f6d8a0'); water.addColorStop(0.18, '#c0a8b8'); water.addColorStop(0.5, '#6c80ac'); water.addColorStop(1, '#344e7c');
+  poly(riv, water);
+  clipPoly(riv, () => {
+    // the left wall's shadow lying across the near water, the sun's path in the far reach, ripples
+    ctx.fillStyle = 'rgba(36,44,90,.35)'; ctx.beginPath(); ctx.moveTo(0, H * 0.6); ctx.lineTo(W * 0.5, H * 0.465); ctx.lineTo(W * 0.42, H * 0.6); ctx.lineTo(W * 0.2, H); ctx.lineTo(0, H); ctx.fill();
+    ctx.fillStyle = '#fbe6b4'; for (let k = 0; k < 6; k++) { const w = (7 - k * 0.8) * u; ctx.fillRect(W * 0.6 - w / 2 + (k % 2) * u, H * (0.46 + k * 0.022), w, 1 * u); }
+    // the golden wall mirrored under itself and the shaded wall under itself, broken into ripples
+    ctx.globalAlpha = 0.5; ctx.fillStyle = '#c89070';
+    for (let k = 0; k < 9; k++) { const t = k / 8, y = H * (0.6 - t * 0.13) + 2 * u, x1 = W * (0.0 + t * 0.48); ctx.fillRect(x1 - 30 * u + ((k * 7) % 5) * u, y, 26 * u, 1.3 * u); ctx.fillRect(x1 - 18 * u, y + 3.2 * u, 16 * u, 1.1 * u); }
+    ctx.fillStyle = '#6a5a86'; for (let k = 0; k < 9; k++) { const t = k / 8, y = H * (0.5 + t * 0.4), x1 = W * (0.66 + t * 0.26); ctx.fillRect(x1 - 12 * u - ((k * 5) % 4) * u, y, 10 * u, 1.3 * u); }
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = 'rgba(214,206,232,.55)'; for (let k = 0; k < 20; k++) ctx.fillRect(W * (0.1 + ((k * 37) % 76) / 100), H * (0.58 + ((k * 13) % 40) / 100), (4 + (k % 3) * 3) * u, 0.9 * u);
+  });
+  // the right wall, in shade: cool violet limestone with paler ribs, scrub along its top
+  const right = [[1, 0.2], [0.93, 0.22], [0.86, 0.27], [0.8, 0.33], [0.74, 0.39], [0.68, 0.44], [0.64, 0.46], [0.66, 0.48], [0.72, 0.55], [0.8, 0.66], [0.88, 0.8], [0.94, 1], [1, 1]];
+  poly(right, '#6c5876');
+  clipPoly(right, () => {
+    ctx.fillStyle = '#86708c'; for (const [a, b, w, h] of [[0.88, 0.3, 3.4, 34], [0.8, 0.38, 2.6, 22], [0.95, 0.3, 3, 46], [0.73, 0.44, 2.2, 12]]) ctx.fillRect(W * a, H * b, w * u, h * u);
+    ctx.fillStyle = '#54426a'; for (const [a, b, w, h] of [[0.91, 0.26, 2, 50], [0.84, 0.32, 2, 40], [0.77, 0.4, 1.6, 26], [0.98, 0.24, 2, 60]]) ctx.fillRect(W * a, H * b, w * u, h * u);
+  });
+  ctx.fillStyle = '#3c5844'; for (let k = 0; k < 12; k++) { const t = k / 11, a = 1 - t * 0.36, b = 0.2 + t * 0.26; ctx.beginPath(); ctx.ellipse(W * a, H * b + 0.4 * u, 3.2 * u, 1.8 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // the left wall: a sheer face of pale limestone lit gold by the low sun, streaked, ledged, dropping into the water
+  const left = [[0, 0.05], [0.08, 0.06], [0.16, 0.1], [0.25, 0.16], [0.34, 0.24], [0.42, 0.32], [0.48, 0.39], [0.53, 0.45], [0.5, 0.465], [0.4, 0.5], [0.28, 0.53], [0.14, 0.56], [0, 0.6]];
+  poly(left, '#c48e66');
+  clipPoly(left, () => {
+    const g = ctx.createLinearGradient(0, 0, W * 0.52, 0); g.addColorStop(0, 'rgba(250,214,150,0)'); g.addColorStop(0.6, 'rgba(250,214,150,.55)'); g.addColorStop(1, 'rgba(250,214,150,.3)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W * 0.54, H);
+    ctx.fillStyle = '#986656'; for (const [a, b, w, h] of [[0.06, 0.1, 2, 50], [0.14, 0.14, 2.2, 44], [0.22, 0.18, 1.8, 38], [0.3, 0.25, 2, 30], [0.38, 0.32, 1.6, 20], [0.45, 0.38, 1.6, 12], [0.02, 0.2, 1.8, 40], [0.18, 0.3, 2, 26]]) ctx.fillRect(W * a, H * b, w * u, h * u);
+    ctx.fillStyle = '#f2cc94'; for (const [a, b, w, h] of [[0.09, 0.08, 3.4, 40], [0.18, 0.13, 3, 34], [0.26, 0.2, 2.6, 28], [0.34, 0.28, 2.4, 20], [0.42, 0.35, 2, 12], [0.04, 0.3, 2.6, 24]]) ctx.fillRect(W * a, H * b, w * u, h * u);
+    // ledges with bushes clinging to them, and the dark water line at the foot
+    ctx.fillStyle = '#5a7a3e'; for (const [a, b, r] of [[0.12, 0.3, 2.6], [0.26, 0.36, 2.2], [0.06, 0.46, 3], [0.2, 0.47, 2.4], [0.36, 0.42, 2]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, r * 1.6 * u, r * 0.8 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  });
+  ctx.strokeStyle = '#4a3c4a'; ctx.lineWidth = 1.2 * u; ctx.beginPath(); ctx.moveTo(0, H * 0.6); ctx.lineTo(W * 0.14, H * 0.56); ctx.lineTo(W * 0.28, H * 0.53); ctx.lineTo(W * 0.4, H * 0.5); ctx.lineTo(W * 0.5, H * 0.465); ctx.stroke();
+  ctx.fillStyle = '#4a6a3e'; for (let k = 0; k < 13; k++) { const t = k / 12, a = t * 0.5, b = 0.05 + t * t * 0.34; ctx.beginPath(); ctx.ellipse(W * a, H * b, 3.4 * u, 1.9 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // a small boat far below, its wake fanning out behind it
+  const bx = W * 0.44, by = H * 0.68;
+  ctx.fillStyle = '#d4d8ea'; ctx.beginPath(); ctx.moveTo(bx + 2 * u, by + 0.6 * u); ctx.lineTo(bx + 12 * u, by + 4.6 * u); ctx.lineTo(bx + 9 * u, by + 5 * u); ctx.lineTo(bx + 1 * u, by + 1.4 * u); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(bx - 1 * u, by + 1 * u); ctx.lineTo(bx + 4 * u, by + 7 * u); ctx.lineTo(bx + 1.4 * u, by + 7 * u); ctx.lineTo(bx - 2 * u, by + 1.6 * u); ctx.fill();
+  ctx.fillStyle = '#f6f2ea'; ctx.beginPath(); ctx.moveTo(bx + 3 * u, by + 1 * u); ctx.lineTo(bx - 2.6 * u, by - 2.6 * u); ctx.lineTo(bx - 4 * u, by - 1 * u); ctx.lineTo(bx + 1 * u, by + 2.4 * u); ctx.fill();
+  ctx.fillStyle = '#c8402a'; ctx.fillRect(bx - 1.6 * u, by - 1.6 * u, 1.8 * u, 1.4 * u);
+  // the clifftop in front of us: rock, grass and bushes in the bottom corner
+  const top = [[0.74, 1], [0.8, 0.9], [0.86, 0.84], [0.93, 0.8], [1, 0.78], [1, 1]];
+  poly(top, '#8e7a68');
+  clipPoly(top, () => { ctx.fillStyle = '#b8a088'; for (const [a, b, w] of [[0.84, 0.88, 12], [0.92, 0.84, 10], [0.8, 0.96, 14]]) { roundRect(ctx, W * a, H * b, w * u, 3 * u, 1.4 * u); ctx.fill(); } });
+  ctx.fillStyle = '#3a5a30'; for (const [a, b, r] of [[0.97, 0.76, 5], [0.9, 0.8, 4], [0.82, 0.9, 3.6], [0.99, 0.88, 4]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, r * 1.4 * u, r * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#5a7e3e'; for (const [a, b, r] of [[0.965, 0.745, 2.4], [0.895, 0.785, 2], [0.815, 0.885, 1.8]]) { ctx.beginPath(); ctx.ellipse(W * a - 0.6 * u, H * b - 0.6 * u, r * 1.4 * u, r * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // a pine leaning in at the top right corner
+  ctx.strokeStyle = '#5a3424'; ctx.lineCap = 'round'; ctx.lineWidth = 2.6 * u; ctx.beginPath(); ctx.moveTo(W * 1.01, H * 0.3); ctx.quadraticCurveTo(W * 0.96, H * 0.18, W * 0.9, H * 0.12); ctx.stroke();
+  for (const [col, oy] of [['#1e3626', 0.8], ['#2c4a30', 0], ['#3e6038', -0.9]]) { ctx.fillStyle = col; for (const [a, b, rx, ry] of [[0.9, 0.1, 9, 3], [0.97, 0.05, 8, 2.6], [0.95, 0.17, 6, 2.2], [0.84, 0.14, 5, 2]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b + oy * u, rx * u * (oy < 0 ? 0.7 : 1), ry * u * (oy < 0 ? 0.6 : 1), 0, 0, Math.PI * 2); ctx.fill(); } }
+}
+
+// The Šargan Eight: the little narrow-gauge steam train crossing a stone arched bridge in the forested mountains of
+// Mokra Gora, puffs of white steam rising, the track looping up the hillside behind it to the upper level and a
+// tunnel, a few trees turning gold, a clear summer sky.
+function srbEightTrain(ctx, W, H) {
+  const u = H / 100;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const ridge = (y0, amp, f, ph, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, H); for (let k = 0; k <= 60; k++) { const t = k / 60; ctx.lineTo(W * t, H * (y0 - amp * (0.6 * Math.sin(t * f + ph) + 0.4 * Math.sin(t * f * 2.1 + ph * 1.6)))); } ctx.lineTo(W, H); ctx.fill(); };
+  const spruce = (a, b, h, col, col2) => { const x0 = W * a, y0 = H * b; ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(x0, y0 - h * u); ctx.lineTo(x0 + h * 0.3 * u, y0); ctx.lineTo(x0 - h * 0.3 * u, y0); ctx.fill(); if (col2) { ctx.fillStyle = col2; ctx.beginPath(); ctx.moveTo(x0, y0 - h * u); ctx.lineTo(x0 - h * 0.3 * u, y0); ctx.lineTo(x0 - h * 0.06 * u, y0); ctx.fill(); } };
+  // a broadleaf tree: a short trunk and a crown of overlapping clumps, lit on top
+  const crown = (a, b, r, col, lite) => {
+    ctx.fillStyle = '#4a3020'; ctx.fillRect(W * a - 0.8 * u, H * b, 1.6 * u, r * 1.1 * u);
+    for (const [dx, dy, k, c] of [[-0.5, 0.15, 0.62, col], [0.5, 0.2, 0.6, col], [0, -0.3, 0.7, col], [-0.25, -0.5, 0.4, lite], [0.3, -0.2, 0.35, lite]]) { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(W * a + dx * r * u, H * b + dy * r * u, k * r * u, 0, Math.PI * 2); ctx.fill(); }
+  };
+  // forest texture: rows of little spruce tops over a slope, clipped to it
+  const forestOn = (pts, cols2, step) => {
+    ctx.save(); ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.clip();
+    let r = 0; for (let y = 0; y < H + step * u; y += step * 1.1 * u, r++) for (let xx = (r % 2) * step * 0.5 * u; xx < W + step * u; xx += step * u) { ctx.fillStyle = cols2[(r + Math.round(xx / (step * u))) % cols2.length]; ctx.beginPath(); ctx.moveTo(xx - step * 0.5 * u, y + step * 0.5 * u); ctx.lineTo(xx, y - step * 1.1 * u); ctx.lineTo(xx + step * 0.5 * u, y + step * 0.5 * u); ctx.fill(); }
+    ctx.restore();
+  };
+  // the sky and a few summer clouds
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.4); sky.addColorStop(0, '#4f8fd0'); sky.addColorStop(1, '#cfe6f0');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f6f8f8'; for (const [a, b, r] of [[0.42, 0.08, 4.5], [0.47, 0.065, 6], [0.52, 0.085, 4.2], [0.8, 0.07, 4], [0.85, 0.055, 5], [0.89, 0.075, 3.6]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, r * 1.8 * u, r * 0.85 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // a far blue range in the gap, then the two forested mountains the line winds between
+  poly([[0.2, 0.4], [0.3, 0.24], [0.4, 0.2], [0.5, 0.23], [0.58, 0.18], [0.68, 0.24], [0.8, 0.4]], '#86a4b4');
+  poly([[0.3, 0.4], [0.4, 0.28], [0.48, 0.3], [0.56, 0.27], [0.66, 0.33], [0.74, 0.4]], '#6e909c');
+  const leftM = [[0, 0.1], [0.08, 0.08], [0.16, 0.12], [0.26, 0.2], [0.36, 0.3], [0.44, 0.38], [0.5, 0.44], [0.5, 1], [0, 1]];
+  const rightM = [[1, 0.13], [0.92, 0.12], [0.84, 0.17], [0.74, 0.26], [0.64, 0.34], [0.56, 0.42], [0.5, 0.46], [0.5, 1], [1, 1]];
+  poly(leftM, '#3d6a46'); forestOn(leftM, ['#346040', '#3f6e48', '#2e5a3c'], 3.2);
+  poly(rightM, '#335c40'); forestOn(rightM, ['#2c5438', '#376244', '#285036'], 3.2);
+  ctx.fillStyle = '#4a7a4e'; for (const [a, b] of [[0.06, 0.12], [0.14, 0.15], [0.9, 0.15], [0.82, 0.2]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, 4 * u, 1.6 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // the upper level of the line: a ledge cut across the left mountain, over an embankment, into a tunnel
+  const upper = [[-0.01, 0.31], [0.12, 0.34], [0.26, 0.38], [0.4, 0.42], [0.52, 0.43], [0.62, 0.405]];
+  ctx.strokeStyle = '#9a8a70'; ctx.lineWidth = 3.4 * u; ctx.lineCap = 'butt'; ctx.lineJoin = 'round'; ctx.beginPath(); upper.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.stroke();
+  ctx.strokeStyle = '#4a3a30'; ctx.lineWidth = 1 * u; ctx.beginPath(); upper.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H - 0.6 * u) : ctx.moveTo(a * W, b * H - 0.6 * u))); ctx.stroke();
+  ctx.fillStyle = '#7a6c5a'; ctx.beginPath(); upper.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H + 1.6 * u) : ctx.moveTo(a * W, b * H + 1.6 * u))); for (let i = upper.length - 1; i >= 0; i--) ctx.lineTo(upper[i][0] * W, upper[i][1] * H + 3.4 * u); ctx.fill();
+  ctx.fillStyle = '#a89c86'; roundRect(ctx, W * 0.61, H * 0.405 - 9 * u, 11 * u, 9.4 * u, [5.5 * u, 5.5 * u, 0, 0]); ctx.fill();
+  ctx.fillStyle = '#1a201c'; roundRect(ctx, W * 0.61 + 2 * u, H * 0.405 - 7 * u, 7 * u, 7.4 * u, [3.5 * u, 3.5 * u, 0, 0]); ctx.fill();
+  ctx.fillStyle = '#c8bca4'; ctx.fillRect(W * 0.61 - 0.6 * u, H * 0.405 - 9.6 * u, 12.2 * u, 1.2 * u);
+  // the ravine under the bridge: darker woods falling to a stream
+  poly([[0.18, 0.6], [0.3, 0.62], [0.42, 0.7], [0.5, 0.82], [0.56, 0.7], [0.68, 0.62], [0.8, 0.6], [0.8, 1], [0.18, 1]], '#2f5a3c');
+  poly([[0.44, 1], [0.47, 0.86], [0.5, 0.82], [0.53, 0.86], [0.57, 1]], '#6aa8c0');
+  // the lower line coming round the hillside from the left, over the bridge, and on round to the right
+  const bed = (pts, w) => { ctx.strokeStyle = '#8a7a60'; ctx.lineWidth = w * u; ctx.lineCap = 'round'; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.stroke(); ctx.strokeStyle = '#4a3a30'; ctx.lineWidth = 0.9 * u; ctx.stroke(); };
+  // the line leaves the bridge curving up the left-hand slope, round towards the upper level: the loop of the eight
+  bed([[-0.01, 0.47], [0.04, 0.5], [0.09, 0.55], [0.15, 0.585], [0.2, 0.595]], 2.6); bed([[0.8, 0.595], [0.88, 0.6], [0.95, 0.63], [1.01, 0.67]], 2.6);
+  // the stone bridge: a deck on three tall arches, lit stone on the left of each pier
+  const bl = W * 0.2, br = W * 0.8, deck = H * 0.6;
+  ctx.fillStyle = '#b8a894'; ctx.fillRect(bl, deck, br - bl, H * 0.4);
+  ctx.fillStyle = '#2f5a3c'; const n = 4, sp = (br - bl) / n;
+  for (let k = 0; k < n; k++) {
+    const x0 = bl + k * sp + 2.6 * u, x1 = bl + (k + 1) * sp - 2.6 * u, top = deck + 6 * u;
+    ctx.save(); ctx.beginPath(); ctx.moveTo(x0, H); ctx.lineTo(x0, top + (x1 - x0) / 2); ctx.arc((x0 + x1) / 2, top + (x1 - x0) / 2, (x1 - x0) / 2, Math.PI, 0); ctx.lineTo(x1, H); ctx.closePath(); ctx.clip();
+    // seen through the arches: the far side of the ravine, woods falling to the stream
+    ctx.fillStyle = '#3c6a46'; ctx.fillRect(x0, top, x1 - x0, H);
+    ctx.fillStyle = '#2a5236'; ctx.beginPath(); ctx.moveTo(bl, H * 0.74); ctx.quadraticCurveTo(W * 0.5, H * 0.98, br, H * 0.74); ctx.lineTo(br, H); ctx.lineTo(bl, H); ctx.fill();
+    ctx.fillStyle = '#7ab4c8'; ctx.beginPath(); ctx.moveTo(W * 0.42, H); ctx.quadraticCurveTo(W * 0.5, H * 0.88, W * 0.6, H * 0.86); ctx.lineTo(W * 0.62, H * 0.88); ctx.quadraticCurveTo(W * 0.52, H * 0.92, W * 0.5, H); ctx.fill();
+    ctx.fillStyle = '#c8e4ec'; ctx.fillRect(W * 0.5, H * 0.9, 3 * u, 0.8 * u);
+    ctx.restore();
+  }
+  ctx.fillStyle = '#d8ccb6'; for (let k = 0; k <= n; k++) ctx.fillRect(bl + k * sp - 2.6 * u, deck + 6 * u, 1.6 * u, H);
+  ctx.fillStyle = '#857866'; for (let k = 0; k <= n; k++) ctx.fillRect(bl + k * sp + 1.2 * u, deck + 6 * u, 1.4 * u, H);
+  ctx.fillStyle = '#8e8070'; ctx.fillRect(bl - 1 * u, deck - 0.6 * u, br - bl + 2 * u, 2.4 * u); ctx.fillStyle = '#d8ccb6'; ctx.fillRect(bl - 1 * u, deck - 0.6 * u, br - bl + 2 * u, 0.9 * u);
+  ctx.fillStyle = '#4a3a30'; ctx.fillRect(bl - 1 * u, deck - 1.4 * u, br - bl + 2 * u, 0.9 * u);
+  // the train, heading left across the bridge: the engine, then three wooden coaches
+  const ty = deck - 1.4 * u, v = 1.22 * u;
+  const coach = (x0, len) => {
+    ctx.fillStyle = '#7a2a22'; ctx.fillRect(x0, ty - 9 * v, len, 7.4 * v);
+    ctx.fillStyle = '#e8d8b0'; ctx.fillRect(x0 + 1 * v, ty - 7.6 * v, len - 2 * v, 2.6 * v);
+    ctx.fillStyle = '#5a1e1a'; for (let k = 0; k < Math.floor(len / (3.4 * v)); k++) ctx.fillRect(x0 + 2.4 * v + k * 3.4 * v, ty - 7.6 * v, 0.9 * v, 2.6 * v);
+    ctx.fillStyle = '#3a3634'; ctx.beginPath(); ctx.moveTo(x0 - 0.6 * v, ty - 9 * v); ctx.quadraticCurveTo(x0 + len / 2, ty - 11.6 * v, x0 + len + 0.6 * v, ty - 9 * v); ctx.fill();
+    ctx.fillStyle = '#1e1c1c'; ctx.fillRect(x0 + 0.6 * v, ty - 1.8 * v, len - 1.2 * v, 1 * v);
+    ctx.fillStyle = '#2a2626'; for (const d of [2.4, len / u - 2.4]) { ctx.beginPath(); ctx.arc(x0 + d * v, ty - 0.6 * v, 1.4 * v, 0, Math.PI * 2); ctx.fill(); }
+  };
+  const ex = W * 0.27;
+  for (let k = 0; k < 3; k++) coach(ex + 17 * v + k * 17.6 * v, 16.4 * v);
+  // the engine: black boiler with brass bands, a tall chimney, red buffer beam and wheels, the cab behind
+  ctx.fillStyle = '#1e1c1e'; ctx.fillRect(ex + 1 * v, ty - 8 * v, 11 * v, 6 * v);
+  ctx.fillStyle = '#3a383c'; ctx.fillRect(ex + 1 * v, ty - 8 * v, 11 * v, 1.6 * v);
+  ctx.fillStyle = '#d8a83a'; ctx.fillRect(ex + 6.6 * v, ty - 8 * v, 1.2 * v, 6 * v);
+  ctx.fillStyle = '#1e1c1e'; ctx.fillRect(ex + 2.4 * v, ty - 13 * v, 2.4 * v, 5 * v); ctx.fillRect(ex + 1.8 * v, ty - 14 * v, 3.6 * v, 1.4 * v); ctx.fillRect(ex + 6.4 * v, ty - 10 * v, 2.4 * v, 2.2 * v);
+  ctx.fillStyle = '#2a2628'; ctx.fillRect(ex + 11 * v, ty - 12 * v, 6 * v, 10.4 * v); ctx.fillStyle = '#3a383c'; ctx.fillRect(ex + 10.4 * v, ty - 12.8 * v, 7.2 * v, 1.2 * v);
+  ctx.fillStyle = '#e8d8b0'; ctx.fillRect(ex + 12.4 * v, ty - 10.6 * v, 3.2 * v, 2.6 * v);
+  ctx.fillStyle = '#c0302a'; ctx.fillRect(ex - 0.6 * v, ty - 3.2 * v, 2 * v, 2.4 * v);
+  ctx.fillStyle = '#c0302a'; for (const d of [3.6, 8.2, 13]) { ctx.beginPath(); ctx.arc(ex + d * v, ty - 1.4 * v, 2 * v, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#e8d8b0'; ctx.fillRect(ex + 3.6 * v, ty - 1.9 * v, 9.4 * v, 0.9 * v);
+  ctx.fillStyle = '#f4e4a0'; ctx.beginPath(); ctx.arc(ex + 0.8 * v, ty - 6.4 * v, 1 * v, 0, Math.PI * 2); ctx.fill();
+  // steam: big white puffs rising from the chimney and drifting back over the train
+  for (const [dx, dy, r, col] of [[3.6, -17, 2.6, '#f6f6f2'], [5.6, -21, 3.6, '#f2f2ee'], [9.6, -25, 4.6, '#eef0ee'], [16, -27.6, 5.6, '#e6eaea'], [24, -28.6, 5, '#dde4e6'], [31, -28.4, 4.2, '#d6dee2']]) {
+    ctx.fillStyle = '#b8c4c8'; ctx.beginPath(); ctx.arc(ex + dx * v + 0.8 * v, ty + dy * v + 0.8 * v, r * v, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = col; ctx.beginPath(); ctx.arc(ex + dx * v, ty + dy * v, r * v, 0, Math.PI * 2); ctx.fill();
+  }
+  // woods in front: spruces and broadleaf trees, a few already turning gold, down both bottom corners
+  for (const [a, b, h] of [[0.03, 0.82, 22], [0.08, 0.86, 26], [0.13, 0.9, 20], [0.9, 0.84, 24], [0.95, 0.8, 20], [0.86, 0.9, 18], [0.99, 0.9, 26]]) spruce(a, b, h, '#1e4230', '#2a5a3c');
+  crown(0.16, 0.8, 5.6, '#4a7e3e', '#6a9e4a'); crown(0.21, 0.9, 6.4, '#d8a03a', '#ecc25a'); crown(0.8, 0.84, 6, '#c8702e', '#e2944a'); crown(0.84, 0.94, 5.4, '#4a7e3e', '#6a9e4a');
+}
+
+// Zlatibor: rolling green highland meadows under a big summer sky, tall conical haystacks built round poles, a
+// wooden cottage with a steep shingle roof, the black pines the mountain is named for, sheep grazing in front.
+function srbZlatibor(ctx, W, H) {
+  const u = H / 100;
+  const hill = (y0, amp, f, ph, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, H); for (let k = 0; k <= 60; k++) { const t = k / 60; ctx.lineTo(W * t, H * (y0 - amp * (0.65 * Math.sin(t * f + ph) + 0.35 * Math.sin(t * f * 2.2 + ph * 1.4)))); } ctx.lineTo(W, H); ctx.fill(); };
+  const hy = (t, y0, amp, f, ph) => H * (y0 - amp * (0.65 * Math.sin(t * f + ph) + 0.35 * Math.sin(t * f * 2.2 + ph * 1.4)));
+  // the sky with big fair-weather clouds
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.45); sky.addColorStop(0, '#3f86d0'); sky.addColorStop(1, '#bfe0f2');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  const cloud = (a, b, s) => { for (const [dx, dy, r, col] of [[0, 0.6, 6, '#d8e4ee'], [-7, 1, 4.6, '#d8e4ee'], [7, 1, 5, '#d8e4ee'], [0, -0.4, 6, '#ffffff'], [-6.6, 0.4, 4.4, '#f6f9fb'], [6.6, 0.2, 4.8, '#f6f9fb'], [2.4, -3.6, 4.6, '#ffffff']]) { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(W * a + dx * s * u * 1.4, H * b + dy * s * u, r * s * u * 1.3, r * s * u * 0.8, 0, 0, Math.PI * 2); ctx.fill(); } };
+  cloud(0.2, 0.15, 1.1); cloud(0.66, 0.1, 1.3); cloud(0.92, 0.22, 0.8);
+  // far ridges, blue-green, then the rolling meadows in bands of green
+  hill(0.36, 0.05, 3, 0.5, '#8aaeb0');
+  hill(0.42, 0.05, 4, 2.2, '#6e9e78');
+  hill(0.5, 0.06, 3.2, 4, '#5e9450'); hill(0.512, 0.06, 3.2, 4, '#7eb058');
+  hill(0.62, 0.06, 2.6, 1.2, '#6aa048'); hill(0.635, 0.06, 2.6, 1.2, '#94c25c');
+  hill(0.8, 0.05, 2.2, 3.1, '#86b852');
+  // mown stripes on the near meadows
+  ctx.strokeStyle = 'rgba(176,214,110,.6)'; ctx.lineWidth = 1.1 * u; for (let k = 0; k < 7; k++) { ctx.beginPath(); for (let t = 0; t <= 1.001; t += 0.05) { const px = W * t, py = hy(t, 0.62, 0.06, 2.6, 1.2) + (4 + k * 4.4) * u; t ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke(); }
+  // the black pines: dark rounded tiers on straight trunks, scattered over the hills, smaller with distance
+  const pine = (a, b, h) => {
+    const x0 = W * a, y0 = H * b, w = h * 0.36;
+    ctx.fillStyle = '#4a3020'; ctx.fillRect(x0 - h * 0.035 * u, y0 - h * 0.3 * u, h * 0.07 * u, h * 0.3 * u);
+    for (const [t, ww, col] of [[0.25, 1, '#1e4030'], [0.48, 0.82, '#24503a'], [0.68, 0.6, '#2a5a40'], [0.86, 0.36, '#2f6446']]) { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(x0, y0 - h * t * u, w * ww * u, h * 0.16 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = '#3e7a50'; ctx.beginPath(); ctx.ellipse(x0 - w * 0.3 * u, y0 - h * 0.52 * u, w * 0.36 * u, h * 0.06 * u, 0, 0, Math.PI * 2); ctx.fill();
+  };
+  for (const [a, h] of [[0.1, 7], [0.14, 6], [0.34, 6.5], [0.52, 6], [0.56, 7], [0.78, 6], [0.9, 7.5]]) pine(a, hy(a, 0.42, 0.05, 4, 2.2) / H + 0.01, h);
+  for (const [a, h] of [[0.03, 12], [0.24, 10], [0.62, 11], [0.68, 13], [0.97, 12]]) pine(a, hy(a, 0.5, 0.06, 3.2, 4) / H + 0.015, h);
+  // the cottage: dark log walls, a tall steep roof of grey shingles, a white chimney, a small porch
+  const cx = W * 0.3, cb = hy(0.3, 0.62, 0.06, 2.6, 1.2) + 3 * u, cw = 24 * u, ch = 12 * u;
+  ctx.fillStyle = '#7a6a58'; ctx.fillRect(cx - cw / 2 - 1 * u, cb - 1.6 * u, cw + 2 * u, 2.2 * u);
+  ctx.fillStyle = '#6a4428'; ctx.fillRect(cx - cw / 2, cb - ch - 1.6 * u, cw, ch);
+  ctx.fillStyle = '#4e3020'; for (let k = 1; k < 5; k++) ctx.fillRect(cx - cw / 2, cb - 1.6 * u - k * ch / 5, cw, 0.6 * u);
+  // a door to one side and one wide window with its shutters open
+  ctx.fillStyle = '#3a2418'; ctx.fillRect(cx + cw * 0.22, cb - ch - 0.4 * u, 3.6 * u, ch - 1.2 * u);
+  ctx.fillStyle = '#2e3440'; ctx.fillRect(cx - cw * 0.26, cb - ch * 0.8, 6 * u, 4.4 * u);
+  ctx.fillStyle = '#f2ead6'; ctx.fillRect(cx - cw * 0.26 - 2.2 * u, cb - ch * 0.8 - 0.6 * u, 2.2 * u, 5.6 * u); ctx.fillRect(cx - cw * 0.26 + 6 * u, cb - ch * 0.8 - 0.6 * u, 2.2 * u, 5.6 * u);
+  ctx.fillStyle = '#4a4440'; ctx.beginPath(); ctx.moveTo(cx - cw / 2 - 4 * u, cb - ch - 0.8 * u); ctx.lineTo(cx - 4 * u, cb - ch - 19 * u); ctx.lineTo(cx + 4 * u, cb - ch - 19 * u); ctx.lineTo(cx + cw / 2 + 4 * u, cb - ch - 0.8 * u); ctx.fill();
+  ctx.fillStyle = '#6a625a'; ctx.beginPath(); ctx.moveTo(cx - cw / 2 - 4 * u, cb - ch - 0.8 * u); ctx.lineTo(cx - 4 * u, cb - ch - 19 * u); ctx.lineTo(cx - 1 * u, cb - ch - 19 * u); ctx.lineTo(cx - cw * 0.12, cb - ch - 0.8 * u); ctx.fill();
+  ctx.fillStyle = '#5a524c'; for (let k = 1; k < 5; k++) { const t = k / 5; ctx.fillRect(cx - cw / 2 - 4 * u + t * (cw / 2), cb - ch - 0.8 * u - t * 18.2 * u, cw + 8 * u - t * cw, 0.8 * u); }
+  ctx.fillStyle = '#ece4d4'; ctx.fillRect(cx + 4.6 * u, cb - ch - 17 * u, 2.8 * u, 7 * u); ctx.fillStyle = '#8a3a2a'; ctx.fillRect(cx + 4.2 * u, cb - ch - 17.8 * u, 3.6 * u, 1.2 * u);
+  ctx.fillStyle = 'rgba(240,244,246,.75)'; for (const [dx, dy, r] of [[6.4, -20, 1.4], [7.4, -22.6, 1.8], [9, -25.4, 2.2]]) { ctx.beginPath(); ctx.arc(cx + dx * u, cb - ch + dy * u, r * u, 0, Math.PI * 2); ctx.fill(); }
+  // a footpath winding down the meadow from the cottage door
+  ctx.strokeStyle = '#c8b48a'; ctx.lineCap = 'round';
+  for (let k = 0; k < 24; k++) { const t = k / 24, t2 = (k + 1) / 24, P = (q) => [cx + cw * 0.27 + Math.sin(q * 3.2) * 9 * u + q * 26 * u, cb + q * (H - cb)]; ctx.lineWidth = (1.6 + t * 6) * u; ctx.beginPath(); ctx.moveTo(...P(t)); ctx.lineTo(...P(t2)); ctx.stroke(); }
+  // a split-rail fence along the brow of the meadow
+  const fence = (a0, a1, dy) => { const pts = []; for (let k = 0; k <= 8; k++) { const a = a0 + (a1 - a0) * k / 8; pts.push([W * a, hy(a, 0.62, 0.06, 2.6, 1.2) + dy * u]); }
+    ctx.strokeStyle = '#6a4a2e'; ctx.lineWidth = 1.3 * u; for (const o of [2.2, 4.4]) { ctx.beginPath(); pts.forEach(([px, py], i) => (i ? ctx.lineTo(px, py - o * u) : ctx.moveTo(px, py - o * u))); ctx.stroke(); }
+    ctx.fillStyle = '#5a3c24'; for (const [px, py] of pts) ctx.fillRect(px - 0.7 * u, py - 6 * u, 1.4 * u, 6.4 * u); };
+  fence(0.4, 0.7, 4);
+  // haystacks: tall cones of hay built round a pole whose top sticks out, lit on the left, a shadow on the grass
+  const stack = (a, b, h) => {
+    const x0 = W * a, y0 = H * b, w = h * 0.36;
+    ctx.fillStyle = 'rgba(60,90,40,.45)'; ctx.beginPath(); ctx.ellipse(x0 + w * 0.6 * u, y0, w * 1.1 * u, h * 0.06 * u, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#5a3a22'; ctx.fillRect(x0 - h * 0.025 * u, y0 - h * 1.18 * u, h * 0.05 * u, h * 0.4 * u);
+    ctx.fillStyle = '#a8803e'; ctx.beginPath(); ctx.moveTo(x0, y0 - h * 0.98 * u); ctx.quadraticCurveTo(x0 + w * 0.7 * u, y0 - h * 0.6 * u, x0 + w * u, y0); ctx.lineTo(x0 - w * u, y0); ctx.quadraticCurveTo(x0 - w * 0.7 * u, y0 - h * 0.6 * u, x0, y0 - h * 0.98 * u); ctx.fill();
+    ctx.fillStyle = '#d8b460'; ctx.beginPath(); ctx.moveTo(x0, y0 - h * 0.98 * u); ctx.quadraticCurveTo(x0 - w * 0.7 * u, y0 - h * 0.6 * u, x0 - w * u, y0); ctx.lineTo(x0 - w * 0.1 * u, y0); ctx.quadraticCurveTo(x0 - w * 0.05 * u, y0 - h * 0.5 * u, x0, y0 - h * 0.98 * u); ctx.fill();
+    ctx.fillStyle = '#ecd088'; ctx.beginPath(); ctx.moveTo(x0 - 0.2 * u, y0 - h * 0.9 * u); ctx.quadraticCurveTo(x0 - w * 0.5 * u, y0 - h * 0.55 * u, x0 - w * 0.62 * u, y0 - h * 0.3 * u); ctx.lineTo(x0 - w * 0.4 * u, y0 - h * 0.3 * u); ctx.quadraticCurveTo(x0 - w * 0.25 * u, y0 - h * 0.6 * u, x0 - 0.2 * u, y0 - h * 0.9 * u); ctx.fill();
+    ctx.strokeStyle = '#8a6a32'; ctx.lineWidth = 0.8 * u; for (const t of [0.35, 0.65]) { const yy = y0 - h * t * u, ww = w * (1 - t * 0.8) * 0.95; ctx.beginPath(); ctx.moveTo(x0 - ww * u, yy); ctx.quadraticCurveTo(x0, yy + 1.4 * u, x0 + ww * u, yy); ctx.stroke(); }
+  };
+  stack(0.52, 0.6, 15); stack(0.6, 0.63, 13); stack(0.1, 0.72, 20); stack(0.83, 0.82, 30);
+  // sheep grazing in the near meadow: woolly white bodies, dark heads and legs
+  const sheep = (a, b, s, dir) => {
+    const x0 = W * a, y0 = H * b;
+    ctx.fillStyle = '#2a2422'; for (const dx of [-2.2, -0.8, 1.2, 2.4]) ctx.fillRect(x0 + dx * s * u, y0, 0.8 * s * u, 2.4 * s * u);
+    ctx.fillStyle = '#d8d2c6'; ctx.beginPath(); ctx.ellipse(x0 + 0.4 * s * u, y0 + 0.2 * s * u, 4 * s * u, 2.6 * s * u, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#f6f2ea'; ctx.beginPath(); ctx.ellipse(x0, y0 - 0.4 * s * u, 3.8 * s * u, 2.4 * s * u, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#2a2422'; ctx.beginPath(); ctx.ellipse(x0 + dir * 4.4 * s * u, y0 + (dir > 0 ? 0.6 : 0.2) * s * u, 1.4 * s * u, 1.1 * s * u, dir * 0.4, 0, Math.PI * 2); ctx.fill();
+  };
+  sheep(0.24, 0.83, 1.4, -1); sheep(0.36, 0.9, 1.6, 1); sheep(0.45, 0.8, 1.3, 1); sheep(0.56, 0.9, 1.6, -1); sheep(0.66, 0.83, 1.35, 1); sheep(0.16, 0.92, 1.6, 1);
+  // wild flowers in the grass
+  const Rf = rng(77); for (let k = 0; k < 60; k++) { const a = Rf(), b = 0.72 + Rf() * 0.28; ctx.fillStyle = ['#f6f2e8', '#f0d040', '#d86aa0', '#f6f2e8'][k % 4]; ctx.fillRect(W * a, H * b, 1.2 * u, 1.2 * u); }
+  pine(0.95, 0.98, 30); pine(0.02, 0.8, 18);
+}
+
+// Little scenes for the postcard letters, each a few big shapes.
+const SERBIA_SCENES = [
+  (c, w, h) => { // plums on orchard green
+    c.fillStyle = '#2a5a34'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#5a9a40'; c.beginPath(); c.ellipse(w * 0.7, h * 0.12, w * 0.32, h * 0.06, -0.5, 0, Math.PI * 2); c.fill();
+    for (const [a, b] of [[0.32, 0.3], [0.68, 0.52], [0.34, 0.78]]) {
+      c.fillStyle = '#3a2e66'; c.beginPath(); c.ellipse(w * a, h * b, w * 0.3, h * 0.13, 0, 0, Math.PI * 2); c.fill();
+      c.fillStyle = '#5a5498'; c.beginPath(); c.ellipse(w * a - w * 0.04, h * b - h * 0.02, w * 0.22, h * 0.1, 0, 0, Math.PI * 2); c.fill();
+      c.fillStyle = '#a8aad4'; c.beginPath(); c.ellipse(w * a - w * 0.1, h * b - h * 0.05, w * 0.08, h * 0.035, 0, 0, Math.PI * 2); c.fill();
+    }
+  },
+  (c, w, h) => { // strings of red peppers on a white wall
+    c.fillStyle = '#f4efe4'; c.fillRect(0, 0, w, h);
+    for (const a of [0.25, 0.75]) for (let k = 0; k < 7; k++) {
+      const y = h * (0.04 + k * 0.14);
+      c.fillStyle = '#8a1812'; for (const sg of [-1, 1]) { c.beginPath(); c.moveTo(w * a, y); c.lineTo(w * (a + sg * 0.24), y + h * 0.1); c.lineTo(w * (a + sg * 0.1), y + h * 0.13); c.fill(); }
+      c.fillStyle = '#d42c1e'; for (const sg of [-1, 1]) { c.beginPath(); c.moveTo(w * a, y + h * 0.01); c.lineTo(w * (a + sg * 0.2), y + h * 0.1); c.lineTo(w * (a + sg * 0.08), y + h * 0.11); c.fill(); }
+      c.fillStyle = '#3f7a2a'; c.fillRect(w * a - w * 0.05, y - h * 0.01, w * 0.1, h * 0.03);
+    }
+  },
+  (c, w, h) => { // the house on the rock in the green Drina
+    c.fillStyle = '#c8dce0'; c.fillRect(0, 0, w, h); c.fillStyle = '#5e8a74'; c.fillRect(0, h * 0.42, w, h * 0.2);
+    c.fillStyle = '#2f7a6a'; c.fillRect(0, h * 0.62, w, h);
+    c.fillStyle = '#9a9488'; c.beginPath(); c.moveTo(w * 0.2, h * 0.72); c.lineTo(w * 0.32, h * 0.44); c.lineTo(w * 0.68, h * 0.44); c.lineTo(w * 0.82, h * 0.72); c.fill();
+    c.fillStyle = '#7a5234'; c.fillRect(w * 0.12, h * 0.3, w * 0.76, h * 0.15);
+    c.fillStyle = '#3c3430'; c.beginPath(); c.moveTo(w * 0.02, h * 0.31); c.lineTo(w * 0.36, h * 0.14); c.lineTo(w * 0.64, h * 0.14); c.lineTo(w * 0.98, h * 0.31); c.fill();
+    c.fillStyle = '#e6d6a6'; c.fillRect(w * 0.26, h * 0.34, w * 0.16, h * 0.06);
+  },
+  (c, w, h) => { // a haystack on a green meadow
+    c.fillStyle = '#6aaee0'; c.fillRect(0, 0, w, h); c.fillStyle = '#f6f8f8'; c.beginPath(); c.ellipse(w * 0.3, h * 0.12, w * 0.3, h * 0.05, 0, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#6aa848'; c.fillRect(0, h * 0.66, w, h);
+    c.fillStyle = '#5a3a22'; c.fillRect(w * 0.47, h * 0.12, w * 0.07, h * 0.2);
+    c.fillStyle = '#c89a48'; c.beginPath(); c.moveTo(w * 0.5, h * 0.2); c.quadraticCurveTo(w * 0.86, h * 0.5, w * 0.98, h * 0.8); c.lineTo(w * 0.02, h * 0.8); c.quadraticCurveTo(w * 0.14, h * 0.5, w * 0.5, h * 0.2); c.fill();
+    c.fillStyle = '#e6c272'; c.beginPath(); c.moveTo(w * 0.5, h * 0.2); c.quadraticCurveTo(w * 0.14, h * 0.5, w * 0.02, h * 0.8); c.lineTo(w * 0.4, h * 0.8); c.quadraticCurveTo(w * 0.45, h * 0.5, w * 0.5, h * 0.2); c.fill();
+  },
+  (c, w, h) => { // the woven leather of an opanak
+    c.fillStyle = '#8a5026'; c.fillRect(0, 0, w, h);
+    const s = w * 0.3; c.fillStyle = '#d89a4c';
+    for (let y = -s; y < h + s; y += s) for (let x = ((y / s) % 2 ? s / 2 : 0) - s; x < w + s; x += s) { c.beginPath(); c.moveTo(x, y - s * 0.42); c.lineTo(x + s * 0.42, y); c.lineTo(x, y + s * 0.42); c.lineTo(x - s * 0.42, y); c.fill(); }
+    c.fillStyle = '#5a3018'; for (let y = 0; y < h; y += s) c.fillRect(0, y - s * 0.06, w, s * 0.12);
+  },
+  (c, w, h) => { // the little steam train in the mountains
+    c.fillStyle = '#7ab4e0'; c.fillRect(0, 0, w, h); c.fillStyle = '#3f6e48'; c.beginPath(); c.moveTo(0, h * 0.5); c.lineTo(w * 0.3, h * 0.3); c.lineTo(w * 0.6, h * 0.45); c.lineTo(w, h * 0.35); c.lineTo(w, h); c.lineTo(0, h); c.fill();
+    c.fillStyle = '#f4f4f0'; for (const [a, b, r] of [[0.28, 0.2, 0.14], [0.46, 0.13, 0.17], [0.7, 0.1, 0.15]]) { c.beginPath(); c.arc(w * a, h * b, w * r, 0, Math.PI * 2); c.fill(); }
+    c.fillStyle = '#b8a894'; c.fillRect(0, h * 0.74, w, h * 0.06);
+    c.fillStyle = '#1e1c1e'; c.fillRect(w * 0.05, h * 0.56, w * 0.32, h * 0.17); c.fillRect(w * 0.1, h * 0.42, w * 0.08, h * 0.14);
+    c.fillStyle = '#7a2a22'; c.fillRect(w * 0.42, h * 0.55, w * 0.56, h * 0.18); c.fillStyle = '#e8d8b0'; c.fillRect(w * 0.46, h * 0.58, w * 0.48, h * 0.05);
+    c.fillStyle = '#c0302a'; for (const a of [0.12, 0.28]) { c.beginPath(); c.arc(w * a, h * 0.73, w * 0.06, 0, Math.PI * 2); c.fill(); }
+  },
+];
+
+// Postcard: "Greetings from SERBIA", every letter a little Serbian scene.
+function srbPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'SERBIA', SERBIA_SCENES); }
+
+// ---------- Balkan pack. Bulgaria ----------
+const BULGARIA_FRAME = { dark: '#2a1c1c', a: '#c8587a', b: '#7a9a3c', line: '#f0dcb0' };
+
+// Knot-by-knot helpers for the Bulgarian rugs: P sets one knot, D fills every knot whose centre lies within r of
+// (cx, cy), and the peacock eye is the dripped Troyan ring: a light ring, a coloured ring and a dark dot.
+function bulKnots(x) {
+  const P = (a, b, col) => { x.fillStyle = col; x.fillRect(a, b, 1, 1); };
+  const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+  const D = (cx, cy, r, col) => { const n = Math.ceil(r) + 1; x.fillStyle = col; for (let j = -n; j <= n; j++) for (let i = -n; i <= n; i++) { const a = Math.floor(cx) + i, b = Math.floor(cy) + j; if (Math.hypot(a + 0.5 - cx, b + 0.5 - cy) <= r) x.fillRect(a, b, 1, 1); } };
+  return { P, R, D };
+}
+
+// Troyan pottery: plates in the dripped glazes of Troyan, brown, green, ochre and cobalt with peacock eyes, combed
+// drips and wavy lines, set out over a cream ground, and a row of jugs along each end on dark brown.
+function bulTroyan(ctx, W, H) {
+  const C = { cream: '#eee2c2', cream2: '#ddcca2', white: '#faf3e0', brown: '#6e3a1a', dbrown: '#3a1e0e', ochre: '#c47e26', honey: '#e8b448', green: '#3e6a26', lgreen: '#88a83a', cobalt: '#22428e', blue: '#5c86cc' };
+  weavePicture(ctx, W, H, 116, Object.values(C), (x, cols, rows) => {
+    const { P, R, D } = bulKnots(x);
+    // a peacock eye centred on a knot: 5 x 5 with the corners off, or 3 x 3 when small
+    const eye = (a, b, ring, mid, dot, small) => {
+      for (let j = -2; j <= 2; j++) for (let i = -2; i <= 2; i++) {
+        const d = Math.hypot(i, j);
+        if (small) { if (d <= 1.5) P(a + i, b + j, d === 0 ? dot : ring); continue; }
+        if (d <= 2.6) P(a + i, b + j, d === 0 ? dot : d <= 1.5 ? mid : ring);
+      }
+    };
+    // a plate seen from above, knot by knot. Four kinds of glaze:
+    // 0 brown with a ring of peacock eyes, a wavy cream line and a big eye in the well
+    // 1 green with white and honey drips running in from the rim and a flower of drips in the middle
+    // 2 ochre combed into wavy rings of brown and green, a brown heart with cream dots
+    // 3 cobalt with white feathered drips and a honey spiral
+    const plate = (cx, cy, Rr, kind) => {
+      const n = Math.ceil(Rr) + 1;
+      for (let j = -n; j <= n; j++) for (let i = -n; i <= n; i++) {
+        const a = Math.floor(cx) + i, b = Math.floor(cy) + j, ex = a + 0.5 - cx, ey = b + 0.5 - cy, d = Math.hypot(ex, ey), t = Math.atan2(ey, ex);
+        if (d > Rr) continue;
+        let col;
+        if (d > Rr - 1) col = C.dbrown;
+        else if (kind === 0) {
+          if (d > Rr - 6) col = C.brown;
+          else if (d > Rr - 7) col = C.honey;
+          else col = Math.abs(d - (Rr - 10 + 1.1 * Math.sin(t * 7))) < 0.62 ? C.cream : C.brown;
+        } else if (kind === 1) {
+          col = d > Rr - 7.2 ? C.green : (d > Rr - 8.2 ? C.dbrown : C.green);
+          const nn = Math.round((Math.PI * 2 * (Rr - 3)) / 4.2), k = Math.round((t / (Math.PI * 2)) * nn), da = Math.abs(t - (k / nn) * Math.PI * 2) * d;
+          const f = (d - (Rr - 8)) / 6;                        // 1 at the rim, 0 where the drip ends
+          if (d < Rr - 1 && f > 0 && da < 0.35 + 1.4 * f * f) col = k % 2 ? C.honey : C.white;
+        } else if (kind === 2) {
+          // ochre combed into wavy rings of brown and green round a brown heart
+          const w = d + 1.1 * Math.sin(t * 7);
+          col = C.ochre;
+          for (const [rk, c] of [[Rr - 4, C.brown], [Rr - 7, C.green], [Rr - 10, C.brown], [Rr - 13, C.green]]) if (rk > 4.5 && Math.abs(w - rk) < 0.62) col = c;
+          if (d > Rr - 2.3) col = C.honey;
+          if (d < 4.6) col = C.brown;
+        } else {
+          col = C.cobalt;
+          const nn = 9, k = Math.round((t / (Math.PI * 2)) * nn), da = (t - (k / nn) * Math.PI * 2) * d;
+          // a feather: a drip drawn in from the rim and combed sideways into a curve
+          const f = (d - 4) / (Rr - 5), off = da - 2.2 * Math.sin(f * Math.PI) ;
+          if (f > 0 && f < 1 && Math.abs(off) < 1.6 * f + 0.2) col = Math.abs(off) < 0.5 * f ? C.blue : C.white;
+          const s = (Math.atan2(ey, ex) + Math.PI) / (Math.PI * 2), sp = d - s * 2.2;
+          if (d < 4.6) col = (((sp % 2.2) + 2.2) % 2.2) < 1.1 ? C.honey : C.cobalt;
+        }
+        P(a, b, col);
+      }
+      if (kind === 0) {
+        const nn = Math.round((Math.PI * 2 * (Rr - 3.5)) / 6.6);
+        for (let k = 0; k < nn; k++) { const t = (k / nn) * Math.PI * 2; eye(Math.floor(cx + Math.cos(t) * (Rr - 3.5)), Math.floor(cy + Math.sin(t) * (Rr - 3.5)), C.white, k % 2 ? C.lgreen : C.honey, C.cobalt); }
+        D(cx, cy, 4.7, C.honey); D(cx, cy, 3.7, C.white); D(cx, cy, 2.4, C.green); D(cx, cy, 1.1, C.cobalt);
+      }
+      if (kind === 1) { for (let k = 0; k < 5; k++) { const t = (k / 5) * Math.PI * 2 - Math.PI / 2; eye(Math.floor(cx + Math.cos(t) * 6.2), Math.floor(cy + Math.sin(t) * 6.2), C.white, C.honey, C.green); } D(cx, cy, 2.3, C.ochre); D(cx - 0.4, cy - 0.4, 1, C.honey); }
+      if (kind === 2) for (let k = 0; k < 6; k++) { const t = (k / 6) * Math.PI * 2; P(Math.floor(cx + Math.cos(t) * 2.4), Math.floor(cy + Math.sin(t) * 2.4), C.white); }
+    };
+    // a jug from the side, standing on y = by: foot, round belly, neck, a lip with a pinched spout and a handle
+    const jug = (cx, by, glaze, lite, deco) => {
+      const prof = [3, 4, 4.6, 5, 5.2, 5.2, 5, 4.6, 3.9, 3, 2.5, 2.5, 2.6, 3.2];
+      for (let h = 0; h < prof.length; h++) {
+        const hw = prof[h], y = by - 1 - h;
+        for (let i = -Math.ceil(hw); i <= Math.ceil(hw); i++) {
+          const e = i + 0.5 - 0.5;
+          if (Math.abs(e) > hw) continue;
+          let col = glaze;
+          if (e > hw - 1.2) col = C.dbrown === glaze ? C.brown : C.dbrown;
+          else if (e < -hw * 0.25 && e > -hw * 0.75 && h > 1 && h < 9) col = lite;
+          P(cx + i, y, col);
+        }
+      }
+      // spout on the left of the lip, handle on the right
+      P(cx - 4, by - 14, glaze); P(cx - 5, by - 15, glaze); P(cx - 4, by - 15, glaze); P(cx - 3, by - 15, glaze);
+      for (let i = -3; i <= 3; i++) P(cx + i, by - 15, glaze);
+      P(cx - 3, by - 15, glaze);
+      for (const [a, b] of [[3, 13], [4, 13], [5, 13], [6, 12], [7, 11], [7, 10], [7, 9], [7, 8], [6, 7], [6, 6]]) P(cx + a, by - b, glaze === C.dbrown ? C.brown : glaze);
+      // dark mouth
+      for (let i = -2; i <= 2; i++) P(cx + i, by - 15, i === -2 || i === 2 ? glaze : C.dbrown);
+      // decoration: a band of eyes on the belly and drips running down from the neck
+      if (deco === 'eyes') { for (let i = -4; i <= 3; i++) P(cx + i, by - 6 - ((i + 8) % 2), C.white); for (let i = -3; i <= 2; i++) P(cx + i, by - 9 + ((i + 8) % 2), lite); }
+      else { for (const [i, l] of [[-4, 3], [-2, 5], [0, 4], [2, 6], [4, 3]]) for (let k = 0; k < l; k++) if (Math.abs(i) <= (prof[11 - k] || 5)) P(cx + i, by - 11 + k, (i / 2) % 2 ? C.white : C.honey); }
+      for (let i = -2; i <= 2; i++) P(cx + i, by - 1, C.dbrown);
+    };
+    // ground and frame
+    R(0, 0, cols, rows, C.dbrown);
+    const SX = 13, SY = 19;                                        // side and end bands
+    for (const o of [2, 0]) { R(2, 2, cols - 4, 1, C.honey); R(2, rows - 3, cols - 4, 1, C.honey); R(2, 2, 1, rows - 4, C.honey); R(cols - 3, 2, 1, rows - 4, C.honey); }
+    R(SX, SY, cols - 2 * SX, 1, C.honey); R(SX, rows - SY - 1, cols - 2 * SX, 1, C.honey); R(SX, SY, 1, rows - 2 * SY, C.honey); R(cols - SX - 1, SY, 1, rows - 2 * SY, C.honey);
+    const fx = SX + 1, fy = SY + 1, fw = cols - 2 * SX - 2, fh = rows - 2 * SY - 2;
+    R(fx, fy, fw, fh, C.cream);
+    // the jug rows along both ends
+    const glazes = [[C.ochre, C.honey, 'eyes'], [C.green, C.lgreen, 'drips'], [C.brown, C.ochre, 'eyes'], [C.cobalt, C.blue, 'drips']];
+    { const len = cols - 2 * SX, { n, d } = evenSteps(len, 17);
+      for (let k = 0; k < n; k++) { const cx = Math.round(SX + (k + 0.5) * d) - 1; for (const by of [SY - 1, rows - 3]) { const g = glazes[(k + (by > rows / 2 ? 2 : 0)) % 4]; jug(cx, by, g[0], g[1], g[2]); } } }
+    // the sides: a trail of honey glaze winding past peacock eyes
+    { const len = rows - 2 * SY, { n, d } = evenSteps(len, 10);
+      for (const sx of [Math.floor(SX / 2) + 1, cols - Math.floor(SX / 2) - 2]) {
+        for (let j = 0; j < len; j++) { const w = Math.round(2.6 * Math.sin((j / d) * Math.PI)); P(sx + w, SY + j, C.honey); }
+        for (let k = 0; k < n; k++) { const yy = Math.round(SY + (k + 0.5) * d) - 1; eye(sx - Math.round(2.6 * Math.sin(((k + 0.5) * Math.PI))) , yy, C.white, k % 2 ? C.green : C.ochre, C.cobalt); }
+      } }
+    // little plates in the corners
+    for (const [a, b] of [[SX / 2 + 0.5, SY / 2], [cols - SX / 2 - 0.5, SY / 2], [SX / 2 + 0.5, rows - SY / 2], [cols - SX / 2 - 0.5, rows - SY / 2]]) { D(a, b, 6.3, C.honey); D(a, b, 5.3, C.brown); eye(Math.floor(a), Math.floor(b), C.white, C.green, C.cobalt); for (let k = 0; k < 8; k++) { const t = k * Math.PI / 4; P(Math.floor(a + Math.cos(t) * 4.2), Math.floor(b + Math.sin(t) * 4.2), C.honey); } }
+    // the field: plates in two staggered rows, the second row running off the edges
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const pr = 17.6, colsN = 4, pitch = fw / colsN, y1 = fy + fh * 0.25, y2 = fy + fh * 0.75;
+    // a dripped flower between the plates: a peacock eye with five honey petals round it
+    const flower = (a, b, k) => {
+      for (let q = 0; q < 5; q++) { const t = q * Math.PI * 2 / 5 - Math.PI / 2; D(a + 0.5 + Math.cos(t) * 4.2, b + 0.5 + Math.sin(t) * 4.2, 1.45, C.honey); P(Math.floor(a + 0.5 + Math.cos(t) * 4.4), Math.floor(b + 0.5 + Math.sin(t) * 4.4), C.lgreen); }
+      eye(a, b, C.ochre, k % 2 ? C.green : C.cobalt, C.white);
+    };
+    for (let i = 0; i <= colsN; i++) { flower(Math.round(fx + i * pitch), Math.round(fy + fh * 0.5) - 6, i); flower(Math.round(fx + (i + 0.5) * pitch), Math.round(fy + fh * 0.5) + 5, i + 1); }
+    // a soft shadow under each plate, then the plate, then a glint of light on the glaze
+    const put = (cx, cy, kind) => {
+      D(cx + 1, cy + 1.2, pr, C.cream2); plate(cx, cy, pr, kind);
+      for (const t of [3.6, 3.75, 3.9, 4.05]) P(Math.floor(cx + Math.cos(t) * (pr - 2.2)), Math.floor(cy + Math.sin(t) * (pr - 2.2)), C.white);
+    };
+    for (let i = 0; i < colsN; i++) put(fx + (i + 0.5) * pitch, y1, [0, 1, 2, 3][i % 4]);
+    for (let i = 0; i <= colsN; i++) put(fx + i * pitch, y2, [2, 3, 0, 1, 2][i]);
+    x.restore();
+  });
+}
+
+// Martenitsi: twisted red and white yarn tassels, pairs of little yarn dolls, pompoms and bracelets hanging from a
+// blossoming branch on soft spring green, a twisted cord running round a pink border.
+function bulMartenitsa(ctx, W, H) {
+  const C = { ground: '#d4e6b0', ground2: '#c4da9c', red: '#c8222e', red2: '#88131e', white: '#f8f4ea', white2: '#d2cbbb', bark: '#6e4c36', bark2: '#43301f', pink: '#f2b4c6', pink2: '#d8708f', leaf: '#7cac42', leaf2: '#4f7e2c', yellow: '#f2cc58', berry: '#7a2a44' };
+  weavePicture(ctx, W, H, 116, Object.values(C), (x, cols, rows) => {
+    const { P, R, D } = bulKnots(x);
+    const tw = (s, o) => ((Math.floor((s + o + 400) / 2) % 2) ? C.red : C.white);   // twisted yarn: diagonal stripes
+    // the border: deep berry edge, a pink band carrying a twisted cord, a little blossom at each corner
+    R(0, 0, cols, rows, C.berry);
+    R(2, 2, cols - 4, rows - 4, C.pink);
+    const B = 9;
+    R(B, B, cols - 2 * B, rows - 2 * B, C.berry);
+    const fx = B + 1, fy = B + 1, fw = cols - 2 * B - 2, fh = rows - 2 * B - 2;
+    R(fx, fy, fw, fh, C.ground);
+    // the cord round the border: three knots thick, its twist running on round the corners
+    { const m = 5, L = [[m, m, cols - 1 - m, m], [cols - 1 - m, m, cols - 1 - m, rows - 1 - m], [cols - 1 - m, rows - 1 - m, m, rows - 1 - m], [m, rows - 1 - m, m, m]];
+      let s0 = 0;
+      for (const [a0, b0, a1, b1] of L) {
+        const n = Math.max(Math.abs(a1 - a0), Math.abs(b1 - b0)), dx = Math.sign(a1 - a0), dy = Math.sign(b1 - b0);
+        for (let k = 0; k < n; k++) for (let o = -1; o <= 1; o++) P(a0 + dx * k - dy * o, b0 + dy * k + dx * o, o === 1 ? (tw(s0 + k, o) === C.red ? C.red2 : C.white2) : tw(s0 + k, o));
+        s0 += n;
+      } }
+    // a faint diagonal weave in the green ground
+    for (let yy = fy; yy < fy + fh; yy++) for (let xx = fx; xx < fx + fw; xx++) if ((xx + yy) % 9 === 0 && (xx - yy + 900) % 9 === 0) P(xx, yy, C.ground2);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // a five-petal blossom
+    const blossom = (a, b, big) => {
+      for (let k = 0; k < 5; k++) { const t = k * Math.PI * 2 / 5 - Math.PI / 2 + a * 0.7; D(a + Math.cos(t) * (big ? 1.7 : 1.2), b + Math.sin(t) * (big ? 1.7 : 1.2), big ? 1.35 : 1.05, C.pink); }
+      if (big) for (let k = 0; k < 5; k++) { const t = k * Math.PI * 2 / 5 - Math.PI / 2 + a * 0.7 + Math.PI / 5; P(Math.floor(a + Math.cos(t) * 2.4), Math.floor(b + Math.sin(t) * 2.4), C.pink2); }
+      P(Math.floor(a), Math.floor(b), C.yellow);
+    };
+    const bez = (p, t) => { const m = 1 - t; return [m * m * m * p[0][0] + 3 * m * m * t * p[1][0] + 3 * m * t * t * p[2][0] + t * t * t * p[3][0], m * m * m * p[0][1] + 3 * m * m * t * p[1][1] + 3 * m * t * t * p[2][1] + t * t * t * p[3][1]]; };
+    const limb = (p, w0, w1) => { for (let k = 0; k <= 220; k++) { const t = k / 220, [a, b] = bez(p, t), w = w0 + (w1 - w0) * t; D(a + 0.4, b + 0.7, w / 2 + 0.2, C.bark2); D(a, b, w / 2, C.bark); } };
+    const rb = rng(31);
+    // the meadow along the bottom: a low green bank with grass, snowdrops and crocuses
+    const bank = (xx) => fy + fh - 11 + 2.2 * Math.sin((xx - fx) / fw * Math.PI * 3 + 0.6) + 1.2 * Math.sin((xx - fx) / fw * Math.PI * 7);
+    for (let xx = fx; xx < fx + fw; xx++) { const t = Math.round(bank(xx)); R(xx, t, 1, fy + fh - t, C.leaf); R(xx, t + 4 + (xx % 3 === 0 ? 1 : 0), 1, fy + fh, C.leaf2); }
+    for (let xx = fx + 1; xx < fx + fw; xx += 2) { const t = Math.round(bank(xx)); const h = 1 + Math.floor(rb() * 3); for (let k = 1; k <= h; k++) P(xx + (k === h && rb() < 0.5 ? 1 : 0), t - k, C.leaf); }
+    const snowdrop = (a) => { const t = Math.round(bank(a)); for (let k = 1; k <= 8; k++) P(a, t - k, C.leaf2); P(a + 1, t - 9, C.leaf2); P(a + 2, t - 9, C.leaf2); for (const [i, j, c] of [[2, 8, C.white], [3, 8, C.white], [2, 7, C.white], [3, 7, C.white2], [1, 7, C.white], [2, 6, C.white], [3, 6, C.leaf]]) P(a + i, t - j, c); for (let k = 1; k <= 4; k++) P(a - 1, t - k, C.leaf); P(a - 2, t - 5, C.leaf); };
+    const crocus = (a, col) => { const t = Math.round(bank(a)); for (let k = 1; k <= 4; k++) P(a, t - k, C.leaf2); P(a - 1, t - 2, C.leaf); P(a - 1, t - 3, C.leaf); P(a + 1, t - 1, C.leaf); P(a + 1, t - 2, C.leaf); R(a - 1, t - 9, 3, 4, col); P(a - 2, t - 9, col); P(a + 2, t - 9, col); P(a - 2, t - 8, col); P(a + 2, t - 8, col); P(a, t - 10, col); P(a, t - 7, C.yellow); P(a, t - 5, col); P(a + 1, t - 6, col === C.yellow ? C.bark : C.berry); };
+    for (const [a, k] of [[0.04, 0], [0.13, 1], [0.19, 0], [0.31, 2], [0.38, 0], [0.47, 1], [0.58, 0], [0.66, 2], [0.72, 0], [0.84, 1], [0.9, 0], [0.97, 2]]) { const ax = Math.round(fx + a * fw); k === 0 ? snowdrop(ax) : crocus(ax, k === 1 ? C.pink2 : C.yellow); }
+    // the branch: in from the left, arching up and away to the right, twigs off it
+    const main = [[fx - 4, fy + 26], [fx + fw * 0.28, fy - 2], [fx + fw * 0.64, fy + 6], [fx + fw + 4, fy + 20]];
+    const twigs = [];
+    for (const [t, len, ang] of [[0.06, 10, -1.2], [0.13, 9, 1.0], [0.24, 12, -0.8], [0.33, 8, 1.3], [0.45, 11, -1.4], [0.55, 8, 0.9], [0.64, 12, -1.0], [0.74, 8, 1.1], [0.84, 11, -1.3], [0.93, 8, 0.7]]) {
+      const [a, b] = bez(main, t), e = [a + Math.cos(ang) * len * 0.6 + 3, b + Math.sin(ang) * len];
+      twigs.push([a, b, e]);
+    }
+    for (const [a, b, e] of twigs) limb([[a, b], [a + (e[0] - a) * 0.3, b + (e[1] - b) * 0.5], [a + (e[0] - a) * 0.7, b + (e[1] - b) * 0.8], e], 1.6, 1);
+    limb(main, 4.4, 2.4);
+    for (const [a, b, e] of twigs) {
+      leaf(x, e[0], e[1], 5, -0.4 + rb() * 0.8 - (e[1] < b ? 1.2 : -1.2), C.leaf);
+      leaf(x, (a + e[0]) / 2, (b + e[1]) / 2, 4.5, (e[1] < b ? -2.4 : 2.2) + rb() * 0.4, C.leaf2);
+      blossom(e[0] + 1, e[1] + (e[1] < b ? -1 : 1), true);
+      blossom((a + e[0] * 2) / 3 - 2, (b + e[1] * 2) / 3, rb() < 0.5);
+    }
+    for (let k = 0; k < 15; k++) { const [a, b] = bez(main, 0.03 + k * 0.066); blossom(a + (rb() - 0.5) * 3, b + (k % 2 ? -3 : 3.5), k % 3 === 0); }
+    // falling petals
+    for (let k = 0; k < 30; k++) { const a = fx + rb() * fw, b = fy + 26 + rb() * (fh - 40); P(Math.floor(a), Math.floor(b), rb() < 0.5 ? C.pink : C.pink2); if (rb() < 0.5) P(Math.floor(a) + 1, Math.floor(b), C.pink); }
+    // the hanging martenitsi. Each hangs on a twisted thread from the branch.
+    const thread = (a, b0, b1) => { for (let yy = Math.floor(b0); yy <= b1; yy++) P(a, yy, Math.floor(yy / 2) % 2 ? C.red : C.white); };
+    const knotBead = (a, b) => { P(a, b, C.red); P(a + 1, b, C.white); P(a, b + 1, C.white); P(a + 1, b + 1, C.red); };
+    // the twisted cord from the knot down to the two pieces, splaying out to each side
+    const splay = (a, b, n) => { for (let k = 0; k <= n; k++) { P(a - k, b + k, k % 2 ? C.red : C.white); P(a + 1 + k, b + k, k % 2 ? C.white : C.red); } knotBead(a, b - 1); };
+    // a tassel: a round head, a tie of the other colour, then a skirt of strands that flares a little
+    const tassel = (a, b, col, sh) => {
+      for (let i = -1; i <= 1; i++) P(a + i, b, col); for (let i = -2; i <= 2; i++) P(a + i, b + 1, i === 2 ? sh : col); for (let i = -2; i <= 2; i++) P(a + i, b + 2, i >= 1 ? sh : col); for (let i = -2; i <= 2; i++) P(a + i, b + 3, i >= 1 ? sh : col);
+      for (let i = -2; i <= 2; i++) { P(a + i, b + 4, col === C.white ? C.red : C.white); P(a + i, b + 5, col === C.white ? C.red2 : C.white2); }
+      for (let j = 6; j < 22; j++) { const hw = 2 + Math.floor((j - 6) / 6); for (let i = -hw; i <= hw; i++) { if (j === 21 && (i + 9) % 2) continue; P(a + i, b + j, (i + 9) % 2 ? sh : col); } }
+    };
+    // a twisted bracelet: a ring of yarn with a twist, a little bead on it, hung from its top
+    const bracelet = (a, b, r) => {
+      for (let j = -r - 2; j <= r + 2; j++) for (let i = -r - 2; i <= r + 2; i++) {
+        const d = Math.hypot(i, j); if (Math.abs(d - r) > 1.05) continue;
+        const t = Math.atan2(j, i), s = Math.floor(((t + Math.PI) / (Math.PI * 2)) * 22 + (d - r) * 1.4);
+        P(a + i, b + r + j, s % 2 ? C.red : C.white);
+      }
+      D(a + 0.5, b + 2 * r + 0.5, 1.6, C.red2); P(a, b + 2 * r, C.pink);
+    };
+    // a pompom: a fluffy ball of yarn with a ragged edge, lit at the top left
+    const pompom = (a, b, r, col, sh) => {
+      const n = Math.ceil(r) + 2;
+      for (let j = -n; j <= n; j++) for (let i = -n; i <= n; i++) {
+        const d = Math.hypot(i, j), t = Math.atan2(j, i), edge = r + 0.45 * Math.sin(t * 9 + a);
+        if (d > edge) continue;
+        P(a + i, b + j, (i + j > r * 0.6 || d > edge - 0.9 && i + j > 0) ? sh : col);
+      }
+    };
+    // Pizho and Penda: white Pizho in trousers, red Penda in a flared skirt, yarn heads with no faces, arms and
+    // legs of loose strands ending in little tufts of the other colour
+    const pizho = (a, b) => {
+      D(a + 0.5, b + 3, 3.4, C.white); P(a + 2, b + 5, C.white2); P(a + 3, b + 4, C.white2); P(a + 1, b + 6, C.white2);
+      R(a - 2, b + 7, 6, 1, C.red);
+      R(a - 3, b + 8, 8, 9, C.white); R(a + 4, b + 8, 1, 9, C.white2);
+      R(a - 3, b + 13, 8, 1, C.red);
+      for (const i of [-5, 6]) { R(a + i, b + 8, 1, 9, C.white); R(a + i, b + 17, 1, 2, C.red); }
+      R(a - 3, b + 17, 3, 10, C.white); R(a + 2, b + 17, 3, 10, C.white); R(a + 4, b + 17, 1, 10, C.white2); R(a - 1, b + 17, 1, 10, C.white2);
+      for (let i = -3; i <= 4; i++) if (i < 0 || i > 1) P(a + i, b + 27, i % 2 ? C.red : C.red2);
+    };
+    const penda = (a, b) => {
+      D(a + 0.5, b + 3, 3.4, C.red); P(a + 2, b + 5, C.red2); P(a + 3, b + 4, C.red2); P(a + 1, b + 6, C.red2);
+      R(a - 2, b + 7, 6, 1, C.white);
+      R(a - 3, b + 8, 8, 6, C.red); R(a + 4, b + 8, 1, 6, C.red2);
+      R(a - 3, b + 13, 8, 1, C.white);
+      for (const i of [-5, 6]) { R(a + i, b + 8, 1, 8, C.red); R(a + i, b + 16, 1, 2, C.white); }
+      for (let j = 0; j < 13; j++) { const hw = 4 + Math.floor(j / 3); for (let i = -hw + 1; i <= hw; i++) P(a + i, b + 14 + j, j === 9 || j === 10 ? C.white : i >= hw - 1 ? C.red2 : C.red); }
+      for (let i = -7; i <= 8; i += 2) P(a + i, b + 27, C.red);
+    };
+    const dolls = (a, b) => { splay(a, b, 6); pizho(a - 7, b + 5); penda(a + 8, b + 5); };
+    const pair = (a, b, kind) => {
+      if (kind === 'tassel') { splay(a, b, 4); tassel(a - 4, b + 5, C.white, C.white2); tassel(a + 5, b + 5, C.red, C.red2); }
+      else { splay(a, b, 4); pompom(a - 4, b + 9, 4.4, C.white, C.white2); pompom(a + 5, b + 9, 4.4, C.red, C.red2); }
+    };
+    const hang = (t, len, put) => { const [a, b] = bez(main, t), ax = Math.round(a); thread(ax, b + 2, b + len); put(ax, Math.round(b + len) + 1); };
+    hang(0.07, 24, (a, b) => pair(a, b, 'tassel'));
+    hang(0.2, 8, (a, b) => dolls(a, b));
+    hang(0.35, 38, (a, b) => { knotBead(a, b - 1); bracelet(a, b + 1, 6); });
+    hang(0.5, 20, (a, b) => dolls(a, b));
+    hang(0.65, 34, (a, b) => pair(a, b, 'pompom'));
+    hang(0.8, 9, (a, b) => dolls(a, b));
+    hang(0.93, 30, (a, b) => pair(a, b, 'tassel'));
+    x.restore();
+  });
+}
+// Thracian gold: a treasure laid out on black velvet under soft lights, a phiale with rings of bosses in the middle,
+// rhytons ending in a deer's head and a goat's head either side, an amphora and a two-handled cup at the ends,
+// inside a border of gold eggs and darts.
+function bulThracian(ctx, W, H) {
+  const C = { black: '#0b090b', vel: '#181115', vel2: '#22181d', vel3: '#2e2026', g0: '#fff0bc', g1: '#f0cf6e', g2: '#d4a23c', g3: '#a87228', g4: '#704816', g5: '#3c260c' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const { P, R, D } = bulKnots(x);
+    const G = [C.g0, C.g1, C.g2, C.g3, C.g4];
+    // a gold dome knot by knot, lit from the top left
+    const dome = (cx, cy, r) => {
+      const n = Math.ceil(r) + 1;
+      for (let j = -n; j <= n; j++) for (let i = -n; i <= n; i++) {
+        const a = Math.floor(cx) + i, b = Math.floor(cy) + j, ex = a + 0.5 - cx, ey = b + 0.5 - cy, d = Math.hypot(ex, ey);
+        if (d > r) continue;
+        const l = -(ex + ey) / (r * 1.414) + (1 - d / r) * 0.45;
+        P(a, b, d > r - 0.7 && ex + ey > 0 ? C.g4 : l > 0.62 ? C.g0 : l > 0.3 ? C.g1 : l > -0.1 ? C.g2 : l > -0.45 ? C.g3 : C.g4);
+      }
+    };
+    // polished gold across a round body: dark at the far edges, a bright streak left of centre
+    const sheen = (x0, x1, flip) => {
+      const g = x.createLinearGradient(flip ? x1 : x0, 0, flip ? x0 : x1, 0);
+      for (const [t, c] of [[0, C.g4], [0.1, C.g3], [0.22, C.g1], [0.3, C.g0], [0.38, C.g1], [0.55, C.g2], [0.78, C.g3], [1, C.g4]]) g.addColorStop(t, c);
+      return g;
+    };
+    const path = (pts) => { x.beginPath(); pts.forEach(([a, b], i) => (i ? x.lineTo(a, b) : x.moveTo(a, b))); x.closePath(); };
+    const line = (pts, w, col) => { x.strokeStyle = col; x.lineWidth = w; x.lineCap = 'round'; x.lineJoin = 'round'; x.beginPath(); pts.forEach(([a, b], i) => (i ? x.lineTo(a, b) : x.moveTo(a, b))); x.stroke(); };
+    // a turned vessel from its right-hand profile [half width, height above the base]
+    const turned = (cx, by, prof) => {
+      const pts = [...prof.map(([w, h]) => [cx + w, by - h]), ...prof.slice().reverse().map(([w, h]) => [cx - w, by - h])];
+      const wmax = Math.max(...prof.map((p) => p[0]));
+      path(pts); x.fillStyle = sheen(cx - wmax, cx + wmax); x.fill();
+    };
+    const ridge = (cx, y, hw) => { for (let i = -Math.floor(hw) + 1; i < hw - 1; i++) { P(cx + i, y, C.g4); P(cx + i, y - 1, i < -hw * 0.2 ? C.g0 : C.g1); } };
+    // ---- the border: black edge, gold lines, a band of gold eggs between darts, rosettes in the corners
+    R(0, 0, cols, rows, C.black);
+    for (const o of [2, 10]) { R(o, o, cols - 2 * o, 1, C.g3); R(o, rows - 1 - o, cols - 2 * o, 1, C.g3); R(o, o, 1, rows - 2 * o, C.g3); R(cols - 1 - o, o, 1, rows - 2 * o, C.g3); }
+    const egg = (cx, cy, along) => {
+      for (let j = -4; j <= 4; j++) for (let i = -4; i <= 4; i++) {
+        const [u, v] = along ? [i, j] : [j, i], e = Math.hypot(u / 2.4, v / 3.1);
+        if (e <= 1) P(cx + i, cy + j, -(i + j) > 1.5 ? C.g0 : -(i + j) > -0.5 ? C.g1 : (i + j) > 2.5 ? C.g3 : C.g2);
+        else if (e <= 1.42 && (along ? Math.abs(i) <= 3 : Math.abs(j) <= 3)) P(cx + i, cy + j, C.g4);
+      }
+    };
+    const dart = (cx, cy, along) => { for (let k = -2; k <= 2; k++) along ? P(cx, cy + k, k > 1 ? C.g3 : C.g2) : P(cx + k, cy, k > 1 ? C.g3 : C.g2); along ? P(cx, cy - 3, C.g1) : P(cx - 3, cy, C.g1); };
+    { const { n, d } = evenSteps(cols - 26, 8); for (let k = 0; k < n; k++) { const a = Math.round(13 + (k + 0.5) * d); egg(a, 6, true); egg(a, rows - 7, true); if (k) { dart(Math.round(13 + k * d), 6, true); dart(Math.round(13 + k * d), rows - 7, true); } } }
+    { const { n, d } = evenSteps(rows - 26, 8); for (let k = 0; k < n; k++) { const b = Math.round(13 + (k + 0.5) * d); egg(6, b, false); egg(cols - 7, b, false); if (k) { dart(6, Math.round(13 + k * d), false); dart(cols - 7, Math.round(13 + k * d), false); } } }
+    for (const [a, b] of [[6.5, 6.5], [cols - 6.5, 6.5], [6.5, rows - 6.5], [cols - 6.5, rows - 6.5]]) { for (let k = 0; k < 8; k++) { const t = k * Math.PI / 4; dome(a + Math.cos(t) * 2.6, b + Math.sin(t) * 2.6, 1.5); } dome(a, b, 1.8); }
+    // ---- the velvet, with a soft pool of light behind each piece
+    const fx = 11, fy = 11, fw = cols - 22, fh = rows - 22;
+    R(fx, fy, fw, fh, C.vel);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const glow = (cx, cy, rx, ry) => { const g = x.createRadialGradient(cx, cy, 0, cx, cy, 1); g.addColorStop(0, C.vel3); g.addColorStop(0.55, C.vel2); g.addColorStop(1, C.vel); x.save(); x.translate(cx, cy); x.scale(rx, ry); x.translate(-cx, -cy); x.fillStyle = g; x.beginPath(); x.arc(cx, cy, 1, 0, Math.PI * 2); x.fill(); x.restore(); };
+    const cx0 = cols / 2, cy0 = fy + fh * 0.47;
+    glow(cx0, cy0, 46, 46); glow(cols * 0.29, fy + fh * 0.45, 22, 40); glow(cols * 0.71, fy + fh * 0.45, 22, 40); glow(cols * 0.125, fy + fh * 0.62, 16, 30); glow(cols * 0.9, fy + fh * 0.68, 16, 24);
+    // the velvet's sheen: faint folds
+    const rv = rng(5); for (let k = 0; k < 220; k++) { const a = fx + Math.floor(rv() * fw), b = fy + Math.floor(rv() * fh); P(a, b, C.vel2); }
+    const base = fy + fh - 6;
+    // shadows under the standing pieces
+    for (const [a, w] of [[cols * 0.125, 9], [cols * 0.9, 10]]) { x.fillStyle = C.black; x.beginPath(); x.ellipse(a + 1, base + 0.5, w, 1.6, 0, 0, Math.PI * 2); x.fill(); }
+    // ---- the amphora: an egg-shaped body on a short foot, a slim neck, two arched handles
+    { const cx = Math.round(cols * 0.125), by = base;
+      for (const s of [-1, 1]) { line([[cx + s * 8.5, by - 38], [cx + s * 12.5, by - 42], [cx + s * 12.5, by - 50], [cx + s * 9, by - 55], [cx + s * 4.5, by - 53]], 2.4, C.g3); line([[cx + s * 9, by - 39], [cx + s * 12, by - 43], [cx + s * 12, by - 49]], 0.9, s < 0 ? C.g1 : C.g2); }
+      turned(cx, by, [[6.5, 0], [6.5, 2], [3, 3.5], [3, 6], [6.5, 8], [9.5, 13], [11.2, 20], [11.4, 27], [10.4, 34], [7.8, 39], [5, 42], [4, 46], [4, 52], [5.2, 55], [6.8, 57], [6.8, 58]]);
+      for (const [h, w] of [[8, 6.5], [22, 11.2], [31, 11], [42, 5], [56, 6.8]]) ridge(cx, by - h, w);
+      for (let i = -8; i <= 8; i += 4) dome(cx + i + 0.5, by - 26.5, 1.6);
+      for (let i = -6; i <= 6; i += 2) for (let h = 34; h < 39; h++) P(cx + i, by - h, (i / 2) % 2 ? C.g4 : C.g2);
+    }
+    // ---- the two-handled cup: a deep bowl on a knopped stem, its handles rising high over the rim and curling
+    { const cx = Math.round(cols * 0.9), by = base;
+      for (const s of [-1, 1]) { line([[cx + s * 12, by - 19], [cx + s * 16, by - 22], [cx + s * 17.2, by - 32], [cx + s * 16, by - 41], [cx + s * 12, by - 42], [cx + s * 11.5, by - 38], [cx + s * 14, by - 37.5]], 2.4, C.g3); line([[cx + s * 16.4, by - 25], [cx + s * 17, by - 32], [cx + s * 16, by - 39]], 0.9, s < 0 ? C.g1 : C.g2); }
+      turned(cx, by, [[8, 0], [8, 2], [3, 3], [2.4, 7], [4.2, 8.5], [2.4, 10], [5, 12], [10, 15], [12.6, 20], [13.4, 27], [14.2, 32], [14.2, 33.5]]);
+      for (const [h, w] of [[2, 8], [8.5, 4], [15, 10], [31, 14], [33, 14.2]]) ridge(cx, by - h, w);
+      for (let i = -12; i <= 12; i += 3) dome(cx + i + 0.5, by - 24.5, 1.4);
+      for (let i = -9; i <= 9; i += 2) for (let h = 15; h < 21; h++) if (Math.abs(i) < 6 + (h - 15)) P(cx + i, by - h, (i / 2) % 2 ? C.g4 : C.g1);
+    }
+    // ---- the rhytons: a horn-shaped cup ending in an animal's head; the left one a deer, the right a goat
+    const rhyton = (cx, top, flip, animal) => {
+      x.save(); x.translate(cx, 0); x.scale(flip, 1);
+      const Q = (a, b) => [a, top + b], lit = flip > 0 ? C.g1 : C.g2;
+      // the ears stand out behind the head
+      const ear = (a, b, ang, len) => { x.fillStyle = C.g3; x.beginPath(); x.ellipse(...Q(a, b), len, 2.2, ang, 0, Math.PI * 2); x.fill(); x.fillStyle = C.g4; x.beginPath(); x.ellipse(...Q(a + 0.6, b + 0.4), len * 0.6, 0.9, ang, 0, Math.PI * 2); x.fill(); };
+      if (animal === 'deer') {
+        ear(8.5, 42.5, -1.05, 5.2);
+        // antlers: a beam rising from the crown in front of the cup, tines branching forward
+        const beam = [Q(-6, 44), Q(-12, 38), Q(-16.5, 31), Q(-19, 23), Q(-19.5, 14), Q(-17.5, 6)];
+        line(beam, 3, C.g3); for (const t of [[Q(-16.5, 31), Q(-23, 29.5)], [Q(-19, 23), Q(-24.5, 19)], [Q(-19.5, 14), Q(-24, 9.5)], [Q(-10, 40), Q(-16, 42)]]) line(t, 2, C.g3);
+        line([Q(-12.4, 37.2), Q(-17, 30), Q(-19.6, 22), Q(-20.2, 14)], 0.9, lit);
+      } else ear(8, 50, 0.45, 5);
+      x.restore();
+      const X = (a) => Math.round(cx + flip * a - (flip < 0 ? 1 : 0));
+      // the goat's horns, knot by knot: two scimitars rising from the crown and sweeping back at the tips, ridged all
+      // along, the far one darker
+      if (animal === 'goat') for (const [dx, far] of [[2.5, 1], [0, 0]]) {
+        const pts = [[-5 + dx, 45], [-12 + dx, 40.5], [-18.5 + dx, 34.5], [-23.5 + dx, 27], [-26.5 + dx, 20], [-28.5 + dx, 14.5], [-31 + dx, 12]];
+        const samp = []; for (let k = 0; k < pts.length - 1; k++) { const [a0, b0] = pts[k], [a1, b1] = pts[k + 1], l = Math.hypot(a1 - a0, b1 - b0); for (let f = 0; f < l; f += 0.4) samp.push([a0 + (a1 - a0) * f / l, b0 + (b1 - b0) * f / l, -(b1 - b0) / l, (a1 - a0) / l]); }
+        const L = samp.length;
+        for (const pass of [0, 1]) samp.forEach(([a, b, nx, ny], k) => {
+          const w = 2.8 - 2.1 * k / L + (pass ? 0 : 0.9);
+          for (let o = -w; o <= w; o += 0.4) { const ridge = Math.floor(k * 0.4 / 2.2) % 2 && Math.abs(o) < w - 0.3; const col = pass === 0 ? C.g5 : ridge ? C.g4 : far ? (o < 0 ? C.g3 : C.g4) : o > 0.6 ? C.g1 : o > -0.8 ? C.g2 : C.g3; P(X(Math.round(a + nx * o)), Math.round(top + b + ny * o), col); }
+        });
+      }
+      x.save(); x.translate(cx, 0); x.scale(flip, 1);
+      // the cup, polished in vertical streaks, and the head below it, modelled round
+      path([Q(-12, 0), Q(12, 0), Q(12, 12), Q(10.5, 27), Q(8, 37), Q(7, 43), Q(-7, 43), Q(-8, 34), Q(-10, 20), Q(-12, 10)]); x.fillStyle = sheen(-13, 13, flip < 0); x.fill();
+      const hg = x.createRadialGradient(...Q(-9, 48), 0, ...Q(-9, 48), 17);
+      for (const [t, c] of [[0, C.g0], [0.18, C.g1], [0.42, C.g2], [0.72, C.g3], [1, C.g4]]) hg.addColorStop(t, c);
+      path([Q(7.5, 42), Q(8, 50), Q(6, 56), Q(1, 60), Q(-6, 61.5), Q(-13, 62.5), Q(-19, 62), Q(-22.5, 59.5), Q(-22, 56), Q(-17, 51.5), Q(-10, 46.5), Q(-7.5, 42)]); x.fillStyle = hg; x.fill();
+      x.fillStyle = C.g4; path([Q(6, 56), Q(1, 60), Q(-6, 61.5), Q(-13, 62.5), Q(-19, 62), Q(-14, 61), Q(-6, 59.6), Q(2, 56.5)]); x.fill();
+      if (animal === 'goat') {
+        // a short pointed beard under the chin
+        x.fillStyle = C.g3; path([Q(-12, 61.5), Q(-17, 62), Q(-15.5, 66.5)]); x.fill();
+        // the horns: ridged, rising from the brow and arching back over the cup
+      }
+      x.restore();
+      // the eye: almond, dark, with a glint; the nostril and the line of the mouth
+      for (const [a, b, c] of [[-8, 50, C.g5], [-9, 50, C.g5], [-10, 50, C.g4], [-7, 50, C.g4], [-9, 49, C.g4], [-8, 49, C.g4], [-8, 51, C.g3]]) P(X(a), top + b, c);
+      P(X(-9), top + 50, C.g0);
+      P(X(-21), top + 57, C.g5); P(X(-20), top + 57, C.g4);
+      for (const a of [-19, -18, -17, -16]) P(X(a), top + 60, C.g4);
+      // the collar: a ridge and a row of beads where the cup meets the head
+      for (let i = -7; i <= 7; i++) { const h = 41 + Math.round(i * 0.15); P(X(i), top + h, C.g4); P(X(i), top + h - 1, (i + 20) % 2 ? C.g1 : C.g2); P(X(i), top + h - 2, C.g4); }
+      // the rim, a frieze of bosses, a ridge, and flutes down the body
+      for (let i = -11; i <= 11; i++) { P(X(i), top, C.g1); P(X(i), top + 1, (i + 20) % 2 ? C.g3 : C.g2); }
+      for (let i = -11; i <= 10; i++) P(X(i), top + 2, C.g4);
+      for (let i = -9; i <= 9; i += 4) dome(X(i) + 0.5, top + 6.5, 1.8);
+      for (let i = -11; i <= 11; i++) { P(X(i), top + 10, C.g4); P(X(i), top + 9, i * flip < -3 ? C.g0 : C.g1); }
+      for (let k = -3; k <= 3; k++) for (let h = 13; h < 37; h++) { const t = (h - 13) / 24, a = k * 3 * (1 - t * 0.5) - t * 0.8; P(X(Math.round(a)), top + h, C.g4); }
+    };
+    rhyton(Math.round(cols * 0.3), fy + 9, 1, 'deer');
+    rhyton(Math.round(cols * 0.7), fy + 9, -1, 'goat');
+    // ---- the phiale: a shallow dish with a boss in the middle and three rings of bosses, small acorns between
+    { const Rr = 27.5;
+      const n = Rr + 1;
+      for (let j = -n; j <= n; j++) for (let i = -n; i <= n; i++) {
+        const a = Math.floor(cx0) + i, b = Math.floor(cy0) + j, ex = a + 0.5 - cx0, ey = b + 0.5 - cy0, d = Math.hypot(ex, ey);
+        if (d > Rr + 0.5) continue;
+        // the dish is hollow: its inside is lit at the bottom right, its rim at the top left
+        const l = (ex + ey) / (Rr * 1.414);
+        let col = l > 0.45 ? C.g2 : l > -0.2 ? C.g3 : C.g4;
+        if (d > Rr - 2.2) col = -(ex + ey) > Rr * 0.5 ? C.g0 : -(ex + ey) > -Rr * 0.3 ? C.g1 : C.g3;
+        if (d > Rr - 0.6 && ex + ey > 0) col = C.g4;
+        P(a, b, col);
+      }
+      const ring = (rad, cnt, r, ph) => { for (let k = 0; k < cnt; k++) { const t = (k / cnt) * Math.PI * 2 + ph; dome(cx0 + Math.cos(t) * rad, cy0 + Math.sin(t) * rad, r); } };
+      const acorns = (rad, cnt, ph) => { for (let k = 0; k < cnt; k++) { const t = (k / cnt) * Math.PI * 2 + ph; const a = Math.floor(cx0 + Math.cos(t) * rad), b = Math.floor(cy0 + Math.sin(t) * rad); P(a, b, C.g1); P(a + 1, b, C.g2); P(a, b + 1, C.g3); } };
+      ring(Rr - 6, 22, 3.3, 0); acorns(Rr - 10.5, 22, Math.PI / 22);
+      ring(Rr - 14.5, 15, 3, Math.PI / 15); acorns(Rr - 18.4, 15, 0);
+      ring(Rr - 21.5, 9, 2.4, 0);
+      dome(cx0, cy0, 4.8);
+    }
+    x.restore();
+  });
+}
+// Kukeri bells: two wide studded leather belts across shaggy dark wool, big copper bells and smaller bronze ones
+// hanging from them with long bunches of bright wool tassels between, a border of coloured pompoms.
+function bulKukeri(ctx, W, H) {
+  const C = { wool: '#1c191e', wool2: '#2b2630', leather: '#6e4024', leather2: '#40230f', hi: '#f6dca0', cu2: '#d27e3e', cu3: '#93451e', br2: '#c9a03e', br3: '#86621c', dk: '#2a150a', red: '#d2282c', yellow: '#f0c22a', green: '#3c9a48', blue: '#3070c8', white: '#f0ece0', pink: '#e0569a' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const { P, R, D } = bulKnots(x);
+    const YARN = [C.red, C.yellow, C.green, C.blue, C.white, C.pink];
+    const rr = rng(77);
+    // shaggy wool: short dark streaks hanging down all over
+    R(0, 0, cols, rows, C.wool);
+    for (let k = 0; k < 900; k++) { const a = Math.floor(rr() * cols), b = Math.floor(rr() * rows), l = 2 + Math.floor(rr() * 3); R(a, b, 1, l, C.wool2); }
+    // the border: a row of round wool pompoms in turn of colour between two leather lines
+    const B = 11;
+    for (const o of [B - 1]) { R(o, o, cols - 2 * o, 1, C.leather); R(o, rows - 1 - o, cols - 2 * o, 1, C.leather); R(o, o, 1, rows - 2 * o, C.leather); R(cols - 1 - o, o, 1, rows - 2 * o, C.leather); }
+    R(1, 1, cols - 2, 1, C.leather2); R(1, rows - 2, cols - 2, 1, C.leather2); R(1, 1, 1, rows - 2, C.leather2); R(cols - 2, 1, 1, rows - 2, C.leather2);
+    const pom = (a, b, r, col) => {
+      for (let j = -5; j <= 5; j++) for (let i = -5; i <= 5; i++) {
+        const d = Math.hypot(i, j), t = Math.atan2(j, i), e = r + 0.3 * Math.sin(t * 8 + a);
+        if (d > e) continue;
+        P(Math.floor(a) + i, Math.floor(b) + j, i + j >= 3 || d > e - 0.8 && i + j > 0 ? mixHex(col, '#000000', 0.38) : (i + j <= -3 ? mixHex(col, '#ffffff', 0.3) : col));
+      }
+    };
+    let pk = 0;
+    for (const [len, put] of [[cols - 2 * B, (a) => { pom(B + a, 5.5, 3.8, YARN[pk % 6]); pom(cols - 1 - B - a, rows - 6.5, 3.8, YARN[(pk + 3) % 6]); pk++; }], [rows - 2 * B, (a) => { pom(5.5, rows - 1 - B - a, 3.8, YARN[pk % 6]); pom(cols - 6.5, B + a, 3.8, YARN[(pk + 3) % 6]); pk++; }]]) { const { n, d } = evenSteps(len, 9); for (let i = 0; i < n; i++) put((i + 0.5) * d); }
+    for (const [a, b] of [[5.5, 5.5], [cols - 6.5, 5.5], [5.5, rows - 6.5], [cols - 6.5, rows - 6.5]]) { D(a + 0.5, b + 0.5, 4.6, C.br3); D(a + 0.5, b + 0.5, 3.4, C.br2); D(a, b, 1.6, C.hi); }
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // a bunch of wool tassels: a wrapped head, then long strands each a colour, swinging a little, ragged ends
+    const tassels = (a, b, len, seed) => {
+      const rt = rng(seed), w = 13;
+      const cols2 = []; for (let i = 0; i < w; i++) cols2.push(YARN[Math.floor(rt() * 6)]);
+      for (let i = 0; i < w; i++) {
+        const l = len - Math.floor(rt() * 9), col = cols2[i];
+        for (let j = 0; j < l; j++) { const sway = Math.round(Math.sin(j / 7 + seed) * 0.8 * (j / len)); const spread = Math.round((i - (w - 1) / 2) * (0.42 + 0.9 * Math.min(1, j / 26))); P(a + spread + sway, b + 4 + j, j % 5 === 4 && i % 2 ? mixHex(col, '#000000', 0.3) : col); }
+      }
+      R(a - 3, b, 7, 5, C.leather2); R(a - 2, b, 5, 5, C.leather); R(a - 3, b + 3, 7, 1, C.br2);
+    };
+    // a bell: a strap from the belt through a loop on its crown, a domed top, sides flaring a little to a lipped
+    // mouth, a clapper below. Polished metal across its round body: dark at the edges, a bright streak left of centre.
+    const bell = (a, top, w, h, big) => {
+      const M = big ? [C.dk, C.cu3, C.cu2, C.hi] : [C.dk, C.br3, C.br2, C.hi];
+      R(a - 1, top - 9, 3, 7, C.leather2); R(a - 1, top - 9, 1, 7, C.leather);
+      for (const [i, j] of [[-2, -3], [-2, -2], [-1, -4], [0, -4], [1, -4], [2, -3], [2, -2]]) P(a + i, top + j, j === -4 && i < 1 ? M[2] : M[1]);
+      const half = w / 2;
+      for (let j = 0; j < h; j++) {
+        let hw;
+        // the big bell: a tall body with rounded shoulders, its sides opening out a little to a rolled rim;
+        // the small one: a round-bellied sheep bell narrowing to its mouth
+        if (big) hw = j < 4 ? (half - 2.2) * Math.sqrt(1 - ((4 - j) / 4.6) ** 2) + 0.8 : half - 1.6 + 0.9 * (j - 4) / (h - 4);
+        else hw = Math.max(2.6, half * Math.pow(Math.sin(Math.PI * (j + 0.8) / (h + 1.2)), 0.6));
+        for (let i = -Math.round(hw); i <= Math.round(hw); i++) {
+          const v = i / (hw + 0.5);
+          let m = v < -0.82 ? 0 : v < -0.55 ? 1 : v < -0.2 ? 2 : v < 0.05 ? 3 : v < 0.4 ? 2 : v < 0.78 ? 1 : 0;
+          if (j < 2) m = Math.min(m, 2);
+          if (big && (j === 4 || j === h - 3)) m = Math.max(0, m - 1);       // ribs round the bell
+          if (big && j === h - 1) m = Math.min(3, m + 1);                      // the rolled rim catching the light
+          if (!big && j === Math.round(h * 0.5)) m = Math.max(0, m - 1);
+          P(a + i, top + j, M[m]);
+        }
+      }
+      // the dark mouth and the clapper
+      const mw = big ? Math.round(half - 0.6) : 3;
+      for (let i = -mw + 1; i <= mw - 1; i++) P(a + i, top + h, C.dk);
+      D(a + 0.5, top + h + 1.8, big ? 2.4 : 1.7, C.dk); P(a, top + h + 1, M[1]); P(a - 1, top + h + 1, M[2]);
+    };
+    // a studded leather belt across the rug, its edges stitched
+    const belt = (y0) => {
+      R(fx, y0, fw, 10, C.leather); R(fx, y0, fw, 1, C.leather2); R(fx, y0 + 9, fw, 1, C.leather2);
+      for (let xx = fx; xx < fx + fw; xx += 3) { P(xx, y0 + 1, C.br3); P(xx, y0 + 8, C.br3); }
+      for (let xx = fx + 3; xx < fx + fw; xx += 8) { D(xx + 0.5, y0 + 5, 2.1, C.br3); P(xx, y0 + 4, C.hi); P(xx - 1, y0 + 4, C.br2); P(xx, y0 + 3, C.br2); P(xx - 1, y0 + 5, C.br2); }
+    };
+    // two rows: tassels of both rows first (the top row's run down behind the lower belt), then belts and bells
+    const { n, d } = evenSteps(fw, 60);
+    const plan = (off) => { const it = []; for (let k = -1; k <= n; k++) { const a0 = fx + (k + off) * d; it.push(['big', a0], ['tas', a0 + d * 0.25], ['small', a0 + d * 0.5], ['tas', a0 + d * 0.75]); } return it; };
+    const rows2 = [[fy + 5, 0.5, plan(0.5), 46], [fy + 56, 0.25, plan(0.25), 46]];
+    for (const [y0, , it, tl] of rows2) for (const [kind, a] of it) if (kind === 'tas') tassels(Math.round(a), y0 + 7, tl, 13 + Math.round(a) + y0);
+    for (const [y0, , it] of rows2) {
+      belt(y0);
+      for (const [kind, a] of it) if (kind === 'big') bell(Math.round(a), y0 + 18, 21, 27, true); else if (kind === 'small') bell(Math.round(a), y0 + 16, 15, 17, false);
+    }
+    x.restore();
+  });
+}
+// Rose oil flacons: little bottles of Bulgarian rose oil standing on a carved walnut shelf against plum velvet, a tall
+// faceted crystal flacon in gilt mounts in the middle, turned wooden cases (muskali) painted with roses either side,
+// small gilt-capped bottles at the ends, damask roses lying along the shelf and petals falling, in a gilded border.
+function bulRoseOil(ctx, W, H) {
+  const C = { plum: '#2e1229', plum2: '#3e1c38', woodD: '#3a1f12', woodM: '#7a4424', woodL: '#c48c56', g0: '#fff0bc', g1: '#e8bf58', g2: '#a87828', g3: '#5c3c12', white: '#fbf4f0', glass: '#d8cce0', glass2: '#9a86ae', pinkL: '#f4b0c6', pink: '#d6527c', deep: '#8a1a42', green: '#4e7e36', green2: '#2c5226' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const { P, R, D } = bulKnots(x);
+    // a turned shape from its profile [half width, height]: colorFn(v, h) gives each knot's colour from v (-1 at the
+    // left edge to 1 at the right) and the height h above the base
+    const vessel = (cx, by, prof, colorFn) => {
+      const top = prof[prof.length - 1][1];
+      for (let h = 0; h <= top; h++) {
+        let k = 0; while (k < prof.length - 2 && prof[k + 1][1] < h) k++;
+        const [w0, h0] = prof[k], [w1, h1] = prof[k + 1], t = h1 > h0 ? Math.min(1, Math.max(0, (h - h0) / (h1 - h0))) : 0, hw = w0 + (w1 - w0) * t;
+        const n = Math.round(hw);
+        for (let i = -n; i <= n; i++) { const v = i / Math.max(0.6, hw + 0.4), col = colorFn(v, h, i); if (col) P(cx + i, by - h, col); }
+      }
+    };
+    const gold = (v) => (v < -0.72 ? C.g2 : v < -0.3 ? C.g1 : v < 0.08 ? C.g0 : v < 0.5 ? C.g1 : v < 0.82 ? C.g2 : C.g3);
+    const wood = (v) => (v < -0.78 ? C.woodD : v < -0.4 ? C.woodM : v < 0.1 ? C.woodL : v < 0.62 ? C.woodM : C.woodD);
+    // a damask rose seen from above: a ring of deep outer petals, a pink ring, a pale heart, curled petal edges
+    const rose = (cx, cy, r) => {
+      x.fillStyle = C.green2; for (const a of [0.5, 2.4, 4.2]) { x.beginPath(); x.ellipse(cx + Math.cos(a) * r * 1.1, cy + Math.sin(a) * r * 0.9, r * 0.75, r * 0.38, a, 0, Math.PI * 2); x.fill(); }
+      x.fillStyle = C.green; for (const a of [0.5, 2.4, 4.2]) { x.beginPath(); x.ellipse(cx + Math.cos(a) * r * 1.05, cy + Math.sin(a) * r * 0.85, r * 0.5, r * 0.24, a, 0, Math.PI * 2); x.fill(); }
+      for (let k = 0; k < 7; k++) { const a = (k / 7) * Math.PI * 2; x.fillStyle = C.deep; x.beginPath(); x.arc(cx + Math.cos(a) * r * 0.55, cy + Math.sin(a) * r * 0.55, r * 0.5, 0, Math.PI * 2); x.fill(); }
+      x.fillStyle = C.pink; x.beginPath(); x.arc(cx - r * 0.08, cy - r * 0.08, r * 0.78, 0, Math.PI * 2); x.fill();
+      x.strokeStyle = C.pinkL; x.lineWidth = 1; for (const [a0, rr] of [[3.6, 0.6], [0.6, 0.45], [2.0, 0.3]]) { x.beginPath(); x.arc(cx, cy, r * rr, a0, a0 + 1.9); x.stroke(); }
+      x.fillStyle = C.deep; x.fillRect(Math.floor(cx), Math.floor(cy), 1, 1);
+    };
+    const petal = (px, py, rot, col) => { x.fillStyle = col; x.beginPath(); x.ellipse(px, py, 1.6, 1, rot, 0, Math.PI * 2); x.fill(); };
+
+    // ---- the border: walnut edge, gold lines, a gilded vine with little roses on dark wood, gilt rosettes at the corners
+    const B = 12;
+    R(0, 0, cols, rows, C.woodD);
+    for (const o of [1, B - 2]) { R(o, o, cols - 2 * o, 1, C.g2); R(o, rows - 1 - o, cols - 2 * o, 1, C.g2); R(o, o, 1, rows - 2 * o, C.g2); R(cols - 1 - o, o, 1, rows - 2 * o, C.g2); }
+    const m = B / 2 - 0.5;
+    const vine = (len, at) => {
+      const { n, d } = evenSteps(len, 12);
+      for (let s = 0; s < len; s += 0.25) { const [a, b] = at(s, 2 * Math.sin((s / d) * Math.PI * 2)); P(Math.floor(a), Math.floor(b), C.g1); }
+      for (let i = 0; i < n; i++) {
+        const sc = (i + 0.25) * d, st = (i + 0.75) * d;
+        const [ra, rb] = at(sc, 2), [la, lb] = at(st, -2.6), [l2a, l2b] = at(st + 1.4, -3.4);
+        D(ra + 0.5, rb + 0.5, 1.9, C.deep); D(ra + 0.3, rb + 0.3, 1.3, C.pink); P(Math.floor(ra), Math.floor(rb), C.pinkL);
+        P(Math.floor(la), Math.floor(lb), C.g0); P(Math.floor(l2a), Math.floor(l2b), C.g1);
+      }
+    };
+    vine(cols - 2 * B, (s, w) => [B + s, m + 0.5 - w]); vine(cols - 2 * B, (s, w) => [cols - B - s, rows - m - 0.5 + w]);
+    vine(rows - 2 * B, (s, w) => [m + 0.5 + w, rows - B - s]); vine(rows - 2 * B, (s, w) => [cols - m - 0.5 - w, B + s]);
+    const boss = (cx, cy, r) => { for (let j = -r - 1; j <= r + 1; j++) for (let i = -r - 1; i <= r + 1; i++) { const ex = i + 0.5, ey = j + 0.5, d = Math.hypot(ex, ey); if (d > r + 0.3) continue; const l = -(ex + ey) / (r * 1.4) + (1 - d / r) * 0.4; P(Math.floor(cx) + i, Math.floor(cy) + j, l > 0.55 ? C.g0 : l > 0.15 ? C.g1 : l > -0.3 ? C.g2 : C.g3); } };
+    for (const [a, b] of [[m, m], [cols - 1 - m, m], [m, rows - 1 - m], [cols - 1 - m, rows - 1 - m]]) { for (let k = 0; k < 8; k++) { const t = k * Math.PI / 4; D(a + 0.5 + Math.cos(t) * 3.4, b + 0.5 + Math.sin(t) * 3.4, 1.2, k % 2 ? C.g2 : C.g1); } boss(a, b, 2); }
+    // a beaded gold line inside the border
+    for (let i = B - 1; i <= cols - B; i++) { P(i, B - 1, i % 2 ? C.g0 : C.g3); P(i, rows - B, i % 2 ? C.g0 : C.g3); }
+    for (let j = B - 1; j <= rows - B; j++) { P(B - 1, j, j % 2 ? C.g0 : C.g3); P(cols - B, j, j % 2 ? C.g0 : C.g3); }
+
+    // ---- the velvet: plum, falling in soft folds
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B, cx0 = Math.floor(cols / 2);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    R(fx, fy, fw, fh, C.plum);
+    for (let xx = fx; xx < fx + fw; xx++) { const f = Math.sin((xx - fx) * 0.42) + 0.6 * Math.sin((xx - fx) * 0.17 + 1); if (f > 0.9) R(xx, fy, 1, fh, C.plum2); }
+    const shelfY = fy + 70;
+    // petals drifting down the velvet
+    const rp = rng(41);
+    for (let k = 0; k < 40; k++) petal(fx + rp() * fw, fy + 2 + rp() * (shelfY - fy - 4), rp() * 3, rp() < 0.45 ? C.pinkL : C.pink);
+    // the shelf: its top seen a little from above, walnut with the grain running along it, a gilt moulding along the
+    // front edge, the carved front below with a row of gilt studs
+    R(fx, shelfY, fw, 14, C.woodM); R(fx, shelfY, fw, 1, C.woodD);
+    for (let yy = shelfY + 2; yy < shelfY + 14; yy += 3) for (let xx = fx; xx < fx + fw; xx++) if (Math.sin(xx * 0.13 + yy * 1.7) + 0.5 * Math.sin(xx * 0.31 + yy) > 0.6) P(xx, yy, C.woodL);
+    R(fx, shelfY + 14, fw, 1, C.g0); R(fx, shelfY + 15, fw, 1, C.g1); R(fx, shelfY + 16, fw, 1, C.g3);
+    R(fx, shelfY + 17, fw, fy + fh - shelfY - 17, C.woodD);
+    { const { n, d } = evenSteps(fw, 18); for (let k = 0; k < n; k++) { const a = Math.round(fx + k * d + 2), w2 = Math.round(d) - 4; R(a, shelfY + 19, w2, 1, C.woodM); R(a, shelfY + 19, 1, fy + fh - shelfY - 20, C.woodM); boss(fx + (k + 0.5) * d, shelfY + 25, 1.6); } }
+    const base = shelfY + 6;
+    const shadow = (cx, w) => { for (let i = -w; i <= w + 3; i++) { P(cx + i, base, C.woodD); if (i > -w + 2) P(cx + i, base + 1, C.woodD); } };
+
+    // ---- a muskala: a turned wooden case like a little vase on a foot, carved rings round it, a rose painted on its
+    // belly between painted bands, a domed lid with a round knob
+    const muskala = (cx, s) => {
+      shadow(cx, Math.round(5 * s));
+      const prof = [[4, 0], [4.2, 1.2], [2.6, 2.4], [3, 3.6], [5.6, 6], [7.4, 10], [7.8, 15], [7, 21], [5, 25.5], [3, 28], [2.6, 29.6], [4, 31], [4.2, 32.4], [3.4, 33.4], [4, 34.6], [3.8, 36.6], [2.8, 38.4], [1.4, 39.4], [1.6, 40.2], [1.9, 41.4], [1.4, 42.8], [0.4, 43.4]].map(([w, h]) => [w * s, h * s]);
+      const rings = [1.2, 3.6, 6, 22, 29.6, 32.4, 39.4].map((h) => Math.round(h * s));
+      vessel(cx, base, prof, (v, h) => (rings.includes(h) ? (v < 0.2 ? C.woodD : C.woodD) : rings.includes(h + 1) ? (v < 0.4 ? C.woodL : C.woodM) : wood(v)));
+      // the painted rose and its leaves
+      const ry = base - Math.round(14 * s);
+      for (const d of [-1, 1]) { D(cx + 0.5 + d * 3.2 * s, ry + 1.2, 1.4 * s, C.green2); P(cx + Math.round(d * 3.4 * s), ry + 1, C.green); }
+      D(cx + 0.5, ry + 0.5, 2.6 * s, C.deep); D(cx + 0.3, ry + 0.3, 1.9 * s, C.pink); P(cx, ry, C.pinkL); P(cx - 1, ry, C.pinkL);
+      // painted bands: gold dots round the shoulder, a green and pink garland round the foot of the belly, gilt dots on the lid
+      const band = (hh, hw, step, colA, colB) => { const yy = base - Math.round(hh * s); for (let i = -12; i <= 12; i += step) if (Math.abs(i) < hw * s * 0.8) P(cx + i, yy, (i / step) % 2 ? colB : colA); };
+      band(23.4, 6.6, 2, C.g1, C.g0); band(8.4, 6.6, 2, C.green, C.pink); band(35.6, 3.8, 2, C.g1, C.g1);
+    };
+    // a crystal flacon: a faceted body in gilt mounts, the golden oil showing in its lower part, a gilt collar and a
+    // tall faceted stopper
+    const crystal = (cx, s, tall) => {
+      shadow(cx, Math.round(6 * s));
+      const facet = (v, oil, i, h) => { const q = (v + 1) * 3, k = Math.max(0, Math.min(5, Math.floor(q))), edge = q - Math.floor(q) < 0.16 && k > 0; if (oil) return edge ? C.g1 : [C.glass2, C.g0, C.white, C.g0, C.g1, C.glass2][k]; if (edge) return C.glass2; if (k > 0 && k < 5 && k !== 2 && ((i + h + 300) % 6 === 0 || (i - h + 300) % 6 === 0)) return C.glass2; return [C.glass2, C.glass, C.white, C.glass, C.glass, C.glass2][k]; };
+      // the gilt foot
+      vessel(cx, base, [[6, 0], [6, 1.6], [4, 2.6], [4.6, 3.4]].map(([w, h]) => [w * s, h * s]), (v) => gold(v));
+      const b0 = Math.round(3.4 * s);
+      const body = tall ? [[5, 0], [9, 3], [10.6, 8], [10.6, 15], [8.6, 21], [5.4, 25], [3.2, 27.4]] : [[6, 0], [7.4, 1.6], [7.4, 10], [5.8, 12.6], [3, 14.4]];
+      const top = Math.round(body[body.length - 1][1] * s), oilTop = Math.round(top * 0.55);
+      vessel(cx, base - b0, body.map(([w, h]) => [w * s, h * s]), (v, h, i) => (h === 0 ? C.g2 : Math.abs(h - Math.round(top * 0.2)) < 0.5 || Math.abs(h - Math.round(top * 0.78)) < 0.5 ? gold(v) : h === oilTop ? C.g0 : facet(v, h < oilTop, i, h)));
+      // gilt filigree studs on the gilt bands
+      for (const hh of [0.2, 0.78]) { const yy = base - b0 - Math.round(top * hh); for (let i = -6; i <= 6; i += 3) P(cx + Math.round(i * s * (hh > 0.5 ? 0.6 : 1)), yy - 1, C.g0); }
+      // the collar and the stopper
+      const c0 = b0 + top;
+      vessel(cx, base - c0, [[3.2, 0], [3.6, 1], [2.4, 2], [2.4, 3.2], [3.8, 4.2], [3.8, 5.2]].map(([w, h]) => [w * s, h * s]), (v) => gold(v));
+      const st = c0 + Math.round(5.2 * s);
+      const stop = tall ? [[2.4, 0], [5, 4], [5.8, 8.6], [4.4, 14], [2, 18], [0.6, 20.4]] : [[1.6, 0], [2.6, 1.4], [2.6, 3.4], [1, 5.4], [0.4, 7.4]];
+      vessel(cx, base - st, stop.map(([w, h]) => [w * s, h * s]), (v, h, i) => (tall ? facet(v, false, i, h) : gold(v)));
+      if (tall) { const tt = base - st - Math.round(20.4 * s); P(cx, tt - 1, C.g1); P(cx, tt - 2, C.g0); D(cx + 0.5, base - st - Math.round(8.6 * s) + 0.5, 1.4, C.g1); P(cx, base - st - Math.round(8.6 * s), C.g0); }
+    };
+    // a small round bottle: a squat flask of pink glass full of oil, a gilt cap with a long gilt dauber
+    const round = (cx, s) => {
+      shadow(cx, Math.round(5 * s));
+      vessel(cx, base, [[3.6, 0], [5.4, 1.2], [6.4, 4], [6.4, 7], [5, 10], [2.6, 12], [2, 13]].map(([w, h]) => [w * s, h * s]), (v, h) => (h > 11 * s ? C.glass : v < -0.75 ? C.deep : v < -0.35 ? C.pink : v < -0.05 ? C.pinkL : v < 0.25 ? C.white : v < 0.7 ? C.pink : C.deep));
+      vessel(cx, base - Math.round(13 * s), [[2.6, 0], [2.6, 3], [1.6, 4], [1.6, 5], [1, 9], [0.4, 11]].map(([w, h]) => [w * s, h * s]), (v) => gold(v));
+      D(cx + 0.5, base - Math.round(19 * s) + 0.5, 1.3, C.g1); P(cx, base - Math.round(19 * s), C.g0);
+    };
+    // the arrangement, symmetrical about the middle
+    for (const sg of [-1, 1]) {
+      round(cx0 + sg * 82, 1.25);
+      crystal(cx0 + sg * 60, 1.45, false);
+      muskala(cx0 + sg * 34, 1.36);
+    }
+    crystal(cx0, 1.36, true);
+    // damask roses lying along the shelf between the flacons, petals fallen round them
+    for (let k = 0; k < 30; k++) petal(fx + 2 + rp() * (fw - 4), base + 2 + rp() * 6, rp() * 3, rp() < 0.5 ? C.pinkL : C.pink);
+    for (const sg of [-1, 1]) for (const [dx, dy, r] of [[19, 3, 5.4], [47, 4, 4.8], [72, 3, 4.6], [92, 4, 3.8]]) rose(cx0 + sg * dx, base + dy, r);
+    rose(cx0 - 8, base + 6, 3.6); rose(cx0 + 9, base + 6.5, 3.2);
+    x.restore();
+  });
+}
+
+// Tryavna carved sun: the great walnut sun of a carved ceiling, a domed boss, a ring of veined petals and long rays
+// straight and wavy in turn inside a beaded ring, smaller carved rosettes in the corners and at the sides, set in
+// boards inside a carved rope frame. Carved as a height map, then lit from the top left.
+function bulTryavna(ctx, W, H) {
+  const T = ['#2a1607', '#45260e', '#653c19', '#8a5626', '#ae7537', '#cf9a52', '#ebc27c', '#f8dea6'];
+  weavePicture(ctx, W, H, 128, T, (x, cols, rows) => {
+    const N = cols * rows, Hm = new Float32Array(N), Al = new Float32Array(N);
+    const cx = cols / 2, cy = rows / 2, B = 12, Rs = 49;
+    const bump = (d, r, h) => (d < r ? h * Math.sqrt(1 - (d / r) ** 2) : 0);
+    // a carved rosette of radius r: a beaded boss, a ring of veined petals out to petalR, then (on the big sun) rays
+    // straight and flame-shaped in turn and a running scroll, a row of beads and a rounded moulding round the edge
+    const rosetteH = (dx, dy, r, o) => {
+      const d = Math.hypot(dx, dy), t = Math.atan2(dy, dx);
+      if (d > r + 0.5) return null;
+      let h = 0;
+      h = Math.max(h, bump(Math.abs(d - (r - 1.5)), 1.6, 2.2));
+      if (!o.scroll) { const rb = r - 4.4, nb = Math.round((Math.PI * 2 * rb) / 2.6), k = Math.round((t / (Math.PI * 2)) * nb), bt = (k / nb) * Math.PI * 2; h = Math.max(h, bump(Math.hypot(dx - Math.cos(bt) * rb, dy - Math.sin(bt) * rb), 1.15, 1.6)); }
+      const rIn = o.boss, rP = o.petalR;
+      if (o.scroll) {
+        // a garland: a wave running round the ring, a round boss in every bay, inside and out in turn
+        const rc = o.scroll, n = o.scrollN, wv = rc + 1.7 * Math.sin(t * n);
+        h = Math.max(h, bump(Math.abs(d - wv), 1.0, 1.5));
+        const k = Math.round((t * n / (Math.PI * 2)) - 0.25), ct = ((k + 0.25) / n) * Math.PI * 2;
+        h = Math.max(h, bump(Math.hypot(dx - Math.cos(ct) * (rc - 1.4), dy - Math.sin(ct) * (rc - 1.4)), 1.25, 1.4));
+        const k2 = Math.round((t * n / (Math.PI * 2)) + 0.25), ct2 = ((k2 - 0.25) / n) * Math.PI * 2;
+        h = Math.max(h, bump(Math.hypot(dx - Math.cos(ct2) * (rc + 1.4), dy - Math.sin(ct2) * (rc + 1.4)), 1.25, 1.4));
+      }
+      if (o.rays && d > rP + 0.5 && d < o.rayEnd) {
+        const k = Math.round((t / (Math.PI * 2)) * o.rays), long = k % 2 === 0, tip = long ? o.rayEnd : rP + (o.rayEnd - rP) * 0.72;
+        const f = (d - rP) / (tip - rP);
+        if (f < 1) {
+          const off = (t - (k / o.rays) * Math.PI * 2) * d;
+          // every ray a flame: the long ones taper in a slow S, the short ones swell and curl to their tips
+          const w = long ? 2.5 * (1 - f) ** 0.8 + 0.35 : 2.6 * Math.sin(Math.PI * Math.min(1, 0.25 + f * 0.8)) * (1 - f * 0.6) + 0.3, sh = long ? 1.3 * Math.sin(f * Math.PI * 2) : 0.9 * Math.sin(f * Math.PI * 1.6);
+          h = Math.max(h, bump(Math.abs(off - sh), w, long ? 2 : 1.7));
+        }
+      }
+      if (d > rIn - 0.5 && d < rP + 1) {
+        const k = Math.round((t / (Math.PI * 2)) * o.petals), off = (t - (k / o.petals) * Math.PI * 2) * d, f = (d - rIn) / (rP - rIn);
+        const w = (Math.PI * d / o.petals) * 0.8 * Math.sin(Math.PI * Math.min(1, f * 0.8 + 0.18)) ** 0.6;
+        if (Math.abs(off) < w && f < 1) { let ph = 3 * Math.sqrt(1 - (off / w) ** 2) * (0.6 + 0.4 * Math.sin(Math.PI * Math.min(1, f))); if (Math.abs(off) < 0.6 && f > 0.12 && f < 0.88) ph -= 1.1; h = Math.max(h, ph); }
+      }
+      h = Math.max(h, bump(d, rIn, 3.6));
+      { const nb = Math.max(8, Math.round(rIn * 1.6)), k = Math.round((t / (Math.PI * 2)) * nb), bt = (k / nb) * Math.PI * 2; h = Math.max(h, bump(Math.hypot(dx - Math.cos(bt) * (rIn + 1.2), dy - Math.sin(bt) * (rIn + 1.2)), 0.95, 1.5)); }
+      return h;
+    };
+    const rose = [[cx, cy, Rs, { boss: 8, petalR: 22, petals: 10, rays: 24, rayEnd: 38.5, scroll: 42.6, scrollN: 16 }]];
+    for (const sx of [-1, 1]) for (const sy of [-1, 1]) rose.push([cx + sx * (cols / 2 - B - 17), cy + sy * (rows / 2 - B - 16), 14.5, { boss: 4, petalR: 10.6, petals: 8 }]);
+    // carved S-scrolls at the sides: a stem curling into a volute at each end
+    const scrollPts = [];
+    for (const sx of [-1, 1]) {
+      const ox = cx + sx * (cols / 2 - B - 14), oy = cy;
+      const vol = (vx, vy, dir, a0, turns) => { const q = []; for (let k = 0; k <= 80; k++) { const f = k / 80, a = a0 + dir * f * turns * Math.PI * 2, rr = 6.2 * (1 - f * 0.82); q.push([vx + Math.cos(a) * rr, vy + Math.sin(a) * rr, 1.7 - f * 0.8]); } return q; };
+      const top = vol(ox + sx * 2, oy - 11, -sx, sx > 0 ? Math.PI : 0, 1.15).reverse(), bot = vol(ox - sx * 2, oy + 11, -sx, sx > 0 ? 0 : Math.PI, 1.15);
+      const a0 = top[top.length - 1], b0 = bot[0], stem = []; for (let k = 1; k < 30; k++) { const f = k / 30; stem.push([a0[0] + (b0[0] - a0[0]) * f + sx * 2.2 * Math.sin(f * Math.PI), a0[1] + (b0[1] - a0[1]) * f, 1.7]); }
+      scrollPts.push([...top, ...stem, ...bot]);
+    }
+    const scrollH = (px, py) => { let h = null; for (const pts of scrollPts) for (const [qx, qy, w] of pts) { if (Math.abs(px - qx) > 2 || Math.abs(py - qy) > 2) continue; const dd = Math.hypot(px - qx, py - qy); if (dd < w) { const v = 1.9 * Math.sqrt(1 - (dd / w) ** 2); h = h === null ? v : Math.max(h, v); } } return h; };
+    for (let yy = 0; yy < rows; yy++) for (let xx = 0; xx < cols; xx++) {
+      const i = yy * cols + xx, px = xx + 0.5, py = yy + 0.5;
+      const e = Math.min(px, py, cols - px, rows - py);
+      let h = 0, al = 0.5;
+      if (e < B) {
+        // the frame: a rounded outer moulding, a twisted rope, an inner step
+        al = 0.52;
+        if (e < 1.2) h = 0;
+        else if (e < 4.5) h = bump(Math.abs(e - 2.9), 1.7, 2.4);
+        else if (e < 10) {
+          const along = (e === px || e === cols - px) ? py : px, c = e - 7.25;
+          const ph = (((along + c * 1.1) % 3.2) + 3.2) % 3.2;
+          h = 2.2 * Math.sqrt(Math.max(0, 1 - (c / 2.8) ** 2)) * (0.45 + 0.55 * Math.sin(Math.PI * ph / 3.2));
+        } else h = 0.6;
+        // a boss in each corner
+        if (Math.min(px, cols - px) < B && Math.min(py, rows - py) < B) { const ddx = (px < cols / 2 ? px : cols - px) - B / 2, ddy = (py < rows / 2 ? py : rows - py) - B / 2; const dd = Math.hypot(ddx, ddy); h = Math.max(bump(dd, 5, 2.6), dd < 5.6 ? 0.2 : h); }
+      } else {
+        // the boards behind: plain, a groove between each, grain running along them
+        const bx = (xx - B) % 16, board = Math.floor((xx - B) / 16);
+        h = bx === 0 ? -1.2 : 0;
+        al = 0.34 + 0.035 * Math.sin((xx + 1.6 * Math.sin(yy * 0.06 + board * 1.7)) * 1.7 + board) + 0.02 * Math.sin(yy * 0.31 + board * 3);
+        for (const [ox, oy, r, o] of rose) { const v = rosetteH(px - ox, py - oy, r, o); if (v !== null) { h = Math.max(0, v); al = v > 0.15 ? 0.6 : 0.28; } }
+        if (Math.abs(px - cx) > 60) { const v = scrollH(px, py); if (v !== null) { h = Math.max(h, v); al = 0.6; } }
+      }
+      Hm[i] = h; Al[i] = al;
+    }
+    // a soft blur of the heights: hollows between raised carving fall into shadow
+    const bl = new Float32Array(N), tmp = new Float32Array(N), Rb = 2;
+    for (let yy = 0; yy < rows; yy++) for (let xx = 0; xx < cols; xx++) { let s = 0, n = 0; for (let k = -Rb; k <= Rb; k++) { const q = xx + k; if (q >= 0 && q < cols) { s += Hm[yy * cols + q]; n++; } } tmp[yy * cols + xx] = s / n; }
+    for (let yy = 0; yy < rows; yy++) for (let xx = 0; xx < cols; xx++) { let s = 0, n = 0; for (let k = -Rb; k <= Rb; k++) { const q = yy + k; if (q >= 0 && q < rows) { s += tmp[q * cols + xx]; n++; } } bl[yy * cols + xx] = s / n; }
+    const L = [-0.62, -0.62, 0.48], Ln = Math.hypot(...L);
+    for (let yy = 0; yy < rows; yy++) for (let xx = 0; xx < cols; xx++) {
+      const i = yy * cols + xx, hx = (Hm[yy * cols + Math.min(cols - 1, xx + 1)] - Hm[yy * cols + Math.max(0, xx - 1)]) / 2, hy = (Hm[Math.min(rows - 1, yy + 1) * cols + xx] - Hm[Math.max(0, yy - 1) * cols + xx]) / 2;
+      const nn = Math.hypot(hx, hy, 1), dot = (-hx * L[0] - hy * L[1] + L[2]) / (nn * Ln), flat = L[2] / Ln;
+      const ao = Math.max(0, bl[i] - Hm[i]) * 0.16;
+      const t = Al[i] + (dot - flat) * 0.95 + Hm[i] * 0.025 - ao;
+      x.fillStyle = T[Math.max(0, Math.min(T.length - 1, Math.round(t * (T.length - 1))))]; x.fillRect(xx, yy, 1, 1);
+    }
+  });
+}
+// The Rose Valley at harvest: rows of pink damask rose bushes running away to the blue Balkan range in early
+// morning light, pickers in white headscarves with baskets between the rows, a big basket of petals in front.
+function bulRoseValley(ctx, W, H) {
+  const u = H / 100, vx = W * 0.62, vy = H * 0.47;
+  const disc = (px, py, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2); ctx.fill(); };
+  const ridge = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, H); pts.forEach(([a, b]) => ctx.lineTo(a * W, b * H)); ctx.lineTo(W, H); ctx.closePath(); ctx.fill(); };
+  // the morning sky: blue overhead, warming to peach and gold over the mountains, the sun just up on the left
+  const sky = ctx.createLinearGradient(0, 0, 0, vy); sky.addColorStop(0, '#86b2da'); sky.addColorStop(0.45, '#c8d0e0'); sky.addColorStop(0.8, '#f4d6b8'); sky.addColorStop(1, '#f8e0b0');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  disc(W * 0.16, H * 0.24, 9 * u, '#fae6bc'); disc(W * 0.16, H * 0.24, 5.4 * u, '#fff4d4');
+  ctx.fillStyle = '#f6d4c8'; for (const [a, b, l] of [[0.3, 0.12, 0.16], [0.36, 0.16, 0.1], [0.62, 0.1, 0.18], [0.7, 0.14, 0.12], [0.86, 0.2, 0.1]]) { roundRect(ctx, W * a, H * b, W * l, 2.2 * u, 1.1 * u); ctx.fill(); }
+  // the Balkan range in layers of blue, the far one palest
+  ridge([[0, 0.33], [0.08, 0.27], [0.16, 0.3], [0.26, 0.22], [0.34, 0.27], [0.44, 0.2], [0.52, 0.25], [0.6, 0.21], [0.7, 0.26], [0.8, 0.2], [0.9, 0.25], [1, 0.22]], '#a8b4d4');
+  ridge([[0, 0.38], [0.1, 0.33], [0.2, 0.36], [0.3, 0.3], [0.4, 0.35], [0.5, 0.31], [0.6, 0.36], [0.72, 0.3], [0.84, 0.35], [0.94, 0.31], [1, 0.33]], '#8698c4');
+  ridge([[0, 0.43], [0.12, 0.39], [0.24, 0.42], [0.36, 0.38], [0.5, 0.42], [0.64, 0.39], [0.78, 0.42], [0.9, 0.39], [1, 0.41]], '#6a80aa');
+  // the far edge of the valley: a band of trees and poplars, a few white houses with red roofs
+  ridge([[0, 0.465], [0.2, 0.455], [0.4, 0.465], [0.6, 0.455], [0.8, 0.465], [1, 0.455]], '#557a54');
+  const rt = rng(41);
+  for (let k = 0; k < 36; k++) { const a = rt(); disc(W * a, H * 0.46, (1.6 + rt() * 1.4) * u, rt() < 0.5 ? '#3f6444' : '#4e7450'); }
+  for (const a of [0.05, 0.09, 0.4, 0.44, 0.93]) { ctx.fillStyle = '#365a3e'; ctx.beginPath(); ctx.ellipse(W * a, H * 0.425, 1.3 * u, 5 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  for (const [a, w] of [[0.74, 4.4], [0.79, 3.6], [0.84, 4]]) { ctx.fillStyle = '#f2ebde'; ctx.fillRect(W * a, H * 0.445, w * u, 2.6 * u); ctx.fillStyle = '#b8503a'; ctx.beginPath(); ctx.moveTo(W * a - 0.5 * u, H * 0.445); ctx.lineTo(W * a + w * u / 2, H * 0.425); ctx.lineTo(W * a + (w + 0.5) * u, H * 0.445); ctx.fill(); }
+  // the field: warm soil, lit from the left
+  const soil = ctx.createLinearGradient(0, vy, 0, H); soil.addColorStop(0, '#7a8a58'); soil.addColorStop(0.18, '#8c8458'); soil.addColorStop(0.4, '#a08058'); soil.addColorStop(1, '#8e6a44');
+  ctx.fillStyle = soil; ctx.fillRect(0, vy, W, H - vy);
+  // the rows of rose bushes, everything sorted far to near so nearer bushes and pickers overlap the farther ones
+  const items = [];
+  const rowGap = 30 * u;
+  for (let k = -14; k <= 8; k++) {
+    const nx = vx + (k + 0.5) * rowGap;
+    let t = 0.015;
+    while (t < 1.12) {
+      const r = (0.9 + 8.4 * t) * u, px = vx + (nx - vx) * t, py = vy + (H - vy) * t;
+      items.push([py, 'bush', px, py, r, t, k]);
+      t += (r * 1.05) / (H - vy) / Math.max(0.35, Math.abs((nx - vx) / (H - vy)) * 0.9 + 0.55);
+    }
+  }
+  // the pickers: small figures between the rows, white scarves over their heads, seen from the side or behind
+  const pickers = [[-0.0, 0.4, '#c8343a', 1], [0.55, 0.33, '#2f5a9a', -1], [-1.0, 0.55, '#d88a2a', 1], [1.5, 0.6, '#7a3a7a', -1], [-3.0, 0.42, '#2f5a9a', -1], [-2.0, 0.76, '#c8343a', 1]];
+  for (const [k, t, col, face] of pickers) { const nx = vx + (k + 1) * rowGap, px = vx + (nx - vx) * t, py = vy + (H - vy) * t; items.push([py + 0.1, 'picker', px, py, t, col, face]); }
+  items.sort((a, b) => a[0] - b[0]);
+  const rose = (px, py, r) => { disc(px, py, r, '#c4487a'); disc(px - r * 0.18, py - r * 0.18, r * 0.72, '#e8709e'); disc(px - r * 0.3, py - r * 0.3, r * 0.35, '#f8b0cc'); };
+  for (const it of items) {
+    if (it[1] === 'bush') {
+      const [, , px, py, r, t, k] = it, rb = rng(Math.round(px * 7 + py));
+      ctx.fillStyle = 'rgba(70,40,20,.28)'; ctx.beginPath(); ctx.ellipse(px + r * 0.5, py + r * 0.15, r * 1.05, r * 0.32, 0, 0, Math.PI * 2); ctx.fill();
+      disc(px, py - r * 0.55, r, '#2f5a30');
+      disc(px - r * 0.18, py - r * 0.72, r * 0.8, '#477a3a');
+      disc(px - r * 0.36, py - r * 0.92, r * 0.42, '#6a9a48');
+      const n = t < 0.12 ? 2 : t < 0.25 ? 4 : 6;
+      for (let j = 0; j < n; j++) { const a = rb() * Math.PI * 2, d = Math.sqrt(rb()) * r * 0.78; rose(px + Math.cos(a) * d, py - r * 0.6 + Math.sin(a) * d * 0.85, Math.max(0.75 * u, r * 0.16)); }
+    } else {
+      const [, , px, py, t, col, face] = it, h = (6 + 24 * t) * u, s = h / 20;
+      ctx.fillStyle = 'rgba(70,40,20,.3)'; ctx.beginPath(); ctx.ellipse(px + 2 * s, py, 4 * s, 1 * s, 0, 0, Math.PI * 2); ctx.fill();
+      // skirt, apron, white blouse, arms, the white headscarf over the head (no face), a basket on the hip
+      ctx.fillStyle = '#3a2a30'; ctx.beginPath(); ctx.moveTo(px - 2.6 * s, py - 9 * s); ctx.lineTo(px + 2.6 * s, py - 9 * s); ctx.lineTo(px + 3.6 * s, py); ctx.lineTo(px - 3.6 * s, py); ctx.fill();
+      ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(px - 1.8 * s * face, py - 9 * s); ctx.lineTo(px + 2.6 * s * face, py - 9 * s); ctx.lineTo(px + 3.4 * s * face, py - 1 * s); ctx.lineTo(px - 0.2 * s * face, py - 1 * s); ctx.fill();
+      ctx.fillStyle = '#f6f2e8'; roundRect(ctx, px - 2.4 * s, py - 15 * s, 4.8 * s, 6.6 * s, 1.4 * s); ctx.fill();
+      ctx.fillStyle = '#e0d8c8'; ctx.fillRect(px + 1.2 * s * face - (face < 0 ? 1.2 * s : 0), py - 14 * s, 1.2 * s, 5.4 * s);
+      ctx.fillStyle = col; ctx.fillRect(px - 2.6 * s, py - 9.6 * s, 5.2 * s, 1.1 * s);
+      disc(px + 0.2 * s * face, py - 17 * s, 2.3 * s, '#f6f2e8');
+      ctx.fillStyle = '#f6f2e8'; ctx.beginPath(); ctx.moveTo(px - 2.2 * s * face, py - 17.6 * s); ctx.lineTo(px - 3.4 * s * face, py - 13 * s); ctx.lineTo(px - 1 * s * face, py - 14 * s); ctx.fill();
+      ctx.fillStyle = '#d8d0c0'; ctx.beginPath(); ctx.arc(px + 0.2 * s * face, py - 17 * s, 2.3 * s, face > 0 ? -0.4 : Math.PI - 0.6 + 0.2, face > 0 ? 1.0 : Math.PI + 1.0); ctx.fill();
+      ctx.fillStyle = '#e8bc98'; ctx.beginPath(); ctx.ellipse(px + 1.9 * s * face, py - 16.6 * s, 0.7 * s, 1.3 * s, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#9a6a3a'; roundRect(ctx, px + (face > 0 ? 1.4 : -6.4) * s, py - 9.6 * s, 5 * s, 3.4 * s, 1 * s); ctx.fill();
+      ctx.fillStyle = '#e8709e'; ctx.beginPath(); ctx.ellipse(px + (face > 0 ? 3.9 : -3.9) * s, py - 9.6 * s, 2.5 * s, 1 * s, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = '#7a5028'; ctx.lineWidth = 0.7 * s; ctx.beginPath(); ctx.arc(px + (face > 0 ? 3.9 : -3.9) * s, py - 9.8 * s, 2.4 * s, Math.PI, 0); ctx.stroke();
+    }
+  }
+  // the morning light washing over the field from the left
+  const glow = ctx.createRadialGradient(W * 0.16, H * 0.3, 0, W * 0.16, H * 0.3, W * 0.6); glow.addColorStop(0, 'rgba(255,226,170,.35)'); glow.addColorStop(1, 'rgba(255,226,170,0)');
+  ctx.fillStyle = glow; ctx.fillRect(0, vy, W, H - vy);
+  // in front: a big wicker basket heaped with petals, petals spilt on the ground
+  const bx = W * 0.15, by = H * 0.9;
+  ctx.fillStyle = 'rgba(60,30,15,.35)'; ctx.beginPath(); ctx.ellipse(bx + 4 * u, by + 1 * u, 17 * u, 3 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#8a5a2e'; ctx.beginPath(); ctx.moveTo(bx - 15 * u, by - 12 * u); ctx.lineTo(bx + 15 * u, by - 12 * u); ctx.lineTo(bx + 12 * u, by); ctx.lineTo(bx - 12 * u, by); ctx.fill();
+  ctx.fillStyle = '#b07a42'; for (let r = 0; r < 4; r++) for (let k = 0; k < 9; k++) { const yy = by - 11 * u + r * 2.8 * u, w = 15 - r * 0.8; ctx.fillRect(bx - w * u + k * (2 * w / 9) * u + (r % 2) * 1.6 * u, yy, 1.6 * u, 1.6 * u); }
+  ctx.fillStyle = '#6a4220'; ctx.fillRect(bx - 15.5 * u, by - 13.4 * u, 31 * u, 1.8 * u);
+  ctx.strokeStyle = '#6a4220'; ctx.lineWidth = 1.6 * u; ctx.beginPath(); ctx.ellipse(bx, by - 13 * u, 13 * u, 10 * u, 0, Math.PI * 1.08, Math.PI * 1.92); ctx.stroke();
+  const rp = rng(9);
+  for (let k = 0; k < 70; k++) { const a = (rp() - 0.5) * 28 * u, b = -Math.sqrt(Math.max(0, 1 - (a / (14 * u)) ** 2)) * 5 * u * rp(); ctx.fillStyle = ['#e8709e', '#f8b0cc', '#c4487a', '#f294b8'][k % 4]; ctx.beginPath(); ctx.ellipse(bx + a, by - 13.5 * u + b, 1.6 * u, 1 * u, rp() * 3, 0, Math.PI * 2); ctx.fill(); }
+  for (let k = 0; k < 16; k++) { ctx.fillStyle = ['#e8709e', '#f8b0cc', '#c4487a'][k % 3]; ctx.beginPath(); ctx.ellipse(bx + (14 + rp() * 22) * u, by - rp() * 3 * u, 1.3 * u, 0.8 * u, rp() * 3, 0, Math.PI * 2); ctx.fill(); }
+  // close by on the right, a branch of the bush in front with open damask roses: rings of petals round a deep heart
+  const big = (px, py, r) => {
+    for (let k = 0; k < 7; k++) { const a = k / 7 * Math.PI * 2; disc(px + Math.cos(a) * r * 0.62, py + Math.sin(a) * r * 0.62, r * 0.48, '#d0558a'); }
+    for (let k = 0; k < 7; k++) { const a = k / 7 * Math.PI * 2 + 0.45; disc(px + Math.cos(a) * r * 0.5 - r * 0.08, py + Math.sin(a) * r * 0.5 - r * 0.08, r * 0.36, '#ec7ea8'); }
+    disc(px - r * 0.1, py - r * 0.1, r * 0.42, '#f6a6c4'); disc(px, py, r * 0.22, '#b03a6a'); disc(px - r * 0.06, py - r * 0.06, r * 0.1, '#e8c060');
+  };
+  for (const [a, b, l, ang] of [[0.86, 1.02, 14, -2.2], [0.92, 0.98, 12, -2.6], [0.97, 0.9, 13, -2.0], [0.8, 0.98, 11, -1.0], [0.9, 0.86, 10, -1.4]]) leaf(ctx, W * a, H * b, l * u, ang, '#3f7232', '#2a5228');
+  for (const [a, b, l, ang] of [[0.84, 0.88, 8, -2.9], [0.95, 0.8, 8, -1.9]]) leaf(ctx, W * a, H * b, l * u, ang, '#5a8e40');
+  big(W * 0.88, H * 0.84, 5 * u); big(W * 0.955, H * 0.74, 4.2 * u); big(W * 0.8, H * 0.93, 3.8 * u);
+  disc(W * 0.93, H * 0.93, 2 * u, '#c4487a'); disc(W * 0.925, H * 0.925, 1.2 * u, '#e8709e');
+}
+// The old town of Plovdiv: painted Revival houses whose upper floors jut out over stone ground floors on curved
+// wooden brackets, an ochre house and a red one at the front, a blue house with a bowed eave and a bay set back
+// between them across a little lane, geraniums in the windows, cobbles in front.
+function bulPlovdiv(ctx, W, H) {
+  const u = H / 100, Wu = W / u, vx = Wu / 2, vy = 62;
+  // a gentle perspective: things at depth Z are drawn 10 / Z times their size, toward the vanishing point
+  const S = (X, Y, Z) => [(vx + ((X - vx) * 10) / Z) * u, (vy + ((Y - vy) * 10) / Z) * u];
+  const quad = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach((p, i) => { const [a, b] = S(...p); i ? ctx.lineTo(a, b) : ctx.moveTo(a, b); }); ctx.closePath(); ctx.fill(); };
+  const face = (x0, x1, y0, y1, Z, col) => quad([[x0, y0, Z], [x1, y0, Z], [x1, y1, Z], [x0, y1, Z]], col);
+  const sideX = (X, z0, z1, y0, y1, col) => quad([[X, y0, z0], [X, y1, z0], [X, y1, z1], [X, y0, z1]], col);
+  const flatY = (Y, x0, x1, z0, z1, col) => quad([[x0, Y, z0], [x1, Y, z0], [x1, Y, z1], [x0, Y, z1]], col);
+  const disc = (X, Y, Z, r, col) => { const [a, b] = S(X, Y, Z); ctx.fillStyle = col; ctx.beginPath(); ctx.arc(a, b, (r * 10 / Z) * u, 0, Math.PI * 2); ctx.fill(); };
+  const strut = (pts, w, col) => { ctx.strokeStyle = col; ctx.lineWidth = w * u; ctx.lineCap = 'round'; ctx.beginPath(); pts.forEach((p, i) => { const [a, b] = S(...p); i ? ctx.lineTo(a, b) : ctx.moveTo(a, b); }); ctx.stroke(); };
+  // sky and the rocky green hill of the old town behind
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.5); sky.addColorStop(0, '#62a2da'); sky.addColorStop(1, '#d2e6f2');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f6f8fa'; for (const [a, b, r] of [[0.13, 0.09, 4], [0.17, 0.08, 5], [0.21, 0.095, 3.6], [0.78, 0.07, 4], [0.82, 0.06, 5.4], [0.86, 0.075, 3.8]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, r * 1.8 * u, r * 0.8 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#7c9a5c'; ctx.beginPath(); ctx.moveTo(0, 30 * u); ctx.lineTo(24 * u, 24 * u); ctx.lineTo(46 * u, 19 * u); ctx.lineTo(64 * u, 15 * u); ctx.lineTo(84 * u, 14 * u); ctx.lineTo(104 * u, 17 * u); ctx.lineTo(126 * u, 22 * u); ctx.lineTo(W, 26 * u); ctx.lineTo(W, 60 * u); ctx.lineTo(0, 60 * u); ctx.fill();
+  ctx.fillStyle = '#a8a08a'; for (const [a, b, w, h] of [[62, 16.5, 7, 3], [76, 15.4, 6, 2.6], [96, 17.5, 6, 2.4]]) { roundRect(ctx, a * u, b * u, w * u, h * u, 1 * u); ctx.fill(); }
+  const rt = rng(12); for (let k = 0; k < 26; k++) { ctx.fillStyle = rt() < 0.5 ? '#557a44' : '#64884c'; ctx.beginPath(); ctx.arc(rt() * W, (21 + rt() * 9) * u, (1.8 + rt() * 1.6) * u, 0, Math.PI * 2); ctx.fill(); }
+  // houses further up the hill, seen only through the gaps between the near ones
+  for (const [x0, x1, col] of [[10, 52, '#e8d8b8'], [50, 80, '#c86a50'], [78, 110, '#d8b860'], [108, 150, '#e8e0d0']]) { ctx.fillStyle = col; ctx.fillRect(x0 * u, 34 * u, (x1 - x0) * u, 44 * u); ctx.fillStyle = '#9a4a34'; ctx.beginPath(); ctx.moveTo((x0 - 1) * u, 34 * u); ctx.lineTo((x0 + 4) * u, 29 * u); ctx.lineTo((x1 - 4) * u, 29 * u); ctx.lineTo((x1 + 1) * u, 34 * u); ctx.fill(); ctx.fillStyle = '#4a5468'; for (let a = x0 + 3; a < x1 - 3; a += 6) ctx.fillRect(a * u, 39 * u, 2.4 * u, 4 * u); }
+  ctx.fillStyle = 'rgba(60,70,90,.25)'; ctx.fillRect(0, 34 * u, W, 44 * u); ctx.fillStyle = '#7a7060'; ctx.fillRect(0, 72 * u, W, 6 * u);
+  const G = 79;                                                   // the ground
+  // stonework on a front face: courses of rounded stones in plaster
+  const stones = (x0, x1, y0, y1, Z, seed) => {
+    face(x0, x1, y0, y1, Z, '#d8ccb2');
+    const rs = rng(seed);
+    for (let r = 0, yy = y0 + 0.4; yy < y1 - 0.8; r++, yy += 2.5) for (let xx = x0 + (r % 2 ? -1.4 : 0.3); xx < x1 - 0.8; xx += 3.4 + rs() * 1.2) {
+      const ww = Math.min(2.6 + rs() * 1.2, x1 - xx - 0.4); if (ww < 0.8 || xx < x0) continue;
+      const [a, b] = S(xx, yy, Z), sc = 10 / Z; ctx.fillStyle = ['#c0b294', '#cbbd9e', '#b4a688'][Math.floor(rs() * 3)]; roundRect(ctx, a, b, ww * sc * u, 1.9 * sc * u, 0.6 * sc * u); ctx.fill();
+    }
+  };
+  // a window on a front face: frame, two dark panes, a sill, geraniums on it if `gera`
+  const win = (x0, y0, w, h, Z, frame, gera) => {
+    face(x0 - 0.8, x0 + w + 0.8, y0 - 0.8, y0 + h + 0.8, Z, frame); face(x0, x0 + w, y0, y0 + h, Z, '#2e3a4e'); face(x0 + w / 2 - 0.35, x0 + w / 2 + 0.35, y0, y0 + h, Z, frame);
+    face(x0 - 1.2, x0 + w + 1.2, y0 + h + 0.6, y0 + h + 1.5, Z, frame);
+    if (gera) { face(x0 - 0.2, x0 + w + 0.2, y0 + h - 1.4, y0 + h + 0.4, Z, '#a8583a'); for (let k = 0; k < 3; k++) disc(x0 + 0.6 + k * (w - 1.2) / 2, y0 + h - 1.9, Z, 1.1, k % 2 ? '#e83a3a' : '#d42a3a'); disc(x0 + w / 2, y0 + h - 2.8, Z, 0.8, '#4a8a3a'); }
+  };
+  // the brackets under a jutting floor, in profile on a side wall: struts from the wall up and out to the floor above
+  const sideBrackets = (Xw, Xo, yTop, z0, z1) => { for (let z = z0 + 0.35; z < z1; z += 0.9) { const pts = []; for (let t = 0; t <= 1.001; t += 0.125) pts.push([Xw + (Xo - Xw) * (1 - Math.cos(t * Math.PI / 2)), yTop + 5 - 5 * Math.sin(t * Math.PI / 2), z]); strut(pts, 1.5 * 10 / z, '#4a2c18'); } };
+  // and on a front face, a row of them seen face on, each a strut leaning out toward us
+  const frontBrackets = (x0, x1, yTop, zw, zo) => { const { n, d } = evenSteps(x1 - x0 - 3, 6); for (let k = 0; k <= n; k++) { const X = x0 + 1.5 + k * d; quad([[X - 1.1, yTop + 5.6, zw], [X + 1.1, yTop + 5.6, zw], [X + 1.1, yTop, zo], [X - 1.1, yTop, zo]], '#4a2c18'); quad([[X - 1.1, yTop + 5.6, zw], [X - 0.4, yTop + 5.6, zw], [X - 0.4, yTop, zo], [X - 1.1, yTop, zo]], '#7a5434'); } };
+  const roofTiles = (pts, col) => { quad(pts, col); };
+  // ---- the blue house, set back across a little square: stone ground floor, the upper floor jutting out on brackets
+  // with a bay in the middle, the eave bowed up over the bay in a wave
+  { const Zg = 12.6, Zu = 12, Zb = 11.4, x0 = 44, x1 = 114, cxm = vx;
+    const bow = (X) => { const d = Math.abs(X - cxm); return d < 16 ? 27 - 6 * Math.cos((d / 16) * Math.PI / 2) ** 1.6 : 27; };
+    // roof behind the eave, rising away from us
+    ctx.fillStyle = '#b05038'; ctx.beginPath(); for (let X = x0 - 3; X <= x1 + 3; X += 0.5) { const [a, b] = S(X, bow(X), Zu - 0.4); X === x0 - 3 ? ctx.moveTo(a, b) : ctx.lineTo(a, b); } { const [a, b] = S(x1 - 8, 13, Zu + 5); ctx.lineTo(a, b); const [c, d] = S(x0 + 8, 13, Zu + 5); ctx.lineTo(c, d); } ctx.fill();
+    ctx.strokeStyle = '#8a3a28'; ctx.lineWidth = 0.55 * u; for (let k = 1; k < 5; k++) { const t = k / 5, [a, b] = S(x0 + t * 7, 27 - t * 14, Zu - 0.4 + t * 5.4), [c, d] = S(x1 - t * 7, 27 - t * 14, Zu - 0.4 + t * 5.4); ctx.beginPath(); ctx.moveTo(a, b); ctx.lineTo(c, d); ctx.stroke(); }
+    stones(x0 + 4, x1 - 4, 57, G, Zg, 5);
+    frontBrackets(x0 + 4, x1 - 4, 56.6, Zg, Zu);
+    // the upper floor: blue under the bowed eave, white pilasters and bands, its windows
+    ctx.fillStyle = '#3d74b4'; ctx.beginPath(); { const [a, b] = S(x0, 57, Zu); ctx.moveTo(a, b); } for (let X = x0; X <= x1; X += 0.5) { const [a, b] = S(X, bow(X) + 1.6, Zu); ctx.lineTo(a, b); } { const [a, b] = S(x1, 57, Zu); ctx.lineTo(a, b); } ctx.fill();
+    ctx.fillStyle = '#3e2616'; ctx.beginPath(); for (let X = x0 - 3; X <= x1 + 3; X += 0.5) { const [a, b] = S(X, bow(X), Zu - 0.4); X === x0 - 3 ? ctx.moveTo(a, b) : ctx.lineTo(a, b); } for (let X = x1 + 3; X >= x0 - 3; X -= 0.5) { const [a, b] = S(X, bow(X) + 2.4, Zu - 0.4); ctx.lineTo(a, b); } ctx.fill();
+    for (const X of [x0 + 1, x1 - 2]) face(X, X + 1, 30, 56, Zu, '#f2ead8');
+    face(x0, x1, 55.6, 57, Zu, '#f2ead8');
+    for (const X of [x0 + 4.5, x0 + 11, x1 - 15.4, x1 - 8.9]) win(X, 36, 4.4, 12, Zu, '#f6f0e2', X === x0 + 11 || X === x1 - 15.4);
+    // the bay: jutting further, its own brackets, three tall windows, a painted garland above them
+    const bx0 = cxm - 13, bx1 = cxm + 13;
+    frontBrackets(bx0, bx1, 58.2, Zu, Zb);
+    face(bx0, bx1, bow(bx0) + 2.4, 58.2, Zb, '#4a84c4'); face(bx0, bx1, 56.8, 58.2, Zb, '#f2ead8');
+    quad([[bx0, bow(bx0) + 2.4, Zb], [bx0, 58.2, Zb], [bx0, 58.2, Zu], [bx0, bow(bx0) + 2.4, Zu]], '#2c5688');
+    quad([[bx1, bow(bx0) + 2.4, Zb], [bx1, 58.2, Zb], [bx1, 58.2, Zu], [bx1, bow(bx0) + 2.4, Zu]], '#2c5688');
+    ctx.strokeStyle = '#f2ead8'; ctx.lineWidth = 0.9 * u; ctx.beginPath(); { const [a, b] = S(bx0 + 3, 28, Zb), [c, d] = S(cxm, 32.5, Zb), [e, f2] = S(bx1 - 3, 28, Zb); ctx.moveTo(a, b); ctx.quadraticCurveTo(c, d, e, f2); } ctx.stroke();
+    for (const X of [cxm - 10, cxm - 2.5, cxm + 5]) win(X, 35, 5, 14, Zb, '#f6f0e2', false);
+    // the gate: an arch in a white frame, double doors
+    const g0 = cxm - 7, g1 = cxm + 7;
+    ctx.fillStyle = '#f2ead8'; ctx.beginPath(); { const p = [S(g0, G, Zg), S(g0, 67, Zg), S(cxm, 62, Zg), S(g1, 67, Zg), S(g1, G, Zg)]; ctx.moveTo(...p[0]); ctx.lineTo(...p[1]); ctx.quadraticCurveTo(...S(g0 + 1, 62.4, Zg), ...p[2]); ctx.quadraticCurveTo(...S(g1 - 1, 62.4, Zg), ...p[3]); ctx.lineTo(...p[4]); } ctx.fill();
+    ctx.fillStyle = '#6a3a20'; ctx.beginPath(); { const p = [S(g0 + 1.2, G, Zg), S(g0 + 1.2, 67.4, Zg), S(cxm, 63.4, Zg), S(g1 - 1.2, 67.4, Zg), S(g1 - 1.2, G, Zg)]; ctx.moveTo(...p[0]); ctx.lineTo(...p[1]); ctx.quadraticCurveTo(...S(g0 + 2, 63.8, Zg), ...p[2]); ctx.quadraticCurveTo(...S(g1 - 2, 63.8, Zg), ...p[3]); ctx.lineTo(...p[4]); } ctx.fill();
+    face(cxm - 0.4, cxm + 0.4, 64, G, Zg, '#4a2614'); disc(cxm - 2, 71, Zg, 0.6, '#d8b048'); disc(cxm + 2, 71, Zg, 0.6, '#d8b048');
+    for (const X of [x0 + 9, x1 - 14]) win(X, 63, 5, 6, Zg, '#f6f0e2', true);
+  }
+  // the little square in front of it and the lanes running back beside it
+  flatY(G, 0, Wu, 10, 12.6, '#857b6b');
+  const cob = (x0, x1, z0, z1, seed) => {
+    for (let z = z1; z > z0; z -= 0.16 * (z / 10)) { const row = Math.round(z * 40); for (let X = x0 + (row % 2) * 1.2; X < x1; X += 2.4) { const [a, b] = S(X, G, z), sc = 10 / z; ctx.fillStyle = ['#978d7b', '#aa9e87', '#867c6c'][(row + Math.round(X)) % 3]; ctx.beginPath(); ctx.ellipse(a, b, 1.15 * sc * u, 0.55 * sc * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#c6baa2'; ctx.beginPath(); ctx.ellipse(a - 0.3 * sc * u, b - 0.15 * sc * u, 0.55 * sc * u, 0.18 * sc * u, 0, 0, Math.PI * 2); ctx.fill(); } }
+  };
+  cob(0, Wu, 10, 12.6, 3);
+  // ---- the two houses at the front, ochre on the left and red on the right. Ground floors of stone, the upper floor
+  // jutting out toward us and over the lane at the side on brackets, a deep eave, a tiled roof.
+  const front = (x0, x1, wall, side, doorAt, wins, gera) => {
+    const Zg = 10, Zu = 9.4, J = 3.5, ux0 = x0 - (side < 0 ? J : 1), ux1 = x1 + (side > 0 ? J : 1), Xs = side > 0 ? x1 : x0, Xso = side > 0 ? ux1 : ux0;
+    // the side wall toward the middle, in perspective: stone below, the jutting floor above on brackets in profile
+    sideX(Xs, Zg, 16, 57, G, '#c4b89c');
+    for (let y = 59.5; y < G; y += 2.5) strut([[Xs, y, Zg], [Xs, y, 16]], 0.35, '#ae9f82');
+    flatY(57, Xs, Xso, Zu, 16, '#3e2616');
+    sideBrackets(Xs, Xso, 57, Zg, 16);
+    sideX(Xso, Zu, 16, 26, 57, mixHex(wall, '#1a1020', 0.22));
+    for (const z of [Zu + 2.2, Zu + 5.2]) { sideX(Xso, z, z + 1.2, 35, 49, '#f2ead8'); sideX(Xso, z + 0.15, z + 1.05, 35.8, 48.2, '#2e3a4e'); }
+    flatY(25.6, Xso, Xso + side * 3, Zu - 0.4, 16, '#3e2616');
+    // the roof: tiles rising away from the eave
+    roofTiles([[ux0 - 3, 25.6, Zu - 0.4], [ux1 + 3, 25.6, Zu - 0.4], [ux1 - 6, 12, Zu + 6], [ux0 + 6, 12, Zu + 6]], '#b4543a');
+    for (let k = 1; k < 5; k++) { const t = k / 5; strut([[ux0 - 3 + t * 9, 25.6 - t * 13.6, Zu - 0.4 + t * 6.4], [ux1 + 3 - t * 9, 25.6 - t * 13.6, Zu - 0.4 + t * 6.4]], 0.55, '#8e3e2a'); }
+    // the front: stone ground floor, the brackets, the painted upper floor and its eave
+    stones(x0, x1, 57, G, Zg, Math.round(x0 * 7 + 3));
+    frontBrackets(x0, x1, 57, Zg, Zu);
+    face(ux0, ux1, 26, 57.4, Zu, wall);
+    face(ux0, ux1, 56, 57.4, Zu, '#f2ead8'); face(ux0, ux1, 29.4, 30.2, Zu, '#f2ead8');
+    face(ux0 - 3, ux1 + 3, 23.4, 26, Zu - 0.4, '#3e2616'); face(ux0 - 3, ux1 + 3, 26, 28.4, Zu - 0.4, 'rgba(30,20,30,.2)');
+    for (const X of wins) win(X, 34, 6, 14, Zu, '#f6f0e2', gera.includes(X));
+    // door
+    face(doorAt - 4.6, doorAt + 4.6, 63, G, Zg, '#5a3420'); face(doorAt - 3.8, doorAt + 3.8, 63.8, G, Zg, doorAt > vx ? '#3d6e48' : '#6e4428'); face(doorAt - 0.4, doorAt + 0.4, 63.8, G, Zg, '#3a2010');
+    quad([[doorAt - 5.4, 63, Zg], [doorAt, 59.6, Zg], [doorAt + 5.4, 63, Zg]], '#5a3420');
+  };
+  front(-4, 33, '#e2a84a', 1, 12, [2, 14, 26], [14]);
+  front(125, Wu + 4, '#b8443a', -1, 144, [128, 140, 152], [140]);
+  // the cobbled street in front
+  flatY(G, 0, Wu, 4, 10, '#6e665a');
+  cob(-20, Wu + 20, 4.2, 10, 7);
+  // pots of geraniums by the doors, a cat on the cobbles
+  const pot = (X, Z, r) => { quad([[X - r, G, Z], [X + r, G, Z], [X + r * 1.2, G - r * 1.6, Z], [X - r * 1.2, G - r * 1.6, Z]], '#b0603a'); face(X - r * 1.3, X + r * 1.3, G - r * 1.9, G - r * 1.6, Z, '#8a4428'); for (const [dx, dy, c] of [[-0.8, -2.6, '#4a8a3a'], [0.9, -2.5, '#4a8a3a'], [-0.6, -3.3, '#d82a3a'], [0.7, -3.4, '#e84a4a'], [0, -3.9, '#d82a3a']]) disc(X + dx * r, G + dy * r, Z, r * 0.62, c); };
+  pot(4, 9.6, 1.6); pot(21, 9.6, 1.6); pot(136, 9.6, 1.6); pot(152, 9.6, 1.6); pot(64, 12.4, 1.4); pot(94, 12.4, 1.4);
+  { const [a, b] = S(84, G, 7), k = (10 / 7) * u; ctx.fillStyle = '#3a3030'; ctx.beginPath(); ctx.ellipse(a, b - 2.2 * k, 2.6 * k, 2.2 * k, 0, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.arc(a + 1.6 * k, b - 4.8 * k, 1.4 * k, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.moveTo(a + 0.6 * k, b - 5.6 * k); ctx.lineTo(a + 0.9 * k, b - 7 * k); ctx.lineTo(a + 1.6 * k, b - 5.9 * k); ctx.moveTo(a + 1.8 * k, b - 5.9 * k); ctx.lineTo(a + 2.6 * k, b - 7 * k); ctx.lineTo(a + 2.8 * k, b - 5.5 * k); ctx.fill(); ctx.strokeStyle = '#3a3030'; ctx.lineWidth = 0.9 * k; ctx.beginPath(); ctx.moveTo(a - 2.2 * k, b - 1 * k); ctx.quadraticCurveTo(a - 4.6 * k, b - 1.6 * k, a - 4 * k, b - 4.4 * k); ctx.stroke(); ctx.fillStyle = 'rgba(40,30,30,.3)'; ctx.beginPath(); ctx.ellipse(a + 1 * k, b, 3.6 * k, 0.8 * k, 0, 0, Math.PI * 2); ctx.fill(); }
+  // a vine climbing the red house's corner
+  for (let k = 0; k < 10; k++) disc(126.5 + Math.sin(k * 1.3) * 1.2, 78 - k * 2.4, 10, 1.6, k % 2 ? '#4a8a3a' : '#5e9e44');
+}
+
+// The Seven Rila Lakes: glacial lakes stepping down a green mountain cirque under grey granite peaks, each a
+// different blue, little streams between them, hikers on a winding path, dwarf pines and boulders in front.
+function bulSevenLakes(ctx, W, H) {
+  const u = H / 100;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const disc = (px, py, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2); ctx.fill(); };
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.35); sky.addColorStop(0, '#3f86d0'); sky.addColorStop(1, '#bcdcf0');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f6f9fb'; for (const [a, b, r] of [[0.12, 0.07, 4], [0.17, 0.06, 5.4], [0.22, 0.075, 3.6], [0.84, 0.1, 3.6], [0.88, 0.09, 4.6]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, r * 1.8 * u, r * 0.8 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // the granite peaks round the head of the cirque: lit faces on the left of each summit, shaded on the right,
+  // snow lying in the gullies
+  const ridge = [[0, 0.33], [0.04, 0.29], [0.07, 0.3], [0.11, 0.25], [0.15, 0.27], [0.2, 0.19], [0.23, 0.21], [0.27, 0.24], [0.31, 0.2], [0.35, 0.16], [0.39, 0.19], [0.42, 0.23], [0.46, 0.17], [0.5, 0.13], [0.53, 0.15], [0.57, 0.2], [0.61, 0.18], [0.65, 0.15], [0.69, 0.19], [0.73, 0.24], [0.77, 0.21], [0.82, 0.18], [0.86, 0.22], [0.9, 0.26], [0.95, 0.24], [1, 0.27]];
+  poly([[0, 0.6], ...ridge, [1, 0.6]], '#8a8c90');
+  // each summit lit on its left face and shaded on its right, with buttresses running down
+  for (let k = 1; k < ridge.length - 1; k++) {
+    const [a, b] = ridge[k]; if (!(b < ridge[k - 1][1] && b < ridge[k + 1][1])) continue;
+    poly([[a, b], ridge[k + 1], [ridge[k + 1][0] + 0.02, 0.4], [a + 0.015, 0.4]], '#6c6e76');
+    poly([[a, b], [a - 0.02, b + 0.05], [a - 0.05, 0.4], [a - 0.005, 0.4]], '#a6a8ac');
+  }
+  ctx.strokeStyle = '#5e6068'; ctx.lineWidth = 1.2 * u; for (const [a, b, c] of [[0.12, 0.28, 0.1], [0.28, 0.25, 0.3], [0.43, 0.24, 0.41], [0.58, 0.21, 0.6], [0.74, 0.25, 0.76], [0.88, 0.24, 0.9]]) { ctx.beginPath(); ctx.moveTo(W * a, H * b); ctx.quadraticCurveTo(W * (a + c) / 2 + 1 * u, H * (b + 0.08), W * c, H * 0.39); ctx.stroke(); }
+  // late snow lying in patches on the shaded slopes
+  ctx.fillStyle = '#f2f4f6';
+  for (const [a, b, rx, ry, r] of [[0.21, 0.24, 2.4, 1.1, 0.4], [0.37, 0.21, 3, 1.2, 0.3], [0.52, 0.17, 2.6, 1.1, 0.4], [0.535, 0.23, 1.8, 0.8, 0.2], [0.67, 0.2, 2.6, 1, 0.3], [0.84, 0.23, 2.4, 1, 0.3], [0.3, 0.3, 1.8, 0.7, 0.2], [0.62, 0.3, 2, 0.8, 0.1]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, rx * u, ry * u, r, 0, Math.PI * 2); ctx.fill(); }
+  // scree fans at the foot of the rock
+  ctx.fillStyle = '#a6a49a'; for (const [a, w] of [[0.14, 0.08], [0.44, 0.1], [0.72, 0.08]]) { ctx.beginPath(); ctx.moveTo(W * a, H * 0.3); ctx.lineTo(W * (a + w / 2), H * 0.44); ctx.lineTo(W * (a - w / 2), H * 0.44); ctx.fill(); }
+  // the cirque: a dark headwall under the peaks, then green terraces stepping down toward us between two flanks
+  const terrace = (top, col, lip) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, H); top.forEach(([a, b]) => ctx.lineTo(a * W, b * H)); ctx.lineTo(W, H); ctx.fill(); if (lip) { ctx.strokeStyle = lip; ctx.lineWidth = 1.6 * u; ctx.beginPath(); top.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.stroke(); } };
+  terrace([[0, 0.4], [0.2, 0.37], [0.4, 0.36], [0.6, 0.35], [0.8, 0.37], [1, 0.4]], '#55784a', null);
+  terrace([[0, 0.44], [0.3, 0.42], [0.45, 0.4], [0.62, 0.41], [0.8, 0.43], [1, 0.45]], '#6a9a4a', '#84b25c');
+  // rock steps across the trough, each holding a lake on the terrace above it
+  const step = (y, x0, x1, h) => {
+    // a rough lip of rock below a lake: grey slabs and boulders, ragged at both ends
+    ctx.fillStyle = '#80807a'; ctx.beginPath(); ctx.moveTo(x0 * W, (y + h * 0.4) * H);
+    for (let k = 0; k <= 14; k++) { const t = k / 14; ctx.lineTo((x0 + (x1 - x0) * t) * W, (y + 0.005 * Math.sin(t * 11 + x0 * 40)) * H); }
+    for (let k = 14; k >= 0; k--) { const t = k / 14; ctx.lineTo((x0 + (x1 - x0) * t) * W, (y + h * Math.sin(Math.PI * t) ** 0.6 * (0.75 + 0.25 * Math.sin(t * 17))) * H); }
+    ctx.fill();
+    const rb = rng(Math.round(y * 1000)); for (let k = 0; k < 9; k++) { const t = 0.08 + rb() * 0.84; ctx.fillStyle = rb() < 0.5 ? '#a4a29a' : '#929088'; ctx.beginPath(); ctx.ellipse((x0 + (x1 - x0) * t) * W, (y + h * (0.25 + rb() * 0.35)) * H, (1.4 + rb() * 1.6) * u, (0.7 + rb() * 0.6) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  };
+  const meadow = (y0, y1, x0, x1, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(x0 * W, y0 * H); ctx.quadraticCurveTo((x0 + x1) / 2 * W, (y0 - 0.02) * H, x1 * W, y0 * H); ctx.lineTo(x1 * W, y1 * H); ctx.lineTo(x0 * W, y1 * H); ctx.fill(); };
+  meadow(0.47, 1, 0, 1, '#5e9244');
+  meadow(0.56, 1, 0, 1, '#58903f');
+  meadow(0.67, 1, 0, 1, '#528a3c');
+  meadow(0.8, 1, 0, 1, '#4c8238');
+  meadow(0.88, 1, 0, 1, '#4a7e38');
+  step(0.452, 0.53, 0.71, 0.03); step(0.53, 0.33, 0.57, 0.035); step(0.625, 0.52, 0.81, 0.035); step(0.752, 0.3, 0.53, 0.04); step(0.855, 0.47, 0.7, 0.04);
+  // the flanks of the cirque: a sunlit green ridge on the left, a shaded one on the right, both rising to the peaks
+  poly([[0, 0.3], [0.08, 0.34], [0.16, 0.4], [0.22, 0.5], [0.26, 0.62], [0.3, 0.76], [0.34, 1.01], [0, 1.01]], '#74a452');
+  poly([[0, 0.3], [0.08, 0.34], [0.16, 0.4], [0.22, 0.5], [0.2, 0.52], [0.12, 0.44], [0.05, 0.4], [0, 0.4]], '#8cbc62');
+  poly([[1, 0.28], [0.94, 0.34], [0.9, 0.44], [0.88, 0.56], [0.9, 0.7], [0.94, 0.86], [0.96, 1.01], [1, 1.01]], '#3f6a38');
+  const rk = rng(23);
+  for (let k = 0; k < 18; k++) { const t = rk(); const a = 0.02 + t * 0.24 * rk(), b = 0.36 + t * 0.6; ctx.fillStyle = rk() < 0.5 ? '#8e8c84' : '#a6a49a'; ctx.beginPath(); ctx.ellipse(W * a, H * b, (1.4 + rk() * 2) * u, (0.8 + rk() * 0.8) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  for (let k = 0; k < 14; k++) { const a = 0.04 + rk() * 0.2, b = 0.42 + rk() * 0.5; disc(W * a, H * b, (1.6 + rk() * 1.4) * u, '#3f6e3a'); }
+  for (let k = 0; k < 8; k++) { const a = 0.91 + rk() * 0.08, b = 0.36 + rk() * 0.6; disc(W * a, H * b, (1.6 + rk() * 1.4) * u, '#2e5430'); }
+  // clumps of dwarf pine on the meadows, a light streak on the right flank, rocks lying in the grass
+  const clump = (a, b, n, r) => { const rc = rng(Math.round(a * 997 + b * 131)); for (let k = 0; k < n; k++) { const px = W * a + (rc() - 0.5) * r * 2.6 * u, py = H * b + (rc() - 0.5) * r * 0.9 * u, rr = (r * 0.45 + rc() * r * 0.3) * u; disc(px, py, rr, '#2c5430'); disc(px - rr * 0.25, py - rr * 0.3, rr * 0.55, '#3e6e3c'); } };
+  for (const [a, b, n, r] of [[0.33, 0.45, 4, 3], [0.74, 0.47, 5, 3.2], [0.27, 0.6, 5, 3.4], [0.84, 0.58, 4, 3.4], [0.72, 0.72, 6, 3.8], [0.3, 0.86, 5, 4], [0.88, 0.8, 5, 3.8], [0.43, 0.94, 4, 4.2], [0.62, 0.69, 3, 3], [0.36, 0.52, 3, 2.6]]) clump(a, b, n, r);
+  poly([[0.97, 0.36], [0.94, 0.44], [0.925, 0.56], [0.935, 0.68], [0.95, 0.66], [0.945, 0.54], [0.96, 0.44]], '#527e44');
+  for (const [a, b, rx, ry] of [[0.92, 0.5, 2.4, 1.2], [0.95, 0.72, 2.8, 1.4], [0.9, 0.62, 2, 1], [0.67, 0.53, 2, 1], [0.39, 0.62, 1.8, 0.9], [0.66, 0.77, 2.2, 1.1]]) { ctx.fillStyle = '#8e8c84'; ctx.beginPath(); ctx.ellipse(W * a, H * b, rx * u, ry * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#b0aea4'; ctx.beginPath(); ctx.ellipse(W * a - rx * 0.25 * u, H * b - ry * 0.3 * u, rx * 0.5 * u, ry * 0.45 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  const rfl = rng(61); for (let k = 0; k < 70; k++) { const a = 0.3 + rfl() * 0.66, b = 0.7 + rfl() * 0.3; disc(W * a, H * b, 0.8 * u, ['#f2d24a', '#f6f2e6', '#b88ad8'][k % 3]); }
+  // the lakes, high to low: a light rim of shallows, the deep water, a sheen of sky
+  const lake = (shape, deep, mid, rim) => {
+    for (const [col, g] of [[rim, 1.2], [mid, 0], [deep, -1.8]]) { ctx.fillStyle = col; ctx.beginPath(); shape(g * u); ctx.fill(); }
+  };
+  const ell = (cx, cy, rx, ry, rot = 0) => (g) => ctx.ellipse(cx * W, cy * H, Math.max(1, rx * u + g), Math.max(1, ry * u + g * 0.5), rot, 0, Math.PI * 2);
+  // streams spilling from each lake over the rock step to the next
+  ctx.strokeStyle = '#c4e2ea'; ctx.lineWidth = 1.2 * u; ctx.lineCap = 'round';
+  for (const pts of [[[0.52, 0.37], [0.54, 0.41], [0.6, 0.44]], [[0.56, 0.455], [0.52, 0.49], [0.47, 0.51]], [[0.5, 0.535], [0.56, 0.57], [0.6, 0.6]], [[0.56, 0.625], [0.48, 0.66], [0.44, 0.7]], [[0.48, 0.735], [0.54, 0.78], [0.56, 0.8]], [[0.62, 0.835], [0.66, 0.87], [0.68, 0.89]]]) { ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.stroke(); }
+  lake(ell(0.515, 0.37, 3.2, 1.2), '#16386e', '#1f4a88', '#4a7ab0');                                          // the Tear
+  lake(ell(0.62, 0.44, 10, 2.6), '#173f80', '#24559c', '#5a8cc4');                                            // the Eye
+  lake((g) => { ctx.ellipse(0.42 * W, 0.515 * H, 12 * u + g, 3 * u + g * 0.5, 0.04, 0, Math.PI * 2); ctx.moveTo(0.53 * W + g, 0.505 * H); ctx.ellipse(0.5 * W, 0.505 * H, 5 * u + g, 2.4 * u + g * 0.5, -0.1, 0, Math.PI * 2); }, '#2a6aa8', '#3a82bc', '#78b4d8'); // the Kidney
+  lake((g) => { ctx.ellipse(0.6 * W, 0.605 * H, 8 * u + g, 3 * u + g * 0.5, 0.08, 0, Math.PI * 2); ctx.moveTo(0.77 * W + g, 0.61 * H); ctx.ellipse(0.72 * W, 0.61 * H, 7.4 * u + g, 2.8 * u + g * 0.5, -0.08, 0, Math.PI * 2); }, '#1f7a8a', '#2e94a2', '#6ec0c6'); // the Twin
+  lake((g) => { for (const [a, b] of [[0.37, 0.715], [0.45, 0.72], [0.41, 0.745]]) { ctx.moveTo(a * W + 6.2 * u + g, b * H); ctx.ellipse(a * W, b * H, 6.2 * u + g, 2.6 * u + g * 0.5, 0, 0, Math.PI * 2); } }, '#2a9aa8', '#46b4bc', '#8ad4d0'); // the Trefoil
+  lake(ell(0.58, 0.83, 14, 3.6, 0.04), '#24708e', '#3488a4', '#74b8c8');                                     // the Fish lake
+  lake(ell(0.7, 0.935, 22, 5, -0.04), '#1c5a9a', '#2c72b4', '#6aa6d4');                                      // the Lower lake
+  ctx.fillStyle = 'rgba(230,244,250,.75)'; for (const [a, b, l] of [[0.6, 0.435, 6], [0.4, 0.51, 7], [0.58, 0.6, 5], [0.71, 0.605, 4], [0.38, 0.712, 4], [0.55, 0.825, 8], [0.64, 0.93, 11], [0.75, 0.94, 6]]) { roundRect(ctx, W * a, H * b, l * u, 0.8 * u, 0.4 * u); ctx.fill(); }
+  // the path, winding up the sunlit flank, and hikers on it
+  ctx.strokeStyle = '#d2bf94'; ctx.lineWidth = 1.5 * u; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  const path = [[0.06, 1.0], [0.12, 0.93], [0.2, 0.9], [0.24, 0.84], [0.17, 0.79], [0.14, 0.72], [0.2, 0.66], [0.22, 0.58], [0.16, 0.52], [0.18, 0.46], [0.26, 0.43], [0.36, 0.41]];
+  ctx.beginPath(); path.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.stroke();
+  const hiker = (a, b, s, coat, pack) => {
+    const px = a * W, py = b * H, k = s * u;
+    ctx.fillStyle = 'rgba(30,50,20,.35)'; ctx.beginPath(); ctx.ellipse(px + 1.2 * k, py, 2.4 * k, 0.6 * k, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#2e3440'; ctx.fillRect(px - 1.1 * k, py - 4 * k, 0.9 * k, 4 * k); ctx.fillRect(px + 0.3 * k, py - 4 * k, 0.9 * k, 4 * k);
+    ctx.fillStyle = pack; roundRect(ctx, px - 2.2 * k, py - 8.2 * k, 2.2 * k, 3.8 * k, 0.6 * k); ctx.fill();
+    ctx.fillStyle = coat; roundRect(ctx, px - 1.3 * k, py - 8 * k, 2.8 * k, 4.4 * k, 0.8 * k); ctx.fill();
+    disc(px + 0.2 * k, py - 9.2 * k, 1.1 * k, '#e8c0a0'); ctx.fillStyle = coat === '#f0c030' ? '#c83a2a' : '#f0c030'; ctx.beginPath(); ctx.arc(px + 0.2 * k, py - 9.4 * k, 1.15 * k, Math.PI, 0); ctx.fill();
+    ctx.strokeStyle = '#6a5040'; ctx.lineWidth = 0.4 * k; ctx.beginPath(); ctx.moveTo(px + 1.6 * k, py - 6 * k); ctx.lineTo(px + 2.4 * k, py); ctx.stroke();
+  };
+  hiker(0.155, 0.935, 1.35, '#d83a2a', '#2f5a9a'); hiker(0.205, 0.9, 1.25, '#f0c030', '#c8402a'); hiker(0.165, 0.735, 1.0, '#2f6ad0', '#e0a030'); hiker(0.2, 0.585, 0.85, '#e04a8a', '#3a5a40');
+  // in front: dwarf pines and boulders
+  for (const [a, b, r] of [[0.02, 0.9, 4], [0.07, 0.95, 3.4], [0.97, 0.9, 4], [0.93, 0.97, 3.6]]) { disc(W * a, H * b, r * u, '#2f5a34'); disc(W * a - r * 0.3 * u, H * b - r * 0.3 * u, r * 0.6 * u, '#467a44'); }
+  for (const [a, b, rx, ry] of [[0.27, 0.97, 4.4, 2.6], [0.33, 0.99, 3.4, 2], [0.86, 0.98, 3.6, 2.2]]) { ctx.fillStyle = '#7a7a76'; ctx.beginPath(); ctx.ellipse(W * a, H * b, rx * u, ry * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#a4a29c'; ctx.beginPath(); ctx.ellipse(W * a - rx * 0.25 * u, H * b - ry * 0.35 * u, rx * 0.55 * u, ry * 0.45 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+}
+// The Belogradchik rocks: towers of red sandstone rising out of green forest, lit warm by the evening sun, old
+// fortress walls with battlements and an arched gate built across the gaps between them, an evening sky.
+function bulBelogradchik(ctx, W, H) {
+  const u = H / 100;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const disc = (px, py, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2); ctx.fill(); };
+  // evening sky: deep blue overhead through violet and rose to gold low down, the sun setting on the right
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.75); sky.addColorStop(0, '#3e4e8e'); sky.addColorStop(0.35, '#8a6aa8'); sky.addColorStop(0.62, '#e8909a'); sky.addColorStop(0.85, '#f6c27a'); sky.addColorStop(1, '#fadc96');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#c87aa0'; for (const [a, b, l] of [[0.05, 0.16, 0.2], [0.12, 0.21, 0.12], [0.6, 0.12, 0.22], [0.66, 0.18, 0.14], [0.74, 0.44, 0.14], [0.86, 0.4, 0.1]]) { roundRect(ctx, W * a, H * b, W * l, 2.2 * u, 1.1 * u); ctx.fill(); }
+  ctx.fillStyle = '#f2b0a0'; for (const [a, b, l] of [[0.1, 0.17, 0.08], [0.65, 0.13, 0.1], [0.78, 0.45, 0.06]]) { roundRect(ctx, W * a, H * b, W * l, 1.4 * u, 0.7 * u); ctx.fill(); }
+  // far hills in the evening haze
+  poly([[0, 0.66], [0.12, 0.6], [0.26, 0.63], [0.4, 0.58], [0.56, 0.62], [0.7, 0.59], [0.86, 0.63], [1, 0.6], [1, 1], [0, 1]], '#8a6a8e');
+  poly([[0, 0.72], [0.16, 0.67], [0.34, 0.7], [0.5, 0.66], [0.68, 0.7], [0.84, 0.67], [1, 0.7], [1, 1], [0, 1]], '#6e5a7a');
+  // the rocks: rounded towers of sandstone grown together into one great massif, each swelling and narrowing as it
+  // rises to a domed top, lit on its right by the low sun and shaded on its left, a dark cleft where one meets the next
+  const tower = (a, w, h, base, seed, hazy) => {
+    const rr = rng(seed), cx = a * W, cw = w * u, ch = h * u, ph = rr() * 6, lean = (rr() - 0.5) * 0.08, pts = [];
+    const hw = (t) => cw / 2 * (1 - 0.22 * t + 0.1 * Math.sin(t * Math.PI * 2.2 + ph));
+    for (let k = 0; k <= 14; k++) { const t = k / 14 * 0.86; pts.push([cx - hw(t) + lean * t * ch, base - ch * t]); }
+    // a broad, lumpy top: a low swell with knobs and hollows along it, never a single round dome
+    const tw = hw(0.86), p2 = rr() * 6, a2 = 0.1 + rr() * 0.12;
+    for (let k = 1; k < 12; k++) { const t = k / 12; pts.push([cx + lean * 0.86 * ch - tw + 2 * tw * t, base - ch * 0.86 - tw * (0.32 * Math.sin(Math.PI * t) + a2 * Math.sin(3 * Math.PI * t + p2) * Math.sin(Math.PI * t))]); }
+    for (let k = 14; k >= 0; k--) { const t = k / 14 * 0.86; pts.push([cx + hw(t) + lean * t * ch, base - ch * t]); }
+    const path = () => { ctx.beginPath(); pts.forEach(([p, q], i) => (i ? ctx.lineTo(p, q) : ctx.moveTo(p, q))); ctx.closePath(); };
+    const g = ctx.createLinearGradient(cx - cw / 2, 0, cx + cw / 2, 0);
+    const C = hazy ? ['#8a5a6a', '#a46a70', '#bc7c7a', '#cc8e84'] : ['#74302a', '#a64a34', '#d26a42', '#f09a64'];
+    g.addColorStop(0, C[0]); g.addColorStop(0.3, C[1]); g.addColorStop(0.62, C[2]); g.addColorStop(1, C[3]);
+    path(); ctx.fillStyle = g; ctx.fill();
+    if (!hazy) {
+      ctx.save(); path(); ctx.clip();
+      ctx.strokeStyle = '#5e2a22'; ctx.lineWidth = 1 * u;
+      { const fx = cx - cw * 0.05 + (rr() - 0.5) * cw * 0.3; ctx.beginPath(); for (let k = 0; k <= 10; k++) { const t = 0.04 + k / 10 * (0.35 + rr() * 0.35); ctx.lineTo(fx + lean * t * ch + Math.sin(t * 9 + seed) * cw * 0.06, base - ch * t); } ctx.stroke(); }
+      ctx.strokeStyle = 'rgba(110,40,30,.35)'; ctx.lineWidth = 0.8 * u; for (let y = base - ch * (0.25 + rr() * 0.1); y > base - ch * 0.8; y -= (7 + rr() * 6) * u) { ctx.beginPath(); ctx.moveTo(cx - cw, y); ctx.quadraticCurveTo(cx, y - 1.6 * u, cx + cw, y + 0.6 * u); ctx.stroke(); }
+      ctx.fillStyle = '#e0a070'; for (let k = 0; k < 2; k++) { ctx.beginPath(); ctx.ellipse(cx + cw * (0.12 + rr() * 0.2), base - ch * (0.3 + rr() * 0.4), 1.8 * u, 3 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+      ctx.restore();
+    }
+    ctx.strokeStyle = hazy ? '#7a4a5a' : '#4a2018'; ctx.lineWidth = 1.2 * u; ctx.beginPath(); for (let k = 3; k <= 17; k++) ctx.lineTo(...pts[k]); ctx.stroke();
+  };
+  // a far row of rocks, hazy pink in the evening air
+  for (const [a, w, h, sd] of [[0.06, 18, 44, 1], [0.2, 16, 50, 2], [0.36, 17, 46, 3], [0.46, 15, 50, 4], [0.55, 18, 44, 5], [0.7, 16, 48, 6], [0.84, 18, 42, 7], [0.97, 16, 46, 8]]) tower(a, w, h, H * 0.8, sd, true);
+  // the sun going down behind the rocks
+  disc(W * 0.6, H * 0.47, 9 * u, '#fbe0a0'); disc(W * 0.6, H * 0.47, 6 * u, '#fff2c8');
+  // the main massif across the picture, lower in the middle where the fortress stands
+  for (const [a, w, h, sd] of [[0.02, 20, 56, 11], [0.1, 18, 68, 12], [0.17, 22, 74, 13], [0.245, 17, 58, 14], [0.31, 18, 46, 15], [0.38, 16, 40, 16], [0.665, 22, 66, 21], [0.74, 17, 56, 22], [0.81, 22, 72, 23], [0.885, 18, 58, 24], [0.95, 22, 66, 25], [1.01, 16, 50, 26]]) tower(a, w, h, H * 0.92, sd, false);
+  // trees on the slopes behind the fortress
+  const rf = rng(8);
+  const trees = (y0, y1, x0, x1, n, r, c1, c2) => { for (let k = 0; k < n; k++) { const a = x0 + rf() * (x1 - x0), py = (y0 + rf() * (y1 - y0)) * H, rr2 = (r + rf() * 1.4) * u; disc(W * a, py, rr2, c1); disc(W * a + rr2 * 0.3, py - rr2 * 0.3, rr2 * 0.6, c2); } };
+  poly([[0.25, 0.95], [0.3, 0.74], [0.4, 0.7], [0.5, 0.68], [0.6, 0.7], [0.68, 0.74], [0.72, 0.95]], '#4a6e3e');
+  trees(0.66, 0.76, 0.3, 0.66, 30, 2.8, '#33553a', '#557a44');
+  // the fortress: a wall with battlements climbing from the left to a square gate tower with an arched gateway, then
+  // on, lower, to the rocks on the right
+  const stoneCol = '#b4a486', shadeCol = '#8a7a62', topCol = '#cfc0a0';
+  const wallSeg = (x0, x1, y0, y1, h) => {
+    poly([[x0, y0], [x1, y1], [x1, y1 - h], [x0, y0 - h]], stoneCol);
+    ctx.strokeStyle = '#94846a'; ctx.lineWidth = 0.7 * u; for (let k = 1; k < 4; k++) { const f = k / 4; ctx.beginPath(); ctx.moveTo(x0 * W, (y0 - h * f) * H); ctx.lineTo(x1 * W, (y1 - h * f) * H); ctx.stroke(); }
+    const n = Math.max(2, Math.round(((x1 - x0) * W) / (5 * u)));
+    for (let k = 0; k < n; k++) { const t = (k + 0.25) / n, t1 = (k + 0.7) / n; poly([[x0 + (x1 - x0) * t, y0 + (y1 - y0) * t - h + 0.002], [x0 + (x1 - x0) * t1, y0 + (y1 - y0) * t1 - h + 0.002], [x0 + (x1 - x0) * t1, y0 + (y1 - y0) * t1 - h - 0.032], [x0 + (x1 - x0) * t, y0 + (y1 - y0) * t - h - 0.032]], stoneCol); }
+    poly([[x0, y0 - h], [x1, y1 - h], [x1, y1 - h + 0.014], [x0, y0 - h + 0.014]], topCol);
+    poly([[x0, y0], [x1, y1], [x1, y1 - h * 0.3], [x0, y0 - h * 0.3]], 'rgba(60,40,40,.18)');
+  };
+  wallSeg(0.2, 0.44, 0.86, 0.74, 0.12);
+  // the gate tower
+  poly([[0.44, 0.78], [0.53, 0.78], [0.53, 0.55], [0.44, 0.55]], stoneCol); poly([[0.44, 0.78], [0.455, 0.78], [0.455, 0.55], [0.44, 0.55]], shadeCol);
+  poly([[0.44, 0.55], [0.53, 0.55], [0.53, 0.562], [0.44, 0.562]], topCol); for (let k = 0; k < 4; k++) poly([[0.44 + k * 0.025, 0.55], [0.452 + k * 0.025, 0.55], [0.452 + k * 0.025, 0.515], [0.44 + k * 0.025, 0.515]], stoneCol);
+  ctx.strokeStyle = '#a8987c'; ctx.lineWidth = 0.6 * u; for (let y = 0.6; y < 0.78; y += 0.035) { ctx.beginPath(); ctx.moveTo(0.44 * W, y * H); ctx.lineTo(0.53 * W, y * H); ctx.stroke(); }
+  { const gx = 0.4875, gy = 0.78, gw = 0.044; ctx.fillStyle = topCol; ctx.beginPath(); ctx.moveTo((gx - gw * 0.68) * W, gy * H); ctx.lineTo((gx - gw * 0.68) * W, (gy - 0.07) * H); ctx.arc(gx * W, (gy - 0.07) * H, gw * 0.68 * W, Math.PI, 0); ctx.lineTo((gx + gw * 0.68) * W, gy * H); ctx.fill(); ctx.fillStyle = '#3a2a2a'; ctx.beginPath(); ctx.moveTo((gx - gw / 2) * W, gy * H); ctx.lineTo((gx - gw / 2) * W, (gy - 0.07) * H); ctx.arc(gx * W, (gy - 0.07) * H, gw / 2 * W, Math.PI, 0); ctx.lineTo((gx + gw / 2) * W, gy * H); ctx.fill(); }
+  wallSeg(0.53, 0.66, 0.76, 0.8, 0.09);
+  // the forest in front, round crowns in layers, warm light on their right sides
+  ctx.fillStyle = '#2a4a30'; ctx.fillRect(0, H * 0.88, W, H * 0.12);
+  trees(0.86, 0.9, 0, 1, 34, 3.6, '#2c4e34', '#4e7a3c');
+  trees(0.94, 0.99, 0, 1, 28, 5, '#2a5030', '#5e8240');
+}
+
+// Bulgarian yogurt: glazed brown clay pots of thick set yogurt seen from a little above, on a linen runner with red
+// and black cross-stitch bands across a walnut table; honey poured over one pot runs down its side, a wooden spoon
+// stands in another, a dripped Troyan bowl of raspberries and blueberries, walnuts scattered round.
+function bulYogurt(ctx, W, H) {
+  const u = H / 100, Wu = W / u;
+  const disc = (a, b, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(a * u, b * u, r * u, 0, Math.PI * 2); ctx.fill(); };
+  const ell = (a, b, rx, ry, col, rot = 0) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(a * u, b * u, rx * u, ry * u, rot, 0, Math.PI * 2); ctx.fill(); };
+  // the table: walnut boards running across, the far ones narrower
+  ctx.fillStyle = '#6e4024'; ctx.fillRect(0, 0, W, H);
+  for (let y = 0, k = 0; y < 100; k++) { const hgt = 7 + y * 0.08; ctx.fillStyle = k % 2 ? '#64381e' : '#7a4a2a'; ctx.fillRect(0, y * u, W, hgt * u); ctx.fillStyle = '#3e2212'; ctx.fillRect(0, y * u, W, 0.7 * u); y += hgt; }
+  // the linen runner and its embroidered bands, the far band smaller than the near one
+  const r0 = 7, r1 = 93;
+  ctx.fillStyle = '#e2d2ae'; ctx.fillRect(0, r0 * u, W, (r1 - r0) * u);
+  ctx.fillStyle = '#d4c29c'; for (let y = r0 + 2; y < r1; y += 3.4) ctx.fillRect(0, y * u, W, 0.6 * u);
+  ctx.fillStyle = 'rgba(40,20,10,.3)'; ctx.fillRect(0, r1 * u, W, 1.6 * u);
+  const band = (y0, s) => {
+    ctx.fillStyle = '#2a1a18'; ctx.fillRect(0, y0 * u, W, 0.8 * s * u); ctx.fillRect(0, (y0 + 8.4 * s) * u, W, 0.8 * s * u);
+    const step = 9 * s;
+    for (let x = step / 2; x < Wu + step; x += step) {
+      const cy = y0 + 4.6 * s;
+      ctx.fillStyle = '#b8262e'; ctx.beginPath(); ctx.moveTo(x * u, (cy - 3.2 * s) * u); ctx.lineTo((x + 3.4 * s) * u, cy * u); ctx.lineTo(x * u, (cy + 3.2 * s) * u); ctx.lineTo((x - 3.4 * s) * u, cy * u); ctx.fill();
+      ctx.fillStyle = '#2a1a18'; ctx.beginPath(); ctx.moveTo(x * u, (cy - 1.3 * s) * u); ctx.lineTo((x + 1.4 * s) * u, cy * u); ctx.lineTo(x * u, (cy + 1.3 * s) * u); ctx.lineTo((x - 1.4 * s) * u, cy * u); ctx.fill();
+      ctx.fillStyle = '#b8262e'; for (const d of [1, -1]) { const ty = d > 0 ? y0 + 1.4 * s : y0 + 7.8 * s; ctx.beginPath(); ctx.moveTo((x + step / 2 - 1.4 * s) * u, ty * u); ctx.lineTo((x + step / 2 + 1.4 * s) * u, ty * u); ctx.lineTo((x + step / 2) * u, (ty + d * 1.8 * s) * u); ctx.fill(); }
+    }
+  };
+  band(r0 + 1.6, 0.75); band(r1 - 11.2, 1.15);
+  // a glazed clay pot: rim ellipse at (cx, ry), body tapering to its foot h below. Brown glaze with a sheen and a
+  // trailed cream wave round the shoulder; inside, thick white yogurt with a creamy skin
+  const pot = (cx, top, rx, ry, h, opts = {}) => {
+    const bx = rx * 0.66, by = ry * 0.66, foot = top + h;
+    ell(cx + 3, foot + 1, bx + 3, by + 1.2, 'rgba(40,18,8,.35)');
+    const body = () => { ctx.beginPath(); ctx.moveTo((cx - rx) * u, top * u); ctx.bezierCurveTo((cx - rx * 1.04) * u, (top + h * 0.5) * u, (cx - bx * 1.1) * u, (foot - h * 0.2) * u, (cx - bx) * u, foot * u); ctx.ellipse(cx * u, foot * u, bx * u, by * u, 0, Math.PI, 0, true); ctx.bezierCurveTo((cx + bx * 1.1) * u, (foot - h * 0.2) * u, (cx + rx * 1.04) * u, (top + h * 0.5) * u, (cx + rx) * u, top * u); ctx.ellipse(cx * u, top * u, rx * u, ry * u, 0, 0, Math.PI, false); ctx.closePath(); };
+    const g = ctx.createLinearGradient((cx - rx) * u, 0, (cx + rx) * u, 0);
+    for (const [t, c] of [[0, '#3a1c0c'], [0.12, '#6a3416'], [0.3, '#9a5428'], [0.38, '#cf884a'], [0.46, '#9a5428'], [0.7, '#6e3818'], [1, '#3a1c0c']]) g.addColorStop(t, c);
+    body(); ctx.fillStyle = g; ctx.fill();
+    // the trailed cream wave round the shoulder and a row of dots below it, following the curve of the pot
+    ctx.save(); body(); ctx.clip();
+    const around = (dy, amp, n, fn) => { for (let k = 0; k <= 80; k++) { const t = k / 80, a = Math.PI * t, px = cx + Math.cos(a) * rx * 0.99 * (1 - dy / h * 0.3), py = top + dy + Math.sin(a) * ry + amp * Math.sin(t * n * Math.PI); fn(px, py, k); } };
+    ctx.strokeStyle = '#ecd6a4'; ctx.lineWidth = 1.5 * u; ctx.beginPath(); around(5.5, 1.6, 9, (px, py, k) => (k ? ctx.lineTo(px * u, py * u) : ctx.moveTo(px * u, py * u))); ctx.stroke();
+    around(10.5, 0, 0, (px, py, k) => { if (k % 8 === 4) disc(px, py, 0.9, opts.dot || '#ecd6a4'); });
+    ctx.fillStyle = 'rgba(20,8,2,.25)'; ctx.fillRect((cx - rx * 1.1) * u, (foot - h * 0.25) * u, rx * 2.2 * u, h * u);
+    ctx.restore();
+    // the rim, its glaze catching the light at the back left, and the inside wall in shadow
+    ell(cx, top, rx, ry, '#8a4a22');
+    ctx.strokeStyle = '#d89a58'; ctx.lineWidth = 1.2 * u; ctx.beginPath(); ctx.ellipse(cx * u, top * u, (rx - 0.7) * u, (ry - 0.4) * u, 0, Math.PI * 0.95, Math.PI * 1.7); ctx.stroke();
+    ell(cx, top, rx - 1.8, ry - 1.1, '#4a2410');
+    // the yogurt: a little below the rim, so the inside wall shows at the back
+    ctx.save(); ctx.beginPath(); ctx.ellipse(cx * u, top * u, (rx - 1.8) * u, (ry - 1.1) * u, 0, 0, Math.PI * 2); ctx.clip();
+    const yg = ctx.createRadialGradient((cx - rx * 0.2) * u, (top + 0.6) * u, 0, cx * u, (top + 1.4) * u, rx * u);
+    if (opts.honey) { yg.addColorStop(0, '#f8d470'); yg.addColorStop(0.5, '#e8a82a'); yg.addColorStop(1, '#b8761a'); } else { yg.addColorStop(0, '#fffdf6'); yg.addColorStop(0.6, '#f8f1de'); yg.addColorStop(1, '#e8d8b0'); }
+    ctx.fillStyle = yg; ctx.beginPath(); ctx.ellipse(cx * u, (top + 1.5) * u, (rx - 2.2) * u, (ry - 1.2) * u, 0, 0, Math.PI * 2); ctx.fill();
+    // the creamy skin: a pale yellow film with soft folds
+    ctx.strokeStyle = opts.honey ? '#f8d470' : '#e6d6aa'; ctx.lineWidth = 0.9 * u;
+    for (const [a0, a1, f] of [[0.3, 1.7, 0.55], [3.5, 4.8, 0.45], [2.2, 3.1, 0.75], [5.2, 6.1, 0.7]]) { ctx.beginPath(); ctx.ellipse((cx + rx * 0.05) * u, (top + 1.6) * u, (rx - 2.2) * f * u, (ry - 1.2) * f * u, 0, a0, a1); ctx.stroke(); }
+    ctx.restore();
+  };
+  // a walnut half and a walnut in its shell
+  const kernel = (a, b, s, rot) => { ctx.save(); ctx.translate(a * u, b * u); ctx.rotate(rot); ctx.fillStyle = '#7a4a22'; ctx.beginPath(); ctx.ellipse(0, 0, 2.7 * s * u, 2 * s * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#b8803e'; for (const [p, q] of [[-1.1, -0.7], [1.1, -0.7], [-1.1, 0.8], [1.1, 0.8]]) { ctx.beginPath(); ctx.ellipse(p * s * u, q * s * u, 1.1 * s * u, 0.85 * s * u, 0, 0, Math.PI * 2); ctx.fill(); } ctx.fillStyle = '#d8a860'; ctx.beginPath(); ctx.ellipse(-1.2 * s * u, -0.9 * s * u, 0.6 * s * u, 0.4 * s * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore(); };
+  const shell = (a, b, r) => { ell(a + 1, b + 1.2, r, r * 0.8, 'rgba(40,18,8,.3)'); disc(a, b, r, '#b88a5a'); disc(a - r * 0.2, b - r * 0.25, r * 0.66, '#dcbc88'); ctx.strokeStyle = '#8a6440'; ctx.lineWidth = 0.6 * u; ctx.beginPath(); ctx.moveTo((a - r) * u, b * u); ctx.quadraticCurveTo(a * u, (b + r * 0.3) * u, (a + r) * u, b * u); ctx.stroke(); };
+  const rasp = (a, b, r) => { disc(a, b, r, '#9a1a32'); disc(a - r * 0.15, b - r * 0.15, r * 0.75, '#c8283e'); disc(a - r * 0.35, b - r * 0.35, r * 0.3, '#ec6a78'); };
+  const blue = (a, b, r) => { disc(a, b, r, '#1e2248'); disc(a - r * 0.3, b - r * 0.3, r * 0.4, '#5a6aa0'); };
+  // a small pot at the back, then the pot with the spoon, then the big honey pot in front
+  pot(84, 25, 14, 4.6, 16);
+  kernel(80, 25.8, 0.9, 0.4); kernel(88, 26.4, 0.9, 2.2); kernel(84, 24.2, 0.85, 1.2);
+  pot(118, 38, 20, 6.6, 24);
+  // the wooden spoon standing in the yogurt, leaning out to the right
+  { ctx.save(); ctx.translate(122 * u, 38.5 * u); ctx.rotate(-1.0);
+    ctx.fillStyle = '#7a5030'; ctx.beginPath(); ctx.ellipse(0, 0, 3.2 * u, 1.3 * u, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#c8965a'; roundRect(ctx, 0, -1.3 * u, 30 * u, 2.6 * u, 1.3 * u); ctx.fill();
+    ctx.fillStyle = '#9a6a3a'; ctx.fillRect(2 * u, 0.4 * u, 27 * u, 0.8 * u);
+    ctx.restore(); }
+  ell(122, 38.9, 3.6, 1.1, '#fffaf0');
+  pot(50, 46, 27, 10, 32, { dot: '#e8b048' });
+  // honey poured over the big pot: a pool on the yogurt, runs over the front rim and down the glaze to round drops
+  { const cx = 50, top = 46;
+    ctx.save(); ctx.beginPath(); ctx.ellipse(cx * u, top * u, 25 * u, 8.9 * u, 0, 0, Math.PI * 2); ctx.clip();
+    ell(cx + 6, top + 4, 9.5, 3, '#c88418'); ell(cx + 5.6, top + 3.6, 8, 2.3, '#e8a82a'); ell(cx + 3.6, top + 3, 3.6, 0.9, '#f8d470');
+    ctx.strokeStyle = '#e8a82a'; ctx.lineWidth = 1.4 * u; ctx.beginPath(); ctx.moveTo((cx - 6) * u, (top - 1) * u); ctx.quadraticCurveTo((cx - 1) * u, (top + 3) * u, (cx + 2) * u, (top + 3.4) * u); ctx.stroke();
+    ctx.restore();
+    const drip = (x0, len, w) => {
+      ctx.strokeStyle = '#c88418'; ctx.lineWidth = (w + 0.8) * u; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x0 * u, (top + 7) * u); ctx.quadraticCurveTo((x0 + 0.4) * u, (top + 10.5) * u, (x0 + 0.8) * u, (top + 10 + len) * u); ctx.stroke();
+      ctx.strokeStyle = '#eaae2e'; ctx.lineWidth = w * u; ctx.beginPath(); ctx.moveTo(x0 * u, (top + 7) * u); ctx.quadraticCurveTo((x0 + 0.4) * u, (top + 10.5) * u, (x0 + 0.8) * u, (top + 10 + len) * u); ctx.stroke();
+      disc(x0 + 0.8, top + 10.6 + len, w * 0.9, '#eaae2e'); disc(x0 + 0.3, top + 10 + len, w * 0.35, '#fbd870');
+      ctx.strokeStyle = '#fbd870'; ctx.lineWidth = 0.7 * u; ctx.beginPath(); ctx.moveTo((x0 - w * 0.25) * u, (top + 8) * u); ctx.lineTo((x0 - w * 0.2 + 0.4) * u, (top + 8 + len * 0.7) * u); ctx.stroke();
+    };
+    ctx.fillStyle = '#e8a82a'; ctx.beginPath(); ctx.ellipse((cx + 7) * u, (top + 8.6) * u, 7.4 * u, 2 * u, 0, 0, Math.PI * 2); ctx.fill();
+    drip(cx + 2, 9, 2.4); drip(cx + 7.5, 16, 2.6); drip(cx + 12.5, 6, 2.1);
+    for (const [a, b, r] of [[-13, -2.2, 0.3], [-6.5, -4.6, 1.9], [-15, 2.4, 2.8]]) kernel(cx + a, top + b, 1.2, r);
+  }
+  // the Troyan bowl of berries in front on the right: dripped peacock eyes round its brown side
+  { const cx = 130, top = 74, rx = 17, ry = 5.4, h = 11;
+    ell(cx + 3, top + h + 1, rx * 0.7 + 3, ry * 0.7 + 1, 'rgba(40,18,8,.35)');
+    ctx.fillStyle = '#5e2e12'; ctx.beginPath(); ctx.moveTo((cx - rx) * u, top * u); ctx.quadraticCurveTo((cx - rx * 0.9) * u, (top + h) * u, (cx - rx * 0.55) * u, (top + h) * u); ctx.lineTo((cx + rx * 0.55) * u, (top + h) * u); ctx.quadraticCurveTo((cx + rx * 0.9) * u, (top + h) * u, (cx + rx) * u, top * u); ctx.ellipse(cx * u, top * u, rx * u, ry * u, 0, 0, Math.PI, false); ctx.fill();
+    for (let k = 0; k < 7; k++) { const t = (k + 0.5) / 7, a = Math.PI * t, px = cx + Math.cos(a) * rx * 0.86, py = top + 4.4 + Math.sin(a) * ry * 0.7; disc(px, py, 1.9, '#f2e6c8'); disc(px, py, 1.1, k % 2 ? '#3e6a26' : '#22428e'); disc(px, py, 0.45, '#e8b448'); }
+    ell(cx, top, rx, ry, '#8a4a22'); ell(cx, top, rx - 1.6, ry - 0.9, '#4a2410');
+    const rb = rng(17);
+    const berries = [];
+    for (let k = 0; k < 30; k++) { const a = rb() * Math.PI * 2, d = Math.sqrt(rb()), bx = cx + Math.cos(a) * d * (rx - 3.5), byy = top - 1.5 + Math.sin(a) * d * (ry - 1) - (1 - d) * 3.6; berries.push([byy, bx, k % 3 === 0]); }
+    berries.sort((p, q) => p[0] - q[0]).forEach(([byy, bx, bl]) => (bl ? blue(bx, byy, 1.9) : rasp(bx, byy, 2.5)));
+  }
+  // walnuts, kernels and berries on the cloth
+  for (const [a, b, r] of [[10, 80, 3.6], [17, 84, 3.3], [12, 89, 3.4], [96, 85, 3.4], [146, 26, 3.2], [150, 32, 3]]) shell(a, b, r);
+  kernel(24, 78, 1.25, 0.6); kernel(90, 80, 1.2, 2.2); kernel(140, 20, 1.15, 1);
+  for (const [a, b] of [[104, 80], [108, 84], [10, 38], [154, 58]]) rasp(a, b, 2.4);
+  for (const [a, b] of [[101, 85], [111, 79], [14, 41], [150, 62]]) blue(a, b, 1.9);
+  // a little clay bowl of honey with a wooden dipper at the back left
+  pot(26, 25, 11, 3.8, 9, { honey: true });
+  { ctx.save(); ctx.translate(28 * u, 25.6 * u); ctx.rotate(-0.5); ctx.fillStyle = '#b07a40'; roundRect(ctx, 0, -0.8 * u, 20 * u, 1.6 * u, 0.8 * u); ctx.fill(); ctx.fillStyle = '#8a5a2a'; ctx.fillRect(2 * u, 0.1 * u, 17 * u, 0.6 * u); ctx.restore(); }
+}
+
+// Little scenes for the postcard letters, each a few big shapes: roses, Troyan glaze, the Belogradchik rocks, the
+// Rila lakes, twisted martenitsa yarn, Plovdiv houses, Thracian gold and a pot of yogurt.
+const BULGARIA_SCENES = [
+  (c, w, h) => { // damask roses on their leaves
+    c.fillStyle = '#4a7a3a'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#6a9a48'; for (const [a, b] of [[0.2, 0.08], [0.8, 0.3], [0.15, 0.55], [0.85, 0.75], [0.4, 0.95]]) { c.beginPath(); c.ellipse(w * a, h * b, w * 0.22, w * 0.1, 0.6, 0, Math.PI * 2); c.fill(); }
+    for (const [a, b, r] of [[0.5, 0.2, 0.3], [0.3, 0.48, 0.26], [0.7, 0.62, 0.28], [0.45, 0.85, 0.25]]) { c.fillStyle = '#c4487a'; c.beginPath(); c.arc(w * a, h * b, w * r, 0, Math.PI * 2); c.fill(); c.fillStyle = '#e8709e'; c.beginPath(); c.arc(w * a - w * r * 0.15, h * b - w * r * 0.15, w * r * 0.68, 0, Math.PI * 2); c.fill(); c.fillStyle = '#f8b0cc'; c.beginPath(); c.arc(w * a - w * r * 0.25, h * b - w * r * 0.25, w * r * 0.3, 0, Math.PI * 2); c.fill(); }
+  },
+  (c, w, h) => { // Troyan glaze: brown with dripped peacock eyes and a wavy trail
+    c.fillStyle = '#6e3a1a'; c.fillRect(0, 0, w, h);
+    c.strokeStyle = '#e8b448'; c.lineWidth = w * 0.07; c.beginPath(); for (let k = 0; k <= 40; k++) { const t = k / 40; c.lineTo(w * (0.5 + 0.32 * Math.sin(t * Math.PI * 4)), h * t); } c.stroke();
+    for (const [a, b, m] of [[0.25, 0.14, '#3e6a26'], [0.75, 0.36, '#22428e'], [0.25, 0.62, '#22428e'], [0.75, 0.86, '#3e6a26']]) { c.fillStyle = '#faf3e0'; c.beginPath(); c.arc(w * a, h * b, w * 0.2, 0, Math.PI * 2); c.fill(); c.fillStyle = m; c.beginPath(); c.arc(w * a, h * b, w * 0.12, 0, Math.PI * 2); c.fill(); c.fillStyle = '#e8b448'; c.beginPath(); c.arc(w * a, h * b, w * 0.05, 0, Math.PI * 2); c.fill(); }
+  },
+  (c, w, h) => { // red rock towers against an evening sky
+    const g = c.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#5a5aa0'); g.addColorStop(0.5, '#e8909a'); g.addColorStop(1, '#f6c27a'); c.fillStyle = g; c.fillRect(0, 0, w, h);
+    for (const [a, rw, top] of [[0.25, 0.42, 0.18], [0.72, 0.5, 0.32]]) { c.fillStyle = '#b4523a'; c.beginPath(); c.moveTo(w * (a - rw / 2), h); c.lineTo(w * (a - rw * 0.4), h * (top + 0.1)); c.quadraticCurveTo(w * a, h * (top - 0.08), w * (a + rw * 0.4), h * (top + 0.1)); c.lineTo(w * (a + rw / 2), h); c.fill(); c.fillStyle = '#e88452'; c.fillRect(w * (a + rw * 0.08), h * (top + 0.1), w * rw * 0.3, h); }
+    c.fillStyle = '#2f5a34'; c.fillRect(0, h * 0.86, w, h);
+  },
+  (c, w, h) => { // a blue glacial lake on green slopes under grey peaks
+    c.fillStyle = '#7ab4e0'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#8a8c90'; c.beginPath(); c.moveTo(0, h * 0.4); c.lineTo(w * 0.3, h * 0.12); c.lineTo(w * 0.55, h * 0.3); c.lineTo(w * 0.8, h * 0.1); c.lineTo(w, h * 0.3); c.lineTo(w, h * 0.5); c.lineTo(0, h * 0.5); c.fill();
+    c.fillStyle = '#5e9244'; c.fillRect(0, h * 0.42, w, h);
+    c.fillStyle = '#2c72b4'; c.beginPath(); c.ellipse(w * 0.5, h * 0.62, w * 0.42, h * 0.1, 0, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#46b4bc'; c.beginPath(); c.ellipse(w * 0.45, h * 0.86, w * 0.36, h * 0.07, 0, 0, Math.PI * 2); c.fill();
+  },
+  (c, w, h) => { // twisted red and white yarn on blossom pink
+    c.fillStyle = '#f2b4c6'; c.fillRect(0, 0, w, h);
+    c.save(); c.beginPath(); c.rect(w * 0.18, 0, w * 0.64, h); c.clip();
+    const s = w * 0.3; for (let k = -10; k < 20; k++) { const y0 = k * s * 1.5, y1 = y0 + s * (k % 2 ? 0.55 : 0.95); c.fillStyle = '#c8222e'; c.beginPath(); c.moveTo(0, y0); c.lineTo(w, y0 - w * 0.7); c.lineTo(w, y0 + s * 1.5 - w * 0.7); c.lineTo(0, y0 + s * 1.5); c.fill(); c.fillStyle = '#f8f4ea'; c.beginPath(); c.moveTo(0, y1); c.lineTo(w, y1 - w * 0.7); c.lineTo(w, y1 + s * 0.5 - w * 0.7); c.lineTo(0, y1 + s * 0.5); c.fill(); }
+    c.restore();
+  },
+  (c, w, h) => { // Plovdiv houses: a blue upper floor jutting out on brackets over an ochre one, a red roof
+    c.fillStyle = '#e2a84a'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#b05038'; c.fillRect(0, 0, w, h * 0.14);
+    c.fillStyle = '#3e2616'; c.fillRect(0, h * 0.14, w, h * 0.04);
+    c.fillStyle = '#3d74b4'; c.fillRect(0, h * 0.18, w, h * 0.42);
+    c.fillStyle = '#f6f0e2'; for (const a of [0.1, 0.58]) c.fillRect(w * a, h * 0.25, w * 0.32, h * 0.26);
+    c.fillStyle = '#2e3a4e'; for (const a of [0.16, 0.64]) c.fillRect(w * a, h * 0.28, w * 0.2, h * 0.2);
+    c.fillStyle = '#3e2616'; c.fillRect(0, h * 0.6, w, h * 0.04);
+    c.fillStyle = '#5a3420'; for (const a of [0.2, 0.5, 0.8]) { c.beginPath(); c.moveTo(w * (a - 0.1), h * 0.64); c.lineTo(w * (a + 0.1), h * 0.64); c.lineTo(w * a, h * 0.76); c.fill(); }
+    c.fillStyle = '#6a3a20'; c.fillRect(w * 0.3, h * 0.8, w * 0.4, h * 0.2);
+  },
+  (c, w, h) => { // Thracian gold: polished gold with a row of bosses on black
+    c.fillStyle = '#140e10'; c.fillRect(0, 0, w, h);
+    const g = c.createLinearGradient(0, 0, w, 0); g.addColorStop(0, '#8a5a1c'); g.addColorStop(0.3, '#fbe9a0'); g.addColorStop(0.6, '#d4a23c'); g.addColorStop(1, '#704816'); c.fillStyle = g; c.fillRect(w * 0.1, 0, w * 0.8, h);
+    for (let k = 0; k < 6; k++) { const y = h * (0.08 + k * 0.17); c.fillStyle = '#704816'; c.beginPath(); c.arc(w * 0.52, y + w * 0.04, w * 0.22, 0, Math.PI * 2); c.fill(); c.fillStyle = '#f0cf6e'; c.beginPath(); c.arc(w * 0.48, y, w * 0.2, 0, Math.PI * 2); c.fill(); c.fillStyle = '#fff0bc'; c.beginPath(); c.arc(w * 0.43, y - w * 0.05, w * 0.08, 0, Math.PI * 2); c.fill(); }
+  },
+  (c, w, h) => { // a glazed pot of white yogurt with honey running down its side
+    c.fillStyle = '#e2d2ae'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#b8262e'; for (let k = 0; k < 6; k++) { const x0 = w * (k * 0.25 - 0.1); c.beginPath(); c.moveTo(x0, h * 0.13); c.lineTo(x0 + w * 0.1, h * 0.08); c.lineTo(x0 + w * 0.2, h * 0.13); c.lineTo(x0 + w * 0.1, h * 0.18); c.fill(); }
+    const g = c.createLinearGradient(0, 0, w, 0); g.addColorStop(0, '#4a2410'); g.addColorStop(0.35, '#b06430'); g.addColorStop(0.5, '#8a4a20'); g.addColorStop(1, '#4a2410');
+    c.fillStyle = g; c.beginPath(); c.moveTo(w * -0.05, h * 0.42); c.quadraticCurveTo(w * 0.05, h * 0.95, w * 0.25, h * 1.02); c.lineTo(w * 0.75, h * 1.02); c.quadraticCurveTo(w * 0.95, h * 0.95, w * 1.05, h * 0.42); c.fill();
+    c.fillStyle = '#8a4a22'; c.beginPath(); c.ellipse(w * 0.5, h * 0.42, w * 0.56, h * 0.09, 0, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#fbf8ee'; c.beginPath(); c.ellipse(w * 0.5, h * 0.43, w * 0.46, h * 0.065, 0, 0, Math.PI * 2); c.fill();
+    c.strokeStyle = '#ecd6a4'; c.lineWidth = w * 0.06; c.beginPath(); for (let k = 0; k <= 20; k++) { const t = k / 20; c.lineTo(w * t, h * (0.58 + 0.03 * Math.sin(t * 12))); } c.stroke();
+    c.fillStyle = '#eaae2e'; c.fillRect(w * 0.58, h * 0.44, w * 0.12, h * 0.3); c.beginPath(); c.arc(w * 0.64, h * 0.75, w * 0.09, 0, Math.PI * 2); c.fill();
+  },
+];
+// Postcard: "Greetings from BULGARIA", every letter a little Bulgarian scene.
+function bulPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'BULGARIA', BULGARIA_SCENES); }
+
+// ---------- Balkan pack. Albania ----------
+const ALBANIA_FRAME = { dark: '#222a31', a: '#2aa5a3', b: '#a9b2b8', line: '#f1ebdd' };
+
+// Xhubleta: three bell-shaped skirts of black felt from the northern highlands standing side by side on a warm stone
+// ground, each with its woven belt, horizontal felt ridges, tiers of red, gold, cream and blue braid, a band of gold
+// coins on blue and a fringe round the hem.
+function albXhubleta(ctx, W, H) {
+  const C = { ground: '#e8dcc2', ground2: '#d6c6a6', shadow: '#b3a184', black: '#16141a', felt: '#2d2933', feltLit: '#4a4450', red: '#bf3a2e', red2: '#7c2220', gold: '#e2ad3e', gold2: '#a3721f', cream: '#f6efde', blue: '#3466aa', blue2: '#86acdc', border: '#3b2a22' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const P = (a, b, col) => { if (a >= 0 && b >= 0 && a < cols && b < rows) { x.fillStyle = col; x.fillRect(a, b, 1, 1); } };
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    // a simple border: a dark band with a gold line inside it, small cream lozenges and red dots in turn, gold corners
+    const B = 7;
+    R(0, 0, cols, rows, C.border);
+    R(B - 1, B - 1, cols - 2 * B + 2, rows - 2 * B + 2, C.gold2);
+    const loz = (cx, cy, k) => { cx = Math.round(cx); cy = Math.round(cy); if (k % 2) { R(cx - 1, cy - 1, 2, 2, C.red); return; } for (let j = -2; j <= 2; j++) for (let i = -2; i <= 2; i++) if (Math.abs(i + 0.5) + Math.abs(j + 0.5) <= 2) P(cx + i, cy + j, C.cream); };
+    const along = (len, put) => { const { n, d } = evenSteps(len, 5); for (let i = 1; i < n; i++) put(i * d, i); };
+    along(cols - 2 * B + 2, (a, i) => { loz(B - 1 + a, 3, i); loz(B - 1 + a, rows - 3, i); });
+    along(rows - 2 * B + 2, (a, i) => { loz(3, B - 1 + a, i); loz(cols - 3, B - 1 + a, i); });
+    for (const [a, b] of [[1, 1], [cols - 6, 1], [1, rows - 6], [cols - 6, rows - 6]]) { R(a, b, 5, 5, C.gold); R(a + 1, b + 1, 3, 3, C.red2); R(a + 2, b + 2, 1, 1, C.gold); }
+    // the ground: a warm plaster wall and a stone floor
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B, floorY = fy + Math.round(fh * 0.8);
+    R(fx, fy, fw, fh, C.ground); R(fx, floorY, fw, fy + fh - floorY, C.ground2);
+    // one skirt standing with its waist at (cx, top): `hs` knots from the waist to the hem, half-widths w0 at the waist
+    // and w1 at the hem, `look` the order of its bands. Each tier is a curve round the front of the bell, so the
+    // knots are found by walking down the skirt (t from 0 at the waist to 1 at the hem) and round it (angle th).
+    const skirt = (cx, top, hs, w0, w1, look) => {
+      const half = (t) => w0 + (w1 - w0) * (0.1 * t + 0.9 * Math.pow(t, 2.7)) + (t > 0.9 ? (t - 0.9) * 14 : 0), sag = (t) => half(t) * 0.22, fr = 7 / hs;
+      // its shadow on the floor
+      x.fillStyle = C.shadow; x.beginPath(); x.ellipse(cx + 5, top + hs + sag(1) - 1, w1 + 4, sag(1) + 2.5, 0, 0, Math.PI * 2); x.fill();
+      // the opening at the waist: the back of the belt and the dark inside
+      for (let dx = -w0; dx <= w0; dx += 0.4) { const e = Math.sqrt(Math.max(0, 1 - (dx / w0) ** 2)), yb = top - sag(0) * e, yf = top + sag(0) * e; for (let yy = yb; yy <= yf; yy += 0.4) P(Math.floor(cx + dx), Math.floor(yy), C.black); P(Math.floor(cx + dx), Math.floor(yb), C.red2); P(Math.floor(cx + dx), Math.floor(yb) - 1, C.red); }
+      const coinAt = (u, v, r, per, ph) => { const k = Math.round((u - ph) / per), du = u - ph - k * per; return Math.hypot(du, v) <= r ? Math.hypot(du, v) : -1; };
+            // colour of the skirt at height v knots below the waist, u knots round from the middle of the front, angle th
+      const color = (v, u, th, sx) => {
+        const side = th < -0.85 ? -1 : th > 0.95 ? 1 : 0;
+        const felt = () => { const ridge = Math.floor(v) % 3 === 0; return side < 0 ? (ridge ? C.feltLit : C.felt) : side > 0 ? C.black : (ridge ? C.felt : C.black); };
+        for (const [a, b, kind] of look) {
+          if (v < a || v >= b) continue;
+          const lv = v - a, h = b - a;
+          if (kind === 'belt') return lv < 1 || lv >= h - 1 ? C.gold : Math.abs(lv - h / 2) < 0.7 ? C.cream : (Math.floor(u / 2) % 2 ? C.red : C.red2);
+          if (kind === 'cord') return (Math.floor(u) % 3 === 0) ? C.gold2 : C.cream;
+          if (kind === 'gcord') return (Math.floor(u) % 3 === 0) ? C.gold2 : C.gold;
+          if (kind === 'zigRG' || kind === 'zigR') {             // teeth of braid: one colour above a cream zigzag, another below
+            const per = 9, tt = (((u % per) + per) % per) / per, z = (h - 1) * Math.abs(tt * 2 - 1);
+            const [up, dn] = kind === 'zigRG' ? [C.gold, C.red] : [C.red, C.gold];
+            return Math.abs(lv - z) < 0.6 ? C.cream : lv < z ? up : dn;
+          }
+          if (kind === 'coins') { const d = coinAt(u, lv - (h - 1) / 2, (h - 3) / 2 + 0.3, 7.5, 0); if (d >= 0) return d > (h - 3) / 2 - 0.7 ? C.gold2 : d < 0.8 ? C.red : C.gold; return lv < 1 || lv >= h - 1 ? C.cream : C.blue; }
+          if (kind === 'blue') return lv < 1 || lv >= h - 1 ? C.blue2 : (Math.floor(u) % 4 === 0 ? C.cream : C.blue);
+          if (kind === 'red') return lv < 1 || lv >= h - 1 ? C.gold : (Math.floor(u + lv) % 4 === 0 ? C.gold : C.red);
+          if (kind === 'fringe') { if (sx % 2 || lv >= h - ((sx >> 1) % 3 === 1 ? 1 : 0)) return felt(); const c4 = [C.red, C.gold, C.red, C.cream][(sx >> 1) % 4]; return lv >= h - 1 - ((sx >> 1) % 3 === 1 ? 1 : 0) ? C.gold2 : c4; }
+        }
+        return felt();
+      };
+      const fringeCols = [C.red, C.gold, C.cream, C.gold, C.blue2, C.gold];
+      for (let t = 0; t <= 1 + fr; t += 0.25 / hs) {
+        const tt = Math.min(1, t), w = half(tt), s = sag(tt), v = t * hs;
+        for (let th = -Math.PI / 2; th <= Math.PI / 2; th += 0.4 / w) {
+          const dx = Math.sin(th) * w, yy = top + t * hs + s * Math.cos(th), u = th * w;
+          let col;
+          if (t <= 1) col = color(v, u, th, Math.floor(cx + dx));
+          else {                                                   // the hem fringe: threads hanging straight down
+            const k = Math.floor((u + 400) / 1.5), len = 1 + fr * hs * (0.75 + 0.25 * ((k * 7) % 4) / 3);
+            if (k % 2 || (t - 1) * hs > len) continue;
+            col = (t - 1) * hs > len - 1 ? C.gold2 : fringeCols[(k >> 1) % fringeCols.length];
+            if (th > 1.1) col = col === C.cream ? C.gold : col === C.gold ? C.gold2 : col === C.red ? C.red2 : col;
+          }
+          if (th > 1.15 && t <= 1) col = col === C.cream ? C.gold2 : col === C.gold ? C.gold2 : col === C.red ? C.red2 : col === C.blue ? C.black : col;
+          P(Math.floor(cx + dx), Math.floor(yy), col);
+        }
+      }
+    };
+    // the three skirts: the middle one richest, the two beside it with their bands in another order
+    const hs = 74, top = floorY - hs - 9;
+    skirt(fx + fw * 0.18, top + 4, hs - 4, 8, 25, [[0, 4, 'belt'], [16, 17, 'cord'], [17, 23, 'zigR'], [23, 24, 'cord'], [30, 36, 'fringe'], [44, 45, 'gcord'], [45, 52, 'coins'], [52, 53, 'gcord'], [61, 62, 'cord'], [62, 66, 'red']]);
+    skirt(fx + fw * 0.82, top + 4, hs - 4, 8, 25, [[0, 4, 'belt'], [14, 15, 'gcord'], [15, 22, 'coins'], [22, 23, 'gcord'], [32, 33, 'cord'], [33, 39, 'zigRG'], [39, 40, 'cord'], [40, 46, 'fringe'], [61, 62, 'cord'], [62, 66, 'blue']]);
+    skirt(fx + fw * 0.5, top, hs, 9, 28, [[0, 5, 'belt'], [12, 13, 'cord'], [13, 19, 'zigRG'], [19, 20, 'cord'], [24, 30, 'fringe'], [36, 37, 'gcord'], [37, 45, 'coins'], [45, 46, 'gcord'], [46, 52, 'fringe'], [58, 59, 'cord'], [59, 65, 'zigR'], [65, 66, 'cord'], [66, 70, 'red']]);
+  });
+}
+
+// Qeleshe: rows of white felt skullcaps, some seen from the side and some from above, soft cream with shading,
+// red woollen tassels between them and woven bands between the rows, on warm grey.
+function albQeleshe(ctx, W, H) {
+  const C = { ground: '#756b62', ground2: '#665d55', felt: '#f5efe2', felt2: '#e4dac6', felt3: '#cbbea6', felt4: '#a99a83', red: '#b8312a', red2: '#7c1f1c', black: '#2a2420', gold: '#d9a842', cream: '#efe4cc' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const P = (a, b, col) => { if (a >= 0 && b >= 0 && a < cols && b < rows) { x.fillStyle = col; x.fillRect(a, b, 1, 1); } };
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    // felt shading in four tones, dithered where one tone gives way to the next so the felt looks soft
+    const shade = (v, xx, yy) => { v += (((xx & 1) * 2 + (yy & 1) * 3) % 4 - 1.5) * 0.035; return v > 0.62 ? C.felt : v > 0.36 ? C.felt2 : v > 0.1 ? C.felt3 : C.felt4; };
+    // a cap: a dome with steep sides that rounds over at the crown, lit from the upper left, on a rolled rim two
+    // knots deep. Seen from the side the rim runs straight; seen from a little above (tilt > 0) it curves round the
+    // front of the cap and more of the crown shows. Its shadow falls on the ground to the right.
+    const cap = (cx, base, rx, tilt) => {
+      const ry = rx * (1 + tilt * 0.25), rb = rx * tilt, low = (ex) => base + rb * Math.sqrt(Math.max(0, 1 - ex * ex));
+      for (let xx = Math.round(cx - rx + 2); xx < cx + rx + 4; xx++) { const ex = (xx - 1.5 + 0.5 - cx) / rx; if (Math.abs(ex) > 1.04) continue; const y = Math.round(low(Math.min(1, Math.abs(ex)))); P(xx, y + 2, C.ground2); P(xx + 1, y + 3, C.ground2); }
+      for (let yy = Math.floor(base - ry - 1); yy < base + rb + 2; yy++) for (let xx = Math.floor(cx - rx - 2); xx <= cx + rx + 1; xx++) {
+        const ex = (xx + 0.5 - cx) / rx, ey = (yy + 0.5 - base) / ry;
+        if (Math.abs(ex) > 1.04) continue;
+        const lb = low(Math.min(1, Math.abs(ex))), dy = yy + 0.5 - lb;
+        if (dy > 2) continue;
+        if (dy > 0) { P(xx, yy, dy < 1 ? shade(0.6 - 0.5 * ex, xx, yy) : shade(0.24 - 0.45 * ex, xx, yy)); continue; }
+        if (dy > -1 && Math.abs(ex) <= 1.02) { P(xx, yy, shade(0.1 - 0.4 * ex, xx, yy)); continue; } // the crease above the rim
+        if (yy + 0.5 < base && Math.pow(Math.abs(ex), 2.8) + ey * ey > 1) continue;
+        if (Math.abs(ex) > 1) continue;
+        const nz = Math.sqrt(Math.max(0, 1 - ex * ex - Math.min(1, ey * ey)));
+        P(xx, yy, shade(0.32 - 0.5 * ex - 0.3 * Math.min(0, ey) + 0.3 * nz + tilt * 0.25, xx, yy));
+      }
+    };
+    // a red woollen tassel hanging from its cord: a gold bead, a round red head, a gold binding and a skirt of threads
+    const TASSEL = ['..rrR..', '.rrrRR.', '..rrR..', '..ggg..', '..rRr..', '.rRrRr.', '.rRrRr.', 'rRrRrRr', 'rRrRrRr', 'r.r.R.r'];
+    const tassel = (cx, y0, L) => {
+      R(cx, y0, 1, L, C.red2); P(cx, y0 + L, C.gold);
+      TASSEL.forEach((row, j) => [...row].forEach((ch, i) => { if (ch !== '.') P(cx - 3 + i, y0 + L + 1 + j, ch === 'g' ? C.gold : ch === 'R' ? C.red2 : C.red); }));
+    };
+    // ground
+    R(0, 0, cols, rows, C.ground);
+    for (let yy = 0; yy < rows; yy++) for (let xx = (yy % 4) * 2; xx < cols; xx += 8) if (yy % 2 === 0) P(xx, yy, C.ground2);
+    // the border: dark lines, a cream wool band with a black braid sewn on in running loops, red corners
+    const B = 10;
+    R(0, 0, cols, rows, C.black);
+    R(1, 1, cols - 2, B - 2, C.cream); R(1, rows - B + 1, cols - 2, B - 2, C.cream); R(1, 1, B - 2, rows - 2, C.cream); R(cols - B + 1, 1, B - 2, rows - 2, C.cream);
+    R(B - 1, B - 1, cols - 2 * B + 2, rows - 2 * B + 2, C.red2);
+    R(B, B, cols - 2 * B, rows - 2 * B, C.ground);
+    for (let yy = B; yy < rows - B; yy++) for (let xx = B; xx < cols - B; xx++) { const a = ((xx - B) % 10 + 10) % 10 - 5, b = ((yy - B) % 10 + 10) % 10 - 5; if (Math.abs(a) + Math.abs(b) === 2) P(xx, yy, C.ground2); }
+    ringKnots(x, cols, rows, 1, B - 2, 8, (i, j) => {
+      const t = ((i % 8) + 8) % 8, d = Math.abs(t - 3.5), m = Math.abs(j - 3.5);
+      // a chain of loops: ovals four knots tall touching end to end, with a red stitch in each eye
+      if ((d >= 2.6 && d <= 3.6 && m <= 1.6) || (d <= 2.6 && m >= 1.8 && m <= 2.8 && d + m >= 2.4)) return C.black;
+      if (d < 1 && m < 1) return C.red;
+      return null;
+    }, (a, b) => { R(a, b, B - 2, B - 2, C.red); R(a + 2, b + 2, B - 6, B - 6, C.gold); R(a + 3, b + 3, B - 8, B - 8, C.red2); });
+    // the field: three rows of caps with woven bands between them
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    const rowH = 27, bandH = 7, top0 = fy + Math.round((fh - 3 * rowH - 2 * bandH) / 2);
+    // a woven band: cream between dark edges, red lozenges with gold hearts, little red and gold stitches between
+    const band = (y0) => {
+      R(fx, y0, fw, bandH, C.cream); R(fx, y0, fw, 1, C.black); R(fx, y0 + bandH - 1, fw, 1, C.black);
+      const { n, d } = evenSteps(fw, 9);
+      for (let k = 0; k < n; k++) {
+        const cx = Math.round(fx + (k + 0.5) * d), cy = y0 + 3;
+        for (let j = -2; j <= 2; j++) for (let i = -3; i <= 3; i++) { const e = Math.abs(i) / 1.5 + Math.abs(j); if (e <= 2.1) P(cx + i, cy + j, e < 0.8 ? C.gold : e < 1.5 ? C.red2 : C.red); }
+        if (k < n - 1) { const sx = Math.round(fx + (k + 1) * d); P(sx, cy - 1, C.red); P(sx - 1, cy + 1, C.red); P(sx - 1, cy - 1, C.gold); P(sx, cy + 1, C.gold); }
+      }
+    };
+    for (let r = 0; r < 3; r++) {
+      const y0 = top0 + r * (rowH + bandH);
+      if (r > 0) band(y0 - bandH);
+      const n = 4, { d } = evenSteps(fw, fw / n);
+      for (let k = 0; k < n; k++) {
+        const cx = fx + (k + 0.5) * d;
+        if ((k + r) % 2 === 0) cap(cx, y0 + rowH - 6, 12.5, 0); else cap(cx, y0 + rowH - 9, 12, 0.32);
+      }
+      for (let k = 0; k <= n; k++) { const tx = Math.round(fx + k * d + (k === 0 ? 5 : k === n ? -6 : 0)); tassel(tx, y0 - (r ? 0 : 3), r ? 5 : 8); }
+    }
+  });
+}
+
+// Çifteli: three pairs of the long-necked two-string lute crossed like an X, warm wooden bodies and pegheads inlaid
+// with bone and mother-of-pearl dots and diamonds, on deep green inside an inlaid walnut border.
+function albCifteli(ctx, W, H) {
+  const C = { green: '#1c4530', green2: '#255a3d', green3: '#123022', wood1: '#3b2212', wood2: '#73441f', wood3: '#a0632c', board: '#cf9550', board2: '#e9bb79', bone: '#f3ebd7', pearl: '#a9cfd2', gold: '#d6a742' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const P = (a, b, col) => { if (a >= 0 && b >= 0 && a < cols && b < rows) { x.fillStyle = col; x.fillRect(a, b, 1, 1); } };
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    // the border: a walnut band between gold lines, inlaid with bone diamonds and pearl dots
+    const B = 12;
+    R(0, 0, cols, rows, C.wood1);
+    for (const o of [1, B - 2]) { R(o, o, cols - 2 * o, 1, C.gold); R(o, rows - 1 - o, cols - 2 * o, 1, C.gold); R(o, o, 1, rows - 2 * o, C.gold); R(cols - 1 - o, o, 1, rows - 2 * o, C.gold); }
+    R(2, 2, cols - 4, B - 4, C.wood2); R(2, rows - B + 2, cols - 4, B - 4, C.wood2); R(2, 2, B - 4, rows - 4, C.wood2); R(cols - B + 2, 2, B - 4, rows - 4, C.wood2);
+    ringKnots(x, cols, rows, 2, B - 4, 10, (i, j) => {
+      const t = ((i % 10) + 10) % 10, d = Math.abs(t - 4.5) + Math.abs(j - 3.5);
+      if (d <= 1) return C.pearl;
+      if (d <= 3) return C.bone;
+      if (Math.abs(t - 4.5) === 4.5 && Math.abs(j - 3.5) === 0.5) return C.pearl;
+      return null;
+    }, (a, b) => { R(a, b, B - 4, B - 4, C.wood1); for (let j = 0; j < B - 4; j++) for (let i = 0; i < B - 4; i++) { const d = Math.abs(i - 3.5) + Math.abs(j - 3.5); if (d <= 3) P(a + i, b + j, d <= 1 ? C.gold : C.bone); } });
+    // the field: deep green with a quiet lattice of small diamonds
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    R(fx, fy, fw, fh, C.green);
+    for (let yy = fy; yy < fy + fh; yy++) for (let xx = fx; xx < fx + fw; xx++) { const a = ((xx - fx - 7) % 14 + 14) % 14 - 7, b = ((yy - fy - 6) % 13 + 13) % 13 - 6; if (Math.abs(a) + Math.abs(b) === 2) P(xx, yy, C.green2); }
+    // one çifteli, knot by knot. Its axis runs from the foot of the body (bx, by) at angle ang towards the head;
+    // u is the distance along the axis, v across it. With `shadow` it only casts its shadow on the green.
+    const lute = (bx, by, ang, L, shadow) => {
+      const ca = Math.cos(ang), sa = Math.sin(ang), Rb = L * 0.108, nw = 2.6, bodyEnd = L * 0.38, headStart = L * 0.83, hw = 3.2;
+      const half = (u) => {
+        if (u < 0 || u > L) return -1;
+        if (u < Rb) return Math.sqrt(Math.max(0, Rb * Rb - (u - Rb) ** 2));
+        if (u < bodyEnd) { const t = (u - Rb) / (bodyEnd - Rb); return nw + (Rb - nw) * Math.cos(t * Math.PI / 2) ** 1.5; }
+        if (u < headStart) return nw;
+        if (u > L - 3) return hw - (u - (L - 3)) * 0.8;
+        return nw + (hw - nw) * Math.min(1, (u - headStart) / 2);
+      };
+      const pegs = [[L * 0.885, -1], [L * 0.945, 1]];
+      const x0 = Math.min(bx, bx + ca * L) - 9, x1 = Math.max(bx, bx + ca * L) + 9, y0 = Math.min(by, by + sa * L) - 9, y1 = Math.max(by, by + sa * L) + 9;
+      for (let yy = Math.floor(y0); yy <= y1; yy++) for (let xx = Math.floor(x0); xx <= x1; xx++) {
+        const dx = xx + 0.5 - bx - (shadow ? 1.3 : 0), dy = yy + 0.5 - by - (shadow ? 1.3 : 0), u = dx * ca + dy * sa, v = -dx * sa + dy * ca, av = Math.abs(v);
+        if (u < -1 || u > L + 1) continue;
+        // the pegs: a wooden shaft through the head to each side, a bone knob on the end
+        let pg = null;
+        for (const [pu, sg] of pegs) if (Math.abs(u - pu) < 1.1 && v * sg > 0 && av < hw + 5) pg = av > hw + 3 ? C.bone : C.wood3;
+        const h = half(u);
+        if (!pg && (h < 0 || av > h + 0.5)) continue;
+        if (shadow) { P(xx, yy, C.green3); continue; }
+        if (pg && (h < 0 || av > h - 0.3)) { P(xx, yy, pg); continue; }
+        let col;
+        if (u < bodyEnd) {
+          if (av > h - 0.9) col = C.wood1;                                                // the rim of the body
+          else if (av > h - 1.8 && u > 1.5) col = C.wood2;
+          else {
+            col = (v < 0 && av > h - 3.4 && u > 2 && u < bodyEnd - 6) ? C.board2 : C.board;   // the soundboard, lit along one side
+            if (Math.abs(u - L * 0.075) < 0.7 && av < 3.6) col = C.wood1;                 // the bridge
+            if (u < L * 0.035 && av < 2.6) col = C.wood2;                                 // the tailpiece
+          }
+        } else if (u < headStart) {
+          col = av > nw - 0.8 ? C.wood1 : C.wood3;                                         // the neck
+          if (av < nw - 0.8 && Math.round(u - bodyEnd) % 6 === 3) col = C.wood2;            // frets
+        } else {
+          col = av > h - 0.8 ? C.wood1 : C.wood2;                                          // the head
+          const hd = Math.abs(u - L * 0.915) * 0.75 + av;
+          if (hd < 2) col = hd < 0.8 ? C.pearl : C.bone;
+          if (Math.abs(u - (L - 2.2)) < 0.6 && av < 0.6) col = C.bone;
+        }
+        if (Math.abs(av - 1.05) < 0.45 && u > L * 0.075 && u < headStart) col = C.bone;   // the two strings
+        P(xx, yy, col);
+      }
+      if (shadow) return;
+      // inlay laid on afterwards, knot by knot at exact places: pearl dots round the soundboard, a bone diamond at
+      // the heel of the neck, little sound holes either side of the strings, pearl dots along the neck
+      const at = (u, v, col) => P(Math.floor(bx + u * ca - v * sa), Math.floor(by + u * sa + v * ca), col);
+      for (let u = 3.5; u < bodyEnd - 5; u += 3.2) for (const s of [-1, 1]) at(u, s * (half(u) - 2.6), C.pearl);
+      at(1.6, 0, C.pearl);
+      for (const s of [-1, 1]) { at(L * 0.27, s * 2.6, C.wood1); at(L * 0.3, s * 2.4, C.wood1); at(L * 0.285, s * 3.6, C.wood1); }
+      for (let k = -2; k <= 2; k++) for (let j = -2; j <= 2; j++) if (Math.abs(k) + Math.abs(j) <= 2) at(bodyEnd - 2.5 + k * 0.9, j * 0.9, Math.abs(k) + Math.abs(j) === 0 ? C.pearl : C.bone);
+      for (let u = bodyEnd + 6; u < headStart - 2; u += 6) at(u, 0, C.pearl);
+    };
+    // small inlay ornaments: a bone diamond ring round a pearl heart
+    const orn = (cx, cy, r = 3) => {
+      cx = Math.round(cx); cy = Math.round(cy);
+      for (let j = -r - 1; j <= r; j++) for (let i = -r - 1; i <= r; i++) { const d = Math.abs(i + 0.5) + Math.abs(j + 0.5); if (Math.abs(d - r) < 0.6) P(cx + i, cy + j, C.bone); else if (d < 1.2) P(cx + i, cy + j, C.pearl); }
+    };
+    // three pairs crossed like an X, crossing at the necks
+    const L = 78, phi = 0.56, c = 0.53;
+    const pair = (cx, cy, flip) => {
+      const A = -Math.PI / 2 + phi, Bn = -Math.PI / 2 - phi;
+      const foot = (a) => [cx - Math.cos(a) * c * L, cy - Math.sin(a) * c * L];
+      const order = flip ? [Bn, A] : [A, Bn];
+      for (const a of order) lute(...foot(a), a, L, true);
+      for (const a of order) { lute(...foot(a), a, L, true); lute(...foot(a), a, L, false); }
+      orn(cx, cy - L * 0.3, 3); orn(cx, cy + L * 0.36, 3);
+    };
+    const cy = fy + fh / 2 - L * (c - 0.5) * Math.cos(phi) - 1;
+    for (let k = 0; k < 3; k++) pair(fx + fw * (k + 0.5) / 3, cy, k % 2 === 1);
+    for (const px of [fx + fw / 3, fx + fw * 2 / 3]) orn(px, cy - 1, 4);
+    // a line of inlaid stringing near the top and bottom of the field: a bone zigzag with pearl dots in its bends
+    for (const [y0, s] of [[fy + 3, 1], [fy + fh - 4, -1]]) for (let xx = fx + 2; xx < fx + fw - 2; xx++) {
+      const t = (xx - fx - 2) % 8, z = t < 4 ? t : 8 - t;
+      P(xx, y0 + s * (z >> 1), C.bone);
+      if (t === 0) P(xx, y0 + s * 3, C.pearl); if (t === 4) P(xx, y0 - s, C.pearl);
+    }
+  });
+}
+
+// Stone roofs of Gjirokastër seen from above: hipped roofs laid with overlapping slabs in many greys and blue-greys,
+// lichen spots, stone chimneys with slab caps, cobbled lanes between the houses, inside a border of dressed stone.
+function albSlateRoofs(ctx, W, H) {
+  const C = { joint: '#24282d', s1: '#3e444b', s2: '#545b63', s3: '#6c737a', s4: '#888e93', s5: '#a9adaf', b1: '#4d5b6c', b2: '#6b7b8e', lichen: '#cba846', lichen2: '#9ba970', lane: '#c4bba8', lane2: '#a09683', mortar: '#6d6559', tree: '#3f5b35' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const P = (a, b, col) => { if (a >= 0 && b >= 0 && a < cols && b < rows) { x.fillStyle = col; x.fillRect(a, b, 1, 1); } };
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const hash = (a, b, c = 0) => { let h = Math.imul(a | 0, 374761393) ^ Math.imul(b | 0, 668265263) ^ Math.imul(c | 0, 1274126177); h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+    // the border: two courses of dressed limestone blocks, staggered, with mortar between, a big block in each corner
+    const B = 11;
+    R(0, 0, cols, rows, C.mortar);
+    ringKnots(x, cols, rows, 1, 8, 1, (i, j) => {
+      if (j === 3 || j === 7) return C.mortar;
+      const c = j < 3 ? 0 : 1, k = Math.floor((i + c * 4 + 400) / 8), t = (i + c * 4 + 400) % 8;
+      if (t === 0) return C.mortar;
+      const r = hash(k, c, 7), lit = j === 0 || j === 4 ? 1 : 0;
+      return lit ? C.lane : r < 0.35 ? C.lane2 : r < 0.7 ? C.lane : C.s5;
+    }, (a, b) => { R(a, b, 8, 8, C.lane2); R(a, b, 8, 1, C.lane); R(a, b, 1, 8, C.lane); R(a + 7, b, 1, 8, C.mortar); R(a, b + 7, 8, 1, C.mortar); R(a + 2, b + 2, 4, 4, C.s5); });
+    R(9, 9, cols - 18, 1, C.joint); R(9, rows - 10, cols - 18, 1, C.joint); R(9, 9, 1, rows - 18, C.joint); R(cols - 10, 9, 1, rows - 18, C.joint);
+    const fx = 10, fy = 10, fw = cols - 20, fh = rows - 20;
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // cobbled lanes everywhere first, laid in a lattice of darker stones
+    for (let yy = fy; yy < fy + fh; yy++) for (let xx = fx; xx < fx + fw; xx++) P(xx, yy, (xx % 3 === 0 && yy % 2 === 0) || (xx % 3 === 1 && yy % 2 === 1 && hash(xx, yy, 3) < 0.4) ? C.lane2 : C.lane);
+    // the houses: three rows of roofs of different widths, some built against each other
+    const roofs = [];
+    const rowsDef = [[fy - 8, 33, -9, 1], [fy + 27, 34, -22, 2], [fy + 64, 32, -4, 3], [fy + 99, 30, -15, 4]];
+    for (const [y0, h, x0, s] of rowsDef) {
+      let xx = fx + x0, k = 0;
+      while (xx < fx + fw) {
+        const r1 = hash(s, k, 1), r2 = hash(s, k, 2), w = 20 + Math.round(r1 * 36), dy = Math.round(hash(s, k, 3) * 5) - 1, hh = h - Math.round(r2 * 5) - Math.max(0, dy - 2);
+        roofs.push({ x0: xx, y0: y0 + dy, w, h: hh, id: s * 20 + k });
+        xx += w + (r2 < 0.35 ? 0 : 2 + Math.round(r1)); k++;
+      }
+    }
+    // their shadows on the lanes, to the lower right
+    for (const r of roofs) { R(r.x0 + 2, r.y0 + r.h, r.w, 2, C.s4); R(r.x0 + r.w, r.y0 + 2, 2, r.h, C.s4); }
+    // a hipped roof, knot by knot: each knot belongs to the slope whose eave is nearest; the slopes are laid in
+    // courses of slabs three knots deep, each course's lower row in shadow, the slabs staggered course to course,
+    // their tones varying, lit from the upper left; light capping along the ridge and hips; lichen here and there
+    const greys = [C.joint, C.s1, C.s2, C.s3, C.s4, C.s5];
+    const roof = (r) => {
+      for (let j = 0; j < r.h; j++) for (let i = 0; i < r.w; i++) {
+        const xx = r.x0 + i, yy = r.y0 + j;
+        if (xx < fx || yy < fy || xx >= fx + fw || yy >= fy + fh) continue;
+        const ds = [j, r.h - 1 - j, i, r.w - 1 - i], f = ds.indexOf(Math.min(...ds)), d = ds[f];
+        const sorted = [...ds].sort((a, b) => a - b);
+        if (sorted[1] - sorted[0] < 1 && d > 0) { P(xx, yy, (i + j) % 3 ? C.s5 : C.s4); continue; }   // ridge and hips
+        const along = f < 2 ? i : j, course = Math.floor(d / 3), off = (course * 3 + r.id * 5) % 6, pos = along + off + 60, slab = Math.floor(pos / 6);
+        const hv = hash(r.id * 7 + f, course, slab);
+        let tone = [3.6, 2.1, 3.0, 1.6][f] + (hv - 0.5) * 1.8;
+        if (d % 3 === 0) tone -= 1.4;
+        if (pos % 6 === 0 && d % 3 !== 0) tone -= 0.8;
+        const ti = Math.max(0, Math.min(5, Math.round(tone)));
+        let col = greys[ti];
+        if (hv > 0.78 && ti >= 2 && ti <= 4 && d % 3 !== 0) col = ti >= 3 ? C.b2 : C.b1;     // blue-grey slabs
+        const lh = hash(xx, yy, 99);                                                          // lichen growing over a whole slab or two
+        if (d % 3 !== 0 && hv > 0.42 && hv < 0.47 && lh < 0.55) col = C.lichen; else if (d % 3 !== 0 && hv > 0.47 && hv < 0.51 && lh < 0.6) col = C.lichen2;
+        if (d === 0) col = f === 0 || f === 2 ? C.s3 : C.joint;                               // the eaves
+        P(xx, yy, col);
+      }
+      // stone chimneys with a slab cap, casting a shadow down the roof
+      const n = 1 + (r.id % 2);
+      for (let k = 0; k < n; k++) {
+        const cx = r.x0 + Math.round(r.w * (0.28 + 0.44 * k + (hash(r.id, k, 5) - 0.5) * 0.12)), cy = r.y0 + Math.round(r.h * (0.3 + hash(r.id, k, 6) * 0.35));
+        R(cx + 2, cy + 2, 5, 4, C.joint); R(cx, cy, 5, 4, C.s4); R(cx, cy, 5, 1, C.lane); R(cx, cy, 1, 4, C.s5); R(cx + 1, cy + 1, 3, 2, C.s5);
+      }
+    };
+    for (const r of roofs) roof(r);
+    // a few fig trees whose crowns spill over the lanes and eaves
+    for (const [a, b, rr] of [[fx + 47, fy + 25, 5], [fx + 128, fy + 62, 5.5], [fx + 16, fy + 63, 4.5], [fx + 163, fy + 26, 4.5], [fx + 98, fy + 97, 5]]) {
+      x.fillStyle = C.joint; x.beginPath(); x.arc(a + 1.5, b + 1.5, rr, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.tree; x.beginPath(); x.arc(a, b, rr, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.lichen2; for (const [dx, dy] of [[-2, -2], [0, -3], [-3, 0], [1, -1], [-1, 1]]) x.fillRect(Math.round(a + dx), Math.round(b + dy), 1, 1);
+    }
+    x.restore();
+  });
+}
+
+// Figs: ripe purple and green figs, some cut in half to show their pink-red insides, on big lobed fig leaves, all
+// over an ochre ground, inside a plum border with a row of little figs.
+function albFigs(ctx, W, H) {
+  const C = { ochre: '#d49b3d', ochre2: '#c2882f', plum: '#3b1a2d', purple: '#6b2d59', purple2: '#9a5885', green: '#83a03c', green2: '#c0cc66', leaf: '#2e5c2f', leaf2: '#4f8a3a', red: '#b2293c', pink: '#e46f7e', cream: '#f3e3c3', brown: '#6a4423' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ink = (col, draw) => sweInk(x, col, draw);
+    // the fig's outline: a round bottom drawing up into a short neck, in units of s, the neck towards -y
+    const tear = (c, s, k = 1) => {
+      s *= k; c.beginPath(); c.moveTo(0, -1.62 * s);
+      c.bezierCurveTo(0.22 * s, -1.55 * s, 0.3 * s, -1.15 * s, 0.62 * s, -0.82 * s); c.bezierCurveTo(1.0 * s, -0.45 * s, 1.05 * s, 0.1 * s, 0.9 * s, 0.5 * s);
+      c.bezierCurveTo(0.7 * s, 0.95 * s, 0.3 * s, 1.02 * s, 0, 1.02 * s); c.bezierCurveTo(-0.3 * s, 1.02 * s, -0.7 * s, 0.95 * s, -0.9 * s, 0.5 * s);
+      c.bezierCurveTo(-1.05 * s, 0.1 * s, -1.0 * s, -0.45 * s, -0.62 * s, -0.82 * s); c.bezierCurveTo(-0.3 * s, -1.15 * s, -0.22 * s, -1.55 * s, 0, -1.62 * s); c.closePath();
+    };
+    const at = (cx, cy, ang, fn) => (c) => { c.translate(cx, cy); c.rotate(ang); fn(c); };
+    // whole figs: skin, shade on the far side, a soft highlight, faint ribs, a short stem. Figs that don't touch can
+    // be laid down together, one layer at a time (each layer is one pass of ink): `list` holds [cx, cy, s, ang, kind].
+    const figs = (list) => {
+      const layer = (col, pick, fn) => { const l = list.filter(pick); if (l.length) ink(col, (c) => { for (const [cx, cy, s, ang, kind] of l) { c.save(); c.translate(cx, cy); c.rotate(ang); fn(c, s, kind); c.restore(); } }); };
+      const all = () => true, pur = (f) => f[4] === 'purple', grn = (f) => f[4] !== 'purple';
+      layer(C.brown, all, (c, s) => { c.lineWidth = Math.max(1.2, s * 0.28); c.beginPath(); c.moveTo(0, -1.5 * s); c.quadraticCurveTo(0.1 * s, -1.9 * s, 0.35 * s, -2.1 * s); c.stroke(); });
+      layer(C.plum, pur, (c, s) => { tear(c, s); c.fill(); }); layer(C.leaf2, grn, (c, s) => { tear(c, s); c.fill(); });
+      layer(C.purple, pur, (c, s) => { c.translate(-0.12 * s, -0.08 * s); tear(c, s, 0.86); c.fill(); }); layer(C.green, grn, (c, s) => { c.translate(-0.12 * s, -0.08 * s); tear(c, s, 0.86); c.fill(); });
+      layer(C.green, (f) => pur(f) && f[2] > 4, (c, s) => { c.translate(-0.12 * s, -0.08 * s); tear(c, s, 0.86); c.clip(); c.beginPath(); c.ellipse(0, -1.55 * s, 0.6 * s, 0.75 * s, 0, 0, Math.PI * 2); c.fill(); });
+      layer(C.purple2, pur, (c, s) => { c.beginPath(); c.ellipse(-0.42 * s, -0.1 * s, 0.2 * s, 0.4 * s, 0.25, 0, Math.PI * 2); c.fill(); }); layer(C.green2, grn, (c, s) => { c.beginPath(); c.ellipse(-0.42 * s, -0.1 * s, 0.2 * s, 0.4 * s, 0.25, 0, Math.PI * 2); c.fill(); });
+      const rib = (c, s) => { c.lineWidth = 0.9; c.beginPath(); c.moveTo(0.15 * s, -1.1 * s); c.quadraticCurveTo(0.45 * s, -0.2 * s, 0.25 * s, 0.85 * s); c.stroke(); };
+      layer(C.plum, (f) => pur(f) && f[2] > 4, rib); layer(C.leaf2, (f) => grn(f) && f[2] > 4, rib);
+    };
+    const fig = (cx, cy, s, ang, kind) => figs([[cx, cy, s, ang, kind]]);
+    // a fig cut in half: a thin skin, white pith, pink flesh with a deep red heart and cream seeds radiating out
+    const half = (cx, cy, s, ang, kind) => {
+      const skin = kind === 'purple' ? C.purple : C.green;
+      ink(C.brown, at(cx, cy, ang, (c) => { c.lineWidth = Math.max(1.2, s * 0.28); c.beginPath(); c.moveTo(0, -1.5 * s); c.lineTo(0.1 * s, -2.0 * s); c.stroke(); }));
+      ink(skin, at(cx, cy, ang, (c) => { tear(c, s); c.fill(); }));
+      ink(C.cream, at(cx, cy, ang, (c) => { c.translate(0, 0.03 * s); tear(c, s, 0.84); c.fill(); }));
+      ink(C.pink, at(cx, cy, ang, (c) => { c.translate(0, 0.1 * s); tear(c, s, 0.66); c.fill(); }));
+      ink(C.red, at(cx, cy, ang, (c) => { c.translate(0, 0.15 * s); c.beginPath(); c.ellipse(0, 0, 0.36 * s, 0.48 * s, 0, 0, Math.PI * 2); c.fill(); c.lineWidth = 1; c.beginPath(); c.moveTo(0, -0.3 * s); c.lineTo(0, -1.0 * s); c.stroke(); }));
+      ink(C.cream, at(cx, cy, ang, (c) => { c.translate(0, 0.15 * s); for (let k = 0; k < 11; k++) { const a = (k / 11) * Math.PI * 2 + 0.3; for (const r of [0.42, 0.62]) c.fillRect(Math.cos(a) * r * s * 0.78 - 0.5, Math.sin(a) * r * s * 1.0 - 0.5, 1, 1); } }));
+    };
+    // a fig leaf: a broad blade with five rounded lobes, the middle one longest, the lobes' left halves lit, light
+    // veins running out to every lobe from the stalk
+    const LOBES = [[0, 1, 0.46], [-1.05, 0.86, 0.42], [1.05, 0.86, 0.42], [-2.1, 0.56, 0.34], [2.1, 0.56, 0.34]];
+    const figLeaf = (cx, cy, L, ang) => {
+      const hub = -0.18 * L;
+      const lobes = (c, k, lit) => { for (const [a, l, w] of LOBES) { c.save(); c.translate(0, hub); c.rotate(a); c.beginPath(); if (lit) c.ellipse(0, -l * L * 0.5 * k, w * L * 0.5 * k, l * L * 0.5 * k, 0, Math.PI / 2, Math.PI * 1.5); else c.ellipse(0, -l * L * 0.5, w * L * 0.5, l * L * 0.5, 0, 0, Math.PI * 2); c.fill(); c.restore(); } };
+      ink(C.leaf, at(cx, cy, ang, (c) => { lobes(c, 1, false); c.beginPath(); c.arc(0, hub - L * 0.1, L * 0.3, 0, Math.PI * 2); c.fill(); c.lineWidth = 1.6; c.beginPath(); c.moveTo(0, hub); c.lineTo(0, L * 0.12); c.stroke(); }));
+      ink(C.leaf2, at(cx, cy, ang, (c) => lobes(c, 0.9, true)));
+      ink(C.green2, at(cx, cy, ang, (c) => { c.lineWidth = 1; for (const [a, l] of LOBES) { c.save(); c.translate(0, hub); c.rotate(a); c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -L * l * 0.82); c.moveTo(0, -L * l * 0.45); c.lineTo(-L * 0.1, -L * l * 0.62); c.moveTo(0, -L * l * 0.45); c.lineTo(L * 0.1, -L * l * 0.62); c.stroke(); c.restore(); } }));
+    };
+    // the border: plum with ochre lines, a row of little figs, purple and green in turn, a cut fig in each corner
+    const B = 12;
+    R(0, 0, cols, rows, C.plum);
+    for (const o of [1, B - 2]) { R(o, o, cols - 2 * o, 1, C.ochre); R(o, rows - 1 - o, cols - 2 * o, 1, C.ochre); R(o, o, 1, rows - 2 * o, C.ochre); R(cols - 1 - o, o, 1, rows - 2 * o, C.ochre); }
+    const along = (len, put) => { const { n, d } = evenSteps(len, 9); for (let i = 0; i < n; i++) put((i + 0.5) * d, i); };
+    const rim = [];
+    along(cols - 2 * B, (a, i) => { rim.push([B + a, B / 2 + 1, 2.6, 0, i % 2 ? 'green' : 'purple'], [cols - B - a, rows - B / 2 + 1, 2.6, 0, i % 2 ? 'green' : 'purple']); });
+    along(rows - 2 * B, (a, i) => { rim.push([B / 2, B + a + 0.5, 2.6, -Math.PI / 2, i % 2 ? 'purple' : 'green'], [cols - B / 2, B + a + 0.5, 2.6, Math.PI / 2, i % 2 ? 'purple' : 'green']); });
+    for (const [a, b] of [[B / 2, B / 2], [cols - B / 2, B / 2], [B / 2, rows - B / 2], [cols - B / 2, rows - B / 2]]) rim.push([a, b + 1, 3.3, 0, 'purple']);
+    figs(rim);
+    // the field: ochre with a quiet pattern of darker dots
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    R(fx, fy, fw, fh, C.ochre);
+    x.fillStyle = C.ochre2; for (let yy = fy + 2; yy < fy + fh; yy += 4) for (let xx = fx + ((yy / 4) % 2 ? 1 : 3); xx < fx + fw; xx += 4) x.fillRect(xx, yy, 1, 1);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // clusters in a half-drop repeat: a big leaf, and at its foot a purple fig, a green fig and a cut one
+    const sets = [];
+    for (let r = 0; r < 2; r++) for (let k = 0; k < (r ? 4 : 3); k++) sets.push([fx + fw * (k + (r ? 0 : 0.5)) / 3, fy + fh * (0.27 + r * 0.5), (r * 3 + k) % 4]);
+    for (const [cx, cy, v] of sets) figLeaf(cx + [6, -6, 4, -4][v], cy + 4, 30, [-0.45, 0.4, -0.15, 0.25][v]);
+    for (const [cx, cy, v] of sets) {
+      const flip = v % 2 ? -1 : 1;
+      fig(cx - flip * 12, cy + 12, 7, flip * 0.3, v < 2 ? 'purple' : 'green');
+      fig(cx + flip * 3, cy + 15, 6.2, -flip * 0.15, v < 2 ? 'green' : 'purple');
+      half(cx + flip * 16, cy + 9, 7.6, flip * 0.45, v % 3 ? 'purple' : 'green');
+    }
+    x.restore();
+  });
+}
+
+// Dalmatian pelicans of the Karavasta lagoon: big silver-white pelicans with orange pouches and curly crests
+// swimming in a line on the blue lagoon, more flying in formation above, reeds with feathery heads at the sides,
+// the pine-covered sand spit and far mountains on the horizon; a border of reed tufts.
+function albPelicans(ctx, W, H) {
+  const C = { sky: '#bdd7e5', sky2: '#e5e3cd', water: '#5f97b8', water2: '#43789e', water3: '#2c587c', white: '#f5f3ec', silver: '#c5cbd0', grey: '#8a939b', dark: '#363c45', orange: '#e8802c', gold: '#ddb24e', reed: '#7f8c3c', reed2: '#4f5e2a', sand: '#dccb9e' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ink = (col, draw) => sweInk(x, col, draw);
+    // the border: dark lines, a sand band with tufts of reeds standing along it, their heads gold
+    const B = 11;
+    R(0, 0, cols, rows, C.water3); R(1, 1, cols - 2, rows - 2, C.sand); R(B - 1, B - 1, cols - 2 * B + 2, rows - 2 * B + 2, C.water3);
+    const tuft = (c) => { c.lineWidth = 1; c.beginPath(); c.moveTo(0, 3.5); c.lineTo(0, -3.2); c.moveTo(0, 3.5); c.quadraticCurveTo(-1.5, 0.5, -3, -1.5); c.moveTo(0, 3.5); c.quadraticCurveTo(1.5, 0.5, 3, -1.5); c.stroke(); };
+    const sides = (fn) => {
+      const along = (len, put) => { const { n, d } = evenSteps(len, 9); for (let i = 0; i < n; i++) put((i + 0.5) * d); };
+      along(cols - 2 * B, (a) => { fn(B + a, B / 2, 0); fn(cols - B - a, rows - B / 2, Math.PI); });
+      along(rows - 2 * B, (a) => { fn(B / 2, rows - B - a, -Math.PI / 2); fn(cols - B / 2, B + a, Math.PI / 2); });
+    };
+    ink(C.reed2, (c) => sides((px, py, a) => { c.save(); c.translate(px, py); c.rotate(a); tuft(c); c.restore(); }));
+    ink(C.gold, (c) => sides((px, py, a) => { c.save(); c.translate(px, py); c.rotate(a); c.fillRect(-0.5, -4.2, 1, 2); c.restore(); }));
+    for (const [a, b] of [[B / 2, B / 2], [cols - B / 2, B / 2], [B / 2, rows - B / 2], [cols - B / 2, rows - B / 2]]) { R(a - 3, b - 3, 6, 6, C.water2); R(a - 2, b - 2, 4, 4, C.white); R(a - 1, b - 1, 2, 2, C.orange); }
+    // the field
+    const fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B, hz = fy + Math.round(fh * 0.42);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    for (let yy = fy; yy < hz; yy++) for (let xx = fx; xx < fx + fw; xx++) { const t = (yy - fy) / (hz - fy); R(xx, yy, 1, 1, t < 0.52 ? C.sky : t < 0.6 ? ((xx + yy) % 2 ? C.sky : C.sky2) : C.sky2); }
+    // far mountains, the sand spit with its pine wood
+    ink(C.grey, (c) => { c.beginPath(); c.moveTo(fx, hz); c.lineTo(fx, hz - 6); c.lineTo(fx + 20, hz - 9); c.lineTo(fx + 40, hz - 5); c.lineTo(fx + 62, hz - 11); c.lineTo(fx + 80, hz - 6); c.lineTo(fx + 100, hz - 4); c.lineTo(fx + 130, hz - 8); c.lineTo(fx + 150, hz - 13); c.lineTo(fx + 168, hz - 7); c.lineTo(fx + fw, hz - 9); c.lineTo(fx + fw, hz); c.fill(); });
+    ink(C.reed2, (c) => { for (let k = 0; k < 26; k++) { const px = fx + 4 + k * 4.3 + (k % 3), r = 1.8 + (k % 4) * 0.5; c.beginPath(); c.ellipse(px, hz - 1.5, r * 1.4, r, 0, 0, Math.PI * 2); c.fill(); } });
+    R(fx, hz, fw, 1, C.sand); R(fx, hz - 1, 110, 1, C.reed2);
+    // the lagoon: bands of blue darkening towards us, ripples catching the sky
+    for (let yy = hz + 1; yy < fy + fh; yy++) { const t = (yy - hz) / (fy + fh - hz); R(fx, yy, fw, 1, t < 0.22 ? C.water : t < 0.55 ? ((yy % 3 === 0 && t < 0.3) ? C.water : C.water2) : ((yy % 4 === 0 && t < 0.62) ? C.water2 : C.water3)); }
+    ink(C.sky, (c) => { for (let k = 0; k < 34; k++) { const t = (k * 0.618) % 1, yy = hz + 3 + ((k * 7) % 40) * (fh * 0.56 / 40), w = 3 + (k % 4) * 2 + (yy - hz) * 0.08; c.fillRect(fx + t * fw, yy, w, 1); } });
+    // a pelican on the water, facing left: a plump body riding high, a folded silver wing with black tips, the neck
+    // in an S with the head drawn back, a curly crest, the long bill pointing down along the neck with the orange
+    // pouch under it, and its reflection broken by ripples
+    const swim = (px, py, s) => {
+      const T = (c) => { c.translate(px, py); c.scale(s, s); };
+      ink(C.water3, (c) => { T(c); for (let k = 0; k < 4; k++) c.fillRect(-0.95 + k * 0.1, 0.32 + k * 0.2, 2.0 - k * 0.3, 0.1 + 0.6 / s); });
+      ink(C.silver, (c) => { T(c); for (let k = 0; k < 3; k++) c.fillRect(-0.75 + k * 0.2, 0.4 + k * 0.2, 1.4 - k * 0.4, 1 / s); });
+      ink(C.white, (c) => {
+        T(c); c.beginPath(); c.moveTo(-0.95, 0.22); c.quadraticCurveTo(-1.02, -0.32, -0.55, -0.45); c.quadraticCurveTo(0.2, -0.68, 0.7, -0.55); c.quadraticCurveTo(1.05, -0.48, 1.15, -0.32); c.lineTo(0.9, 0.22); c.closePath(); c.fill();
+        c.lineWidth = 0.34; c.lineCap = 'round'; c.beginPath(); c.moveTo(-0.72, -0.3); c.bezierCurveTo(-0.95, -0.7, -0.35, -0.85, -0.55, -1.12); c.stroke();
+        c.beginPath(); c.ellipse(-0.62, -1.2, 0.24, 0.2, 0, 0, Math.PI * 2); c.fill();
+      });
+      ink(C.silver, (c) => { T(c); c.beginPath(); c.ellipse(0.32, -0.36, 0.62, 0.19, -0.1, 0, Math.PI * 2); c.fill(); c.fillRect(-0.88, 0.1, 1.8, 0.12); for (const [a, b] of [[-0.38, -1.28], [-0.33, -1.14], [-0.41, -1.02]]) { c.beginPath(); c.arc(a, b, 0.09, 0, Math.PI * 2); c.fill(); } });
+      ink(C.dark, (c) => { T(c); c.beginPath(); c.moveTo(0.62, -0.42); c.lineTo(1.18, -0.42); c.lineTo(1.0, -0.22); c.closePath(); c.fill(); c.fillRect(-0.72, -1.27, 1 / s, 1 / s); });
+      ink(C.orange, (c) => { T(c); c.beginPath(); c.moveTo(-0.8, -1.12); c.lineTo(-1.62, -0.52); c.quadraticCurveTo(-1.32, -0.42, -0.86, -0.78); c.closePath(); c.fill(); });
+      ink(C.gold, (c) => { T(c); c.lineWidth = Math.max(1.1, 0.1 * s) / s; c.lineCap = 'round'; c.beginPath(); c.moveTo(-0.8, -1.22); c.lineTo(-1.7, -0.56); c.stroke(); });
+    };
+    // a pelican flying left: wings raised and swept back with black tips, the far wing behind in shadow, the neck
+    // drawn back so the head sits on the shoulders, the bill held straight out in front
+    const fly = (px, py, s, lift) => {
+      const T = (c) => { c.translate(px, py); c.scale(s, s); };
+      ink(C.grey, (c) => { T(c); c.beginPath(); c.moveTo(0.05, -0.1); c.lineTo(0.55, -0.7 * lift); c.lineTo(1.2, -1.0 * lift); c.lineTo(0.75, -0.5 * lift); c.lineTo(0.5, 0); c.closePath(); c.fill(); });
+      ink(C.white, (c) => {
+        T(c); c.beginPath(); c.ellipse(0, 0, 0.8, 0.25, 0, 0, Math.PI * 2); c.fill(); c.beginPath(); c.arc(-0.78, -0.1, 0.2, 0, Math.PI * 2); c.fill();
+        c.beginPath(); c.moveTo(-0.32, -0.12); c.lineTo(-0.1, -0.8 * lift); c.lineTo(0.25, -1.05 * lift); c.lineTo(0.62, -1.0 * lift); c.lineTo(0.5, -0.6 * lift); c.lineTo(0.42, -0.02); c.closePath(); c.fill();
+      });
+      ink(C.grey, (c) => { T(c); c.beginPath(); c.moveTo(0.42, -0.02); c.lineTo(0.5, -0.6 * lift); c.lineTo(0.62, -1.0 * lift); c.lineTo(0.45, -1.0 * lift); c.lineTo(0.34, -0.6 * lift); c.lineTo(0.28, -0.02); c.closePath(); c.fill(); c.beginPath(); c.arc(-0.62, -0.22, 0.11, 0, Math.PI * 2); c.fill(); });
+      ink(C.dark, (c) => { T(c); c.fillRect(-0.86, -0.17, 1 / s, 1 / s); c.beginPath(); c.moveTo(0.25, -1.05 * lift); c.lineTo(0.85, -1.38 * lift); c.lineTo(0.8, -1.16 * lift); c.lineTo(0.62, -1.0 * lift); c.closePath(); c.fill(); c.beginPath(); c.moveTo(0.62, -1.0 * lift); c.lineTo(0.5, -0.6 * lift); c.lineTo(0.56, -0.55 * lift); c.lineTo(0.72, -1.02 * lift); c.fill(); c.beginPath(); c.moveTo(0.72, -0.08); c.lineTo(1.05, 0); c.lineTo(0.72, 0.1); c.fill(); });
+      ink(C.orange, (c) => { T(c); c.beginPath(); c.moveTo(-0.9, -0.04); c.lineTo(-1.7, 0); c.quadraticCurveTo(-1.25, 0.2, -0.85, 0.08); c.closePath(); c.fill(); });
+      ink(C.gold, (c) => { T(c); c.fillRect(-1.78, -0.12, 0.88, Math.max(1, 0.1 * s) / s); });
+    };
+    // the reeds: clumps of tall stems and blades at both sides, feathery gold heads on top
+    const reeds = (x0, x1, base, top, seed) => {
+      const Rr = rng(seed), stems = [];
+      for (let px = x0; px < x1; px += 1.6 + Rr() * 1.6) stems.push([px, top + Rr() * (base - top) * 0.35, (Rr() - 0.5) * 0.25]);
+      ink(C.reed2, (c) => { c.lineWidth = 1; for (const [px, ty, lean] of stems) { c.beginPath(); c.moveTo(px, base); c.quadraticCurveTo(px, (base + ty) / 2, px + lean * (base - ty), ty); c.stroke(); } });
+      ink(C.reed, (c) => { c.lineWidth = 1; stems.forEach(([px, ty, lean], k) => { if (k % 2) return; const my = base - (base - ty) * (0.3 + (k % 5) * 0.08), sg = k % 4 ? 1 : -1; c.beginPath(); c.moveTo(px, my + 4); c.quadraticCurveTo(px + sg * 3, my - 2, px + sg * 7, my + 1); c.stroke(); }); });
+      ink(C.gold, (c) => { stems.forEach(([px, ty, lean], k) => { if (k % 3 === 1) return; c.beginPath(); c.ellipse(px + lean * (base - ty) + 0.8, ty - 1, 1.2, 3, 0.35 + lean, 0, Math.PI * 2); c.fill(); }); });
+    };
+    reeds(fx - 2, fx + 24, fy + fh, hz + 4, 11);
+    reeds(fx + fw - 18, fx + fw + 2, fy + fh, hz + 10, 12);
+    // three swimming in a line, five flying in a line above them
+    swim(fx + fw * 0.38, fy + fh * 0.8, 15);
+    swim(fx + fw * 0.62, fy + fh * 0.67, 12.5);
+    swim(fx + fw * 0.82, fy + fh * 0.57, 9.5);
+    [[0.19, 0.36, 8.6, 1.45], [0.36, 0.29, 8.1, 1.2], [0.53, 0.23, 7.6, 1.5], [0.7, 0.18, 7.1, 1.25], [0.86, 0.14, 6.6, 1.45]].forEach(([a, b, s, l]) => fly(fx + fw * a, fy + fh * b, s, l));
+    x.restore();
+  });
+}
+
+// Gjirokastër: tall fortified stone tower houses with whitewashed upper floors and grey stone-slab roofs climbing a
+// steep hillside, cypresses between them, the long castle walls along the ridge, blue mountains behind.
+function albGjirokaster(ctx, W, H) {
+  const u = H / 100;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.5); sky.addColorStop(0, '#5e96c8'); sky.addColorStop(1, '#d8e6ea');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f5f7f7'; for (const [a, b, r] of [[0.1, 0.1, 3.4], [0.14, 0.09, 4.6], [0.18, 0.105, 3.2], [0.42, 0.06, 2.8], [0.46, 0.05, 3.6], [0.5, 0.065, 2.6]]) { ctx.beginPath(); ctx.arc(W * a, H * b, r * u, 0, Math.PI * 2); ctx.fill(); }
+  // the mountains across the valley: a far pale range and a nearer blue one, lit faces on the left of each peak
+  poly([[0, 0.5], [0, 0.3], [0.08, 0.25], [0.16, 0.29], [0.24, 0.21], [0.32, 0.26], [0.4, 0.2], [0.5, 0.27], [0.6, 0.22], [0.7, 0.3], [0.7, 0.5]], '#a2b4c8');
+  const range = [[0, 0.56], [0, 0.4], [0.07, 0.35], [0.14, 0.38], [0.22, 0.31], [0.3, 0.37], [0.38, 0.33], [0.46, 0.4], [0.52, 0.42], [0.52, 0.56]];
+  poly(range, '#7088a4');
+  for (const [a, b] of [[0.07, 0.35], [0.22, 0.31], [0.38, 0.33]]) poly([[a, b], [a - 0.05, b + 0.12], [a - 0.01, b + 0.14], [a + 0.012, b + 0.06]], '#869cb4');
+  // the valley floor below the town: fields and rows of trees
+  poly([[0, 0.9], [0, 0.52], [0.2, 0.52], [0.4, 0.54], [0.4, 0.9]], '#8aa25a');
+  poly([[0, 0.66], [0.3, 0.64], [0.3, 0.67], [0, 0.7]], '#a8b56c');
+  poly([[0, 0.58], [0.4, 0.6], [0.4, 0.62], [0, 0.6]], '#a8b56c');
+  ctx.fillStyle = '#4f6e3c'; for (let k = 0; k < 14; k++) { ctx.beginPath(); ctx.arc(W * (0.01 + k * 0.025), H * 0.545, 1.4 * u, 0, Math.PI * 2); ctx.fill(); }
+  // the castle hill: a steep slope rising from the lower left to the ridge on the right, scrub on it, bare rock
+  // under the walls
+  const hill = [[0, 1], [0, 0.86], [0.12, 0.76], [0.26, 0.64], [0.38, 0.52], [0.5, 0.4], [0.6, 0.31], [0.7, 0.26], [1, 0.24], [1, 1]];
+  poly(hill, '#647f45');
+  poly([[0.56, 0.34], [0.6, 0.31], [0.7, 0.26], [1, 0.24], [1, 0.33], [0.84, 0.35], [0.7, 0.36], [0.62, 0.38]], '#968a76');
+  ctx.fillStyle = '#4f6c3a'; for (let k = 0; k < 60; k++) { const a = (k * 0.618) % 1, b = 0.3 + ((k * 0.377) % 0.7); const edge = 0.86 - a * 0.62; if (b < edge + 0.03) continue; ctx.beginPath(); ctx.arc(W * a, H * b, (1.5 + (k % 3) * 0.6) * u, 0, Math.PI * 2); ctx.fill(); }
+  // the castle: a long stone wall along the ridge, square bastions, a tall tower with a slab roof, dark slits
+  const wall = '#ab9e86', wallLit = '#c4b8a0', wallDk = '#7d7260';
+  ctx.fillStyle = wall; ctx.fillRect(W * 0.6, H * 0.17, W * 0.42, H * 0.12);
+  ctx.fillStyle = wallLit; ctx.fillRect(W * 0.6, H * 0.17, W * 0.42, 1.4 * u);
+  poly([[0.56, 0.36], [0.6, 0.29], [0.6, 0.17], [0.58, 0.21], [0.54, 0.33]], wall);
+  for (const [a, w, t] of [[0.6, 0.05, 0.13], [0.74, 0.045, 0.14], [0.87, 0.05, 0.125], [0.97, 0.05, 0.135]]) {
+    ctx.fillStyle = wall; ctx.fillRect(W * a, H * t, W * w, H * (0.29 - t));
+    ctx.fillStyle = wallLit; ctx.fillRect(W * a, H * t, W * w * 0.35, H * (0.29 - t)); ctx.fillRect(W * a, H * t, W * w, 1.2 * u);
+    ctx.fillStyle = wallDk; ctx.fillRect(W * (a + w * 0.5), H * (t + 0.05), 1.6 * u, 3 * u);
+  }
+  // a broad square keep with battlements
+  ctx.fillStyle = wall; ctx.fillRect(W * 0.79, H * 0.07, W * 0.07, H * 0.22); ctx.fillStyle = wallLit; ctx.fillRect(W * 0.79, H * 0.07, W * 0.024, H * 0.22);
+  for (let k = 0; k < 4; k++) { ctx.fillStyle = k ? wall : wallLit; ctx.fillRect(W * (0.79 + k * 0.019), H * 0.045, W * 0.012, H * 0.03); }
+  ctx.fillStyle = wallDk; ctx.fillRect(W * 0.818, H * 0.11, 1.8 * u, 3.4 * u); ctx.fillRect(W * 0.838, H * 0.11, 1.8 * u, 3.4 * u);
+  ctx.fillStyle = wallDk; for (let k = 0; k < 6; k++) ctx.fillRect(W * (0.66 + k * 0.06), H * 0.235, 1.4 * u, 2.6 * u);
+  ctx.fillStyle = '#857a68'; ctx.fillRect(W * 0.6, H * 0.285, W * 0.42, 1.2 * u);
+  // a tower house: a stone body with small windows and a shaded side, a whitewashed upper floor jutting out over
+  // dark brackets with a row of windows, a big hipped roof of grey stone slabs, lit on the left, and a chimney
+  const stones = [['#ab9e88', '#c3b7a0', '#877c6a'], ['#a09b90', '#bab5aa', '#7f7b72'], ['#b3a58b', '#cabda2', '#8c7f69']];
+  const house = (cx, by, w, h, k) => {
+    const tall = h > w * 1.08, top = by - h, up = h * (tall ? 0.5 : 0.4), ov = w * 0.06, roofH = w * 0.38, [st, stL, stD] = stones[k % 3];
+    ctx.fillStyle = st; ctx.fillRect(cx - w / 2, top + up, w, h - up);
+    ctx.fillStyle = stL; ctx.fillRect(cx - w / 2, top + up, w * 0.26, h - up);
+    ctx.fillStyle = stD; ctx.fillRect(cx + w / 2 - w * 0.18, top + up, w * 0.18, h - up);
+    ctx.fillStyle = stD; for (let yy = top + up + 4 * u; yy < by - 2 * u; yy += 4.5 * u) ctx.fillRect(cx - w / 2, yy, w * 0.82, 0.8 * u);
+    // small deep-set windows in the stone, each under a pale lintel
+    const sw = 2.6 * u;
+    for (const fx of k % 2 ? [-0.2, 0.12] : [-0.04]) { const wx = cx + w * fx - sw / 2, wy = top + up + (h - up) * 0.32; ctx.fillStyle = '#ddd4c2'; ctx.fillRect(wx - 0.8 * u, wy - 1.2 * u, sw + 1.6 * u, 1.2 * u); ctx.fillStyle = '#3a322c'; ctx.fillRect(wx, wy, sw, 3.4 * u); }
+    // the whitewashed upper floors on their brackets, with rows of windows
+    ctx.fillStyle = '#4e3a2c'; ctx.fillRect(cx - w / 2 - ov, top + up - 1.5 * u, w + 2 * ov, 1.5 * u);
+    ctx.fillStyle = '#f3eee3'; ctx.fillRect(cx - w / 2 - ov, top, w + 2 * ov, up - 1.5 * u);
+    ctx.fillStyle = '#d8d1c2'; ctx.fillRect(cx + w / 2 + ov - w * 0.15, top, w * 0.15, up - 1.5 * u);
+    const nw = Math.max(2, Math.round(w / (6.5 * u))), ww = 2.8 * u, wh = 3.6 * u;
+    ctx.fillStyle = '#323844';
+    for (const fy of tall ? [0.14, 0.56] : [0.24]) for (let i = 0; i < nw; i++) ctx.fillRect(cx - w / 2 - ov + (w + 2 * ov) * (i + 0.5) / nw - ww / 2, top + (up - 1.5 * u) * fy + 0.8 * u, ww, wh);
+    // the roof: a dark shadow under the eaves, a big hipped roof, lit on the left, two courses of slabs showing
+    const eL = cx - w / 2 - ov - 2.6 * u, eR = cx + w / 2 + ov + 2.6 * u, rL = cx - w * 0.15, rR = cx + w * 0.15;
+    ctx.fillStyle = '#2f343b'; ctx.fillRect(cx - w / 2 - ov, top, w + 2 * ov, 1.3 * u);
+    ctx.fillStyle = '#5a616b'; ctx.beginPath(); ctx.moveTo(eL, top + 1.2 * u); ctx.lineTo(rL, top - roofH); ctx.lineTo(rR, top - roofH); ctx.lineTo(eR, top + 1.2 * u); ctx.fill();
+    ctx.fillStyle = '#868e98'; ctx.beginPath(); ctx.moveTo(eL, top + 1.2 * u); ctx.lineTo(rL, top - roofH); ctx.lineTo(cx - w * 0.02, top - roofH); ctx.lineTo(cx - w * 0.1, top + 1.2 * u); ctx.fill();
+    ctx.fillStyle = '#464c55'; for (let r = 1; r < 3; r++) { const f = r / 3, yy = top + 1.2 * u - (roofH + 1.2 * u) * f; ctx.fillRect(eL + (rL - eL) * f, yy, (eR - eL) - ((eR - rR) + (rL - eL)) * f, 1 * u); }
+    const chx = cx + w * (k % 2 ? 0.2 : -0.16); ctx.fillStyle = '#e8e2d4'; ctx.fillRect(chx - 1.5 * u, top - roofH * 0.85, 3 * u, roofH * 0.7); ctx.fillStyle = '#464c55'; ctx.fillRect(chx - 2.3 * u, top - roofH * 0.85 - 1.1 * u, 4.6 * u, 1.4 * u);
+  };
+  const cypress = (cx, by, h) => { ctx.fillStyle = '#2b4629'; ctx.beginPath(); ctx.moveTo(cx, by - h); ctx.quadraticCurveTo(cx + h * 0.17, by - h * 0.45, cx + h * 0.08, by); ctx.lineTo(cx - h * 0.08, by); ctx.quadraticCurveTo(cx - h * 0.17, by - h * 0.45, cx, by - h); ctx.fill(); ctx.fillStyle = '#3d6034'; ctx.beginPath(); ctx.moveTo(cx, by - h); ctx.quadraticCurveTo(cx - h * 0.15, by - h * 0.45, cx - h * 0.06, by); ctx.lineTo(cx, by); ctx.fill(); };
+  // the houses, row by row from the top of the hill down, cypresses between them
+  const rows = [
+    [[0.63, 0.43, 15, 17], [0.77, 0.42, 17, 18], [0.92, 0.42, 15, 17], [1.04, 0.41, 15, 17]],
+    [[0.4, 0.67, 19, 20], [0.555, 0.65, 19, 25], [0.72, 0.65, 19, 20], [0.88, 0.66, 20, 25], [1.03, 0.65, 19, 21]],
+    [[0.1, 0.95, 24, 25], [0.3, 0.94, 25, 32], [0.52, 0.94, 25, 26], [0.74, 0.95, 24, 31], [0.96, 0.94, 25, 26]],
+  ];
+  for (const [a, b, h] of [[0.475, 0.62, 13], [0.7, 0.43, 9], [0.2, 0.9, 16], [0.64, 0.66, 13], [0.85, 0.44, 9], [0.41, 0.93, 17], [0.8, 0.66, 12]]) cypress(W * a, H * b, h * u);
+  rows.forEach((row, r) => row.forEach(([a, b, w, h], k) => house(W * a, H * b, w * u, h * u, k + r)));
+  // a stone retaining wall and the cobbled street along the bottom
+  ctx.fillStyle = '#8f8472'; ctx.fillRect(0, H * 0.95, W, H * 0.05);
+  ctx.fillStyle = '#b3a892'; ctx.fillRect(0, H * 0.95, W, 1.2 * u);
+}
+
+// Berat, the town of a thousand windows: white houses stacked up the steep hill with rows of dark windows and red
+// tile roofs, the castle walls along the hilltop, the green Osum river below with the old stone bridge.
+function albBerat(ctx, W, H) {
+  const u = H / 100;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.4); sky.addColorStop(0, '#6fa2d0'); sky.addColorStop(1, '#e2ecec');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f6f8f8'; for (const [a, b, r] of [[0.08, 0.07, 3], [0.12, 0.06, 4], [0.16, 0.075, 2.8], [0.36, 0.09, 2.6], [0.4, 0.08, 3.4]]) { ctx.beginPath(); ctx.arc(W * a, H * b, r * u, 0, Math.PI * 2); ctx.fill(); }
+  // far hills on the left, the castle hill rising steeply to the right with the walls along its top
+  poly([[0, 0.62], [0, 0.34], [0.1, 0.3], [0.2, 0.33], [0.28, 0.4], [0.28, 0.62]], '#8fa6a0');
+  poly([[0, 0.66], [0, 0.46], [0.08, 0.44], [0.16, 0.47], [0.24, 0.52], [0.3, 0.6], [0.3, 0.66]], '#5f7f4a');
+  poly([[0.14, 0.66], [0.22, 0.42], [0.32, 0.26], [0.42, 0.16], [0.52, 0.12], [1, 0.1], [1, 0.66]], '#6c8848');
+  poly([[0.38, 0.19], [0.42, 0.16], [0.52, 0.12], [1, 0.1], [1, 0.16], [0.7, 0.18], [0.5, 0.2]], '#a39882');
+  const wall = '#b9ac93', wallLit = '#d0c4ab', wallDk = '#8a7e69';
+  ctx.fillStyle = wall; ctx.fillRect(W * 0.44, H * 0.06, W * 0.58, H * 0.08); ctx.fillStyle = wallLit; ctx.fillRect(W * 0.44, H * 0.06, W * 0.58, 1.2 * u);
+  for (const [a, w, t] of [[0.44, 0.04, 0.03], [0.58, 0.035, 0.035], [0.71, 0.04, 0.025], [0.85, 0.035, 0.035], [0.97, 0.04, 0.03]]) { ctx.fillStyle = wall; ctx.fillRect(W * a, H * t, W * w, H * (0.14 - t)); ctx.fillStyle = wallLit; ctx.fillRect(W * a, H * t, W * w * 0.4, H * (0.14 - t)); ctx.fillStyle = wallDk; ctx.fillRect(W * (a + w * 0.45), H * (t + 0.03), 1.4 * u, 2.4 * u); }
+  ctx.fillStyle = wallDk; ctx.fillRect(W * 0.44, H * 0.135, W * 0.58, 1 * u);
+  ctx.fillStyle = '#4f6c3a'; for (let k = 0; k < 30; k++) { const a = 0.36 + ((k * 0.618) % 0.64), b = 0.16 + ((k * 0.37) % 0.08); ctx.beginPath(); ctx.arc(W * a, H * b, 1.6 * u, 0, Math.PI * 2); ctx.fill(); }
+  // a house of the Mangalem quarter: a white front with two rows of tall dark windows close together, a shaded
+  // end wall, a low red tile roof with deep eaves seen from below
+  const house = (x0, by, w, h, k) => {
+    const top = by - h, nw = Math.max(2, Math.floor((w - 2 * u) / (5 * u)));
+    ctx.fillStyle = k % 4 === 3 ? '#efe3cc' : '#f4f0e6'; ctx.fillRect(x0, top, w, h);
+    ctx.fillStyle = '#d6cfc0'; ctx.fillRect(x0 + w - 2 * u, top, 2 * u, h);
+    ctx.fillStyle = '#2c3038';
+    for (const fy of [0.14, 0.58]) for (let i = 0; i < nw; i++) ctx.fillRect(x0 + (w - 2 * u) * (i + 0.5) / nw - 1.3 * u, top + h * fy, 2.6 * u, Math.min(3.6 * u, h * 0.3));
+    ctx.fillStyle = '#5c2c22'; ctx.fillRect(x0 - 1.2 * u, top - 1.2 * u, w + 2.4 * u, 1.4 * u);
+    ctx.fillStyle = k % 3 === 1 ? '#a85438' : '#9a4a32'; ctx.beginPath(); ctx.moveTo(x0 - 1.6 * u, top - 1 * u); ctx.lineTo(x0 + w * 0.12, top - 4.2 * u); ctx.lineTo(x0 + w * 0.88, top - 4.2 * u); ctx.lineTo(x0 + w + 1.6 * u, top - 1 * u); ctx.fill();
+    ctx.fillStyle = '#c0694a'; ctx.fillRect(x0 + w * 0.12, top - 4.2 * u, w * 0.76, 1 * u);
+  };
+  // the houses row by row, from the top of the hill down to the river, each row a little in front of the last
+  const rows = [
+    [0.26, 0.42, 0.98, 9],
+    [0.34, 0.33, 1.0, 9.5],
+    [0.43, 0.26, 1.0, 10],
+    [0.52, 0.2, 1.0, 10.5],
+    [0.62, 0.15, 1.0, 11],
+  ];
+  rows.forEach(([by, x0, x1, h], r) => {
+    let xx = W * x0 + (r % 2) * 3 * u, k = r * 3;
+    while (xx < W * x1) {
+      const w = (14 + ((k * 7) % 5) * 2.4) * u, dy = ((k * 5) % 4) * 1.1 * u;
+      if ((k * 11) % 7 === 3) { ctx.fillStyle = '#2f4a2c'; ctx.beginPath(); ctx.moveTo(xx + 3 * u, H * by - h * u - 9 * u); ctx.quadraticCurveTo(xx + 5.4 * u, H * by - 5 * u, xx + 4 * u, H * by); ctx.lineTo(xx + 2 * u, H * by); ctx.quadraticCurveTo(xx + 0.6 * u, H * by - 5 * u, xx + 3 * u, H * by - h * u - 9 * u); ctx.fill(); xx += 6 * u; }
+      house(xx, H * by + dy, w, h * u, k);
+      xx += w + 1.4 * u; k++;
+    }
+  });
+  // the river bank wall below the houses
+  ctx.fillStyle = '#b0a48c'; ctx.fillRect(0, H * 0.62, W, 2.6 * u); ctx.fillStyle = '#8e826c'; ctx.fillRect(0, H * 0.62 + 2.6 * u, W, 1 * u);
+  ctx.fillStyle = '#5f7f4a'; ctx.fillRect(0, H * 0.62, W * 0.3, 2.6 * u);
+  // the Osum: green water with the white houses mirrored in it in broken strips
+  const wy = H * 0.65;
+  const water = ctx.createLinearGradient(0, wy, 0, H); water.addColorStop(0, '#5f9e98'); water.addColorStop(1, '#2f6a6c');
+  ctx.fillStyle = water; ctx.fillRect(0, wy, W, H - wy);
+  ctx.fillStyle = 'rgba(244,240,230,.55)'; for (let k = 0; k < 12; k++) { const yy = wy + 1.5 * u + k * 2.2 * u; for (let j = 0; j < 7; j++) { const a = (0.33 + j * 0.1 + ((k * 0.037) % 0.04)) * W; ctx.fillRect(a, yy, (5 - k * 0.3) * u, 1 * u); } }
+  ctx.fillStyle = '#9fcac2'; for (let k = 0; k < 14; k++) ctx.fillRect(W * ((k * 0.377) % 0.95), H * (0.82 + ((k * 0.0617) % 0.16)), (4 + (k % 3) * 2) * u, 0.8 * u);
+  // the old stone bridge across the river: arches on stout piers with cutwaters, a parapet along the top, its
+  // arches mirrored in the water
+  const by0 = H * 0.73, by1 = H * 0.86, bx0 = -W * 0.03, bx1 = W * 0.8, n = 5, span = (bx1 - bx0) / n;
+  ctx.fillStyle = '#c9b896'; ctx.fillRect(bx0, by0, bx1 - bx0, by1 - by0);
+  ctx.beginPath(); ctx.moveTo(bx1, by0); ctx.lineTo(bx1 + 4 * u, by0 + 3 * u); ctx.lineTo(bx1 + 4 * u, by1); ctx.lineTo(bx1, by1); ctx.fill();
+  ctx.fillStyle = '#e0d3b5'; ctx.fillRect(bx0, by0 - 1.6 * u, bx1 - bx0, 1.8 * u);
+  ctx.fillStyle = '#a8977a'; ctx.fillRect(bx0, by0 + 0.2 * u, bx1 - bx0, 1 * u);
+  for (let i = 0; i < n; i++) {
+    const cx = bx0 + span * (i + 0.5), r = span * 0.33, spring = by1 - r * 0.35;
+    ctx.fillStyle = '#a3926f'; ctx.beginPath(); ctx.moveTo(cx - r - 1.2 * u, by1); ctx.lineTo(cx - r - 1.2 * u, spring); ctx.arc(cx, spring, r + 1.2 * u, Math.PI, 0); ctx.lineTo(cx + r + 1.2 * u, by1); ctx.fill();
+    ctx.fillStyle = '#23403f'; ctx.beginPath(); ctx.moveTo(cx - r, by1); ctx.lineTo(cx - r, spring); ctx.arc(cx, spring, r, Math.PI, 0); ctx.lineTo(cx + r, by1); ctx.fill();
+    ctx.fillStyle = '#4f8a86'; ctx.fillRect(cx - r * 0.7, by1 - 2.6 * u, r * 1.4, 1 * u);
+  }
+  // reflections of the arches and piers in the water in front
+  ctx.fillStyle = '#9c8f72'; for (let i = 0; i <= n; i++) { const px = bx0 + span * i; for (let k = 0; k < 3; k++) ctx.fillRect(px - (3 - k * 0.6) * u, by1 + 1.4 * u + k * 2.4 * u, (6 - k * 1.2) * u, 1.2 * u); }
+  ctx.fillStyle = 'rgba(30,60,64,.45)'; ctx.fillRect(bx0, by1, bx1 - bx0 + 4 * u, 1.2 * u);
+}
+
+// The Blue Eye: a round spring pool, deep blue in the middle fading to turquoise and clear green over pale stones at
+// its rim, in a lush forest of plane trees and figs, the overflow running off as a stream, a small wooden platform
+// on its bank.
+function albBlueEye(ctx, W, H) {
+  const u = H / 100;
+  const blob = (cx, cy, rx, ry, wob, seed, col) => { ctx.fillStyle = col; ctx.beginPath(); for (let k = 0; k <= 48; k++) { const a = (k / 48) * Math.PI * 2, r = 1 + wob * Math.sin(a * 3 + seed) * 0.6 + wob * Math.sin(a * 5 + seed * 2) * 0.4; const px = cx + Math.cos(a) * rx * r, py = cy + Math.sin(a) * ry * r; k ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.closePath(); ctx.fill(); };
+  // a bush or a tree crown: a dark mass, a lit top, a few bright leaves
+  const bush = (bx, by, r, seed, dk = '#28492c', md = '#437838', lt = '#78ac48') => { blob(bx, by, r, r * 0.78, 0.14, seed, dk); blob(bx - r * 0.18, by - r * 0.2, r * 0.72, r * 0.52, 0.16, seed + 2, md); blob(bx - r * 0.35, by - r * 0.38, r * 0.32, r * 0.22, 0.2, seed + 4, lt); };
+  // the forest: dark behind, trunks, crowns in layers
+  ctx.fillStyle = '#1b3320'; ctx.fillRect(0, 0, W, H);
+  const R = rng(17);
+  for (let k = 0; k < 12; k++) bush(W * (k / 11), H * (0.02 + R() * 0.06), (10 + R() * 4) * u, k, '#1e3a24', '#2c5230', '#3f6e36');
+  ctx.fillStyle = '#5a4a3a'; for (const a of [0.06, 0.2, 0.36, 0.66, 0.8, 0.95]) { ctx.fillRect(W * a - 1.5 * u, H * 0.12, 3 * u, H * 0.24); ctx.fillStyle = '#7d6c58'; ctx.fillRect(W * a - 1.5 * u, H * 0.12, 1 * u, H * 0.24); ctx.fillStyle = '#5a4a3a'; }
+  for (let k = 0; k < 11; k++) bush(W * ((k + 0.5) / 11), H * (0.16 + R() * 0.06), (8 + R() * 4) * u, k + 20);
+  // the banks: forest floor in greens all round the pool
+  ctx.fillStyle = '#2f5a2e'; ctx.fillRect(0, H * 0.3, W, H * 0.7);
+  for (let k = 0; k < 40; k++) { const a = R(), b = 0.3 + R() * 0.72; bush(W * a, H * b, (3.5 + R() * 3.5) * u, k + 40, '#2a522c', '#447a38', '#6fa446'); }
+  ctx.fillStyle = '#9cc85c'; for (let k = 0; k < 26; k++) { ctx.beginPath(); ctx.ellipse(W * R(), H * (0.34 + R() * 0.64), (1.4 + R()) * u, 0.8 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // the pool: pale stones and clear green shallows at the rim, then turquoise, then deeper and deeper blue towards
+  // the spring, the outline uneven like a real bank
+  const cx = W * 0.46, cy = H * 0.56;
+  blob(cx, cy, 43 * u, 24 * u, 0.07, 1.0, '#7d7a70');
+  blob(cx, cy - 0.6 * u, 41 * u, 22.5 * u, 0.07, 1.0, '#c5c2b4');
+  const rings = [[38, 20.5, '#a2d9c4'], [34, 18.2, '#6cd0c2'], [29, 15.6, '#33b5c9'], [23.5, 12.8, '#1f8bcc'], [17.5, 9.6, '#1867bd'], [11.5, 6.6, '#114aa0'], [6, 3.6, '#0c3074']];
+  rings.forEach(([rx, ry, col], i) => blob(cx + i * 0.7 * u, cy + i * 0.3 * u, rx * u, ry * u, 0.06 + i * 0.015, 1.3 + i * 0.5, col));
+  ctx.fillStyle = '#d4eee4'; for (let k = 0; k < 24; k++) { const a = (k / 24) * Math.PI * 2 + 0.1, rr = 0.9 + (k % 3) * 0.035; ctx.beginPath(); ctx.ellipse(cx + Math.cos(a) * 36.5 * u * rr, cy + Math.sin(a) * 19.5 * u * rr, 1.5 * u, 0.9 * u, a, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = 'rgba(225,248,252,.8)'; for (let k = 0; k < 8; k++) { const a = -2.5 + k * 0.3; ctx.fillRect(cx + Math.cos(a) * 21 * u, cy + Math.sin(a) * 10.5 * u, (3 + (k % 3)) * u, 0.9 * u); }
+  // the overflow: a stream running from the near edge of the pool down to the bottom, over pale stones
+  ctx.fillStyle = '#c5c2b4'; ctx.beginPath(); ctx.moveTo(cx - 13 * u, cy + 18 * u); ctx.quadraticCurveTo(cx - 20 * u, H * 0.88, cx - 34 * u, H + 1); ctx.lineTo(cx + 6 * u, H + 1); ctx.quadraticCurveTo(cx - 2 * u, H * 0.86, cx + 6 * u, cy + 19 * u); ctx.fill();
+  ctx.fillStyle = '#4fc2c6'; ctx.beginPath(); ctx.moveTo(cx - 10 * u, cy + 18 * u); ctx.quadraticCurveTo(cx - 17 * u, H * 0.88, cx - 30 * u, H + 1); ctx.lineTo(cx + 2 * u, H + 1); ctx.quadraticCurveTo(cx - 5 * u, H * 0.86, cx + 3 * u, cy + 19 * u); ctx.fill();
+  ctx.fillStyle = '#2b9fbf'; ctx.beginPath(); ctx.moveTo(cx - 5 * u, cy + 19 * u); ctx.quadraticCurveTo(cx - 13 * u, H * 0.9, cx - 22 * u, H + 1); ctx.lineTo(cx - 8 * u, H + 1); ctx.quadraticCurveTo(cx - 8 * u, H * 0.88, cx - 1 * u, cy + 19 * u); ctx.fill();
+  ctx.fillStyle = '#e6f6f6'; for (const [a, b, w] of [[-14, 30, 4], [-19, 36, 5], [-11, 38, 3], [-25, 42, 4]]) ctx.fillRect(cx + a * u, cy + b * u, w * u, 0.9 * u);
+  // rocks along the bank with moss on them
+  for (const [a, b, r] of [[-43, -2, 4], [-40, 10, 5], [-30, 19, 4], [19, 21, 4.5], [-38, -14, 4.5], [10, -22, 3.5], [-18, -22, 4]]) { blob(cx + a * u, cy + b * u, r * u, r * 0.7 * u, 0.1, a, '#8f8c82'); blob(cx + a * u - r * 0.25 * u, cy + b * u - r * 0.25 * u, r * 0.6 * u, r * 0.4 * u, 0.1, b, '#bdbaad'); blob(cx + a * u + r * 0.2 * u, cy + b * u - r * 0.5 * u, r * 0.5 * u, r * 0.25 * u, 0.1, b, '#5f8a3a'); }
+  // the wooden platform built out over the water from the right bank: a planked deck, its edge, posts and a rail
+  const x0 = cx + 26 * u, y0 = cy - 7 * u, dw = 22 * u, dd = 10 * u, sk = 4 * u;
+  ctx.fillStyle = 'rgba(8,40,90,.45)'; ctx.beginPath(); ctx.moveTo(x0 - 1 * u, y0 + dd + 2.4 * u); ctx.lineTo(x0 + dw, y0 + dd + 2.4 * u); ctx.lineTo(x0 + dw, y0 + dd + 5 * u); ctx.lineTo(x0 - 3 * u, y0 + dd + 5 * u); ctx.fill();
+  ctx.fillStyle = '#a8763f'; ctx.beginPath(); ctx.moveTo(x0 + sk, y0); ctx.lineTo(x0 + dw + sk, y0); ctx.lineTo(x0 + dw, y0 + dd); ctx.lineTo(x0, y0 + dd); ctx.fill();
+  ctx.fillStyle = '#82552c'; for (let k = 1; k < 7; k++) { const t = k / 7; ctx.beginPath(); ctx.moveTo(x0 + sk + dw * t, y0); ctx.lineTo(x0 + sk + dw * t + 0.8 * u, y0); ctx.lineTo(x0 + dw * t + 0.8 * u, y0 + dd); ctx.lineTo(x0 + dw * t, y0 + dd); ctx.fill(); }
+  ctx.fillStyle = '#5b3a1e'; ctx.fillRect(x0, y0 + dd, dw, 2.4 * u);
+  ctx.fillStyle = '#4a2e18'; for (const t of [0.05, 0.5, 0.95]) ctx.fillRect(x0 + dw * t - 0.8 * u, y0 + dd, 1.6 * u, 4 * u);
+  ctx.fillStyle = '#6a4224'; for (const t of [0, 0.25, 0.5, 0.75, 1]) ctx.fillRect(x0 + dw * t - 0.7 * u, y0 + dd - 7 * u, 1.4 * u, 7 * u);
+  ctx.fillStyle = '#c08a52'; ctx.fillRect(x0 - 0.7 * u, y0 + dd - 7.6 * u, dw + 1.4 * u, 1.4 * u);
+  ctx.fillStyle = '#6a4224'; ctx.fillRect(x0 - 0.7 * u, y0 + dd - 3.8 * u, dw + 1.4 * u, 0.8 * u);
+  // ferns in the near corners, leafy branches hanging over the far rim of the pool
+  const fern = (fx, fy, s, a) => { ctx.save(); ctx.translate(fx, fy); ctx.rotate(a); ctx.fillStyle = '#2f5a2a'; ctx.fillRect(-0.5 * u, -s, 1 * u, s); ctx.fillStyle = '#6aa444'; for (let k = 1; k < 7; k++) { const y = -s * k / 7, l = s * 0.34 * (1 - k / 8); ctx.beginPath(); ctx.ellipse(-l / 2, y, l / 2, 1 * u, 0.4, 0, Math.PI * 2); ctx.ellipse(l / 2, y, l / 2, 1 * u, -0.4, 0, Math.PI * 2); ctx.fill(); } ctx.restore(); };
+  for (const [a, b, s, r] of [[0.03, 1.02, 24, 0.3], [0.1, 1.02, 19, 0.65], [0.93, 1.02, 24, -0.4], [0.99, 1.02, 19, -0.1], [0.85, 1.02, 17, -0.7]]) fern(W * a, H * b, s * u, r);
+  for (const [a, b, r] of [[0.2, 0.34, 6], [0.27, 0.32, 5], [0.62, 0.33, 6], [0.7, 0.36, 5.5], [0.12, 0.5, 6], [0.78, 0.56, 6.5]]) bush(W * a, H * b, r * u, a * 50);
+  // big plane trees leaning in over the top corners
+  bush(W * 0.02, H * 0.06, 20 * u, 7, '#22402a', '#3a6c36', '#6aa044'); bush(W * 0.12, H * 0.02, 14 * u, 9, '#22402a', '#3a6c36', '#6aa044');
+  bush(W * 0.98, H * 0.08, 19 * u, 11, '#22402a', '#3a6c36', '#6aa044'); bush(W * 0.88, H * 0.01, 13 * u, 13, '#22402a', '#3a6c36', '#6aa044');
+}
+
+// Ksamil: little green islets in turquoise Ionian water, white sand in front with straw umbrellas and sunbeds, small
+// boats at anchor, and the hills of Corfu hazy across the strait.
+function albKsamil(ctx, W, H) {
+  const u = H / 100;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const hz = 0.34;
+  const sky = ctx.createLinearGradient(0, 0, 0, H * hz); sky.addColorStop(0, '#5ea6dc'); sky.addColorStop(1, '#d8eef2');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f6fafa'; for (const [a, b, r] of [[0.52, 0.08, 3.2], [0.56, 0.07, 4.4], [0.6, 0.085, 3], [0.8, 0.13, 2.6], [0.84, 0.12, 3.4], [0.88, 0.135, 2.4]]) { ctx.beginPath(); ctx.arc(W * a, H * b, r * u, 0, Math.PI * 2); ctx.fill(); }
+  // Corfu across the strait: long hazy hills
+  poly([[0, hz], [0, 0.29], [0.08, 0.27], [0.18, 0.25], [0.3, 0.27], [0.42, 0.23], [0.52, 0.22], [0.62, 0.25], [0.74, 0.27], [0.86, 0.26], [1, 0.29], [1, hz]], '#aab6cb');
+  poly([[0.36, hz], [0.44, 0.27], [0.52, 0.255], [0.6, 0.28], [0.7, hz]], '#bcc6d6');
+  // the sea: deep blue far off, turquoise nearer, pale green over the sand
+  const sea = ctx.createLinearGradient(0, H * hz, 0, H * 0.82); sea.addColorStop(0, '#1f63a6'); sea.addColorStop(0.3, '#1f8dbf'); sea.addColorStop(0.62, '#2fbec4'); sea.addColorStop(1, '#8fe2d6');
+  ctx.fillStyle = sea; ctx.fillRect(0, H * hz, W, H * (1 - hz));
+  ctx.fillStyle = 'rgba(235,250,250,.6)'; for (let k = 0; k < 30; k++) { const t = (k * 0.618) % 1, y = hz + 0.02 + ((k * 0.137) % 0.4); ctx.fillRect(W * t, H * y, (2.4 + (k % 3) + y * 6) * u, 0.8 * u); }
+  // an islet: rocks round the waterline, a little white beach, a dome of pines and maquis, its reflection
+  const islet = (cx, cy, rx, ry, beach) => {
+    ctx.fillStyle = 'rgba(20,90,110,.45)'; ctx.beginPath(); ctx.ellipse(cx, cy + 1.2 * u, rx * 1.02, ry * 0.32, 0, 0, Math.PI * 2); ctx.fill();
+    // a low cliff of pale rock all round, then the green dome of pines and maquis on top
+    ctx.fillStyle = '#9d978a'; ctx.beginPath(); ctx.moveTo(cx - rx, cy); ctx.lineTo(cx - rx * 0.92, cy - ry * 0.32); ctx.lineTo(cx + rx * 0.9, cy - ry * 0.36); ctx.lineTo(cx + rx, cy); ctx.lineTo(cx + rx * 0.7, cy + ry * 0.12); ctx.lineTo(cx - rx * 0.6, cy + ry * 0.14); ctx.fill();
+    ctx.fillStyle = '#cfc8b6'; ctx.beginPath(); ctx.moveTo(cx - rx * 0.96, cy - ry * 0.05); ctx.lineTo(cx - rx * 0.9, cy - ry * 0.34); ctx.lineTo(cx - rx * 0.1, cy - ry * 0.38); ctx.lineTo(cx - rx * 0.2, cy - ry * 0.02); ctx.fill();
+    if (beach) { ctx.fillStyle = '#f4eedc'; ctx.beginPath(); ctx.ellipse(cx + beach * rx, cy, rx * 0.28, ry * 0.14, 0, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = '#2d5532'; ctx.beginPath(); ctx.moveTo(cx - rx * 0.92, cy - ry * 0.28); ctx.bezierCurveTo(cx - rx * 0.85, cy - ry * 1.25, cx + rx * 0.75, cy - ry * 1.35, cx + rx * 0.9, cy - ry * 0.3); ctx.fill();
+    ctx.fillStyle = '#467a3c'; ctx.beginPath(); ctx.moveTo(cx - rx * 0.78, cy - ry * 0.45); ctx.bezierCurveTo(cx - rx * 0.7, cy - ry * 1.2, cx + rx * 0.05, cy - ry * 1.3, cx + rx * 0.2, cy - ry * 0.7); ctx.fill();
+    ctx.fillStyle = '#244a2c'; for (let k = 0; k < 5; k++) { const px = cx + rx * (-0.6 + k * 0.3), py = cy - ry * (0.85 + (k % 2) * 0.2); ctx.beginPath(); ctx.ellipse(px, py, rx * 0.13, ry * 0.2, 0, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = '#6a9a48'; for (let k = 0; k < 4; k++) { const px = cx + rx * (-0.55 + k * 0.28), py = cy - ry * (1.0 + (k % 2) * 0.12); ctx.beginPath(); ctx.ellipse(px, py, rx * 0.07, ry * 0.09, 0, 0, Math.PI * 2); ctx.fill(); }
+  };
+  islet(W * 0.86, H * 0.4, 10 * u, 6 * u, 0);
+  islet(W * 0.58, H * 0.42, 15 * u, 8 * u, -0.6);
+  islet(W * 0.24, H * 0.47, 21 * u, 11 * u, 0.55);
+  islet(W * 0.42, H * 0.5, 7 * u, 4.5 * u, 0);
+  // boats at anchor: white hulls with a coloured stripe, a sailboat further out
+  const boat = (bx, by, l, band) => { ctx.fillStyle = 'rgba(20,90,110,.4)'; ctx.fillRect(bx - l * 0.45, by + 1.6 * u, l * 0.9, 1.1 * u); ctx.fillStyle = '#f6f4ee'; ctx.beginPath(); ctx.moveTo(bx - l / 2, by - 1.6 * u); ctx.lineTo(bx + l / 2, by - 2.2 * u); ctx.lineTo(bx + l * 0.38, by + 1.6 * u); ctx.lineTo(bx - l * 0.4, by + 1.6 * u); ctx.fill(); ctx.fillStyle = band; ctx.fillRect(bx - l / 2, by - 0.4 * u, l * 0.92, 1 * u); ctx.fillStyle = '#e8e4da'; ctx.fillRect(bx - l * 0.15, by - 4.4 * u, l * 0.3, 2.6 * u); };
+  boat(W * 0.42, H * 0.62, 13 * u, '#2f6fb0'); boat(W * 0.7, H * 0.56, 11 * u, '#d8603a'); boat(W * 0.12, H * 0.62, 10 * u, '#2f8a8a');
+  ctx.fillStyle = '#f6f4ee'; ctx.beginPath(); ctx.moveTo(W * 0.76, H * 0.36); ctx.lineTo(W * 0.76, H * 0.27); ctx.lineTo(W * 0.79, H * 0.36); ctx.fill(); ctx.fillRect(W * 0.745, H * 0.36, 5 * u, 1.2 * u);
+  // the beach in front: white sand meeting the water in a gentle curve, a line of foam
+  ctx.fillStyle = '#e9f8f4'; ctx.beginPath(); ctx.moveTo(0, H * 0.78); ctx.quadraticCurveTo(W * 0.5, H * 0.7, W, H * 0.8); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill();
+  ctx.fillStyle = '#f3ecd8'; ctx.beginPath(); ctx.moveTo(0, H * 0.8); ctx.quadraticCurveTo(W * 0.5, H * 0.72, W, H * 0.82); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill();
+  ctx.fillStyle = '#e2d6b6'; for (let k = 0; k < 24; k++) { ctx.beginPath(); ctx.ellipse(W * ((k * 0.618) % 1), H * (0.84 + ((k * 0.13) % 0.15)), 2.4 * u, 0.7 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // straw umbrellas over pairs of white sunbeds
+  const umbrella = (ux, uy, r) => {
+    ctx.fillStyle = 'rgba(150,130,90,.45)'; ctx.beginPath(); ctx.ellipse(ux + r * 0.3, uy + 0.2 * u, r * 0.95, r * 0.3, 0, 0, Math.PI * 2); ctx.fill();
+    for (const s of [-1, 1]) { ctx.fillStyle = '#b8ab8a'; ctx.fillRect(ux + s * r * 0.5 - r * 0.32, uy - 0.6 * u, r * 0.66, 1 * u); ctx.fillStyle = '#ffffff'; ctx.fillRect(ux + s * r * 0.5 - r * 0.34, uy - 2 * u, r * 0.66, 1.6 * u); ctx.fillRect(ux + s * r * 0.5 - r * 0.34, uy - 4 * u, 1.6 * u, 2.2 * u); }
+    ctx.fillStyle = '#7a5a34'; ctx.fillRect(ux - 0.5 * u, uy - r * 1.25, 1 * u, r * 1.25);
+    ctx.fillStyle = '#c99a52'; ctx.beginPath(); ctx.moveTo(ux - r, uy - r * 0.9); ctx.lineTo(ux, uy - r * 1.45); ctx.lineTo(ux + r, uy - r * 0.9); ctx.fill();
+    ctx.fillStyle = '#a87836'; ctx.beginPath(); ctx.moveTo(ux, uy - r * 1.45); ctx.lineTo(ux + r, uy - r * 0.9); ctx.lineTo(ux + r * 0.3, uy - r * 0.9); ctx.fill();
+    ctx.fillStyle = '#e0b86c'; for (let k = 0; k < 5; k++) ctx.fillRect(ux - r + k * r * 0.45, uy - r * 0.92, 0.9 * u, 1.4 * u);
+  };
+  for (const [a, b, r] of [[0.3, 0.9, 9], [0.52, 0.9, 9.5], [0.74, 0.92, 9], [0.94, 0.95, 8.5]]) umbrella(W * a, H * b, r * u);
+  // towels on the sand
+  for (const [a, b, col] of [[0.4, 0.95, '#2f6fb0'], [0.62, 0.96, '#e07a3a'], [0.84, 0.97, '#2f9a9a']]) { ctx.save(); ctx.translate(W * a, H * b); ctx.rotate(-0.15); ctx.fillStyle = col; ctx.fillRect(-5.5 * u, -2 * u, 11 * u, 4 * u); ctx.fillStyle = '#f6f4ee'; ctx.fillRect(-5.5 * u, -0.5 * u, 11 * u, 1 * u); ctx.restore(); }
+  // an Aleppo pine leaning out over the beach on the left, its flat crown across the top corner
+  ctx.strokeStyle = '#6a4a32'; ctx.lineWidth = 3 * u; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(W * 0.07, H * 1.02); ctx.quadraticCurveTo(W * 0.04, H * 0.5, W * 0.13, H * 0.14); ctx.stroke();
+  ctx.lineWidth = 1.6 * u; ctx.beginPath(); ctx.moveTo(W * 0.08, H * 0.4); ctx.quadraticCurveTo(W * 0.12, H * 0.3, W * 0.2, H * 0.22); ctx.stroke();
+  for (const [a, b, rx, ry] of [[0.12, 0.1, 15, 6], [0.24, 0.17, 11, 4.5], [0.03, 0.16, 10, 5], [0.3, 0.08, 9, 4]]) { ctx.fillStyle = '#2b4a2c'; ctx.beginPath(); ctx.ellipse(W * a, H * b, rx * u, ry * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#467036'; ctx.beginPath(); ctx.ellipse(W * a - rx * 0.2 * u, H * b - ry * 0.35 * u, rx * 0.7 * u, ry * 0.45 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+
+}
+
+// Theth: the sharp pale limestone peaks of the Accursed Mountains above a green valley, beech woods on the slopes, a
+// stone tower house with a steep roof, haystacks, and a wooden footbridge over the clear turquoise river.
+function albTheth(ctx, W, H) {
+  const u = H / 100;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.5); sky.addColorStop(0, '#4a8acc'); sky.addColorStop(1, '#d2e6ef');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f6f9fa'; for (const [a, b, r] of [[0.46, 0.07, 2.8], [0.5, 0.06, 3.6], [0.54, 0.075, 2.6], [0.9, 0.1, 2.6], [0.93, 0.09, 3.2]]) { ctx.beginPath(); ctx.arc(W * a, H * b, r * u, 0, Math.PI * 2); ctx.fill(); }
+  // the peaks: pale grey limestone, steep and jagged, a sunlit face and a shaded face on each, cliff bands, a few
+  // streaks of old snow in the gullies
+  const peaks = [[0, 0.5], [0, 0.24], [0.04, 0.2], [0.07, 0.23], [0.11, 0.13], [0.14, 0.18], [0.19, 0.05], [0.22, 0.12], [0.25, 0.1], [0.29, 0.2], [0.33, 0.15], [0.37, 0.24], [0.42, 0.19], [0.47, 0.28], [0.52, 0.22], [0.56, 0.12], [0.6, 0.03], [0.63, 0.09], [0.66, 0.07], [0.7, 0.16], [0.74, 0.11], [0.79, 0.2], [0.84, 0.14], [0.88, 0.19], [0.93, 0.12], [0.97, 0.18], [1, 0.16], [1, 0.5]];
+  poly(peaks, '#a4a7ad');
+  for (let k = 1; k < peaks.length - 1; k++) {
+    const [a, b] = peaks[k];
+    if (!(b < peaks[k - 1][1] && b < peaks[k + 1][1])) continue;
+    const [pa, pb] = peaks[k - 1], [na, nb] = peaks[k + 1];
+    poly([[a, b], [pa, pb], [pa + 0.01, 0.42], [a - 0.005, 0.42]], '#d9d7cf');
+    poly([[a, b], [a - 0.005, 0.42], [na - 0.01, 0.42], [na, nb]], '#8d929b');
+    poly([[a, b], [a - 0.004, b + 0.1], [a - 0.018, b + 0.2], [a - 0.03, 0.42], [pa + 0.01, 0.42], [pa, pb]], '#e6e4dd');
+    ctx.strokeStyle = '#f6f7f8'; ctx.lineWidth = 1.4 * u; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(W * (a + 0.004), H * (b + 0.05)); ctx.quadraticCurveTo(W * (a + 0.01), H * (b + 0.1), W * (a + 0.006), H * (b + 0.15)); ctx.stroke();
+  }
+  ctx.fillStyle = '#7d828b'; for (const [a, b, w] of [[0.18, 0.2, 7], [0.58, 0.16, 8], [0.66, 0.22, 6], [0.84, 0.24, 6], [0.1, 0.28, 5], [0.42, 0.3, 6]]) ctx.fillRect(W * a, H * b, w * u, 1.2 * u);
+  // scree and beech woods below the cliffs
+  poly([[0, 0.5], [0, 0.36], [0.1, 0.34], [0.2, 0.37], [0.3, 0.33], [0.42, 0.38], [0.55, 0.35], [0.66, 0.32], [0.78, 0.36], [0.9, 0.33], [1, 0.36], [1, 0.5]], '#b5b1a4');
+  const R = rng(5);
+  for (let k = 0; k < 46; k++) { const a = (k / 45) * 1.04 - 0.02, b = 0.41 + R() * 0.05; ctx.fillStyle = k % 3 ? '#2d5a30' : '#3a6c36'; ctx.beginPath(); ctx.ellipse(W * a, H * b, (3.4 + R() * 2) * u, (3 + R() * 1.6) * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#2d5a30'; ctx.fillRect(0, H * 0.44, W, H * 0.12);
+  for (let k = 0; k < 30; k++) { const a = R(), b = 0.47 + R() * 0.04; ctx.fillStyle = '#4a7e3c'; ctx.beginPath(); ctx.ellipse(W * a, H * b, 3 * u, 2.2 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // the valley meadows, in strips of mown and unmown grass
+  poly([[0, 1], [0, 0.52], [0.3, 0.5], [0.6, 0.52], [1, 0.5], [1, 1]], '#77a844');
+  poly([[0, 0.62], [0.25, 0.58], [0.5, 0.62], [0.5, 0.66], [0.2, 0.64], [0, 0.68]], '#93c058');
+  poly([[0.6, 0.56], [1, 0.54], [1, 0.6], [0.7, 0.62]], '#8cba52');
+  poly([[0, 0.82], [0.3, 0.78], [0.3, 0.84], [0, 0.9]], '#68983c');
+  // hedgerows and a few beech trees across the valley floor
+  ctx.fillStyle = '#4f7f36'; for (const [x0, y0, x1, y1] of [[0, 0.6, 0.36, 0.56], [0.62, 0.58, 1, 0.62], [0, 0.76, 0.3, 0.74], [0.64, 0.7, 1, 0.68]]) { ctx.beginPath(); ctx.moveTo(W * x0, H * y0); ctx.lineTo(W * x1, H * y1); ctx.lineTo(W * x1, H * y1 + 1.4 * u); ctx.lineTo(W * x0, H * y0 + 1.4 * u); ctx.fill(); }
+  for (const [a, b, r] of [[0.05, 0.6, 4], [0.32, 0.57, 3.4], [0.62, 0.59, 3.6], [0.96, 0.66, 4.4], [0.04, 0.74, 3.6]]) { ctx.fillStyle = '#5a3e26'; ctx.fillRect(W * a - 0.6 * u, H * b - r * u, 1.2 * u, r * 1.2 * u); ctx.fillStyle = '#2f5e2e'; ctx.beginPath(); ctx.ellipse(W * a, H * b - r * 1.4 * u, r * u, r * 1.2 * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#4f8a3a'; ctx.beginPath(); ctx.ellipse(W * a - r * 0.3 * u, H * b - r * 1.7 * u, r * 0.5 * u, r * 0.6 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // a footpath from the bridge across the meadow to the tower, and one down to the near corner
+  ctx.strokeStyle = '#cbb98e'; ctx.lineCap = 'round';
+  ctx.lineWidth = 2.6 * u; ctx.beginPath(); ctx.moveTo(W * 0.63, H * 0.79); ctx.quadraticCurveTo(W * 0.74, H * 0.74, W * 0.75, H * 0.67); ctx.stroke();
+  ctx.lineWidth = 3.4 * u; ctx.beginPath(); ctx.moveTo(W * 0.41, H * 0.8); ctx.quadraticCurveTo(W * 0.26, H * 0.86, W * 0.16, H * 1.02); ctx.stroke();
+  // dry-stone walls round the fields
+  ctx.fillStyle = '#a8a596'; for (const [x0, y0, x1, y1] of [[0.02, 0.69, 0.34, 0.66], [0.66, 0.64, 0.98, 0.63], [0.7, 0.88, 1.0, 0.84]]) for (let t = 0; t <= 1; t += 0.03) { ctx.beginPath(); ctx.ellipse(W * (x0 + (x1 - x0) * t), H * (y0 + (y1 - y0) * t), 1.3 * u, 1 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // the river: from the far end of the valley down to the bottom, widening, pale stones on its banks
+  const riv = (w0, w1, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(W * 0.52 - w0, H * 0.52); ctx.bezierCurveTo(W * 0.42, H * 0.62, W * 0.62, H * 0.74, W * 0.42 - w1, H * 1.01); ctx.lineTo(W * 0.42 + w1, H * 1.01); ctx.bezierCurveTo(W * 0.66 + w1 * 0.6, H * 0.74, W * 0.46 + w0, H * 0.62, W * 0.52 + w0, H * 0.52); ctx.fill(); };
+  riv(2 * u, 17 * u, '#d9d5c8');
+  riv(1.2 * u, 13 * u, '#3fbcc6');
+  riv(0.4 * u, 6 * u, '#2e9cb4');
+  ctx.fillStyle = '#e8f8f8'; for (const [a, b, w] of [[0.5, 0.6, 2], [0.53, 0.68, 3], [0.5, 0.86, 4], [0.45, 0.93, 3], [0.56, 0.78, 3]]) ctx.fillRect(W * a, H * b, w * u, 0.9 * u);
+  ctx.fillStyle = '#c4c0b2'; for (const [a, b] of [[0.37, 0.9], [0.32, 0.97], [0.55, 0.93], [0.6, 0.86], [0.46, 0.72]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, 2 * u, 1.2 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // the tower house: a tall square stone tower with tiny windows, a steep dark roof, its shadow on the meadow
+  const kx = W * 0.74, kb = H * 0.66, kw = 13 * u, kh = 24 * u;
+  ctx.fillStyle = 'rgba(40,70,30,.4)'; ctx.beginPath(); ctx.moveTo(kx + kw / 2, kb); ctx.lineTo(kx + kw / 2 + 10 * u, kb + 2 * u); ctx.lineTo(kx - kw / 2 + 8 * u, kb + 3 * u); ctx.lineTo(kx - kw / 2, kb); ctx.fill();
+  ctx.fillStyle = '#a99c86'; ctx.fillRect(kx - kw / 2, kb - kh, kw, kh);
+  ctx.fillStyle = '#c4b9a3'; ctx.fillRect(kx - kw / 2, kb - kh, kw * 0.35, kh);
+  ctx.fillStyle = '#857a69'; ctx.fillRect(kx + kw / 2 - kw * 0.2, kb - kh, kw * 0.2, kh);
+  ctx.fillStyle = '#8e8371'; for (let yy = kb - kh + 4 * u; yy < kb; yy += 4.5 * u) ctx.fillRect(kx - kw / 2, yy, kw * 0.8, 0.8 * u);
+  ctx.fillStyle = '#2e2924'; for (const [a, b, w, h] of [[-0.24, 0.16, 1.8, 2.8], [0.1, 0.42, 1.8, 2.8], [-0.2, 0.62, 1.6, 2.4], [0.08, 0.78, 3, 5.4]]) ctx.fillRect(kx + kw * a, kb - kh + kh * b, w * u, h * u);
+  ctx.fillStyle = '#4a4442'; ctx.beginPath(); ctx.moveTo(kx - kw / 2 - 2 * u, kb - kh + 1 * u); ctx.lineTo(kx, kb - kh - 11 * u); ctx.lineTo(kx + kw / 2 + 2 * u, kb - kh + 1 * u); ctx.fill();
+  ctx.fillStyle = '#6a625c'; ctx.beginPath(); ctx.moveTo(kx - kw / 2 - 2 * u, kb - kh + 1 * u); ctx.lineTo(kx, kb - kh - 11 * u); ctx.lineTo(kx - 1 * u, kb - kh + 1 * u); ctx.fill();
+  // two small stone farmhouses with steep roofs further up the valley
+  const farm = (fx, fb, fw, fh) => { ctx.fillStyle = '#b3a892'; ctx.fillRect(fx - fw / 2, fb - fh, fw, fh); ctx.fillStyle = '#8c826f'; ctx.fillRect(fx + fw * 0.25, fb - fh, fw * 0.25, fh); ctx.fillStyle = '#2e2924'; ctx.fillRect(fx - fw * 0.25, fb - fh * 0.65, 1.6 * u, 2 * u); ctx.fillStyle = '#4a4442'; ctx.beginPath(); ctx.moveTo(fx - fw / 2 - 1.4 * u, fb - fh + 0.6 * u); ctx.lineTo(fx, fb - fh - fw * 0.55); ctx.lineTo(fx + fw / 2 + 1.4 * u, fb - fh + 0.6 * u); ctx.fill(); };
+  farm(W * 0.2, H * 0.58, 9 * u, 6 * u); farm(W * 0.9, H * 0.57, 8 * u, 5.5 * u);
+  // haystacks round their poles
+  const hay = (hx, hb, s) => { ctx.fillStyle = '#5a4026'; ctx.fillRect(hx - 0.5 * u, hb - s * 1.7, 1 * u, s * 1.7); ctx.fillStyle = '#c9a050'; ctx.beginPath(); ctx.moveTo(hx - s * 0.7, hb); ctx.quadraticCurveTo(hx - s * 0.75, hb - s * 0.9, hx, hb - s * 1.35); ctx.quadraticCurveTo(hx + s * 0.75, hb - s * 0.9, hx + s * 0.7, hb); ctx.fill(); ctx.fillStyle = '#a07a38'; ctx.beginPath(); ctx.moveTo(hx + s * 0.1, hb); ctx.quadraticCurveTo(hx + s * 0.5, hb - s * 0.7, hx, hb - s * 1.35); ctx.quadraticCurveTo(hx + s * 0.75, hb - s * 0.9, hx + s * 0.7, hb); ctx.fill(); };
+  hay(W * 0.13, H * 0.72, 6 * u); hay(W * 0.24, H * 0.7, 5 * u); hay(W * 0.88, H * 0.75, 6.5 * u);
+  // the wooden footbridge across the river: a plank deck on log beams, posts and a handrail
+  const bx0 = W * 0.4, bx1 = W * 0.64, by = H * 0.8;
+  ctx.fillStyle = 'rgba(20,70,80,.4)'; ctx.fillRect(bx0 + 4 * u, by + 3 * u, bx1 - bx0 - 8 * u, 1.6 * u);
+  ctx.fillStyle = '#5e3c22'; ctx.fillRect(bx0, by, bx1 - bx0, 2.2 * u);
+  ctx.fillStyle = '#9a6a3a'; ctx.fillRect(bx0, by - 1.6 * u, bx1 - bx0, 1.8 * u);
+  ctx.fillStyle = '#7a5030'; for (let k = 0; k * 3 * u < bx1 - bx0; k++) ctx.fillRect(bx0 + k * 3 * u, by - 1.6 * u, 0.7 * u, 1.8 * u);
+  ctx.fillStyle = '#6a4426'; for (let k = 0; k <= 4; k++) ctx.fillRect(bx0 + (bx1 - bx0) * k / 4 - 0.6 * u, by - 8 * u, 1.2 * u, 7 * u);
+  ctx.fillStyle = '#b07c48'; ctx.fillRect(bx0 - 0.6 * u, by - 8.4 * u, bx1 - bx0 + 1.2 * u, 1.3 * u);
+  ctx.fillStyle = '#7a5030'; ctx.fillRect(bx0 - 0.6 * u, by - 4.6 * u, bx1 - bx0 + 1.2 * u, 0.8 * u);
+  // beeches framing the near corners
+  for (const [a, b, r] of [[0.02, 0.9, 9], [0.07, 1.0, 7], [0.98, 0.95, 9], [0.93, 1.02, 6]]) { ctx.fillStyle = '#244a28'; ctx.beginPath(); ctx.ellipse(W * a, H * b, r * u, r * 1.3 * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#3d7034'; ctx.beginPath(); ctx.ellipse(W * a - r * 0.25 * u, H * b - r * 0.4 * u, r * 0.6 * u, r * 0.7 * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#5f9a44'; ctx.beginPath(); ctx.ellipse(W * a - r * 0.4 * u, H * b - r * 0.75 * u, r * 0.28 * u, r * 0.3 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // wild flowers in the near meadow
+  const F = rng(9); for (let k = 0; k < 40; k++) { const a = F(), b = 0.84 + F() * 0.15; if (Math.abs(a - 0.45) < 0.13) continue; ctx.fillStyle = ['#f2e05a', '#ffffff', '#c86ab8', '#e8f0a0'][k % 4]; ctx.beginPath(); ctx.arc(W * a, H * b, 1 * u, 0, Math.PI * 2); ctx.fill(); }
+}
+
+// Little scenes for the postcard letters. A letter shows only the band of its canvas between the top of the
+// capitals and the baseline, about 0.26 to 0.92 of the height, so each scene is laid out in that band.
+const albY = (h, t) => h * (0.26 + 0.66 * t);
+const ALBANIA_SCENES = [
+  (c, w, h) => { // a stone-slab roof: grey courses of slabs, a chimney
+    const Y = (t) => albY(h, t);
+    c.fillStyle = '#8f969e'; c.fillRect(0, 0, w, h);
+    const sl = ['#7b828b', '#a3a9ae', '#6a717a', '#8f969e', '#b4b8ba'];
+    for (let r = 0; r < 8; r++) for (let k = -1; k < 5; k++) { c.fillStyle = sl[(r * 3 + k * 2 + 9) % 5]; c.fillRect(w * (k * 0.3 + (r % 2) * 0.15), Y(r * 0.13), w * 0.28, Y(0.1) - Y(0)); }
+    c.fillStyle = '#4a5058'; for (let r = 1; r < 8; r++) c.fillRect(0, Y(r * 0.13) - (Y(0.03) - Y(0)), w, Y(0.03) - Y(0));
+    c.fillStyle = '#efe9dc'; c.fillRect(w * 0.6, Y(0.08), w * 0.18, Y(0.3) - Y(0)); c.fillStyle = '#4a5058'; c.fillRect(w * 0.55, Y(0.04), w * 0.28, Y(0.06) - Y(0));
+  },
+  (c, w, h) => { // the white houses of Berat, rows of dark windows under red tile eaves
+    const Y = (t) => albY(h, t);
+    c.fillStyle = '#f3efe4'; c.fillRect(0, 0, w, h);
+    for (const r of [0, 0.36, 0.72]) { c.fillStyle = '#a24e34'; c.fillRect(0, Y(r - 0.02), w, Y(0.08) - Y(0)); c.fillStyle = '#2c3038'; for (let k = 0; k < 3; k++) c.fillRect(w * (0.12 + k * 0.3), Y(r + 0.12), w * 0.16, Y(0.15) - Y(0)); }
+    c.fillStyle = '#3f8a88'; c.fillRect(0, Y(0.94), w, h);
+  },
+  (c, w, h) => { // the Blue Eye: forest above, then green shallows, turquoise and the deep blue spring water below
+    const Y = (t) => albY(h, t);
+    c.fillStyle = '#2f5e30'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#4c8238'; for (const a of [0.1, 0.5, 0.9]) { c.beginPath(); c.arc(w * a, Y(0.06), w * 0.24, 0, Math.PI * 2); c.fill(); }
+    c.fillStyle = '#c8c4b4'; c.fillRect(0, Y(0.24), w, h);
+    c.fillStyle = '#9fdac6'; c.fillRect(0, Y(0.29), w, h);
+    c.fillStyle = '#3ab8c8'; c.beginPath(); c.moveTo(0, Y(0.4)); c.quadraticCurveTo(w * 0.5, Y(0.32), w, Y(0.42)); c.lineTo(w, h); c.lineTo(0, h); c.fill();
+    c.fillStyle = '#1f86cc'; c.beginPath(); c.moveTo(0, Y(0.56)); c.quadraticCurveTo(w * 0.6, Y(0.46), w, Y(0.58)); c.lineTo(w, h); c.lineTo(0, h); c.fill();
+    c.fillStyle = '#1556ad'; c.beginPath(); c.moveTo(0, Y(0.72)); c.quadraticCurveTo(w * 0.4, Y(0.62), w, Y(0.74)); c.lineTo(w, h); c.lineTo(0, h); c.fill();
+    c.fillStyle = '#0d3376'; c.beginPath(); c.moveTo(0, Y(0.9)); c.quadraticCurveTo(w * 0.6, Y(0.8), w, Y(0.92)); c.lineTo(w, h); c.lineTo(0, h); c.fill();
+    c.fillStyle = '#e8f8fa'; c.fillRect(w * 0.15, Y(0.5), w * 0.3, Y(0.025) - Y(0)); c.fillRect(w * 0.55, Y(0.66), w * 0.25, Y(0.025) - Y(0));
+  },
+  (c, w, h) => { // a pelican on the lagoon: white, its head at the top of the letter, the bill and orange pouch
+    // running down the left stroke, the body and the grey wing in the right one
+    const Y = (t) => albY(h, t);
+    c.fillStyle = '#2f6a98'; c.fillRect(0, 0, w, h); c.fillStyle = '#1d4a72'; c.fillRect(0, Y(0.7), w, h); c.fillStyle = '#8cc0dc'; c.fillRect(0, Y(0.9), w, Y(0.03) - Y(0));
+    c.fillStyle = '#f5f3ec'; c.beginPath(); c.ellipse(w * 0.7, Y(0.62), w * 0.36, Y(0.2) - Y(0), 0, 0, Math.PI * 2); c.fill();
+    c.fillRect(w * 0.5, Y(0.08), w * 0.17, Y(0.5) - Y(0)); c.beginPath(); c.arc(w * 0.56, Y(0.1), w * 0.14, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#e8802c'; c.beginPath(); c.moveTo(w * 0.48, Y(0.12)); c.lineTo(w * 0.12, Y(0.66)); c.lineTo(w * 0.42, Y(0.42)); c.closePath(); c.fill();
+    c.fillStyle = '#ddb24e'; c.beginPath(); c.moveTo(w * 0.46, Y(0.06)); c.lineTo(w * 0.06, Y(0.64)); c.lineTo(w * 0.14, Y(0.66)); c.lineTo(w * 0.5, Y(0.14)); c.fill();
+    c.fillStyle = '#9aa2aa'; c.beginPath(); c.ellipse(w * 0.78, Y(0.56), w * 0.24, Y(0.08) - Y(0), 0.2, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#363c45'; c.fillRect(w * 0.88, Y(0.58), w * 0.14, Y(0.07) - Y(0));
+  },
+  (c, w, h) => { // figs on ochre: a purple one and one cut in half
+    const Y = (t) => albY(h, t);
+    c.fillStyle = '#d49b3d'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#2e5c2f'; c.beginPath(); c.ellipse(w * 0.75, Y(0.12), w * 0.4, Y(0.16) - Y(0), -0.5, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#6b2d59'; c.beginPath(); c.ellipse(w * 0.3, Y(0.3), w * 0.26, Y(0.2) - Y(0), 0, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#7c9a3c'; c.beginPath(); c.ellipse(w * 0.66, Y(0.78), w * 0.3, Y(0.21) - Y(0), 0, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#f3e3c3'; c.beginPath(); c.ellipse(w * 0.66, Y(0.78), w * 0.24, Y(0.17) - Y(0), 0, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#e46f7e'; c.beginPath(); c.ellipse(w * 0.66, Y(0.79), w * 0.17, Y(0.12) - Y(0), 0, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#b2293c'; c.beginPath(); c.ellipse(w * 0.66, Y(0.8), w * 0.08, Y(0.06) - Y(0), 0, 0, Math.PI * 2); c.fill();
+  },
+  (c, w, h) => { // a çifteli standing up the letter: the body at the foot, the long neck with its strings, the pegs
+    const Y = (t) => albY(h, t);
+    c.fillStyle = '#1f4a33'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#3b2212'; c.fillRect(w * 0.3, Y(0), w * 0.4, Y(0.7) - Y(0));
+    c.fillStyle = '#a0632c'; c.fillRect(w * 0.38, Y(0.04), w * 0.24, Y(0.66) - Y(0));
+    c.fillStyle = '#cf9550'; c.beginPath(); c.ellipse(w * 0.5, Y(0.82), w * 0.5, Y(0.2) - Y(0), 0, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#f3ebd7'; c.fillRect(w * 0.46, Y(0.02), w * 0.08, Y(0.86) - Y(0)); c.fillStyle = '#a9cfd2'; for (const t of [0.2, 0.4, 0.6]) c.fillRect(w * 0.44, Y(t), w * 0.12, Y(0.03) - Y(0));
+    c.fillStyle = '#3b2212'; c.fillRect(w * 0.2, Y(0.86), w * 0.6, Y(0.025) - Y(0));
+  },
+  (c, w, h) => { // turquoise sea with a green islet and white sand
+    const Y = (t) => albY(h, t);
+    c.fillStyle = '#7fbde4'; c.fillRect(0, 0, w, h); c.fillStyle = '#1f78b4'; c.fillRect(0, Y(0.36), w, h); c.fillStyle = '#2fbec4'; c.fillRect(0, Y(0.56), w, h); c.fillStyle = '#f3ecd8'; c.fillRect(0, Y(0.84), w, h);
+    c.fillStyle = '#d2ccbb'; c.fillRect(w * 0.15, Y(0.34), w * 0.7, Y(0.06) - Y(0));
+    c.fillStyle = '#2d5532'; c.beginPath(); c.ellipse(w * 0.5, Y(0.36), w * 0.36, Y(0.2) - Y(0), 0, Math.PI, 0); c.fill();
+    c.fillStyle = '#467a3c'; c.beginPath(); c.ellipse(w * 0.42, Y(0.3), w * 0.16, Y(0.1) - Y(0), 0, 0, Math.PI * 2); c.fill();
+  },
+];
+// Postcard: "Greetings from ALBANIA", every letter a little Albanian scene.
+function albPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'ALBANIA', ALBANIA_SCENES); }
+
+// ---------- Jordan pack ----------
+const JORDAN_FRAME = { dark: '#271a26', a: '#d47c66', b: '#8a6cb4', line: '#f2e6d4' };
+
+// A camel facing right, knot by knot (# body). 15 wide, 10 tall.
+const JOR_CAMEL = [
+  '..........##...',
+  '....##....#####',
+  '...####..##....',
+  '..######.##....',
+  '.#########.....',
+  '##########.....',
+  '#.#######......',
+  '..#.#..#.#.....',
+  '..#.#..#.#.....',
+  '..#.#..#.#.....',
+];
+
+// Sand bottles: a row of glass bottles of different shapes on a dark ground, each filled with layers of coloured sand
+// that make a little desert scene (dunes, a camel, the sun, a palm, red cliffs); a border of sand strata.
+function jorSandBottles(ctx, W, H) {
+  const C = { dark: '#18202c', dark2: '#243040', glass: '#cfdadc', glass2: '#8ea2a8', shine: '#f8f6ee', red: '#b8402c', rust: '#7a3020', orange: '#e2803a',
+    ochre: '#d6a246', yellow: '#f0cf6a', cream: '#f2e6c8', blue: '#3a74ae', sky: '#8cc0dc', brown: '#4a2a1c', green: '#4f8a3c', sand: '#d8b47c', sand2: '#a98250' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(a, b, 1, 1); };
+    // the border: a sand band with three wavy strata running round it, a sun in each corner
+    R(0, 0, cols, rows, C.brown);
+    R(1, 1, cols - 2, rows - 2, C.sand);
+    ringKnots(x, cols, rows, 1, 9, 12, (i, j) => {
+      const t = (i / 12) * Math.PI * 2, y1 = 2.2 + 1.3 * Math.sin(t), y2 = 4.4 + 1.3 * Math.sin(t + 0.9), y3 = 6.6 + 1.3 * Math.sin(t + 1.8);
+      if (Math.abs(j - y1) < 0.55) return C.red;
+      if (Math.abs(j - y2) < 0.55) return C.orange;
+      if (Math.abs(j - y3) < 0.55) return C.rust;
+      return null;
+    }, (a, b) => {
+      R(a, b, 9, 9, C.brown);
+      x.fillStyle = C.orange; x.beginPath(); x.arc(a + 4.5, b + 4.5, 3.6, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.yellow; x.beginPath(); x.arc(a + 4.5, b + 4.5, 2.1, 0, Math.PI * 2); x.fill();
+    });
+    for (const [o, col] of [[10, C.brown], [11, C.sand2]]) { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); }
+    const fx = 12, fy = 12, fw = cols - 24, fh = rows - 24;
+    R(fx, fy, fw, fh, C.dark);
+    // a faint lattice of small diamonds in the dark ground
+    for (let yy = fy; yy < fy + fh; yy++) for (let xx = fx; xx < fx + fw; xx++) { const a = (xx - fx) % 10, b = (yy - fy) % 10; if (Math.abs(a - 5) + Math.abs(b - 5) === 1) P(xx, yy, C.dark2); }
+    // a bottle: a neck (with a lip and a cork) on a body that is a superellipse; `w(y)` gives its half width
+    const base = fy + fh - 6;
+    const bottle = (cx, top, neckW, neckLen, bodies, scene) => {
+      const half = (y) => {
+        let w = (y >= top && y <= top + neckLen + 2) ? neckW + (y < top + 2 ? 1 : 0) : 0;
+        for (const [cy, bh, bw, p] of bodies) { const d = Math.abs(y - cy) / bh; if (d < 1) w = Math.max(w, bw * Math.pow(1 - Math.pow(d, p), 1 / p)); }
+        return w;
+      };
+      // the shape knot by knot, row by row, so its edge stays crisp
+      const outline = (shrink, dx = 0) => { x.beginPath(); for (let y = Math.floor(top); y < base; y++) { const w = half(y + 0.5) - shrink; if (w <= 0.3) continue; const a = Math.round(cx - w + dx), b = Math.round(cx + w + dx); if (b > a) x.rect(a, y, b - a, 1); } };
+      // a soft shadow on the ground, the glass, then the sand scene clipped to the inside
+      x.fillStyle = C.dark2; x.beginPath(); x.ellipse(cx + 3, base + 0.5, half(base - 3) + 4, 1.8, 0, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.glass2; outline(0); x.fill();
+      x.fillStyle = C.glass; outline(0.6, -0.6); x.fill();
+      x.save(); outline(1.4); x.clip();
+      scene(cx, top, half);
+      x.restore();
+      // the cork, and a streak of light down the left of the glass
+      R(Math.round(cx - neckW + 1), top - 3, Math.round(2 * neckW - 2), 4, C.sand2);
+      R(Math.round(cx - neckW + 1), top - 3, Math.round(2 * neckW - 2), 1, C.sand);
+      for (const [cy, bh, bw] of bodies) { x.strokeStyle = C.shine; x.lineWidth = 1; x.beginPath(); x.ellipse(cx, cy, bw - 2.2, bh - 2.2, 0, Math.PI * 1.08, Math.PI * 1.38); x.stroke(); }
+    };
+    // scene parts
+    const stripes = (y0, y1, list, h = 2) => { let k = 0; for (let y = y0; y < y1; y += h) R(0, y, cols, h, list[k++ % list.length]); };
+    const dunes = (y0, list, amp, f, ph) => {
+      list.forEach((col, k) => {
+        const yy = y0 + k * 5;
+        x.fillStyle = C.cream; x.beginPath(); x.moveTo(0, rows); for (let t = 0; t <= cols; t++) x.lineTo(t, yy - 1 + amp * Math.sin(t * f + ph + k * 1.7)); x.lineTo(cols, rows); x.fill();
+        x.fillStyle = col; x.beginPath(); x.moveTo(0, rows); for (let t = 0; t <= cols; t++) x.lineTo(t, yy + amp * Math.sin(t * f + ph + k * 1.7)); x.lineTo(cols, rows); x.fill();
+      });
+    };
+    const sun = (sx, sy, r) => { x.fillStyle = C.orange; x.beginPath(); x.arc(sx, sy, r + 1, 0, Math.PI * 2); x.fill(); x.fillStyle = C.yellow; x.beginPath(); x.arc(sx, sy, r, 0, Math.PI * 2); x.fill(); };
+    const camel = (px, py, flip) => iceSprite(x, JOR_CAMEL, { '#': C.brown }, Math.round(px), Math.round(py), flip);
+    const palm = (px, py, h) => {
+      x.strokeStyle = C.brown; x.lineWidth = 1.3; x.beginPath(); x.moveTo(px, py); x.quadraticCurveTo(px + 2, py - h * 0.5, px + 1, py - h); x.stroke();
+      for (const a of [-2.7, -2.2, -1.6, -1.0, -0.45]) leaf(x, px + 1, py - h, 6.5, a + 0.5, C.green);
+      P(px, py - h + 1, C.brown); P(px + 2, py - h + 1, C.brown);
+    };
+    const sky = (y0, y1) => { R(0, y0, cols, (y1 - y0) * 0.55, C.blue); R(0, y0 + (y1 - y0) * 0.55, cols, y1 - y0, C.sky); };
+    const neckStripes = (top, y1) => stripes(top - 1, y1, [C.red, C.cream, C.ochre, C.blue, C.orange, C.cream, C.rust, C.yellow]);
+    // six bottles, each its own shape and scene
+    const n = 6, slot = fw / n;
+    const X = (k) => fx + slot * (k + 0.5);
+    // 1. round flask: blue sky and sun over orange dunes, a camel on the crest
+    { const cx = X(0), top = base - 78, cy = base - 17; bottle(cx, top, 3.2, 50, [[cy, 17, 13.5, 2]], (cx2) => { neckStripes(top, cy - 15); sky(cy - 16, cy + 2); sun(cx + 6, cy - 10, 2.6); dunes(cy + 1, [C.orange, C.ochre, C.red, C.rust], 1.8, 0.35, 0.2); camel(cx - 10, cy - 7, false); }); }
+    // 2. tall slim bottle: stripes and zigzags all the way up
+    { const cx = X(1), top = base - 92, cy = base - 36; bottle(cx, top, 3, 24, [[cy, 36, 9.5, 5]], () => {
+      const list = [C.red, C.cream, C.orange, C.ochre, C.cream, C.blue, C.sky, C.cream, C.rust, C.yellow];
+      list.forEach((col, k) => { x.fillStyle = col; x.beginPath(); x.moveTo(0, rows); for (let t = 0; t <= cols; t++) x.lineTo(t, top + 4 + k * 8.4 + 2.2 * (Math.abs(((t - cx) / 3) % 2) - 0.5) * 2); x.lineTo(cols, rows); x.fill(); });
+    }); }
+    // 3. gourd: two bulbs, an oasis palm on red sand, a little sun above
+    { const cx = X(2), top = base - 84, cy1 = base - 54, cy2 = base - 18; bottle(cx, top, 3, 18, [[cy1, 13, 9, 2], [base - 39.5, 5, 5, 2], [cy2, 18, 13.5, 2.2]], () => {
+      neckStripes(top, cy1 - 10); sky(cy1 - 11, cy2 - 2); sun(cx - 3, cy1 - 1, 3.2); dunes(cy2 + 1, [C.ochre, C.orange, C.red], 2, 0.4, 1.2); palm(cx + 3, cy2 + 2, 15); palm(cx - 6, cy2 + 4, 10);
+    }); }
+    // 4. square bottle: red cliffs of the desert with a camel in front
+    { const cx = X(3), top = base - 70, cy = base - 22; bottle(cx, top, 3.4, 22, [[cy, 22, 12.5, 6]], () => {
+      neckStripes(top, cy - 20); sky(cy - 21, cy + 4); sun(cx + 6, cy - 12, 2.5);
+      x.fillStyle = C.rust; x.beginPath(); x.moveTo(cx - 14, cy + 6); x.lineTo(cx - 13, cy - 8); x.quadraticCurveTo(cx - 9, cy - 13, cx - 5, cy - 8); x.lineTo(cx - 4, cy - 2); x.quadraticCurveTo(cx, cy - 6, cx + 4, cy - 2); x.lineTo(cx + 5, cy + 6); x.fill();
+      x.fillStyle = C.red; x.beginPath(); x.moveTo(cx - 12, cy + 6); x.lineTo(cx - 11, cy - 7); x.quadraticCurveTo(cx - 9, cy - 11, cx - 7, cy - 7); x.lineTo(cx - 6, cy + 6); x.fill();
+      dunes(cy + 4, [C.orange, C.ochre, C.cream, C.red], 1.4, 0.3, 2); camel(cx - 3, cy + 1, true);
+    }); }
+    // 5. pear-shaped bottle: sunset bands and dunes
+    { const cx = X(4), top = base - 86, cy = base - 22; bottle(cx, top, 2.6, 34, [[cy, 22, 12.5, 1.6], [cy - 20, 10, 6, 2]], () => {
+      neckStripes(top, cy - 28); stripes(cy - 29, cy + 2, [C.blue, C.sky, C.yellow, C.orange, C.red], 5); sun(cx, cy - 2, 4);
+      dunes(cy + 1, [C.rust, C.red, C.orange, C.ochre], 1.6, 0.45, 0.6); camel(cx + 1, cy - 5, true); camel(cx - 12, cy - 3, true);
+    }); }
+    // 6. small round bottle: a palm and dunes under a big sun
+    { const cx = X(5), top = base - 62, cy = base - 16; bottle(cx, top, 2.8, 30, [[cy, 16, 12, 2.4]], () => {
+      neckStripes(top, cy - 14); sky(cy - 15, cy + 4); sun(cx - 4, cy - 6, 3.5); dunes(cy + 3, [C.ochre, C.red, C.orange], 1.6, 0.5, 2.2); palm(cx + 4, cy + 4, 12);
+    }); }
+    // little heaps of coloured sand on the ground between the bottles, ready to be poured
+    const heap = (hx, w, h, col) => { x.fillStyle = col; x.beginPath(); x.moveTo(hx - w, base + 1); x.quadraticCurveTo(hx - w * 0.3, base - h, hx, base - h); x.quadraticCurveTo(hx + w * 0.3, base - h, hx + w, base + 1); x.fill(); };
+    for (let k = 0; k < n - 1; k++) { const gx = fx + slot * (k + 1), list = [[C.red, C.ochre, C.blue], [C.orange, C.cream, C.rust], [C.yellow, C.red, C.sky], [C.blue, C.orange, C.cream], [C.ochre, C.rust, C.yellow]][k]; heap(gx - 3, 3.4, 3, list[0]); heap(gx + 3, 3.4, 3.4, list[1]); heap(gx, 3.2, 5, list[2]); }
+  });
+}
+
+// Arabic coffee: two tall brass dallahs facing each other, beaked spouts rising towards a bowl of dates, a tray of
+// handle-less cups between them, more cups, dates and cardamom pods about, on deep red-brown in a chased brass border.
+function jorDallah(ctx, W, H) {
+  const C = { ground: '#64221a', ground2: '#521a12', b1: '#f6dc8a', b2: '#dcaa48', b3: '#a8742a', b4: '#5e3a14', cream: '#f2e8d4', cream2: '#c9bca2', red: '#b8322a',
+    date: '#3a1408', date2: '#b8682e', card: '#b8c682', card2: '#62783a', dark: '#2a0e08' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(a, b, 1, 1); };
+    // the border: a brass band chased with a zigzag and dots between a dark edge and dark guard lines
+    R(0, 0, cols, rows, C.dark);
+    R(1, 1, cols - 2, rows - 2, C.b2);
+    ringKnots(x, cols, rows, 1, 9, 8, (i, j) => {
+      const t = ((i % 8) + 8) % 8, z = 2 + (t < 4 ? t : 8 - t);
+      if (j === 0 || j === 8) return C.b3;
+      if (j === z || j === z + 1) return C.b4;
+      if (j === 1 || j === 7) return C.b1;
+      if ((t === 0 && j === 5) || (t === 4 && j === 3)) return C.b4;
+      return null;
+    }, (a, b) => {
+      R(a, b, 9, 9, C.b3);
+      x.fillStyle = C.b1; x.beginPath(); x.moveTo(a + 4.5, b + 0.5); x.lineTo(a + 8.5, b + 4.5); x.lineTo(a + 4.5, b + 8.5); x.lineTo(a + 0.5, b + 4.5); x.fill();
+      R(a + 3, b + 3, 3, 3, C.red); P(a + 4, b + 4, C.b1);
+    });
+    for (const [o, col] of [[10, C.dark], [11, C.cream], [12, C.dark]]) { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); }
+    const fx = 13, fy = 13, fw = cols - 26, fh = rows - 26;
+    R(fx, fy, fw, fh, C.ground);
+    // a faint diamond lattice in the ground, dotted
+    for (let yy = fy; yy < fy + fh; yy++) for (let xx = fx; xx < fx + fw; xx++) { const a = (xx - fx + 200) % 14, b = (yy - fy) % 14; if ((a === b || a === 14 - b) && (xx + yy) % 2 === 0) P(xx, yy, C.ground2); }
+    // the dallah, facing right, base centre at (0, 0), 62 knots tall at size 1: a flared foot, a wide round lower
+    // body, a narrow waist with a collar, a flaring upper body, a stepped lid with a pointed finial, a long spout
+    // rising from the lower body and ending in a bird's-beak opening, and a tall loop handle at the back
+    const SPOUT = [[9.5, -9], [18, -12], [18.6, -30], [19.6, -42.5]];
+    const spoutAt = (t) => { const m = 1 - t, [p0, p1, p2, p3] = SPOUT; return [m * m * m * p0[0] + 3 * m * m * t * p1[0] + 3 * m * t * t * p2[0] + t * t * t * p3[0], m * m * m * p0[1] + 3 * m * m * t * p1[1] + 3 * m * t * t * p2[1] + t * t * t * p3[1]]; };
+    const spoutPath = (c, grow, k0 = 0) => {
+      const L = [], Rr = [];
+      for (let k = k0; k <= 30; k++) { const t = k / 30, [px, py] = spoutAt(t), [qx, qy] = spoutAt(Math.min(1, t + 0.02)), [ox, oy] = spoutAt(Math.max(0, t - 0.02)), a = Math.atan2(qy - oy, qx - ox), w = 2.3 - 1.1 * t + grow; L.push([px - Math.sin(a) * w, py + Math.cos(a) * w]); Rr.push([px + Math.sin(a) * w, py - Math.cos(a) * w]); }
+      c.moveTo(...L[0]); for (const q of L) c.lineTo(...q); for (let i = Rr.length - 1; i >= 0; i--) c.lineTo(...Rr[i]); c.closePath();
+    };
+    const body = (c) => {
+      c.moveTo(-8.4, 0); c.lineTo(8.4, 0); c.lineTo(6.4, -2.6); c.lineTo(-6.4, -2.6); c.closePath();                                   // foot
+      c.moveTo(-6.6, -2.4); c.bezierCurveTo(-14, -4, -14.4, -17, -6.2, -22.6); c.lineTo(6.2, -22.6); c.bezierCurveTo(14.4, -17, 14, -4, 6.6, -2.4); c.closePath(); // lower body
+      c.rect(-7.4, -25.4, 14.8, 3);                                                                                                       // waist collar
+      c.moveTo(-4.4, -24.6); c.bezierCurveTo(-4.4, -30, -6.6, -35, -9.8, -38.6); c.lineTo(9.8, -38.6); c.bezierCurveTo(6.6, -35, 4.4, -30, 4.4, -24.6); c.closePath(); // upper body
+      c.rect(-11.8, -40.6, 23.6, 2.2);                                                                                                    // rim
+      c.moveTo(-8.8, -40.4); c.lineTo(-8, -43.8); c.lineTo(8, -43.8); c.lineTo(8.8, -40.4); c.closePath();                             // lid, first step
+      c.moveTo(-6.2, -43.6); c.lineTo(-5.4, -46.6); c.lineTo(5.4, -46.6); c.lineTo(6.2, -43.6); c.closePath();                         // second step
+      c.moveTo(-4, -46.4); c.bezierCurveTo(-4, -49.6, -2.2, -50.4, 0, -50.6); c.bezierCurveTo(2.2, -50.4, 4, -49.6, 4, -46.4); c.closePath(); // dome
+      c.rect(-2.6, -52, 5.2, 1.6);
+      c.moveTo(-1.8, -51.6); c.lineTo(0, -63); c.lineTo(1.8, -51.6); c.closePath();                                                    // finial
+      c.moveTo(1.7, -56.4); c.arc(0, -56.4, 1.7, 0, Math.PI * 2);
+      spoutPath(c, 0);
+      // the beak: a long pointed opening on top of the spout, its upper edge straight, its lower edge curving back
+      c.moveTo(17.4, -44.2); c.lineTo(20.6, -48.6); c.lineTo(29.6, -51); c.quadraticCurveTo(24.2, -46.6, 22.4, -41.6); c.closePath();
+    };
+    const handle = (c, lw) => { c.lineWidth = lw; c.lineCap = 'round'; c.beginPath(); c.moveTo(-8.2, -36.6); c.bezierCurveTo(-17.6, -40, -20.4, -25, -11.2, -12.4); c.stroke(); };
+    const dallahs = [], cups = [], trays = [], bowls = [], dates = [], pods = [];
+    const each = (list, f) => (c) => { for (const [px, py, s, dir] of list) { c.save(); c.translate(px, py); c.scale(dir * s, s); f(c); c.restore(); } };
+    // a round brass tray with three cups on it; a brass bowl heaped with dates; little sprays of cardamom pods
+    const tray = (tx, ty, s) => { trays.push([tx, ty, s, 1]); for (const a of [-8.6, 0, 8.6]) cups.push([tx + a * s, ty - 1.2 * s, s, 1]); };
+    const bowl = (bx, by, s) => { bowls.push([bx, by, s, 1]); for (const [a, b] of [[-5, -6.4], [0, -6.6], [5, -6.4], [-2.6, -8.6], [2.6, -8.6], [0, -10.6]]) dates.push([bx + a * s, by + b * s, s, (a * 7 + b) % 2 ? 1 : -1]); };
+    const spray = (px, py, s, dir) => { for (const [a, b] of [[0, 0], [4.2, -1.2], [2.2, 2.8], [6, 2]]) pods.push([px + dir * a * s, py + b * s, s, dir]); };
+    // two great pots facing each other; between them a bowl of dates and, below, a tray of cups; cups, dates and
+    // cardamom at their backs and in the corners
+    const S = 1.28, base = fy + fh - 4, cx = fx + fw / 2, px0 = fx + fw * 0.22;
+    dallahs.push([px0, base, S, 1], [fx + fw - (px0 - fx), base, S, -1]);
+    tray(cx, base, 1.1);
+    bowl(cx, fy + 64, 1.1);
+    for (const sg of [-1, 1]) {
+      cups.push([cx + sg * (fw / 2 - 7), base, 1.2, 1]);
+      for (const [a, b] of [[-3, -2], [2.6, -1], [0, 1.4]]) dates.push([cx + sg * (fw / 2 - 17 + a), base + b - 1.4, 1, sg]);
+      spray(cx + sg * (fw / 2 - 12), fy + 8, 1, -sg); spray(cx + sg * (fw / 2 - 6), fy + 22, 1, -sg); spray(cx + sg * 14, fy + 8, 1, sg);
+    }
+    spray(cx - 4, fy + 22, 1.1, 1); spray(cx + 4, fy + 36, 1.1, -1);
+    for (const [a, b] of [[-4.6, 0], [0, 0.4], [4.6, 0], [-2.3, -2.4], [2.3, -2.4]]) dates.push([cx + a, fy + 77 + b, 1, a < 0 ? 1 : -1]);
+    // the pots: a dark edge, brass in shadow, brass lit from the left, highlights, chased bands
+    sweInk(x, C.b4, each(dallahs, (c) => { c.lineWidth = 1.6; c.lineJoin = 'round'; c.beginPath(); body(c); c.fill(); c.stroke(); handle(c, 3.6); }));
+    sweInk(x, C.b3, each(dallahs, (c) => { c.beginPath(); body(c); c.fill(); handle(c, 2); }));
+    sweInk(x, C.b2, each(dallahs, (c) => {
+      c.save(); c.beginPath(); body(c); c.clip();
+      c.beginPath(); c.moveTo(-20, 2); c.lineTo(4.4, 2); c.bezierCurveTo(9.4, -6, 8.6, -18, 2, -22.4); c.lineTo(1.6, -26); c.bezierCurveTo(2.6, -31, 4.6, -35, 6, -38); c.lineTo(5, -41); c.lineTo(2, -46); c.lineTo(0.6, -70); c.lineTo(-20, -70); c.closePath(); c.fill();
+      c.restore();
+      c.save(); c.beginPath(); spoutPath(c, -0.9); c.clip(); c.beginPath(); spoutPath(c, 0); c.translate(-0.9, -0.5); c.fill(); c.restore();
+      c.beginPath(); c.moveTo(18.2, -44.6); c.lineTo(20.8, -48); c.lineTo(27.4, -49.9); c.lineTo(21.6, -46.4); c.closePath(); c.fill();
+      c.lineWidth = 0.9; c.beginPath(); c.moveTo(-8.6, -37.6); c.bezierCurveTo(-17, -40.4, -19.2, -26, -12.4, -16); c.stroke();
+    }));
+    sweInk(x, C.b1, each(dallahs, (c) => {
+      c.beginPath(); c.ellipse(-8.2, -10.6, 1.5, 4.6, 0.12, 0, Math.PI * 2); c.fill();                                   // on the lower body
+      c.fillRect(-4.8, -36, 1.1, 8.4);                                                                                    // up the upper body
+      c.fillRect(-10.8, -40.2, 6, 1.2); c.fillRect(-6.4, -25, 3.4, 1.2); c.fillRect(-7.4, -43.4, 3, 1); c.fillRect(-4.8, -46.2, 2.4, 1); // on the rim, collar, lid
+      c.beginPath(); c.arc(-1.6, -48.6, 0.9, 0, Math.PI * 2); c.fill(); c.fillRect(-0.9, -57.4, 1, 1);
+    }));
+    // chased decoration: a band round the lower body with a row of bright dots, lines on the foot and rim
+    sweInk(x, C.b4, each(dallahs, (c) => { c.save(); c.beginPath(); body(c); c.clip(); for (const [y, h] of [[-15.6, 0.9], [-12, 0.9], [-23, 0.8], [-25.8, 0.8], [-38.8, 0.8], [-41.2, 0.8], [-44.4, 0.8], [-47.2, 0.8], [-52.4, 0.8]]) c.fillRect(-15, y, 30, h); c.restore(); }));
+    sweInk(x, C.b1, each(dallahs, (c) => { for (let k = -4; k <= 3; k++) c.fillRect(k * 2.6 - 0.4, -14.2, 0.9, 0.9); }));
+    // trays under their cups, bowls with dates heaped in them
+    sweInk(x, C.b4, each(trays, (c) => { c.beginPath(); c.ellipse(0, -0.6, 14, 2.6, 0, 0, Math.PI * 2); c.fill(); }));
+    sweInk(x, C.b2, each(trays, (c) => { c.beginPath(); c.ellipse(-0.6, -1.2, 12.8, 1.9, 0, 0, Math.PI * 2); c.fill(); }));
+    sweInk(x, C.date, each(dates, (c) => { c.beginPath(); c.ellipse(0, 0, 2.1, 1.3, 0.25, 0, Math.PI * 2); c.fill(); }));
+    sweInk(x, C.date2, each(dates, (c) => { c.beginPath(); c.ellipse(-0.6, -0.5, 1.1, 0.6, 0.25, 0, Math.PI * 2); c.fill(); }));
+    sweInk(x, C.b4, each(bowls, (c) => { c.beginPath(); c.ellipse(0, -6.4, 9.6, 7, 0, 0, Math.PI); c.fill(); c.fillRect(-3.6, -1, 7.2, 1.6); c.beginPath(); c.ellipse(0, -6.6, 9.6, 2.6, 0, 0, Math.PI * 2); c.fill(); }));
+    sweInk(x, C.b3, each(bowls, (c) => { c.beginPath(); c.ellipse(-0.8, -6, 7.8, 5.6, 0, 0, Math.PI); c.fill(); }));
+    sweInk(x, C.b1, each(bowls, (c) => { c.lineWidth = 1; c.beginPath(); c.ellipse(0, -6.6, 8.8, 2, 0, 0, Math.PI * 2); c.stroke(); c.beginPath(); c.ellipse(-4.6, -3.8, 1.2, 1.4, 0.4, 0, Math.PI * 2); c.fill(); }));
+    sweInk(x, C.date, each(dates, (c) => { c.beginPath(); c.ellipse(0, 0, 2.2, 1.35, 0.25, 0, Math.PI * 2); c.fill(); }));
+    sweInk(x, C.date2, each(dates, (c) => { c.beginPath(); c.ellipse(-0.7, -0.5, 1.1, 0.6, 0.25, 0, Math.PI * 2); c.fill(); }));
+    // cups: cream porcelain with green and red bands and a brass rim
+    sweInk(x, C.dark, each(cups, (c) => { c.beginPath(); c.moveTo(-4, -8.6); c.lineTo(4, -8.6); c.lineTo(2.8, 0.4); c.lineTo(-2.8, 0.4); c.fill(); }));
+    sweInk(x, C.cream2, each(cups, (c) => { c.beginPath(); c.moveTo(-3.2, -7); c.lineTo(3.2, -7); c.lineTo(2, 0); c.lineTo(-2, 0); c.fill(); }));
+    sweInk(x, C.cream, each(cups, (c) => { c.beginPath(); c.moveTo(-3.2, -7); c.lineTo(1.8, -7); c.lineTo(0.8, 0); c.lineTo(-2, 0); c.fill(); }));
+    sweInk(x, C.card2, each(cups, (c) => c.fillRect(-2.9, -5, 5.8, 1)));
+    sweInk(x, C.red, each(cups, (c) => c.fillRect(-2.6, -3.4, 5.2, 1)));
+    sweInk(x, C.b1, each(cups, (c) => c.fillRect(-3.4, -7.8, 6.8, 1)));
+    sweInk(x, C.card2, each(pods, (c) => { c.rotate(0.55); c.beginPath(); c.ellipse(0, 0, 2.4, 1.8, 0, 0, Math.PI * 2); c.fill(); c.fillRect(2, -0.5, 1.4, 1); }));
+    sweInk(x, C.card, each(pods, (c) => { c.rotate(0.55); c.beginPath(); c.ellipse(-0.4, -0.4, 1.5, 1.1, 0, 0, Math.PI * 2); c.fill(); }));
+  });
+}
+
+// Black iris: Jordan's wild flower. Deep purple-black blooms with domed standards and velvety falls, veined hafts,
+// buds in their green sheaths, fans of grey-green sword leaves, on sandy limestone; a border of buds on a stem.
+function jorBlackIris(ctx, W, H) {
+  const C = { k: '#1a0f1e', p1: '#3a2046', p2: '#5e3a72', p3: '#9474ac', pale: '#d9cfdc', leaf: '#7f9784', leaf2: '#4f6656', leaf3: '#acbea8',
+    stone: '#e6d8b8', stone2: '#d6c6a2', stone3: '#b29e78', edge: '#2c1a30' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(a, b, 1, 1); };
+    const ink = (col, f) => sweInk(x, col, f);
+    // the border: a deep aubergine band, a stem along it with buds leaning off alternately to each side
+    R(0, 0, cols, rows, C.k);
+    R(1, 1, cols - 2, rows - 2, C.p1);
+    for (const [o, col] of [[11, C.stone], [12, C.k]]) { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); }
+    const buds = [];
+    const side = (len, at) => {
+      const { n, d } = evenSteps(len, 12);
+      ink(C.leaf2, (c) => { c.lineWidth = 1; c.beginPath(); const [a0, b0] = at(0, 0), [a1, b1] = at(len, 0); c.moveTo(a0, b0); c.lineTo(a1, b1); c.stroke(); });
+      for (let i = 0; i < n; i++) { const sg = i % 2 ? 1 : -1, [a, b] = at((i + 0.3) * d, 0), [a2, b2] = at((i + 0.3) * d + 3, sg * 3.2); buds.push([a, b, Math.atan2(b2 - b, a2 - a)]); }
+    };
+    side(cols - 24, (t, o) => [12 + t, 6 + o]); side(cols - 24, (t, o) => [cols - 12 - t, rows - 6 - o]);
+    side(rows - 24, (t, o) => [6 - o, rows - 12 - t]); side(rows - 24, (t, o) => [cols - 6 + o, 12 + t]);
+    const budAt = (list, col, f) => ink(col, (c) => { for (const [a, b, ang] of list) { c.save(); c.translate(a, b); c.rotate(ang); f(c); c.restore(); } });
+    budAt(buds, C.k, (c) => { c.beginPath(); c.moveTo(2.4, -2.2); c.quadraticCurveTo(7, -2.2, 9.4, 0); c.quadraticCurveTo(7, 2.2, 2.4, 2.2); c.fill(); });
+    budAt(buds, C.p3, (c) => { c.beginPath(); c.moveTo(2.6, -1.5); c.quadraticCurveTo(6.2, -1.5, 8.2, 0); c.quadraticCurveTo(6.2, 0.4, 2.6, 0.4); c.fill(); });
+    budAt(buds, C.p2, (c) => { c.beginPath(); c.moveTo(2.6, 0.4); c.quadraticCurveTo(6.2, 0.4, 8.2, 0); c.quadraticCurveTo(6.2, 1.5, 2.6, 1.5); c.fill(); });
+    budAt(buds, C.leaf, (c) => { c.beginPath(); c.moveTo(0, -0.8); c.quadraticCurveTo(3, -2.6, 5.2, -1.6); c.lineTo(4.4, 0); c.quadraticCurveTo(3, 2.6, 0, 0.8); c.fill(); });
+    for (const [a, b] of [[6, 6], [cols - 6, 6], [6, rows - 6], [cols - 6, rows - 6]]) {
+      R(a - 5, b - 5, 11, 11, C.k);
+      for (let dy = -4; dy <= 4; dy++) for (let dx = -4; dx <= 4; dx++) { const d = Math.abs(dx) + Math.abs(dy); if (d <= 4) P(a + dx, b + dy, d === 4 ? C.p3 : d === 3 ? C.k : d >= 1 ? C.p2 : C.pale); }
+    }
+    // the field: sandy limestone, mottled, with pebbles
+    const fx = 13, fy = 13, fw = cols - 26, fh = rows - 26;
+    R(fx, fy, fw, fh, C.stone);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const rnd = rng(77);
+    for (let k = 0; k < 36; k++) { const px = fx + rnd() * fw, py = fy + rnd() * fh; x.fillStyle = C.stone2; x.beginPath(); x.ellipse(px, py, 4 + rnd() * 6, 1.5 + rnd() * 2, rnd() - 0.5, 0, Math.PI * 2); x.fill(); }
+    for (let k = 0; k < 60; k++) { const px = fx + rnd() * fw, py = fy + fh * (0.3 + rnd() * 0.7), r = 0.7 + rnd() * 1.1; x.fillStyle = k % 3 ? C.stone2 : C.stone3; x.beginPath(); x.ellipse(px, py, r * 1.4, r, 0, 0, Math.PI * 2); x.fill(); }
+    // sword leaves in flat fans from the ground
+    const leaves = [];
+    const fan = (bx, n, h, spread) => { for (let k = 0; k < n; k++) { const t = n > 1 ? k / (n - 1) - 0.5 : 0; leaves.push([bx + t * 10, fy + fh + 3, bx + t * spread, fy + fh - h * (1 - Math.abs(t) * 0.55), t]); } };
+    const cx = fx + fw / 2;
+    fan(cx - 3, 6, 54, 54); fan(cx - 54, 5, 44, 44); fan(cx + 54, 5, 48, 46); fan(fx + 12, 4, 32, 28); fan(fx + fw - 12, 4, 34, 28);
+    leaves.sort((p, q) => Math.abs(q[4]) - Math.abs(p[4]));
+    const blade = (c, w, l) => { const [bx, by, tx, ty, t] = l, mx = (bx + tx) / 2 + t * 12, my = (by + ty) / 2; c.beginPath(); c.moveTo(bx - w, by); c.quadraticCurveTo(mx - w * 0.9, my, tx, ty); c.quadraticCurveTo(mx + w * 0.9, my, bx + w, by); c.fill(); };
+    for (const l of leaves) {
+      ink(C.leaf2, (c) => blade(c, 3.4, l));
+      ink(l[4] < 0 ? C.leaf : C.leaf3, (c) => { c.save(); c.translate(l[4] < 0 ? -0.8 : 0.8, 0.5); blade(c, 2.1, l); c.restore(); });
+      ink(C.leaf, (c) => { if (l[4] >= 0) { c.save(); c.translate(-0.9, 1); blade(c, 1.1, l); c.restore(); } });
+    }
+    // the blooms: [x, y, size]; buds: [x, y, size, lean]
+    const blooms = [[cx, fy + 27, 1.2], [cx - 54, fy + 42, 0.98], [cx + 55, fy + 35, 1.02], [fx + 15, fy + 64, 0.66], [fx + fw - 15, fy + 60, 0.7]];
+    const budsF = [[cx - 27, fy + 20, 1, -0.2], [cx + 28, fy + 14, 0.95, 0.25], [cx + 80, fy + 22, 0.72, 0.2], [cx - 80, fy + 28, 0.72, -0.15]];
+    ink(C.leaf2, (c) => { c.lineWidth = 2.2; for (const [bx, by, sz] of blooms) { c.beginPath(); c.moveTo(bx, by + 6 * sz); c.quadraticCurveTo(bx + 2, (by + fy + fh) / 2, bx + 1, fy + fh + 2); c.stroke(); } for (const [bx, by, sz, ln] of budsF) { c.beginPath(); c.moveTo(bx, by + 6 * sz); c.quadraticCurveTo(bx - ln * 8, (by + fy + fh) / 2, bx - ln * 14, fy + fh + 2); c.stroke(); } });
+    // buds: a pointed purple bud wrapped at its foot by a green sheath
+    const bud = (c, s) => { c.beginPath(); c.moveTo(-2.8 * s, 2 * s); c.quadraticCurveTo(-3.2 * s, -6 * s, 0, -13 * s); c.quadraticCurveTo(3.2 * s, -6 * s, 2.8 * s, 2 * s); c.fill(); };
+    const atB = (f) => (c) => { for (const [bx, by, sz, ln] of budsF) { c.save(); c.translate(bx, by); c.rotate(ln); f(c, sz); c.restore(); } };
+    ink(C.k, atB((c, s) => bud(c, s * 1.12)));
+    ink(C.p1, atB((c, s) => bud(c, s)));
+    ink(C.p2, atB((c, s) => { c.fillRect(-1.4 * s, -9 * s, 1.2, 9 * s); }));
+    ink(C.leaf2, atB((c, s) => { c.beginPath(); c.moveTo(-3.4 * s, 6 * s); c.quadraticCurveTo(-4.2 * s, -1 * s, -1 * s, -6 * s); c.lineTo(0, 6 * s); c.fill(); c.beginPath(); c.moveTo(3.4 * s, 6 * s); c.quadraticCurveTo(4.2 * s, 0, 1.6 * s, -4 * s); c.lineTo(0, 6 * s); c.fill(); }));
+    ink(C.leaf, atB((c, s) => { c.beginPath(); c.moveTo(-2.6 * s, 5 * s); c.quadraticCurveTo(-3.2 * s, 0, -1.2 * s, -4.4 * s); c.lineTo(-0.4, 5 * s); c.fill(); }));
+    // a bloom: three broad standards cupped into a dome, three falls hanging below with velvety black signals and
+    // finely veined hafts
+    const each = (f) => (c) => { for (const [bx, by, sz] of blooms) { c.save(); c.translate(bx, by); c.scale(sz, sz); f(c); c.restore(); } };
+    const std = (c, ang, k = 1, h = 19) => { c.save(); c.rotate(ang); c.beginPath(); c.moveTo(-2.4 * k, 0); c.bezierCurveTo(-10 * k, -5, -8.6 * k, -h * 0.9, 0, -h); c.bezierCurveTo(8.6 * k, -h * 0.9, 10 * k, -5, 2.4 * k, 0); c.fill(); c.restore(); };
+    const fall = (c, ang, len, k = 1) => { c.save(); c.rotate(ang); c.beginPath(); c.moveTo(-2.6 * k, 0); c.bezierCurveTo(-9 * k, 3, -8.6 * k, len * 0.85, 0, len); c.bezierCurveTo(8.6 * k, len * 0.85, 9 * k, 3, 2.6 * k, 0); c.fill(); c.restore(); };
+    const FALLS = [[1.08, 16.5], [-1.08, 16.5], [0, 16.5]];
+    const eachF = (f) => each((c) => { c.translate(0, 2.6); f(c); });
+    ink(C.edge, eachF((c) => { for (const [a, l] of FALLS) fall(c, a, l + 1.4, 1.14); }));
+    for (const [a, l] of FALLS) {
+      ink(C.p1, eachF((c) => fall(c, a, l)));
+      ink(C.k, eachF((c) => { c.save(); c.rotate(a); c.beginPath(); if (a) c.ellipse(a > 0 ? 2.6 : -1.8, l * 0.6, 2.4, l * 0.34, 0, 0, Math.PI * 2); else c.ellipse(0.4, l * 0.66, 5, l * 0.27, 0, 0, Math.PI * 2); c.fill(); c.restore(); }));
+      ink(C.p2, eachF((c) => { c.save(); c.rotate(a); c.lineWidth = 1.1; c.beginPath(); c.moveTo(-6, l * 0.3); c.quadraticCurveTo(-6.6, l * 0.78, -1.4, l * 0.95); c.stroke(); c.restore(); }));
+      // the haft: pale lilac, streaked with dark veins either side of the dark beard
+      ink(C.p3, eachF((c) => { c.save(); c.rotate(a); c.beginPath(); c.moveTo(-2.4, 0); c.lineTo(-3.4, 4); c.quadraticCurveTo(0, 9, 3.4, 4); c.lineTo(2.4, 0); c.fill(); c.restore(); }));
+      ink(C.pale, eachF((c) => { c.save(); c.rotate(a); c.lineWidth = 0.6; for (const v of [-1.7, 1.7]) { c.beginPath(); c.moveTo(v * 0.6, 0.6); c.lineTo(v * 1.2, 5.6); c.stroke(); } c.restore(); }));
+      ink(C.edge, eachF((c) => { c.save(); c.rotate(a); c.fillRect(-0.5, 0.6, 1, 6.6); c.restore(); }));
+    }
+    // standards, over the falls' roots: dark edges, deep purple, lighter veins
+    ink(C.k, each((c) => { std(c, -0.46, 1.12, 19.5); std(c, 0.46, 1.12, 19.5); std(c, 0, 1.12, 21.5); }));
+    ink(C.p2, each((c) => { std(c, -0.46, 1, 18); std(c, 0.46, 1, 18); }));
+    ink(C.p1, each((c) => { c.save(); c.translate(0, 0.4); std(c, 0, 0.92, 20); c.restore(); }));
+    ink(C.p3, each((c) => { c.lineWidth = 0.9; for (const a of [-0.46, 0.46]) { c.save(); c.rotate(a); c.beginPath(); c.moveTo(a * 2, -5); c.quadraticCurveTo(a * 8, -10, a * 4, -15); c.stroke(); c.restore(); } c.beginPath(); c.moveTo(0.4, -5); c.quadraticCurveTo(-1, -11, 0.4, -17); c.stroke(); }));
+    x.restore();
+  });
+}
+
+// Arabian oryx: white antelopes with long straight horns, dark legs and black face markings, walking and grazing in
+// rows over pale sand with wind ripples and little desert plants; a terracotta border with a trail of hoofprints.
+function jorOryx(ctx, W, H) {
+  const C = { w: '#f6f2ea', w2: '#d8cfbf', k: '#1e1a18', dk: '#5a3a26', horn: '#46403b', sand: '#eedfba', sand2: '#e0cc9e', sand3: '#c9ad7c',
+    plant: '#8f9e5c', plant2: '#5d6c3a', flower: '#e6b83a', terra: '#a9553a', terra2: '#6e3222' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(a, b, 1, 1); };
+    const ink = (col, f) => sweInk(x, col, f);
+    // the border: terracotta with a row of little dunes, lit on one side, and a sun between each pair
+    R(0, 0, cols, rows, C.terra2);
+    R(1, 1, cols - 2, rows - 2, C.terra);
+    for (const [o, col] of [[10, C.w], [11, C.terra2]]) { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); }
+    ringKnots(x, cols, rows, 1, 9, 10, (i, j) => {
+      const t = ((i % 10) + 10) % 10, hump = 4.6 * Math.sin(Math.PI * (t + 0.5) / 10);
+      if (j >= 8.4 - hump && j <= 8) return t < 5 ? C.sand : C.sand3;
+      if (j === 3 && (t === 0 || t === 9)) return C.flower;
+      if ((j === 2 || j === 4) && (t === 0 || t === 9) && t === 0) return C.flower;
+      return null;
+    });
+    for (const [a, b] of [[5.5, 5.5], [cols - 5.5, 5.5], [5.5, rows - 5.5], [cols - 5.5, rows - 5.5]]) {
+      R(Math.floor(a) - 4, Math.floor(b) - 4, 9, 9, C.terra2);
+      for (let dy = -3; dy <= 3; dy++) for (let dx = -3; dx <= 3; dx++) { const d = Math.abs(dx) + Math.abs(dy); if (d <= 3) P(Math.floor(a) + dx, Math.floor(b) + dy, d === 3 ? C.flower : d === 2 ? C.terra : d === 1 ? C.w : C.terra2); }
+    }
+    // the field: pale sand with wind ripples, pebbles and little desert plants
+    const fx = 12, fy = 12, fw = cols - 24, fh = rows - 24;
+    R(fx, fy, fw, fh, C.sand);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    for (let k = 0; k < 16; k++) { const y0 = fy + 3 + k * 6.4; for (let t = 0; t < fw; t++) { const yy = Math.round(y0 + 1.6 * Math.sin(t * 0.11 + k * 1.3) + 0.8 * Math.sin(t * 0.31 + k)); if (Math.sin(t * 0.05 + k * 2.1) > -0.35) P(fx + t, yy, C.sand2); } }
+    const rnd = rng(311);
+    const tufts = [];
+    const tuft = (px, py, big) => tufts.push([px, py, big]);
+    for (let k = 0; k < 40; k++) { const px = fx + rnd() * fw, py = fy + rnd() * fh; x.fillStyle = C.sand3; x.beginPath(); x.ellipse(px, py, 1.2, 0.8, 0, 0, Math.PI * 2); x.fill(); }
+    // an oryx facing right, standing on (0, 0); o = [x, y, size, dir, graze, step]
+    const herd = [];
+    const each = (f) => (c) => { for (const o of herd) { const [px, py, sz, dir] = o; c.save(); c.translate(px, py); c.scale(dir * sz, sz); f(c, o); c.restore(); } };
+    const LEGS = [[-10.4, -1], [-7.2, 1], [6, 1], [8.8, -1]];
+    const legs = (c, o, lo, hi) => { const step = o[5]; for (const [hx, sg] of LEGS) { const fxx = hx + sg * step, xa = hx + (fxx - hx) * (15 + lo) / 15, xb = hx + (fxx - hx) * (15 + hi) / 15; c.beginPath(); c.moveTo(xa - 1.1, lo); c.lineTo(xa + 1.1, lo); c.lineTo(xb + 1.1, hi); c.lineTo(xb - 1.1, hi); c.fill(); } };
+    // the neck and head, for the two poses
+    const pose = (g) => g ? { neck: [[4.6, -22.6], [9.6, -21.6], [16.4, -8.2], [13.4, -6.4], [10.4, -14], [11.4, -18.6]], hx: 15.6, hy: -5.6, ha: 1.3, hb: [14.6, -10.4], ht: [1.6, -24.6] }
+      : { neck: [[4.6, -22.6], [12.4, -31.8], [16.8, -29.6], [11.4, -18.6]], hx: 17.2, hy: -29.8, ha: 0.55, hb: [14.4, -32.4], ht: [4.6, -51] };
+    const head = (c, o, grow = 0) => { const q = pose(o[4]); c.save(); c.translate(q.hx, q.hy); c.rotate(q.ha); c.beginPath(); c.ellipse(1.6, 0.2, 5 + grow, 2.4 + grow, 0, 0, Math.PI * 2); c.fill(); c.beginPath(); c.ellipse(-1.8, -0.2, 2.8 + grow, 3 + grow, 0, 0, Math.PI * 2); c.fill(); c.restore(); };
+    const body = (c, o, grow = 0) => {
+      c.save(); if (grow) { c.lineWidth = grow * 2; c.lineJoin = 'round'; }
+      c.beginPath(); c.moveTo(-13.6, -17.4); c.quadraticCurveTo(-14, -23.2, -9, -23.4); c.lineTo(3, -23); c.quadraticCurveTo(6, -24.4, 8, -23); c.lineTo(11.6, -18.6);
+      c.quadraticCurveTo(12.4, -14.2, 8.6, -13.2); c.quadraticCurveTo(0, -12, -9, -13.2); c.quadraticCurveTo(-13.4, -13.6, -13.6, -17.4); c.closePath(); c.fill(); if (grow) c.stroke();
+      const q = pose(o[4]); c.beginPath(); q.neck.forEach(([a, b], i) => (i ? c.lineTo(a, b) : c.moveTo(a, b))); c.closePath(); c.fill(); if (grow) c.stroke();
+      c.restore(); head(c, o, grow);
+    };
+    const row = (list, by, sz) => { for (const [px, dir, g, step] of list) herd.push([fx + px, by, sz, dir, g, step]); };
+    row([[22, 1, false, 1.8], [70, -1, true, 0.6], [116, 1, true, 0.4], [162, -1, false, -1.6]], fy + 52, 0.88);
+    row([[38, 1, true, 0.6], [92, 1, false, 2], [146, 1, false, -1.6]], fy + fh - 3, 1.02);
+    // little plants dotted about, kept clear of the animals
+    const clear = (px, py) => herd.every(([hx, hy, sz, dir, g]) => (Math.abs(px - hx) > 19 * sz || py < hy - 27 * sz || py > hy + 4) && (g || Math.abs(px - (hx + dir * 10 * sz)) > 9 * sz || py < hy - 56 * sz || py > hy - 24 * sz));
+    for (let k = 0, n = 0; k < 200 && n < 24; k++) { const px = fx + 4 + rnd() * (fw - 8), py = fy + 6 + rnd() * (fh - 8); if (clear(px, py)) { tuft(px, py, n % 3 === 0); n++; } }
+    ink(C.plant2, (c) => { c.lineWidth = 1; for (const [px, py, big] of tufts) for (let k = -2; k <= 2; k++) { c.beginPath(); c.moveTo(px, py); c.lineTo(px + k * (big ? 2.2 : 1.4), py - (big ? 5 : 3.4) + Math.abs(k) * 0.9); c.stroke(); } });
+    ink(C.plant, (c) => { for (const [px, py, big] of tufts) { c.beginPath(); c.ellipse(px, py - (big ? 2.4 : 1.6), big ? 3 : 2, big ? 2 : 1.3, 0, 0, Math.PI * 2); c.fill(); } });
+    for (const [px, py, big] of tufts) if (big) { P(Math.round(px - 2), Math.round(py - 5), C.flower); P(Math.round(px + 2), Math.round(py - 4), C.flower); }
+    const horns = (c, o) => { const q = pose(o[4]); c.lineWidth = 1.2; c.lineCap = 'round'; for (const d of [0, 1.6]) { c.beginPath(); c.moveTo(q.hb[0] + d * 0.7, q.hb[1] + d * 0.3); c.lineTo(q.ht[0] + d * 1.7, q.ht[1] + d * 0.7); c.stroke(); } };
+    // shadows on the sand
+    ink(C.sand3, each((c) => { c.beginPath(); c.ellipse(0, 0, 15, 1.8, 0, 0, Math.PI * 2); c.fill(); }));
+    // legs: dark above the knee, white socks, dark hooves
+    ink(C.dk, each((c, o) => legs(c, o, -15, -5.6)));
+    ink(C.w, each((c, o) => legs(c, o, -5.6, -1)));
+    ink(C.k, each((c, o) => { legs(c, o, -1, 0); legs(c, o, -7, -5.6); }));
+    // body: a soft grey edge, white, the dark flank line and shaded belly
+    ink(C.w2, each((c, o) => body(c, o, 0.6)));
+    ink(C.w, each((c, o) => body(c, o)));
+    ink(C.w2, each((c) => { c.beginPath(); c.ellipse(-1, -14.2, 10.6, 1.2, 0, 0, Math.PI * 2); c.fill(); c.beginPath(); c.ellipse(-10.4, -15.6, 2.6, 2.2, 0, 0, Math.PI * 2); c.fill(); }));
+    ink(C.dk, each((c) => { c.fillRect(-8, -13.6, 15, 1); }));
+    // tail with a black tuft
+    ink(C.w2, each((c) => { c.lineWidth = 1.3; c.beginPath(); c.moveTo(-13.4, -21); c.quadraticCurveTo(-15, -17, -14.6, -13); c.stroke(); }));
+    ink(C.k, each((c) => { c.beginPath(); c.ellipse(-14.6, -12.4, 1, 2.2, 0, 0, Math.PI * 2); c.fill(); }));
+    // ear, horns, and the black face markings: a stripe through the eye, a band over the nose, the throat patch
+    ink(C.horn, each((c, o) => horns(c, o)));
+    ink(C.w2, each((c, o) => { const q = pose(o[4]); c.save(); c.translate(q.hb[0] - 2.6, q.hb[1] + 1.2); c.rotate(o[4] ? 0.1 : -1.0); c.beginPath(); c.ellipse(0, 0, 1.1, 2.6, 0, 0, Math.PI * 2); c.fill(); c.restore(); }));
+    ink(C.k, each((c, o) => {
+      const q = pose(o[4]); c.save(); c.translate(q.hx, q.hy); c.rotate(q.ha);
+      c.fillRect(-1.6, -2.4, 2.2, 5.2);
+      c.fillRect(3.2, -2.4, 1.8, 2.6);
+      c.restore();
+      if (!o[4]) { c.beginPath(); c.moveTo(12.2, -26.4); c.lineTo(15.4, -25.4); c.lineTo(13, -22); c.closePath(); c.fill(); }
+      else { c.beginPath(); c.moveTo(12.4, -12.6); c.lineTo(15, -11.6); c.lineTo(12.6, -9); c.closePath(); c.fill(); }
+    }));
+    x.restore();
+  });
+}
+
+// Bedouin silver: a great necklace of silver beads, red glass and amber with coins and bells hanging from it, chunky
+// knobbed bracelets and belled anklets, laid out symmetrically on deep indigo cloth; a border of silver chain.
+function jorSilver(ctx, W, H) {
+  const C = { ground: '#1d2452', ground2: '#262f66', deep: '#121738', s1: '#f2f4f6', s2: '#c4cad1', s3: '#8a929c', s4: '#4c5460',
+    red: '#c4282c', red2: '#78151a', amber: '#eaa23a', amber2: '#a8601a' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(a, b, 1, 1); };
+    const ink = (col, f) => sweInk(x, col, f);
+    const disc = (c, list, grow = 0, dx = 0, dy = 0) => { for (const [a, b, r] of list) { c.beginPath(); c.arc(a + dx * r, b + dy * r, Math.max(0.5, r + grow), 0, Math.PI * 2); c.fill(); } };
+    // a bead, knot by knot: a shaded ball with a glint
+    const beads = { s: [], r: [], a: [] };
+    const bead = (kind, a, b, r) => beads[kind].push([a, b, r]);
+    const drawBeads = () => {
+      for (const [k, lo, mid, hi] of [['s', C.s4, C.s2, C.s1], ['r', C.red2, C.red, C.s1], ['a', C.amber2, C.amber, '#f6dc9a']]) {
+        const L = beads[k]; if (!L.length) continue;
+        ink(lo, (c) => disc(c, L));
+        ink(mid, (c) => disc(c, L, -0.7, -0.18, -0.18));
+        ink(k === 'a' ? C.amber : hi, (c) => { for (const [a, b, r] of L) if (r >= 1.6) c.fillRect(a - r * 0.5, b - r * 0.55, 1, 1); });
+      }
+      beads.s = []; beads.r = []; beads.a = [];
+    };
+    // the border: a deep band carrying a silver chain, a red bead every few links, a silver line inside
+    R(0, 0, cols, rows, C.s4);
+    R(1, 1, cols - 2, rows - 2, C.deep);
+    for (const [o, col] of [[10, C.s3], [11, C.deep]]) { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); }
+    const links = [], gems = [];
+    const chain = (len, at) => { const { n, d } = evenSteps(len, 5); for (let i = 0; i < n; i++) { const [a, b] = at((i + 0.5) * d), [a2, b2] = at((i + 0.5) * d + 1); (i % 4 === 1 ? gems : links).push([a, b, Math.atan2(b2 - b, a2 - a), i % 2]); } };
+    chain(cols - 22, (t) => [11 + t, 5.5]); chain(cols - 22, (t) => [11 + t, rows - 5.5]); chain(rows - 22, (t) => [5.5, 11 + t]); chain(rows - 22, (t) => [cols - 5.5, 11 + t]);
+    ink(C.s3, (c) => { for (const [a, b, ang] of [...links, ...gems]) { c.save(); c.translate(a, b); c.rotate(ang); c.fillRect(-3, -0.5, 6, 1); c.restore(); } });
+    ink(C.s2, (c) => { c.lineWidth = 1; for (const [a, b, ang, odd] of links) { c.save(); c.translate(a, b); c.rotate(ang); c.beginPath(); if (odd) c.ellipse(0, 0, 2.6, 1.6, 0, 0, Math.PI * 2); else c.rect(-2.2, -0.6, 4.4, 1.2); c.stroke(); c.restore(); } });
+    for (const [a, b] of gems) bead('r', a, b, 2.2);
+    for (const [a, b] of [[5.5, 5.5], [cols - 5.5, 5.5], [5.5, rows - 5.5], [cols - 5.5, rows - 5.5]]) { ink(C.s2, (c) => { c.beginPath(); c.arc(a, b, 4.2, 0, Math.PI * 2); c.fill(); }); ink(C.s4, (c) => { c.beginPath(); c.arc(a, b, 3.1, 0, Math.PI * 2); c.fill(); }); bead('a', a, b, 2.4); }
+    drawBeads();
+    // the cloth: indigo with a faint twill
+    const fx = 12, fy = 12, fw = cols - 24, fh = rows - 24, cx = fx + fw / 2;
+    R(fx, fy, fw, fh, C.ground);
+    for (let yy = fy; yy < fy + fh; yy++) for (let xx = fx; xx < fx + fw; xx++) if ((xx + 2 * yy) % 7 === 0) P(xx, yy, C.ground2);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // a coin: a silver disc with a raised rim and a little stamped rosette; a bell: a domed cup with a clapper
+    const coins = [], bells = [];
+    const hang = (a, b, len, kind, r = 3) => { ink(C.s3, (c) => c.fillRect(a - 0.5, b, 1, len)); (kind === 'c' ? coins : bells).push([a, b + len + (kind === 'c' ? r - 0.5 : 0), r]); };
+    const drawHangers = () => {
+      ink(C.s4, (c) => disc(c, coins, 0.6));
+      ink(C.s2, (c) => disc(c, coins));
+      ink(C.s1, (c) => disc(c, coins, -1.4, -0.2, -0.2));
+      ink(C.s3, (c) => { for (const [a, b, r] of coins) { c.fillRect(a - 0.5, b - 0.5, 1, 1); for (let k = 0; k < 6; k++) { const t = k * Math.PI / 3; c.fillRect(a + Math.cos(t) * r * 0.55 - 0.4, b + Math.sin(t) * r * 0.55 - 0.4, 0.8, 0.8); } } });
+      ink(C.s4, (c) => { for (const [a, b, r] of bells) { c.beginPath(); c.moveTo(a - r * 0.4, b); c.quadraticCurveTo(a - r, b + r * 0.6, a - r * 1.05, b + r * 1.5); c.lineTo(a + r * 1.05, b + r * 1.5); c.quadraticCurveTo(a + r, b + r * 0.6, a + r * 0.4, b); c.fill(); } });
+      ink(C.s2, (c) => { for (const [a, b, r] of bells) { c.beginPath(); c.moveTo(a - r * 0.3, b + 0.4); c.quadraticCurveTo(a - r * 0.8, b + r * 0.6, a - r * 0.8, b + r * 1.2); c.lineTo(a + r * 0.3, b + r * 1.2); c.quadraticCurveTo(a + r * 0.3, b + r * 0.5, a + r * 0.1, b + 0.4); c.fill(); } });
+      ink(C.s4, (c) => { for (const [a, b, r] of bells) { c.beginPath(); c.arc(a, b + r * 1.8, 0.9, 0, Math.PI * 2); c.fill(); } });
+      coins.length = 0; bells.length = 0;
+    };
+    // points spaced `step` apart along the lower half of an ellipse round (ex, ey), from angle t0 to t1
+    const along = (ex, ey, rx, ry, t0, t1, step) => {
+      const pts = []; let acc = step, px = null, py = null;
+      for (let k = 0; k <= 600; k++) { const t = t0 + (t1 - t0) * k / 600, qx = ex - Math.cos(t) * rx, qy = ey + Math.sin(t) * ry; if (px !== null) acc += Math.hypot(qx - px, qy - py); if (acc >= step) { pts.push([qx, qy, t]); acc = 0; } px = qx; py = qy; }
+      return pts;
+    };
+    // the great necklace: three strands hanging in a deep U (silver, then red glass and amber, then small silver),
+    // a fringe of coins with bells at its ends, and a round pendant with a red stone and a fan of coins
+    const NY = fy - 4;
+    const outer = along(cx, NY, 56, 62, 0.12, Math.PI - 0.12, 4.6);
+    along(cx, NY, 49, 55, 0.14, Math.PI - 0.14, 4.2).forEach(([a, b], i) => bead(i % 3 === 1 ? 'r' : 'a', a, b, 2.1));
+    ink(C.s3, (c) => { c.lineWidth = 1; c.beginPath(); c.ellipse(cx, NY, 43, 49, 0, 0.16, Math.PI - 0.16); c.stroke(); });
+    along(cx, NY, 43, 49, 0.2, Math.PI - 0.2, 5).forEach(([a, b]) => bead('s', a, b, 1.6));
+    for (const tier of [1, 0]) { outer.forEach(([a, b, t], i) => { if (i % 2 === tier && t > 0.55 && t < Math.PI - 0.55 && Math.abs(t - Math.PI / 2) > 0.16) hang(a, b + 1.6, i % 2 ? 6 : 2, (t < 0.75 || t > Math.PI - 0.75) ? 'b' : 'c', (t < 0.75 || t > Math.PI - 0.75) ? 2.2 : 2.8); }); drawHangers(); }
+    outer.forEach(([a, b]) => bead('s', a, b, 2.4));
+    drawBeads();
+    const py = NY + 62 + 9;
+    for (const [dx, len] of [[-9, 3], [-4.6, 6], [0, 8], [4.6, 6], [9, 3]]) hang(cx + dx, py + 6, len, 'c', 2.8);
+    drawHangers();
+    ink(C.s4, (c) => { c.beginPath(); c.arc(cx, py, 10.6, 0, Math.PI * 2); c.fill(); });
+    ink(C.s2, (c) => { c.beginPath(); c.arc(cx, py, 9.6, 0, Math.PI * 2); c.fill(); });
+    ink(C.s1, (c) => { for (let k = 0; k < 18; k++) { const t = k * Math.PI / 9; c.beginPath(); c.arc(cx + Math.cos(t) * 8.2, py + Math.sin(t) * 8.2, 0.75, 0, Math.PI * 2); c.fill(); } });
+    ink(C.s3, (c) => { c.lineWidth = 1; c.beginPath(); c.arc(cx, py, 6.4, 0, Math.PI * 2); c.stroke(); });
+    for (let k = 0; k < 8; k++) { const t = k * Math.PI / 4 + Math.PI / 8; bead('a', cx + Math.cos(t) * 6.4, py + Math.sin(t) * 6.4, 1.3); }
+    bead('r', cx, py, 3.8);
+    drawBeads();
+    // bracelets at the top: chunky rings with a crown of knobs and red beads between
+    const bracelet = (bx, by, r) => {
+      ink(C.s4, (c) => { c.beginPath(); c.arc(bx, by, r + 1, 0, Math.PI * 2); c.arc(bx, by, r - 5, 0, Math.PI * 2, true); c.fill(); });
+      ink(C.s2, (c) => { c.beginPath(); c.arc(bx - 0.4, by - 0.4, r, 0, Math.PI * 2); c.arc(bx, by, r - 4, 0, Math.PI * 2, true); c.fill(); });
+      ink(C.s1, (c) => { c.lineWidth = 1; c.beginPath(); c.arc(bx, by, r - 2, Math.PI * 1.05, Math.PI * 1.55); c.stroke(); });
+      for (let k = 0; k < 12; k++) { const t = k * Math.PI / 6; bead(k % 2 ? 'r' : 's', bx + Math.cos(t) * (r - 2), by + Math.sin(t) * (r - 2), k % 2 ? 1.5 : 2.2); }
+      drawBeads();
+    };
+    // anklets at the bottom: a twisted silver band, a row of little bells hanging from its lower half
+    const anklet = (bx, by, r) => {
+      for (let k = 0; k < 9; k++) { const t = Math.PI * (0.1 + 0.8 * k / 8); hang(bx - Math.cos(t) * r, by + Math.sin(t) * r + 1, 1.5 + Math.sin(t) * 1.5, 'b', 2); }
+      drawHangers();
+      ink(C.s4, (c) => { c.lineWidth = 3.6; c.beginPath(); c.arc(bx, by, r, 0, Math.PI * 2); c.stroke(); });
+      ink(C.s2, (c) => { c.lineWidth = 1.5; for (let k = 0; k < 22; k++) { const t = k * Math.PI / 11; c.beginPath(); c.arc(bx, by, r, t, t + 0.17); c.stroke(); } });
+      ink(C.s1, (c) => { c.lineWidth = 1; c.beginPath(); c.arc(bx, by, r - 0.4, Math.PI * 1.1, Math.PI * 1.45); c.stroke(); });
+      for (const t of [0, Math.PI]) bead('r', bx + Math.cos(t) * r, by + Math.sin(t) * r, 2); drawBeads();
+    };
+    for (const sg of [-1, 1]) {
+      bracelet(cx + sg * 70, fy + 22, 13);
+      anklet(cx + sg * 70, fy + fh - 28, 11);
+      // a loop of amber beads with red ones between, and an earring hoop with a coin
+      along(cx + sg * 30, fy + 64, 13, 16, 0.25, Math.PI - 0.25, 3.8).forEach(([a, b], i) => bead(i % 3 === 1 ? 'r' : 'a', a, b, 2));
+      drawBeads();
+      const ex = cx + sg * 46, ey = fy + 62;
+      ink(C.s2, (c) => { c.lineWidth = 1.3; c.beginPath(); c.arc(ex, ey, 5.2, 0, Math.PI * 2); c.stroke(); });
+      bead('r', ex, ey - 5.2, 1.7); drawBeads();
+      hang(ex, ey + 5.2, 1, 'c', 2.8); drawHangers();
+      // a finger ring with a red stone
+      const rx = cx + sg * 24, ry = fy + fh - 10;
+      ink(C.s4, (c) => { c.lineWidth = 2.2; c.beginPath(); c.ellipse(rx, ry, 5, 3.4, 0, 0, Math.PI * 2); c.stroke(); });
+      ink(C.s2, (c) => { c.lineWidth = 1; c.beginPath(); c.ellipse(rx, ry - 0.3, 5, 3.4, 0, Math.PI * 0.9, Math.PI * 2.1); c.stroke(); });
+      ink(C.s2, (c) => { c.beginPath(); c.arc(rx, ry - 3.6, 3, 0, Math.PI * 2); c.fill(); });
+      bead('r', rx, ry - 3.6, 2.1); drawBeads();
+    }
+    x.restore();
+  });
+}
+
+// Dates: arching date-palm fronds, hanging bunches of golden, orange and dark brown dates on their orange strands, a
+// coiled palm-leaf basket heaped with dates, on warm sand; a border of frond leaflets in herringbone.
+function jorDates(ctx, W, H) {
+  const C = { sand: '#ecd29a', sand2: '#dcbc7c', edge: '#5a3a1a', green: '#6f9a48', green2: '#42692c', green3: '#a2c26a', stalk: '#e09a34', stalk2: '#a8682a',
+    gold: '#f2c440', gold2: '#c88a24', orange: '#e0702a', orange2: '#a8441c', brown: '#6a2e14', brown2: '#3a160a', hi: '#f8e2a0', straw: '#d8b064', straw2: '#9c7034', red: '#b8382a' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(a, b, 1, 1); };
+    const ink = (col, f) => sweInk(x, col, f);
+    // the border: on dark green, a frond running along each side, its leaflets pointing the same way all round;
+    // date clusters at the corners
+    R(0, 0, cols, rows, C.edge);
+    R(1, 1, cols - 2, rows - 2, C.green2);
+    const leaf2 = [];
+    const side = (len, at) => { const { n, d } = evenSteps(len, 4); for (let i = 0; i < n; i++) { const [a, b] = at(i * d + 0.5, 0), [a1, b1] = at(i * d + 3.6, 3.4), [a2, b2] = at(i * d + 3.6, -3.4); leaf2.push([a, b, a1, b1], [a, b, a2, b2]); } };
+    side(cols - 22, (t, o) => [11 + t, 5.5 + o]); side(cols - 22, (t, o) => [cols - 11 - t, rows - 5.5 - o]);
+    side(rows - 22, (t, o) => [5.5 + o, rows - 11 - t]); side(rows - 22, (t, o) => [cols - 5.5 - o, 11 + t]);
+    ink(C.green, (c) => { c.lineWidth = 1; for (const [a, b, e, f] of leaf2) { c.beginPath(); c.moveTo(a, b); c.lineTo(e, f); c.stroke(); } });
+    ink(C.green3, (c) => { c.lineWidth = 0.7; for (const [a, b, e, f] of leaf2) { c.beginPath(); c.moveTo(a + (e - a) * 0.35, b + (f - b) * 0.35); c.lineTo(e, f); c.stroke(); } });
+    ink(C.stalk2, (c) => { c.lineWidth = 1; c.strokeRect(11, 5.5, cols - 22, 0.01); c.strokeRect(11, rows - 5.5, cols - 22, 0.01); c.strokeRect(5.5, 11, 0.01, rows - 22); c.strokeRect(cols - 5.5, 11, 0.01, rows - 22); });
+    for (const [a, b] of [[1, 1], [cols - 10, 1], [1, rows - 10], [cols - 10, rows - 10]]) {
+      R(a, b, 9, 9, C.edge);
+      for (const [dx, dy, col] of [[2, 3, C.orange], [6, 3, C.gold], [4, 6, C.brown]]) { x.fillStyle = col; x.beginPath(); x.ellipse(a + dx + 0.5, b + dy + 0.5, 1.6, 2.2, 0, 0, Math.PI * 2); x.fill(); }
+      P(a + 4, b + 1, C.stalk); P(a + 4, b + 2, C.stalk);
+    }
+    for (const [o, col] of [[10, C.edge], [11, C.green3]]) { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); }
+    const fx = 12, fy = 12, fw = cols - 24, fh = rows - 24, cx = fx + fw / 2;
+    R(fx, fy, fw, fh, C.sand);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    for (let yy = fy; yy < fy + fh; yy++) for (let xx = fx; xx < fx + fw; xx++) if ((xx * 7 + yy * 13) % 23 === 0) P(xx, yy, C.sand2);
+    // the palm's crown at the top: fronds spread out from it, a curved rib (p0 to p1 through c1) with stiff leaflets
+    // either side, shorter towards the tip
+    const fronds = [];
+    const crown = [cx, fy - 6];
+    for (const sg of [-1, 1]) {
+      fronds.push([crown, [cx + sg * 40, fy - 10], [cx + sg * 92, fy + 8], 15]);
+      fronds.push([crown, [cx + sg * 44, fy + 2], [cx + sg * 86, fy + 44], 15]);
+      fronds.push([crown, [cx + sg * 34, fy + 12], [cx + sg * 58, fy + 70], 13]);
+      fronds.push([crown, [cx + sg * 20, fy - 8], [cx + sg * 50, fy - 2], 9]);
+    }
+    const ribAt = (f, t) => { const [p0, c1, p1] = f, m = 1 - t; return [m * m * p0[0] + 2 * m * t * c1[0] + t * t * p1[0], m * m * p0[1] + 2 * m * t * c1[1] + t * t * p1[1]]; };
+    const leafs = [];
+    for (const f of fronds) {
+      let acc = 0, prev = ribAt(f, 0.08), k = 0;
+      for (let i = 1; i <= 300; i++) {
+        const t = 0.08 + 0.92 * i / 300, q = ribAt(f, t); acc += Math.hypot(q[0] - prev[0], q[1] - prev[1]); prev = q;
+        if (acc < 3.4) continue; acc = 0; k++;
+        const [bx2, by2] = ribAt(f, Math.min(1, t + 0.01)), ang = Math.atan2(by2 - q[1], bx2 - q[0]), len = f[3] * (1 - t * 0.62);
+        for (const sg of [-1, 1]) { const a2 = ang + sg * 0.62; leafs.push([q[0], q[1], q[0] + Math.cos(a2) * len, q[1] + Math.sin(a2) * len + len * 0.3, sg * Math.sign(Math.cos(ang) || 1)]); }
+      }
+    }
+    ink(C.green2, (c) => { c.lineWidth = 1.2; c.lineCap = 'round'; for (const [a, b, e, f2, up] of leafs) if (up > 0) { c.beginPath(); c.moveTo(a, b); c.lineTo(e, f2); c.stroke(); } });
+    ink(C.green, (c) => { c.lineWidth = 1.2; c.lineCap = 'round'; for (const [a, b, e, f2, up] of leafs) if (up < 0) { c.beginPath(); c.moveTo(a, b); c.lineTo(e, f2); c.stroke(); } });
+    ink(C.green3, (c) => { c.lineWidth = 0.6; for (const [a, b, e, f2, up] of leafs) if (up < 0) { c.beginPath(); c.moveTo(a + (e - a) * 0.3, b + (f2 - b) * 0.3); c.lineTo(a + (e - a) * 0.7, b + (f2 - b) * 0.7); c.stroke(); } });
+    ink(C.stalk2, (c) => { c.lineWidth = 1.6; for (const f of fronds) { c.beginPath(); const [p0, c1, p1] = f; c.moveTo(...p0); c.quadraticCurveTo(...c1, ...p1); c.stroke(); } });
+    // hanging bunches: a thick orange stalk out of the crown, then strands hanging down, each hung with dates
+    const bunch = (bx, by0, len, spread, n, body, shade) => {
+      const strands = [];
+      for (let k = 0; k < n; k++) { const t = n > 1 ? k / (n - 1) - 0.5 : 0; strands.push([[bx + t * 8, by0], [bx + t * spread * 1.1, by0 + len * 0.45], [bx + t * spread * 0.8, by0 + len * (0.8 + 0.2 * Math.cos(t * 3.4))]]); }
+      ink(C.stalk2, (c) => { c.lineWidth = 3.4; c.beginPath(); c.moveTo(cx + (bx - cx) * 0.2, fy - 2); c.quadraticCurveTo(bx, fy, bx, by0 + 1); c.stroke(); });
+      ink(C.stalk, (c) => { c.lineWidth = 1.6; c.beginPath(); c.moveTo(cx + (bx - cx) * 0.2 - 0.6, fy - 2); c.quadraticCurveTo(bx - 0.6, fy, bx - 0.6, by0 + 1); c.stroke(); c.lineWidth = 1; for (const [p0, c1, p1] of strands) { c.beginPath(); c.moveTo(...p0); c.quadraticCurveTo(...c1, ...p1); c.stroke(); } });
+      const ds = [];
+      strands.forEach((st, si) => { for (let t = 0.14 + (si % 2) * 0.07; t <= 1.001; t += 0.15) { const m = 1 - t, [p0, c1, p1] = st, qx = m * m * p0[0] + 2 * m * t * c1[0] + t * t * p1[0], qy = m * m * p0[1] + 2 * m * t * c1[1] + t * t * p1[1]; ds.push([qx, qy + 1.6]); } });
+      ink(shade, (c) => { for (const [a, b] of ds) { c.beginPath(); c.ellipse(a, b, 2, 2.8, 0, 0, Math.PI * 2); c.fill(); } });
+      ink(body, (c) => { for (const [a, b] of ds) { c.beginPath(); c.ellipse(a - 0.4, b - 0.5, 1.3, 2, 0, 0, Math.PI * 2); c.fill(); } });
+      for (const [a, b] of ds) P(Math.round(a - 1), Math.round(b - 2), C.hi);
+    };
+    bunch(cx - 32, fy + 16, 38, 24, 7, C.gold, C.gold2);
+    bunch(cx + 32, fy + 16, 38, 24, 7, C.brown, C.brown2);
+    bunch(cx, fy + 12, 44, 28, 8, C.orange, C.orange2);
+    // the basket: coiled palm leaf, in bands of natural straw with dyed red and green rows, heaped with dark dates
+    const bx = cx, by = fy + fh - 3, bw = 24, bh = 20;
+    const heap = [];
+    for (let r = 0; r < 4; r++) for (let k = -6 + r; k <= 6 - r; k++) heap.push([bx + k * 3.6 + (r % 2) * 1.8, by - bh - 1 - r * 2.6]);
+    ink(C.brown2, (c) => { for (const [a, b] of heap) { c.beginPath(); c.ellipse(a, b, 2.2, 1.6, 0, 0, Math.PI * 2); c.fill(); } });
+    ink(C.brown, (c) => { for (const [a, b] of heap) { c.beginPath(); c.ellipse(a - 0.4, b - 0.4, 1.4, 1, 0, 0, Math.PI * 2); c.fill(); } });
+    for (const [a, b] of heap) P(Math.round(a - 1), Math.round(b - 1), C.hi);
+    const basket = (c, grow) => { c.beginPath(); c.moveTo(bx - bw - grow, by - bh - grow); c.lineTo(bx + bw + grow, by - bh - grow); c.quadraticCurveTo(bx + bw * 0.98 + grow, by - 2, bx + bw * 0.7, by + grow); c.lineTo(bx - bw * 0.7, by + grow); c.quadraticCurveTo(bx - bw * 0.98 - grow, by - 2, bx - bw - grow, by - bh - grow); c.fill(); };
+    ink(C.straw2, (c) => { c.lineWidth = 2.2; for (const sg of [-1, 1]) { c.beginPath(); c.ellipse(bx + sg * (bw + 2), by - bh + 4, 3.6, 4.6, 0, -Math.PI / 2, Math.PI / 2, sg < 0); c.stroke(); } });
+    ink(C.straw2, (c) => basket(c, 1));
+    ink(C.straw, (c) => basket(c, 0));
+    x.save(); basket(x, 0); x.clip();
+    for (let k = 0; k < 10; k++) {
+      const y0 = by - bh + 1 + k * 2.2, col = k === 3 || k === 7 ? C.red : k === 5 ? C.green2 : null;
+      if (col) R(bx - bw - 2, Math.round(y0), 2 * bw + 4, 2, col);
+      for (let xx = bx - bw; xx < bx + bw; xx += 2) P(Math.round(xx + (k % 2)), Math.round(y0) + 1, col ? (col === C.red ? C.orange2 : C.green) : C.straw2);
+    }
+    x.restore();
+    ink(C.straw2, (c) => { c.fillRect(bx - bw - 1, by - bh - 1, 2 * bw + 2, 2); });
+    ink(C.straw, (c) => { for (let xx = bx - bw; xx < bx + bw; xx += 2) c.fillRect(xx, by - bh - 1, 1, 1); });
+    // round coiled trays either side, each heaped with dates of one kind
+    const tray = (tx, ty, rx, body, shade) => {
+      ink(C.straw2, (c) => { c.beginPath(); c.ellipse(tx, ty, rx + 1, rx * 0.36 + 1, 0, 0, Math.PI * 2); c.fill(); });
+      ink(C.straw, (c) => { c.beginPath(); c.ellipse(tx, ty - 0.4, rx, rx * 0.36, 0, 0, Math.PI * 2); c.fill(); });
+      ink(C.red, (c) => { c.lineWidth = 1; c.beginPath(); c.ellipse(tx, ty - 0.4, rx * 0.8, rx * 0.36 * 0.8, 0, 0, Math.PI * 2); c.stroke(); });
+      ink(C.green2, (c) => { c.lineWidth = 1; c.beginPath(); c.ellipse(tx, ty - 0.4, rx * 0.58, rx * 0.36 * 0.58, 0, 0, Math.PI * 2); c.stroke(); });
+      const ds = []; for (let r = 0; r < 3; r++) for (let k = -3 + r; k <= 3 - r; k++) ds.push([tx + k * 3.8 + (r % 2) * 1.9, ty - 1.6 - r * 2.8]);
+      ink(shade, (c) => { for (const [a, b] of ds) { c.beginPath(); c.ellipse(a, b, 2.3, 1.7, 0, 0, Math.PI * 2); c.fill(); } });
+      ink(body, (c) => { for (const [a, b] of ds) { c.beginPath(); c.ellipse(a - 0.4, b - 0.4, 1.5, 1.1, 0, 0, Math.PI * 2); c.fill(); } });
+      for (const [a, b] of ds) P(Math.round(a - 1), Math.round(b - 1), C.hi);
+    };
+    tray(bx - 58, by - 6, 19, C.gold, C.gold2);
+    tray(bx + 58, by - 6, 19, C.orange, C.orange2);
+    for (const [dx, dy, col] of [[-30, -1, C.brown], [-33, 1, C.orange], [31, 0, C.gold], [34, -2, C.brown]]) {
+      const sh = col === C.brown ? C.brown2 : col === C.gold ? C.gold2 : C.orange2;
+      ink(sh, (c) => { c.beginPath(); c.ellipse(bx + dx, by + dy, 2.6, 1.7, 0.3, 0, Math.PI * 2); c.fill(); });
+      ink(col, (c) => { c.beginPath(); c.ellipse(bx + dx - 0.4, by + dy - 0.4, 1.8, 1.1, 0.3, 0, Math.PI * 2); c.fill(); });
+      P(Math.round(bx + dx - 1), Math.round(by + dy - 1), C.hi);
+    }
+    x.restore();
+  });
+}
+
+// A camel standing on (x, y) facing right, h tall to the top of its hump, for the picture rugs: long legs, a hump,
+// the neck curving forward and up to a small head; `saddle` lays a plain cloth over the hump.
+function jorCamel(ctx, x, y, h, dir, body, shade, saddle, cloth) {
+  const s = h / 20;
+  ctx.save(); ctx.translate(x, y); ctx.scale(dir * s, s);
+  const leg = (lx, a, col) => { ctx.strokeStyle = col; ctx.lineWidth = 2.4; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(lx, -12); ctx.lineTo(lx + a * 0.5, -5.5); ctx.lineTo(lx + a, -0.8); ctx.stroke(); };
+  leg(-6, 0.8, shade); leg(5.2, -0.6, shade);
+  ctx.fillStyle = body;
+  ctx.beginPath(); ctx.ellipse(-0.4, -13.4, 8.6, 4.4, 0, 0, Math.PI * 2); ctx.fill();           // body
+  ctx.beginPath(); ctx.ellipse(-1.2, -16.6, 5.2, 4, 0, 0, Math.PI * 2); ctx.fill();             // hump
+  ctx.beginPath(); ctx.moveTo(5, -16.4); ctx.quadraticCurveTo(8.6, -14.6, 10.8, -16.6); ctx.quadraticCurveTo(11.8, -18.6, 12, -20.6);
+  ctx.lineTo(14.6, -20.2); ctx.quadraticCurveTo(14.4, -14, 11.2, -11.6); ctx.quadraticCurveTo(8.6, -10.4, 6.6, -10.6); ctx.closePath(); ctx.fill(); // neck
+  ctx.beginPath(); ctx.ellipse(14.4, -20.4, 3.2, 1.8, 0.25, 0, Math.PI * 2); ctx.fill();       // head
+  ctx.fillRect(11.6, -22.6, 1.2, 1.8);                                                          // ear
+  ctx.strokeStyle = body; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(-8.8, -14); ctx.quadraticCurveTo(-10, -11, -9.6, -8.4); ctx.stroke(); // tail
+  leg(-3.4, -0.6, body); leg(7.4, 0.5, body);
+  if (saddle) {
+    ctx.fillStyle = cloth; ctx.beginPath(); ctx.moveTo(-6.2, -16); ctx.quadraticCurveTo(-1.2, -22.4, 3.8, -16); ctx.lineTo(3.2, -11.2); ctx.lineTo(-5.6, -11.2); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = saddle; ctx.beginPath(); ctx.ellipse(-1.2, -19.8, 3.6, 1.6, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillRect(-0.7, -22.4, 1.2, 2.8);
+  }
+  ctx.restore();
+}
+
+// A small standing figure (no face): a robe, a head, a headscarf, h tall.
+function jorFigure(ctx, x, y, h, robe, head, scarf) {
+  const s = h / 10;
+  ctx.fillStyle = robe; ctx.beginPath(); ctx.moveTo(x - 1.6 * s, y); ctx.lineTo(x - 1.1 * s, y - 6.8 * s); ctx.quadraticCurveTo(x, y - 7.6 * s, x + 1.1 * s, y - 6.8 * s); ctx.lineTo(x + 1.6 * s, y); ctx.fill();
+  ctx.fillStyle = head; ctx.beginPath(); ctx.arc(x, y - 8.4 * s, 1.3 * s, 0, Math.PI * 2); ctx.fill();
+  if (scarf) { ctx.fillStyle = scarf; ctx.beginPath(); ctx.arc(x, y - 8.7 * s, 1.4 * s, Math.PI, 0); ctx.lineTo(x + 1.5 * s, y - 6.6 * s); ctx.lineTo(x - 1.5 * s, y - 6.6 * s); ctx.fill(); }
+}
+
+// The Treasury at Petra seen through the end of the Siq: the rose-pink carved facade glowing in sunlight, two
+// storeys of columns, a pediment and the round tholos, between dark canyon walls; a camel and two small figures.
+function jorPetra(ctx, W, H) {
+  const u = H / 100;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const rect = (x0, y0, x1, y1, col) => { ctx.fillStyle = col; ctx.fillRect(x0 * W, y0 * H, (x1 - x0) * W, (y1 - y0) * H); };
+  const R1 = '#ffdcc0', R2 = '#f6a282', R3 = '#d6745e', R4 = '#983e36', R5 = '#5a2228';
+  // the cliff the facade is cut into: warm rose rock with darker seams
+  const cliff = ctx.createLinearGradient(0, 0, 0, H); cliff.addColorStop(0, '#d8866e'); cliff.addColorStop(1, '#eaa080');
+  ctx.fillStyle = cliff; ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = '#bc6e5c'; ctx.lineWidth = 2 * u;
+  for (const [a, b, c, d] of [[0.3, 0.04, 0.42, 0.02], [0.56, 0.03, 0.7, 0.05], [0.28, 0.5, 0.31, 0.7], [0.7, 0.45, 0.68, 0.7]]) { ctx.beginPath(); ctx.moveTo(a * W, b * H); ctx.lineTo(c * W, d * H); ctx.stroke(); }
+  // the facade, recessed: a shadowed niche, then the two storeys
+  rect(0.315, 0.06, 0.685, 0.84, R4);
+  // lower storey: a floor, six columns with capitals, a dark doorway in the middle, the entablature and pediment
+  rect(0.3, 0.8, 0.7, 0.86, R3);
+  rect(0.3, 0.8, 0.7, 0.815, R2);
+  const colX = [0.335, 0.395, 0.455, 0.545, 0.605, 0.665], cw = 0.026;
+  rect(0.47, 0.56, 0.53, 0.8, R5);                                        // doorway
+  rect(0.462, 0.545, 0.538, 0.56, R2);
+  for (const cx of colX) {
+    rect(cx - cw / 2, 0.5, cx + cw / 2, 0.8, R2);
+    rect(cx + cw * 0.12, 0.5, cx + cw / 2, 0.8, R3);
+    rect(cx - cw / 2, 0.5, cx - cw * 0.2, 0.8, R1);
+    rect(cx - cw * 0.8, 0.475, cx + cw * 0.8, 0.505, R1);                 // capital
+    rect(cx - cw * 0.7, 0.785, cx + cw * 0.7, 0.8, R1);                   // base
+  }
+  rect(0.31, 0.43, 0.69, 0.478, R2);                                      // entablature
+  rect(0.31, 0.455, 0.69, 0.462, R3);
+  rect(0.31, 0.43, 0.69, 0.438, R1);
+  poly([[0.38, 0.432], [0.5, 0.345], [0.62, 0.432]], R1);                 // pediment
+  poly([[0.405, 0.424], [0.5, 0.362], [0.595, 0.424]], R3);
+  // upper storey: two side pavilions with half pediments, the round tholos in the middle with a conical roof and urn
+  rect(0.31, 0.39, 0.69, 0.43, R3);
+  for (const sg of [-1, 1]) {
+    const px0 = sg < 0 ? 0.315 : 0.585, px1 = sg < 0 ? 0.415 : 0.685;
+    rect(px0, 0.17, px1, 0.4, R4);
+    for (const cx of sg < 0 ? [0.33, 0.395] : [0.605, 0.67]) { rect(cx - 0.012, 0.18, cx + 0.012, 0.4, R2); rect(cx + 0.003, 0.18, cx + 0.012, 0.4, R3); rect(cx - 0.016, 0.165, cx + 0.016, 0.185, R1); }
+    rect(px0, 0.14, px1, 0.17, R2);
+    // the half pediment, rising towards the tholos
+    const inner = sg < 0 ? px1 : px0, outer = sg < 0 ? px0 : px1;
+    poly([[outer, 0.142], [inner, 0.142], [inner, 0.075]], R1);
+    poly([[outer + sg * -0.012, 0.136], [inner - sg * 0.008, 0.136], [inner - sg * 0.008, 0.095]], R3);
+  }
+  rect(0.455, 0.17, 0.545, 0.4, R2);                                      // tholos drum
+  rect(0.47, 0.19, 0.53, 0.39, R4);
+  rect(0.49, 0.19, 0.51, 0.39, R2); rect(0.503, 0.19, 0.51, 0.39, R3);
+  rect(0.455, 0.17, 0.47, 0.4, R1); rect(0.53, 0.17, 0.545, 0.4, R3);
+  rect(0.448, 0.155, 0.552, 0.175, R1);
+  poly([[0.452, 0.157], [0.5, 0.075], [0.548, 0.157]], R2);               // conical roof
+  poly([[0.5, 0.075], [0.548, 0.157], [0.515, 0.157]], R3);
+  ctx.fillStyle = R1; ctx.beginPath(); ctx.ellipse(W * 0.5, H * 0.06, 1.6 * u, 2.2 * u, 0, 0, Math.PI * 2); ctx.fill();   // urn
+  rect(0.494, 0.068, 0.506, 0.085, R1);
+  // sunlight sweeping across the lower facade, and shade on its upper right
+  ctx.save(); ctx.globalAlpha = 0.1; ctx.fillStyle = '#fff0d0'; ctx.beginPath(); ctx.moveTo(W * 0.28, H * 0.86); ctx.lineTo(W * 0.28, H * 0.3); ctx.lineTo(W * 0.66, H * 0.86); ctx.fill(); ctx.restore();
+  rect(0.47, 0.56, 0.53, 0.8, R5); rect(0.477, 0.575, 0.523, 0.8, '#4a2026');
+  // the sandy floor of the Siq: lit in front of the Treasury, in shadow towards us
+  const floor = ctx.createLinearGradient(0, H * 0.84, 0, H); floor.addColorStop(0, '#eebc92'); floor.addColorStop(1, '#c88a68');
+  ctx.fillStyle = floor; ctx.fillRect(0, H * 0.84, W, H * 0.16);
+  // the canyon walls: dark, banded rock framing the view, lit along their edges
+  const wall = (pts, sg, edgeCol) => {
+    ctx.save(); poly(pts, '#3a1e24'); ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.clip();
+    // bands of sandstone sweeping down towards the gap, lighter nearer the light
+    const cols = ['#4e2830', '#6a3436', '#5a2c32', '#82443e', '#4a262c', '#9a5448'];
+    for (let k = 0; k < 16; k++) {
+      ctx.strokeStyle = cols[k % cols.length]; ctx.lineWidth = (2.4 + (k * 7 % 3)) * u; ctx.beginPath();
+      for (let t = 0; t <= 1.001; t += 0.04) { const xx = sg < 0 ? W * 0.42 * t : W * (1 - 0.42 * t), yy = H * (-0.2 + k * 0.085) + H * 0.3 * t * t + Math.sin(t * 6 + k * 1.3) * 2.4 * u; t ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); }
+      ctx.stroke();
+    }
+    // the glow of reflected light near the edge
+    const g = ctx.createLinearGradient(sg < 0 ? W * 0.18 : W * 0.82, 0, sg < 0 ? W * 0.4 : W * 0.6, 0); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(220,120,90,.35)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+    ctx.strokeStyle = edgeCol; ctx.lineWidth = 2.6 * u; ctx.lineJoin = 'round'; ctx.beginPath(); pts.slice(0, -3).forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.stroke();
+  };
+  wall([[0.35, -0.02], [0.32, 0.08], [0.34, 0.18], [0.3, 0.3], [0.32, 0.42], [0.28, 0.56], [0.3, 0.68], [0.25, 0.82], [0.26, 0.92], [0.21, 1.02], [-0.02, 1.02], [-0.02, -0.02]], -1, '#c06a54');
+  wall([[0.65, -0.02], [0.685, 0.1], [0.665, 0.2], [0.7, 0.33], [0.685, 0.46], [0.72, 0.6], [0.71, 0.72], [0.76, 0.86], [0.74, 0.94], [0.79, 1.02], [1.02, 1.02], [1.02, -0.02]], 1, '#a45a4c');
+  // shadow cast across the floor by the walls
+  ctx.fillStyle = 'rgba(70,30,30,.35)'; ctx.beginPath(); ctx.moveTo(0, H * 0.9); ctx.lineTo(W * 0.3, H * 0.86); ctx.lineTo(W * 0.4, H); ctx.lineTo(0, H); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(W, H * 0.92); ctx.lineTo(W * 0.72, H * 0.88); ctx.lineTo(W * 0.66, H); ctx.lineTo(W, H); ctx.fill();
+  // a camel with a plain red cloth, resting in front, and two small figures
+  ctx.fillStyle = 'rgba(80,40,30,.4)'; ctx.beginPath(); ctx.ellipse(W * 0.6, H * 0.96, 10 * u, 1.4 * u, 0, 0, Math.PI * 2); ctx.fill();
+  jorCamel(ctx, W * 0.6, H * 0.96, 21 * u, -1, '#7e5436', '#563824', '#2e1c16', '#c0303a');
+  for (const [fx2, robe, scarf] of [[0.43, '#f2ece0', '#c03a34'], [0.465, '#2f4a7a', '#e8dcc0']]) {
+    ctx.fillStyle = 'rgba(80,40,30,.35)'; ctx.beginPath(); ctx.ellipse(W * fx2 + 1.4 * u, H * 0.955, 3 * u, 0.9 * u, 0, 0, Math.PI * 2); ctx.fill();
+    jorFigure(ctx, W * fx2, H * 0.955, 11 * u, robe, '#8a5a40', scarf);
+  }
+}
+
+// Wadi Rum at sunset: towering sandstone massifs with domed tops and fluted cliffs, red sand, a Bedouin camp of
+// black tents with a fire glowing, a line of camels walking past, long shadows, a pink and orange sky.
+function jorWadiRum(ctx, W, H) {
+  const u = H / 100;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.62); sky.addColorStop(0, '#5a3f84'); sky.addColorStop(0.35, '#b0588a'); sky.addColorStop(0.65, '#ec7a6a'); sky.addColorStop(0.88, '#f6a85c'); sky.addColorStop(1, '#fad488');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  // the low sun, and wisps of cloud catching the light
+  ctx.fillStyle = '#fbd27a'; ctx.beginPath(); ctx.arc(W * 0.6, H * 0.4, 8.6 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#fff0bc'; ctx.beginPath(); ctx.arc(W * 0.6, H * 0.4, 6.4 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#f6b0a0'; for (const [a, b, w] of [[0.18, 0.12, 14], [0.27, 0.15, 9], [0.7, 0.09, 16], [0.82, 0.13, 10], [0.48, 0.2, 8]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, w * u, 1.3 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // far hazy ranges
+  poly([[0, 0.52], [0.06, 0.42], [0.12, 0.4], [0.18, 0.46], [0.3, 0.44], [0.36, 0.38], [0.44, 0.4], [0.5, 0.48], [0.66, 0.47], [0.72, 0.4], [0.8, 0.38], [0.88, 0.44], [1, 0.42], [1, 0.76], [0, 0.76]], '#b8607a');
+  poly([[0, 0.56], [0.1, 0.5], [0.2, 0.52], [0.3, 0.49], [0.42, 0.54], [0.52, 0.53], [0.64, 0.55], [0.74, 0.5], [0.86, 0.52], [1, 0.5], [1, 0.76], [0, 0.76]], '#9a4a62');
+  // a massif: a steep block with a rounded, melting top; lit on its right face, fluted with dark gullies
+  const massif = (x0, x1, top, base, domes, litFrom) => {
+    const pts = [[x0, base]];
+    domes.forEach(([dx, dy, w]) => { pts.push([dx - w, top + dy + 0.09]); for (let k = 0; k <= 10; k++) { const t = k / 10; pts.push([dx - w + 2 * w * t, top + dy + 0.09 - Math.pow(Math.sin(t * Math.PI), 0.7) * 0.1]); } });
+    pts.push([x1, base]);
+    poly(pts, '#7c2e2c');
+    ctx.save(); ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.clip();
+    // the sunlit face
+    const lit = ctx.createLinearGradient(W * litFrom, 0, W * x1, 0); lit.addColorStop(0, 'rgba(232,110,60,0)'); lit.addColorStop(0.35, 'rgba(232,110,60,.85)'); lit.addColorStop(1, '#f08a4a');
+    ctx.fillStyle = lit; ctx.fillRect(0, 0, W, H);
+    // vertical flutes and horizontal ledges
+    for (let k = 0; k < 40; k++) { const fx = x0 + (x1 - x0) * (k + 0.5) / 40; ctx.fillStyle = k % 3 === 0 ? 'rgba(80,24,28,.55)' : 'rgba(80,24,28,.25)'; ctx.fillRect(W * fx, H * (top + 0.06 + (k * 7 % 5) * 0.02), (k % 3 === 0 ? 1.6 : 1) * u, H); }
+    ctx.fillStyle = 'rgba(90,30,30,.4)'; for (const ly of [0.5, 0.62]) ctx.fillRect(0, H * (top + (base - top) * ly), W, 1.4 * u);
+    ctx.fillStyle = 'rgba(70,30,40,.45)'; ctx.fillRect(0, H * (top + (base - top) * 0.74), W, H);
+    ctx.restore();
+  };
+  massif(-0.02, 0.36, 0.08, 0.72, [[0.03, 0.05, 0.05], [0.12, 0, 0.06], [0.21, 0.03, 0.05], [0.3, 0.07, 0.06]], 0.12);
+  massif(0.7, 1.02, 0.16, 0.72, [[0.75, 0.04, 0.05], [0.84, 0, 0.05], [0.93, 0.02, 0.05], [1.0, 0.05, 0.04]], 0.78);
+  massif(0.44, 0.56, 0.38, 0.7, [[0.47, 0.02, 0.03], [0.53, 0, 0.035]], 0.48);
+  // scree at the foot of the cliffs
+  poly([[0, 0.66], [0.08, 0.62], [0.2, 0.64], [0.34, 0.63], [0.42, 0.69], [0.42, 0.74], [0, 0.74]], '#a8463a');
+  poly([[0.68, 0.7], [0.76, 0.66], [0.88, 0.65], [1, 0.66], [1, 0.74], [0.66, 0.74]], '#a8463a');
+  // the red sand: dunes lit on their sunward sides, with long shadows reaching left
+  const sand = ctx.createLinearGradient(0, H * 0.68, 0, H); sand.addColorStop(0, '#d8703c'); sand.addColorStop(1, '#c45a32');
+  ctx.fillStyle = sand; ctx.beginPath(); ctx.moveTo(0, H * 0.72); for (let t = 0; t <= 1.001; t += 0.02) ctx.lineTo(W * t, H * (0.71 + 0.02 * Math.sin(t * 9))); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill();
+  const dune = (x0, x1, y, h, col, sh) => {
+    ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(W * x0, H * y); ctx.quadraticCurveTo(W * (x0 + (x1 - x0) * 0.6), H * (y - h), W * x1, H * y); ctx.fill();
+    ctx.fillStyle = sh; ctx.beginPath(); ctx.moveTo(W * x0, H * y); ctx.quadraticCurveTo(W * (x0 + (x1 - x0) * 0.35), H * (y - h * 0.7), W * (x0 + (x1 - x0) * 0.6), H * (y - h * 0.98)); ctx.lineTo(W * (x0 + (x1 - x0) * 0.5), H * y); ctx.fill();
+  };
+  dune(0.1, 0.5, 0.86, 0.06, '#ec8c4c', '#a84434');
+  dune(0.55, 0.98, 0.9, 0.07, '#ec8c4c', '#a84434');
+  dune(-0.1, 0.25, 1.0, 0.08, '#f09a58', '#b04c36');
+  dune(0.4, 0.8, 1.02, 0.07, '#f09a58', '#b04c36');
+  // the Bedouin camp: long black tents on poles, open at the front, a fire glowing, and their shadows
+  const tent = (cx, by, w, h) => {
+    const x0 = W * cx - w / 2;
+    ctx.fillStyle = 'rgba(110,40,50,.55)'; ctx.beginPath(); ctx.moveTo(x0, by); ctx.lineTo(x0 - w * 0.9, by + 1.2 * u); ctx.lineTo(x0 - w * 0.7, by + 3 * u); ctx.lineTo(x0 + w * 0.9, by + 1.6 * u); ctx.fill();
+    // the roof: goat-hair cloth sagging between three tall poles, pegged down at the ends
+    ctx.fillStyle = '#2a1c1e'; ctx.beginPath(); ctx.moveTo(x0 - w * 0.06, by);
+    ctx.lineTo(x0 + w * 0.08, by - h * 0.78);
+    for (const [t, pk] of [[0.25, 1], [0.5, 0.82], [0.75, 1]]) { ctx.quadraticCurveTo(x0 + w * (t - 0.12), by - h * (pk === 1 ? 0.8 : 0.84), x0 + w * t, by - h * pk); }
+    ctx.quadraticCurveTo(x0 + w * 0.86, by - h * 0.8, x0 + w * 0.92, by - h * 0.78); ctx.lineTo(x0 + w * 1.06, by); ctx.fill();
+    // the open front: a shaded inside, poles, and lamplight
+    ctx.fillStyle = '#5a3a32'; ctx.fillRect(x0 + w * 0.14, by - h * 0.62, w * 0.72, h * 0.62);
+    ctx.fillStyle = '#7a4a36'; ctx.fillRect(x0 + w * 0.14, by - h * 0.22, w * 0.72, h * 0.22);
+    ctx.fillStyle = '#2a1c1e'; for (const t of [0.25, 0.5, 0.75]) ctx.fillRect(x0 + w * t - 0.7 * u, by - h * 0.9, 1.4 * u, h * 0.9);
+    ctx.fillStyle = '#f0b050'; ctx.fillRect(x0 + w * 0.36, by - h * 0.42, 2.2 * u, 2.2 * u);
+  };
+  tent(0.18, H * 0.8, 26 * u, 10 * u);
+  tent(0.34, H * 0.775, 18 * u, 7.4 * u);
+  ctx.fillStyle = '#ffd27a'; ctx.beginPath(); ctx.arc(W * 0.285, H * 0.83, 1.8 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#f07a3a'; ctx.beginPath(); ctx.arc(W * 0.285, H * 0.83 + 0.8 * u, 1.2 * u, 0, Math.PI * 2); ctx.fill();
+  // the caravan: camels walking right to left, a rider on the first, each with a long shadow behind it
+  const camels = [[0.5, 0.88, 12.5], [0.6, 0.885, 12], [0.7, 0.89, 12.5], [0.8, 0.895, 11.5], [0.89, 0.9, 12]];
+  for (const [cx, cy, h] of camels) { ctx.fillStyle = 'rgba(100,36,44,.55)'; ctx.beginPath(); ctx.moveTo(W * cx + 4 * u, H * cy); ctx.lineTo(W * cx - 16 * u, H * cy + 0.6 * u); ctx.lineTo(W * cx - 15 * u, H * cy + 2.4 * u); ctx.lineTo(W * cx + 5 * u, H * cy + 1.4 * u); ctx.fill(); }
+  camels.forEach(([cx, cy, h], i) => jorCamel(ctx, W * cx, H * cy, h * u, -1, '#3e2622', '#2a1a1a', i % 2 ? null : '#2a1a1a', '#a8302e'));
+  jorFigure(ctx, W * 0.5 + 0.6 * u, H * 0.88 - 11.6 * u, 7 * u, '#f0e6d4', '#3e2622', '#c03a34');
+  // a few desert shrubs
+  ctx.fillStyle = '#6a5a3a'; for (const [a, b, r] of [[0.06, 0.9, 1.6], [0.42, 0.95, 1.4], [0.94, 0.97, 1.8], [0.36, 0.84, 1.2]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, r * 1.6 * u, r * u, 0, 0, Math.PI * 2); ctx.fill(); }
+}
+
+// The Dead Sea shore: white salt mushrooms standing in milky turquoise water, salt terraces holding little pools, a
+// cracked salt crust in front, the hazy mountains of Moab across the water and one bather floating on the sea.
+function jorDeadSea(ctx, W, H) {
+  const u = H / 100;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.42); sky.addColorStop(0, '#8fbcd8'); sky.addColorStop(0.6, '#cfe0e4'); sky.addColorStop(1, '#f2e4d2');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#fbf2dc'; ctx.beginPath(); ctx.arc(W * 0.82, H * 0.12, 5 * u, 0, Math.PI * 2); ctx.fill();
+  // the mountains of Moab across the water: flat-topped, cut by gullies, softened by haze
+  poly([[0, 0.34], [0.08, 0.27], [0.16, 0.26], [0.24, 0.3], [0.32, 0.24], [0.44, 0.23], [0.52, 0.28], [0.6, 0.25], [0.72, 0.24], [0.8, 0.29], [0.9, 0.26], [1, 0.28], [1, 0.42], [0, 0.42]], '#cdaeb2');
+  ctx.strokeStyle = '#bb9aa2'; ctx.lineWidth = 1.6 * u; for (let k = 0; k < 14; k++) { const gx = 0.04 + k * 0.07; ctx.beginPath(); ctx.moveTo(W * gx, H * 0.3); ctx.lineTo(W * (gx + 0.02), H * 0.4); ctx.stroke(); }
+  poly([[0, 0.38], [0.12, 0.35], [0.26, 0.37], [0.4, 0.34], [0.56, 0.37], [0.7, 0.35], [0.86, 0.37], [1, 0.35], [1, 0.42], [0, 0.42]], '#b89aa4');
+  // the sea: milky turquoise, paler in the distance, with a sheen of light bands
+  const sea = ctx.createLinearGradient(0, H * 0.41, 0, H * 0.8); sea.addColorStop(0, '#b6e0d8'); sea.addColorStop(0.35, '#7ccfc6'); sea.addColorStop(1, '#4fb6b4');
+  ctx.fillStyle = sea; ctx.fillRect(0, H * 0.41, W, H * 0.59);
+  ctx.fillStyle = '#d6f0e8'; for (let k = 0; k < 16; k++) ctx.fillRect(W * (((k * 37) % 100) / 100), H * (0.45 + ((k * 13) % 30) / 100), (5 + (k % 4) * 3) * u, 0.7 * u);
+  // the far shore line of salt
+  ctx.fillStyle = '#f4f2ea'; ctx.fillRect(0, H * 0.41, W, 0.9 * u);
+  // the bather, floating on their back with arms out
+  const fx = W * 0.62, fy = H * 0.52;
+  ctx.fillStyle = 'rgba(40,120,120,.35)'; ctx.beginPath(); ctx.ellipse(fx, fy + 1.4 * u, 9 * u, 1.8 * u, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#d89a74'; ctx.lineCap = 'round'; ctx.strokeStyle = '#d89a74'; ctx.lineWidth = 1.5 * u;
+  ctx.beginPath(); ctx.moveTo(fx - 3 * u, fy); ctx.lineTo(fx - 4.5 * u, fy - 3.4 * u); ctx.moveTo(fx - 3 * u, fy); ctx.lineTo(fx - 4.2 * u, fy + 3 * u); ctx.stroke();  // arms
+  ctx.beginPath(); ctx.moveTo(fx + 3 * u, fy - 0.6 * u); ctx.lineTo(fx + 9 * u, fy - 1.2 * u); ctx.moveTo(fx + 3 * u, fy + 0.6 * u); ctx.lineTo(fx + 9 * u, fy + 1 * u); ctx.stroke(); // legs
+  ctx.beginPath(); ctx.arc(fx - 6.4 * u, fy, 1.7 * u, 0, Math.PI * 2); ctx.fill();               // head
+  ctx.fillStyle = '#c8303a'; ctx.beginPath(); ctx.ellipse(fx, fy, 3.8 * u, 1.9 * u, 0, 0, Math.PI * 2); ctx.fill();   // swimsuit
+  ctx.fillStyle = '#e6f6f0'; ctx.beginPath(); ctx.ellipse(fx, fy + 2.4 * u, 11 * u, 0.6 * u, 0, 0, Math.PI * 2); ctx.fill();
+  // salt mushrooms standing in the shallows: a lumpy white stalk with a shadowed side, a broad crusted cap of
+  // several bulges, a pale reflection in the water
+  const mush = (mx, my, sh, cw) => {
+    const X = W * mx, Y = H * my;
+    ctx.fillStyle = 'rgba(200,240,232,.6)'; ctx.fillRect(X - cw * 0.22 * u, Y, cw * 0.44 * u, sh * 0.35 * u);
+    ctx.fillStyle = 'rgba(30,110,110,.35)'; ctx.beginPath(); ctx.ellipse(X, Y + 0.4 * u, cw * 0.55 * u, 1.3 * u, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e8eeec'; ctx.beginPath(); ctx.moveTo(X - cw * 0.34 * u, Y); ctx.quadraticCurveTo(X - cw * 0.14 * u, Y - sh * u * 0.55, X - cw * 0.24 * u, Y - sh * u); ctx.lineTo(X + cw * 0.24 * u, Y - sh * u); ctx.quadraticCurveTo(X + cw * 0.14 * u, Y - sh * u * 0.55, X + cw * 0.34 * u, Y); ctx.fill();
+    ctx.fillStyle = '#b6caca'; ctx.beginPath(); ctx.moveTo(X + cw * 0.04 * u, Y); ctx.quadraticCurveTo(X + cw * 0.08 * u, Y - sh * u * 0.55, X + cw * 0.04 * u, Y - sh * u); ctx.lineTo(X + cw * 0.24 * u, Y - sh * u); ctx.quadraticCurveTo(X + cw * 0.14 * u, Y - sh * u * 0.55, X + cw * 0.34 * u, Y); ctx.fill();
+    ctx.fillStyle = '#d4e2e0'; for (let k = 0; k < 3; k++) ctx.fillRect(X - cw * 0.2 * u, Y - sh * u * (0.3 + k * 0.22), cw * 0.24 * u, 0.9 * u);
+    const top = Y - sh * u;
+    const bulges = [[-0.2, 0, 0.24, 0.3], [0.1, -0.5, 0.26, 0.36], [0.3, 0.2, 0.16, 0.24]];
+    ctx.fillStyle = '#a8bcbe'; for (const [dx, dy, rx, ry] of bulges) { ctx.beginPath(); ctx.ellipse(X + (dx + 0.03) * cw * u, top + dy * u + 1.2 * u, rx * cw * u, ry * cw * u, 0, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = '#fbfbf6'; for (const [dx, dy, rx, ry] of bulges) { ctx.beginPath(); ctx.ellipse(X + dx * cw * u, top + dy * u, rx * cw * u, ry * cw * u * 0.9, 0, Math.PI * 0.95, Math.PI * 2.05); ctx.fill(); }
+  };
+  mush(0.07, 0.6, 7, 10); mush(0.37, 0.585, 6, 9); mush(0.29, 0.635, 10, 13); mush(0.16, 0.71, 16, 19); mush(0.45, 0.56, 4, 6);
+  // salt terraces on the right: scalloped white rims, each holding a pool of paler water, stepping down to the sea
+  const rim = (x0, y0, k) => { const pts = []; for (let t = 0; t <= 1.001; t += 0.01) { const xx = x0 + (1.03 - x0) * t; pts.push([W * xx, H * (y0 - 0.05 * t + 0.009 * Math.abs(Math.sin(t * Math.PI * (5 + k))))]); } return pts; };
+  const terr = [[0.62, 0.69], [0.55, 0.77], [0.48, 0.855]];
+  terr.forEach(([x0, y0], k) => {
+    const top = rim(x0 + 0.05, y0 - 0.06, k + 1), r = rim(x0, y0, k);
+    ctx.fillStyle = '#a8e0d6'; ctx.beginPath(); r.forEach(([a2, b2], i) => (i ? ctx.lineTo(a2, b2) : ctx.moveTo(a2, b2))); for (let i = top.length - 1; i >= 0; i--) ctx.lineTo(...top[i]); ctx.closePath(); ctx.fill();
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#a8bcbe'; ctx.lineWidth = 2.6 * u; ctx.beginPath(); r.forEach(([a2, b2], i) => (i ? ctx.lineTo(a2, b2 + 1.4 * u) : ctx.moveTo(a2, b2 + 1.4 * u))); ctx.stroke();
+    ctx.strokeStyle = '#fbfbf4'; ctx.lineWidth = 2.4 * u; ctx.beginPath(); r.forEach(([a2, b2], i) => (i ? ctx.lineTo(a2, b2) : ctx.moveTo(a2, b2))); ctx.stroke();
+  });
+  // the cracked salt crust along the front, with a pool or two
+  poly([[0, 0.8], [0.2, 0.78], [0.42, 0.82], [0.5, 0.86], [0.7, 0.88], [1, 0.9], [1, 1], [0, 1]], '#f2f0e6');
+  poly([[0, 0.8], [0.2, 0.78], [0.42, 0.82], [0.5, 0.86], [0.7, 0.88], [1, 0.9], [1, 0.915], [0.7, 0.9], [0.5, 0.878], [0.42, 0.838], [0.2, 0.8], [0, 0.82]], '#d0dcda');
+  ctx.fillStyle = '#8fd6cc'; for (const [a, b, rx, ry] of [[0.18, 0.9, 7, 1.8], [0.4, 0.95, 9, 1.6], [0.78, 0.96, 6, 1.4]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, rx * u, ry * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.save(); ctx.beginPath(); ctx.moveTo(0, H * 0.83); ctx.lineTo(W * 0.2, H * 0.81); ctx.lineTo(W * 0.42, H * 0.85); ctx.lineTo(W * 0.5, H * 0.89); ctx.lineTo(W * 0.7, H * 0.91); ctx.lineTo(W, H * 0.93); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath(); ctx.clip();
+  // salt plates: slightly raised white polygons with grey seams between them
+  ctx.fillStyle = '#cdd8d6'; ctx.fillRect(0, H * 0.8, W, H * 0.2);
+  const R = rng(5);
+  for (let j = 0; j < 4; j++) for (let i = -1; i < 17; i++) {
+    const px = W * ((i + (j % 2) * 0.5) / 15 + (R() - 0.5) * 0.02), py = H * (0.835 + j * 0.05 + (R() - 0.5) * 0.01);
+    ctx.fillStyle = (i + j) % 3 ? '#f4f2ea' : '#fbfaf4'; ctx.beginPath();
+    for (let k = 0; k < 6; k++) { const t = k * Math.PI / 3 + R() * 0.3; ctx.lineTo(px + Math.cos(t) * W * 0.03, py + Math.sin(t) * H * 0.022); }
+    ctx.fill();
+  }
+  ctx.fillStyle = '#8fd6cc'; for (const [a, b, rx, ry] of [[0.18, 0.92, 7, 1.8], [0.42, 0.96, 9, 1.6], [0.8, 0.97, 6, 1.4]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, rx * u, ry * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.restore();
+}
+
+// Jerash: standing at the edge of the Roman city's oval plaza, its Ionic columns sweeping round in a great curve
+// under a continuous architrave, the paving laid in rings, the colonnaded main street leaving it to the north.
+function jorJerash(ctx, W, H) {
+  const u = H / 100;
+  const S1 = '#fdecc4', S2 = '#efc884', S3 = '#c48f52', S4 = '#7e5430';
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.6); sky.addColorStop(0, '#3a7fcc'); sky.addColorStop(1, '#c4e2ee');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f6f8f8'; for (const [a, b, r] of [[0.3, 0.1, 5], [0.35, 0.08, 6], [0.4, 0.11, 4], [0.76, 0.14, 5], [0.82, 0.12, 6.5], [0.88, 0.15, 4]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, r * 1.8 * u, r * 0.8 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // the camera: standing just inside the ring on its south-west side, looking north
+  const hy = H * 0.54, F = W * 0.42, EYE = 2.2, CX = -16, CZ = -24;
+  const P = (X, Z) => [W * 0.5 + F * (X - CX) / (Z - CZ), hy + F * EYE / (Z - CZ)];
+  // low hills on the horizon, olive trees, the dry ground
+  ctx.fillStyle = '#93a07a'; ctx.beginPath(); ctx.moveTo(0, hy + 1 * u); for (let k = 0; k <= 40; k++) { const t = k / 40; ctx.lineTo(W * t, hy - (2.6 + 2 * Math.sin(t * 7) + 1.4 * Math.sin(t * 17)) * u); } ctx.lineTo(W, hy + 1 * u); ctx.fill();
+  ctx.fillStyle = '#5f733e'; for (let k = 0; k < 26; k++) { ctx.beginPath(); ctx.arc(W * ((k * 37 % 100) / 100), hy - (1 + (k % 3)) * u, 1.3 * u, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#b8a26a'; ctx.fillRect(0, hy, W, H - hy);
+  const quad = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a, b) : ctx.moveTo(a, b))); ctx.closePath(); ctx.fill(); };
+  // the plaza's paving in rings with radial joints, and the street's paving leaving it northwards
+  const RX = 30, RZ = 24, near = -CZ - 2;
+  const ring = (k) => { const pts = []; for (let i = 0; i <= 160; i++) { const a = i / 160 * Math.PI * 2, Z = RZ * k * Math.sin(a); if (Z - CZ < 1.5) continue; pts.push(P(RX * k * Math.cos(a), Z)); } return pts; };
+  quad([P(-7, RZ - 2), P(7, RZ - 2), P(7, 3000), P(-7, 3000)], '#dcc9a0');
+  quad(ring(1), '#e8d6ae');
+  ctx.strokeStyle = S3; ctx.lineWidth = 1.6 * u; ctx.beginPath(); ring(1.005).forEach(([a, b], i) => (i ? ctx.lineTo(a, b) : ctx.moveTo(a, b))); ctx.stroke();
+  for (let k = 1; k < 10; k++) { ctx.strokeStyle = k % 2 ? '#b89c6c' : '#f4e6c8'; ctx.lineWidth = (k % 2 ? 1.3 : 1.8) * u; ctx.beginPath(); ring(k / 10).forEach(([a, b], i) => (i ? ctx.lineTo(a, b) : ctx.moveTo(a, b))); ctx.stroke(); }
+  ctx.strokeStyle = '#c8b088'; ctx.lineWidth = 0.9 * u; for (let k = 0; k < 24; k++) { const a = k * Math.PI / 12; ctx.beginPath(); let first = true; for (let r = 0.12; r <= 1.001; r += 0.04) { const Z = RZ * r * Math.sin(a); if (Z - CZ < 1.5) continue; const [qx, qy] = P(RX * r * Math.cos(a), Z); first ? ctx.moveTo(qx, qy) : ctx.lineTo(qx, qy); first = false; } ctx.stroke(); }
+  // a column at world (X, Z): base, shaft lit on the left, an Ionic capital with two scrolls; returns its top
+  const column = (X, Z, hgt) => {
+    const d = Z - CZ, [x, y] = P(X, Z), h = F * hgt / d, w = Math.max(1.6 * u, F * 1.1 / d);
+    ctx.fillStyle = 'rgba(110,80,40,.3)'; ctx.beginPath(); ctx.moveTo(x - w / 2, y); ctx.lineTo(x + w / 2, y); ctx.lineTo(x + w / 2 + h * 0.3, y + w * 0.5); ctx.lineTo(x - w / 2 + h * 0.3, y + w * 0.5); ctx.fill();
+    ctx.fillStyle = S3; ctx.fillRect(x - w * 0.75, y - w * 0.5, w * 1.5, w * 0.6);
+    ctx.fillStyle = S2; ctx.fillRect(x - w / 2, y - h, w, h);
+    ctx.fillStyle = S1; ctx.fillRect(x - w / 2, y - h, w * 0.4, h);
+    ctx.fillStyle = S3; ctx.fillRect(x + w * 0.16, y - h, w * 0.34, h);
+    ctx.fillStyle = S1; ctx.fillRect(x - w * 0.9, y - h - w * 0.5, w * 1.8, w * 0.55);
+    ctx.fillStyle = S4; for (const sg of [-1, 1]) { ctx.beginPath(); ctx.arc(x + sg * w * 0.68, y - h - w * 0.22, w * 0.27, 0, Math.PI * 2); ctx.fill(); }
+    return [x, y - h - w * 0.5, d];
+  };
+  const beam = (p, q) => { const d = (p[2] + q[2]) / 2, t = Math.max(1.4 * u, F * 0.9 / d); ctx.lineCap = 'butt'; ctx.strokeStyle = S4; ctx.lineWidth = t * 1.4; ctx.beginPath(); ctx.moveTo(p[0], p[1] - t * 0.2); ctx.lineTo(q[0], q[1] - t * 0.2); ctx.stroke(); ctx.strokeStyle = S2; ctx.lineWidth = t; ctx.beginPath(); ctx.moveTo(p[0], p[1] - t * 0.6); ctx.lineTo(q[0], q[1] - t * 0.6); ctx.stroke(); ctx.strokeStyle = S1; ctx.lineWidth = t * 0.3; ctx.beginPath(); ctx.moveTo(p[0], p[1] - t * 0.95); ctx.lineTo(q[0], q[1] - t * 0.95); ctx.stroke(); };
+  // the street's colonnades, far to near
+  for (const [X, Zs] of [[-7.5, [44, 35, 27]], [7.5, [160, 118, 88, 66, 50, 38, 28]]]) { let prev = null; for (const Z of Zs) { const top = column(X, Z, 9); if (prev) beam(prev, top); prev = top; } }
+  // the plaza's colonnade, far columns first, with a gap where the street leaves it
+  const n = 40, list = [];
+  for (let i = 0; i < n; i++) { const a = (i + 0.5) / n * Math.PI * 2, X = RX * Math.cos(a), Z = RZ * Math.sin(a); if (Math.abs(X) < 9 && Z > 0) continue; if (Z - CZ < 6) continue; const [sx] = P(X, Z); if (sx < -W * 0.2 || sx > W * 1.2) continue; list.push([i, X, Z]); }
+  const tops = {};
+  for (const [i, X, Z] of [...list].sort((p, q) => q[2] - p[2])) {
+    tops[i] = column(X, Z, 9.5);
+    for (const j of [(i + n - 1) % n, (i + 1) % n]) if (tops[j]) beam(tops[j], tops[i]);
+  }
+  // two small visitors crossing the plaza
+  for (const [X, Z, robe, scarf] of [[-10, -12, '#2f4a7a', null], [-13, -15, '#8a3434', '#f2ece0']]) { const [x, y] = P(X, Z), h = F * 1.7 / (Z - CZ); ctx.fillStyle = 'rgba(110,80,40,.35)'; ctx.beginPath(); ctx.ellipse(x + h * 0.2, y, h * 0.25, h * 0.06, 0, 0, Math.PI * 2); ctx.fill(); jorFigure(ctx, x, y, h, robe, '#7a5038', scarf); }
+}
+
+// The coral reef at Aqaba, under water: an orange brain coral, pink and purple branching corals, a sea fan, an
+// anemone with two clownfish, a turtle gliding over, a shoal of orange anthias, light rays through blue water.
+function jorAqaba(ctx, W, H) {
+  const u = H / 100;
+  const sea = ctx.createLinearGradient(0, 0, 0, H); sea.addColorStop(0, '#62cadc'); sea.addColorStop(0.45, '#2b8cc4'); sea.addColorStop(1, '#1c4c8e');
+  ctx.fillStyle = sea; ctx.fillRect(0, 0, W, H);
+  // the surface far above, rippling, and rays of light slanting down
+  ctx.fillStyle = '#a8e6ee'; ctx.beginPath(); ctx.moveTo(0, 0); for (let t = 0; t <= 1.001; t += 0.02) ctx.lineTo(W * t, H * 0.04 + Math.sin(t * 30) * 1.2 * u); ctx.lineTo(W, 0); ctx.fill();
+  ctx.save(); ctx.globalAlpha = 0.14; ctx.fillStyle = '#ffffff';
+  for (const [x0, w] of [[0.08, 0.05], [0.22, 0.08], [0.4, 0.04], [0.55, 0.07], [0.74, 0.05]]) { ctx.beginPath(); ctx.moveTo(W * x0, 0); ctx.lineTo(W * (x0 + w), 0); ctx.lineTo(W * (x0 + w + 0.22), H); ctx.lineTo(W * (x0 + 0.16), H); ctx.fill(); }
+  ctx.restore();
+  // the sandy bottom with ripples
+  ctx.fillStyle = '#d8cc9c'; ctx.beginPath(); ctx.moveTo(0, H); ctx.lineTo(0, H * 0.86); for (let t = 0; t <= 1.001; t += 0.05) ctx.lineTo(W * t, H * (0.86 + 0.02 * Math.sin(t * 8))); ctx.lineTo(W, H); ctx.fill();
+  ctx.fillStyle = '#bcae7e'; for (let k = 0; k < 14; k++) ctx.fillRect(W * ((k * 37 % 100) / 100), H * (0.9 + (k * 7 % 9) / 100), (4 + k % 3 * 2) * u, 0.8 * u);
+  // the reef itself: lumpy mounds of rock on both sides, sand between them and along the front
+  const mound = (cx, cy, rx, ry, col, col2) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(cx * W, cy * H, rx * W, ry * H, 0, Math.PI, 0); ctx.fill(); ctx.fillStyle = col2; for (let k = 0; k < 5; k++) { ctx.beginPath(); ctx.ellipse((cx - rx * 0.6 + k * rx * 0.3) * W, (cy - ry * (0.35 + 0.25 * Math.sin(k * 2.1))) * H, rx * 0.12 * W, ry * 0.12 * H, 0, 0, Math.PI * 2); ctx.fill(); } };
+  mound(0.08, 0.95, 0.16, 0.3, '#6e5e58', '#86766a'); mound(0.26, 0.97, 0.14, 0.2, '#665650', '#7e6e64');
+  mound(0.92, 0.95, 0.15, 0.34, '#6e5e58', '#86766a'); mound(0.76, 0.98, 0.13, 0.22, '#665650', '#7e6e64');
+  ctx.fillStyle = '#d8cc9c'; ctx.beginPath(); ctx.moveTo(0, H); ctx.lineTo(0, H * 0.95); for (let t = 0; t <= 1.001; t += 0.05) ctx.lineTo(W * t, H * (0.95 + 0.012 * Math.sin(t * 11))); ctx.lineTo(W, H); ctx.fill();
+  // a sea fan at the back: a crimson fan of branching lines
+  const branch = (x, y, ang, len, w, depth, col, spread = 0.45, shrink = 0.72) => {
+    const x2 = x + Math.cos(ang) * len, y2 = y + Math.sin(ang) * len;
+    ctx.strokeStyle = col; ctx.lineWidth = w; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x2, y2); ctx.stroke();
+    if (depth > 0) { branch(x2, y2, ang - spread, len * shrink, w * 0.8, depth - 1, col, spread, shrink); branch(x2, y2, ang + spread, len * shrink, w * 0.8, depth - 1, col, spread, shrink); }
+  };
+  for (const a of [-2.3, -1.95, -1.57, -1.2, -0.85]) branch(W * 0.9, H * 0.64, a, 8 * u, 1.6 * u, 3, '#c8344e', 0.28, 0.8);
+  ctx.strokeStyle = '#c8344e'; ctx.lineWidth = 0.9 * u; for (let k = 1; k < 4; k++) { ctx.beginPath(); ctx.arc(W * 0.9, H * 0.64, k * 8 * u, Math.PI * 1.22, Math.PI * 1.78); ctx.stroke(); }
+  // branching staghorn corals, pink on the left of centre, purple on the right
+  const stag = (x, y, col, tip, n) => { for (let k = 0; k < n; k++) branch(x + (k - n / 2) * 2.4 * u, y, -Math.PI / 2 + (k - (n - 1) / 2) * 0.32, 8 * u, 2.6 * u, 3, col, 0.42, 0.74); ctx.fillStyle = tip; };
+  stag(W * 0.4, H * 0.94, '#e2628e', '#f6a0c0', 5);
+  stag(W * 0.76, H * 0.8, '#9a62c4', '#c8a0e8', 4);
+  stag(W * 0.07, H * 0.68, '#e2628e', '#f6a0c0', 3);
+  stag(W * 0.24, H * 0.8, '#9a62c4', '#c8a0e8', 3);
+  // the brain coral: a big orange dome with winding grooves
+  const bx = W * 0.13, by = H * 0.86, brx = 14 * u, bry = 11 * u;
+  ctx.fillStyle = '#b8582a'; ctx.beginPath(); ctx.ellipse(bx, by, brx + 0.8 * u, bry + 0.8 * u, 0, Math.PI, 0); ctx.fill();
+  ctx.fillStyle = '#ec8c3e'; ctx.beginPath(); ctx.ellipse(bx, by, brx, bry, 0, Math.PI, 0); ctx.fill();
+  ctx.save(); ctx.beginPath(); ctx.ellipse(bx, by, brx, bry, 0, Math.PI, 0); ctx.clip();
+  ctx.strokeStyle = '#b8582a'; ctx.lineWidth = 1.2 * u; for (let k = 0; k < 6; k++) { ctx.beginPath(); for (let t = 0; t <= 1.001; t += 0.02) { const xx = bx - brx + 2 * brx * t, yy = by - bry + k * 2.4 * u + 2.2 * u + Math.sin(t * 14 + k * 1.7) * 1.1 * u; t ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); } ctx.stroke(); }
+  ctx.fillStyle = 'rgba(255,230,180,.35)'; ctx.beginPath(); ctx.ellipse(bx - brx * 0.3, by - bry * 0.7, brx * 0.4, bry * 0.2, -0.2, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+  // a smaller brain coral and round sponges
+  ctx.fillStyle = '#d2b040'; ctx.beginPath(); ctx.ellipse(W * 0.88, H * 0.84, 6 * u, 5 * u, 0, Math.PI, 0); ctx.fill();
+  ctx.strokeStyle = '#a07a24'; ctx.lineWidth = 1 * u; for (let k = 0; k < 2; k++) { ctx.beginPath(); ctx.ellipse(W * 0.88, H * 0.84, (4 - k * 2) * u, (3.4 - k * 1.6) * u, 0, Math.PI, 0); ctx.stroke(); }
+  for (const [a, b, r, c] of [[0.55, 0.93, 3, '#e05a4a'], [0.58, 0.95, 2.2, '#f0a030'], [0.97, 0.93, 3, '#e05a4a'], [0.66, 0.95, 2.4, '#e88aa8']]) { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(W * a, H * b, r * u, 0, Math.PI * 2); ctx.fill(); }
+  // the anemone, its tentacles swaying, and two clownfish
+  const ax = W * 0.6, ay = H * 0.95;
+  ctx.fillStyle = '#7a3a52'; ctx.beginPath(); ctx.ellipse(ax, ay, 11 * u, 4 * u, 0, 0, Math.PI * 2); ctx.fill();
+  const R = rng(9);
+  for (let k = 0; k < 34; k++) {
+    const t = R() * Math.PI, r = Math.sqrt(R()), tx2 = ax + Math.cos(t) * r * 12 * u, ty2 = ay - Math.sin(t) * r * 11 * u - 1 * u;
+    ctx.fillStyle = '#b8587a'; ctx.beginPath(); ctx.ellipse(tx2, ty2 + 0.6 * u, 1.9 * u, 2.4 * u, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = k % 3 ? '#f2a8c0' : '#d6e0a0'; ctx.beginPath(); ctx.arc(tx2 - 0.3 * u, ty2 - 0.6 * u, 1.2 * u, 0, Math.PI * 2); ctx.fill();
+  }
+  const clown = (x, y, s, dir) => {
+    ctx.save(); ctx.translate(x, y); ctx.scale(dir * s * u, s * u);
+    ctx.fillStyle = '#1a1416'; ctx.beginPath(); ctx.ellipse(0, 0, 5.4, 3, 0, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.moveTo(-4.4, 0); ctx.lineTo(-7.6, -2.8); ctx.lineTo(-7.6, 2.8); ctx.fill();
+    ctx.fillStyle = '#f2721a'; ctx.beginPath(); ctx.ellipse(0, 0, 4.8, 2.5, 0, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.moveTo(-4, 0); ctx.lineTo(-7, -2.3); ctx.lineTo(-7, 2.3); ctx.fill();
+    ctx.fillStyle = '#ffffff'; for (const bx2 of [2.4, -0.6, -3.6]) ctx.fillRect(bx2 - 0.6, -2.4, 1.3, 4.8);
+    ctx.fillStyle = '#1a1416'; ctx.fillRect(3.3, -1, 0.9, 0.9);
+    ctx.restore();
+  };
+  clown(W * 0.54, H * 0.74, 1.5, 1); clown(W * 0.67, H * 0.79, 1.3, -1);
+  // a shoal of orange anthias up in the open water
+  for (let k = 0; k < 16; k++) {
+    const fx = W * (0.08 + (k % 6) * 0.045 + (k * 7 % 5) * 0.008), fy = H * (0.18 + Math.floor(k / 6) * 0.08 + (k * 5 % 3) * 0.02);
+    ctx.fillStyle = '#f08a5a'; ctx.beginPath(); ctx.ellipse(fx, fy, 2.4 * u, 1.1 * u, 0, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.moveTo(fx - 2 * u, fy); ctx.lineTo(fx - 3.6 * u, fy - 1.2 * u); ctx.lineTo(fx - 3.6 * u, fy + 1.2 * u); ctx.fill();
+  }
+  // the turtle, gliding to the left: flippers, shell with its plates, head
+  const tx = W * 0.58, ty = H * 0.34, ts = u * 1.3;
+  ctx.save(); ctx.translate(tx, ty); ctx.rotate(-0.12); ctx.scale(ts, ts);
+  ctx.fillStyle = '#8a8a5a';
+  ctx.beginPath(); ctx.moveTo(-6, -4); ctx.quadraticCurveTo(-16, -16, -24, -14); ctx.quadraticCurveTo(-14, -6, -8, 0); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(-6, 4); ctx.quadraticCurveTo(-14, 14, -22, 15); ctx.quadraticCurveTo(-12, 6, -8, 1); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(12, -5, 5, 2.2, -0.6, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.ellipse(12, 6, 4.6, 2, 0.6, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#a8a272'; ctx.beginPath(); ctx.ellipse(-17, 0, 5.4, 3.6, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#4e5a2c'; ctx.beginPath(); ctx.ellipse(0, 0, 13, 9.5, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#7e8a40'; for (const [a, b, rx, ry] of [[0, 0, 4, 3.2], [-6.4, -3.4, 3, 2.4], [-6.4, 3.4, 3, 2.4], [6, -3.6, 3, 2.4], [6, 3.6, 3, 2.4], [-10, 0, 2, 2.6], [10, 0, 2, 2.6]]) { ctx.beginPath(); ctx.ellipse(a, b, rx, ry, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.fillStyle = '#3e4422'; ctx.fillRect(-19.6, -1.6, 1.6, 1.6);
+  ctx.restore();
+  // a few yellow and blue reef fish about the coral
+  for (const [a, b, s2, dir, body, fin] of [[0.8, 0.27, 1.6, -1, '#f2c832', '#2a3a6a'], [0.89, 0.34, 1.4, -1, '#f2c832', '#2a3a6a'], [0.84, 0.43, 1.3, -1, '#f2c832', '#2a3a6a'], [0.34, 0.5, 1.4, 1, '#f6f2e6', '#2a3a6a']]) {
+    ctx.save(); ctx.translate(W * a, H * b); ctx.scale(dir * s2 * u, s2 * u);
+    ctx.fillStyle = body; ctx.beginPath(); ctx.ellipse(0, 0, 3.6, 2.4, 0, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.moveTo(-3, 0); ctx.lineTo(-5.6, -2); ctx.lineTo(-5.6, 2); ctx.fill();
+    ctx.fillStyle = fin; ctx.fillRect(-1, -2.4, 1.4, 4.8); ctx.fillStyle = '#1a1416'; ctx.fillRect(1.8, -0.8, 0.9, 0.9);
+    ctx.restore();
+  }
+  // bubbles rising
+  ctx.strokeStyle = '#d8f4f8'; ctx.lineWidth = 0.8 * u; for (const [a, b, r] of [[0.62, 0.62, 1.2], [0.63, 0.55, 0.9], [0.615, 0.49, 1.1], [0.3, 0.6, 1], [0.31, 0.52, 1.3]]) { ctx.beginPath(); ctx.arc(W * a, H * b, r * u, 0, Math.PI * 2); ctx.stroke(); }
+}
+
+// Little scenes for the postcard letters, each a few big shapes.
+const JORDAN_SCENES = [
+  (c, w, h) => { // the Treasury at Petra: rose-red rock, pale carved columns in two storeys, a dark doorway
+    c.fillStyle = '#b4523e'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#ffd6b4'; c.fillRect(0, h * 0.44, w, h * 0.07); c.fillRect(0, h * 0.06, w, h * 0.05);
+    for (let k = 0; k < 4; k++) { const x0 = w * (0.02 + k * 0.32); c.fillRect(x0, h * 0.53, w * 0.16, h * 0.47); c.fillRect(x0 + w * 0.02, h * 0.13, w * 0.12, h * 0.3); }
+    c.beginPath(); c.moveTo(0, h * 0.44); c.lineTo(w * 0.5, h * 0.3); c.lineTo(w, h * 0.44); c.fill();
+    c.fillStyle = '#e88a6a'; for (let k = 0; k < 4; k++) c.fillRect(w * (0.12 + k * 0.32), h * 0.53, w * 0.05, h * 0.47);
+    c.fillStyle = '#4a1c20'; c.fillRect(w * 0.42, h * 0.66, w * 0.16, h * 0.34);
+  },
+  (c, w, h) => { // Wadi Rum at sunset: banded sky, the sun, red cliffs, a camel on the sand
+    for (const [y0, col] of [[0, '#6a4a94'], [0.2, '#c0588a'], [0.34, '#f0845e'], [0.46, '#f8b25a']]) { c.fillStyle = col; c.fillRect(0, h * y0, w, h); }
+    c.fillStyle = '#fff0b0'; c.beginPath(); c.arc(w * 0.5, h * 0.5, w * 0.24, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#8a2e2a'; c.beginPath(); c.moveTo(0, h * 0.8); c.lineTo(0, h * 0.5); c.quadraticCurveTo(w * 0.18, h * 0.4, w * 0.34, h * 0.52); c.lineTo(w * 0.34, h * 0.62); c.lineTo(w * 0.7, h * 0.62); c.quadraticCurveTo(w * 0.84, h * 0.46, w, h * 0.54); c.lineTo(w, h * 0.8); c.fill();
+    c.fillStyle = '#d8703c'; c.fillRect(0, h * 0.74, w, h);
+    jorCamel(c, w * 0.42, h * 0.95, h * 0.2, 1, '#2e1a18', '#2e1a18', null, null);
+  },
+  (c, w, h) => { // salt mushrooms in the Dead Sea
+    c.fillStyle = '#bfe0e6'; c.fillRect(0, 0, w, h); c.fillStyle = '#c8a8b2'; c.fillRect(0, h * 0.22, w, h * 0.12);
+    c.fillStyle = '#62c6c0'; c.fillRect(0, h * 0.34, w, h);
+    c.fillStyle = '#f8f8f2'; for (const [x0, y0, s] of [[0.3, 0.8, 1], [0.75, 0.62, 0.7]]) { c.fillRect(w * (x0 - 0.1 * s), h * (y0 - 0.3 * s), w * 0.2 * s, h * 0.3 * s); c.beginPath(); c.ellipse(w * x0, h * (y0 - 0.3 * s), w * 0.3 * s, h * 0.1 * s, 0, Math.PI, 0); c.fill(); }
+    c.fillStyle = '#f8f8f2'; c.fillRect(0, h * 0.88, w, h);
+  },
+  (c, w, h) => { // a clownfish over pink coral
+    c.fillStyle = '#2c86c0'; c.fillRect(0, 0, w, h); c.fillStyle = '#4aaad4'; c.fillRect(0, 0, w, h * 0.25);
+    c.strokeStyle = '#e6628e'; c.lineWidth = w * 0.08; c.lineCap = 'round'; for (const [x0, x1] of [[0.2, 0.05], [0.2, 0.35], [0.7, 0.55], [0.7, 0.9]]) { c.beginPath(); c.moveTo(w * x0, h); c.lineTo(w * x1, h * 0.72); c.stroke(); }
+    c.save(); c.translate(w * 0.5, h * 0.42); c.fillStyle = '#f2721a'; c.beginPath(); c.ellipse(0, 0, w * 0.32, h * 0.12, 0, 0, Math.PI * 2); c.fill(); c.beginPath(); c.moveTo(-w * 0.26, 0); c.lineTo(-w * 0.46, -h * 0.1); c.lineTo(-w * 0.46, h * 0.1); c.fill();
+    c.fillStyle = '#ffffff'; for (const bx of [0.14, -0.08]) c.fillRect(w * bx, -h * 0.12, w * 0.08, h * 0.24); c.restore();
+  },
+  (c, w, h) => { // layers of coloured sand in a bottle
+    const cols = ['#b8402c', '#f2e6c8', '#e2803a', '#3a74ae', '#f0cf6a', '#7a3020', '#8cc0dc', '#d6a246'];
+    for (let k = 0; k < 9; k++) { c.fillStyle = cols[k % cols.length]; c.beginPath(); c.moveTo(0, h); for (let t = 0; t <= 1.001; t += 0.05) c.lineTo(w * t, h * (0.02 + k * 0.11) + Math.sin(t * 7 + k) * h * 0.03); c.lineTo(w, h); c.fill(); }
+  },
+  (c, w, h) => { // hanging bunches of dates among palm fronds
+    c.fillStyle = '#3f6a2c'; c.fillRect(0, 0, w, h);
+    c.strokeStyle = '#7aa04a'; c.lineWidth = w * 0.05; for (let k = -4; k < 12; k++) { c.beginPath(); c.moveTo(0, h * k * 0.1); c.lineTo(w, h * (k * 0.1 + 0.16)); c.stroke(); }
+    const bunch = (x0, y0, col, sh) => { for (let r = 0; r < 6; r++) for (let k = 0; k < 4 - Math.floor(r / 2); k++) { const dx = (k - (3 - Math.floor(r / 2)) / 2) * w * 0.13, dy = r * h * 0.035; c.fillStyle = sh; c.beginPath(); c.ellipse(w * x0 + dx, h * y0 + dy, w * 0.07, h * 0.022, 0, 0, Math.PI * 2); c.fill(); c.fillStyle = col; c.beginPath(); c.ellipse(w * x0 + dx - w * 0.015, h * y0 + dy - h * 0.005, w * 0.045, h * 0.014, 0, 0, Math.PI * 2); c.fill(); } };
+    bunch(0.28, 0.06, '#f6c840', '#c88a24'); bunch(0.72, 0.3, '#ee7a2c', '#a8441c'); bunch(0.3, 0.56, '#7a3418', '#3a160a'); bunch(0.7, 0.78, '#f6c840', '#c88a24');
+  },
+];
+// Postcard: "Greetings from JORDAN", every letter a little Jordanian scene.
+function jorPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'JORDAN', JORDAN_SCENES); }
+
+// ---------- Morocco pack ----------
+const MOROCCO_FRAME = { dark: '#2a1812', a: '#c4683a', b: '#3b4fc8', line: '#f2e6cc' };
+
+// Cut mosaic on the knot grid: the grout lines `segs` ([ax, ay, bx, by] in knots) are laid one knot wide, every
+// piece they enclose is found, and `colorOf(mx, my, area)` (the piece's centre and size) picks its glaze.
+function morMosaic(x, cols, rows, segs, grout, colorOf) {
+  const wall = new Uint8Array(cols * rows), lab = new Int32Array(cols * rows).fill(-1);
+  for (let [ax, ay, bx, by] of segs) {
+    if (ax > bx || (ax === bx && ay > by)) [ax, ay, bx, by] = [bx, by, ax, ay];   // same knots whichever way it was given
+    const n = Math.max(1, Math.ceil(Math.max(Math.abs(bx - ax), Math.abs(by - ay))));
+    for (let k = 0; k <= n; k++) { const px = Math.floor(ax + (bx - ax) * k / n), py = Math.floor(ay + (by - ay) * k / n); if (px >= 0 && py >= 0 && px < cols && py < rows) wall[py * cols + px] = 1; }
+  }
+  x.fillStyle = grout;
+  for (let i = 0; i < cols * rows; i++) if (wall[i]) x.fillRect(i % cols, (i / cols) | 0, 1, 1);
+  const stack = [];
+  for (let s = 0; s < cols * rows; s++) {
+    if (wall[s] || lab[s] >= 0) continue;
+    const pts = []; lab[s] = s; stack.push(s);
+    let sx = 0, sy = 0;
+    while (stack.length) {
+      const i = stack.pop(), px = i % cols, py = (i / cols) | 0; pts.push(i); sx += px; sy += py;
+      for (const j of [px > 0 ? i - 1 : -1, px < cols - 1 ? i + 1 : -1, py > 0 ? i - cols : -1, py < rows - 1 ? i + cols : -1]) if (j >= 0 && !wall[j] && lab[j] < 0) { lab[j] = s; stack.push(j); }
+    }
+    // centre and size of the piece, and the first knot of it (for ring-shaped pieces whose centre lies outside them)
+    const col = colorOf(sx / pts.length + 0.5, sy / pts.length + 0.5, pts.length, s % cols + 0.5, ((s / cols) | 0) + 0.5);
+    if (!col) continue;
+    x.fillStyle = col;
+    for (const i of pts) x.fillRect(i % cols, (i / cols) | 0, 1, 1);
+  }
+}
+
+// Hankin's star lines in a regular n-gon (centre cx, cy, apothem a, first edge midpoint at angle rot): from each
+// edge's midpoint two lines lean in at the contact angle th and stop where they meet their neighbours'.
+function morHankin(segs, cx, cy, n, a, rot, th) {
+  const M = [];
+  for (let i = 0; i < n; i++) { const al = rot + (2 * Math.PI * i) / n; M.push([cx + a * Math.cos(al), cy + a * Math.sin(al), al]); }
+  for (let i = 0; i < n; i++) {
+    const [x1, y1, a1] = M[i], [x2, y2, a2] = M[(i + 1) % n];
+    const d1 = [Math.cos(th) * -Math.sin(a1) - Math.sin(th) * Math.cos(a1), Math.cos(th) * Math.cos(a1) - Math.sin(th) * Math.sin(a1)];
+    const d2 = [Math.cos(th) * Math.sin(a2) - Math.sin(th) * Math.cos(a2), -Math.cos(th) * Math.cos(a2) - Math.sin(th) * Math.sin(a2)];
+    const det = d1[0] * -d2[1] + d1[1] * d2[0], t = ((x2 - x1) * -d2[1] + (y2 - y1) * d2[0]) / det;
+    const px = x1 + t * d1[0], py = y1 + t * d1[1];
+    segs.push([x1, y1, px, py], [x2, y2, px, py]);
+  }
+}
+
+// Zellij: a cut-tile mosaic panel from Fes. A great sixteen-pointed star rosette in the middle with an
+// eight-pointed star at its heart, rings of petals and kites radiating out from it to a chain band; round it a field
+// of sharp eight-pointed stars and kites; every piece glazed emerald, cobalt, ochre, white or black with pale grout
+// between; a border of diamonds.
+function morZellij(ctx, W, H) {
+  const C = { grout: '#cbc2ad', white: '#f2eee2', black: '#1d1a1c', green: '#1d7a4a', cobalt: '#1f3f96', blue: '#3f72c4', ochre: '#dc9a2a', honey: '#a8601c', turq: '#2a9a9c', bind: '#14261e' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const segs = [], L = (ax, ay, bx, by) => segs.push([ax, ay, bx, by]);
+    const B = 13, fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B, cx = cols / 2, cy = rows / 2;
+    const RB = 43, RO = RB + 4;                                // the chain band round the rosette
+    // ---- the rosette, drawn in each sixteenth and mirrored. rose(r1, t1, r2, t2): a line from radius r1 to r2,
+    // t = 0 on a star-tip axis and 1 halfway to the next
+    const N = 16, hw = Math.PI / N;
+    const rose = (r1, t1, r2, t2) => { for (let k = 0; k < N; k++) for (const s of [-1, 1]) { const a1 = k * 2 * hw + s * t1 * hw, a2 = k * 2 * hw + s * t2 * hw; L(cx + r1 * Math.cos(a1), cy + r1 * Math.sin(a1), cx + r2 * Math.cos(a2), cy + r2 * Math.sin(a2)); } };
+    const star8 = (sx, sy, R, ri, rot) => { for (let k = 0; k < 8; k++) { const a = rot + (k * Math.PI) / 4, b = a + Math.PI / 8, c = a + Math.PI / 4; L(sx + R * Math.cos(a), sy + R * Math.sin(a), sx + ri * Math.cos(b), sy + ri * Math.sin(b)); L(sx + ri * Math.cos(b), sy + ri * Math.sin(b), sx + R * Math.cos(c), sy + R * Math.sin(c)); } };
+    const rr = [0.23, 0.38, 0.565, 0.75, 0.925].map((f) => f * RB);
+    star8(cx, cy, rr[0] * 0.72, rr[0] * 0.38, 0); // the eight-pointed star at the heart
+    rose(rr[0], 1, rr[1], 0);               // the sixteen-pointed star
+    rose(rr[1], 0, rr[2], 1);               // petals between its points
+    rose(rr[2], 1, rr[3], 0);               // kites on the tip axes
+    rose(rr[3], 0, rr[4], 1);               // kites between them
+    rose(rr[4], 1, RB, 0.55);               // darts reaching the band
+    const circ = (r, n) => { for (let k = 0; k < n; k++) { const a = (k / n) * Math.PI * 2, b = ((k + 1) / n) * Math.PI * 2; L(cx + r * Math.cos(a), cy + r * Math.sin(a), cx + r * Math.cos(b), cy + r * Math.sin(b)); } };
+    circ(RB, 96); circ(RO, 96);
+    for (let k = 0; k < 48; k++) { const a = ((k + 0.5) / 48) * Math.PI * 2; L(cx + RB * Math.cos(a), cy + RB * Math.sin(a), cx + RO * Math.cos(a), cy + RO * Math.sin(a)); }
+    // ---- the field: Hankin stars in a tiling of octagons and squares, clipped to outside the band
+    const P = 26, sq = P / (1 + Math.SQRT2), th = (75 * Math.PI) / 180, fs = [];
+    for (let i = -5; i <= 5; i++) for (let j = -3; j <= 3; j++) {
+      const ox = cx + i * P, oy = cy + j * P;
+      morHankin(fs, ox, oy, 8, P / 2, 0, th);
+      morHankin(fs, ox + P / 2, oy + P / 2, 4, sq / 2, Math.PI / 4, th);
+    }
+    for (const [ax, ay, bx, by] of fs) {
+      const n = 16; let prev = null;
+      for (let k = 0; k <= n; k++) {
+        const px = ax + (bx - ax) * k / n, py = ay + (by - ay) * k / n, ok = Math.hypot(px - cx, py - cy) > RO + 0.2 && px > fx - 1 && px < fx + fw + 1 && py > fy - 1 && py < fy + fh + 1;
+        if (ok && prev) L(prev[0], prev[1], px, py);
+        prev = ok ? [px, py] : null;
+      }
+    }
+    // ---- the border: binding, a band of diamonds between two lines, the field's edge
+    const rect = (a, b, w, h) => { L(a, b, a + w, b); L(a + w, b, a + w, b + h); L(a + w, b + h, a, b + h); L(a, b + h, a, b); };
+    rect(fx - 0.5, fy - 0.5, fw + 1, fh + 1);
+    rect(2.5, 2.5, cols - 5, rows - 5); rect(10.5, 10.5, cols - 21, rows - 21);
+    const band = (len, at) => { const { n, d } = evenSteps(len, 8); for (let i = 0; i < n; i++) { const a0 = i * d, a1 = a0 + d / 2, a2 = a0 + d; L(...at(a0, 0.5), ...at(a1, 0)); L(...at(a1, 0), ...at(a2, 0.5)); L(...at(a2, 0.5), ...at(a1, 1)); L(...at(a1, 1), ...at(a0, 0.5)); } };
+    band(cols - 26, (s, t) => [13 + s, 2.5 + t * 8]); band(cols - 26, (s, t) => [13 + s, rows - 2.5 - t * 8]);
+    band(rows - 26, (s, t) => [2.5 + t * 8, 13 + s]); band(rows - 26, (s, t) => [cols - 2.5 - t * 8, 13 + s]);
+    for (const [a, b] of [[2.5, 2.5], [cols - 13, 2.5], [2.5, rows - 13], [cols - 13, rows - 13]]) { rect(a, b, 10.5, 10.5); star8(a + 5.25, b + 5.25, 4.6, 2.4, Math.PI / 8); }
+    x.fillStyle = C.bind; x.fillRect(0, 0, cols, rows);
+    morMosaic(x, cols, rows, segs, C.grout, (mx, my, area, sx, sy) => {
+      if (sx < 2.5 || sy < 2.5 || sx > cols - 2.5 || sy > rows - 2.5) return C.bind;
+      if (sx < 10.5 || sy < 10.5 || sx > cols - 10.5 || sy > rows - 10.5) {
+        const ex = Math.min(mx - 2.5, cols - 2.5 - mx), ey = Math.min(my - 2.5, rows - 2.5 - my);
+        if (ex < 10.5 && ey < 10.5) return Math.hypot(ex - 5.25, ey - 5.25) < 2.5 ? C.ochre : Math.hypot(ex - 5.25, ey - 5.25) < 4.4 ? C.black : C.white;
+        const e = Math.min(ex, ey), along = ex < ey ? my : mx;
+        if (Math.abs(e - 4) < 1.6) return Math.round((along - 13) / 8 + 0.5) % 2 ? C.cobalt : C.green;
+        return C.white;
+      }
+      if (sx < fx || sy < fy || sx > fx + fw || sy > fy + fh) return C.black;
+      const dx = mx - cx, dy = my - cy, r = Math.hypot(dx, dy), sr = Math.hypot(sx - cx, sy - cy);
+      const a = Math.atan2(dy, dx), kA = Math.round(a / (2 * hw)), kB = Math.round((a - hw) / (2 * hw));
+      if (sr < RO + 0.5) {
+        if (sr > RB - 0.5 && r > RB - 2) return Math.floor(((a + Math.PI) / (Math.PI * 2)) * 48 + 0.5) % 2 ? C.black : C.ochre;
+        if (sr < rr[0] * 0.75 && area < 120) return C.black;
+        if (r < 3) return C.ochre;                                // the big star round it
+        if (r < rr[1] + 0.5) return (kB % 2) ? C.green : C.turq; // petals
+        if (r < rr[2] + 2) return (kA % 2) ? C.white : C.black;   // kites
+        if (r < rr[3] + 2.5) return (kB % 2) ? C.cobalt : C.white; // kites
+        return area > 14 ? C.green : C.white;                     // darts
+      }
+      // the field, by the nearest star centre
+      const gx = (mx - cx) / P, gy = (my - cy) / P, i = Math.round(gx), j = Math.round(gy), ox = (gx - i) * P, oy = (gy - j) * P, d = Math.hypot(ox, oy) / P;
+      if (d < 0.2) return (i + j) % 2 ? C.black : C.ochre;      // the stars
+      if (area < 12) return d > 0.6 ? C.cobalt : C.ochre;        // the little crosses
+      if (d < 0.62) return (i + j) % 2 ? C.white : C.green;     // kites round the stars
+      return C.black;
+    });
+  });
+}
+
+// Lanterns: pierced brass and copper lanterns of many shapes hanging on chains in the night: a tall six-sided one
+// with arched panes of coloured glass, star lanterns, pierced globes and drums, glowing amber, red, blue and green,
+// with the dots of light they throw round them; a border of pierced brass.
+function morLanterns(ctx, W, H) {
+  const C = { night: '#111a3a', night2: '#18244e', night3: '#213066', dark: '#0a0e20', brass: '#c8922e', brass2: '#80501a', copper: '#b4602c', brassL: '#f0c860', amber: '#f0a01c', amberL: '#ffe28c', red: '#c42e2a', blue: '#2f66d2', green: '#2f9a58', dot: '#e8c070' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const poly = (pts, col) => { x.fillStyle = col; x.beginPath(); pts.forEach(([a, b], i) => (i ? x.lineTo(a, b) : x.moveTo(a, b))); x.closePath(); x.fill(); };
+    const disc = (a, b, r, col) => { x.fillStyle = col; x.beginPath(); x.arc(a, b, r, 0, Math.PI * 2); x.fill(); };
+    // the border: a band of pierced brass, lit holes and dark rivets in turn, small rosettes in the corners
+    R(0, 0, cols, rows, C.dark); R(2, 2, cols - 4, rows - 4, C.brass2); R(3, 3, cols - 6, rows - 6, C.brass);
+    R(8, 8, cols - 16, rows - 16, C.brass2); R(9, 9, cols - 18, rows - 18, C.dark); R(10, 10, cols - 20, rows - 20, C.night);
+    const holes = (len, at) => { const { n, d } = evenSteps(len, 6); for (let i = 0; i < n; i++) { const [a, b] = at((i + 0.5) * d); R(Math.round(a) - 1, Math.round(b) - 1, 2, 2, C.amberL); const [c, e] = at(i * d); if (i) R(Math.round(c) - 0.5, Math.round(e) - 0.5, 1, 1, C.brass2); } };
+    holes(cols - 22, (t) => [11 + t, 5.5]); holes(cols - 22, (t) => [11 + t, rows - 5.5]);
+    holes(rows - 22, (t) => [5.5, 11 + t]); holes(rows - 22, (t) => [cols - 5.5, 11 + t]);
+    for (const [a, b] of [[5.5, 5.5], [cols - 5.5, 5.5], [5.5, rows - 5.5], [cols - 5.5, rows - 5.5]]) { disc(a, b, 3.2, C.brass2); disc(a, b, 2.2, C.amber); disc(a, b, 1, C.amberL); }
+    x.save(); x.beginPath(); x.rect(10, 10, cols - 20, rows - 20); x.clip();
+    // the lanterns: type, centre x, body centre y, size, glass colours
+    const LS = [['globe', 0.12, 0.66, 10.5, [C.red, C.blue, C.green]], ['star', 0.255, 0.38, 14, [C.red, C.amber, C.green, C.blue]], ['drum', 0.37, 0.75, 8, [C.blue, C.green]],
+      ['house', 0.5, 0.58, 13.5, [C.amber, C.red, C.blue]], ['drum', 0.63, 0.75, 8, [C.green, C.red]], ['star', 0.745, 0.38, 14, [C.blue, C.green, C.amber, C.red]], ['globe', 0.88, 0.66, 10.5, [C.green, C.amber, C.red]]];
+    const fx = 10, fy = 10, fw = cols - 20, fh = rows - 20;
+    const at = (l) => [fx + fw * l[1], fy + fh * l[2], l[3]];
+    // glows, then the dots of light thrown round each lantern
+    for (const l of LS) { const [cx, cy, s] = at(l); disc(cx, cy, s * 2.1, C.night2); }
+    for (const l of LS) { const [cx, cy, s] = at(l); disc(cx, cy, s * 1.55, C.night3); }
+    for (const l of LS) {
+      const [cx, cy, s] = at(l), n = l[0] === 'house' ? 24 : 16;
+      for (let i = 0; i < n; i++) for (const [k, rr] of [[0, 1.7], [1, 2.15], [2, 2.65], [3, 3.2]]) {
+        const a = ((i + (k % 2) * 0.5) / n) * Math.PI * 2, px = Math.round(cx + Math.cos(a) * rr * s), py = Math.round(cy + Math.sin(a) * rr * s * 0.9);
+        if (k === 0) R(px - 1, py - 1, 2, 2, C.amberL); else if (k < 3 || i % 2) R(px, py, 1, 1, k === 3 ? C.dot : C.amberL);
+      }
+    }
+    // chains up to the top
+    const chain = (cx, y1) => { for (let y = fy; y < y1; y++) R(Math.round(cx) - (y % 3 === 0 ? 1 : 0), y, y % 3 === 0 ? 2 : 1, 1, y % 3 === 1 ? C.brass2 : C.brass); };
+    const finial = (cx, y, s) => { x.strokeStyle = C.brass; x.lineWidth = 1; x.beginPath(); x.arc(cx, y - s * 0.22, s * 0.16 + 0.6, 0, Math.PI * 2); x.stroke(); disc(cx, y + s * 0.08, s * 0.14 + 0.5, C.brassL); };
+    const pierce = (pts, rows2, col) => { x.save(); poly(pts, C.brass); x.clip(); for (let yy = 0; yy < rows2.length; yy++) { const [y0, step, ph] = rows2[yy]; for (let xx = -40; xx < 40; xx += step) R(Math.round(pts[0][0] + xx + ph), Math.round(y0), 1, 1, col); } x.restore(); };
+    const drawHouse = (cx, cy, s, g) => {
+      const w = s, h = s * 1.35, top = cy - h, bot = cy + h;
+      chain(cx, top - s * 1.5);
+      finial(cx, top - s * 1.25, s);
+      // the pointed cap, pierced
+      x.fillStyle = C.brass; x.beginPath(); x.moveTo(cx - w * 1.12, top); x.quadraticCurveTo(cx - w * 0.2, top - s * 0.3, cx, top - s * 1.2); x.quadraticCurveTo(cx + w * 0.2, top - s * 0.3, cx + w * 1.12, top); x.closePath(); x.fill();
+      x.save(); x.clip(); for (const [yy, n] of [[top - s * 0.25, 9], [top - s * 0.55, 5], [top - s * 0.82, 3]]) for (let i = 0; i < n; i++) R(Math.round(cx - (n - 1) * 1.1 + i * 2.2), Math.round(yy), 1, 1, C.amberL); x.restore();
+      R(cx - w * 1.18, top - 1, w * 2.36, 2.2, C.brass2); R(cx - w * 1.18, top - 1, w * 2.36, 0.8, C.brassL);
+      // three faces of the six: arched panes of glass behind brass fretwork
+      const faces = [[cx - w, cx - w * 0.5, g[1]], [cx - w * 0.5, cx + w * 0.5, g[0]], [cx + w * 0.5, cx + w, g[2]]];
+      R(cx - w, top + 1, w * 2, h * 2 - 2, C.brass);
+      for (const [a0, a1, gc] of faces) {
+        const m = (a0 + a1) / 2, hw2 = (a1 - a0) / 2 - 1.2, y0 = top + 3, y1 = bot - 3;
+        x.fillStyle = gc; x.beginPath(); x.moveTo(m - hw2, y1); x.lineTo(m - hw2, y0 + hw2 * 1.4); x.quadraticCurveTo(m - hw2, y0 + hw2 * 0.3, m, y0); x.quadraticCurveTo(m + hw2, y0 + hw2 * 0.3, m + hw2, y0 + hw2 * 1.4); x.lineTo(m + hw2, y1); x.closePath(); x.fill();
+        // brass fretwork over the glass: a lattice of diagonal bars, the light brightest in the middle of the pane
+        x.save(); x.beginPath(); x.rect(m - hw2, y0, hw2 * 2, y1 - y0); x.clip();
+        if (gc === C.amber) R(m - hw2 * 0.5, y0 + (y1 - y0) * 0.3, hw2, (y1 - y0) * 0.45, C.amberL);
+        x.strokeStyle = C.brass2; x.lineWidth = 0.9; x.beginPath();
+        for (let d = -30; d < 30; d += 4.5) { x.moveTo(m + d, y0); x.lineTo(m + d + 30, y0 + 30); x.moveTo(m + d, y0); x.lineTo(m + d - 30, y0 + 30); }
+        x.stroke(); x.restore();
+      }
+      for (const a of [cx - w * 0.5, cx + w * 0.5]) R(Math.round(a) - 1, top + 1, 2, h * 2 - 2, C.brassL);
+      R(cx - w, top + 1, 1, h * 2 - 2, C.brass2); R(cx + w - 1, top + 1, 1, h * 2 - 2, C.brass2);
+      // the base: a band and a pierced point, a ball at the tip
+      R(cx - w * 1.1, bot - 1.2, w * 2.2, 2.4, C.brass2);
+      pierce([[cx - w * 0.95, bot + 1], [cx + w * 0.95, bot + 1], [cx, bot + s * 0.9]], [[bot + 3, 2.2, 0.4], [bot + 5.5, 2.2, 1.5]], C.amberL);
+      disc(cx, bot + s * 0.95, 1.6, C.brassL);
+    };
+    const drawGlobe = (cx, cy, s, g) => {
+      chain(cx, cy - s - 3);
+      finial(cx, cy - s - 2.4, s * 0.7);
+      poly([[cx - 3, cy - s + 1], [cx + 3, cy - s + 1], [cx + 1.5, cy - s - 2.5], [cx - 1.5, cy - s - 2.5]], C.brass);
+      disc(cx, cy, s, C.brass2);
+      // pierced all over in a lattice of holes that shrink towards the edge, a belt of glass jewels at the equator
+      x.save(); x.beginPath(); x.arc(cx, cy, s - 0.8, 0, Math.PI * 2); x.clip();
+      for (let j = -5; j <= 5; j++) for (let i = -7; i <= 7; i++) {
+        if ((i + j) % 2 || j === 0) continue;
+        const u = i / 7.5, v = j / 5.6, q = 1 - u * u - v * v; if (q <= 0.08) continue;
+        const px = Math.round(cx + Math.sin(u * Math.PI / 2) * s), py = Math.round(cy + Math.sin(v * Math.PI / 2) * s);
+        R(px, py - 1, 1, q > 0.5 ? 2 : 1, q > 0.3 ? C.amberL : C.amber);
+      }
+      R(cx - s, cy - 1.6, s * 2, 3.2, C.brass);
+      for (let i = 0; i < 5; i++) { const t = (i + 0.5) / 5 * 2 - 1, px = cx + Math.sin(t * Math.PI / 2) * s * 0.85; disc(px, cy, 1.3, g[i % g.length]); }
+      x.restore();
+      x.strokeStyle = C.brass; x.lineWidth = 1; x.beginPath(); x.arc(cx, cy, s - 0.5, 0, Math.PI * 2); x.stroke();
+      poly([[cx - 2.5, cy + s - 0.5], [cx + 2.5, cy + s - 0.5], [cx, cy + s + 3]], C.brass); disc(cx, cy + s + 3, 1.2, C.brassL);
+    };
+    const drawStar = (cx, cy, s, g) => {
+      chain(cx, cy - s - 1);
+      for (let k = 0; k < 8; k++) {
+        const a = (k * Math.PI) / 4 - Math.PI / 2, b1 = a - Math.PI / 8, b2 = a + Math.PI / 8, ri = s * 0.5;
+        const tip = [cx + Math.cos(a) * s, cy + Math.sin(a) * s], p1 = [cx + Math.cos(b1) * ri, cy + Math.sin(b1) * ri], p2 = [cx + Math.cos(b2) * ri, cy + Math.sin(b2) * ri];
+        poly([[cx, cy], p1, tip, p2], C.brass);
+        const sh = (p, f) => [cx + (p[0] - cx) * f + Math.cos(a) * 1.2, cy + (p[1] - cy) * f + Math.sin(a) * 1.2];
+        poly([sh(p1, 0.86), sh(tip, 0.84), sh(p2, 0.86), [cx + Math.cos(a) * ri * 0.6, cy + Math.sin(a) * ri * 0.6]], g[k % g.length]);
+      }
+      disc(cx, cy, s * 0.42, C.brass); disc(cx, cy, s * 0.28, C.amberL);
+      for (let k = 0; k < 8; k++) { const a = (k * Math.PI) / 4 + Math.PI / 8; R(Math.round(cx + Math.cos(a) * s * 0.36 - 0.5), Math.round(cy + Math.sin(a) * s * 0.36 - 0.5), 1, 1, C.brass2); }
+      disc(cx, cy + s + 1, 1.2, C.brassL);
+    };
+    const drawDrum = (cx, cy, s, g) => {
+      const w = s * 0.8, h = s * 1.15, top = cy - h, bot = cy + h;
+      chain(cx, top - s * 0.9);
+      finial(cx, top - s * 0.75, s * 0.8);
+      poly([[cx - w - 1, top], [cx + w + 1, top], [cx + w * 0.4, top - s * 0.55], [cx - w * 0.4, top - s * 0.55]], C.copper);
+      R(cx - w - 1.5, top - 1, w * 2 + 3, 2, C.brass);
+      R(cx - w, top + 1, w * 2, h * 2 - 2, C.copper);
+      // two arched windows of glass with pierced dots round them
+      for (const [m, gc] of [[cx - w * 0.45, g[0]], [cx + w * 0.45, g[1]]]) {
+        const hw2 = w * 0.32, y0 = top + 3.5, y1 = bot - 3;
+        x.fillStyle = gc; x.beginPath(); x.moveTo(m - hw2, y1); x.lineTo(m - hw2, y0 + hw2); x.quadraticCurveTo(m - hw2, y0, m, y0 - hw2 * 0.6); x.quadraticCurveTo(m + hw2, y0, m + hw2, y0 + hw2); x.lineTo(m + hw2, y1); x.closePath(); x.fill();
+      }
+      for (let yy = top + 3; yy < bot - 2; yy += 3) R(Math.round(cx), Math.round(yy), 1, 1, C.amberL);
+      R(cx - w - 1.5, bot - 1, w * 2 + 3, 2, C.brass);
+      poly([[cx - w * 0.7, bot + 1], [cx + w * 0.7, bot + 1], [cx, bot + s * 0.6]], C.copper); disc(cx, bot + s * 0.65, 1.2, C.brassL);
+    };
+    for (const l of LS) { const [cx, cy, s] = at(l); ({ house: drawHouse, globe: drawGlobe, star: drawStar, drum: drawDrum })[l[0]](cx, cy, s, l[4]); }
+    x.restore();
+  });
+}
+
+// Babouches: a slipper-seller's wall: rows of pointed leather babouches in pairs seen from above, and rows seen from
+// the side standing on wooden shelves, in saffron, red, cobalt, emerald, white and pink, a few embroidered in gold
+// thread; a border of tooled red leather with a running stitch.
+function morBabouches(ctx, W, H) {
+  const C = { wall: '#1c3a40', wall2: '#22464c', saffron: '#eeb020', red: '#c42e2c', cobalt: '#2a4fae', emerald: '#22905a', white: '#f2ede2', pink: '#e98aa6', tan: '#dcb27c', sole: '#8a5a30', gold: '#f2d068', wood: '#7a4a26', wood2: '#4e2c16', dark: '#1a1210', leather: '#9a2e22' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const disc = (a, b, r, col) => { x.fillStyle = col; x.beginPath(); x.arc(a, b, r, 0, Math.PI * 2); x.fill(); };
+    // the border: tooled red leather between dark edges, a gold running stitch each side, a little gold flower
+    // at each corner
+    R(0, 0, cols, rows, C.dark); R(1, 1, cols - 2, rows - 2, C.leather);
+    R(9, 9, cols - 18, rows - 18, C.dark);
+    const stitch = (o) => { for (let i = o + 1; i < cols - o - 1; i++) if ((i - o) % 3 !== 0) { R(i, o, 1, 1, C.gold); R(i, rows - 1 - o, 1, 1, C.gold); } for (let j = o + 1; j < rows - o - 1; j++) if ((j - o) % 3 !== 0) { R(o, j, 1, 1, C.gold); R(cols - 1 - o, j, 1, 1, C.gold); } };
+    stitch(2); stitch(7);
+    // tooled marks between the stitches: small diamonds pressed into the leather
+    const dia = (a, b, col) => { x.fillStyle = col; x.beginPath(); x.moveTo(a, b - 2.6); x.lineTo(a + 2.6, b); x.lineTo(a, b + 2.6); x.lineTo(a - 2.6, b); x.closePath(); x.fill(); };
+    const row = (len, at) => { const { n, d } = evenSteps(len, 8); for (let i = 0; i <= n; i++) { const [a, b] = at(i * d); dia(a, b, i % 2 ? C.wood2 : C.saffron); } };
+    row(cols - 22, (t) => [11 + t, 4.5]); row(cols - 22, (t) => [11 + t, rows - 4.5]); row(rows - 22, (t) => [4.5, 11 + t]); row(rows - 22, (t) => [cols - 4.5, 11 + t]);
+    for (const [a, b] of [[4.5, 4.5], [cols - 4.5, 4.5], [4.5, rows - 4.5], [cols - 4.5, rows - 4.5]]) { for (let k = 0; k < 5; k++) { const an = (k / 5) * Math.PI * 2 - Math.PI / 2; disc(a + Math.cos(an) * 1.8, b + Math.sin(an) * 1.8, 1.1, C.gold); } disc(a, b, 0.9, C.red); }
+    const fx = 10, fy = 10, fw = cols - 20, fh = rows - 20;
+    // the wall: painted plaster with faint vertical brush bands
+    for (let i = 0; i < fw; i++) R(fx + i, fy, 1, fh, Math.floor(i / 7) % 3 === 1 ? C.wall2 : C.wall);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // a babouche from above, toe up: pointed toe, the coloured vamp, the tan insole showing in the back half
+    const topView = (cx, cy, L, col, emb, lean) => {
+      x.save(); x.translate(cx, cy); x.rotate(lean);
+      const w = L * 0.2, shape = (g) => { x.beginPath(); x.moveTo(0, -L / 2 - g); x.bezierCurveTo(w * 0.3 + g, -L * 0.42, w + g, -L * 0.24, w + g, -L * 0.04); x.bezierCurveTo(w + g, L * 0.2, w * 0.9 + g, L * 0.44, 0, L / 2 + g); x.bezierCurveTo(-w * 0.9 - g, L * 0.44, -w - g, L * 0.2, -w - g, -L * 0.04); x.bezierCurveTo(-w - g, -L * 0.24, -w * 0.3 - g, -L * 0.42, 0, -L / 2 - g); x.fill(); };
+      x.fillStyle = C.dark; shape(0.9); x.fillStyle = col; shape(0);
+      // the opening: an insole of tan inside a thin rim, the vamp's edge a curve bowing towards the toe
+      const open = (g, y0) => { x.beginPath(); x.moveTo(-w + g, L * 0.24); x.quadraticCurveTo(0, y0, w - g, L * 0.24); x.bezierCurveTo(w - g, L * 0.36, w * 0.62, L * 0.46, 0, L / 2 - g); x.bezierCurveTo(-w * 0.62, L * 0.46, -w + g, L * 0.36, -w + g, L * 0.24); x.fill(); };
+      x.fillStyle = col === C.white ? C.sole : C.dark; open(1.2, L * 0.08); x.fillStyle = C.tan; open(2, L * 0.14);
+      if (emb) {      // gold embroidery: stitches down the vamp and a little flower of dots at the throat
+        x.fillStyle = C.gold; for (let k = 0; k < 3; k++) x.fillRect(-0.5, -L * 0.36 + k * L * 0.09, 1, 1);
+        for (const [a, b] of [[-1.5, -L * 0.06], [1.5, -L * 0.06], [-2.4, -L * 0.13], [2.4, -L * 0.13]]) x.fillRect(a - 0.5, b - 0.5, 1, 1);
+      }
+      x.restore();
+    };
+    // a babouche from the side and a little above, toe pointing `dir`: the folded heel, the opening showing a sliver
+    // of insole, the vamp swelling over the instep and running to a pointed, turned-up toe, a tan leather sole
+    const sideView = (x0, base, L, col, emb, dir) => {
+      x.save(); x.translate(x0, base); x.scale(dir, 1);
+      const body = (g) => { x.beginPath(); x.moveTo(-g, 0); x.quadraticCurveTo(-1.2 - g, -L * 0.1, L * 0.04, -L * 0.13 - g); x.quadraticCurveTo(L * 0.25, -L * 0.15 - g, L * 0.44, -L * 0.17 - g); x.quadraticCurveTo(L * 0.5, -L * 0.36 - g, L * 0.63, -L * 0.34 - g); x.quadraticCurveTo(L * 0.86, -L * 0.28 - g, L + 1.2 + g, -L * 0.18 - g); x.quadraticCurveTo(L * 0.96, -L * 0.04, L * 0.8, 0); x.closePath(); x.fill(); };
+      x.fillStyle = C.dark; body(1); x.fillStyle = col; body(0);
+      // the opening, seen almost edge on
+      x.fillStyle = C.dark; x.beginPath(); x.ellipse(L * 0.235, -L * 0.135, L * 0.215, 1.5, -0.03, 0, Math.PI * 2); x.fill();
+      x.fillStyle = C.tan; x.beginPath(); x.ellipse(L * 0.235, -L * 0.13, L * 0.19, 0.8, -0.03, 0, Math.PI * 2); x.fill();
+      // a seam down the vamp and the sole
+      x.fillStyle = C.tan; x.beginPath(); x.moveTo(-0.5, -1.2); x.lineTo(L * 0.82, -1.2); x.quadraticCurveTo(L * 0.95, -1.6, L + 1.4, -L * 0.17); x.lineTo(L + 1.4, -L * 0.13); x.quadraticCurveTo(L * 0.93, 0.2, L * 0.8, 0.2); x.lineTo(-0.5, 0.2); x.closePath(); x.fill();
+      if (emb) { x.fillStyle = C.gold; for (let k = 0; k < 7; k++) { const t = 0.5 + k * 0.065; x.fillRect(L * t - 0.5, -L * (0.32 - Math.abs(t - 0.63) * 0.4) + 1.6, 1, 1); } for (const [t, h] of [[0.6, 0.2], [0.68, 0.18], [0.76, 0.15], [0.64, 0.1], [0.72, 0.09], [0.84, 0.1]]) x.fillRect(L * t - 0.5, -L * h, 1, 1); }
+      x.restore();
+    };
+    const pal = [C.saffron, C.red, C.cobalt, C.emerald, C.white, C.pink];
+    const RT = 31, RS = fh - 2 * RT;
+    // the top and bottom rows: pairs hanging from nails, seen from above; between them a shelf of pairs from the side
+    for (const [y0, off, r] of [[fy, 0, 0], [fy + RT + RS, 3, 2]]) {
+      const yc = y0 + RT / 2 + 0.5, n = 8, step = fw / n;
+      for (let i = 0; i < n; i++) {
+        const cx = fx + step * (i + 0.5), col = pal[(i + off) % 6], emb = (i + r) % 3 === 1;
+        disc(cx, yc - RT * 0.47, 0.9, C.gold);
+        topView(cx - 4.6, yc + 0.6, RT * 0.86, col, emb, 0.04); topView(cx + 4.6, yc + 0.6, RT * 0.86, col, emb, -0.04);
+      }
+    }
+    {
+      const base = fy + RT + RS - 5, n = 4, step = fw / n;
+      R(fx, base, fw, 2.6, C.wood); R(fx, base + 2.6, fw, 1.2, C.wood2); R(fx, base + 3.8, fw, 1.4, C.dark);
+      for (let i = 0; i < n; i++) {
+        const col = [C.red, C.saffron, C.emerald, C.cobalt][i], col2 = [C.pink, C.white, C.saffron, C.white][i], dir = (i % 2) ? -1 : 1, L = step * 0.8;
+        const x0 = dir > 0 ? fx + step * i + step * 0.05 : fx + step * (i + 1) - step * 0.05;
+        sideView(x0 + dir * 5, base - 8, L, col2, i % 2 === 0, dir); sideView(x0, base, L, col, i % 2 === 1, dir);   // a pair, one behind the other
+      }
+    }
+    x.restore();
+  });
+}
+
+// Spice cones: a grid of bowls seen from above on a dark wooden table, each heaped into a sculpted, terraced cone of
+// paprika, turmeric or cumin, or holding dried mint, rose buds or saffron threads; cinnamon sticks, star anise and
+// dried chillies between them; a wooden tray rim studded with brass.
+function morSpices(ctx, W, H) {
+  const C = { wood: '#3c2618', wood2: '#2a180e', woodL: '#55361f', dark: '#160c06', brass: '#c8962e', brassL: '#f0c860', cobalt: '#2a4aa6', cream: '#eee2c8',
+    paprika: '#c63a22', paprikaD: '#86221a', paprikaL: '#e8683e', turmeric: '#ecb422', turmericD: '#b87e18', cumin: '#9a6436', cuminD: '#62401e', cuminL: '#c08a52', mint: '#7f9c4c', mintD: '#4c6a2e', rose: '#e27e9c', roseD: '#a44a68', blue2: '#8492c8' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const P = (a, b, col) => { x.fillStyle = col; x.fillRect(a, b, 1, 1); };
+    const disc = (a, b, r, col) => { x.fillStyle = col; x.beginPath(); x.arc(a, b, r, 0, Math.PI * 2); x.fill(); };
+    const rnd = rng(31);
+    // the tray: a dark rim with a row of brass studs, then planks with grain
+    R(0, 0, cols, rows, C.dark); R(1, 1, cols - 2, rows - 2, C.woodL); R(2, 2, cols - 4, rows - 4, C.wood2);
+    R(8, 8, cols - 16, rows - 16, C.brass); R(9, 9, cols - 18, rows - 18, C.dark);
+    const studs = (len, at) => { const { n, d } = evenSteps(len, 5); for (let i = 0; i <= n; i++) { const [a, b] = at(i * d); disc(a, b, 1.5, C.brass); P(Math.floor(a - 0.5), Math.floor(b - 0.5), C.brassL); } };
+    studs(cols - 10, (t) => [5 + t, 5]); studs(cols - 10, (t) => [5 + t, rows - 5]); studs(rows - 10, (t) => [5, 5 + t]); studs(rows - 10, (t) => [cols - 5, 5 + t]);
+    const fx = 10, fy = 10, fw = cols - 20, fh = rows - 20;
+    for (let j = 0; j < fh; j++) {
+      const plank = Math.floor(j / 12), seam = j % 12 === 11;
+      for (let i = 0; i < fw; i++) {
+        const g = Math.sin(i * 0.09 + plank * 2.1 + Math.sin(i * 0.031 + plank) * 2.5 + j * 0.9);
+        P(fx + i, fy + j, seam ? C.dark : g > 0.82 ? C.woodL : g < -0.9 ? C.wood2 : C.wood);
+      }
+    }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // bowls seen from high up: a rim ellipse, the bowl's side below it, and the spice heaped above the rim. A cone
+    // is sculpted in terraces stepping up to a sharp peak, lit from the left.
+    const KY = 0.5;                                              // how flat the rims look from this height
+    const cone = (cx, by, rx, Hh, col, dk, lt) => {
+      const ry = rx * KY, top = by - Hh;
+      for (let py = Math.floor(top); py <= Math.ceil(by + ry); py++) for (let px = Math.floor(cx - rx - 1); px <= Math.ceil(cx + rx + 1); px++) {
+        const ex = px + 0.5 - cx, ey = py + 0.5 - top;
+        // the level t of the terrace ring through this knot: its ring is the ellipse (t rx, t ry) centred t Hh below the peak
+        let t = Math.min(1, Math.max(0, ey / (Hh + ry)));
+        for (let it = 0; it < 6; it++) { const q = Math.max(0, 1 - (ex / (t * rx + 1e-3)) ** 2); t = Math.min(1.2, ey / (Hh + ry * Math.sqrt(q) + 1e-3)); }
+        if (t > 1 || Math.abs(ex) > t * rx + 0.3) continue;
+        const u = ex / (t * rx + 0.5), step = (t * 5.2) % 1;
+        let k = u < -0.3 ? 2 : u > 0.38 ? 0 : 1;
+        if (step > 0.74 && t > 0.12) k = Math.max(0, k - 1);
+        P(px, py, t < 0.07 ? lt : [dk, col, lt][k]);
+      }
+    };
+    const mound = (cx, by, rx, Hh, base, specks) => {
+      x.fillStyle = base; x.beginPath(); x.ellipse(cx, by, rx, rx * KY, 0, 0, Math.PI); x.ellipse(cx, by, rx, Hh, 0, Math.PI, 0); x.fill();
+      x.save(); x.clip(); specks(cx, by - Hh * 0.4, rx, Hh); x.restore();
+    };
+    const bowl = (cx, cy, Rr, kind, k) => {
+      const ry = Rr * KY;
+      x.fillStyle = C.dark; x.beginPath(); x.ellipse(cx + 2, cy + ry * 0.9, Rr * 0.95, ry * 0.9, 0, 0, Math.PI * 2); x.fill();   // shadow
+      // the bowl's side: a shallow half-ellipse under the rim
+      x.fillStyle = kind ? C.cobalt : C.brass; x.beginPath(); x.ellipse(cx, cy, Rr, ry + Rr * 0.32, 0, 0, Math.PI); x.fill();
+      if (kind) { for (let i = 0; i < 7; i++) { const a = (i + 0.5) / 7 * Math.PI; R(Math.floor(cx + Math.cos(a) * Rr * 0.85), Math.floor(cy + Math.sin(a) * (ry + Rr * 0.18)), 1, 1, C.cream); } }
+      else { x.fillStyle = C.brassL; x.fillRect(cx - Rr * 0.7, cy + ry * 0.55, 2, 2); }
+      // the rim and the spice level inside it
+      x.fillStyle = kind ? C.cream : C.brassL; x.beginPath(); x.ellipse(cx, cy, Rr, ry, 0, 0, Math.PI * 2); x.fill();
+      x.fillStyle = kind ? C.cobalt : C.brass; x.beginPath(); x.ellipse(cx, cy, Rr - 0.9, ry - 0.6, 0, 0, Math.PI * 2); x.fill();
+      const ir = Rr - 2, H2 = Rr * 1.35, sp = { paprika: [C.paprika, C.paprikaD, C.paprikaL], turmeric: [C.turmeric, C.turmericD, C.cream], cumin: [C.cumin, C.cuminD, C.cuminL] }[k];
+      if (sp) cone(cx, cy, ir, H2, ...sp);
+      else if (k === 'mint') mound(cx, cy, ir, Rr * 0.75, C.mintD, (a, b, r, h) => { for (let i = 0; i < r * r * 1.1; i++) P(Math.floor(a + (rnd() * 2 - 1) * r), Math.floor(b + (rnd() * 2 - 1) * h), rnd() < 0.6 ? C.mint : C.cuminD); });
+      else if (k === 'rose') mound(cx, cy, ir, Rr * 0.75, C.roseD, (a, b, r, h) => { for (let i = 0; i < r * 1.6; i++) { const bx = a + (rnd() * 2 - 1) * r, by2 = b + (rnd() * 2 - 1) * h; disc(bx, by2, 1.5, C.roseD); disc(bx - 0.3, by2 - 0.4, 1.1, C.rose); P(Math.floor(bx + 0.8), Math.floor(by2 + 1.1), C.mintD); } });
+      else mound(cx, cy, ir, Rr * 0.55, C.paprikaD, (a, b, r, h) => { x.lineWidth = 0.9; x.lineCap = 'round'; for (let i = 0; i < r * 5; i++) { const bx = a + (rnd() * 2 - 1) * r, by2 = b + (rnd() * 2 - 1) * h * 1.2, an = rnd() * Math.PI; x.strokeStyle = rnd() < 0.7 ? C.paprika : C.turmeric; x.beginPath(); x.moveTo(bx, by2); x.lineTo(bx + Math.cos(an) * 2.2, by2 + Math.sin(an) * 1.6); x.stroke(); } });
+    };
+    // things lying on the table between the bowls
+    const cinnamon = (cx, cy, ang) => { x.save(); x.translate(cx, cy); x.rotate(ang); R(-6, -1.2, 12, 2.4, C.cumin); R(-6, -0.2, 12, 1, C.cuminD); R(-6, -1.2, 12, 0.6, C.turmericD); x.restore(); };
+    const anise = (cx, cy) => { for (let k = 0; k < 8; k++) { const a = (k / 8) * Math.PI * 2; x.fillStyle = C.cuminD; x.beginPath(); x.ellipse(cx + Math.cos(a) * 1.7, cy + Math.sin(a) * 1.7, 1.6, 0.8, a, 0, Math.PI * 2); x.fill(); } P(Math.floor(cx), Math.floor(cy), C.cumin); };
+    const chilli = (cx, cy, ang) => { x.save(); x.translate(cx, cy); x.rotate(ang); x.fillStyle = C.paprika; x.beginPath(); x.moveTo(-4, -1); x.quadraticCurveTo(1, -1.6, 4.5, 0.6); x.quadraticCurveTo(0, 1.3, -4, 1); x.fill(); R(-5.4, -0.6, 1.6, 1.2, C.mintD); x.restore(); };
+    const kinds = ['paprika', 'turmeric', 'mint', 'cumin', 'rose', 'turmeric', 'saffron', 'paprika', 'cumin', 'paprika', 'cumin', 'rose', 'turmeric', 'mint', 'paprika'];
+    const nc = 5, nr = 3, sx = fw / nc, sy = fh / nr, Rr = sx * 0.4;
+    for (let j = 0; j <= nr; j++) for (let i = 0; i <= nc; i++) {
+      const cx = fx + sx * i + (j % 2 ? 0 : sx * 0.5), cy = fy + sy * j + sy * 0.06, t = (i * 3 + j * 5) % 4;
+      if (t === 0) cinnamon(cx, cy, 0.3 + i * 0.4); else if (t === 1) anise(cx, cy); else if (t === 2) chilli(cx, cy, -0.6 + j * 0.5); else { anise(cx - 3, cy + 1); cinnamon(cx + 3, cy - 1, -0.3); }
+    }
+    for (let j = 0; j < nr; j++) for (let i = 0; i < nc; i++) {
+      const cx = fx + sx * (i + 0.5) + (j % 2 ? 2.5 : -2.5), cy = fy + sy * (j + 0.7), k = kinds[j * nc + i];
+      bowl(cx, cy, Rr, (i + j) % 2, k);
+    }
+    x.restore();
+  });
+}
+
+// Tagines: rows of painted ceramic tagine pots on terracotta, each a shallow dish under a tall conical lid with a
+// knob, glazed cobalt, green, ochre or cream and painted with dots, stripes, zigzags and petals; a painted border of
+// cobalt zigzags.
+function morTagines(ctx, W, H) {
+  const C = { terra: '#b65a34', terra2: '#9e4a2a', terraL: '#c86c42', cream: '#f0e4c6', cobalt: '#22449e', green: '#2e7a42', ochre: '#dc9a2e', dark: '#2a1610', clay: '#7e3a1e', blue2: '#4a72c0' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const disc = (a, b, r, col) => { x.fillStyle = col; x.beginPath(); x.arc(a, b, r, 0, Math.PI * 2); x.fill(); };
+    // the border: cream band with a cobalt zigzag between ochre lines, green corner squares with a cream dot flower
+    R(0, 0, cols, rows, C.dark); R(1, 1, cols - 2, rows - 2, C.ochre); R(2, 2, cols - 4, rows - 4, C.cream);
+    R(9, 9, cols - 18, rows - 18, C.ochre); R(10, 10, cols - 20, rows - 20, C.dark);
+    const zig = (len, at) => { const { n, d } = evenSteps(len, 6); x.strokeStyle = C.cobalt; x.lineWidth = 1.5; x.lineJoin = 'miter'; x.beginPath(); for (let i = 0; i <= n * 2; i++) { const [a, b] = at((i * d) / 2, i % 2 ? 1 : -1); i ? x.lineTo(a, b) : x.moveTo(a, b); } x.stroke(); for (let i = 0; i < n; i++) { const [a, b] = at((i + 0.5) * d, 1.7); R(Math.floor(a), Math.floor(b), 1, 1, C.green); const [c, e] = at(i * d, -1.7); R(Math.floor(c), Math.floor(e), 1, 1, C.green); } };
+    zig(cols - 22, (t, o) => [11 + t, 5.5 + o * 2]); zig(cols - 22, (t, o) => [11 + t, rows - 5.5 - o * 2]);
+    zig(rows - 22, (t, o) => [5.5 + o * 2, 11 + t]); zig(rows - 22, (t, o) => [cols - 5.5 - o * 2, 11 + t]);
+    for (const [a, b] of [[2, 2], [cols - 9, 2], [2, rows - 9], [cols - 9, rows - 9]]) { R(a, b, 7, 7, C.green); R(a + 2, b + 2, 3, 3, C.cream); R(a + 3, b + 3, 1, 1, C.ochre); }
+    const fx = 10, fy = 10, fw = cols - 20, fh = rows - 20;
+    // the ground: terracotta floor tiles
+    R(fx, fy, fw, fh, C.terra);
+    for (let j = 0; j < fh; j++) for (let i = 0; i < fw; i++) { const a = (i + 4) % 14, b = (j + 2) % 14; if (a === 0 || b === 0) R(fx + i, fy + j, 1, 1, C.terra2); else if ((a === 1 || b === 1) && (Math.floor((i + 4) / 14) + Math.floor((j + 2) / 14)) % 2) R(fx + i, fy + j, 1, 1, C.terraL); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // a tagine: shadow, a shallow dish with a flared rim, a tall lid with slightly hollow sides, a knob
+    const tagine = (cx, by, w, glaze, paint, accent, kind) => {
+      const dh = w * 0.22, lh = w * 0.82, lw = w * 0.37, top = by - dh - lh;
+      x.fillStyle = C.terra2; x.beginPath(); x.ellipse(cx + w * 0.12, by + 0.5, w * 0.58, w * 0.1, 0, 0, Math.PI * 2); x.fill();
+      const dish = (g, col) => { x.fillStyle = col; x.beginPath(); x.moveTo(cx - w / 2 - g, by - dh); x.lineTo(cx + w / 2 + g, by - dh); x.quadraticCurveTo(cx + w * 0.4 + g, by + g, cx + w * 0.2, by + g); x.lineTo(cx - w * 0.2, by + g); x.quadraticCurveTo(cx - w * 0.4 - g, by + g, cx - w / 2 - g, by - dh); x.fill(); };
+      dish(1, C.dark); dish(0, glaze);
+      R(cx - w / 2 - 0.5, by - dh - 0.6, w + 1, 1.8, C.cream); R(cx - w / 2 - 0.5, by - dh + 1.2, w + 1, 1, C.dark);   // the rim
+      for (let k = 0; k < 6; k++) R(Math.floor(cx - w * 0.33 + k * w * 0.13), Math.floor(by - dh * 0.45), 1, 1, accent);
+      const lid = (g) => { x.beginPath(); x.moveTo(cx - lw - g, by - dh + 0.2); x.quadraticCurveTo(cx - lw * 0.32 - g, by - dh - lh * 0.35, cx - 1.6 - g, top + 2); x.lineTo(cx + 1.6 + g, top + 2); x.quadraticCurveTo(cx + lw * 0.32 + g, by - dh - lh * 0.35, cx + lw + g, by - dh + 0.2); x.closePath(); };
+      x.fillStyle = C.dark; lid(1); x.fill();
+      x.fillStyle = glaze; lid(0); x.fill();
+      x.save(); lid(0); x.clip();
+      const y0 = by - dh;
+      if (kind === 0) {           // bands of dots between painted rings
+        for (const t of [0.12, 0.42]) R(cx - lw, y0 - lh * t - 1, lw * 2, 2, paint);
+        for (const [t, step] of [[0.25, 3], [0.56, 3], [0.7, 4]]) for (let xx = -lw; xx < lw; xx += step) R(Math.floor(cx + xx + (t * 10) % 2), Math.floor(y0 - lh * t), 1, 1, accent);
+      } else if (kind === 1) {    // a zigzag band and stripes
+        x.strokeStyle = paint; x.lineWidth = 1.6; x.beginPath(); for (let k = 0; k <= 12; k++) { const xx = cx - lw + k * lw / 6, yy = y0 - lh * (0.22 + (k % 2) * 0.12); k ? x.lineTo(xx, yy) : x.moveTo(xx, yy); } x.stroke();
+        R(cx - lw, y0 - lh * 0.08 - 1, lw * 2, 1.6, accent); R(cx - lw, y0 - lh * 0.5, lw * 2, 1.6, accent);
+        for (let xx = -lw; xx < lw; xx += 3) R(Math.floor(cx + xx), Math.floor(y0 - lh * 0.64), 1, 1, paint);
+      } else if (kind === 2) {    // painted petals rising from the rim, a dot in each
+        for (let k = -2; k <= 2; k++) {
+          const bx = cx + k * lw / 2.4, tx = cx + k * lw * 0.14, ty = y0 - lh * 0.62, hw2 = lw * 0.13;
+          x.fillStyle = paint; x.beginPath(); x.moveTo(bx - hw2, y0); x.quadraticCurveTo(bx - hw2 * 1.1, y0 - lh * 0.3, tx, ty); x.quadraticCurveTo(bx + hw2 * 1.1, y0 - lh * 0.3, bx + hw2, y0); x.fill();
+          disc((bx * 2 + tx) / 3, y0 - lh * 0.24, 1.1, accent);
+        }
+        R(cx - lw, y0 - lh * 0.78, lw * 2, 1.5, paint);
+      } else {                    // broad stripes fanning up to the knob, a band of dots
+        for (let k = -2; k <= 2; k++) { x.fillStyle = paint; x.beginPath(); const bx = cx + k * lw / 2.3; x.moveTo(bx - lw * 0.1, y0); x.lineTo(bx + lw * 0.1, y0); x.lineTo(cx + k * 0.9 + 0.6, top + 2); x.lineTo(cx + k * 0.9 - 0.6, top + 2); x.fill(); }
+        R(cx - lw, y0 - lh * 0.34 - 1.5, lw * 2, 3, accent); for (let xx = -lw; xx < lw; xx += 3) R(Math.floor(cx + xx), Math.floor(y0 - lh * 0.34), 1, 1, paint);
+      }
+      // a highlight down the left side of the glaze
+      if (kind < 2 && glaze !== C.cream) { x.strokeStyle = C.cream; x.lineWidth = 1; x.beginPath(); x.moveTo(cx - lw * 0.62, y0 - lh * 0.08); x.quadraticCurveTo(cx - lw * 0.3, y0 - lh * 0.38, cx - 2.5, top + lh * 0.2); x.stroke(); }
+      x.restore();
+      R(cx - 2.5, top + 1, 5, 1.5, C.dark); disc(cx, top, 2.2, C.dark); disc(cx, top, 1.6, paint); R(Math.floor(cx - 1), Math.floor(top - 1), 1, 1, C.cream);
+    };
+    // three rows, as on a potter's stall: small ones at the back, bigger ones in front
+    const rowsT = [
+      [0.3, 0.78, [[C.green, C.ochre, C.cream, 1], [C.cream, C.cobalt, C.green, 2], [C.cobalt, C.cream, C.ochre, 0], [C.ochre, C.cobalt, C.green, 3], [C.green, C.cream, C.cobalt, 0], [C.cream, C.green, C.ochre, 1]]],
+      [0.62, 0.82, [[C.cobalt, C.ochre, C.cream, 3], [C.cream, C.green, C.ochre, 0], [C.ochre, C.green, C.cream, 2], [C.green, C.cobalt, C.ochre, 1], [C.cream, C.cobalt, C.green, 3]]],
+      [0.985, 0.86, [[C.ochre, C.cobalt, C.cream, 0], [C.cobalt, C.cream, C.green, 2], [C.cream, C.ochre, C.cobalt, 1], [C.green, C.cream, C.ochre, 2]]]];
+    for (const [yb, k, list] of rowsT) list.forEach(([g, p2, a, kind], i) => tagine(fx + fw * (i + 0.5) / list.length, fy + fh * yb, (fw / list.length) * k, g, p2, a, kind));
+    x.restore();
+  });
+}
+
+// Painted cedar (zouak): a ceiling panel of warm cedar painted with gold strapwork, two squares interlaced into an
+// eight-pointed star round each of six medallions, a floral rosette in red, green and blue in each, leaves and buds
+// in the ground between; framed by carved bands of notches and rope.
+function morZouak(ctx, W, H) {
+  const C = { cedar: '#b2703e', cedar2: '#9c5c30', cedarL: '#cc8a52', black: '#1c1210', gold: '#e2aa3a', goldL: '#f4d27a', red: '#b8302a', green: '#2f7a3e', blue: '#2a4c9a', cream: '#efdcb2', carve: '#5c3018', carve2: '#7c4624' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const disc = (a, b, r, col) => { x.fillStyle = col; x.beginPath(); x.arc(a, b, r, 0, Math.PI * 2); x.fill(); };
+    const poly = (pts, col) => { x.fillStyle = col; x.beginPath(); pts.forEach(([a, b], i) => (i ? x.lineTo(a, b) : x.moveTo(a, b))); x.closePath(); x.fill(); };
+    // the carved frame: a dark edge, a band of notched blocks, a twisted rope, a painted red and gold line
+    R(0, 0, cols, rows, C.carve);
+    R(2, 2, cols - 4, rows - 4, C.cedar2);
+    const blocks = (len, at, vert) => { const { n, d } = evenSteps(len, 4); for (let i = 0; i < n; i++) { const [a, b] = at(i * d); vert ? (R(a, b + 0.6, 4, d - 1.2, C.cedarL), R(a, b + d - 1.6, 4, 1, C.carve2)) : (R(a + 0.6, b, d - 1.2, 4, C.cedarL), R(a + d - 1.6, b, 1, 4, C.carve2)); } };
+    blocks(cols - 4, (t) => [2 + t, 2]); blocks(cols - 4, (t) => [2 + t, rows - 6]); blocks(rows - 12, (t) => [2, 6 + t], 1); blocks(rows - 12, (t) => [cols - 6, 6 + t], 1);
+    R(6, 6, cols - 12, rows - 12, C.carve);
+    R(7, 7, cols - 14, rows - 14, C.cedar);
+    // the rope: short diagonal twists all the way round
+    const rope = (len, at) => { const { n, d } = evenSteps(len, 3); for (let i = 0; i < n; i++) { const [a, b, c, e] = at(i * d, d); x.strokeStyle = C.cedarL; x.lineWidth = 1.3; x.beginPath(); x.moveTo(a, b); x.lineTo(c, e); x.stroke(); } };
+    rope(cols - 14, (t, d) => [7 + t, 11, 7 + t + d, 7]); rope(cols - 14, (t, d) => [7 + t, rows - 7, 7 + t + d, rows - 11]);
+    rope(rows - 22, (t, d) => [7, 11 + t, 11, 11 + t + d]); rope(rows - 22, (t, d) => [cols - 11, 11 + t, cols - 7, 11 + t + d]);
+    R(11, 11, cols - 22, rows - 22, C.carve);
+    R(12, 12, cols - 24, rows - 24, C.red); R(13, 13, cols - 26, rows - 26, C.gold); R(14, 14, cols - 28, rows - 28, C.black);
+    const fx = 15, fy = 15, fw = cols - 30, fh = rows - 30;
+    // the cedar field with its grain
+    for (let j = 0; j < fh; j++) for (let i = 0; i < fw; i++) { const g = Math.sin(j * 0.55 + Math.sin(i * 0.05 + j * 0.02) * 3); R(fx + i, fy + j, 1, 1, g > 0.86 ? C.cedar2 : C.cedar); }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const nc = 3, nr = 2, cw = fw / nc, ch = fh / nr, Rm = Math.min(cw, ch) * 0.52;
+    // painted flowers and leaves in the ground between the medallions (drawn first, the strapwork goes over them)
+    const sprig = (a, b, ang, s) => { x.save(); x.translate(a, b); x.rotate(ang); x.strokeStyle = C.green; x.lineWidth = 1; x.beginPath(); x.moveTo(0, 0); x.lineTo(s * 0.8, 0); x.stroke(); leaf(x, s * 0.25, 0, s * 0.55, -0.7, C.green); leaf(x, s * 0.25, 0, s * 0.55, 0.7, C.green); x.fillStyle = C.red; x.beginPath(); x.ellipse(s * 0.95, 0, s * 0.22, s * 0.15, 0, 0, Math.PI * 2); x.fill(); x.restore(); };
+    const flower = (a, b, r, petal, heart) => { for (let k = 0; k < 8; k++) { const an = (k * Math.PI) / 4; x.fillStyle = C.black; x.beginPath(); x.ellipse(a + Math.cos(an) * r * 0.6, b + Math.sin(an) * r * 0.6, r * 0.42, r * 0.24, an, 0, Math.PI * 2); x.fill(); } for (let k = 0; k < 8; k++) { const an = (k * Math.PI) / 4; x.fillStyle = petal; x.beginPath(); x.ellipse(a + Math.cos(an) * r * 0.62, b + Math.sin(an) * r * 0.62, r * 0.32, r * 0.16, an, 0, Math.PI * 2); x.fill(); } disc(a, b, r * 0.34, C.black); disc(a, b, r * 0.26, heart); };
+    for (let j = 0; j <= nr; j++) for (let i = 0; i <= nc; i++) {
+      const a = fx + cw * i, b = fy + ch * j;
+      for (let k = 0; k < 4; k++) sprig(a, b, (k * Math.PI) / 2 + Math.PI / 4, Rm * 0.5);
+      flower(a, b, Rm * 0.32, C.blue, C.gold);
+    }
+    for (let j = 0; j < nr; j++) for (let i = 0; i <= nc; i++) flower(fx + cw * i, fy + ch * (j + 0.5), Rm * 0.2, C.gold, C.red);
+    for (let j = 0; j <= nr; j++) for (let i = 0; i < nc; i++) flower(fx + cw * (i + 0.5), fy + ch * j, Rm * 0.2, C.gold, C.red);
+    // a medallion: two squares of gold strapwork interlaced into an eight-pointed star, its points painted blue and
+    // green, the octagon inside red with a floral rosette
+    const sqPts = (cx, cy, h, rot) => [0, 1, 2, 3].map((k) => { const a = rot + Math.PI / 4 + (k * Math.PI) / 2; return [cx + Math.cos(a) * h * Math.SQRT2, cy + Math.sin(a) * h * Math.SQRT2]; });
+    const band = (pts, w) => { x.lineJoin = 'miter'; x.strokeStyle = C.black; x.lineWidth = w + 1.5; x.beginPath(); pts.forEach(([a, b], i) => (i ? x.lineTo(a, b) : x.moveTo(a, b))); x.closePath(); x.stroke(); x.strokeStyle = C.gold; x.lineWidth = w; x.stroke(); };
+    const medallion = (cx, cy, Rr, k) => {
+      const h = Rr * 0.7, A = sqPts(cx, cy, h, 0), B = sqPts(cx, cy, h, Math.PI / 4), alt = k % 2, ri = h * Math.SQRT2 * 0.765;
+      // the eight-pointed star: its body, its points in red and green, the octagon at its heart
+      const star = []; for (let i = 0; i < 16; i++) { const a = (i * Math.PI) / 8 - Math.PI / 2, r = i % 2 ? ri : h * Math.SQRT2; star.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); }
+      poly(star, alt ? C.green : C.blue);
+      for (let i = 0; i < 8; i++) poly([star[(2 * i + 15) % 16], star[2 * i], star[2 * i + 1]], i % 2 ? C.red : (alt ? C.blue : C.green));
+      const oc = []; for (let i = 0; i < 8; i++) { const a = Math.PI / 8 + (i * Math.PI) / 4; oc.push([cx + Math.cos(a) * h * 0.86, cy + Math.sin(a) * h * 0.86]); }
+      poly(oc, C.black); oc.length = 0; for (let i = 0; i < 8; i++) { const a = Math.PI / 8 + (i * Math.PI) / 4; oc.push([cx + Math.cos(a) * h * 0.8, cy + Math.sin(a) * h * 0.8]); }
+      poly(oc, alt ? C.blue : C.red);
+      // the rosette: eight petals edged black, small leaves between, a gold and blue heart
+      for (let i = 0; i < 8; i++) { const a = (i * Math.PI) / 4; x.save(); x.translate(cx, cy); x.rotate(a); x.fillStyle = C.black; x.beginPath(); x.ellipse(h * 0.4, 0, h * 0.31, h * 0.15, 0, 0, Math.PI * 2); x.fill(); x.fillStyle = alt ? C.goldL : C.cream; x.beginPath(); x.ellipse(h * 0.41, 0, h * 0.25, h * 0.1, 0, 0, Math.PI * 2); x.fill(); x.restore(); }
+      for (let i = 0; i < 8; i++) { const a = (i * Math.PI) / 4 + Math.PI / 8; disc(cx + Math.cos(a) * h * 0.58, cy + Math.sin(a) * h * 0.58, h * 0.075, alt ? C.red : C.green); }
+      disc(cx, cy, h * 0.24, C.black); disc(cx, cy, h * 0.18, alt ? C.red : C.gold); disc(cx, cy, h * 0.08, alt ? C.goldL : C.blue);
+      // the strapwork, square A over B at one crossing and under at the next
+      band(A, 1.4); band(B, 1.4);
+      for (let i = 0; i < 4; i++) { const [a1, b1] = A[i], [a2, b2] = A[(i + 1) % 4], px = a1 + (a2 - a1) * 0.29, py = b1 + (b2 - b1) * 0.29; x.save(); x.beginPath(); x.arc(px, py, 2.6, 0, Math.PI * 2); x.clip(); band(A, 1.4); x.restore(); }
+    };
+    for (let j = 0; j < nr; j++) for (let i = 0; i < nc; i++) medallion(fx + cw * (i + 0.5), fy + ch * (j + 0.5), Rm, i + j);
+    x.restore();
+  });
+}
+
+// Chefchaouen: a stepped alley climbing between walls washed in every shade of blue, an arch over it further up,
+// painted pots hung on the walls and geraniums on the steps, a cobalt door with brass studs on the right, a ginger cat
+// on a step, and white sunlight falling across the walls.
+function morChefchaouen(ctx, W, H) {
+  const u = H / 100;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const disc = (a, b, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(a, b, r, 0, Math.PI * 2); ctx.fill(); };
+  ctx.fillStyle = '#4a74cc'; ctx.fillRect(0, 0, W, H);
+  // sky in the gap at the top
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.2); sky.addColorStop(0, '#5a9ade'); sky.addColorStop(1, '#bcdaf2');
+  ctx.fillStyle = sky; ctx.fillRect(W * 0.38, 0, W * 0.32, H * 0.2);
+  // the house at the end of the alley, seen through the arch
+  poly([[0.4, 0.13], [0.68, 0.11], [0.68, 0.56], [0.4, 0.56]], '#8cb4e6');
+  poly([[0.4, 0.13], [0.68, 0.11], [0.68, 0.145], [0.4, 0.16]], '#e8eef6');
+  poly([[0.525, 0.21], [0.575, 0.21], [0.575, 0.28], [0.525, 0.28]], '#2a4a9a');
+  poly([[0.52, 0.28], [0.58, 0.28], [0.58, 0.3], [0.52, 0.3]], '#f2f4f8');
+  // the steps: each tread and riser further away is smaller (evenly spaced in depth, seen in perspective)
+  const steps = 12, zMax = 4.2, at = (k) => (1 - 1 / (1 + (zMax - 1) * k / steps)) / (1 - 1 / zMax);
+  const xl = (t) => 0.12 + 0.32 * t, xr = (t) => 0.9 - 0.26 * t, yy = (t) => 1.01 - 0.5 * t;
+  poly([[xl(0), 1.01], [xr(0), 1.01], [xr(1), yy(1)], [xl(1), yy(1)]], '#2c4f9e');
+  for (let k = 0; k < steps; k++) {
+    const t0 = at(k), t1 = at(k + 1), ym = yy(t0) - (yy(t0) - yy(t1)) * 0.42;
+    poly([[xl(t0), ym], [xr(t0), ym], [xr(t1), yy(t1)], [xl(t1), yy(t1)]], k % 4 === 1 ? '#dbe8f6' : '#b6d0ee');
+    poly([[xl(t0), ym + 0.004], [xr(t0), ym + 0.004], [xr(t0), ym + 0.012], [xl(t0), ym + 0.012]], '#f4f8fc');   // the sunlit nose of each step
+  }
+  // the left wall, its foot running down beside the steps
+  const lw = [[0, 0], [0.4, 0], [0.4, 0.13], [0.44, 0.13], [0.44, 0.52], [xl(0), 1.01], [0, 1.01]];
+  const lg = ctx.createLinearGradient(0, 0, W * 0.44, 0); lg.addColorStop(0, '#3a62c0'); lg.addColorStop(1, '#5684d2');
+  ctx.fillStyle = lg; ctx.beginPath(); lw.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill();
+  // patches of fresher and older wash on it, a deep blue skirting along the foot
+  ctx.fillStyle = '#4c78cc'; for (const [a, b, rx, ry] of [[0.1, 0.24, 7, 9], [0.3, 0.42, 6, 8], [0.08, 0.64, 8, 6], [0.22, 0.06, 9, 5]]) { ctx.beginPath(); ctx.ellipse(W * a, H * b, rx * u, ry * u, 0.3, 0, Math.PI * 2); ctx.fill(); }
+  poly([[0, 0.9], [xl(0) - 0.01, 0.92], [0.43, 0.53], [0.44, 0.52], [xl(0), 1.01], [0, 1.01]], '#24448e');
+  // the right wall
+  const rw = [[0.68, 0], [1.01, 0], [1.01, 1.01], [xr(0), 1.01], [0.64, 0.52], [0.64, 0.11], [0.68, 0.11]];
+  const rg = ctx.createLinearGradient(W * 0.64, 0, W, 0); rg.addColorStop(0, '#94bcec'); rg.addColorStop(1, '#6e9ee0');
+  ctx.fillStyle = rg; ctx.beginPath(); rw.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill();
+  poly([[1.01, 0.88], [xr(0) + 0.015, 0.95], [0.645, 0.515], [0.64, 0.52], [xr(0), 1.01], [1.01, 1.01]], '#4a76c8');
+  // the arch over the alley: a horseshoe arch through a wall of deeper blue, edged white
+  ctx.fillStyle = '#3e66c2'; ctx.beginPath(); ctx.moveTo(W * 0.4, H * 0.13); ctx.lineTo(W * 0.68, H * 0.11); ctx.lineTo(W * 0.68, H * 0.56); ctx.lineTo(W * 0.62, H * 0.56); ctx.lineTo(W * 0.62, H * 0.33);
+  ctx.ellipse(W * 0.54, H * 0.33, W * 0.08, H * 0.11, 0, 0, Math.PI, true); ctx.lineTo(W * 0.46, H * 0.56); ctx.lineTo(W * 0.4, H * 0.56); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = '#eef4fa'; ctx.lineWidth = 1.8 * u; ctx.beginPath(); ctx.ellipse(W * 0.54, H * 0.33, W * 0.083, H * 0.115, 0, Math.PI * 1.08, Math.PI * 1.92); ctx.stroke();
+  poly([[0.4, 0.13], [0.68, 0.11], [0.68, 0.135], [0.4, 0.155]], '#eef4fa');
+  // sunlight falling across the right wall
+  ctx.globalAlpha = 0.5; poly([[0.7, 0.11], [0.84, 0], [1.01, 0], [1.01, 0.12], [0.72, 0.46], [0.7, 0.42]], '#f4f8fc'); ctx.globalAlpha = 1;
+  // a small window high on the left wall: blue shutters folded open, three plain bars
+  poly([[0.245, 0.02], [0.345, 0.02], [0.345, 0.2], [0.245, 0.2]], '#eef4fa');
+  poly([[0.26, 0.035], [0.33, 0.035], [0.33, 0.185], [0.26, 0.185]], '#1c2c5a');
+  for (const a of [0.28, 0.295, 0.31]) poly([[a, 0.035], [a + 0.005, 0.035], [a + 0.005, 0.185], [a, 0.185]], '#5a6a8a');
+  poly([[0.21, 0.03], [0.243, 0.03], [0.243, 0.19], [0.21, 0.19]], '#2a8aa8'); poly([[0.347, 0.03], [0.38, 0.03], [0.38, 0.19], [0.347, 0.19]], '#2a8aa8');
+  // the blue door on the right: a horseshoe-arched frame, studded panels, a ring knocker, a white step
+  const dx0 = 0.765, dx1 = 0.93, dyt = 0.36, dyb = 0.84, dcx = (dx0 + dx1) / 2, dw = dx1 - dx0;
+  ctx.fillStyle = '#f2f6fa'; ctx.beginPath(); ctx.moveTo(W * (dx0 - 0.015), H * (dyb + 0.02)); ctx.lineTo(W * (dx0 - 0.015), H * (dyt + 0.06)); ctx.ellipse(W * dcx, H * (dyt + 0.06), W * (dw / 2 + 0.015), H * 0.14, 0, Math.PI, 0); ctx.lineTo(W * (dx1 + 0.015), H * (dyb + 0.02)); ctx.fill();
+  ctx.fillStyle = '#1f3c94'; ctx.beginPath(); ctx.moveTo(W * dx0, H * dyb); ctx.lineTo(W * dx0, H * (dyt + 0.06)); ctx.ellipse(W * dcx, H * (dyt + 0.06), W * dw / 2, H * 0.12, 0, Math.PI, 0); ctx.lineTo(W * dx1, H * dyb); ctx.fill();
+  ctx.fillStyle = '#132a6e'; ctx.fillRect(W * (dcx - 0.005), H * (dyt - 0.04), W * 0.01, H * (dyb - dyt + 0.04));
+  for (let r = 0; r < 5; r++) for (const c of [0.22, 0.78]) disc(W * (dx0 + dw * c), H * (dyt + 0.1 + r * 0.085), 1.5 * u, '#eab43e');
+  for (const c of [0.22, 0.5, 0.78]) disc(W * (dx0 + dw * c), H * (dyt + 0.02), 1.5 * u, '#eab43e');
+  ctx.strokeStyle = '#eab43e'; ctx.lineWidth = 1.3 * u; ctx.beginPath(); ctx.arc(W * (dcx + 0.035), H * 0.6, 2.6 * u, 0, Math.PI * 2); ctx.stroke();
+  poly([[dx0 - 0.03, dyb], [dx1 + 0.03, dyb], [dx1 + 0.05, dyb + 0.045], [dx0 - 0.04, dyb + 0.045]], '#e8f0f8');
+  // pots hung on the left wall in rows, painted yellow, pink, green and orange, with trailing plants
+  const pot = (a, b, sz, col, flower) => {
+    ctx.fillStyle = '#2a8a4a'; ctx.beginPath(); ctx.ellipse(a * W, b * H - sz * 0.55, sz * 0.75, sz * 0.5, 0, 0, Math.PI * 2); ctx.fill();
+    for (let k = 0; k < 4; k++) disc(a * W + (k - 1.5) * sz * 0.38, b * H - sz * (0.7 + (k % 2) * 0.25), sz * 0.24, flower);
+    ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(a * W - sz * 0.6, b * H - sz * 0.25); ctx.lineTo(a * W + sz * 0.6, b * H - sz * 0.25); ctx.lineTo(a * W + sz * 0.42, b * H + sz * 0.55); ctx.lineTo(a * W - sz * 0.42, b * H + sz * 0.55); ctx.fill();
+    ctx.fillStyle = '#2a8a4a'; ctx.fillRect(a * W - sz * 0.35, b * H + sz * 0.5, sz * 0.18, sz * 0.7);
+  };
+  const potCols = ['#f0c030', '#e86a9a', '#2fa060', '#e8762a', '#f2f2f2'], flowers = ['#e8344a', '#f0f0f0', '#e86aa8', '#e8344a', '#f2c040'];
+  let n = 0;
+  for (const [a, b, sz] of [[0.08, 0.14, 6.4], [0.07, 0.37, 6.6], [0.19, 0.37, 6.2], [0.31, 0.36, 5.6], [0.08, 0.61, 6.8], [0.2, 0.59, 6.2], [0.315, 0.56, 5.4]]) { pot(a, b, sz * u, potCols[n % 5], flowers[n % 5]); n++; }
+  // terracotta pots of geraniums on the steps
+  const gpot = (a, b, sz) => { ctx.fillStyle = '#2f7a3a'; ctx.beginPath(); ctx.ellipse(a * W, b * H - sz * 0.9, sz * 1.1, sz * 0.75, 0, 0, Math.PI * 2); ctx.fill(); for (let k = 0; k < 5; k++) disc(a * W + (k - 2) * sz * 0.42, b * H - sz * (1.1 + (k % 2) * 0.35), sz * 0.3, '#e0283a'); ctx.fillStyle = '#c0582c'; ctx.beginPath(); ctx.moveTo(a * W - sz * 0.75, b * H - sz * 0.45); ctx.lineTo(a * W + sz * 0.75, b * H - sz * 0.45); ctx.lineTo(a * W + sz * 0.55, b * H + sz * 0.5); ctx.lineTo(a * W - sz * 0.55, b * H + sz * 0.5); ctx.fill(); };
+  for (const [a, b, sz] of [[0.3, 0.95, 4.6], [0.36, 0.86, 3.8], [0.4, 0.74, 3.2], [0.43, 0.63, 2.6], [0.64, 0.66, 2.8], [0.7, 0.78, 3.4]]) gpot(a, b, sz * u);
+  // a ginger cat sitting on a step
+  const ccx = W * 0.54, ccy = H * 0.84;
+  ctx.fillStyle = '#e08a3a'; ctx.beginPath(); ctx.ellipse(ccx, ccy, 3.4 * u, 4 * u, 0, 0, Math.PI * 2); ctx.fill();
+  disc(ccx + 0.6 * u, ccy - 4.6 * u, 2.6 * u, '#e08a3a');
+  ctx.beginPath(); ctx.moveTo(ccx - 1.6 * u, ccy - 6 * u); ctx.lineTo(ccx - 1.2 * u, ccy - 8.4 * u); ctx.lineTo(ccx + 0.2 * u, ccy - 6.6 * u); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(ccx + 1.2 * u, ccy - 6.6 * u); ctx.lineTo(ccx + 2.6 * u, ccy - 8.4 * u); ctx.lineTo(ccx + 3 * u, ccy - 5.6 * u); ctx.fill();
+  ctx.strokeStyle = '#e08a3a'; ctx.lineWidth = 1.6 * u; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(ccx + 2.6 * u, ccy + 3 * u); ctx.quadraticCurveTo(ccx + 7 * u, ccy + 3 * u, ccx + 6.4 * u, ccy - 1 * u); ctx.stroke();
+  ctx.fillStyle = '#b8642a'; ctx.fillRect(ccx - 2.4 * u, ccy - 1 * u, 4.8 * u, 1.2 * u);
+}
+
+// The souk: a covered market lane running away from us under a roof of reed slats that throws stripes of sunlight on
+// the ground; the stalls on either side crammed with brass lanterns, babouches, pottery and baskets, open sacks of
+// spices in front, a few small figures in hooded djellabas, and bright daylight at the far end.
+function morSouk(ctx, W, H) {
+  const u = H / 100;
+  const P = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const disc = (a, b, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(a, b, r, 0, Math.PI * 2); ctx.fill(); };
+  // a stall front as a quad [top-near, top-far, bottom-far, bottom-near]; at(q, s, t) is the point s of the way along
+  // and t of the way down it
+  const at = (q, sa, t) => { const top = [q[0][0] + (q[1][0] - q[0][0]) * sa, q[0][1] + (q[1][1] - q[0][1]) * sa], bot = [q[3][0] + (q[2][0] - q[3][0]) * sa, q[3][1] + (q[2][1] - q[3][1]) * sa]; return [(top[0] + (bot[0] - top[0]) * t) * W, (top[1] + (bot[1] - top[1]) * t) * H]; };
+  // the roof, the lane and the daylight at its end
+  ctx.fillStyle = '#5a3c22'; ctx.fillRect(0, 0, W, H);
+  P([[0.47, 0.3], [0.53, 0.3], [0.53, 0.6], [0.47, 0.6]], '#fbf0d0');
+  P([[0.485, 0.42], [0.515, 0.42], [0.515, 0.6], [0.485, 0.6]], '#e8c890');
+  const floor = [[-0.01, 1.01], [0.3, 0.8], [0.42, 0.67], [0.47, 0.6], [0.53, 0.6], [0.58, 0.67], [0.7, 0.8], [1.01, 1.01]];
+  P(floor, '#a8845c');
+  // the reed roof: slats across the lane, closer together further away, bright gaps between
+  for (let k = 0; k < 15; k++) {
+    const t0 = 1 - 1 / (1 + k * 0.32), t1 = 1 - 1 / (1 + (k + 0.45) * 0.32), y = (t) => 0.02 + t * 0.4, hx = (t) => 0.5 - 0.5 * (1 - t * 1.05);
+    P([[hx(t0) - 0.02, y(t0)], [1.02 - hx(t0), y(t0)], [1.02 - hx(t1), y(t1)], [hx(t1) - 0.02, y(t1)]], '#f2d8a0');
+  }
+  for (const sg of [-1, 1]) P([[0.5 + sg * 0.2, -0.01], [0.5 + sg * 0.24, -0.01], [0.5 + sg * 0.02, 0.31], [0.5 + sg * 0.01, 0.31]], '#2e1c0e');
+  // stripes of sun across the floor
+  for (let k = 0; k < 10; k++) {
+    const t0 = 1 - 1 / (1 + k * 0.5), t1 = 1 - 1 / (1 + (k + 0.35) * 0.5), y = (t) => 1.01 - t * 0.41, hx = (t) => 0.5 - 0.51 * (1 - t);
+    P([[hx(t0), y(t0)], [1 - hx(t0), y(t0) - 0.03 * (1 - t0)], [1 - hx(t1), y(t1) - 0.03 * (1 - t1)], [hx(t1), y(t1)]], '#e4c894');
+  }
+  // the stall fronts: near ones big on both sides, smaller ones further up the lane
+  const L1 = [[0, 0.02], [0.3, 0.16], [0.3, 0.8], [0, 1.0]], L2 = [[0.3, 0.16], [0.42, 0.26], [0.42, 0.67], [0.3, 0.8]], L3 = [[0.42, 0.26], [0.47, 0.3], [0.47, 0.6], [0.42, 0.67]];
+  const mirror = (q) => q.map(([a, b]) => [1 - a, b]);
+  const R1 = mirror(L1), R2 = mirror(L2), R3 = mirror(L3);
+  for (const [q, col] of [[L1, '#c88a5e'], [L2, '#c48458'], [L3, '#bc7c52'], [R1, '#b87a52'], [R2, '#b4764e'], [R3, '#ac704a']]) P(q, col);
+  // the dark recess of each stall, a wooden awning and a counter
+  const recess = (q, col) => { const pts = [at(q, 0.06, 0.1), at(q, 0.94, 0.1), at(q, 0.94, 0.86), at(q, 0.06, 0.86)]; ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a, b) : ctx.moveTo(a, b))); ctx.closePath(); ctx.fill(); };
+  const strip = (q, t0, t1, col) => { const pts = [at(q, 0, t0), at(q, 1, t0), at(q, 1, t1), at(q, 0, t1)]; ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a, b) : ctx.moveTo(a, b))); ctx.closePath(); ctx.fill(); };
+  for (const q of [L1, L2, L3, R1, R2, R3]) { recess(q, '#3a2416'); strip(q, 0.04, 0.1, '#7a4a26'); strip(q, 0.86, 0.9, '#6a4024'); }
+  const size = (q, sa) => Math.hypot((q[3][0] - q[0][0]) + ((q[2][0] - q[1][0]) - (q[3][0] - q[0][0])) * sa, (q[3][1] - q[0][1]) + ((q[2][1] - q[1][1]) - (q[3][1] - q[0][1])) * sa) * H;
+  // goods
+  const glass = ['#f2a01c', '#c8322a', '#2f68c8', '#2f9a58', '#ffd86a'];
+  const lantern = (px, py, s, col) => {
+    ctx.fillStyle = '#d8a438'; ctx.fillRect(px - s * 0.05, py - s * 1.5, s * 0.1, s * 1.1);
+    P([[px / W - s * 0.42 / W, py / H - s * 0.45 / H], [px / W + s * 0.42 / W, py / H - s * 0.45 / H], [px / W, py / H - s * 0.95 / H]], '#d8a438');
+    ctx.fillStyle = col; ctx.fillRect(px - s * 0.4, py - s * 0.45, s * 0.8, s * 0.9);
+    ctx.fillStyle = '#d8a438'; ctx.fillRect(px - s * 0.07, py - s * 0.45, s * 0.14, s * 0.9);
+    P([[px / W - s * 0.45 / W, py / H + s * 0.45 / H], [px / W + s * 0.45 / W, py / H + s * 0.45 / H], [px / W, py / H + s * 0.85 / H]], '#d8a438');
+  };
+  const shoe = (px, py, s, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(px, py, s * 0.3, s * 0.75, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#dcb27c'; ctx.beginPath(); ctx.ellipse(px, py + s * 0.38, s * 0.19, s * 0.32, 0, 0, Math.PI * 2); ctx.fill(); };
+  const pot = (px, py, s, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(px, py - s * 0.55, s * 0.45, s * 0.5, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillRect(px - s * 0.18, py - s * 1.25, s * 0.36, s * 0.4); ctx.fillStyle = '#f0e4c6'; ctx.fillRect(px - s * 0.44, py - s * 0.62, s * 0.88, s * 0.1); };
+  const plate = (px, py, s, c1, c2) => { disc(px, py, s * 0.42, c1); disc(px, py, s * 0.2, c2); };
+  const basket = (px, py, s) => { for (let k = 0; k < 3; k++) { ctx.fillStyle = k % 2 ? '#c8a050' : '#e2be6e'; ctx.beginPath(); ctx.ellipse(px, py - s * (0.25 + k * 0.36), s * (0.55 - k * 0.07), s * 0.2, 0, 0, Math.PI * 2); ctx.fill(); } };
+  const shoes = ['#eeb020', '#c42e2c', '#2a4fae', '#22905a', '#f2ede2', '#e98aa6'], wares = ['#2446a0', '#2e7a42', '#dc9a2e', '#f0e4c6'];
+  // left near stall: lanterns hanging in two rows, pottery on the counter
+  for (let i = 0; i < 5; i++) { const sa = 0.12 + i * 0.18, s = size(L1, sa) * 0.13; for (const [t, j] of [[0.27, 0], [0.56, 1]]) { const [px, py] = at(L1, sa + j * 0.09, t + (i % 2) * 0.04); lantern(px, py, s * (1 - j * 0.2), glass[(i + j * 3) % 5]); } }
+  for (let i = 0; i < 5; i++) { const sa = 0.12 + i * 0.18, s = size(L1, sa) * 0.15, [px, py] = at(L1, sa, 0.86); pot(px, py, s, wares[i % 4]); }
+  // left middle stall: plates on the wall, baskets below; the far one: more lanterns
+  for (let i = 0; i < 5; i++) { const sa = 0.15 + i * 0.18, s = size(L2, sa) * 0.12; for (const [t, k] of [[0.25, 0], [0.45, 1]]) { const [px, py] = at(L2, sa, t); plate(px, py, s, wares[(i + k) % 4], wares[(i + k + 2) % 4]); } const [bx, by] = at(L2, sa, 0.86); basket(bx, by, s * 1.1); }
+  for (let i = 0; i < 4; i++) { const sa = 0.15 + i * 0.23, s = size(L3, sa) * 0.12, [px, py] = at(L3, sa, 0.3 + (i % 2) * 0.12); lantern(px, py, s, glass[i % 5]); }
+  // right near stall: a wall of babouches, row on row
+  for (let r = 0; r < 5; r++) for (let i = 0; i < 8; i++) { const sa = 0.1 + i * 0.115, s = size(R1, sa) * 0.085, [px, py] = at(R1, sa, 0.2 + r * 0.14); shoe(px - s * 0.2, py, s, shoes[(i + r * 2) % 6]); shoe(px + s * 0.2, py, s, shoes[(i + r * 2) % 6]); }
+  for (let i = 0; i < 5; i++) { const sa = 0.15 + i * 0.18, s = size(R2, sa) * 0.12; for (const t of [0.3, 0.55]) { const [px, py] = at(R2, sa, t); lantern(px, py, s, glass[(i + (t > 0.4 ? 2 : 0)) % 5]); } const [bx, by] = at(R2, sa, 0.86); pot(bx, by, s, wares[i % 4]); }
+  for (let r = 0; r < 3; r++) for (let i = 0; i < 4; i++) { const sa = 0.15 + i * 0.23, s = size(R3, sa) * 0.12, [px, py] = at(R3, sa, 0.25 + r * 0.22); shoe(px, py, s, shoes[(i + r) % 6]); }
+  // open sacks of spice on the ground in front of the stalls, each heaped to a cone
+  const sack = (a, b, s, col) => {
+    const px = a * W, py = b * H;
+    ctx.fillStyle = '#d8c090'; ctx.beginPath(); ctx.moveTo(px - s * 0.7, py); ctx.lineTo(px - s * 0.8, py - s * 0.75); ctx.quadraticCurveTo(px, py - s * 0.95, px + s * 0.8, py - s * 0.75); ctx.lineTo(px + s * 0.7, py); ctx.fill();
+    ctx.fillStyle = '#b89a62'; ctx.beginPath(); ctx.ellipse(px, py - s * 0.77, s * 0.8, s * 0.2, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(px - s * 0.66, py - s * 0.8); ctx.lineTo(px, py - s * 1.45); ctx.lineTo(px + s * 0.66, py - s * 0.8); ctx.fill();
+  };
+  sack(0.84, 0.97, 12 * u, '#c63a22'); sack(0.94, 0.93, 11 * u, '#ecb422'); sack(0.74, 0.9, 9 * u, '#9a6436'); sack(0.665, 0.82, 7 * u, '#7f9c4c');
+  sack(0.1, 0.99, 11 * u, '#e27e9c'); sack(0.2, 0.93, 9 * u, '#ecb422');
+  // small figures in hooded djellabas walking away from us (no faces: hoods up, seen from behind)
+  const fig = (a, b, s, col, dark) => {
+    const px = a * W, py = b * H;
+    ctx.fillStyle = '#7a5c3c'; ctx.beginPath(); ctx.ellipse(px + s * 0.1, py, s * 0.22, s * 0.05, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(px - s * 0.18, py); ctx.lineTo(px - s * 0.14, py - s * 0.62); ctx.quadraticCurveTo(px, py - s * 0.7, px + s * 0.14, py - s * 0.62); ctx.lineTo(px + s * 0.18, py); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(px - s * 0.12, py - s * 0.6); ctx.quadraticCurveTo(px - s * 0.13, py - s * 0.84, px, py - s * 0.96); ctx.quadraticCurveTo(px + s * 0.13, py - s * 0.84, px + s * 0.12, py - s * 0.6); ctx.fill();
+    ctx.fillStyle = dark; ctx.fillRect(px - s * 0.14, py - s * 0.035, s * 0.1, s * 0.04); ctx.fillRect(px + s * 0.04, py - s * 0.035, s * 0.1, s * 0.04);
+  };
+  fig(0.505, 0.63, 9 * u, '#f2ead8', '#5a3c22'); fig(0.44, 0.71, 14 * u, '#8a3a2a', '#2a1810'); fig(0.57, 0.83, 22 * u, '#4e5a7e', '#2a1810');
+}
+
+// The Sahara at Erg Chebbi: tall orange dunes at sunset with knife-edge crests, each lit gold on one side and in
+// violet shade on the other, a camel caravan walking along a ridge against the low sun with long shadows, and a few
+// dark desert tents at the foot of the dunes.
+function morSahara(ctx, W, H) {
+  const u = H / 100;
+  const P = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.55); sky.addColorStop(0, '#3a3a7a'); sky.addColorStop(0.35, '#a85a8a'); sky.addColorStop(0.7, '#f08a5a'); sky.addColorStop(1, '#fbc878');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  // the low sun with a halo, a few streaks of cloud
+  ctx.fillStyle = '#fbd88a'; ctx.beginPath(); ctx.arc(W * 0.8, H * 0.4, 11 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#fff2c0'; ctx.beginPath(); ctx.arc(W * 0.8, H * 0.4, 7 * u, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#c86a8a'; for (const [a, b, l] of [[0.05, 0.14, 0.2], [0.12, 0.19, 0.14], [0.55, 0.1, 0.22], [0.62, 0.16, 0.12], [0.86, 0.24, 0.12]]) { roundRect(ctx, W * a, H * b, W * l, 2 * u, 1 * u); ctx.fill(); }
+  // the far dunes along the horizon, pink in the haze
+  P([[-0.02, 0.56], [0.1, 0.5], [0.22, 0.52], [0.34, 0.47], [0.48, 0.5], [0.62, 0.46], [0.76, 0.49], [0.9, 0.46], [1.02, 0.48], [1.02, 0.7], [-0.02, 0.7]], '#e2906e');
+  for (const [a, b, c] of [[0.34, 0.47, 0.28], [0.62, 0.46, 0.55], [0.9, 0.46, 0.84]]) P([[a, b], [c, b + 0.05], [c - 0.02, b + 0.08], [a - 0.01, b + 0.03]], '#bc6a74');
+  // the caravan's dune: a long ridge, its near face half in shade
+  const ridge = [[0.3, 0.6], [0.42, 0.55], [0.55, 0.515], [0.68, 0.5], [0.8, 0.505], [0.9, 0.53], [1.02, 0.57]];
+  P([...ridge, [1.02, 0.8], [0.3, 0.8]], '#ee9440');
+  P([[0.3, 0.6], [0.42, 0.55], [0.55, 0.515], [0.5, 0.6], [0.44, 0.7], [0.3, 0.72]], '#b04e40');
+  // the big near dune: its crest snakes from the peak at the top left down towards us, the left flank in deep shade,
+  // the right flank lit by the sun and rippled by the wind
+  const X = (v) => v * W, Y = (v) => v * H;
+  ctx.fillStyle = '#f29a3e'; ctx.beginPath(); ctx.moveTo(X(-0.02), Y(0.52)); ctx.quadraticCurveTo(X(0.1), Y(0.33), X(0.24), Y(0.3));
+  ctx.bezierCurveTo(X(0.34), Y(0.32), X(0.42), Y(0.56), X(0.6), Y(0.65)); ctx.quadraticCurveTo(X(0.8), Y(0.73), X(1.02), Y(0.74)); ctx.lineTo(X(1.02), Y(1.02)); ctx.lineTo(X(-0.02), Y(1.02)); ctx.fill();
+  ctx.fillStyle = '#f8b660'; ctx.beginPath(); ctx.moveTo(X(0.24), Y(0.3)); ctx.bezierCurveTo(X(0.34), Y(0.32), X(0.42), Y(0.56), X(0.6), Y(0.65)); ctx.quadraticCurveTo(X(0.8), Y(0.73), X(1.02), Y(0.74)); ctx.lineTo(X(1.02), Y(0.8)); ctx.quadraticCurveTo(X(0.7), Y(0.78), X(0.52), Y(0.68)); ctx.bezierCurveTo(X(0.38), Y(0.6), X(0.33), Y(0.42), X(0.24), Y(0.3)); ctx.fill();
+  const crest = () => { ctx.moveTo(X(0.24), Y(0.3)); ctx.bezierCurveTo(X(0.31), Y(0.46), X(0.22), Y(0.7), X(0.42), Y(1.02)); };
+  ctx.fillStyle = '#a8443c'; ctx.beginPath(); ctx.moveTo(X(-0.02), Y(0.52)); ctx.quadraticCurveTo(X(0.1), Y(0.33), X(0.24), Y(0.3)); ctx.bezierCurveTo(X(0.31), Y(0.46), X(0.22), Y(0.7), X(0.42), Y(1.02)); ctx.lineTo(X(-0.02), Y(1.02)); ctx.fill();
+  ctx.fillStyle = '#8a3442'; ctx.beginPath(); crest(); ctx.lineTo(X(0.33), Y(1.02)); ctx.bezierCurveTo(X(0.15), Y(0.7), X(0.24), Y(0.46), X(0.2), Y(0.33)); ctx.fill();
+  ctx.strokeStyle = '#fbc878'; ctx.lineWidth = 1.4 * u; ctx.lineCap = 'round';
+  for (let k = 0; k < 6; k++) { const t = k / 6; ctx.beginPath(); ctx.moveTo(W * (0.36 + t * 0.04), H * (0.66 + t * 0.06)); ctx.quadraticCurveTo(W * (0.52 + t * 0.1), H * (0.7 + t * 0.07), W * (0.8 + t * 0.1), H * (0.86 + t * 0.03)); ctx.stroke(); }
+  // the caravan on the middle ridge: dromedaries in single file, a man leading, their shadows stretched out behind
+  const camel = (cx, by, s, lean) => {
+    ctx.fillStyle = '#7a3a2a'; ctx.beginPath(); ctx.moveTo(cx - 1 * s, by); ctx.lineTo(cx - 9 * s, by + 1.6 * s); ctx.lineTo(cx - 9 * s, by + 2.6 * s); ctx.lineTo(cx + 1 * s, by + 1 * s); ctx.fill();
+    ctx.fillStyle = '#2e1418';
+    ctx.beginPath(); ctx.ellipse(cx, by - 4.2 * s, 2.6 * s, 1.5 * s, 0, 0, Math.PI * 2); ctx.fill();               // body
+    ctx.beginPath(); ctx.ellipse(cx - 0.2 * s, by - 5.4 * s, 1.4 * s, 1.3 * s, 0, 0, Math.PI * 2); ctx.fill();       // hump
+    ctx.lineCap = 'round'; ctx.strokeStyle = '#2e1418'; ctx.lineWidth = 0.75 * s;
+    ctx.beginPath(); ctx.moveTo(cx + 2.2 * s, by - 4.6 * s); ctx.quadraticCurveTo(cx + 3.6 * s, by - 3.6 * s, cx + 3.8 * s, by - 6.4 * s); ctx.stroke();   // neck
+    ctx.beginPath(); ctx.moveTo(cx + 3.6 * s, by - 6.5 * s); ctx.lineTo(cx + 4.8 * s, by - 6.1 * s); ctx.stroke();                                   // head
+    ctx.lineWidth = 0.6 * s; for (const [a, b] of [[-1.8, -2.2 + lean], [-1.1, -1.4 - lean], [1.4, 1 + lean], [2, 1.9 - lean]]) { ctx.beginPath(); ctx.moveTo(cx + a * s, by - 3.4 * s); ctx.lineTo(cx + b * s, by); ctx.stroke(); }
+  };
+  const man = (cx, by, s) => { ctx.fillStyle = '#7a3a2a'; ctx.beginPath(); ctx.moveTo(cx - 0.5 * s, by); ctx.lineTo(cx - 6 * s, by + 1 * s); ctx.lineTo(cx - 6 * s, by + 1.8 * s); ctx.lineTo(cx + 0.5 * s, by + 0.6 * s); ctx.fill(); ctx.fillStyle = '#2e1418'; ctx.beginPath(); ctx.moveTo(cx - 0.9 * s, by); ctx.lineTo(cx - 0.6 * s, by - 3.6 * s); ctx.lineTo(cx + 0.6 * s, by - 3.6 * s); ctx.lineTo(cx + 0.9 * s, by); ctx.fill(); ctx.beginPath(); ctx.arc(cx, by - 4.3 * s, 0.75 * s, 0, Math.PI * 2); ctx.fill(); };
+  const yOn = (xx) => { for (let i = 0; i < ridge.length - 1; i++) { const [a, b] = ridge[i], [c, d] = ridge[i + 1]; if (xx >= a && xx <= c) return b + (d - b) * (xx - a) / (c - a); } return 0.5; };
+  const s = 1.55 * u;
+  man(W * 0.8, H * yOn(0.8) + 0.4 * u, s);
+  for (let k = 0; k < 4; k++) { const xx = 0.725 - k * 0.075; camel(W * xx, H * yOn(xx) + 0.4 * u, s, k % 2 ? 0.5 : -0.5); }
+  // low desert tents of dark woven goat hair on the lit sand, guy ropes out to pegs, long shadows to the left
+  const tent = (cx, by, w, h) => {
+    P([[cx / W - w / W * 1.6, by / H + 0.004], [cx / W - w / W * 0.5, by / H - 0.01], [cx / W + w / W * 0.5, by / H + 0.004]], '#c46a3a');
+    P([[cx / W - w / W * 0.5, by / H], [cx / W - w / W * 0.38, by / H - h / H], [cx / W + w / W * 0.38, by / H - h / H], [cx / W + w / W * 0.5, by / H]], '#3a2020');
+    P([[cx / W - w / W * 0.38, by / H - h / H], [cx / W + w / W * 0.38, by / H - h / H], [cx / W + w / W * 0.2, by / H - h * 1.35 / H], [cx / W - w / W * 0.2, by / H - h * 1.35 / H]], '#4e2c26');
+    P([[cx / W - w / W * 0.12, by / H], [cx / W - w / W * 0.12, by / H - h * 0.7 / H], [cx / W + w / W * 0.12, by / H - h * 0.7 / H], [cx / W + w / W * 0.12, by / H]], '#f8c860');
+    ctx.strokeStyle = '#3a2020'; ctx.lineWidth = 0.5 * u; for (const sg of [-1, 1]) { ctx.beginPath(); ctx.moveTo(cx + sg * w * 0.38, by - h); ctx.lineTo(cx + sg * w * 0.75, by + 0.3 * u); ctx.stroke(); }
+  };
+  tent(W * 0.72, H * 0.93, 15 * u, 5.5 * u); tent(W * 0.88, H * 0.9, 12 * u, 4.6 * u); tent(W * 0.6, H * 0.96, 10 * u, 4 * u);
+}
+
+// Ait Benhaddou: the earthen ksar climbing its hill, clay kasbahs with crenellated corner towers stacked up the slope
+// to the old granary at the top, under a blue sky with far hills; date palms and the shallow river in front.
+function morKasbah(ctx, W, H) {
+  const u = H / 100, X = (v) => v * W, Y = (v) => v * H;
+  const P = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(a * W, b * H) : ctx.moveTo(a * W, b * H))); ctx.closePath(); ctx.fill(); };
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.6); sky.addColorStop(0, '#3f7cc8'); sky.addColorStop(1, '#a8d0ec');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#f4f6f8'; for (const [a, b, r] of [[0.12, 0.12, 5], [0.17, 0.1, 6.5], [0.22, 0.13, 4.5], [0.86, 0.09, 5], [0.91, 0.08, 6]]) { ctx.beginPath(); ctx.ellipse(X(a), Y(b), r * 1.9 * u, r * 0.8 * u, 0, 0, Math.PI * 2); ctx.fill(); }
+  // far hills
+  P([[-0.02, 0.5], [0.1, 0.4], [0.2, 0.43], [0.3, 0.36], [0.42, 0.44], [0.6, 0.42], [0.78, 0.36], [0.9, 0.4], [1.02, 0.36], [1.02, 0.7], [-0.02, 0.7]], '#b89a9a');
+  P([[0.3, 0.36], [0.36, 0.41], [0.42, 0.44], [0.33, 0.44]], '#9e8288'); P([[0.78, 0.36], [0.85, 0.4], [0.9, 0.4], [0.82, 0.42]], '#9e8288');
+  // the hill
+  P([[-0.02, 0.76], [0.14, 0.62], [0.3, 0.44], [0.44, 0.28], [0.54, 0.17], [0.6, 0.14], [0.68, 0.17], [0.78, 0.3], [0.9, 0.46], [1.02, 0.56], [1.02, 0.8], [-0.02, 0.8]], '#a86c44');
+  P([[0.6, 0.14], [0.68, 0.17], [0.78, 0.3], [0.9, 0.46], [1.02, 0.56], [1.02, 0.66], [0.84, 0.5], [0.7, 0.3]], '#8a5636');
+  // a building: lit front, shaded side, the shadow it throws to the right, crenellations along the top; a tower is
+  // taller and paler, flares out at the top and carries a band of patterns cut into the clay
+  const fronts = ['#d88c5c', '#c87a4a', '#e09a6a', '#c27046'];
+  let bn = 0;
+  const build = (x0, base, w, h, tower) => {
+    const top = base - h, sd = w * (tower ? 0.3 : 0.16), fc = tower ? '#e6a874' : fronts[bn++ % 4], fl = tower ? 0.005 : 0;
+    P([[x0 + w + sd, base], [x0 + w + sd + 0.022, base], [x0 + w + sd + 0.022, top + 0.04], [x0 + w + sd, top + 0.01]], '#94502e');
+    P([[x0 + w, base], [x0 + w + sd, base - 0.01], [x0 + w + sd + fl, top - 0.01], [x0 + w + fl, top]], '#8a4628');
+    P([[x0, base], [x0 + w, base], [x0 + w + fl, top], [x0 - fl, top]], fc);
+    const n = Math.max(2, Math.round((w + 2 * fl) / 0.018));
+    for (let k = 0; k < n; k++) { const a = x0 - fl + (k + 0.18) * (w + 2 * fl) / n, b = a + (w + 2 * fl) / n * 0.64; P([[a, top + 0.002], [a, top - 0.022], [b, top - 0.022], [b, top + 0.002]], fc); }
+    if (tower) {
+      P([[x0 - fl, top + 0.012], [x0 + w + fl, top + 0.012], [x0 + w + fl, top + 0.022], [x0 - fl, top + 0.022]], '#8a4628');
+      const m = w > 0.045 ? 3 : 2;
+      for (let k = 0; k < m; k++) { const cx = x0 + (k + 0.5) * w / m, cy = top + 0.055; P([[cx, cy - 0.02], [cx + w / m * 0.36, cy], [cx, cy + 0.02], [cx - w / m * 0.36, cy]], '#6a3420'); }
+      for (let k = 0; k < m - 1; k++) { const cx = x0 + (k + 1) * w / m; P([[cx - 0.004, top + 0.09], [cx + 0.004, top + 0.09], [cx + 0.004, top + 0.14], [cx - 0.004, top + 0.14]], '#4a2418'); }
+    } else {
+      const nw = w > 0.1 ? 2 : 1;
+      for (let k = 0; k < nw; k++) { const a = x0 + (k + 0.3) * w / nw; P([[a, top + h * 0.3], [a + 0.013, top + h * 0.3], [a + 0.013, top + h * 0.3 + 0.032], [a, top + h * 0.3 + 0.032]], '#4a2418'); }
+    }
+  };
+  // the granary at the summit, then the houses and towers down the slope (back to front)
+  build(0.555, 0.21, 0.08, 0.08, false); build(0.54, 0.23, 0.026, 0.13, true); build(0.635, 0.23, 0.026, 0.12, true);
+  const B = [
+    [0.4, 0.37, 0.09, 0.1, 0], [0.48, 0.38, 0.035, 0.17, 1], [0.53, 0.37, 0.1, 0.1, 0], [0.66, 0.37, 0.09, 0.09, 0], [0.75, 0.38, 0.035, 0.15, 1],
+    [0.25, 0.53, 0.1, 0.1, 0], [0.35, 0.54, 0.04, 0.2, 1], [0.4, 0.53, 0.12, 0.11, 0], [0.53, 0.54, 0.04, 0.21, 1], [0.58, 0.53, 0.12, 0.1, 0], [0.71, 0.53, 0.1, 0.1, 0], [0.82, 0.54, 0.04, 0.18, 1],
+    [0.05, 0.7, 0.1, 0.11, 0], [0.155, 0.71, 0.045, 0.22, 1], [0.21, 0.7, 0.13, 0.12, 0], [0.35, 0.7, 0.12, 0.11, 0], [0.48, 0.71, 0.05, 0.26, 1], [0.54, 0.7, 0.13, 0.12, 0], [0.68, 0.7, 0.12, 0.11, 0], [0.81, 0.71, 0.045, 0.22, 1], [0.87, 0.7, 0.12, 0.11, 0],
+  ];
+  for (const [a, b, w, h, t] of B) build(a, b, w, h, !!t);
+  // the foot of the town, the shingle bank and the river
+  P([[-0.02, 0.69], [1.02, 0.69], [1.02, 0.78], [-0.02, 0.78]], '#b8764a');
+  P([[-0.02, 0.76], [1.02, 0.74], [1.02, 0.8], [-0.02, 0.82]], '#d8b480');
+  const river = ctx.createLinearGradient(0, Y(0.8), 0, Y(0.9)); river.addColorStop(0, '#6aa8cc'); river.addColorStop(1, '#3f80b0');
+  ctx.fillStyle = river; ctx.beginPath(); ctx.moveTo(X(-0.02), Y(0.84)); ctx.quadraticCurveTo(X(0.5), Y(0.78), X(1.02), Y(0.8)); ctx.lineTo(X(1.02), Y(0.9)); ctx.quadraticCurveTo(X(0.5), Y(0.92), X(-0.02), Y(0.9)); ctx.fill();
+  ctx.fillStyle = '#cfe6f2'; for (let k = 0; k < 10; k++) ctx.fillRect(X(0.05 + ((k * 37) % 90) / 100), Y(0.83 + ((k * 13) % 6) / 100), (5 + (k % 3) * 3) * u, 0.8 * u);
+  P([[-0.02, 0.9], [1.02, 0.89], [1.02, 1.02], [-0.02, 1.02]], '#c8a470');
+  // green fields and reeds along the near bank
+  ctx.fillStyle = '#6a8a3a'; ctx.beginPath(); ctx.moveTo(X(-0.02), Y(0.93)); for (let k = 0; k <= 40; k++) ctx.lineTo(X(k / 40 * 1.04 - 0.02), Y(0.925 - (k % 2) * 0.015)); ctx.lineTo(X(1.02), Y(1.02)); ctx.lineTo(X(-0.02), Y(1.02)); ctx.fill();
+  // date palms: a curved trunk and a crown of drooping fronds
+  const palm = (x0, base, h, lean) => {
+    const tx = x0 + lean, ty = base - h;
+    ctx.strokeStyle = '#7a5a36'; ctx.lineWidth = 1.8 * u; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(X(x0), Y(base)); ctx.quadraticCurveTo(X(x0 + lean * 0.2), Y(base - h * 0.5), X(tx), Y(ty)); ctx.stroke();
+    ctx.strokeStyle = '#5a4026'; ctx.lineWidth = 0.6 * u; for (let k = 1; k < 6; k++) { const t = k / 6, px = X(x0 + lean * 0.2 * 2 * t * (1 - t) + lean * t * t), py = Y(base - h * t); ctx.beginPath(); ctx.moveTo(px - 0.9 * u, py); ctx.lineTo(px + 0.9 * u, py - 0.5 * u); ctx.stroke(); }
+    for (let k = 0; k < 10; k++) {
+      const side = k < 5 ? -1 : 1, j = k % 5, L = (h * H) * (0.32 + (j % 2) * 0.05), up = [0.9, 0.55, 0.25, 0.0, -0.3][j];
+      const ex = X(tx) + side * L * (0.45 + j * 0.13), ey = Y(ty) + L * (0.25 + j * 0.12 - up * 0.35);
+      ctx.strokeStyle = (k % 2) ? '#3f6e32' : '#4f843a'; ctx.lineWidth = 1.9 * u; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(X(tx), Y(ty)); ctx.quadraticCurveTo(X(tx) + side * L * (0.25 + j * 0.08), Y(ty) - L * (0.18 + up * 0.35), ex, ey); ctx.stroke();
+    }
+    ctx.fillStyle = '#c87a2a'; ctx.beginPath(); ctx.arc(X(tx) + 1 * u, Y(ty) + 1.4 * u, 1.2 * u, 0, Math.PI * 2); ctx.fill();
+  };
+  for (const [a, b, h, l] of [[0.04, 0.99, 0.36, 0.02], [0.12, 1.0, 0.28, -0.015], [0.2, 0.98, 0.22, 0.01], [0.82, 0.99, 0.3, -0.02], [0.92, 1.0, 0.38, 0.015], [0.72, 0.97, 0.2, 0.012]]) palm(a, b, h, l);
+}
+
+// The tannery of Fes seen from a terrace above: big round vats in a honeycomb, thick pale stone rims, each brimming
+// with one strong dye (red, saffron, white, brown, indigo, ochre) with a ring of foam on it, three workers standing
+// waist-deep in the vats, and along the top a low wall and the flat roofs with hides laid out in rows to dry.
+function morTannery(ctx, W, H) {
+  const u = H / 100;
+  const disc = (a, b, rx, ry, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(a, b, rx, ry, 0, 0, Math.PI * 2); ctx.fill(); };
+  // the yard: dye-stained stone showing between the vats
+  ctx.fillStyle = '#9a8462'; ctx.fillRect(0, 0, W, H);
+  // the vats: dye colour, foam ring
+  const dyes = [['#b8302a', '#e2725c'], ['#eeb422', '#fadc82'], ['#f2eee4', '#d2cab8'], ['#7a4a2a', '#ac7c52'], ['#2a3f8a', '#6078bc'], ['#d8862a', '#f2b86a']];
+  const Rr = 14 * u, K = 0.78, pitch = 2 * Rr, rowStep = Math.sqrt(3) * Rr * K;
+  const order = [0, 1, 4, 2, 5, 3, 1, 0, 3, 4, 2, 5, 4, 2, 0, 1, 3, 5, 2, 3, 5, 0, 4, 1, 5, 4, 1, 3, 0, 2];
+  const workers = [[1, 2], [2, 4], [3, 1]];          // [row, column] of the vats with a man in them
+  const spots = [];
+  let n = 0;
+  for (let r = 0; r < 4; r++) {
+    const cy = 34 * u + r * rowStep, off = r % 2 ? pitch / 2 : 0;
+    for (let c = -1, cx = W / 2 - 3 * pitch + off; cx < W + Rr; c++, cx += pitch) {
+      const [dye, foam] = dyes[order[n++ % order.length]];
+      disc(cx, cy, Rr - 0.5 * u, (Rr - 0.5 * u) * K, '#ebe2cb');                  // the stone rim
+      disc(cx, cy + 0.6 * u, Rr - 3 * u, (Rr - 3 * u) * K, '#a8977a');           // its inner edge, in shade
+      disc(cx, cy + 0.9 * u, Rr - 4.4 * u, (Rr - 4.4 * u) * K, dye);             // the dye
+      ctx.strokeStyle = foam; ctx.lineWidth = 1.7 * u;                            // a ring of foam on it
+      ctx.beginPath(); ctx.ellipse(cx, cy + 0.9 * u, (Rr - 4.4 * u) * 0.62, (Rr - 4.4 * u) * K * 0.62, 0, 0, Math.PI * 2); ctx.stroke();
+      if (workers.some(([wr, wc]) => wr === r && wc === c + 1)) spots.push([cx, cy + 0.9 * u, foam]);
+    }
+  }
+  // the workers: waist-deep, a white or blue shirt, the head bent over the work (no face), arms down into the dye
+  spots.forEach(([cx, cy, foam], i) => {
+    ctx.strokeStyle = foam; ctx.lineWidth = 1.6 * u; ctx.beginPath(); ctx.ellipse(cx, cy + 0.8 * u, 5.6 * u, 2.8 * u, 0, 0, Math.PI * 2); ctx.stroke();
+    ctx.strokeStyle = '#7a4e34'; ctx.lineWidth = 1.6 * u; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(cx - 3 * u, cy - 4.6 * u); ctx.lineTo(cx - 5 * u, cy + 0.4 * u); ctx.moveTo(cx + 3 * u, cy - 4.6 * u); ctx.lineTo(cx + 5 * u, cy + 0.4 * u); ctx.stroke();
+    ctx.fillStyle = ['#f4f0e6', '#3f62b0', '#f4f0e6'][i]; ctx.beginPath(); ctx.moveTo(cx - 3.4 * u, cy + 0.8 * u); ctx.lineTo(cx - 3.4 * u, cy - 5.4 * u); ctx.quadraticCurveTo(cx, cy - 7 * u, cx + 3.4 * u, cy - 5.4 * u); ctx.lineTo(cx + 3.4 * u, cy + 0.8 * u); ctx.fill();
+    disc(cx, cy - 7.8 * u, 2.3 * u, 2.3 * u, '#3e2618');
+  });
+  // the low wall along the top of the yard: its whitewashed top, its face and its shadow
+  ctx.fillStyle = '#8f7e62'; ctx.fillRect(0, 26.5 * u, W, 1.2 * u);
+  ctx.fillStyle = '#cdbd98'; ctx.fillRect(0, 23.8 * u, W, 2.8 * u);
+  ctx.fillStyle = '#f2ece0'; ctx.fillRect(0, 20.6 * u, W, 3.3 * u);
+  // the roofs: flat, sand coloured, split into houses by parapets, white house fronts along the top edge
+  ctx.fillStyle = '#c8ad80'; ctx.fillRect(0, 0, W, 20.6 * u);
+  ctx.fillStyle = '#9a7e58'; ctx.fillRect(0, 0, W, 2 * u);
+  const walls = [0.24, 0.5, 0.76];
+  for (const a of walls) { ctx.fillStyle = '#ece4d2'; ctx.fillRect(W * a - 1 * u, 0, 2 * u, 20.6 * u); ctx.fillStyle = '#9a7e58'; ctx.fillRect(W * a + 1 * u, 2 * u, 0.9 * u, 18.6 * u); }
+  // the hides, laid out in two neat rows on each roof, every roof drying its own colour
+  const hideCols = [['#f0c84a', '#e2b43a'], ['#f6f0e2', '#ece2c8'], ['#b4482e', '#a03c26'], ['#e8a24e', '#d89040']];
+  const edges = [0, ...walls, 1];
+  for (let hI = 0; hI < 4; hI++) {
+    const x0 = W * edges[hI] + (hI ? 1.8 * u : 1.2 * u), x1 = W * edges[hI + 1] - (hI < 3 ? 1.8 * u : 1.2 * u), hw = 7 * u, gap = 1.6 * u;
+    const nh = Math.floor((x1 - x0 + gap) / (hw + gap)), start = x0 + (x1 - x0 - (nh * hw + (nh - 1) * gap)) / 2;
+    for (let row = 0; row < 2; row++) for (let k = 0; k < nh; k++) {
+      const a = start + k * (hw + gap), b = 3.6 * u + row * 8.4 * u, w = hw, h = 6.6 * u, c = 1.4 * u;
+      ctx.fillStyle = hideCols[hI][(k + row) % 2];
+      ctx.beginPath(); ctx.moveTo(a + c, b); ctx.lineTo(a + w - c, b); ctx.lineTo(a + w, b + c); ctx.lineTo(a + w, b + h - c); ctx.lineTo(a + w - c, b + h); ctx.lineTo(a + c, b + h); ctx.lineTo(a, b + h - c); ctx.lineTo(a, b + c); ctx.closePath(); ctx.fill();
+    }
+  }
+}
+
+const MOROCCO_SCENES = [
+  (c, w, h) => { // zellij: big eight-pointed stars in white and ochre on emerald, cobalt between
+    c.fillStyle = '#1d7a4a'; c.fillRect(0, 0, w, h);
+    const star = (cx, cy, R, col) => { c.fillStyle = col; for (const rot of [0, Math.PI / 4]) { c.save(); c.translate(cx, cy); c.rotate(rot); c.fillRect(-R * 0.72, -R * 0.72, R * 1.44, R * 1.44); c.restore(); } };
+    const R = w * 0.3;
+    for (let j = 0; j < 4; j++) for (let i = 0; i < 2; i++) { const cx = w * (0.25 + i * 0.5), cy = h * (0.1 + j * 0.27); star(cx, cy, R, '#f2eee2'); star(cx, cy, R * 0.62, (i + j) % 2 ? '#dc9a2a' : '#1f3f96'); }
+    for (let j = 0; j < 5; j++) { c.fillStyle = '#1d1a1c'; c.beginPath(); c.arc(w * 0.5, h * (j * 0.27 - 0.035), w * 0.1, 0, Math.PI * 2); c.fill(); }
+  },
+  (c, w, h) => { // a blue alley with steps
+    c.fillStyle = '#9cc2ee'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#3a62c0'; c.beginPath(); c.moveTo(0, 0); c.lineTo(w * 0.42, 0); c.lineTo(w * 0.42, h * 0.55); c.lineTo(0, h); c.fill();
+    for (let k = 0; k < 6; k++) { c.fillStyle = k % 2 ? '#dbe8f6' : '#2c4f9e'; c.fillRect(w * (0.42 - k * 0.07), h * (0.55 + k * 0.075), w * (0.16 + k * 0.12), h * 0.075); }
+    c.fillStyle = '#1f3c94'; c.beginPath(); c.moveTo(w * 0.62, h * 0.62); c.lineTo(w * 0.62, h * 0.3); c.arc(w * 0.78, h * 0.3, w * 0.16, Math.PI, 0); c.lineTo(w * 0.94, h * 0.62); c.fill();
+    c.fillStyle = '#eab43e'; c.beginPath(); c.arc(w * 0.72, h * 0.42, w * 0.035, 0, Math.PI * 2); c.fill();
+  },
+  (c, w, h) => { // dunes at sunset
+    const g = c.createLinearGradient(0, h * 0.25, 0, h * 0.6); g.addColorStop(0, '#6a4a9a'); g.addColorStop(1, '#f6a05a'); c.fillStyle = g; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#fff0b0'; c.beginPath(); c.arc(w * 0.7, h * 0.42, w * 0.16, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#f29a3e'; c.beginPath(); c.moveTo(0, h * 0.68); c.quadraticCurveTo(w * 0.3, h * 0.46, w * 0.5, h * 0.52); c.quadraticCurveTo(w * 0.8, h * 0.6, w, h * 0.56); c.lineTo(w, h); c.lineTo(0, h); c.fill();
+    c.fillStyle = '#a8443c'; c.beginPath(); c.moveTo(w * 0.32, h * 0.5); c.quadraticCurveTo(w * 0.28, h * 0.76, w * 0.45, h); c.lineTo(0, h); c.lineTo(0, h * 0.68); c.quadraticCurveTo(w * 0.18, h * 0.54, w * 0.32, h * 0.5); c.fill();
+  },
+  (c, w, h) => { // a kasbah tower against the sky
+    c.fillStyle = '#4a86d0'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#d0844e'; c.fillRect(0, h * 0.46, w, h);
+    c.fillStyle = '#8a4628'; c.fillRect(w * 0.62, h * 0.46, w * 0.38, h);
+    c.fillStyle = '#d0844e'; for (let k = 0; k < 4; k++) c.fillRect(w * (0.02 + k * 0.26), h * 0.38, w * 0.14, h * 0.09);
+    c.fillStyle = '#6a3420'; for (let k = 0; k < 2; k++) { const x = w * (0.18 + k * 0.28); c.beginPath(); c.moveTo(x, h * 0.52); c.lineTo(x + w * 0.1, h * 0.58); c.lineTo(x, h * 0.64); c.lineTo(x - w * 0.1, h * 0.58); c.fill(); }
+    c.fillRect(w * 0.26, h * 0.72, w * 0.12, h * 0.1);
+    c.fillStyle = '#3f7a32'; c.fillRect(0, h * 0.9, w, h);
+  },
+  (c, w, h) => { // a lantern glowing in the night
+    c.fillStyle = '#111a3a'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#213066'; c.beginPath(); c.arc(w / 2, h * 0.62, w * 0.5, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#f6d27a'; for (let k = 0; k < 14; k++) { const a = (k / 14) * Math.PI * 2; c.fillRect(w / 2 + Math.cos(a) * w * 0.42, h * 0.62 + Math.sin(a) * w * 0.42, w * 0.07, w * 0.07); }
+    c.fillStyle = '#c8922e'; c.fillRect(w * 0.47, 0, w * 0.06, h * 0.42); c.beginPath(); c.moveTo(w * 0.26, h * 0.48); c.lineTo(w * 0.5, h * 0.36); c.lineTo(w * 0.74, h * 0.48); c.fill();
+    c.fillRect(w * 0.28, h * 0.48, w * 0.44, h * 0.3); c.fillStyle = '#f0a01c'; c.fillRect(w * 0.35, h * 0.52, w * 0.3, h * 0.22); c.fillStyle = '#ffe28c'; c.fillRect(w * 0.44, h * 0.56, w * 0.12, h * 0.14);
+    c.fillStyle = '#c8922e'; c.beginPath(); c.moveTo(w * 0.28, h * 0.78); c.lineTo(w * 0.72, h * 0.78); c.lineTo(w * 0.5, h * 0.9); c.fill();
+  },
+  (c, w, h) => { // spice cones in a bowl
+    c.fillStyle = '#3c2618'; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#c8962e'; c.beginPath(); c.ellipse(w * 0.5, h * 0.72, w * 0.5, h * 0.12, 0, 0, Math.PI * 2); c.fill();
+    for (const [x0, col, dk, ht] of [[0.3, '#ecb422', '#b87e18', 0.36], [0.68, '#c63a22', '#86221a', 0.26]]) { c.fillStyle = col; c.beginPath(); c.moveTo(w * (x0 - 0.26), h * 0.72); c.lineTo(w * x0, h * ht); c.lineTo(w * (x0 + 0.26), h * 0.72); c.fill(); c.fillStyle = dk; c.beginPath(); c.moveTo(w * x0, h * ht); c.lineTo(w * (x0 + 0.26), h * 0.72); c.lineTo(w * (x0 + 0.08), h * 0.72); c.fill(); }
+    c.fillStyle = '#2a4aa6'; c.fillRect(0, h * 0.86, w, h);
+  },
+  (c, w, h) => { // dye vats in the tannery: big round vats of colour in a honeycomb of pale stone
+    c.fillStyle = '#e4d8be'; c.fillRect(0, 0, w, h);
+    const cols = ['#b8302a', '#eab830', '#2a4a92', '#7a4a2a', '#d8742a', '#f6f2ea'];
+    let n = 0;
+    for (let r = 0; r < 4; r++) for (let k = -1; k < 2; k++) { const cx = w * (0.25 + k * 0.52 + (r % 2) * 0.26), cy = h * (0.25 + r * 0.22); c.fillStyle = cols[n++ % 6]; c.beginPath(); c.ellipse(cx, cy, w * 0.22, h * 0.1, 0, 0, Math.PI * 2); c.fill(); }
+  },
+];
+// Postcard: "Greetings from MOROCCO", every letter a little Moroccan scene.
+function morPostcard(ctx, W, H) { americaPostcard(ctx, W, H, 'MOROCCO', MOROCCO_SCENES); }
+
 // ---------- USA pack: woven, pieced and knotted rugs (restored from the earlier drafts) ----------
 // Dashed stitching around a rectangle; each side starts and ends on a stitch, so the corners join up.
 function stitchRect(ctx, x, y, w, h, step, thick, color) {
@@ -12624,11 +20332,95 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7, { frontOnly =
   else if (P.iceland === 'lagoon') iceLagoon(ctx, W, H);
   else if (P.iceland === 'reykjavik') iceReykjavik(ctx, W, H);
   else if (P.iceland === 'postcard') icePostcard(ctx, W, H);
+  else if (P.croatia === 'licitar') croLicitar(ctx, W, H);
+  else if (P.croatia === 'konavle') croKonavle(ctx, W, H);
+  else if (P.croatia === 'dalmatians') croDalmatians(ctx, W, H);
+  else if (P.croatia === 'cravats') croCravats(ctx, W, H);
+  else if (P.croatia === 'buttons') croButtons(ctx, W, H);
+  else if (P.croatia === 'paglace') croPagLace(ctx, W, H);
+  else if (P.croatia === 'dubrovnik') croDubrovnik(ctx, W, H);
+  else if (P.croatia === 'plitvice') croPlitvice(ctx, W, H);
+  else if (P.croatia === 'goldenhorn') croZlatniRat(ctx, W, H);
+  else if (P.croatia === 'dolac') croDolac(ctx, W, H);
+  else if (P.croatia === 'kornati') croKornati(ctx, W, H);
+  else if (P.croatia === 'postcard') croPostcard(ctx, W, H);
+  else if (P.bosnia === 'copper') bihCopper(ctx, W, H);
+  else if (P.bosnia === 'woodcarving') bihWoodcarving(ctx, W, H);
+  else if (P.bosnia === 'goldwork') bihGoldwork(ctx, W, H);
+  else if (P.bosnia === 'coffeecups') bihCoffeeCups(ctx, W, H);
+  else if (P.bosnia === 'grapes') bihGrapes(ctx, W, H);
+  else if (P.bosnia === 'pita') bihPita(ctx, W, H);
+  else if (P.bosnia === 'oldbridge') bihOldBridge(ctx, W, H);
+  else if (P.bosnia === 'bascarsija') bihBascarsija(ctx, W, H);
+  else if (P.bosnia === 'watermills') bihWatermills(ctx, W, H);
+  else if (P.bosnia === 'cevapi') bihCevapi(ctx, W, H);
+  else if (P.bosnia === 'lukomir') bihLukomir(ctx, W, H);
+  else if (P.bosnia === 'postcard') bihPostcard(ctx, W, H);
+  else if (P.serbia === 'plums') srbPlums(ctx, W, H);
+  else if (P.serbia === 'opanci') srbOpanci(ctx, W, H);
+  else if (P.serbia === 'peppers') srbPeppers(ctx, W, H);
+  else if (P.serbia === 'pottery') srbPottery(ctx, W, H);
+  else if (P.serbia === 'kolo') srbKolo(ctx, W, H);
+  else if (P.serbia === 'embroidery') srbSumadija(ctx, W, H);
+  else if (P.serbia === 'kalemegdan') srbKalemegdan(ctx, W, H);
+  else if (P.serbia === 'drinahouse') srbDrinaHouse(ctx, W, H);
+  else if (P.serbia === 'irongates') srbIronGates(ctx, W, H);
+  else if (P.serbia === 'eighttrain') srbEightTrain(ctx, W, H);
+  else if (P.serbia === 'zlatibor') srbZlatibor(ctx, W, H);
+  else if (P.serbia === 'postcard') srbPostcard(ctx, W, H);
+  else if (P.bulgaria === 'troyan') bulTroyan(ctx, W, H);
+  else if (P.bulgaria === 'martenitsa') bulMartenitsa(ctx, W, H);
+  else if (P.bulgaria === 'thracian') bulThracian(ctx, W, H);
+  else if (P.bulgaria === 'bells') bulKukeri(ctx, W, H);
+  else if (P.bulgaria === 'roseoil') bulRoseOil(ctx, W, H);
+  else if (P.bulgaria === 'carvedsun') bulTryavna(ctx, W, H);
+  else if (P.bulgaria === 'rosevalley') bulRoseValley(ctx, W, H);
+  else if (P.bulgaria === 'plovdiv') bulPlovdiv(ctx, W, H);
+  else if (P.bulgaria === 'sevenlakes') bulSevenLakes(ctx, W, H);
+  else if (P.bulgaria === 'belogradchik') bulBelogradchik(ctx, W, H);
+  else if (P.bulgaria === 'yogurt') bulYogurt(ctx, W, H);
+  else if (P.bulgaria === 'postcard') bulPostcard(ctx, W, H);
+  else if (P.albania === 'xhubleta') albXhubleta(ctx, W, H);
+  else if (P.albania === 'qeleshe') albQeleshe(ctx, W, H);
+  else if (P.albania === 'cifteli') albCifteli(ctx, W, H);
+  else if (P.albania === 'slateroofs') albSlateRoofs(ctx, W, H);
+  else if (P.albania === 'figs') albFigs(ctx, W, H);
+  else if (P.albania === 'pelicans') albPelicans(ctx, W, H);
+  else if (P.albania === 'gjirokaster') albGjirokaster(ctx, W, H);
+  else if (P.albania === 'berat') albBerat(ctx, W, H);
+  else if (P.albania === 'blueeye') albBlueEye(ctx, W, H);
+  else if (P.albania === 'ksamil') albKsamil(ctx, W, H);
+  else if (P.albania === 'theth') albTheth(ctx, W, H);
+  else if (P.albania === 'postcard') albPostcard(ctx, W, H);
+  else if (P.jordan === 'sandbottles') jorSandBottles(ctx, W, H);
+  else if (P.jordan === 'dallah') jorDallah(ctx, W, H);
+  else if (P.jordan === 'blackiris') jorBlackIris(ctx, W, H);
+  else if (P.jordan === 'oryx') jorOryx(ctx, W, H);
+  else if (P.jordan === 'silver') jorSilver(ctx, W, H);
+  else if (P.jordan === 'dates') jorDates(ctx, W, H);
+  else if (P.jordan === 'petra') jorPetra(ctx, W, H);
+  else if (P.jordan === 'wadirum') jorWadiRum(ctx, W, H);
+  else if (P.jordan === 'deadsea') jorDeadSea(ctx, W, H);
+  else if (P.jordan === 'jerash') jorJerash(ctx, W, H);
+  else if (P.jordan === 'aqaba') jorAqaba(ctx, W, H);
+  else if (P.jordan === 'postcard') jorPostcard(ctx, W, H);
+  else if (P.morocco === 'zellij') morZellij(ctx, W, H);
+  else if (P.morocco === 'lanterns') morLanterns(ctx, W, H);
+  else if (P.morocco === 'babouches') morBabouches(ctx, W, H);
+  else if (P.morocco === 'spices') morSpices(ctx, W, H);
+  else if (P.morocco === 'tagines') morTagines(ctx, W, H);
+  else if (P.morocco === 'paintedwood') morZouak(ctx, W, H);
+  else if (P.morocco === 'chefchaouen') morChefchaouen(ctx, W, H);
+  else if (P.morocco === 'souk') morSouk(ctx, W, H);
+  else if (P.morocco === 'sahara') morSahara(ctx, W, H);
+  else if (P.morocco === 'kasbah') morKasbah(ctx, W, H);
+  else if (P.morocco === 'tannery') morTannery(ctx, W, H);
+  else if (P.morocco === 'postcard') morPostcard(ctx, W, H);
   else if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
   else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
-  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : P.mexico ? MEXICO_FRAME : P.turkiye ? TURKIYE_FRAME : P.korea ? KOREA_FRAME : P.japan ? JAPAN_FRAME : P.china ? CHINA_FRAME : P.italy ? ITALY_FRAME : P.greece ? GREECE_FRAME : P.spain ? SPAIN_FRAME : P.france ? FRANCE_FRAME : P.norway ? NORWAY_FRAME : P.sweden ? SWEDEN_FRAME : P.denmark ? DENMARK_FRAME : P.finland ? FINLAND_FRAME : P.iceland ? ICELAND_FRAME : undefined); else addWeave(ctx, W, H, seed, P.silk ? 12 : 26);
+  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : P.mexico ? MEXICO_FRAME : P.turkiye ? TURKIYE_FRAME : P.korea ? KOREA_FRAME : P.japan ? JAPAN_FRAME : P.china ? CHINA_FRAME : P.italy ? ITALY_FRAME : P.greece ? GREECE_FRAME : P.spain ? SPAIN_FRAME : P.france ? FRANCE_FRAME : P.norway ? NORWAY_FRAME : P.sweden ? SWEDEN_FRAME : P.denmark ? DENMARK_FRAME : P.finland ? FINLAND_FRAME : P.iceland ? ICELAND_FRAME : P.croatia ? CROATIA_FRAME : P.bosnia ? BOSNIA_FRAME : P.serbia ? SERBIA_FRAME : P.bulgaria ? BULGARIA_FRAME : P.albania ? ALBANIA_FRAME : P.jordan ? JORDAN_FRAME : P.morocco ? MOROCCO_FRAME : undefined); else addWeave(ctx, W, H, seed, P.silk ? 12 : 26);
 
   if (frontOnly) return { front: c };
 

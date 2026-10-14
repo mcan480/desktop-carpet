@@ -187,7 +187,10 @@
       <div class="grid results-grid swatches group" id="resultsGrid" role="radiogroup" aria-labelledby="resultsHead"></div>
     </div>
     <nav class="shelves" role="tablist">
-      <button type="button" role="tab" data-coll="nordic" data-new aria-selected="false"><img src="./thumbs/fiyort.webp" alt=""><span data-t="nordic">Nordic</span><i class="badge" data-t="newBadge">NEW</i></button>
+      <button type="button" role="tab" data-coll="balkans" data-new aria-selected="false"><img src="./thumbs/starimost.webp" alt=""><span data-t="balkans">Balkans</span><i class="badge" data-t="newBadge">NEW</i></button>
+      <button type="button" role="tab" data-coll="jordan" data-new aria-selected="false"><img src="./thumbs/petra.webp" alt=""><span data-t="jordan">Jordan</span><i class="badge" data-t="newBadge">NEW</i></button>
+      <button type="button" role="tab" data-coll="morocco" data-new aria-selected="false"><img src="./thumbs/sefsavan.webp" alt=""><span data-t="morocco">Morocco</span><i class="badge" data-t="newBadge">NEW</i></button>
+      <button type="button" role="tab" data-coll="nordic" aria-selected="false"><img src="./thumbs/fiyort.webp" alt=""><span data-t="nordic">Nordic</span></button>
       <button type="button" role="tab" data-coll="mediterranean" aria-selected="false"><img src="./thumbs/santorini.webp" alt=""><span data-t="mediterranean">Mediterranean</span></button>
       <button type="button" role="tab" data-coll="classics" aria-selected="true"><img src="./thumbs/tabriz.webp" alt=""><span data-t="classics">Classics</span></button>
       <button type="button" role="tab" data-coll="halloween" aria-selected="false"><img src="./thumbs/balkabagi.webp" alt=""><span data-t="halloween">Halloween</span></button>
@@ -514,7 +517,7 @@
 
       <!-- Nordic: a tab for each country -->
       <div class="coll" data-coll="nordic" role="tabpanel" hidden>
-        <header class="pack-head"><h3><span data-t="nordic">Nordic</span><i class="badge" data-t="newBadge">NEW</i></h3><p class="pack-count"></p><p class="pack-tag" data-t="nordicTag"></p></header>
+        <header class="pack-head"><h3><span data-t="nordic">Nordic</span></h3><p class="pack-count"></p><p class="pack-tag" data-t="nordicTag"></p></header>
         <div class="country-tabs" role="tablist">
           <button type="button" role="tab" data-country="norway" aria-selected="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0.4L9.19 5.14L13.37 2.63L10.86 6.81L15.6 8L10.86 9.19L13.37 13.37L9.19 10.86L8 15.6L6.81 10.86L2.63 13.37L5.14 9.19L0.4 8L5.14 6.81L2.63 2.63L6.81 5.14z" fill="#4f86b8"/><circle cx="8" cy="8" r="1.7" fill="#c8402a"/></svg><span data-t="norway">Norway</span></button>
           <button type="button" role="tab" data-country="sweden" aria-selected="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.6 6.2h7.6l.3-3.6c.6-1.2 1.8-1.7 3-1.3l2.9 2.3-.6 1.7-2-.2-.2 2v3.4L12 15.2H9.6l-.5-3H6.2l-.5 3H3.2l-.6-5.3-1.4-.7-.2-2.4z" fill="#d2442c"/><path d="M4.4 6.2h4.2v3H4.4z" fill="#2f7d4a"/><path d="M4.4 9.6h4.2" stroke="#f2e6cc" stroke-width=".8"/><circle cx="12.1" cy="2.9" r=".6" fill="#f2e6cc"/></svg><span data-t="sweden">Sweden</span></button>
@@ -621,6 +624,164 @@
               <button type="button" role="radio" data-style="reykjavik"><img src="./thumbs/reykjavik.webp" alt=""><span data-t="s_reykjavik">Reykjavík Roofs</span></button>
               <button type="button" role="radio" data-style="izlandakart"><img src="./thumbs/izlandakart.webp" alt=""><span data-t="s_izlandakart">Greetings from Iceland</span></button>
           </div>
+        </div>
+      </div>
+
+      <!-- Balkans: a tab for each country -->
+      <div class="coll" data-coll="balkans" role="tabpanel" hidden>
+        <header class="pack-head"><h3><span data-t="balkans">Balkans</span><i class="badge" data-t="newBadge">NEW</i></h3><p class="pack-count"></p><p class="pack-tag" data-t="balkansTag"></p></header>
+        <div class="country-tabs" role="tablist">
+          <button type="button" role="tab" data-country="croatia" aria-selected="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 15 1.8 8.8A4.384 4.384 0 0 1 8 2.6a4.384 4.384 0 0 1 6.2 6.2z" fill="#d22a2e"/><path d="M8 15 1.8 8.8A4.384 4.384 0 0 1 8 2.6a4.384 4.384 0 0 1 6.2 6.2z" transform="translate(8 8.8) scale(.7) translate(-8 -8.8)" fill="none" stroke="#f8eedc" stroke-width="1.2" stroke-dasharray="1.3 1.1"/><circle cx="8" cy="8.4" r="1.9" fill="#f2c84a"/><circle cx="8" cy="8.4" r="1.3" fill="#a8d4e4"/><path d="M7.3 7.8l.9-.5" stroke="#fff" stroke-width=".5" stroke-linecap="round"/></svg><span data-t="croatia">Croatia</span></button>
+          <button type="button" role="tab" data-country="bosnia" aria-selected="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11 8.6 15.2 4.4" stroke="#8a5530" stroke-width="1.4" stroke-linecap="round"/><path d="M4.4 3.2h5.8l-.7 2.4c1.9 1.3 2.8 3.2 2.8 5.3 0 2.4-1.5 3.9-4.6 3.9s-4.6-1.5-4.6-3.9c0-2.1.9-4 2.8-5.3l-.3-1.1-1.9-.4z" fill="#cf7a3c"/><path d="M4.4 10.6h7.2" stroke="#f3c98e" stroke-width=".8"/><path d="M4.6 12.2h6.8" stroke="#9c5226" stroke-width=".6"/><path d="M5.4 7.6c-.5.7-.8 1.4-.9 2" stroke="#f6d6a8" stroke-width=".7" fill="none" stroke-linecap="round"/></svg><span data-t="bosnia">Bosnia and Herzegovina</span></button>
+          <button type="button" role="tab" data-country="serbia" aria-selected="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8.2 5c.1-1.6.7-2.9 1.8-3.8" stroke="#7a5432" stroke-width=".9" fill="none" stroke-linecap="round"/><path d="M9.4 2.6c1.3-1.6 3.8-1.9 5.6-1-1.1 1.9-3.6 2.6-5.6 1z" fill="#5f9d3e"/><ellipse cx="7.8" cy="10" rx="5.3" ry="5.6" fill="#6a4ea2"/><path d="M8.1 4.6c-1 2.2-1 6.4.1 10.8" stroke="#3e2b6a" stroke-width=".8" fill="none"/><ellipse cx="5.3" cy="8.6" rx="1.2" ry="2.1" fill="#a998d6" transform="rotate(12 5.3 8.6)"/></svg><span data-t="serbia">Serbia</span></button>
+          <button type="button" role="tab" data-country="bulgaria" aria-selected="false"><svg viewBox="0 0 16 16" aria-hidden="true"><ellipse cx="3.6" cy="13" rx="3" ry="1.4" fill="#4f8f3c" transform="rotate(-30 3.6 13)"/><ellipse cx="12.4" cy="13" rx="3" ry="1.4" fill="#4f8f3c" transform="rotate(30 12.4 13)"/><g fill="#e0507c"><circle cx="8" cy="4.2" r="2.6"/><circle cx="10.85" cy="6.27" r="2.6"/><circle cx="9.76" cy="9.63" r="2.6"/><circle cx="6.24" cy="9.63" r="2.6"/><circle cx="5.15" cy="6.27" r="2.6"/></g><circle cx="8" cy="7.2" r="2.7" fill="#f27fa0"/><path d="M8 5.6a1.6 1.6 0 1 1-1.5 2.2M8 6.6a.6.6 0 1 0 .6.6" stroke="#b42c58" stroke-width=".7" fill="none" stroke-linecap="round"/></svg><span data-t="bulgaria">Bulgaria</span></button>
+          <button type="button" role="tab" data-country="albania" aria-selected="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7.4 10.6c.9-1.6 1.2-4 .4-6.4" stroke="#56626f" stroke-width="2.9" fill="none" stroke-linecap="round"/><path d="M7.4 10.6c.9-1.6 1.2-4 .4-6.4" stroke="#c4ccd5" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="5.4" cy="11.8" rx="4.9" ry="3.1" fill="#c4ccd5" stroke="#56626f" stroke-width=".55"/><path d="M1 11.2c1.9-1.5 5-1.6 7-.3-1.3 1.5-4.4 1.8-7 .3z" fill="#6c7886"/><circle cx="7.9" cy="3.7" r="1.75" fill="#d8dee5" stroke="#56626f" stroke-width=".55"/><path d="M8.9 3.9c1.6 3 3.6 4.4 5.4 4.2.9-.1 1.2-.7 1.1-1.3z" fill="#f2a83a"/><path d="M9 2.9 15.4 6.5" stroke="#d27a1e" stroke-width="1.1" stroke-linecap="round"/><circle cx="8.1" cy="3.4" r=".5" fill="#2a2e38"/></svg><span data-t="albania">Albania</span></button>
+        </div>
+        <div class="country" data-country="croatia" role="tabpanel">
+          <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="licitar"><img src="./thumbs/licitar.webp" alt=""><span data-t="s_licitar">Licitar Hearts</span></button>
+              <button type="button" role="radio" data-style="konavle"><img src="./thumbs/konavle.webp" alt=""><span data-t="s_konavle">Konavle Embroidery</span></button>
+              <button type="button" role="radio" data-style="dalmacyali"><img src="./thumbs/dalmacyali.webp" alt=""><span data-t="s_dalmacyali">Dalmatians</span></button>
+              <button type="button" role="radio" data-style="kravat"><img src="./thumbs/kravat.webp" alt=""><span data-t="s_kravat">Croatian Cravats</span></button>
+              <button type="button" role="radio" data-style="sibenik"><img src="./thumbs/sibenik.webp" alt=""><span data-t="s_sibenik">Šibenik Buttons</span></button>
+              <button type="button" role="radio" data-style="paglace"><img src="./thumbs/paglace.webp" alt=""><span data-t="s_paglace">Pag Lace</span></button>
+          </div>
+          <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="dubrovnik"><img src="./thumbs/dubrovnik.webp" alt=""><span data-t="s_dubrovnik">Dubrovnik</span></button>
+              <button type="button" role="radio" data-style="plitvice"><img src="./thumbs/plitvice.webp" alt=""><span data-t="s_plitvice">Plitvice Lakes</span></button>
+              <button type="button" role="radio" data-style="zlatnirat"><img src="./thumbs/zlatnirat.webp" alt=""><span data-t="s_zlatnirat">Zlatni Rat</span></button>
+              <button type="button" role="radio" data-style="dolac"><img src="./thumbs/dolac.webp" alt=""><span data-t="s_dolac">Dolac Market</span></button>
+              <button type="button" role="radio" data-style="kornati"><img src="./thumbs/kornati.webp" alt=""><span data-t="s_kornati">Kornati Islands</span></button>
+              <button type="button" role="radio" data-style="hirvatkart"><img src="./thumbs/hirvatkart.webp" alt=""><span data-t="s_hirvatkart">Greetings from Croatia</span></button>
+          </div>
+        </div>
+        <div class="country" data-country="bosnia" role="tabpanel" hidden>
+          <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="bakir"><img src="./thumbs/bakir.webp" alt=""><span data-t="s_bakir">Sarajevo Copper</span></button>
+              <button type="button" role="radio" data-style="konjic"><img src="./thumbs/konjic.webp" alt=""><span data-t="s_konjic">Konjic Woodcarving</span></button>
+              <button type="button" role="radio" data-style="zlatovez"><img src="./thumbs/zlatovez.webp" alt=""><span data-t="s_zlatovez">Gold Embroidery</span></button>
+              <button type="button" role="radio" data-style="fildzan"><img src="./thumbs/fildzan.webp" alt=""><span data-t="s_fildzan">Fildžan Cups</span></button>
+              <button type="button" role="radio" data-style="grozd"><img src="./thumbs/grozd.webp" alt=""><span data-t="s_grozd">Herzegovina Grapes</span></button>
+              <button type="button" role="radio" data-style="pita"><img src="./thumbs/pita.webp" alt=""><span data-t="s_pita">Bosnian Pita</span></button>
+          </div>
+          <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="starimost"><img src="./thumbs/starimost.webp" alt=""><span data-t="s_starimost">Mostar Bridge</span></button>
+              <button type="button" role="radio" data-style="bascarsija"><img src="./thumbs/bascarsija.webp" alt=""><span data-t="s_bascarsija">Baščaršija</span></button>
+              <button type="button" role="radio" data-style="jajce"><img src="./thumbs/jajce.webp" alt=""><span data-t="s_jajce">Pliva Watermills</span></button>
+              <button type="button" role="radio" data-style="cevapi"><img src="./thumbs/cevapi.webp" alt=""><span data-t="s_cevapi">Ćevapi</span></button>
+              <button type="button" role="radio" data-style="lukomir"><img src="./thumbs/lukomir.webp" alt=""><span data-t="s_lukomir">Lukomir Village</span></button>
+              <button type="button" role="radio" data-style="saraybosnakart"><img src="./thumbs/saraybosnakart.webp" alt=""><span data-t="s_saraybosnakart">Greetings from Sarajevo</span></button>
+          </div>
+        </div>
+        <div class="country" data-country="serbia" role="tabpanel" hidden>
+          <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="sljiva"><img src="./thumbs/sljiva.webp" alt=""><span data-t="s_sljiva">Plums</span></button>
+              <button type="button" role="radio" data-style="opanak"><img src="./thumbs/opanak.webp" alt=""><span data-t="s_opanak">Opanci</span></button>
+              <button type="button" role="radio" data-style="venci"><img src="./thumbs/venci.webp" alt=""><span data-t="s_venci">Red Peppers</span></button>
+              <button type="button" role="radio" data-style="zlakusa"><img src="./thumbs/zlakusa.webp" alt=""><span data-t="s_zlakusa">Zlakusa Pottery</span></button>
+              <button type="button" role="radio" data-style="kolo"><img src="./thumbs/kolo.webp" alt=""><span data-t="s_kolo">Kolo</span></button>
+              <button type="button" role="radio" data-style="sumadija"><img src="./thumbs/sumadija.webp" alt=""><span data-t="s_sumadija">Šumadija Embroidery</span></button>
+          </div>
+          <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="kalemegdan"><img src="./thumbs/kalemegdan.webp" alt=""><span data-t="s_kalemegdan">Kalemegdan</span></button>
+              <button type="button" role="radio" data-style="drina"><img src="./thumbs/drina.webp" alt=""><span data-t="s_drina">The House on the Drina</span></button>
+              <button type="button" role="radio" data-style="derdap"><img src="./thumbs/derdap.webp" alt=""><span data-t="s_derdap">Iron Gates</span></button>
+              <button type="button" role="radio" data-style="sargan"><img src="./thumbs/sargan.webp" alt=""><span data-t="s_sargan">Šargan Eight</span></button>
+              <button type="button" role="radio" data-style="zlatibor"><img src="./thumbs/zlatibor.webp" alt=""><span data-t="s_zlatibor">Zlatibor Hills</span></button>
+              <button type="button" role="radio" data-style="sirbistankart"><img src="./thumbs/sirbistankart.webp" alt=""><span data-t="s_sirbistankart">Greetings from Serbia</span></button>
+          </div>
+        </div>
+        <div class="country" data-country="bulgaria" role="tabpanel" hidden>
+          <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="troyan"><img src="./thumbs/troyan.webp" alt=""><span data-t="s_troyan">Troyan Pottery</span></button>
+              <button type="button" role="radio" data-style="martenitsa"><img src="./thumbs/martenitsa.webp" alt=""><span data-t="s_martenitsa">Martenitsa</span></button>
+              <button type="button" role="radio" data-style="trakya"><img src="./thumbs/trakya.webp" alt=""><span data-t="s_trakya">Thracian Gold</span></button>
+              <button type="button" role="radio" data-style="kukeri"><img src="./thumbs/kukeri.webp" alt=""><span data-t="s_kukeri">Kukeri Bells</span></button>
+              <button type="button" role="radio" data-style="gulyagi"><img src="./thumbs/gulyagi.webp" alt=""><span data-t="s_gulyagi">Rose Oil</span></button>
+              <button type="button" role="radio" data-style="tryavna"><img src="./thumbs/tryavna.webp" alt=""><span data-t="s_tryavna">Tryavna Sun</span></button>
+          </div>
+          <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="gulvadisi"><img src="./thumbs/gulvadisi.webp" alt=""><span data-t="s_gulvadisi">Rose Valley</span></button>
+              <button type="button" role="radio" data-style="plovdiv"><img src="./thumbs/plovdiv.webp" alt=""><span data-t="s_plovdiv">Old Plovdiv</span></button>
+              <button type="button" role="radio" data-style="yedigoller"><img src="./thumbs/yedigoller.webp" alt=""><span data-t="s_yedigoller">Seven Lakes</span></button>
+              <button type="button" role="radio" data-style="belogradcik"><img src="./thumbs/belogradcik.webp" alt=""><span data-t="s_belogradcik">Belogradchik Rocks</span></button>
+              <button type="button" role="radio" data-style="yogurt"><img src="./thumbs/yogurt.webp" alt=""><span data-t="s_yogurt">Bulgarian Yogurt</span></button>
+              <button type="button" role="radio" data-style="bulgaristankart"><img src="./thumbs/bulgaristankart.webp" alt=""><span data-t="s_bulgaristankart">Greetings from Bulgaria</span></button>
+          </div>
+        </div>
+        <div class="country" data-country="albania" role="tabpanel" hidden>
+          <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="xhubleta"><img src="./thumbs/xhubleta.webp" alt=""><span data-t="s_xhubleta">Xhubleta</span></button>
+              <button type="button" role="radio" data-style="qeleshe"><img src="./thumbs/qeleshe.webp" alt=""><span data-t="s_qeleshe">Qeleshe</span></button>
+              <button type="button" role="radio" data-style="cifteli"><img src="./thumbs/cifteli.webp" alt=""><span data-t="s_cifteli">Çifteli</span></button>
+              <button type="button" role="radio" data-style="tascati"><img src="./thumbs/tascati.webp" alt=""><span data-t="s_tascati">Stone Roofs</span></button>
+              <button type="button" role="radio" data-style="incir"><img src="./thumbs/incir.webp" alt=""><span data-t="s_incir">Figs</span></button>
+              <button type="button" role="radio" data-style="pelikan"><img src="./thumbs/pelikan.webp" alt=""><span data-t="s_pelikan">Pelicans</span></button>
+          </div>
+          <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+          <div class="grid">
+              <button type="button" role="radio" data-style="gjirokaster"><img src="./thumbs/gjirokaster.webp" alt=""><span data-t="s_gjirokaster">Gjirokastër</span></button>
+              <button type="button" role="radio" data-style="berat"><img src="./thumbs/berat.webp" alt=""><span data-t="s_berat">Windows of Berat</span></button>
+              <button type="button" role="radio" data-style="mavigoz"><img src="./thumbs/mavigoz.webp" alt=""><span data-t="s_mavigoz">The Blue Eye</span></button>
+              <button type="button" role="radio" data-style="ksamil"><img src="./thumbs/ksamil.webp" alt=""><span data-t="s_ksamil">Ksamil Islands</span></button>
+              <button type="button" role="radio" data-style="theth"><img src="./thumbs/theth.webp" alt=""><span data-t="s_theth">Theth Valley</span></button>
+              <button type="button" role="radio" data-style="arnavutlukkart"><img src="./thumbs/arnavutlukkart.webp" alt=""><span data-t="s_arnavutlukkart">Greetings from Albania</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jordan: the patterns and crafts and the picture rugs on two shelves -->
+      <div class="coll" data-coll="jordan" role="tabpanel" hidden>
+        <header class="pack-head"><h3><span data-t="jordan">Jordan</span><i class="badge" data-t="newBadge">NEW</i></h3><p class="pack-count"></p><p class="pack-tag" data-t="jordanTag"></p></header>
+        <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
+        <div class="grid">
+          <button type="button" role="radio" data-style="kumsise"><img src="./thumbs/kumsise.webp" alt=""><span data-t="s_kumsise">Sand Bottles</span></button>
+          <button type="button" role="radio" data-style="dallah"><img src="./thumbs/dallah.webp" alt=""><span data-t="s_dallah">Dallah and Cups</span></button>
+          <button type="button" role="radio" data-style="karasusen"><img src="./thumbs/karasusen.webp" alt=""><span data-t="s_karasusen">Black Iris</span></button>
+          <button type="button" role="radio" data-style="oriks"><img src="./thumbs/oriks.webp" alt=""><span data-t="s_oriks">Arabian Oryx</span></button>
+          <button type="button" role="radio" data-style="bedevi"><img src="./thumbs/bedevi.webp" alt=""><span data-t="s_bedevi">Bedouin Silver</span></button>
+          <button type="button" role="radio" data-style="hurma"><img src="./thumbs/hurma.webp" alt=""><span data-t="s_hurma">Dates</span></button>
+        </div>
+        <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+        <div class="grid">
+          <button type="button" role="radio" data-style="petra"><img src="./thumbs/petra.webp" alt=""><span data-t="s_petra">The Treasury, Petra</span></button>
+          <button type="button" role="radio" data-style="vadirum"><img src="./thumbs/vadirum.webp" alt=""><span data-t="s_vadirum">Wadi Rum</span></button>
+          <button type="button" role="radio" data-style="oludeniz"><img src="./thumbs/oludeniz.webp" alt=""><span data-t="s_oludeniz">The Dead Sea</span></button>
+          <button type="button" role="radio" data-style="ceras"><img src="./thumbs/ceras.webp" alt=""><span data-t="s_ceras">Jerash</span></button>
+          <button type="button" role="radio" data-style="akabe"><img src="./thumbs/akabe.webp" alt=""><span data-t="s_akabe">Aqaba Corals</span></button>
+          <button type="button" role="radio" data-style="urdunkart"><img src="./thumbs/urdunkart.webp" alt=""><span data-t="s_urdunkart">Greetings from Jordan</span></button>
+        </div>
+      </div>
+
+      <!-- Morocco: the patterns and crafts and the picture rugs on two shelves -->
+      <div class="coll" data-coll="morocco" role="tabpanel" hidden>
+        <header class="pack-head"><h3><span data-t="morocco">Morocco</span><i class="badge" data-t="newBadge">NEW</i></h3><p class="pack-count"></p><p class="pack-tag" data-t="moroccoTag"></p></header>
+        <h4 class="room-shelf" data-t="medKnot">Patterns and crafts</h4>
+        <div class="grid">
+          <button type="button" role="radio" data-style="zellij"><img src="./thumbs/zellij.webp" alt=""><span data-t="s_zellij">Zellij</span></button>
+          <button type="button" role="radio" data-style="fasfener"><img src="./thumbs/fasfener.webp" alt=""><span data-t="s_fasfener">Moroccan Lanterns</span></button>
+          <button type="button" role="radio" data-style="babuc"><img src="./thumbs/babuc.webp" alt=""><span data-t="s_babuc">Babouches</span></button>
+          <button type="button" role="radio" data-style="baharat"><img src="./thumbs/baharat.webp" alt=""><span data-t="s_baharat">Spice Cones</span></button>
+          <button type="button" role="radio" data-style="tajin"><img src="./thumbs/tajin.webp" alt=""><span data-t="s_tajin">Tagines</span></button>
+          <button type="button" role="radio" data-style="zouak"><img src="./thumbs/zouak.webp" alt=""><span data-t="s_zouak">Painted Cedar</span></button>
+        </div>
+        <h4 class="room-shelf" data-t="turkiyePic">Picture rugs</h4>
+        <div class="grid">
+          <button type="button" role="radio" data-style="sefsavan"><img src="./thumbs/sefsavan.webp" alt=""><span data-t="s_sefsavan">Chefchaouen</span></button>
+          <button type="button" role="radio" data-style="marakes"><img src="./thumbs/marakes.webp" alt=""><span data-t="s_marakes">Marrakesh Souk</span></button>
+          <button type="button" role="radio" data-style="sahra"><img src="./thumbs/sahra.webp" alt=""><span data-t="s_sahra">Sahara Camels</span></button>
+          <button type="button" role="radio" data-style="aitbenhaddou"><img src="./thumbs/aitbenhaddou.webp" alt=""><span data-t="s_aitbenhaddou">Aït Benhaddou</span></button>
+          <button type="button" role="radio" data-style="fesboya"><img src="./thumbs/fesboya.webp" alt=""><span data-t="s_fesboya">Fez Tanneries</span></button>
+          <button type="button" role="radio" data-style="faskart"><img src="./thumbs/faskart.webp" alt=""><span data-t="s_faskart">Greetings from Morocco</span></button>
         </div>
       </div>
     </div>
