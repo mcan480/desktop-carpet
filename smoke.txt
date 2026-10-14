@@ -1,0 +1,5 @@
+version 1.18.0 patch none shell e44.7.0-k3.3.2-s1
+koffi ok
+rugVisible true
+gallery rugs 321 search 16
+wallpaper {"src":"/System/Library/Desktop Pictures/Solid Colors/Black.png","mode":"fill","bytes":390,"anchor":0.5}

@@ -1,0 +1,7 @@
+482M	dist/Desktop Carpet-darwin-universal/Desktop Carpet.app
+261M	dist/thin-arm64
+267M	dist/thin-x64
+-rw-r--r--  1 runner  staff  126895753 Oct 14 14:59 dist/DesktopCarpet-Mac-arm64.zip
+-rw-r--r--  1 runner  staff  133779766 Oct 14 15:00 dist/DesktopCarpet-Mac-x64.zip
+-rw-r--r--@ 1 runner  staff  181619280 Oct 14 15:03 dist/DesktopCarpet-Mac.dmg
+-rw-r--r--  1 runner  staff  228694762 Oct 14 14:59 dist/DesktopCarpet-Mac.zip

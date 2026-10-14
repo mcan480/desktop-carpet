@@ -1,0 +1,31 @@
+Packaging app for platform darwin universal using electron v44.7.0 - Building x64 and arm64 slices now
+Packaging app for platform darwin x64 using electron v44.7.0
+Packaging app for platform darwin arm64 using electron v44.7.0
+WARNING: Could not find icon "electron/icon.icns" with extension ".icon", skipping this app icon format
+WARNING: Could not find icon "electron/icon.icns" with extension ".icon", skipping this app icon format
+Stitching universal app for platform darwin
+dist/Desktop Carpet-darwin-universal/Desktop Carpet.app: replacing existing signature
+--prepared:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Desktop Carpet Helper (GPU).app
+--validated:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Desktop Carpet Helper (GPU).app
+--prepared:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/.
+--prepared:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/Helpers/chrome_crashpad_handler
+--validated:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/Helpers/chrome_crashpad_handler
+--validated:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Electron Framework.framework/Versions/Current/.
+--prepared:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Squirrel.framework/Versions/Current/.
+--prepared:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Desktop Carpet Helper.app
+--validated:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Squirrel.framework/Versions/Current/.
+--prepared:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/ReactiveObjC.framework/Versions/Current/.
+--validated:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Desktop Carpet Helper.app
+--validated:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/ReactiveObjC.framework/Versions/Current/.
+--prepared:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Desktop Carpet Helper (Renderer).app
+--validated:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Desktop Carpet Helper (Renderer).app
+--prepared:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Desktop Carpet Helper (Plugin).app
+--prepared:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Mantle.framework/Versions/Current/.
+--validated:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Desktop Carpet Helper (Plugin).app
+--validated:/Users/runner/work/desktop-carpet/desktop-carpet/dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/Frameworks/Mantle.framework/Versions/Current/.
+dist/Desktop Carpet-darwin-universal/Desktop Carpet.app: valid on disk
+dist/Desktop Carpet-darwin-universal/Desktop Carpet.app: satisfies its Designated Requirement
+dist/thin-arm64/Desktop Carpet.app: replacing existing signature
+dist/thin-x64/Desktop Carpet.app: replacing existing signature
+created: /Users/runner/work/desktop-carpet/desktop-carpet/dist/DesktopCarpet-Mac.dmg
+packaged dist/Desktop Carpet-darwin-universal/Desktop Carpet.app dist/DesktopCarpet-Mac.zip dist/DesktopCarpet-Mac.dmg
