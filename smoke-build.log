@@ -1,0 +1,2 @@
+Packaging app for platform win32 x64 using electron v44.7.0
+packaged dist\Desktop Carpet-win32-x64
