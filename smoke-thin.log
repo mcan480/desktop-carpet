@@ -1,0 +1,10 @@
+update check failed: github 403
+SMOKE version 1.19.0 patch none
+SMOKE license {"state":"none","key":null} rugVisible false lang en
+SMOKE after unlock rugVisible true
+SMOKE wallpaper {"src":"/System/Library/Desktop Pictures/Solid Colors/Black.png","mode":"fill","bytes":390,"anchor":0.5}
+update check failed: github 403
+SMOKE trial expired rugVisible false
+update check failed: github 403
+[5659:1113/221030.685498:ERROR:base/process/process_mac.cc:53] task_policy_set TASK_CATEGORY_POLICY: (os/kern) invalid argument (4)
+[5659:1113/221030.698461:ERROR:base/process/process_mac.cc:98] task_policy_set TASK_SUPPRESSION_POLICY: (ipc/send) invalid destination port (0x10000003)
