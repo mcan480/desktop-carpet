@@ -369,6 +369,34 @@ export const STYLES = {
   paten:      { name: 'Buz Pateni',           yilbasi: 'skating', hooked: true },
   kizakay:    { name: 'Ay Işığında Kızak',    yilbasi: 'sleigh', hooked: true },
   havaifisek: { name: 'Gece Yarısı Havai Fişekleri', yilbasi: 'fireworks', hooked: true },
+  safran:    { name: 'Safran',        field: '#c28a2e', field2: '#af7a28', navy: '#1c2244', cream: '#efe3c4', gold: '#a8322a', blue: '#5b7499', dark: '#120f1a' },
+  murdum:    { name: 'Mürdüm',        field: '#4a1d3c', field2: '#3f1833', navy: '#1c4148', cream: '#e6bdb2', gold: '#d0a75a', blue: '#5f9a92', dark: '#140a12' },
+  soluk:     { name: 'Solgun Antika', classic: 'faded' },
+  turkuaz:   { name: 'Turkuaz Boyalı Antika', classic: 'overdyed' },
+  kafkas:    { name: 'Kafkas Yıldızları', classic: 'caucasus' },
+  artdeko:   { name: 'Art Deco',      classic: 'deco' },
+  savonnerie:{ name: 'Savonnerie',    classic: 'savonnerie' },
+  yarasa:     { name: 'Yarasalar', halloween: 'bats' },
+  karakedi:   { name: 'Kara Kediler', halloween: 'blackcats' },
+  cadisapka:  { name: 'Cadı Şapkaları ve Süpürgeler', halloween: 'witchhats' },
+  sekermisir: { name: 'Şeker Mısır', halloween: 'candycorn' },
+  baykus:     { name: 'Baykuşlar', halloween: 'owls' },
+  iksir:      { name: 'İksir Şişeleri',  halloween: 'potions' },
+  mumya:      { name: 'Minik Mumyalar',  halloween: 'mummies' },
+  elmasekeri: { name: 'Elma Şekerleri',  halloween: 'candyapples' },
+  sekerleme:  { name: 'Şeker mi Şaka mı Şekerlemeleri', halloween: 'treats' },
+  hasat:      { name: 'Sonbahar Hasadı', halloween: 'harvest' },
+  perilikosk: { name: 'Perili Köşk',       halloween: 'haunted', hooked: true },
+  cadikulube: { name: 'Cadı Kulübesi',     halloween: 'witchcottage', hooked: true },
+  sekermisaka:{ name: 'Şeker mi Şaka mı',  halloween: 'trickortreat', hooked: true },
+  veranda:    { name: 'Süslü Veranda',     halloween: 'porch', hooked: true },
+  kabakoyma:  { name: 'Kabak Oymak',       halloween: 'carving', hooked: true },
+  pencerekedi:{ name: 'Penceredeki Kedi',  halloween: 'windowcat', hooked: true },
+  korkuluk:   { name: 'Korkuluk',       halloween: 'scarecrow', hooked: true },
+  hasatciftligi: { name: 'Hasat Çiftliği', halloween: 'farm', hooked: true },
+  sisliorman: { name: 'Sisli Orman',    halloween: 'woods', hooked: true },
+  dolunay:    { name: 'Dolunay Kurdu',  halloween: 'wolf', hooked: true },
+  cadilarkart: { name: 'Mutlu Cadılar Bayramı', halloween: 'postcard', fonts: true, hooked: true },
   // Shows whatever wallpaper is behind it, so the desktop icons underneath seem to vanish.
   gorunmez:{ name: 'Görünmez',      invisible: true },
 };
@@ -22510,6 +22538,3153 @@ function yilSkating(ctx, W, H) {
   skater(32, 92, 17, 1, '#d0383e', '#3e8a48', '#f6e6c0', 'glide', '#e6b496');
 }
 
+// ---------- Halloween pack, grown: bats, black cats, witch hats and haunted houses ----------
+const HALLOWEEN_FRAME = { dark: '#170f1e', a: '#e2782a', b: '#6a3e96', line: '#f2e6cc' };
+
+// ---------- Classics pack, grown: faded and overdyed antiques, Caucasian stars, Art Deco and Savonnerie ----------
+
+// Smooth value noise for the Classics rugs: returns n(u, v) in 0..1, with one random value per whole (u, v).
+function clsFadedNoise(seed, gw = 64, gh = 64) {
+  const R = rng(seed), g = new Float32Array(gw * gh);
+  for (let i = 0; i < g.length; i++) g[i] = R();
+  const s = (t) => t * t * (3 - 2 * t);
+  return (u, v) => {
+    const a = Math.floor(u), b = Math.floor(v), fu = s(u - a), fv = s(v - b);
+    const q = (p, r) => g[(((r % gh) + gh) % gh) * gw + (((p % gw) + gw) % gw)];
+    return (q(a, b) * (1 - fu) + q(a + 1, b) * fu) * (1 - fv) + (q(a, b + 1) * (1 - fu) + q(a + 1, b + 1) * fu) * fv;
+  };
+}
+
+// Wear for the Classics antiques: in each patch [x, y, rx, ry] (knots) the pile is low, so every knot's colour
+// steps to its own faded, greyer shade (`fade` maps colour to colour; the design stays readable), the patch edges
+// are soft and dithered, and in the middle a few one-knot weft lines show through in `weft`. Run on the knot canvas
+// after the design is drawn.
+function clsFadedWear(x, cols, rows, pal, fade, weft, patches, seed) {
+  const img = x.getImageData(0, 0, cols, rows), d = img.data;
+  const rgb = pal.map((h) => [...rgbOf(h), h]);
+  const wn = clsFadedNoise(seed), dash = clsFadedNoise(seed + 2), Rw = rng(seed + 1);
+  for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+    let w = -1;
+    for (const [bx, by, rx, ry] of patches) w = Math.max(w, 1 - ((i - bx) / rx) ** 2 - ((j - by) / ry) ** 2);
+    if (w < -0.5) continue;
+    w += (wn(i / 3, j / 2.2) - 0.5) * 0.6 + (Rw() - 0.5) * 0.3;
+    if (w < 0.1) continue;
+    const p = (j * cols + i) * 4;
+    let best = rgb[0], bd = Infinity;
+    for (const q of rgb) { const e = (q[0] - d[p]) ** 2 + (q[1] - d[p + 1]) ** 2 + (q[2] - d[p + 2]) ** 2; if (e < bd) { bd = e; best = q; } }
+    let col = fade[best[3]] || best[3];
+    if (j % 3 === 1 && w > 0.5 && dash(i / 2.5, j * 3.7) > 0.45) col = weft;
+    const c = rgbOf(col);
+    d[p] = c[0]; d[p + 1] = c[1]; d[p + 2] = c[2];
+  }
+  x.putImageData(img, 0, 0);
+}
+
+// Sun-faded antique: a lobed faded-indigo medallion with pendants on an abrashed rose-terracotta field, quarter
+// medallions in the corners, floral sprays, turtle palmettes on a sand border, and a few softly worn patches.
+function clsFaded(ctx, W, H) {
+  const C = { rose: '#b27463', rose2: '#c08a78', rose3: '#a46657', indigo: '#56647b', indigo2: '#7b8a9e', sand: '#dcc8a3', sand2: '#c8ae84',
+    weft: '#d6c6a8', brown: '#664c41', sage: '#8f9a7a', ochre: '#c99d5c', roseW: '#bb8f80', indigoW: '#7b8696', brownW: '#86705f' };
+  const pal = Object.values(C);
+  weavePicture(ctx, W, H, 128, pal, (x, cols, rows) => {
+    const R = rng(4242);
+    const F = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ink = (col, f) => { const m = x.getTransform(); sweInk(x, col, (c) => { c.setTransform(m); f(c); }); };
+    const flower = (cx, cy, r, n, c1, c2, c3, rot = -Math.PI / 2) => {
+      ink(c1, (c) => { for (let k = 0; k < n; k++) { const a = rot + (k / n) * Math.PI * 2; c.beginPath(); c.ellipse(cx + Math.cos(a) * r * 0.55, cy + Math.sin(a) * r * 0.55, r * 0.5, r * 0.3, a, 0, Math.PI * 2); c.fill(); } });
+      ink(c2, (c) => { c.beginPath(); c.arc(cx, cy, r * 0.4, 0, Math.PI * 2); c.fill(); });
+      if (c3) F(Math.round(cx - 0.5), Math.round(cy - 0.5), 1, 1, c3);
+    };
+    const lob = (col, cx, cy, rx, ry, n, dep) => ink(col, (c) => persLobed(c, cx, cy, rx, ry, n, dep, '#000'));
+    // each side of a band `o` knots in and `depth` deep: draw(len) in local coordinates, x along the side, y inwards
+    const sides = (o, depth, draw) => {
+      for (const [len, m] of [[cols - 2 * o, [1, 0, 0, 1, o, o]], [cols - 2 * o, [1, 0, 0, -1, o, rows - o]], [rows - 2 * o, [0, 1, 1, 0, o, o]], [rows - 2 * o, [0, 1, -1, 0, cols - o, o]]]) {
+        x.save(); x.transform(...m); x.beginPath(); x.rect(depth, 0, len - 2 * depth, depth); x.clip(); draw(len); x.restore();
+      }
+    };
+
+    // ---- border: brown edge, rose guard with sand buds, sand main band with turtle palmettes, indigo guard
+    F(0, 0, cols, rows, C.brown);
+    F(2, 2, cols - 4, rows - 4, C.rose3);
+    F(6, 6, cols - 12, rows - 12, C.brown);
+    F(7, 7, cols - 14, rows - 14, C.sand);
+    F(19, 19, cols - 38, rows - 38, C.brown);
+    F(20, 20, cols - 40, rows - 40, C.indigo);
+    F(24, 24, cols - 48, rows - 48, C.brown);
+    // outer guard: little sand buds and ochre dots in turn
+    sides(2, 4, (len) => { const { n, d } = evenSteps(len - 8, 4); for (let i = 0; i <= n; i++) { const t = 4 + i * d; if (i % 2) F(Math.round(t - 0.5), 1, 1, 2, C.ochre); else F(Math.round(t - 1), 1, 2, 2, C.sand); } });
+    // inner guard: rose buds and sand dots
+    sides(20, 4, (len) => { const { n, d } = evenSteps(len - 8, 4); for (let i = 0; i <= n; i++) { const t = 4 + i * d; if (i % 2) F(Math.round(t - 0.5), 1, 1, 2, C.sand); else F(Math.round(t - 1), 1, 2, 2, C.roseW); } });
+    // main band: a brown vine, hooked turtle palmettes (rose, indigo heart) and indigo blossoms in turn
+    sides(7, 12, (len) => {
+      const run = len - 24, { n, d } = evenSteps(run, 24);
+      ink(C.brown, (c) => { c.lineWidth = 1; c.beginPath(); for (let t = 0; t <= run; t += 0.5) { const y = 6 + Math.sin((t / d) * Math.PI * 2) * 3; t ? c.lineTo(12 + t, y) : c.moveTo(12 + t, y); } c.stroke(); });
+      for (let i = 0; i < n; i++) {
+        const t0 = 12 + i * d;
+        for (const [lt, s] of [[t0 + d * 0.25, -1], [t0 + d * 0.75, 1]]) ink(C.sage, (c) => { c.beginPath(); c.ellipse(lt, 6 + s * 3.4, 2.8, 1.2, s * 0.5, 0, Math.PI * 2); c.fill(); });
+        const tx = t0 + d / 2;
+        const hex = (c, a, b) => { c.beginPath(); c.moveTo(tx - a, 6); c.lineTo(tx - a * 0.55, 6 - b); c.lineTo(tx + a * 0.55, 6 - b); c.lineTo(tx + a, 6); c.lineTo(tx + a * 0.55, 6 + b); c.lineTo(tx - a * 0.55, 6 + b); c.closePath(); c.fill(); };
+        ink(C.brown, (c) => {
+          hex(c, 7, 4.4); c.lineWidth = 1;
+          for (const [sx, sy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) { c.beginPath(); c.moveTo(tx + sx * 4.6, 6 + sy * 3.6); c.lineTo(tx + sx * 7.4, 6 + sy * 5.6); c.lineTo(tx + sx * 9, 6 + sy * 5.6); c.stroke(); }
+        });
+        ink(C.rose, (c) => hex(c, 5.8, 3.4));
+        ink(C.indigo, (c) => hex(c, 3.4, 1.6));
+        F(Math.round(tx - 1), 5, 2, 2, C.sand);
+      }
+      for (let i = 0; i <= n; i++) flower(12 + i * d, 6, 4.6, 8, C.indigo, C.ochre, C.brown);
+    });
+    for (const [a, b] of [[7, 7], [cols - 19, 7], [7, rows - 19], [cols - 19, rows - 19]]) {
+      F(a, b, 12, 12, C.sand); flower(a + 6, b + 6, 5.4, 8, C.rose, C.indigo, C.sand);
+    }
+
+    // ---- field: abrashed rose in uneven horizontal bands
+    const fx = 25, fy = 25, fw = cols - 50, fh = rows - 50, cx = fx + fw / 2, cy = fy + fh / 2;
+    const ab = clsFadedNoise(77);
+    for (let j = fy; j < fy + fh; j++) for (let i = fx; i < fx + fw; i++) {
+      const v = ab(i / 70 + 3, j / 4.5) * 0.85 + ab(i / 12, j / 12 + 9) * 0.15;
+      F(i, j, 1, 1, v < 0.36 ? C.rose3 : v > 0.74 ? C.rose2 : C.rose);
+    }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // corner quarter medallions with a half blossom and buds
+    const qrx = fw * 0.17, qry = fh * 0.32;
+    for (const [sx, sy] of [[fx, fy], [fx + fw, fy], [fx, fy + fh], [fx + fw, fy + fh]]) {
+      lob(C.brown, sx, sy, qrx + 2.6, qry + 2.6, 12, 0.12); lob(C.sand, sx, sy, qrx + 1.4, qry + 1.4, 12, 0.12); lob(C.indigo, sx, sy, qrx, qry, 12, 0.12);
+      lob(C.sand, sx, sy, qrx * 0.48, qry * 0.48, 8, 0.2); lob(C.rose, sx, sy, qrx * 0.48 - 1.3, qry * 0.48 - 1.3, 8, 0.2);
+      flower(sx, sy, 4.5, 8, C.sand, C.indigo, null);
+      const dx = sx < cx ? 1 : -1, dy = sy < cy ? 1 : -1;
+      for (const a of [0.3, 0.78, 1.26]) flower(sx + dx * Math.cos(a) * qrx * 0.74, sy + dy * Math.sin(a) * qry * 0.74, 3, 5, C.sand, C.ochre);
+      for (const a of [0.54, 1.02]) ink(C.sage, (c) => { c.beginPath(); c.ellipse(sx + dx * Math.cos(a) * qrx * 0.76, sy + dy * Math.sin(a) * qry * 0.76, 2.4, 1, dx * dy * (a + Math.PI / 2), 0, Math.PI * 2); c.fill(); });
+    }
+    // floral sprays scattered over the field, mirrored in four: a curving stem, two leaves, a blossom and a bud
+    const mrx = fw * 0.215, mry = fh * 0.39;
+    const spots = [];
+    for (let tries = 0; tries < 800 && spots.length < 11; tries++) {
+      const px = fx + 4 + R() * (fw / 2 - 6), py = fy + 4 + R() * (fh / 2 - 5);
+      const ex = (px - cx) / (mrx + 6), ey = (py - cy) / (mry + 5);
+      if (ex * ex + ey * ey < 1) continue;
+      if (Math.abs(py - cy) < 7 && Math.abs(px - cx) < mrx + 22) continue;
+      const qx = (px - fx) / (qrx + 6), qy = (py - fy) / (qry + 5);
+      if (qx * qx + qy * qy < 1) continue;
+      if (spots.some((s) => Math.hypot(s[0] - px, s[1] - py) < 11)) continue;
+      spots.push([px, py, R(), R()]);
+    }
+    for (const [px, py, k, a] of spots) for (const [sx, sy] of [[1, 1], [-1, 1], [1, -1], [-1, -1]]) {
+      const X = sx > 0 ? px : 2 * cx - px, Y = sy > 0 ? py : 2 * cy - py, ang = Math.atan2(Math.sin(a * 6.28) * sy, Math.cos(a * 6.28) * sx);
+      const ux = Math.cos(ang), uy = Math.sin(ang), A = [X - ux * 4, Y - uy * 4], B = [X + ux * 4, Y + uy * 4];
+      ink(C.brown, (c) => { c.beginPath(); c.moveTo(...A); c.quadraticCurveTo(X - uy * 2.5, Y + ux * 2.5, ...B); c.stroke(); });
+      ink(C.sage, (c) => { for (const [o, s] of [[-1.4, 1], [1.2, -1]]) { c.beginPath(); c.ellipse(X + ux * o - uy * s * 2.2, Y + uy * o + ux * s * 2.2, 2.4, 1, ang + s * 0.9, 0, Math.PI * 2); c.fill(); } });
+      if (k < 0.55) flower(B[0], B[1], 3.3, 5, C.sand, C.ochre, C.brown, ang);
+      else flower(B[0], B[1], 3.3, 5, C.indigo, C.sand, null, ang);
+      ink(k < 0.55 ? C.indigo : C.roseW, (c) => { c.beginPath(); c.arc(A[0], A[1], 1.2, 0, Math.PI * 2); c.fill(); });
+    }
+    // pendants on the long axis, joined to the medallion by a short pole, each crowned with a palmette
+    for (const s of [-1, 1]) {
+      const px = cx + s * (mrx + 9);
+      F(Math.round(Math.min(cx, px)), Math.round(cy - 1), Math.round(Math.abs(px - cx)), 2, C.brown);
+      lob(C.brown, px, cy, 6.8, 5.6, 8, 0.25); lob(C.sand, px, cy, 5.6, 4.5, 8, 0.25); lob(C.indigo, px, cy, 4.3, 3.3, 8, 0.25);
+      F(Math.round(px - 1), Math.round(cy - 1), 2, 2, C.roseW);
+      ink(C.brown, (c) => { c.beginPath(); c.moveTo(px + s * 6, cy - 5); c.lineTo(px + s * 12.5, cy); c.lineTo(px + s * 6, cy + 5); c.lineTo(px + s * 8.5, cy); c.closePath(); c.fill(); });
+      ink(C.ochre, (c) => { c.beginPath(); c.moveTo(px + s * 7.2, cy - 3); c.lineTo(px + s * 11, cy); c.lineTo(px + s * 7.2, cy + 3); c.lineTo(px + s * 9, cy); c.closePath(); c.fill(); });
+    }
+    // the medallion: lobed faded indigo with a sand rim, a ring of blossoms, a rose heart with a star flower
+    lob(C.brown, cx, cy, mrx + 2.6, mry + 2.6, 16, 0.08); lob(C.sand, cx, cy, mrx + 1.4, mry + 1.4, 16, 0.08); lob(C.indigo, cx, cy, mrx, mry, 16, 0.08);
+    for (let k = 0; k < 16; k++) {
+      const a = (k / 16) * Math.PI * 2, X = cx + Math.cos(a) * mrx * 0.8, Y = cy + Math.sin(a) * mry * 0.8;
+      if (k % 2) ink(C.sage, (c) => { c.beginPath(); c.ellipse(X, Y, 2.4, 1, a + Math.PI / 2, 0, Math.PI * 2); c.fill(); });
+      else { ink(C.sand, (c) => { c.beginPath(); c.arc(X, Y, 2.3, 0, Math.PI * 2); c.fill(); }); F(Math.round(X - 0.5), Math.round(Y - 0.5), 1, 1, C.rose); }
+    }
+    lob(C.sand, cx, cy, mrx * 0.6, mry * 0.6, 8, 0.2); lob(C.rose, cx, cy, mrx * 0.6 - 1.3, mry * 0.6 - 1.3, 8, 0.2);
+    for (let k = 0; k < 8; k++) {
+      const a = (k / 8) * Math.PI * 2 + Math.PI / 8;
+      ink(C.indigo2, (c) => { c.translate(cx + Math.cos(a) * mrx * 0.38, cy + Math.sin(a) * mry * 0.38); c.rotate(a); c.beginPath(); c.moveTo(-2.6, 0); c.lineTo(0, -1.6); c.lineTo(2.6, 0); c.lineTo(0, 1.6); c.closePath(); c.fill(); });
+    }
+    flower(cx, cy, mry * 0.27, 8, C.sand, C.indigo, C.ochre);
+    x.restore();
+
+    // ---- wear: a few small low patches where the colours have gone paler and greyer and weft lines show
+    clsFadedWear(x, cols, rows, pal, { [C.rose3]: C.roseW, [C.rose]: C.roseW, [C.rose2]: C.roseW, [C.indigo]: C.indigoW, [C.brown]: C.brownW,
+      [C.sand2]: C.sand, [C.ochre]: C.sand2 }, C.weft,
+      [[cx - 15, cy + 6, 11, 5], [fx + fw * 0.84, fy + fh * 0.22, 8, 4], [fx + fw * 0.14, fy + fh * 0.78, 7, 3.5], [cols * 0.6, rows - 13, 10, 3], [cx + 13, cy - 13, 7, 3], [13, rows * 0.36, 3, 7]], 31);
+  });
+}
+
+// Overdyed vintage: an old allover palmette carpet (vine lattice, big palmettes, rosettes, a palmette border)
+// washed all over in deep teal, so the design shows crisply as darker and lighter teal, with faint ghosts of the
+// old red and gold here and there and a few softly worn patches.
+function clsOverdyed(ctx, W, H) {
+  // the teal it comes out as, and the faded or worn shades
+  const T = { t0: '#082528', t1: '#0e3539', t2: '#164749', t3: '#1b5857', t3b: '#1f605e', t4: '#2b726e', t5: '#4b968b', t6: '#80bcae',
+    ghostRed: '#5f5350', ghostGold: '#7b8a62', worn: '#4a7d78', worn2: '#76a198', weft: '#88aca2' };
+  // the old carpet's own colours, used only to draw it before the wash
+  const O = { dark: '#2a1a16', navy: '#1f2d4a', red: '#a8322f', red2: '#962b28', rust: '#c2562a', ivory: '#efe2c4', gold: '#e0a83a', green: '#4f7a52', blue: '#6a90b8', pink: '#d88a7a' };
+  const pal = Object.values(T);
+  weavePicture(ctx, W, H, 128, pal, (x, cols, rows) => {
+    const R = rng(808);
+    const F = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ink = (col, f) => { const m = x.getTransform(); sweInk(x, col, (c) => { c.setTransform(m); f(c); }); };
+    const sides = (o, depth, draw) => {
+      for (const [len, m] of [[cols - 2 * o, [1, 0, 0, 1, o, o]], [cols - 2 * o, [1, 0, 0, -1, o, rows - o]], [rows - 2 * o, [0, 1, 1, 0, o, o]], [rows - 2 * o, [0, 1, -1, 0, cols - o, o]]]) {
+        x.save(); x.transform(...m); x.beginPath(); x.rect(depth, 0, len - 2 * depth, depth); x.clip(); draw(len); x.restore();
+      }
+    };
+    // a palmette opening towards `ang` (0 = up): a scalloped fan in three layers on a little calyx
+    const fan = (c, s, lobes) => {
+      c.beginPath(); c.moveTo(-0.32 * s, 0.3 * s);
+      for (let t = 0; t <= 1.0001; t += 0.02) { const a = Math.PI + t * Math.PI, r = s * (0.84 + 0.16 * Math.abs(Math.cos(t * lobes * Math.PI))); c.lineTo(Math.cos(a) * r, Math.sin(a) * r * 0.9); }
+      c.lineTo(0.32 * s, 0.3 * s); c.closePath(); c.fill();
+    };
+    const palm = (px, py, s, ang, c1, c2, c3) => {
+      const at = (f) => (c) => { c.translate(px, py); c.rotate(ang); f(c); };
+      ink(O.dark, at((c) => fan(c, s + 1.2, 7)));
+      ink(c1, at((c) => fan(c, s, 7)));
+      ink(c2, at((c) => { c.translate(0, -0.05 * s); fan(c, s * 0.66, 5); }));
+      ink(c3, at((c) => { c.beginPath(); c.ellipse(0, -0.28 * s, 0.16 * s, 0.3 * s, 0, 0, Math.PI * 2); c.fill(); }));
+      ink(O.dark, at((c) => { c.fillRect(-0.4 * s, 0.22 * s, 0.8 * s, 0.22 * s); }));
+    };
+    const flower = (cx, cy, r, n, c1, c2, c3) => {
+      ink(O.dark, (c) => { c.beginPath(); c.arc(cx, cy, r + 0.9, 0, Math.PI * 2); c.fill(); });
+      ink(c1, (c) => { for (let k = 0; k < n; k++) { const a = (k / n) * Math.PI * 2; c.beginPath(); c.ellipse(cx + Math.cos(a) * r * 0.55, cy + Math.sin(a) * r * 0.55, r * 0.5, r * 0.32, a, 0, Math.PI * 2); c.fill(); } });
+      ink(c2, (c) => { c.beginPath(); c.arc(cx, cy, r * 0.42, 0, Math.PI * 2); c.fill(); });
+      if (c3) F(Math.round(cx - 0.5), Math.round(cy - 0.5), 1, 1, c3);
+    };
+    const leafy = (c, px, py, len, ang) => { c.save(); c.translate(px, py); c.rotate(ang); c.beginPath(); c.moveTo(0, 0); c.quadraticCurveTo(len * 0.5, -len * 0.38, len, 0); c.quadraticCurveTo(len * 0.5, len * 0.38, 0, 0); c.fill(); c.restore(); };
+
+    // ---- the old carpet
+    F(0, 0, cols, rows, O.dark);
+    F(2, 2, cols - 4, rows - 4, O.gold);
+    F(5, 5, cols - 10, rows - 10, O.dark);
+    F(6, 6, cols - 12, rows - 12, O.navy);
+    F(19, 19, cols - 38, rows - 38, O.dark);
+    F(20, 20, cols - 40, rows - 40, O.red);
+    F(23, 23, cols - 46, rows - 46, O.dark);
+    sides(2, 3, (len) => { const { n, d } = evenSteps(len - 6, 3); for (let i = 0; i <= n; i++) F(Math.round(3 + i * d - 0.5), i % 2 ? 0 : 2, 1, 1, O.dark); });
+    sides(20, 3, (len) => { const { n, d } = evenSteps(len - 6, 4); for (let i = 0; i <= n; i++) F(Math.round(3 + i * d - 1), 1, 2, 1, i % 2 ? O.ivory : O.gold); });
+    // main border: an ivory vine with palmettes turning in and out, and rosettes between
+    sides(6, 13, (len) => {
+      const run = len - 26, { n, d } = evenSteps(run, 26);
+      ink(O.ivory, (c) => { c.lineWidth = 1; c.beginPath(); for (let t = 0; t <= run; t += 0.5) { const y = 6.5 + Math.sin((t / d) * Math.PI * 2) * 3.4; t ? c.lineTo(13 + t, y) : c.moveTo(13 + t, y); } c.stroke(); });
+      for (let i = 0; i < n; i++) {
+        const t0 = 13 + i * d;
+        ink(O.green, (c) => { leafy(c, t0 + d * 0.3, 6.5 - 3, 4.4, -0.5); leafy(c, t0 + d * 0.7, 6.5 + 3, 4.4, Math.PI - 0.5); });
+        palm(t0 + d * 0.5, 6.5 + 1.6, 5.4, 0, O.red, O.ivory, O.blue);
+      }
+      for (let i = 0; i <= n; i++) flower(13 + i * d, 6.5, 4.4, 8, O.ivory, O.rust, O.navy);
+    });
+    for (const [a, b] of [[6, 6], [cols - 19, 6], [6, rows - 19], [cols - 19, rows - 19]]) flower(a + 6.5, b + 6.5, 5.6, 8, O.gold, O.red, O.ivory);
+
+    // field: red with abrash, an ogival lattice of gold vines with big palmettes where the vines cross, rosettes in
+    // the compartments and blossoms at their tips
+    const fx = 24, fy = 24, fw = cols - 48, fh = rows - 48, cx = fx + fw / 2, cy = fy + fh / 2;
+    const ab = clsFadedNoise(12);
+    for (let j = fy; j < fy + fh; j++) for (let i = fx; i < fx + fw; i++) F(i, j, 1, 1, ab(i / 50, j / 4) < 0.28 ? O.red2 : O.red);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    const sy = fh / 2, sx = fw / Math.round(fw / (sy * 0.98)), A = sx / 2;
+    ink(O.gold, (c) => {
+      c.lineWidth = 1.9;
+      for (let k = -4; k <= 4; k++) for (const sg of [1, -1]) {
+        c.beginPath();
+        for (let Y = fy - 2; Y <= fy + fh + 2; Y += 0.5) { const X = cx + k * sx + sg * A * Math.sin(((Y - cy) / sy) * Math.PI); Y > fy - 2 ? c.lineTo(X, Y) : c.moveTo(X, Y); }
+        c.stroke();
+      }
+    });
+    // leaves and buds along the vines, between the crossings
+    for (let k = -4; k <= 4; k++) for (const sg of [1, -1]) for (const f of [-0.78, -0.25, 0.25, 0.78]) {
+      const Y = cy + f * sy, X = cx + k * sx + sg * A * Math.sin(f * Math.PI), slope = sg * A * Math.cos(f * Math.PI) * Math.PI / sy;
+      const side = (f > 0 ? 1 : -1) * sg, ang = Math.atan2(1, slope) + side * 1.1;
+      if (Math.abs(f) > 0.5) ink(O.green, (c) => leafy(c, X, Y, 5.5, ang));
+      else ink(O.pink, (c) => { c.beginPath(); c.arc(X + Math.cos(ang) * 2.2, Y + Math.sin(ang) * 2.2, 1.4, 0, Math.PI * 2); c.fill(); });
+    }
+    for (let n = -1; n <= 1; n++) for (let k = -3; k <= 3; k++) {
+      const Y = cy + n * sy, X = cx + (k + 0.5) * sx;
+      // inside each compartment: four lancet leaves round a big rosette
+      ink(O.green, (c) => { for (const [dx, dy] of [[1, 1], [-1, 1], [1, -1], [-1, -1]]) leafy(c, X + dx * 4, Y + dy * 4, 8, Math.atan2(dy * 1.1, dx)); });
+      ink(O.dark, (c) => persLobed(c, X, Y, 8.6, 8.6, 8, 0.3, '#000'));
+      ink(O.ivory, (c) => persLobed(c, X, Y, 7.5, 7.5, 8, 0.3, '#000'));
+      ink(O.navy, (c) => persLobed(c, X, Y, 4.6, 4.6, 8, 0.3, '#000'));
+      for (let q = 0; q < 8; q++) { const a = (q / 8) * Math.PI * 2; F(Math.round(X + Math.cos(a) * 6 - 0.5), Math.round(Y + Math.sin(a) * 6 - 0.5), 1, 1, O.gold); }
+      ink(O.red, (c) => { c.beginPath(); c.arc(X, Y, 2.2, 0, Math.PI * 2); c.fill(); });
+      flower(X, Y + sy / 2, 3.4, 6, O.blue, O.ivory, null);
+    }
+    // palmettes where the vines cross: navy and ivory in turn, turned up in the middle row and down above and below
+    const palmO = (px, py, s, dn, c1, c2, c3) => {
+      const shape = (c, sc, dy) => {
+        c.beginPath();
+        const pts = [];
+        for (let u = 0; u <= 1.0001; u += 0.025) { const hw = s * sc * 0.82 * Math.sin(Math.PI * Math.pow(u, 0.75)) * (1 - 0.14 * Math.abs(Math.sin(u * 5 * Math.PI))); pts.push([hw, s * sc * (0.45 - 1.5 * u) + dy]); }
+        pts.forEach(([a, b], i) => (i ? c.lineTo(-a, b) : c.moveTo(-a, b)));
+        for (let i = pts.length - 1; i >= 0; i--) c.lineTo(pts[i][0], pts[i][1]);
+        c.closePath(); c.fill();
+      };
+      const at = (f) => (c) => { c.translate(px, py); if (dn) c.scale(1, -1); f(c); };
+      ink(O.dark, at((c) => { c.translate(0, -0.6); shape(c, 1.12, 0); }));
+      ink(c1, at((c) => shape(c, 1, 0)));
+      ink(c2, at((c) => shape(c, 0.62, -s * 0.18)));
+      ink(c3, at((c) => { c.beginPath(); c.ellipse(0, -s * 0.38, s * 0.13, s * 0.26, 0, 0, Math.PI * 2); c.fill(); }));
+      ink(O.green, at((c) => { leafy(c, -s * 0.15, s * 0.45, s * 0.7, Math.PI - 0.35); leafy(c, s * 0.15, s * 0.45, s * 0.7, 0.35); }));
+    };
+    // blossoms between the palmettes, above and below them
+    for (const n of [-0.5, 0.5]) for (let k = -3; k <= 3; k++) {
+      const X = cx + k * sx, Y = cy + n * sy;
+      ink(O.green, (c) => { leafy(c, X - 3, Y, 6, Math.PI); leafy(c, X + 3, Y, 6, 0); });
+      flower(X, Y, 4.6, 6, O.gold, O.navy, O.ivory);
+    }
+    for (let n = -1; n <= 1; n++) for (let k = -3; k <= 3; k++) {
+      const alt = (k + n + 8) % 2;
+      palmO(cx + k * sx, cy + n * sy + (n ? -n * 2 : 3), 10.5, n !== 0, alt ? O.navy : O.ivory, alt ? O.rust : O.red, alt ? O.gold : O.navy);
+    }
+    x.restore();
+
+    // ---- the wash: every colour of the old carpet becomes a teal by its depth; uneven dye shifts it a shade;
+    // here and there the old red, gold and ivory ghost through
+    const teal = { [O.dark]: T.t0, [O.navy]: T.t1, [O.green]: T.t2, [O.rust]: T.t2, [O.red]: T.t3, [O.red2]: T.t3b, [O.pink]: T.t4, [O.blue]: T.t4, [O.gold]: T.t5, [O.ivory]: T.t6 };
+    const ghost = { [O.rust]: T.ghostRed, [O.pink]: T.ghostRed, [O.gold]: T.ghostGold };
+    const orig = Object.values(O).map((h) => [...rgbOf(h), h]);
+    const gh = clsFadedNoise(6);
+    const img = x.getImageData(0, 0, cols, rows), d = img.data;
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+      const p = (j * cols + i) * 4;
+      let best = orig[0], bd = Infinity;
+      for (const q of orig) { const e = (q[0] - d[p]) ** 2 + (q[1] - d[p + 1]) ** 2 + (q[2] - d[p + 2]) ** 2; if (e < bd) { bd = e; best = q; } }
+      let col = teal[best[3]];
+      if (ghost[best[3]] && gh(i / 10 + 7, j / 5) > 0.8) col = ghost[best[3]];
+      const c = rgbOf(col); d[p] = c[0]; d[p + 1] = c[1]; d[p + 2] = c[2];
+    }
+    x.putImageData(img, 0, 0);
+    // distressed: a few small worn patches, paler greyer teal with weft lines
+    clsFadedWear(x, cols, rows, pal, { [T.t0]: T.t1, [T.t1]: T.t2, [T.t2]: T.t3, [T.t3]: T.worn, [T.t3b]: T.worn, [T.t4]: T.worn, [T.t5]: T.worn2, [T.t6]: T.worn2,
+      [T.ghostRed]: T.worn, [T.ghostGold]: T.worn2 }, T.weft,
+      [[cols * 0.42, rows * 0.56, 11, 4.5], [cols * 0.8, rows * 0.3, 8, 3.5], [cols * 0.18, rows * 0.25, 7, 3], [cols * 0.3, rows - 12, 9, 3], [cols - 12, rows * 0.7, 3, 7], [cols * 0.62, rows * 0.78, 6, 2.5]], 41);
+  });
+}
+
+// Caucasian village carpet: three big hooked medallions in a row on madder red (indigo in the middle, green either
+// side), little dogs, combs and rosettes scattered round them, and a wine-glass border between running-dog guards.
+function clsCaucasus(ctx, W, H) {
+  const C = { red: '#a52b29', red2: '#962624', indigo: '#1d2a58', ivory: '#efe2c4', gold: '#e0a53a', green: '#3b7a52', sky: '#6b9ac6',
+    brown: '#2a1a17', rust: '#c8642e' };
+  weavePicture(ctx, W, H, 120, Object.values(C), (x, cols, rows) => {
+    const K = (i, j, col) => { x.fillStyle = col; x.fillRect(i, j, 1, 1); };
+    const F = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    // knot art: rows of characters, each mapped to a colour (or skipped for '.')
+    const art = (i0, j0, lines, map, flip) => lines.forEach((ln, j) => [...ln].forEach((ch, i) => { if (map[ch]) K(flip ? i0 + ln.length - 1 - i : i0 + i, j0 + j, map[ch]); }));
+    // a pattern round a band `o` in, `depth` deep: at(i, j) gives the colour of knot i along the side, j inwards
+    const band = (o, depth, period, at, corner) => ringKnots(x, cols, rows, o, depth, period, at, corner);
+
+    // ---- border
+    F(0, 0, cols, rows, C.brown);
+    F(2, 2, cols - 4, rows - 4, C.indigo);
+    F(6, 6, cols - 12, rows - 12, C.ivory);
+    F(18, 18, cols - 36, rows - 36, C.indigo);
+    F(22, 22, cols - 44, rows - 44, C.red);
+    // guards: a little ivory zigzag with gold dots in its bays, outside and in
+    const zz = (col, dot) => (i, j) => { const t = ((i % 6) + 6) % 6, z = Math.abs(t - 3); return j === z ? col : t === 3 && j === 3 ? dot : null; };
+    band(2, 4, 6, zz(C.ivory, C.gold), (a, b) => { F(a + 1, b + 1, 2, 2, C.gold); });
+    band(18, 4, 6, zz(C.gold, C.ivory), (a, b) => { F(a + 1, b + 1, 2, 2, C.ivory); });
+    // wine-glass border: an indigo zigzag stem with a red goblet (gold foot and stem, mouth to the field) in every
+    // bay that opens inwards and a serrated green leaf in every bay that opens outwards
+    const P = 18, D = 12, GLASS = { 4: [8, 10, 'y'], 5: [9, 9, 'y'], 6: [9, 9, 'y'], 7: [7, 11, 'r'], 8: [6, 12, 'r'], 9: [5, 13, 'r'] };
+    const LEAF = [-1, -1, 0, 1, 2, 2, 1, 0, 0, 0];
+    band(6, D, P, (i, j) => {
+      const t = ((i % P) + P) % P;
+      if (j === 1 + Math.abs(t - 9)) return C.indigo;
+      const g = GLASS[j];
+      if (g && t >= g[0] && t <= g[1]) return j === 8 && t >= 8 && t <= 10 ? C.rust : g[2] === 'y' ? C.gold : C.red;
+      const k = Math.min(t, P - t);                                  // distance from the leaf's centre line
+      if (j >= 2 && j <= 9 && k <= LEAF[j]) return j >= 7 ? C.brown : k === 0 && j >= 3 && j <= 5 ? C.gold : C.green;
+      return null;
+    }, (a, b) => {
+      for (let j = 0; j < D; j++) for (let i = 0; i < D; i++) { const d = Math.abs(i - 5.5) + Math.abs(j - 5.5); K(a + i, b + j, d < 2 ? C.gold : d < 4 ? C.red : d < 5 ? C.indigo : C.ivory); }
+    });
+
+    // ---- field: madder red with strong abrash bands
+    const fx = 22, fy = 22, fw = cols - 44, fh = rows - 44, cy = fy + Math.floor(fh / 2), cx = fx + Math.floor(fw / 2);
+    for (let j = fy; j < fy + fh; j++) if ([3, 4, 11, 12, 13, 27, 28, 44, 45, 46, 58, 59].includes(j - fy)) F(fx, j, fw, 1, C.red2);
+    // a hooked medallion: a hexagon pointed top and bottom, an outline with latch hooks, a body, an inner hooked
+    // hexagon, a stepped diamond at the heart
+    const med = (mx, my, a, b, M) => {
+      const put = (dx, dy, col) => { K(mx + dx, my + dy, col); K(mx - dx, my + dy, col); K(mx + dx, my - dy, col); K(mx - dx, my - dy, col); };
+      const f = (dx, dy, A, B) => Math.max(dx - A, dx + dy - A - B);
+      for (let dy = 0; dy <= a + b + 4; dy++) for (let dx = 0; dx <= a + 4; dx++) {
+        const v = f(dx, dy, a, b);
+        if (v <= -1) put(dx, dy, M.body); else if (v <= 0) put(dx, dy, M.line);
+      }
+      // latch hooks round the outline: off the sides, and off the roof
+      for (let dy = 1; dy <= b - 1; dy += 4) { put(a + 1, dy, M.line); put(a + 2, dy, M.line); put(a + 2, dy + 1, M.line); }
+      for (let dx = a - 2; dx >= 1; dx -= 4) { const dy = a + b - dx; put(dx + 1, dy + 1, M.line); put(dx + 2, dy + 2, M.line); put(dx + 1, dy + 3, M.line); }
+      put(0, a + b + 1, M.line); put(0, a + b + 2, M.line);
+      // inner hexagon with hooks into the body
+      const a2 = a - 6, b2 = b - 4;
+      for (let dy = 0; dy <= a2 + b2; dy++) for (let dx = 0; dx <= a2; dx++) {
+        const v = f(dx, dy, a2, b2);
+        if (v <= -1) put(dx, dy, M.inner); else if (v <= 0) put(dx, dy, M.line2);
+      }
+      for (let dy = 1; dy <= b2 - 1; dy += 4) { put(a2 + 1, dy, M.line2); put(a2 + 2, dy, M.line2); put(a2 + 2, dy + 1, M.line2); }
+      for (let dx = a2 - 2; dx >= 1; dx -= 4) { const dy = a2 + b2 - dx; put(dx + 1, dy + 1, M.line2); put(dx + 2, dy + 2, M.line2); put(dx + 1, dy + 3, M.line2); }
+      // heart: a pointed star with a stepped jewel in it
+      sweInk(x, M.core, (c) => persStar(c, mx + 0.5, my + 0.5, a2 + 0.6, a2 + 0.6, 8, 0.42, '#000', Math.PI / 8));
+      for (let dy = 0; dy <= 1; dy++) for (let dx = 0; dx <= 1; dx++) put(dx, dy, dx + dy === 0 ? M.core2 : M.inner);
+      // small motifs in the body's four corners
+      for (const [dx, dy] of [[a - 3, b - 2], [a - 3, 1]]) { put(dx, dy, M.dot); put(dx - 1, dy, M.dot); put(dx, dy + 1, M.dot); put(dx - 1, dy + 1, M.dot); }
+      for (let k = 2; k <= a - 7; k += 3) put(k, a + b - 4 - k, M.dot);
+    };
+    const gap = Math.round(fw * 0.33);
+    med(cx, cy, 14, 10, { body: C.indigo, line: C.ivory, inner: C.red, line2: C.gold, core: C.ivory, core2: C.green, dot: C.sky });
+    for (const s of [-1, 1]) med(cx + s * gap, cy, 13, 9, { body: C.green, line: C.ivory, inner: C.indigo, line2: C.gold, core: C.gold, core2: C.red, dot: C.gold });
+
+    // ---- small motifs round the medallions: dogs, birds, combs, rosettes and little hooked diamonds
+    const DOGGY = ['#.....#.', '#.....##', '.######.', '.######.', '.#.#.#.#', '.#.#.#.#'];
+    const COMB = ['#######', '#.#.#.#', '#.#.#.#'];
+    const ROS = ['..#..', '.###.', '##o##', '.###.', '..#..'];
+    const BIRD = ['....##.', '....###', '#..###.', '######.', '.####..', '..#.#..'];
+    const DIA = ['...#...', '..#o#..', '.#ooo#.', '#ooyoo#', '.#ooo#.', '..#o#..', '...#...'];
+    const rosette = (i, j, c1, c2) => { art(i - 2, j - 2, ROS, { '#': c1, o: c2 }); for (const [dx, dy] of [[-3, -3], [3, -3], [-3, 3], [3, 3]]) K(i + dx, j + dy, c2); };
+    const dia = (i, j, c1, c2, c3) => art(i - 3, j - 3, DIA, { '#': c1, o: c2, y: c3 });
+    const comb = (i, j, col) => art(i - 3, j - 1, COMB, { '#': col });
+    const dog = (i, j, col, flip) => art(i - 4, j - 3, DOGGY, { '#': col }, flip);
+    const bird = (i, j, col, flip) => art(i - 3, j - 3, BIRD, { '#': col }, flip);
+    for (const s of [-1, 1]) {
+      const gx = cx + s * Math.round(gap / 2), ex = s < 0 ? fx + 5 : fx + fw - 6;
+      // between the medallions
+      rosette(gx, cy - 17, C.gold, C.indigo); rosette(gx, cy + 17, C.gold, C.indigo);
+      comb(gx, cy - 8, C.ivory); comb(gx, cy + 8, C.ivory);
+      dia(gx, cy, C.ivory, C.indigo, C.gold);
+      // top and bottom rows
+      dog(cx + s * 11, fy + 5, C.ivory, s < 0); dog(cx + s * 11, fy + fh - 6, C.gold, s < 0);
+      bird(gx, fy + 4, C.sky, s > 0); bird(gx, fy + fh - 5, C.ivory, s > 0);
+      rosette(cx + s * (gap - 11), fy + 5, C.ivory, C.green); rosette(cx + s * (gap - 11), fy + fh - 6, C.sky, C.ivory);
+      comb(cx + s * (gap + 11), fy + 4, C.gold); comb(cx + s * (gap + 11), fy + fh - 5, C.gold);
+      // the far ends
+      rosette(ex, fy + 5, C.ivory, C.indigo); rosette(ex, fy + fh - 6, C.ivory, C.indigo);
+      dia(ex, cy, C.gold, C.green, C.ivory);
+      bird(ex, cy - 13, C.ivory, s > 0); bird(ex, cy + 13, C.gold, s > 0);
+    }
+    rosette(cx, fy + 5, C.gold, C.red2); rosette(cx, fy + fh - 6, C.gold, C.red2);
+  });
+}
+
+// Art Deco: a sunburst of long and short rays in a panel of ink blue between fluted bands, pleated fans opening
+// from either side with stylised flowers growing out of them, pinstripes, and a black border of stepped ziggurats.
+function clsDeco(ctx, W, H) {
+  const C = { ink: '#16203a', ink2: '#1f2c4c', black: '#0c111e', jade: '#2e8a74', jade2: '#1d5c50', gold: '#d8bf88', gold2: '#a8894f',
+    coral: '#e07a5f', coral2: '#b4553f', cream: '#f0e6d0' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const F = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ink = (col, f) => { const m = x.getTransform(); sweInk(x, col, (c) => { c.setTransform(m); f(c); }); };
+    const ring = (o, col, t = 1) => { F(o, o, cols - 2 * o, t, col); F(o, rows - o - t, cols - 2 * o, t, col); F(o, o, t, rows - 2 * o, col); F(cols - o - t, o, t, rows - 2 * o, col); };
+    const sides = (o, depth, draw) => {
+      for (const [len, m] of [[cols - 2 * o, [1, 0, 0, 1, o, o]], [cols - 2 * o, [1, 0, 0, -1, o, rows - o]], [rows - 2 * o, [0, 1, 1, 0, o, o]], [rows - 2 * o, [0, 1, -1, 0, cols - o, o]]]) {
+        x.save(); x.transform(...m); x.beginPath(); x.rect(depth, 0, len - 2 * depth, depth); x.clip(); draw(len); x.restore();
+      }
+    };
+    const disc = (col, cx, cy, r) => ink(col, (c) => { c.beginPath(); c.arc(cx, cy, r, 0, Math.PI * 2); c.fill(); });
+
+    // ---- border: black band between gold lines, stepped ziggurats rising from the outer edge, coral discs between
+    F(0, 0, cols, rows, C.black);
+    ring(2, C.gold); ring(15, C.gold); F(16, 16, cols - 32, rows - 32, C.jade2); ring(18, C.gold);
+    sides(3, 12, (len) => {
+      const run = len - 24, { n, d } = evenSteps(run, 18);
+      for (let i = 0; i < n; i++) {
+        const m = 12 + (i + 0.5) * d;
+        // ziggurat: three broad steps rising from the outer edge, gold outline, jade inside, a coral cap
+        const hw = (j) => 8 - 3 * Math.floor((j - 1) / 3), inP = (i2, j) => j >= 1 && j <= 9 && Math.abs(i2 + 0.5 - m) <= hw(j);
+        for (let j = 1; j <= 9; j++) for (let i2 = Math.floor(m - 9); i2 <= m + 9; i2++) if (inP(i2, j)) F(i2, j, 1, 1, j > 1 && inP(i2 - 1, j) && inP(i2 + 1, j) && inP(i2, j + 1) ? C.jade : C.gold);
+        F(Math.round(m - 1), 7, 2, 2, C.coral);
+        const e = 12 + (i + 1) * d;
+        if (i < n - 1) { disc(C.coral, e, 6, 2.6); disc(C.gold, e, 6, 1.1); F(Math.round(e - 0.5), 1, 1, 2, C.gold); F(Math.round(e - 0.5), 10, 1, 1, C.gold); }
+      }
+      disc(C.coral, 12, 6, 2.6); disc(C.coral, len - 12, 6, 2.6);
+    });
+    // corners: stepped squares round a coral jewel
+    for (const [a, b] of [[3, 3], [cols - 15, 3], [3, rows - 15], [cols - 15, rows - 15]]) {
+      F(a + 1, b + 1, 10, 10, C.gold); F(a + 2, b + 2, 8, 8, C.black); F(a + 3, b + 3, 6, 6, C.jade); F(a + 4, b + 4, 4, 4, C.coral); F(a + 5, b + 5, 2, 2, C.gold);
+    }
+
+    // ---- field
+    const fx = 19, fy = 19, fw = cols - 38, fh = rows - 38, cx = cols / 2, cy = rows / 2;
+    F(fx, fy, fw, fh, C.ink);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    // pinstripe frame with stepped corners
+    const pin = (o, col) => {
+      const a = fx + o, b = fy + o, w = fw - 2 * o, h = fh - 2 * o, s = 5;
+      F(a + s, b, w - 2 * s, 1, col); F(a + s, b + h - 1, w - 2 * s, 1, col); F(a, b + s, 1, h - 2 * s, col); F(a + w - 1, b + s, 1, h - 2 * s, col);
+      for (const [px, py, dx, dy] of [[a, b, 1, 1], [a + w - 1, b, -1, 1], [a, b + h - 1, 1, -1], [a + w - 1, b + h - 1, -1, -1]]) {
+        F(px + dx * s - (dx < 0 ? 0 : 0), py, 1, 1, col);
+        for (let k = 0; k <= s; k++) { F(px + dx * k, py + dy * s, 1, 1, col); F(px + dx * s, py + dy * k, 1, 1, col); }
+      }
+    };
+    pin(3, C.gold2);
+    // two fluted bands split the field into a centre panel and two side panels
+    const P = Math.round(fw * 0.25);
+    for (const s of [-1, 1]) { const bx = Math.round(cx + s * P); F(bx - 3, fy, 1, fh, C.gold2); F(bx - 1, fy, 2, fh, C.jade); F(bx + 2, fy, 1, fh, C.gold2); }
+    // speed lines from the side fans to the bands
+    for (const s of [-1, 1]) {
+      const x0 = s < 0 ? fx + 18 : Math.round(cx + P + 3), x1 = s < 0 ? Math.round(cx - P - 3) : fx + fw - 18;
+      for (const [dy, col] of [[-6, C.gold2], [-3, C.coral2], [3, C.coral2], [6, C.gold2]]) F(x0, Math.round(cy + dy - 0.5), x1 - x0, 1, col);
+    }
+    // stepped, pleated fans opening from the left and right edges
+    for (const s of [-1, 1]) {
+      const ox = s < 0 ? fx : fx + fw, a0 = s < 0 ? -Math.PI / 2 : Math.PI / 2;
+      const fan = (r, col) => ink(col, (c) => { c.beginPath(); c.moveTo(ox, cy); c.arc(ox, cy, r, a0, a0 + Math.PI); c.closePath(); c.fill(); });
+      fan(21, C.gold); fan(20, C.ink); fan(18.6, C.gold);
+      for (let k = 0; k < 9; k++) ink(k % 2 ? C.jade2 : C.jade, (c) => { const b0 = a0 + (k / 9) * Math.PI, b1 = a0 + ((k + 1) / 9) * Math.PI; c.beginPath(); c.moveTo(ox, cy); c.arc(ox, cy, 17.6, b0, b1); c.closePath(); c.fill(); });
+      fan(11, C.gold); fan(10, C.coral); fan(7, C.gold); fan(6, C.ink2); fan(3.5, C.coral);
+    }
+    // a stylised flower growing out of each fan, up and down: a straight stem, two long leaves in a V, a round bloom
+    // of rings and two buds
+    for (const [sx, sy] of [[1, 1], [-1, 1], [1, -1], [-1, -1]]) {
+      const bx = cx + sx * (fw / 2 - 16.5), by = cy + sy * fh * 0.33, rim = cy + sy * Math.sqrt(21 * 21 - 16.5 * 16.5);
+      F(Math.round(bx - 0.5), Math.round(Math.min(by, rim)), 1, Math.round(Math.abs(rim - by)), C.gold2);
+      for (const lr of [-1, 1]) ink(C.jade, (c) => {
+        const S = [bx, rim + sy * 1], E = [bx + lr * 7, rim + sy * 9.5], mx = (S[0] + E[0]) / 2, my = (S[1] + E[1]) / 2, nx = -(E[1] - S[1]) * 0.3, ny = (E[0] - S[0]) * 0.3;
+        c.beginPath(); c.moveTo(...S); c.quadraticCurveTo(mx + nx, my + ny, ...E); c.quadraticCurveTo(mx - nx, my - ny, ...S); c.fill();
+      });
+      disc(C.gold, bx, by, 7.4); disc(C.coral, bx, by, 6.3); disc(C.coral2, bx, by, 4.3); disc(C.gold, bx, by, 2.5); disc(C.coral, bx, by, 1.2);
+      ink(C.cream, (c) => { c.lineWidth = 1; c.beginPath(); c.arc(bx, by, 5.3, Math.PI * 1.1, Math.PI * 1.7); c.stroke(); });
+      for (const lr of [-1, 1]) { const px = bx + lr * 9, py = by - sy * 8; ink(C.gold2, (c) => { c.lineWidth = 1; c.beginPath(); c.moveTo(bx, by - sy * 10); c.lineTo(px, py); c.stroke(); }); disc(C.gold, px, py, 2.9); disc(C.coral, px, py, 1.9); }
+    }
+    // quarter fans of rings in the corners of the centre panel
+    x.save(); x.beginPath(); x.rect(Math.round(cx - P + 3), fy + 3, Math.round(2 * P - 6), fh - 6); x.clip();
+    for (const [sx, sy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+      const qx = Math.round(cx + sx * (P - 3)), qy = sy < 0 ? fy + 3 : fy + fh - 3;
+      for (const [r, col] of [[11, C.gold2], [8.5, C.jade], [6, C.gold2]]) ink(col, (c) => { c.lineWidth = 1.2; c.beginPath(); c.arc(qx, qy, r, 0, Math.PI * 2); c.stroke(); });
+      disc(C.coral, qx, qy, 3.4);
+    }
+    x.restore();
+    // the sunburst: long gold and short jade rays round a coral sun ringed in gold
+    const R1 = fh * 0.45, R2 = fh * 0.34, N = 32;
+    for (let k = 0; k < N; k++) {
+      const a = (k / N) * Math.PI * 2, w = (Math.PI / N) * 0.72, r = k % 2 ? R1 : R2;
+      ink(k % 2 ? C.gold : C.jade, (c) => { c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx + Math.cos(a - w) * r, cy + Math.sin(a - w) * r); c.lineTo(cx + Math.cos(a + w) * r, cy + Math.sin(a + w) * r); c.closePath(); c.fill(); });
+    }
+    ink(C.ink, (c) => { c.lineWidth = 1.2; c.beginPath(); c.arc(cx, cy, R2 * 0.66, 0, Math.PI * 2); c.stroke(); });
+    disc(C.gold, cx, cy, 14); disc(C.ink2, cx, cy, 12.8); disc(C.coral, cx, cy, 11.3); disc(C.gold, cx, cy, 7.4); disc(C.coral2, cx, cy, 6.2); disc(C.gold, cx, cy, 3.2);
+    x.restore();
+  });
+}
+
+// Savonnerie: a French palace carpet. A powder-blue cartouche framed in gilded acanthus holds a bouquet of roses on
+// an ivory field; acanthus scrolls curl out from it, rose garlands swing to bouquets in the corners, and a
+// scrolling acanthus border with roses runs round on Wedgwood blue.
+function clsSavonnerie(ctx, W, H) {
+  const C = { ivory: '#f0e7d3', ivory2: '#e2d5ba', blue: '#a9c1d6', blue2: '#7f9dbb', bord: '#6c89a6', gold: '#dcb96e', gold2: '#a8803f',
+    brown: '#5a3f2e', rose: '#dc8e8e', rose2: '#b0505e', rose3: '#f5cdc4', leaf: '#8aa572', leaf2: '#52724a', cream: '#fbf5e6' };
+  weavePicture(ctx, W, H, 140, Object.values(C), (x, cols, rows) => {
+    const F = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    // crisp knots like sweInk, but only over `box` ([x0, y0, x1, y1] in the current coordinates) when one is given,
+    // since this rug lays down hundreds of small shapes
+    const scr = document.createElement('canvas'); scr.width = cols; scr.height = rows;
+    const sc = scr.getContext('2d', { willReadFrequently: true });
+    const ink = (col, f, box) => {
+      const m = x.getTransform();
+      let a = 0, b = 0, a1 = cols, b1 = rows;
+      if (box) {
+        const q = [[box[0], box[1]], [box[2], box[1]], [box[0], box[3]], [box[2], box[3]]].map(([u, v]) => [m.a * u + m.c * v + m.e, m.b * u + m.d * v + m.f]);
+        a = Math.max(0, Math.floor(Math.min(...q.map((p) => p[0])))); b = Math.max(0, Math.floor(Math.min(...q.map((p) => p[1]))));
+        a1 = Math.min(cols, Math.ceil(Math.max(...q.map((p) => p[0])))); b1 = Math.min(rows, Math.ceil(Math.max(...q.map((p) => p[1]))));
+      }
+      const w = a1 - a, h = b1 - b;
+      if (w <= 0 || h <= 0) return;
+      sc.setTransform(1, 0, 0, 1, 0, 0); sc.clearRect(a, b, w, h);
+      sc.save(); sc.setTransform(m); sc.fillStyle = sc.strokeStyle = '#000'; sc.lineCap = 'round'; sc.lineJoin = 'round'; sc.lineWidth = 1; f(sc); sc.restore();
+      const img = sc.getImageData(a, b, w, h), d = img.data, [r, g, bl] = rgbOf(col);
+      for (let i = 0; i < d.length; i += 4) { if (d[i + 3] >= 128) { d[i] = r; d[i + 1] = g; d[i + 2] = bl; d[i + 3] = 255; } else d[i + 3] = 0; }
+      sc.putImageData(img, a, b);
+      x.save(); x.setTransform(1, 0, 0, 1, 0, 0); x.drawImage(scr, a, b, w, h, a, b, w, h); x.restore();
+    };
+    const around = (px, py, r) => [px - r - 1, py - r - 1, px + r + 1, py + r + 1];
+    const ring = (o, col, t = 1) => { F(o, o, cols - 2 * o, t, col); F(o, rows - o - t, cols - 2 * o, t, col); F(o, o, t, rows - 2 * o, col); F(cols - o - t, o, t, rows - 2 * o, col); };
+    const sides = (o, depth, draw) => {
+      for (const [len, m] of [[cols - 2 * o, [1, 0, 0, 1, o, o]], [cols - 2 * o, [1, 0, 0, -1, o, rows - o]], [rows - 2 * o, [0, 1, 1, 0, o, o]], [rows - 2 * o, [0, 1, -1, 0, cols - o, o]]]) {
+        x.save(); x.transform(...m); x.beginPath(); x.rect(depth, 0, len - 2 * depth, depth); x.clip(); draw(len); x.restore();
+      }
+    };
+    const disc = (col, cx, cy, r) => ink(col, (c) => { c.beginPath(); c.arc(cx, cy, r, 0, Math.PI * 2); c.fill(); }, around(cx, cy, r));
+    // an open rose: petals, a shaded side, a curled heart and a pale highlight
+    const rose = (px, py, r, pale) => {
+      disc(C.rose2, px, py, r);
+      ink(pale ? C.rose3 : C.rose, (c) => { for (let k = 0; k < 5; k++) { const a = (k / 5) * Math.PI * 2 - 1.2; c.beginPath(); c.arc(px + Math.cos(a) * r * 0.42 - r * 0.08, py + Math.sin(a) * r * 0.42 - r * 0.08, r * 0.55, 0, Math.PI * 2); c.fill(); } }, around(px, py, r * 1.1));
+      ink(C.rose2, (c) => { c.lineWidth = Math.max(1, r * 0.16); c.beginPath(); c.arc(px - r * 0.05, py - r * 0.05, r * 0.42, 0.3, Math.PI * 1.6); c.stroke(); }, around(px, py, r));
+      if (r >= 3.5) disc(pale ? C.rose : C.rose3, px - r * 0.3, py - r * 0.35, r * 0.2);
+    };
+    // a leaf from (px, py) pointing at `ang`, light on one side and dark on the other
+    const leaf2 = (px, py, len, ang, wid = 0.36) => {
+      const tip = [px + Math.cos(ang) * len, py + Math.sin(ang) * len], n = [-Math.sin(ang) * len * wid, Math.cos(ang) * len * wid], m = [(px + tip[0]) / 2, (py + tip[1]) / 2];
+      ink(C.leaf2, (c) => { c.beginPath(); c.moveTo(px, py); c.quadraticCurveTo(m[0] + n[0], m[1] + n[1], ...tip); c.quadraticCurveTo(m[0] - n[0], m[1] - n[1], px, py); c.fill(); }, around(px, py, len));
+      ink(C.leaf, (c) => { c.beginPath(); c.moveTo(px, py); c.quadraticCurveTo(m[0] + n[0], m[1] + n[1], ...tip); c.quadraticCurveTo(m[0], m[1], px, py); c.fill(); }, around(px, py, len));
+    };
+    // an acanthus scroll: a tapering gilded stem that curls tighter and tighter, shaded on its inner side, with
+    // leaflets turned back along its outer side and a rose in the curl
+    const acanthus = (x0, y0, ang, len, curl, dir, w0, ex = 1.7) => {
+      const pts = []; let px = x0, py = y0;
+      for (let s = 0; s <= len; s += 0.5) { const t = s / len, h = ang + dir * curl * Math.pow(t, ex); pts.push([px, py, h, w0 * (1 - 0.72 * t)]); px += Math.cos(h) * 0.5; py += Math.sin(h) * 0.5; }
+      let bx0 = Infinity, by0 = Infinity, bx1 = -Infinity, by1 = -Infinity;
+      for (const [qx, qy] of pts) { bx0 = Math.min(bx0, qx); by0 = Math.min(by0, qy); bx1 = Math.max(bx1, qx); by1 = Math.max(by1, qy); }
+      const bb = [bx0 - w0 * 2.5, by0 - w0 * 2.5, bx1 + w0 * 2.5, by1 + w0 * 2.5];
+      // leaflets turned back along the outer side, each a gilded lobe with a darker edge
+      const step = Math.max(6, Math.round(w0 * 2.4));
+      for (let i = step; i < pts.length * 0.8; i += step) {
+        const [qx, qy, h, w] = pts[i], o = h - dir * Math.PI / 2, la = h + Math.PI - dir * 0.75;
+        const bx = qx + Math.cos(o) * (w * 0.5 + w0 * 0.35) + Math.cos(la) * w0 * 0.55, by = qy + Math.sin(o) * (w * 0.5 + w0 * 0.35) + Math.sin(la) * w0 * 0.55;
+        ink(C.gold2, (c) => { c.beginPath(); c.ellipse(bx, by, w0 * 0.85 + 0.6, w0 * 0.42 + 0.6, la, 0, Math.PI * 2); c.fill(); }, around(bx, by, w0 + 1));
+        ink(C.gold, (c) => { c.beginPath(); c.ellipse(bx - Math.cos(o) * 0.3, by - Math.sin(o) * 0.3, w0 * 0.85, w0 * 0.42, la, 0, Math.PI * 2); c.fill(); }, around(bx, by, w0 + 1));
+      }
+      ink(C.gold2, (c) => { for (const [qx, qy, , w] of pts) { c.beginPath(); c.arc(qx, qy, w / 2 + 0.6, 0, Math.PI * 2); c.fill(); } }, bb);
+      ink(C.gold, (c) => { for (const [qx, qy, , w] of pts) { c.beginPath(); c.arc(qx, qy, w / 2, 0, Math.PI * 2); c.fill(); } }, bb);
+      ink(C.cream, (c) => { c.lineWidth = 0.8; c.beginPath(); pts.forEach(([qx, qy, h, w], i) => { if (i > pts.length * 0.75) return; const ex = qx + Math.cos(h - dir * Math.PI / 2) * w * 0.22, ey = qy + Math.sin(h - dir * Math.PI / 2) * w * 0.22; i ? c.lineTo(ex, ey) : c.moveTo(ex, ey); }); c.stroke(); }, bb);
+      const e = pts[pts.length - 1];
+      return [e[0] + Math.cos(e[2] + dir * Math.PI / 2) * 2.4, e[1] + Math.sin(e[2] + dir * Math.PI / 2) * 2.4];
+    };
+
+    // ---- border: brown edge, gilded fillets, a Wedgwood-blue band with a scrolling acanthus and roses
+    F(0, 0, cols, rows, C.brown);
+    ring(2, C.gold2); F(3, 3, cols - 6, rows - 6, C.bord); ring(17, C.gold2); ring(18, C.gold); F(19, 19, cols - 38, rows - 38, C.ivory2); ring(20, C.gold2);
+    sides(3, 14, (len) => {
+      const run = len - 28, { n, d } = evenSteps(run, 26);
+      // the wave stem
+      ink(C.gold2, (c) => { c.lineWidth = 2.2; c.beginPath(); for (let t = 0; t <= run; t += 0.5) { const y = 7 + Math.sin((t / d) * Math.PI * 2) * 3.6; t ? c.lineTo(14 + t, y) : c.moveTo(14 + t, y); } c.stroke(); });
+      ink(C.gold, (c) => { c.lineWidth = 1.2; c.beginPath(); for (let t = 0; t <= run; t += 0.5) { const y = 6.8 + Math.sin((t / d) * Math.PI * 2) * 3.6; t ? c.lineTo(14 + t, y) : c.moveTo(14 + t, y); } c.stroke(); });
+      for (let i = 0; i < n; i++) for (const h of [0, 1]) {
+        // an acanthus curl off the stem into each bay, a rose in its heart, and a leaf on the stem
+        const tc = 14 + (i + 0.25 + 0.5 * h) * d, t0 = tc - d * 0.14, y0 = 7 + Math.sin(((t0 - 14) / d) * Math.PI * 2) * 3.6, sg = h ? -1 : 1;
+        const e = acanthus(t0, y0 - sg * 0.5, -sg * Math.PI / 2 - sg * 0.35, 11, Math.PI * 1.55, sg, 2.3, 1.6);
+        rose(e[0], e[1], 2.2, h === 1);
+        leaf2(tc + d * 0.2, 7 + sg * 1.2, 4.2, sg > 0 ? -0.5 : 0.5, 0.34);
+      }
+    });
+    for (const [a, b] of [[3, 3], [cols - 17, 3], [3, rows - 17], [cols - 17, rows - 17]]) {
+      F(a, b, 14, 14, C.bord); disc(C.gold2, a + 7, b + 7, 5.6); disc(C.gold, a + 7, b + 7, 4.8); rose(a + 7, b + 7, 3.6, false);
+    }
+
+    // ---- field: ivory with a gilded fillet with bracket corners
+    const fx = 21, fy = 21, fw = cols - 42, fh = rows - 42, cx = cols / 2, cy = rows / 2;
+    F(fx, fy, fw, fh, C.ivory);
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    ink(C.gold2, (c) => {
+      c.lineWidth = 1; const a = fx + 4, b = fy + 4, w = fw - 8, h = fh - 8, r = 7;
+      c.beginPath(); c.moveTo(a + r, b); c.lineTo(a + w - r, b); c.arc(a + w, b, r, Math.PI, Math.PI / 2, true); c.lineTo(a + w, b + h - r); c.arc(a + w, b + h, r, -Math.PI / 2, Math.PI, true);
+      c.lineTo(a + r, b + h); c.arc(a, b + h, r, 0, -Math.PI / 2, true); c.lineTo(a, b + r); c.arc(a, b, r, Math.PI / 2, 0, true); c.stroke();
+    });
+    // corner bouquets: a gilded C-scroll bracket in the corner and roses, buds and leaves
+    for (const [sx, sy] of [[1, 1], [-1, 1], [1, -1], [-1, -1]]) {
+      const ox = sx > 0 ? fx : fx + fw, oy = sy > 0 ? fy : fy + fh, bx = ox + sx * 21, by = oy + sy * 16;
+      acanthus(ox + sx * 6, oy + sy * 30, Math.atan2(-sy, 0), 22, Math.PI * 1.25, sx * sy, 3.4);
+      acanthus(ox + sx * 36, oy + sy * 6, Math.atan2(0, -sx), 22, Math.PI * 1.25, -sx * sy, 3.4);
+      for (const [lx, ly, a] of [[bx - sx * 6, by + sy * 3, Math.atan2(sy * 0.6, -sx)], [bx + sx * 3, by + sy * 6, Math.atan2(sy, sx * 0.4)], [bx + sx * 6, by - sy * 4, Math.atan2(-sy * 0.5, sx)], [bx - sx * 3, by - sy * 6, Math.atan2(-sy, -sx * 0.3)], [bx + sx * 8, by + sy * 3, Math.atan2(sy * 0.2, sx)]]) leaf2(lx, ly, 7, a);
+      rose(bx, by, 5.4, false); rose(bx + sx * 7, by - sy * 3, 3.6, true); rose(bx - sx * 4, by + sy * 6, 3.4, true);
+      for (const [px, py] of [[bx - sx * 8, by - sy * 3], [bx + sx * 3, by + sy * 9]]) { disc(C.rose2, px, py, 1.6); disc(C.rose, px - 0.3, py - 0.3, 1); }
+    }
+    // rose garlands swinging from the cartouche to the bouquets
+    for (const [sx, sy] of [[1, 1], [-1, 1], [1, -1], [-1, -1]]) {
+      const A = [cx + sx * 24, cy - sy * 31], B = [cx + sx * (fw / 2 - 30), cy - sy * (fh / 2 - 16)], sag = 9;
+      const at = (t) => [A[0] + (B[0] - A[0]) * t, A[1] + (B[1] - A[1]) * t + sy * sag * Math.sin(Math.PI * t)];
+      ink(C.leaf2, (c) => { c.lineWidth = 0.9; c.beginPath(); for (let t = 0; t <= 1; t += 0.02) { const [px, py] = at(t); t ? c.lineTo(px, py) : c.moveTo(px, py); } c.stroke(); });
+      for (let k = 0; k <= 12; k++) { const t = k / 12, [px, py] = at(t), [qx, qy] = at(Math.min(1, t + 0.04)); leaf2(px, py, 4.2, Math.atan2(qy - py, qx - px) + (k % 2 ? 0.9 : -0.9), 0.34); }
+      for (let k = 1; k < 12; k += 2) { const [px, py] = at(k / 12); rose(px, py, k === 5 || k === 7 ? 2.8 : 2.2, k % 4 === 1); }
+      for (const [px, py] of [at(0.02), at(0.98)]) { disc(C.gold2, px, py, 2.2); disc(C.gold, px, py, 1.4); }
+    }
+    // shells with acanthus at the middle of each long side, and little sprigs in the open ground
+    for (const sx of [-1, 1]) {
+      const ox = sx < 0 ? fx : fx + fw;
+      for (let k = -3; k <= 3; k++) { const b = (sx < 0 ? 0 : Math.PI) + k * 0.36; ink(k % 2 ? C.gold2 : C.gold, (c) => { c.beginPath(); c.moveTo(ox, cy); c.lineTo(ox + Math.cos(b - 0.17) * 12, cy + Math.sin(b - 0.17) * 12); c.lineTo(ox + Math.cos(b + 0.17) * 12, cy + Math.sin(b + 0.17) * 12); c.closePath(); c.fill(); }); }
+      disc(C.gold2, ox, cy, 4.2); disc(C.gold, ox, cy, 3);
+      for (const sy of [-1, 1]) { const e = acanthus(ox - sx * 2, cy + sy * 11, Math.atan2(sy, -sx * 0.2), 22, Math.PI * 1.4, -sx * sy, 3.2, 2.4); rose(e[0], e[1], 2.4, true); }
+    }
+    for (const [px, py] of [[0.5, 0.11], [0.5, 0.89], [0.3, 0.5], [0.7, 0.5], [0.205, 0.3], [0.795, 0.3], [0.205, 0.7], [0.795, 0.7]]) {
+      const X = fx + fw * px, Y = fy + fh * py;
+      if (px === 0.5) { leaf2(X - 1, Y, 5, Math.PI + 0.25); leaf2(X + 1, Y, 5, -0.25); rose(X, Y, 2.6, false); continue; }
+      leaf2(X, Y, 4.5, -Math.PI / 2 - 0.6); leaf2(X, Y, 4.5, -Math.PI / 2 + 0.6); rose(X, Y + 0.5, 2.2, true);
+    }
+    // acanthus scrolls curling out from the cartouche's sides, up and down
+    const rx = 40, ry = 32;
+    for (const sx of [-1, 1]) for (const sy of [-1, 1]) {
+      const end = acanthus(cx + sx * (rx - 2), cy + sy * 3, Math.atan2(sy * 0.2, sx), 44, Math.PI * 1.6, sx * sy, 4.8, 3);
+      rose(end[0], end[1], 3.6, sy > 0);
+      // and a smaller one from the top and bottom shells, sweeping sideways
+      const e2 = acanthus(cx + sx * 4, cy + sy * (ry + 2), Math.atan2(sy * 0.1, sx), 27, Math.PI * 1.6, sx * sy, 3.6, 2.4);
+      rose(e2[0], e2[1], 2.8, sy < 0);
+    }
+    // the cartouche: a gilded frame with shells top, bottom and at the sides, filled with powder blue
+    const shape = (c, k) => {
+      c.beginPath();
+      for (let i = 0; i <= 360; i++) {
+        const a = (i / 180) * Math.PI, ca = Math.cos(a), sa = Math.sin(a);
+        const shell = Math.pow(Math.abs(Math.cos(2 * a)), 30) * 0.07, notch = Math.pow(Math.abs(Math.sin(2 * a)), 30) * 0.03;
+        const r = 1 + shell + notch;
+        const px = cx + ca * (rx * r + k), py = cy + sa * (ry * r + k);
+        i ? c.lineTo(px, py) : c.moveTo(px, py);
+      }
+      c.closePath(); c.fill();
+    };
+    ink(C.gold2, (c) => shape(c, 1.6)); ink(C.gold, (c) => shape(c, 0.4)); ink(C.cream, (c) => shape(c, -1.4)); ink(C.blue, (c) => shape(c, -2.4));
+        // little gold beads on the frame
+    for (let k = 0; k < 28; k++) { const a = (k / 28) * Math.PI * 2; F(Math.round(cx + Math.cos(a) * (rx + 0.4) - 0.5), Math.round(cy + Math.sin(a) * (ry + 0.4) - 0.5), 1, 1, C.cream); }
+    // shells at the four points of the frame
+    for (const [a, sxx] of [[0, 1], [Math.PI, 1], [Math.PI / 2, 0], [-Math.PI / 2, 0]]) {
+      const px = cx + Math.cos(a) * (rx * 1.09 + 1), py = cy + Math.sin(a) * (ry * 1.09 + 1);
+      for (let k = -2; k <= 2; k++) { const b = a + k * 0.42; ink(k % 2 ? C.gold2 : C.gold, (c) => { c.beginPath(); c.moveTo(px - Math.cos(a) * 2, py - Math.sin(a) * 2); c.lineTo(px + Math.cos(b - 0.2) * 5.5, py + Math.sin(b - 0.2) * 5.5); c.lineTo(px + Math.cos(b + 0.2) * 5.5, py + Math.sin(b + 0.2) * 5.5); c.closePath(); c.fill(); }); }
+      disc(C.gold2, px - Math.cos(a) * 1.5, py - Math.sin(a) * 1.5, 1.8);
+    }
+    // inside: a round bouquet of roses with leaves and buds, in a ring of little ivory flowers
+    // a laurel wreath inside the frame, tied with rose buds at the four points
+    ink(C.leaf2, (c) => { c.lineWidth = 1.2; c.beginPath(); c.ellipse(cx, cy, rx - 8.5, ry - 7.5, 0, 0, Math.PI * 2); c.stroke(); });
+    for (let k = 0; k < 40; k++) {
+      const a = (k / 40) * Math.PI * 2, px = cx + Math.cos(a) * (rx - 8.5), py = cy + Math.sin(a) * (ry - 7.5), side = k % 2 ? 1 : -1;
+      const nx = Math.cos(a) * side, ny = Math.sin(a) * side, tg = Math.atan2(Math.cos(a) * (ry - 7.5), -Math.sin(a) * (rx - 8.5));
+      ink(k % 4 < 2 ? C.leaf : C.leaf2, (c) => { c.beginPath(); c.ellipse(px + nx * 1.6, py + ny * 1.6, 2.5, 1.1, tg + side * 0.6, 0, Math.PI * 2); c.fill(); });
+    }
+    for (let k = 0; k < 4; k++) { const a = (k / 4) * Math.PI * 2; rose(cx + Math.cos(a) * (rx - 8.5), cy + Math.sin(a) * (ry - 7.5), 2.4, true); }
+    for (let k = 0; k < 8; k++) { const a = (k / 8) * Math.PI * 2 + Math.PI / 8; leaf2(cx + Math.cos(a) * 9, cy + Math.sin(a) * 8, 9, a, 0.38); }
+    for (let k = 0; k < 6; k++) { const a = (k / 6) * Math.PI * 2 - Math.PI / 2; rose(cx + Math.cos(a) * 11, cy + Math.sin(a) * 9.5, 4, k % 2 === 1); }
+    rose(cx, cy, 7, false);
+    x.restore();
+  });
+}
+
+// Bats: black bats flapping across a dusk sky banded from violet to burnt orange, a full moon in each corner.
+function hlwBats(ctx, W, H) {
+  const C = { edge: '#120a18', bat: '#150a1c', eye: '#f8cc4a',
+    sky0: '#32175a', sky1: '#43206c', sky2: '#5a297a', sky3: '#7a2f70', sky4: '#9e3b5c', sky5: '#c04e3e', sky6: '#da6a2e', sky7: '#ec8f38',
+    plum: '#3a1842', moon: '#f6e6b2', moon2: '#dcc27e', star: '#e8dcf2' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ring = (o, col) => { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); };
+    const rnd = rng(1031);
+    const B = 15, fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    // the border: dark edge, orange line, a plum band with a lace of scallops like the trailing edge of a bat's wing,
+    // a cream bead in each scallop and an orange point where two meet, orange and dark lines round the field
+    R(0, 0, cols, rows, C.edge);
+    ring(1, C.sky6);
+    const sides = [[cols - 2 * B, (a, j) => [B + a, j]], [cols - 2 * B, (a, j) => [B + a, rows - 1 - j]], [rows - 2 * B, (a, j) => [j, B + a]], [rows - 2 * B, (a, j) => [cols - 1 - j, B + a]]];
+    for (const [len, at] of sides) {
+      const { n, d } = evenSteps(len, 11);
+      const h = (a) => { const f = (((a % d) + d) % d) / d; return 4.6 + 5 * (1 - Math.pow(Math.sin(Math.PI * f), 0.8)); };
+      for (let a = 0; a < len; a++) {
+        const h0 = h(a), h1 = h(a + 1), lo = Math.min(h0, h1), hi = Math.max(h0, h1);
+        for (let j = 3; j < B - 2; j++) {
+          const [px, py] = at(a, j);
+          R(px, py, 1, 1, j + 0.5 < lo - 0.2 ? C.bat : j + 0.5 <= hi + 0.8 ? C.sky6 : C.plum);
+        }
+      }
+      for (let i = 0; i < n; i++) { const [px, py] = at(Math.round((i + 0.5) * d) - 1, 8); const [qx, qy] = at(Math.round((i + 0.5) * d), 9); R(Math.min(px, qx), Math.min(py, qy), 2, 2, C.moon); }
+      for (let i = 1; i < n; i++) { const [px, py] = at(Math.round(i * d - 0.5), 11.6); R(px, Math.floor(py), 1, 1, C.sky7); }
+    }
+    ring(B - 2, C.sky6); ring(B - 1, C.edge);
+    for (const [cx, cy] of [[7.5, 7.5], [cols - 7.5, 7.5], [7.5, rows - 7.5], [cols - 7.5, rows - 7.5]]) {
+      R(Math.round(cx - 6.5), Math.round(cy - 6.5), 13, 13, C.edge);
+      const dia = (r, col) => sweInk(x, col, (c) => { c.beginPath(); c.moveTo(cx, cy - r); c.lineTo(cx + r, cy); c.lineTo(cx, cy + r); c.lineTo(cx - r, cy); c.closePath(); c.fill(); });
+      dia(6, C.sky6); dia(4, C.plum); R(Math.round(cx - 1), Math.round(cy - 1), 2, 2, C.moon);
+    }
+    // the sky: bands of colour with gently waving edges, violet at the top, burnt orange at the bottom
+    const sky = [C.sky0, C.sky1, C.sky2, C.sky3, C.sky4, C.sky5, C.sky6, C.sky7];
+    const stops = [0, 0.22, 0.38, 0.51, 0.62, 0.72, 0.82, 0.91];
+    for (let i = fx; i < fx + fw; i++) for (let j = fy; j < fy + fh; j++) {
+      const v = (j + 0.5 - fy) / fh;
+      let k = 0;
+      for (let b = 1; b < stops.length; b++) { const wav = (Math.sin(i * 0.19 + b * 1.7) * 1.1 + Math.sin(i * 0.071 + b * 0.6) * 0.9) / fh; if (v > stops[b] + wav) k = b; }
+      R(i, j, 1, 1, sky[k]);
+    }
+    // stars in the violet part of the sky
+    for (let n = 0; n < 60; n++) {
+      const sx = fx + 2 + Math.floor(rnd() * (fw - 4)), sy = fy + 2 + Math.floor(Math.pow(rnd(), 1.5) * fh * 0.42);
+      R(sx, sy, 1, 1, C.star);
+    }
+    // the moons, one in each corner of the field, with a halo
+    const mr = 10.5, mi = 16;
+    const moons = [[fx + mi, fy + mi], [fx + fw - mi, fy + mi], [fx + mi, fy + fh - mi], [fx + fw - mi, fy + fh - mi]];
+    for (const [mx, my] of moons) {
+      sweInk(x, C.moon, (c) => { c.lineWidth = 1.25; c.beginPath(); c.arc(mx, my, mr + 2.6, 0, Math.PI * 2); c.stroke(); });
+      sweInk(x, C.moon, (c) => { c.beginPath(); c.arc(mx, my, mr, 0, Math.PI * 2); c.fill(); });
+      sweInk(x, C.moon2, (c) => { for (const [a, b, r] of [[-3.5, -2.5, 2.6], [3.2, 2.8, 3.2], [-2, 5, 1.6], [4.6, -4.2, 1.5]]) { c.beginPath(); c.arc(mx + a, my + b, r, 0, Math.PI * 2); c.fill(); } });
+    }
+    // the bats are knotted shapes: each wing a list of [top, bottom] rows per column from the tip in to the
+    // shoulder (three scallops along the trailing edge, a claw at the wrist), then the head and body columns up to
+    // the middle one; the other side is the mirror image. A raised wing sits higher by `lift` rows.
+    const WING = {
+      spread: { top: [3, 2, 2, 1, 1, 0, 1, 1, 1, 2, 2, 2, 3, 3], bot: [4, 5, 6, 7, 8, 7, 6, 6, 7, 8, 9, 8, 7, 8], lift: 0 },
+      up: { top: [0, 0, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5], bot: [2, 3, 4, 5, 6, 5, 5, 5, 6, 8, 9, 8, 8, 10], lift: 2 },
+      smallSpread: { top: [2, 1, 1, 0, 1, 1, 2, 2], bot: [3, 4, 5, 6, 4, 4, 5, 6], lift: 0 },
+      smallUp: { top: [0, 0, 1, 1, 1, 2, 2, 3], bot: [1, 2, 3, 4, 3, 4, 5, 6], lift: 1 },
+    };
+    const HEAD = { big: [[0, 8], [1, 9], [2, 10]], small: [[0, 6], [1, 7], [2, 8]] };
+    // draws a bat with its middle column at cx and its head's top row at cy, and returns the box round it
+    const bat = (cx, cy, left, right, size) => {
+      const head = HEAD[size], n = WING[left].top.length, mid = n + head.length - 1;
+      const col = (dx, t, b) => R(cx + dx, cy + t, 1, b - t + 1, C.bat);
+      head.forEach(([t, b], k) => { col(k + n - mid, t, b); col(mid - (k + n), t, b); });
+      for (const [w, sg] of [[WING[left], -1], [WING[right], 1]]) w.top.forEach((t, k) => col(sg * (mid - k), t - w.lift, w.bot[k] - w.lift));
+      R(cx - 1, cy + 3, 1, 1, C.eye); R(cx + 1, cy + 3, 1, 1, C.eye);
+      const lift = Math.max(WING[left].lift, WING[right].lift);
+      return [cx - mid, cy - lift, 2 * mid + 1, (size === 'big' ? 11 : 9) + lift];
+    };
+    // a half-drop repeat of big bats whose corner places hold the moons
+    const boxes = moons.map(([mx, my]) => [mx - mr - 3, my - mr - 3, 2 * mr + 6, 2 * mr + 6]);
+    const colX = [0, 1, 2, 3, 4].map((i) => fx + mi + (i * (fw - 2 * mi)) / 4), rowY = [0, 1, 2, 3, 4].map((j) => fy + mi + (j * (fh - 2 * mi)) / 4);
+    const poses = [['spread', 'spread'], ['up', 'up'], ['up', 'spread'], ['spread', 'spread'], ['spread', 'up'], ['up', 'up'], ['spread', 'spread'], ['up', 'spread'], ['up', 'up']];
+    let k = 0;
+    for (let i = 0; i < 5; i++) for (let j = i % 2; j < 5; j += 2) {
+      if ((i === 0 || i === 4) && (j === 0 || j === 4)) continue;
+      const [l, r] = poses[k++ % poses.length];
+      boxes.push(bat(Math.round(colX[i] + (rnd() - 0.5) * 4), Math.round(rowY[j] - 4 + (rnd() - 0.5) * 3), l, r, 'big'));
+    }
+    // small ones further off, each put where it has the most room
+    const gap = ([a, b, w, h]) => Math.min(...boxes.map(([p, q, u, v]) => Math.max(p - (a + w), a - (p + u), (q - (b + h)) * 1.6, (b - (q + v)) * 1.6)), (b - fy) * 1.6, (fy + fh - b - h) * 1.6, a - fx, fx + fw - a - w);
+    for (let n = 0; n < 8; n++) {
+      let best = null, bd = -1;
+      for (let t = 0; t < 60; t++) {
+        const up = rnd() < 0.5, lift = up ? 1 : 0, bx = Math.round(fx + 12 + rnd() * (fw - 24)), byy = Math.round(fy + 3 + rnd() * (fh - 14));
+        const box = [bx - 10, byy - lift, 21, 9 + lift], g = gap(box);
+        if (g > bd) { bd = g; best = [bx, byy, up]; }
+      }
+      if (bd < 2) break;
+      const [bx, byy, up] = best;
+      boxes.push(bat(bx, byy, up ? 'smallUp' : 'smallSpread', up ? 'smallUp' : 'smallSpread', 'small'));
+    }
+  });
+}
+
+// Black cats: staggered rows of arched and sitting black cats, paw prints and violet stars on mustard.
+function hlwBlackCats(ctx, W, H) {
+  const C = { edge: '#16111a', cat: '#1b1520', grey: '#4a3f52', eye: '#c6dc3a', pink: '#e08a96', mustard: '#dba33a', mustard2: '#c98f2e',
+    paw: '#7a4620', violet: '#4c2a6c', violet2: '#6e3e96', orange: '#e2762a', cream: '#f4e4bc', gold: '#f2c64a' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ring = (o, col) => { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); };
+    const B = 16, fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    // a paw print, toes up, centred on knot (px, py)
+    const paw = (px, py, col) => { R(px - 1, py, 3, 2, col); R(px, py + 2, 1, 1, col); for (const [a, b] of [[-2, -1], [-1, -2], [1, -2], [2, -1]]) R(px + a, py + b, 1, 1, col); };
+    // the border: dark edge, a checker of black and orange, cream line, a violet band with stars and orange beads,
+    // orange and dark lines round the field, a paw print in each corner
+    R(0, 0, cols, rows, C.edge);
+    for (let j = 1; j < rows - 1; j++) for (let i = 1; i < cols - 1; i++) {
+      const e = Math.min(i, j, cols - 1 - i, rows - 1 - j);
+      if (e <= 4) R(i, j, 1, 1, (Math.floor((i - 1) / 2) + Math.floor((j - 1) / 2)) % 2 ? C.edge : C.orange);
+    }
+    ring(5, C.cream);
+    R(6, 6, cols - 12, rows - 12, C.violet);
+    ring(14, C.orange); ring(15, C.edge);
+    const sides = [[cols - 32, (a, d) => [16 + a, d]], [cols - 32, (a, d) => [16 + a, rows - d]], [rows - 32, (a, d) => [d, 16 + a]], [rows - 32, (a, d) => [cols - d, 16 + a]]];
+    for (const [len, at] of sides) {
+      const { n, d } = evenSteps(len, 12);
+      for (let i = 0; i < n; i++) {
+        const [px, py] = at((i + 0.5) * d, 10.2);
+        sweInk(x, C.gold, (c) => star5(c, px, py, 3.7));
+        const [qx, qy] = at(i * d, 10.2);
+        if (i) R(Math.round(qx - 1), Math.round(qy - 1), 2, 2, C.orange);
+      }
+    }
+    for (const [cx, cy] of [[8, 8], [cols - 8, 8], [8, rows - 8], [cols - 8, rows - 8]]) {
+      R(cx - 8, cy - 8, 16, 16, C.edge); R(cx - 6, cy - 6, 12, 12, C.orange); R(cx - 5, cy - 5, 10, 10, C.violet);
+      paw(cx, cy, C.cream);
+    }
+    // the field: mustard with a fine diaper of darker dots
+    R(fx, fy, fw, fh, C.mustard);
+    for (let j = fy + 2; j < fy + fh - 1; j += 4) for (let i = fx + 2 + ((j - fy - 2) % 8 ? 3 : 0); i < fx + fw - 1; i += 6) R(i, j, 1, 1, C.mustard2);
+    // the cats, drawn facing right with the ground at y = 0
+    const arched = (c) => {
+      c.lineCap = 'round'; c.lineJoin = 'round';
+      c.lineWidth = 8.4; c.beginPath(); c.moveTo(-8, -10.5); c.quadraticCurveTo(-1, -27, 8, -11.5); c.stroke();
+      c.lineWidth = 2.6; c.beginPath();
+      for (const [a, b] of [[-8.6, -9.5], [-5.6, -8.5], [5.6, -9], [8.6, -9.5]]) { c.moveTo(a, b); c.lineTo(a + (a < 0 ? -0.6 : 0.6), -1); }
+      c.stroke();
+      c.lineWidth = 2.8; c.beginPath(); c.moveTo(-10, -12.5); c.bezierCurveTo(-15.5, -14, -17, -23, -13.5, -26.5); c.bezierCurveTo(-10.5, -29.5, -7.5, -26.5, -9.6, -24.2); c.stroke();
+      c.beginPath(); c.ellipse(11.2, -14.5, 5.8, 5.2, 0, 0, Math.PI * 2); c.fill();
+      c.beginPath(); c.moveTo(6.6, -16.5); c.lineTo(6.9, -23.6); c.lineTo(10.6, -19.2); c.closePath(); c.moveTo(11.8, -19.2); c.lineTo(15.6, -23.6); c.lineTo(16, -16.5); c.closePath(); c.fill();
+      for (const [a, b] of [[-11, -9.5], [-6.2, -0.8], [6.2, -0.8], [9.2, -0.8], [-9.2, -0.8]]) { c.beginPath(); c.ellipse(a, b, 1.7, 1, 0, 0, Math.PI * 2); c.fill(); }
+    };
+    const sitting = (c) => {
+      c.lineCap = 'round'; c.lineJoin = 'round';
+      c.beginPath(); c.ellipse(0, -8.5, 8.4, 8.5, 0, 0, Math.PI * 2); c.fill();
+      c.beginPath(); c.ellipse(0, -15.5, 6.2, 6.8, 0, 0, Math.PI * 2); c.fill();
+      c.beginPath(); c.ellipse(0, -24, 6.8, 5.9, 0, 0, Math.PI * 2); c.fill();
+      c.beginPath(); c.moveTo(-6.6, -25.5); c.lineTo(-6.2, -32.6); c.lineTo(-1.8, -28.6); c.closePath(); c.moveTo(6.6, -25.5); c.lineTo(6.2, -32.6); c.lineTo(1.8, -28.6); c.closePath(); c.fill();
+      c.lineWidth = 2.8; c.beginPath(); c.moveTo(6, -2.5); c.bezierCurveTo(12, -0.5, 15.5, -5.5, 14.2, -11.5); c.bezierCurveTo(13.4, -15.8, 9.6, -16.4, 10, -13.2); c.stroke();
+      for (const sg of [-1, 1]) { c.beginPath(); c.ellipse(sg * 3, -0.9, 2.4, 1.4, 0, 0, Math.PI * 2); c.fill(); }
+    };
+    // the grey line between a sitting cat's front legs
+    const sittingLines = (c) => { c.lineWidth = 1; c.beginPath(); c.moveTo(0, -11); c.lineTo(0, -1.6); c.stroke(); };
+    // three staggered rows, mirrored about the middle: arched cats facing out at the ends, sitting cats with their
+    // tails curling outwards
+    const cats = [], sw = fw / 4, s = 0.88;
+    const layout = [[fy + 31, [0.5, 1.5, 2.5, 3.5], ['arched', 'sitting', 'sitting', 'arched']], [fy + 63, [1, 2, 3], ['sitting', 'arched', 'sitting']], [fy + 95, [0.5, 1.5, 2.5, 3.5], ['sitting', 'arched', 'arched', 'sitting']]];
+    layout.forEach(([gy, xs, kinds], r) => xs.forEach((q, i) => {
+      const cx = Math.round(fx + q * sw), left = q < 2 || (q === 2 && r === 1);
+      const flip = kinds[i] === 'arched' ? (r === 1 ? 1 : left ? -1 : 1) : (q < 2 ? -1 : 1);
+      cats.push({ cx, gy, kind: kinds[i], flip, collar: [C.violet2, C.orange][(i + r) % 2] });
+    }));
+    // in the gaps: a violet star between two paw prints
+    const gaps = [[1, fy + 17], [2, fy + 17], [3, fy + 17], [0.5, fy + 49], [1.5, fy + 49], [2.5, fy + 49], [3.5, fy + 49], [1, fy + 81], [2, fy + 81], [3, fy + 81]];
+    for (const [q, gy] of gaps) {
+      const gx = Math.round(fx + q * sw);
+      sweInk(x, C.violet, (c) => star5(c, gx + 0.5, gy + 0.8, 4.3));
+      paw(gx - 3, gy - 9, C.paw); paw(gx + 3, gy + 9, C.paw);
+    }
+    for (const gx of [fx + 10, fx + fw - 11]) { paw(gx - 3, fy + 43, C.paw); paw(gx + 3, fy + 51, C.paw); paw(gx - 3, fy + 59, C.paw); }
+    const each = (kind, f) => (c) => { for (const k of cats) if (k.kind === kind) { c.save(); c.translate(k.cx + 0.5, k.gy); c.scale(k.flip * s, s); f(c); c.restore(); } };
+    sweInk(x, C.cat, each('arched', arched));
+    sweInk(x, C.cat, each('sitting', sitting));
+    sweInk(x, C.grey, each('sitting', sittingLines));
+    // collars on the sitting cats, a little bell on each
+    for (const k of cats) if (k.kind === 'sitting') {
+      sweInk(x, k.collar, (c) => { c.translate(k.cx + 0.5, k.gy); c.scale(s, s); c.lineWidth = 1.6; c.beginPath(); c.moveTo(-5.4, -19.6); c.quadraticCurveTo(0, -17.4, 5.4, -19.6); c.stroke(); });
+      R(k.cx, Math.round(k.gy - 17.4 * s), 2, 2, C.gold);
+    }
+    // faces: yellow-green eyes with slit pupils and a pink nose
+    for (const k of cats) {
+      const hx = k.kind === 'arched' ? k.cx + 0.5 + k.flip * 11.2 * s : k.cx + 0.5, hy = k.gy - (k.kind === 'arched' ? 14.5 : 24) * s;
+      const ix = Math.floor(hx), iy = Math.round(hy);
+      for (const ex of [ix - 3, ix + 1]) { R(ex, iy - 1, 3, 2, C.eye); R(ex + 1, iy - 1, 1, 2, C.cat); }
+      R(ix, iy + 1, 1, 1, C.pink);
+      if (k.kind === 'sitting') for (const sg of [-1, 1]) R(ix + sg * 4, Math.round(hy - 6.8 * s), 1, 1, C.pink);
+    }
+  });
+}
+
+// Witch hats and brooms: pointed hats and straw brooms in a gold-cord diamond lattice on moss, cauldron border.
+function hlwWitchHats(ctx, W, H) {
+  const C = { edge: '#121a0e', dark: '#1e2c18', moss: '#4c6b30', moss2: '#3f5c28', cord: '#c9a64c', hat: '#1d1526', hat2: '#3b2a4e',
+    purple: '#5e2d82', purple2: '#8a52b0', orange: '#e2742a', gold: '#f2c444', straw: '#e2b450', straw2: '#a87428', wood: '#7a4a26',
+    brew: '#8fd44c' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ring = (o, col) => { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); };
+    const B = 16, fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    // the border: dark edge, gold line, a dark green band of cauldrons with green brew and rising bubbles, a
+    // gold dot between each two, purple and dark lines round the field
+    R(0, 0, cols, rows, C.edge);
+    R(2, 2, cols - 4, rows - 4, C.dark);
+    ring(1, C.cord); ring(B - 2, C.purple); ring(B - 1, C.edge);
+    // a round cauldron, its rim catching the light, green brew with bubbles rising
+    const cauldron = (cx, cy) => {
+      const a = Math.round(cx), b = Math.round(cy);
+      sweInk(x, C.hat, (c) => { c.beginPath(); c.ellipse(a, b + 1.4, 5.6, 3.7, 0, 0, Math.PI * 2); c.fill(); });
+      R(a - 4, b - 3, 8, 1, C.hat2); R(a - 3, b - 2, 6, 1, C.brew); R(a - 5, b - 2, 2, 1, C.hat2); R(a + 3, b - 2, 2, 1, C.hat2);
+      R(a - 3, b + 0, 1, 2, C.hat2);
+      R(a - 2, b - 5, 1, 1, C.brew); R(a + 1, b - 6, 2, 2, C.brew);
+    };
+    const sides = [[cols - 2 * B, (a, d) => [B + a, d]], [cols - 2 * B, (a, d) => [B + a, rows - d]], [rows - 2 * B, (a, d) => [d, B + a]], [rows - 2 * B, (a, d) => [cols - d, B + a]]];
+    for (const [len, at] of sides) {
+      const { n, d } = evenSteps(len, 16);
+      for (let i = 0; i < n; i++) { const [px, py] = at((i + 0.5) * d, 7.6); cauldron(px, py + (py > rows / 2 ? -0.2 : 1.2)); }
+      for (let i = 1; i < n; i++) { const [px, py] = at(i * d, 7.6); R(Math.round(px - 1), Math.round(py - 1), 2, 2, C.gold); }
+    }
+    for (const [cx, cy] of [[8, 8], [cols - 8, 8], [8, rows - 8], [cols - 8, rows - 8]]) {
+      R(cx - 7, cy - 7, 14, 14, C.edge); R(cx - 6, cy - 6, 12, 12, C.purple); R(cx - 5, cy - 5, 10, 10, C.dark);
+      sweInk(x, C.gold, (c) => star5(c, cx, cy + 0.6, 4.4));
+    }
+    // the field: a diamond lattice of gold cord, the hat rows on moss and the broom row a shade darker
+    const P = fw / 5, hh = fh / 4;
+    for (let j = fy; j < fy + fh; j++) for (let i = fx; i < fx + fw; i++) {
+      const u = (i + 0.5 - fx) / (P / 2) - 1, v = (j + 0.5 - fy) / hh, s = Math.floor((u + v) / 2), t = Math.floor((u - v) / 2);
+      R(i, j, 1, 1, (s - t) % 2 ? C.moss2 : C.moss);
+    }
+    x.save(); x.beginPath(); x.rect(fx, fy, fw, fh); x.clip();
+    for (let j = fy; j < fy + fh; j++) {
+      const v = (j + 0.5 - fy) / hh;
+      for (let k = -6; k <= 12; k++) for (const sg of [1, -1]) {
+        const i = Math.floor(fx + (P / 2) * (2 * k + 1 + sg * v));
+        if (i >= fx && i < fx + fw) R(i, j, 1, 1, C.cord);
+      }
+    }
+    // a gold bead where the cords cross
+    for (let j = 0; j <= 4; j++) for (let i = 0; i <= 10; i++) if ((i + j) % 2 === 1) R(Math.round(fx + (i * P) / 2 - 1), Math.round(fy + j * hh - 1), 2, 2, C.gold);
+    x.restore();
+    // a witch hat at (cx, cy): the brim, a cone bending over at the tip, a band with a buckle
+    const cone = (c) => {
+      c.beginPath(); c.moveTo(-7.4, 5.5); c.quadraticCurveTo(-5.4, -4, -1.6, -12.5); c.quadraticCurveTo(1, -17.6, 7, -18.4); c.lineTo(8.6, -15.8);
+      c.lineTo(7.2, -15.2); c.quadraticCurveTo(4, -14.6, 2.6, -10.6); c.quadraticCurveTo(4.8, -3.5, 7.4, 5.5); c.closePath();
+    };
+    const hat = (cx, cy, main, shade, glint, band, flip) => {
+      const ink = (col, f) => sweInk(x, col, (c) => { c.translate(cx + 0.5, cy); c.scale(flip * 0.92, 0.92); f(c); });
+      ink(shade, (c) => { c.beginPath(); c.ellipse(0, 6.4, 12.4, 3.4, 0, 0, Math.PI * 2); c.fill(); cone(c); c.fill(); });
+      ink(main, (c) => { cone(c); c.clip(); c.translate(-1.6, 0); cone(c); c.fill(); });
+      if (glint) ink(glint, (c) => { cone(c); c.clip(); c.beginPath(); c.rect(-20, -30, 40, 40); c.translate(1.3, 0.3); c.moveTo(-7.4, 5.5); c.quadraticCurveTo(-5.4, -4, -1.6, -12.5); c.quadraticCurveTo(1, -17.6, 7, -18.4); c.lineTo(8.6, -15.8); c.lineTo(7.2, -15.2); c.quadraticCurveTo(4, -14.6, 2.6, -10.6); c.quadraticCurveTo(4.8, -3.5, 7.4, 5.5); c.closePath(); c.fill('evenodd'); });
+      ink(glint || main, (c) => { c.beginPath(); c.ellipse(0, 6.4, 12.4, 3.4, 0, Math.PI * 0.95, Math.PI * 1.55); c.lineWidth = 1; c.stroke(); });
+      ink(band, (c) => { cone(c); c.clip(); c.fillRect(-10, 1.4, 20, 3.4); });
+      R(cx - 2, cy + 1, 5, 4, C.gold); R(cx - 1, cy + 2, 3, 2, shade);
+    };
+    // a broom standing in its diamond: a wooden handle and a bundle of straw tied with a band, frayed at the end
+    const broom = (cx, cy, ang, tie) => {
+      const ink = (col, f) => sweInk(x, col, (c) => { c.translate(cx + 0.5, cy); c.rotate(ang); f(c); });
+      const straw = (c) => { c.beginPath(); c.moveTo(-2.4, -3); c.quadraticCurveTo(-8, 4, -8.4, 11.4); for (let k = 0; k <= 7; k++) c.lineTo(-8.4 + k * 2.4, k % 2 ? 13.8 : 11.6); c.quadraticCurveTo(8, 4, 2.4, -3); c.closePath(); };
+      ink(C.wood, (c) => { c.lineWidth = 2; c.lineCap = 'round'; c.beginPath(); c.moveTo(0, -21.5); c.lineTo(0, -1); c.stroke(); });
+      ink(C.straw2, (c) => { straw(c); c.fill(); });
+      ink(C.straw, (c) => { straw(c); c.clip(); c.translate(-1.2, -0.6); straw(c); c.fill(); });
+      ink(C.straw2, (c) => { straw(c); c.clip(); c.lineWidth = 0.9; c.beginPath(); for (const a of [-4.2, -0.6, 3]) { c.moveTo(a * 0.4, 2); c.lineTo(a * 1.3, 13); } c.stroke(); });
+      ink(tie, (c) => { c.fillRect(-3.4, -2.2, 6.8, 2.4); });
+      ink(C.wood, (c) => { c.fillRect(-1, -24, 2, 2); });
+    };
+    const hats = [[C.hat, C.hat, C.hat2, C.orange], [C.purple2, C.purple, null, C.brew], [C.hat, C.hat, C.hat2, C.purple2], [C.purple2, C.purple, null, C.orange], [C.hat, C.hat, C.hat2, C.brew]];
+    for (const [j, off] of [[1, 0.5], [3, 0.5]]) for (let i = 0; i < 5; i++) {
+      const [m, sh, gl, band] = hats[(i + j) % 5];
+      hat(Math.round(fx + (i + off) * P), Math.round(fy + j * hh + 1), m, sh, gl, band, i < 2 || (i === 2 && j === 1) ? 1 : -1);
+    }
+    for (let i = 1; i < 5; i++) broom(Math.round(fx + i * P), Math.round(fy + 2 * hh), i % 2 ? -0.1 : 0.1, i % 2 ? C.orange : C.purple);
+    // little gold stars in the half diamonds round the edge
+    for (let i = 1; i < 5; i++) for (const yy of [fy + 7, fy + fh - 7]) sweInk(x, C.gold, (c) => star5(c, fx + i * P + 0.5, yy + 1, 4.2));
+    for (const xx of [fx + 8, fx + fw - 8]) sweInk(x, C.gold, (c) => star5(c, xx, fy + 2 * hh + 1, 4.6));
+  });
+}
+
+// Candy corn: rows of candy corn climbing plum chevron bands, in a striped candy border.
+function hlwCandyCorn(ctx, W, H) {
+  const C = { choc: '#2a160e', plum: '#55203f', plum2: '#3c142e', yellow: '#f6c632', yellow2: '#d39a1c', orange: '#f07c24', orange2: '#c55a16',
+    white: '#fdf6e4', white2: '#e6d4b2', pink: '#d8507c' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ring = (o, col) => { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); };
+    const B = 16, fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B;
+    // a candy corn standing at (cx, cy) (the middle of its base), w wide and h tall: a rounded kernel, yellow at
+    // the base, orange in the middle, white at the tip, lit from the left
+    const kernel = (c, w, h) => {
+      c.beginPath(); c.moveTo(0, -h);
+      c.bezierCurveTo(w * 0.16, -h, w * 0.5, -h * 0.34, w * 0.5, -h * 0.12);
+      c.quadraticCurveTo(w * 0.5, 0, w * 0.3, 0.2); c.quadraticCurveTo(0, h * 0.06, -w * 0.3, 0.2); c.quadraticCurveTo(-w * 0.5, 0, -w * 0.5, -h * 0.12);
+      c.bezierCurveTo(-w * 0.5, -h * 0.34, -w * 0.16, -h, 0, -h); c.closePath();
+    };
+    const candies = (list) => {
+      const each = (f) => (c) => { for (const [cx, cy, w, h] of list) { c.save(); c.translate(cx, cy); f(c, w, h); c.restore(); } };
+      const band = (lo, hi) => (c, w, h) => { kernel(c, w, h); c.clip(); c.fillRect(-w, -h * hi, 2 * w, h * (hi - lo)); };
+      const lit = (lo, hi) => (c, w, h) => { kernel(c, w, h); c.clip(); c.translate(-1.3, 0); kernel(c, w, h); c.clip(); c.fillRect(-w, -h * hi, 2 * w, h * (hi - lo)); };
+      sweInk(x, C.yellow2, each(band(-0.2, 0.37)));
+      sweInk(x, C.orange2, each(band(0.37, 0.7)));
+      sweInk(x, C.white2, each(band(0.7, 1.1)));
+      sweInk(x, C.yellow, each(lit(-0.2, 0.37)));
+      sweInk(x, C.orange, each(lit(0.37, 0.7)));
+      sweInk(x, C.white, each(lit(0.7, 1.1)));
+      for (const [cx, cy, w, h] of list) R(Math.round(cx - w * 0.26), Math.round(cy - h * 0.6), 1, 2, C.white);
+    };
+    // the border: chocolate edge, orange line, a plum band of sugar sprinkles, then a broad band of candy stripes
+    // running on the slant, chocolate and orange lines round the field
+    R(0, 0, cols, rows, C.choc);
+    R(2, 2, cols - 4, rows - 4, C.plum2);
+    ring(1, C.orange);
+    const stripe = [C.yellow, C.yellow, C.yellow, C.orange, C.orange, C.orange, C.white, C.white, C.white, C.choc];
+    for (let j = 4; j < rows - 4; j++) for (let i = 4; i < cols - 4; i++) {
+      const e = Math.min(i, j, cols - 1 - i, rows - 1 - j);
+      if (e > 11) continue;
+      const along = j === e || rows - 1 - j === e ? i : j, flipS = (j <= e || i <= e) ? 1 : -1;
+      R(i, j, 1, 1, e === 4 || e === 11 ? C.choc : stripe[(((along + flipS * e) % 10) + 10) % 10]);
+    }
+    const sprinkles = (o) => {
+      for (let k = o + 1; k < cols - o - 1; k += 3) { R(k, o, 1, 1, (k / 3 | 0) % 2 ? C.pink : C.white); R(cols - 1 - k, rows - 1 - o, 1, 1, (k / 3 | 0) % 2 ? C.pink : C.white); }
+      for (let k = o + 1; k < rows - o - 1; k += 3) { R(o, rows - 1 - k, 1, 1, (k / 3 | 0) % 2 ? C.pink : C.white); R(cols - 1 - o, k, 1, 1, (k / 3 | 0) % 2 ? C.pink : C.white); }
+    };
+    sprinkles(2); sprinkles(13);
+    ring(14, C.orange); ring(15, C.choc);
+    for (const [cx, cy] of [[8, 8], [cols - 8, 8], [8, rows - 8], [cols - 8, rows - 8]]) { R(cx - 8, cy - 8, 16, 16, C.choc); R(cx - 7, cy - 7, 14, 14, C.plum); }
+    // the field: three chevron bands, plum, dark plum and plum, between zigzag lines of sugar, a row of candy corn
+    // climbing up and down each; dark teeth fill in along the top and bottom edges
+    const nC = 10, dx = fw / nC, A = 8, bandH = (fh - 2 * A - 2) / 3, y0 = fy + 1 + A;
+    const zig = (px) => A * (Math.abs((((px - fx) / (fw / 4)) % 2 + 2) % 2 - 1) * 2 - 1);
+    for (let i = fx; i < fx + fw; i++) {
+      const z0 = zig(i), z1 = zig(i + 1);
+      for (let j = fy; j < fy + fh; j++) {
+        const b = Math.floor((j + 0.5 - y0 - zig(i + 0.5)) / bandH);
+        R(i, j, 1, 1, b < 0 || b > 2 ? C.choc : b % 2 ? C.plum2 : C.plum);
+      }
+      for (let b = 0; b < 4; b++) {
+        const yb = y0 + b * bandH, lo = Math.round(yb + Math.min(z0, z1)), hi = Math.round(yb + Math.max(z0, z1));
+        for (let j = lo; j <= Math.max(lo, hi - 1); j++) R(i, j, 1, 1, (Math.floor((i - fx) / 2)) % 3 === 2 ? C.pink : C.white2);
+      }
+    }
+    // the chocolate teeth are dotted with nonpareils
+    const rnd = rng(77), dots = [C.white, C.pink, C.yellow, C.white, C.orange];
+    for (let j = fy + 1; j < fy + fh - 1; j += 3) for (let i = fx + 1 + ((j - fy) % 2 ? 2 : 0); i < fx + fw - 1; i += 4) {
+      const px = i + Math.floor(rnd() * 2), z = zig(px + 0.5), b = (j + 0.5 - y0 - z) / bandH;
+      if ((b < 0 && j < y0 + z - 2.5) || (b > 3 && j > y0 + 3 * bandH + z + 2)) R(px, j, 1, 1, dots[Math.floor(rnd() * dots.length)]);
+    }
+    const list = [];
+    for (let b = 0; b < 3; b++) for (let i = 0; i < nC; i++) { const px = fx + (i + 0.5) * dx; list.push([px, y0 + (b + 0.5) * bandH + zig(px) + 9.4, 13.4, 18.4]); }
+    for (const [cx, cy] of [[8, 8], [cols - 8, 8], [8, rows - 8], [cols - 8, rows - 8]]) list.push([cx, cy + 5.6, 10, 12.4]);
+    candies(list);
+  });
+}
+
+// Owls: big-eyed owls on an autumn oak branch under a full moon on midnight blue, oak-leaf and acorn border.
+function hlwOwls(ctx, W, H) {
+  const C = { ink: '#0c0e1c', night: '#121a3e', night2: '#1b2856', night3: '#27396e', moon: '#f4dc9a', moon2: '#d8b868', cream: '#f6ead0',
+    bark: '#3a2216', brown: '#7a4a28', tan: '#c8955a', rust: '#b23e28', orange: '#e47c2a', gold: '#ecb23e', grey: '#8c8c9e', grey2: '#5a5b72' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ring = (o, col) => { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); };
+    const rnd = rng(4242);
+    const B = 16, fx = B, fy = B, fw = cols - 2 * B, fh = rows - 2 * B, mx = cols / 2, my = fy + 38;
+    const disc = (cx, cy, r, col) => sweInk(x, col, (c) => { c.beginPath(); c.arc(cx, cy, r, 0, Math.PI * 2); c.fill(); });
+    // an oak leaf from its stalk at (px, py), `len` long, pointing along `ang`: three rounded lobes a side, a vein
+    const LOBES = [[0, 0.04], [0.1, 0.16], [0.22, 0.3], [0.33, 0.17], [0.46, 0.35], [0.58, 0.19], [0.7, 0.3], [0.8, 0.15], [0.89, 0.2], [1, 0]];
+    const VEIN = { [C.gold]: C.orange, [C.orange]: C.rust, [C.rust]: C.bark };
+    const oakLeaves = (list) => {
+      for (const col of [C.orange, C.rust, C.gold]) {
+        const mine = list.filter((l) => l[4] === col);
+        if (!mine.length) continue;
+        sweInk(x, col, (c) => { for (const [px, py, len, ang] of mine) { c.save(); c.translate(px, py); c.rotate(ang); c.beginPath(); for (const [t, w] of LOBES) c.lineTo(t * len, -w * len); for (const [t, w] of [...LOBES].reverse()) c.lineTo(t * len, w * len); c.closePath(); c.fill(); c.restore(); } });
+        sweInk(x, VEIN[col], (c) => { c.lineWidth = 0.9; c.beginPath(); for (const [px, py, len, ang] of mine) { c.moveTo(px - Math.cos(ang) * 1.5, py - Math.sin(ang) * 1.5); c.lineTo(px + Math.cos(ang) * len * 0.78, py + Math.sin(ang) * len * 0.78); } c.stroke(); });
+      }
+    };
+    const leafCols = [C.orange, C.gold, C.rust];
+    // an acorn hanging from (ax, ay): a stalk, a scaly cap and a tan nut with a glint
+    const acorn = (ax, ay) => { const a = Math.round(ax), b = Math.round(ay); R(a, b, 1, 1, C.bark); R(a - 2, b + 1, 5, 2, C.bark); R(a - 1, b + 1, 1, 1, C.brown); R(a + 1, b + 2, 1, 1, C.brown); R(a - 2, b + 3, 5, 2, C.tan); R(a - 1, b + 5, 3, 1, C.tan); R(a, b + 6, 1, 1, C.brown); R(a - 1, b + 3, 1, 1, C.gold); };
+    // the border: dark edge, gold line, a bark-brown band with a wavy twig bearing oak leaves and acorns in turn,
+    // gold and dark lines round the field, and a little owl face in each corner
+    R(0, 0, cols, rows, C.ink);
+    R(2, 2, cols - 4, rows - 4, C.bark);
+    ring(1, C.gold); ring(B - 2, C.gold); ring(B - 1, C.ink);
+    const sides = [[cols - 2 * B, (a, d) => [B + a, d]], [cols - 2 * B, (a, d) => [B + a, rows - d]], [rows - 2 * B, (a, d) => [d, B + a]], [rows - 2 * B, (a, d) => [cols - d, B + a]]];
+    const bl = [];
+    let lc = 0;
+    for (const [len, at] of sides) {
+      const { n, d } = evenSteps(len, 18);
+      const wave = (a) => 7.5 + 2.2 * Math.sin((a / d) * Math.PI * 2);
+      sweInk(x, C.brown, (c) => { c.lineWidth = 1; c.beginPath(); for (let a = 0; a <= len; a += 0.25) { const [px, py] = at(a, wave(a)); a ? c.lineTo(px, py) : c.moveTo(px, py); } c.stroke(); });
+      for (let i = 0; i < n; i++) {
+        const a = (i + 0.1) * d, [px, py] = at(a, wave(a)), [qx, qy] = at(a + 6, wave(a) - 1.2);
+        bl.push([px, py, 9.6, Math.atan2(qy - py, qx - px), leafCols[lc++ % 3]]);
+        const b2 = (i + 0.75) * d, [ax, ay] = at(b2, wave(b2));
+        acorn(ax, ay - 3);
+      }
+    }
+    oakLeaves(bl);
+    const owlFace = (cx, cy) => {
+      R(cx - 7, cy - 7, 14, 14, C.ink);
+      sweInk(x, C.brown, (c) => { c.beginPath(); c.ellipse(cx, cy + 1, 6.2, 5.6, 0, 0, Math.PI * 2); c.fill(); c.beginPath(); c.moveTo(cx - 6, cy - 1); c.lineTo(cx - 6.4, cy - 6.6); c.lineTo(cx - 2, cy - 3.6); c.moveTo(cx + 6, cy - 1); c.lineTo(cx + 6.4, cy - 6.6); c.lineTo(cx + 2, cy - 3.6); c.fill(); });
+      for (const sg of [-1, 1]) { disc(cx + sg * 2.6, cy + 0.6, 2.6, C.cream); disc(cx + sg * 2.6, cy + 0.6, 1.6, C.gold); R(Math.round(cx + sg * 2.6 - 0.5), Math.round(cy + 0.1), 1, 1, C.ink); }
+      R(Math.round(cx - 0.5), Math.round(cy + 3), 1, 2, C.orange);
+    };
+    for (const [cx, cy] of [[8, 8], [cols - 8, 8], [8, rows - 8], [cols - 8, rows - 8]]) owlFace(cx, cy);
+    // the sky: midnight blue, the moon in rings of lighter blue inside a ring of gold beads, stars
+    R(fx, fy, fw, fh, C.night);
+    disc(mx, my, 35, C.night2); disc(mx, my, 30, C.night3); disc(mx, my, 26.6, C.night2);
+    for (let k = 0; k < 44; k++) { const a = (k / 44) * Math.PI * 2; R(Math.round(mx + Math.cos(a) * 32.4 - 0.5), Math.round(my + Math.sin(a) * 32.4 - 0.5), 1, 1, k % 2 ? C.gold : C.cream); }
+    disc(mx, my, 23.6, C.moon);
+    sweInk(x, C.moon2, (c) => { for (const [a, b, r] of [[-8, -9, 4.4], [7, -4, 3.2], [-3, 6, 5.2], [10, 9, 3], [-13, 4, 2.4], [3, -15, 2.2]]) { c.beginPath(); c.arc(mx + a, my + b, r, 0, Math.PI * 2); c.fill(); } });
+    for (let k = 0; k < 64; k++) {
+      const sx = fx + 2 + Math.floor(rnd() * (fw - 4)), sy = fy + 2 + Math.floor(rnd() * (fh * 0.58));
+      if (Math.hypot(sx - mx, sy - my) < 37 || (Math.abs(sx - mx) > 52 && sy < fy + 24)) continue;
+      R(sx, sy, 1, 1, rnd() < 0.3 ? C.gold : C.cream);
+    }
+    for (const [sx, sy] of [[fx + 52, fy + 8], [fx + fw - 54, fy + 8], [fx + 24, fy + 40], [fx + fw - 26, fy + 40], [fx + 54, fy + 36], [fx + fw - 56, fy + 36]]) R(sx, sy, 2, 2, C.cream);
+    // oak sprigs reaching in from the top corners
+    const lv = [];
+    for (const sg of [-1, 1]) {
+      const ox = sg < 0 ? fx - 1 : fx + fw + 1, P = (t) => [ox - sg * (36 * t), fy - 1 + 15 * t * t + 6 * t];
+      sweInk(x, C.bark, (c) => { c.lineCap = 'round'; c.lineWidth = 2.4; c.beginPath(); for (let t = 0; t <= 1.001; t += 0.05) { const [px, py] = P(t); t ? c.lineTo(px, py) : c.moveTo(px, py); } c.stroke(); });
+      const [ex, ey] = P(1), [ax, ay] = P(0.45), [bx, by2] = P(0.75);
+      lv.push([ex, ey, 11, sg < 0 ? 0.35 : Math.PI - 0.35, C.orange], [ax, ay, 10.4, sg < 0 ? 1.35 : Math.PI - 1.35, C.gold], [bx, by2, 10, sg < 0 ? -0.75 : Math.PI + 0.75, C.rust], [ax, ay, 9, sg < 0 ? -1.2 : Math.PI + 1.2, C.orange]);
+      acorn(bx + sg * 0.5, by2 + 1); acorn(ex - sg * 3, ey + 2);
+    }
+    // the branch: across the rug, sagging a little between the owls
+    const by = (px) => fy + 83 - 6 * Math.sin((Math.PI * Math.min(Math.abs(px - mx), 85)) / 85);
+    sweInk(x, C.bark, (c) => {
+      c.lineCap = 'round'; c.lineWidth = 3.8; c.beginPath(); for (let px = fx - 2; px <= fx + fw + 2; px += 0.5) { const py = by(px) + 1; px === fx - 2 ? c.moveTo(px, py) : c.lineTo(px, py); } c.stroke();
+    });
+    sweInk(x, C.brown, (c) => { c.lineWidth = 1; c.beginPath(); for (let px = fx; px <= fx + fw; px += 0.5) { const py = by(px) - 0.5; px === fx ? c.moveTo(px, py) : c.lineTo(px, py); } c.stroke(); });
+    // leaves in pairs on the branch between the owls, acorns hanging under them
+    for (const sg of [-1, 1]) for (const [d, k] of [[23, 0], [60, 1], [88, 2]]) {
+      const px = mx + sg * d, py = by(px) + 0.5, f = sg > 0 ? (a) => a : (a) => Math.PI - a;
+      lv.push([px, py, 11, f(d === 60 ? -1.3 : -0.75), leafCols[k]], [px, py, 10, f(d === 60 ? 1.0 : 0.55), leafCols[(k + 1) % 3]]);
+      if (d < 88) { acorn(px - sg * 4, py + 1.5); acorn(px + sg * 1, py + 2.5); }
+    }
+    oakLeaves(lv);
+    // the owls: an egg-shaped body with ear tufts, folded wings, a pale speckled breast, a pale face with two big
+    // round eyes and a little beak, orange toes gripping the branch
+    const owl = (cx, s, body, wing, breast, mark) => {
+      const gy = by(cx) - 1.2, ink = (col, f) => sweInk(x, col, (c) => { c.translate(cx, gy); c.scale(s, s); f(c); });
+      const shape = (c) => {
+        c.beginPath(); c.ellipse(0, -10.5, 8.6, 10.8, 0, 0, Math.PI * 2); c.fill();
+        c.beginPath(); c.moveTo(-7.8, -15); c.lineTo(-8.8, -24.4); c.lineTo(-2.6, -19.6); c.closePath(); c.moveTo(7.8, -15); c.lineTo(8.8, -24.4); c.lineTo(2.6, -19.6); c.closePath(); c.fill();
+      };
+      ink(body, shape);
+      ink(breast, (c) => { c.beginPath(); c.ellipse(0, -6.2, 5.4, 6.6, 0, 0, Math.PI * 2); c.fill(); });
+      ink(wing, (c) => { for (const sg of [-1, 1]) { c.beginPath(); c.ellipse(sg * 6.6, -8, 3.3, 8.2, sg * 0.18, 0, Math.PI * 2); c.fill(); } });
+      ink(mark, (c) => { c.lineWidth = 0.9; c.beginPath(); for (const [a, b] of [[-3, -8.4], [0, -8.4], [3, -8.4], [-1.5, -5.4], [1.5, -5.4], [-3, -2.4], [0, -2.4], [3, -2.4]]) { c.moveTo(a - 0.9, b - 0.8); c.lineTo(a, b); c.lineTo(a + 0.9, b - 0.8); } c.stroke(); });
+      // the eyes sit on whole knots, mirror images of each other
+      const ex = Math.round(3.7 * s), ey = Math.round(gy - 14.4 * s);
+      const eyes = (r, col) => sweInk(x, col, (c) => { for (const sg of [-1, 1]) { c.beginPath(); c.arc(cx + sg * ex, ey, r, 0, Math.PI * 2); c.fill(); } });
+      eyes(4.1 * s, C.cream); eyes(2.8 * s, C.gold);
+      if (s > 1.2) { eyes(1.5 * s, C.ink); for (const sg of [-1, 1]) R(cx + sg * ex - 1, ey - 1, 1, 1, C.cream); }
+      else for (const sg of [-1, 1]) R(cx + sg * ex - 1, ey - 1, 2, 2, C.ink);
+      ink(C.orange, (c) => { c.beginPath(); c.moveTo(-1.3, -12); c.lineTo(1.3, -12); c.lineTo(0, -8.6); c.closePath(); c.fill(); for (const sg of [-1, 1]) c.fillRect(sg * 3.2 - 1.6, -0.6, 3.2, 1.4); });
+    };
+    owl(mx, 1.32, C.brown, C.bark, C.tan, C.brown);
+    for (const sg of [-1, 1]) { owl(mx + sg * 44, 1.1, C.rust, C.bark, C.gold, C.orange); owl(mx + sg * 74, 1.0, C.grey, C.grey2, C.cream, C.grey); }
+  });
+}
+
+// Potions: three wooden shelves of glowing potion bottles, jars and vials with corks and plain labels on dark teal, in a plum border of drops.
+function hlwPotions(ctx, W, H) {
+  const C = { edge: '#140a16', plum: '#4a1846', plum2: '#6c2a62', gold: '#e0ac46', gold2: '#f6dc8a',
+    teal: '#0e3436', teal2: '#18494a', glow: '#22605b', rim: '#86cbbf', shine: '#e8fbf4',
+    wood: '#6e4026', wood2: '#a8703e', wood3: '#3a2014', cork: '#d29e64', cork2: '#8a5a30', label: '#f0e4c4', label2: '#b89c6c', pot: '#1f1a24', pot2: '#4c4258',
+    g1: '#24803a', g2: '#5cd65a', g3: '#c8f892', v1: '#5a2a96', v2: '#a65ce2', v3: '#dfb6ff',
+    a1: '#a85614', a2: '#f2a42a', a3: '#ffe08c', p1: '#a42c66', p2: '#f26aa8', p3: '#ffc6e0' };
+  const L = { green: [C.g1, C.g2, C.g3], violet: [C.v1, C.v2, C.v3], amber: [C.a1, C.a2, C.a3], pink: [C.p1, C.p2, C.p3] };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ring = (o, col) => { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); };
+    const ink = (col, f) => sweInk(x, col, f);
+    const disc = (cx, cy, r, col) => ink(col, (c) => { c.beginPath(); c.arc(cx, cy, r, 0, Math.PI * 2); c.fill(); });
+    const pix = (map, ox, oy, key) => map.forEach((row, j) => { for (let i = 0; i < row.length; i++) if (key[row[i]]) R(ox + i, oy + j, 1, 1, key[row[i]]); });
+    // ---- border: dark edge, gold lines round a plum band of potion drops and gold beads, a cauldron in each corner
+    R(0, 0, cols, rows, C.edge);
+    R(2, 2, cols - 4, rows - 4, C.plum);
+    ring(2, C.gold); ring(13, C.gold); ring(14, C.edge); ring(15, C.teal2);
+    const DROP = ['...m...', '..mmm..', '..mmm..', '.mlmmm.', 'mlmmmmd', 'mlmmmmd', 'mmmmmdd', '.mmmdd.', '..ddd..'];
+    const drops = [L.green, L.violet, L.amber, L.pink];
+    const bead = (cx, cy) => { R(cx - 1, cy - 2, 2, 1, C.gold); R(cx - 2, cy - 1, 4, 2, C.gold); R(cx - 1, cy + 1, 2, 1, C.gold); R(cx - 1, cy - 1, 1, 1, C.gold2); };
+    let nd = 0;
+    for (const [len, at] of [[cols - 32, (a) => [16 + a, 8]], [cols - 32, (a) => [16 + a, rows - 8]], [rows - 32, (a) => [8, 16 + a]], [rows - 32, (a) => [cols - 8, 16 + a]]]) {
+      const { n, d } = evenSteps(len, 14);
+      for (let i = 0; i < n; i++) { const [px, py] = at((i + 0.5) * d), liq = drops[(nd++) % 4]; pix(DROP, Math.round(px) - 3, Math.round(py) - 4, { m: liq[1], d: liq[0], l: liq[2] }); }
+      for (let i = 1; i < n; i++) { const [px, py] = at(i * d); bead(Math.round(px), Math.round(py)); }
+    }
+    const CAUL = ['..o....o..', '....o.....', '..gogggg..', '.gggggggg.', 'rrrrrrrrrr', '.pqppppppp', '.pqppppppp', '.pppppppp.', '..pppppp..', '..p....p..'];
+    for (const [ox, oy] of [[0, 0], [cols - 16, 0], [0, rows - 16], [cols - 16, rows - 16]]) {
+      R(ox + 2, oy + 2, 12, 12, C.gold); R(ox + 3, oy + 3, 10, 10, C.plum2);
+      pix(CAUL, ox + 3, oy + 3, { o: C.g3, g: C.g2, r: C.pot2, p: C.pot, q: C.pot2 });
+    }
+    // ---- the field: dark teal with a faint diaper of dots
+    const fx = 16, fy = 16, fw = cols - 32, fh = rows - 32;
+    R(fx, fy, fw, fh, C.teal);
+    for (let j = fy + 2; j < fy + fh; j += 4) for (let i = fx + 2 + ((j - fy) % 8 ? 4 : 0); i < fx + fw; i += 8) R(i, j, 1, 1, C.teal2);
+    // ---- bottle shapes, origin at the middle of the bottle's foot; path(c, d) is the glass outline pulled in by d
+    const lipNeck = (c, d, nw, lw, neckBot, top) => { c.rect(-nw + d, top + 2 - d, 2 * (nw - d), neckBot - top - 2 + d); c.rect(-lw + d, top + d, 2 * (lw - d), 2.4 - d); };
+    const S = {
+      round: { w: 18, top: -22, level: -11, nw: 2.2, label: null,
+        path(c, d) { c.arc(0, -8, 8 - d, 0, Math.PI * 2); lipNeck(c, d, 2.2, 3.2, -12, -22); } },
+      erlen: { w: 17, top: -21, level: -9, nw: 2.4, label: [-3, -6, 6, 3],
+        path(c, d) { c.moveTo(-6.6 + d, -d); c.quadraticCurveTo(-8.4 + d, -d, -7.6 + d, -1.6); c.lineTo(-2.4 + d, -14); c.lineTo(2.4 - d, -14); c.lineTo(7.6 - d, -1.6); c.quadraticCurveTo(8.4 - d, -d, 6.6 - d, -d); c.closePath(); lipNeck(c, d, 2.4, 3.4, -13, -21); } },
+      tall: { w: 12, top: -23, level: -14, nw: 2, label: [-3, -9, 6, 4],
+        path(c, d) { c.moveTo(-5.2 + d, -0.6 - d); c.lineTo(-5.2 + d, -14); c.quadraticCurveTo(-5.2 + d, -17.4 + d, -2 + d, -17.6 + d); c.lineTo(2 - d, -17.6 + d); c.quadraticCurveTo(5.2 - d, -17.4 + d, 5.2 - d, -14); c.lineTo(5.2 - d, -0.6 - d); c.closePath(); lipNeck(c, d, 2, 2.9, -17, -23); } },
+      bulb: { w: 17, top: -21, level: -9, nw: 1.8, label: null,
+        path(c, d) { c.moveTo(-4.6 + d, -d); c.bezierCurveTo(-10 + d, -0.4 - d, -9.4 + d, -8.4, -1.8 + d, -12.4); c.lineTo(1.8 - d, -12.4); c.bezierCurveTo(9.4 - d, -8.4, 10 - d, -0.4 - d, 4.6 - d, -d); c.closePath(); lipNeck(c, d, 1.8, 2.8, -12, -21); } },
+      gourd: { w: 14, top: -22, level: -11, nw: 1.8, label: null,
+        path(c, d) { c.arc(0, -6.2, 6.2 - d, 0, Math.PI * 2); c.moveTo(4 - d, -14.2); c.arc(0, -14.2, 4 - d, 0, Math.PI * 2); c.rect(-2.6 + d, -12, 5.2 - 2 * d, 3); lipNeck(c, d, 1.8, 2.8, -17, -22); } },
+      jar: { w: 16, top: -15, level: -11, nw: 5, label: [-4, -8, 8, 4],
+        path(c, d) { c.roundRect(-7.2 + d, -13 + d, 14.4 - 2 * d, 13 - 2 * d, 3 - d / 2); c.rect(-5 + d, -15 + d, 10 - 2 * d, 3); } },
+      vial: { w: 6, top: -18, level: -13, nw: 2.8, label: null,
+        path(c, d) { c.moveTo(-2.9 + d, -16); c.lineTo(-2.9 + d, -2.9); c.arc(0, -2.9, 2.9 - d, Math.PI, 0, true); c.lineTo(2.9 - d, -16); c.closePath(); c.rect(-3.6 + d, -18 + d, 7.2 - 2 * d, 2.4 - d); } },
+    };
+    // one bottle on the shelf at (bx, by): a soft glow behind, the glass, the liquid shaded to the right with a bright
+    // surface, bubbles, a glint down the left, a plain label, and a cork (or, when open, bubbles rising out)
+    const bottle = (bx, by, kind, liq, open, tie) => {
+      const s = S[kind], at = (f) => (c) => { c.translate(bx, by); c.beginPath(); f(c); };
+      ink(C.glow, at((c) => { c.translate(0, -1); c.scale(1.24, 1.07); s.path(c, 0); c.fill(); }));
+      ink(C.rim, at((c) => { s.path(c, 0); c.fill(); }));
+      ink(C.teal2, at((c) => { s.path(c, 1); c.fill(); }));
+      const inLiquid = (c) => { c.beginPath(); c.rect(-20, s.level, 40, 40); c.clip(); c.beginPath(); s.path(c, 1); c.clip(); };
+      ink(liq[0], at((c) => { inLiquid(c); c.fillRect(-20, -40, 40, 80); }));
+      ink(liq[1], at((c) => { inLiquid(c); c.beginPath(); c.translate(-1.5, -0.6); s.path(c, 1); c.fill(); }));
+      ink(liq[2], at((c) => { inLiquid(c); c.fillRect(-20, s.level, 40, 1); }));
+      const rb = rng(Math.round(bx * 7 + by * 13));
+      for (let k = 0; k < 3; k++) { const px = Math.round(bx - s.w * 0.22 + rb() * s.w * 0.36), py = Math.round(by + s.level + 2 + rb() * (-s.level - 4)); R(px, py, 1, 1, liq[2]); }
+      ink(C.shine, at((c) => { s.path(c, 1); c.clip(); c.beginPath(); c.rect(-s.w * 0.34, s.top + 5, 1, -s.top * 0.5); c.fill(); }));
+      if (s.label) {
+        const [lx, ly, lw, lh] = s.label;
+        R(bx + lx - 1, by + ly - 1, lw + 2, lh + 2, C.label2); R(bx + lx, by + ly, lw, lh, C.label);
+      }
+      if (tie) R(bx - s.nw - 1, by + s.top + 3, 2 * s.nw + 2, 1, C.gold);
+      if (open) {
+        for (const [dx, dy, r] of [[0.5, -2.4, 1.6], [-1.5, -6, 1.2], [1.5, -9, 0.8]]) disc(bx + dx, by + s.top + dy, r, liq[2]);
+      } else {
+        const cw = Math.round(s.nw * 2 + 1), ct = by + s.top - 2, cx0 = Math.round(bx - cw / 2);
+        R(cx0, ct, cw, 3, C.cork2); R(cx0, ct, cw - 1, 2, C.cork); R(cx0 + 1, ct - 1, cw - 2, 1, C.cork2);
+      }
+    };
+    // a little wooden rack of three vials
+    const rack = (bx, by, liqs) => {
+      liqs.forEach((liq, k) => bottle(bx + (k - 1) * 7, by - 1, 'vial', L[liq]));
+      R(bx - 11, by - 7, 1, 7, C.wood); R(bx + 11, by - 7, 1, 7, C.wood); R(bx - 11, by - 7, 23, 1, C.wood2); R(bx - 11, by - 6, 23, 1, C.wood); R(bx - 11, by - 1, 23, 1, C.wood2);
+    };
+    // ---- three shelves of bottles
+    const tiers = [
+      [['tall', 'violet', 0, 1], ['round', 'green'], ['rack', ['amber', 'pink', 'green']], ['jar', 'violet', 1], ['bulb', 'pink'], ['erlen', 'amber'], ['gourd', 'green', 0, 1], ['tall', 'pink']],
+      [['erlen', 'green'], ['gourd', 'violet'], ['tall', 'amber', 0, 1], ['round', 'pink'], ['jar', 'green', 1], ['bulb', 'violet', 0, 1], ['tall', 'pink'], ['round', 'amber']],
+      [['jar', 'pink', 1], ['tall', 'green'], ['bulb', 'amber', 0, 1], ['erlen', 'violet'], ['round', 'pink', 0, 1], ['rack', ['green', 'amber', 'violet']], ['gourd', 'pink'], ['tall', 'amber']],
+    ];
+    const wid = (kind) => (kind === 'rack' ? 23 : S[kind].w);
+    tiers.forEach((row, k) => {
+      const sy = fy + 32 * (k + 1) - 3;
+      const tot = row.reduce((t, [kind]) => t + wid(kind), 0), gap = (fw - 4 - tot) / row.length;
+      let cx = fx + 2 + gap / 2;
+      for (const [kind, liq, open, tie] of row) {
+        const w = wid(kind), bx = Math.round(cx + w / 2);
+        if (kind === 'rack') rack(bx, sy, liq); else bottle(bx, sy, kind, L[liq], open, tie);
+        cx += w + gap;
+      }
+      R(fx, sy, fw, 1, C.wood2); R(fx, sy + 1, fw, 1, C.wood); R(fx, sy + 2, fw, 1, C.wood3);
+    });
+    // little glints of light floating in the bare spaces above the bottles
+    const img = x.getImageData(0, 0, cols, rows).data, tealR = parseInt(C.teal.slice(1, 3), 16), tealR2 = parseInt(C.teal2.slice(1, 3), 16);
+    const bare = (a, b) => { const r = img[(b * cols + a) * 4]; return r === tealR || r === tealR2; };
+    const rs = rng(515), glints = [C.g3, C.v3, C.a3, C.p3, C.gold2];
+    let ng = 0;
+    for (let t = 0; t < 400 && ng < 26; t++) {
+      const a = fx + 3 + Math.floor(rs() * (fw - 6)), b = fy + 2 + Math.floor(rs() * (fh - 4));
+      let ok = true; for (let j = -3; j <= 3 && ok; j++) for (let i = -3; i <= 3; i++) if (!bare(a + i, b + j)) { ok = false; break; }
+      if (!ok) continue;
+      const col = glints[ng % 5]; ng++;
+      if (ng % 3) R(a, b, 2, 2, col); else R(a, b, 1, 1, col);
+      for (let j = -3; j <= 3; j++) for (let i = -3; i <= 3; i++) img[((b + j) * cols + a + i) * 4] = 0;
+    }
+  });
+}
+
+// Mummies: rows of cute little mummies walking with their arms out, some with a bow, with bats and stars between on mustard.
+function hlwMummies(ctx, W, H) {
+  const C = { edge: '#1e1020', aub: '#3c1f40', aub2: '#5a3260', orange: '#e8742a', orange2: '#b04e18',
+    mustard: '#d8a23c', mustard2: '#c68e2e', shadow: '#a87224', ink: '#4a2a16',
+    band: '#f6eedc', band2: '#cdbd9a', band3: '#a8987c', dark: '#2a1622', white: '#ffffff', blush: '#f29a8a', bow: '#d8406a', star: '#fff2c0' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ring = (o, col) => { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); };
+    const ink = (col, f) => sweInk(x, col, f);
+    const pix = (map, ox, oy, key) => map.forEach((row, j) => { for (let i = 0; i < row.length; i++) if (key[row[i]]) R(ox + i, oy + j, 1, 1, key[row[i]]); });
+    // ---- border: dark edge, orange lines, an aubergine band with an orange zigzag and cream dots, a bandage-striped guard
+    R(0, 0, cols, rows, C.edge);
+    R(2, 2, cols - 4, rows - 4, C.aub);
+    ring(2, C.orange); ring(12, C.orange); ring(16, C.edge);
+    ringKnots(x, cols, rows, 3, 9, 12, (i, j) => {
+      const p = ((i % 12) + 12) % 12, h = p < 6 ? p : 12 - p, top = 7 - h;
+      if (j === top || j === top + 1) return C.orange;
+      if ((p === 0 && (j === 1 || j === 2)) || (p === 6 && (j === 6 || j === 7))) return C.band;
+      if (((p === 1 || p === 11) && j === 2) || ((p === 5 || p === 7) && j === 6)) return C.orange2;
+      return null;
+    });
+    ringKnots(x, cols, rows, 13, 3, 4, (i, j) => (((i + j) % 4) + 4) % 4 < 2 ? C.band : C.band2, (a, b) => R(a, b, 3, 3, C.band));
+    // a mummy face in each corner
+    const FACE = ['.bbbbbbbbb.', 'bbBBbbbbbbb', 'bbbbbbBBbbb', 'BBbbbbbbbbB', 'ddwwdddwwdd', 'dwwkddwwkdd', 'ddwwdddwwdd', 'bbbbBBbbbbb', 'bBBbbbbbBBb', 'bbbbbbbbbbb', '.bbBBbbbbb.'];
+    for (const [ox, oy] of [[0, 0], [cols - 17, 0], [0, rows - 17], [cols - 17, rows - 17]]) {
+      R(ox + 2, oy + 2, 13, 13, C.orange); R(ox + 3, oy + 3, 11, 11, C.aub2);
+      pix(FACE, ox + 3, oy + 3, { b: C.band, B: C.band2, d: C.dark, w: C.white, k: C.dark });
+    }
+    // ---- the field: mustard with a faint lattice of little diamonds
+    const fx = 17, fy = 17, fw = cols - 34, fh = rows - 34;
+    R(fx, fy, fw, fh, C.mustard);
+    for (let j = fy + 2; j < fy + fh - 2; j++) for (let i = fx + 2; i < fx + fw - 2; i++) { const a = (i - fx + 3) % 10, b = (j - fy + 2) % 10; if ((a === 0 && b === 0) || (a === 5 && b === 5)) for (const [di, dj] of [[-2, 0], [2, 0], [0, -2], [0, 2], [-1, -1], [1, -1], [-1, 1], [1, 1]]) R(i + di, j + dj, 1, 1, C.mustard2); }
+    // ---- a little mummy standing at (cx, by), facing f (1 right, -1 left): a round bandaged body, stubby legs, both arms
+    // straight out in front with a loose bandage end dangling, a dark slit with two big round eyes, rosy cheeks;
+    // 'bow' ones wear a bow
+    const mummy = (cx, by, f, kind) => {
+      const at = (fn) => (c) => { c.translate(cx, by); c.scale(f, 1); c.beginPath(); fn(c); };
+      const body = (c) => { c.moveTo(-7, -4); c.lineTo(-7, -15); c.arc(0, -15, 7, Math.PI, 0); c.lineTo(7, -4); c.quadraticCurveTo(7, -2.6, 5, -2.6); c.lineTo(-5, -2.6); c.quadraticCurveTo(-7, -2.6, -7, -4); c.closePath(); };
+      const legs = (c) => { c.roundRect(-5.6, -4, 4.2, 4.2, 1); c.roundRect(1.4, -4, 4.2, 4.2, 1); };
+      const armFront = (c) => c.roundRect(0, -9.4, 13, 3.6, 1.8);
+      const armBack = (c) => c.roundRect(2, -13.2, 10.6, 3.4, 1.7);
+      const loose = (c) => { c.moveTo(8.4, -6.2); c.lineTo(10, -6.2); c.lineTo(9.6, -3.4); c.lineTo(8, -3.2); c.closePath(); };
+      ink(C.shadow, (c) => { c.beginPath(); c.ellipse(cx + f * 1.5, by + 0.4, 9, 1.6, 0, 0, Math.PI * 2); c.fill(); });
+      ink(C.ink, at((c) => { body(c); legs(c); armBack(c); c.fill(); c.lineWidth = 2.2; c.stroke(); }));
+      ink(C.band2, at((c) => { armBack(c); legs(c); c.fill(); }));
+      ink(C.band3, at((c) => { armBack(c); c.clip(); c.beginPath(); for (let k = 0; k < 3; k++) c.rect(8 + k * 2.4, -14, 1, 5); c.fill(); }));
+      ink(C.band, at((c) => { body(c); c.fill(); }));
+      // bandage wraps: slanting lines across the body, alternately one way and the other, and a shaded back
+      ink(C.band2, at((c) => { body(c); c.clip(); c.beginPath(); for (const [y, t] of [[-21.4, 0.2], [-19, -0.12], [-11, -0.16], [-7.8, 0.2], [-4.8, -0.1]]) { c.moveTo(-8, y - t * 8); c.lineTo(8, y + t * 8); } c.lineWidth = 1.2; c.stroke(); c.fillRect(-7.5, -24, 1.6, 24); }));
+      // the front arm, outlined so it stands off the body, with a loose bandage end hanging from it
+      ink(C.ink, at((c) => { armFront(c); loose(c); c.fill(); c.lineWidth = 2.2; c.stroke(); }));
+      ink(C.band, at((c) => { armFront(c); c.fill(); }));
+      ink(C.band2, at((c) => { loose(c); c.fill(); }));
+      ink(C.band2, at((c) => { armFront(c); c.clip(); c.beginPath(); for (let k = 0; k < 4; k++) c.rect(3.6 + k * 2.5, -10, 1, 4.6); c.fill(); }));
+      // the eye slit and two big eyes, looking the way it walks, and rosy cheeks
+      const FACE = ['.ddWWdddWWdd.', 'ddWWkkdWWkkdd', 'ddWWkkdWWkkdd', '.ddWWdddWWdd.'];
+      pix(f === 1 ? FACE : FACE.map((r) => [...r].reverse().join('')), f === 1 ? cx - 6 : cx - 7, by - 17, { d: C.dark, W: C.white, k: C.dark });
+      for (const ex of f === 1 ? [cx - 4, cx + 1] : [cx - 3, cx + 2]) R(ex, by - 12, 2, 1, C.blush);
+      if (kind === 'bow') {
+        // a bow pinned on the back of the head, tilted: two loops and a knot
+        const bow = (c, g) => { c.save(); c.translate(-3, -20.6); c.rotate(-0.35); for (const sx of [-1, 1]) { c.moveTo(0, 0); c.lineTo(sx * (4.4 - g), -2.6 + g * 0.6); c.quadraticCurveTo(sx * (5.2 - g), 0, sx * (4.4 - g), 2.6 - g * 0.6); c.closePath(); } c.restore(); };
+        ink(C.ink, at((c) => { bow(c, 0); c.fill(); c.lineWidth = 1.8; c.stroke(); }));
+        ink(C.bow, at((c) => { bow(c, 0.5); c.fill(); }));
+        ink(C.ink, at((c) => { c.arc(-3, -20.6, 1.2, 0, Math.PI * 2); c.fill(); }));
+      }
+    };
+    const BAT = ['....b...b....', '....bbbbb....', 'bb..bwbwb..bb', 'bbbbbbbbbbbbb', '.bbbbbbbbbbb.', '..bb.bbb.bb..', '...b..b..b...'];
+    const bat = (cx, cy) => pix(BAT, Math.round(cx) - 6, Math.round(cy) - 3, { b: C.aub, w: C.orange });
+    const STAR = ['...x...', '..xxx..', 'xxxxxxx', '.xxxxx.', '..xxx..', '.xx.xx.', '.x...x.'];
+    const star = (cx, cy, col) => pix(STAR, Math.round(cx) - 3, Math.round(cy) - 3, { x: col });
+    const kinds = ['walk', 'bow', 'walk', 'walk', 'bow', 'walk', 'bow'];
+    const n = 5, step = fw / n;
+    let k = 0;
+    for (let r = 0; r < 3; r++) {
+      const by = fy + 31 * r + 28, off = r % 2 ? step / 2 : 0, f = r % 2 ? -1 : 1;
+      for (let i = 0; i < n - (r % 2); i++) mummy(Math.round(fx + step * (i + 0.5) + off), by, f, kinds[(k++) % kinds.length]);
+      for (let i = 0; i <= n - (r % 2); i++) {
+        const gx = fx + step * i + off;
+        if (gx < fx + 6 || gx > fx + fw - 6) continue;
+        if ((i + r) % 2) { bat(gx, by - 22); star(gx + 1.5, by - 2.5, C.orange); } else { star(gx, by - 21, C.star); bat(gx, by - 2); }
+      }
+    }
+  });
+}
+
+// Candy apples: rows of red toffee and caramel apples on sticks (some with nuts, sprinkles or a bow) on moss-green gingham.
+function hlwCandyApples(ctx, W, H) {
+  const C = { edge: '#24130a', dark: '#2c150b', cream: '#f4e8c8', cream2: '#dcc89c',
+    moss: '#6a7a34', moss2: '#566428', moss3: '#3e4a1a',
+    red: '#cc1f2a', red2: '#86121c', red3: '#f2686a', white: '#fff6ee',
+    car: '#cf7c2c', car2: '#8e4c18', car3: '#f0b058', apple: '#9cc640', apple2: '#5e8a26',
+    choc: '#5e2e18', choc2: '#8c5230', nut: '#e8c68c', nut2: '#b4844a', pink: '#f27aaa', yellow: '#f6d442', blue: '#5ab0e6',
+    stick: '#e6c690', stick2: '#b48a52', leaf: '#4a8a36', leaf2: '#2e5e22', gold: '#e8b03c' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ring = (o, col) => { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); };
+    const ink = (col, f) => sweInk(x, col, f);
+    const pix = (map, ox, oy, key) => map.forEach((row, j) => { for (let i = 0; i < row.length; i++) if (key[row[i]]) R(ox + i, oy + j, 1, 1, key[row[i]]); });
+    // ---- border: dark edge, caramel lines round a cream band with a running apple-branch vine, red and dark guards
+    R(0, 0, cols, rows, C.edge);
+    R(2, 2, cols - 4, rows - 4, C.cream);
+    ring(2, C.car); ring(13, C.car); ring(14, C.edge); ring(15, C.red); ring(16, C.edge);
+    const APPLE = ['...s..', '..sll.', '.rrrr.', 'rwrrrr', 'rrrrRr', 'rrrRRr', '.rRRr.'];
+    const leafInk = (px, py, len, ang) => ink(C.leaf, (c) => { c.translate(px, py); c.rotate(ang); c.beginPath(); c.moveTo(0, 0); c.quadraticCurveTo(len * 0.5, -len * 0.42, len, 0); c.quadraticCurveTo(len * 0.5, len * 0.42, 0, 0); c.fill(); });
+    for (const [len, at] of [[cols - 28, (a, d) => [14 + a, d]], [cols - 28, (a, d) => [cols - 14 - a, rows - d]], [rows - 28, (a, d) => [d, rows - 14 - a]], [rows - 28, (a, d) => [cols - d, 14 + a]]]) {
+      const { n, d: P } = evenSteps(len, 20), wave = (a) => 8 + 2.2 * Math.sin((a / P) * Math.PI * 2);
+      ink(C.dark, (c) => { c.lineWidth = 1.5; c.beginPath(); for (let a = 0; a <= len; a += 0.25) { const [px, py] = at(a, wave(a)); a ? c.lineTo(px, py) : c.moveTo(px, py); } c.stroke(); });
+      for (let i = 0; i < n; i++) {
+        // two leaves sprouting from the stem, and an apple sitting on it between them
+        for (const [f, side] of [[0.12, -1], [0.38, 1]]) {
+          const a = (i + f) * P, [px, py] = at(a, wave(a)), [qx, qy] = at(a + 2.6, wave(a) + side * 3.6);
+          leafInk(px, py, 5.6, Math.atan2(qy - py, qx - px));
+        }
+        const [ax, ay] = at((i + 0.75) * P, 8.6);
+        pix(APPLE, Math.round(ax) - 3, Math.round(ay) - 4, { r: C.red, R: C.red2, w: C.white, s: C.dark, l: C.leaf });
+      }
+    }
+    // corners: a red apple with a leaf in a caramel-edged square
+    const BIG = ['.....sl...', '....sll...', '.rrrsrrr..', 'rrwrrrrrr.', 'rwwrrrrrRr', 'rwrrrrrrRr', 'rrrrrrrrRr', 'rrrrrrrRRr', '.rrrrRRRr.', '..rr..rr..'];
+    for (const [ox, oy] of [[2, 2], [cols - 14, 2], [2, rows - 14], [cols - 14, rows - 14]]) {
+      R(ox, oy, 12, 12, C.car); R(ox + 1, oy + 1, 10, 10, C.cream);
+      pix(BIG, ox + 1, oy + 1, { r: C.red, R: C.red2, w: C.white, s: C.dark, l: C.leaf });
+    }
+    // ---- the field: moss-green gingham
+    const fx = 17, fy = 17, fw = cols - 34, fh = rows - 34;
+    for (let j = fy; j < fy + fh; j++) for (let i = fx; i < fx + fw; i++) {
+      const a = Math.floor((i - fx + 1) / 4) % 2, b = Math.floor((j - fy + 3) / 4) % 2;
+      R(i, j, 1, 1, a && b ? C.moss3 : a || b ? C.moss2 : C.moss);
+    }
+    // ---- a candy apple standing on its stick at (cx, by)
+    const body = (c) => { c.moveTo(0, -14.4); c.bezierCurveTo(2.6, -17.2, 9.4, -16.6, 9.4, -9.6); c.bezierCurveTo(9.4, -3.6, 5.6, -0.8, 3, -1); c.quadraticCurveTo(0, -1.8, -3, -1);
+      c.bezierCurveTo(-5.6, -0.8, -9.4, -3.6, -9.4, -9.6); c.bezierCurveTo(-9.4, -16.6, -2.6, -17.2, 0, -14.4); c.closePath(); };
+    const candy = (cx, by, kind, bow) => {
+      const at = (fn) => (c) => { c.translate(cx, by); c.beginPath(); fn(c); };
+      const coat = { toffee: [C.red2, C.red, C.red3], sprinkle: [C.red2, C.red, C.red3], caramel: [C.car2, C.car, C.car3], nuts: [C.car2, C.car, C.car3], drizzle: [C.car2, C.car, C.car3], choc: [C.choc, C.choc2, C.choc2] }[kind];
+      const red = kind === 'toffee' || kind === 'sprinkle';
+      const skin = kind === 'choc' ? [C.red2, C.red, C.red3] : [C.apple2, C.apple, C.apple];
+      // the stick and the outline of apple and puddle
+      ink(C.dark, at((c) => { c.rect(-1.6, -23.6, 3.2, 10); body(c); c.ellipse(0, -1.4, 11.4, 2.4, 0, 0, Math.PI * 2); c.fill(); c.lineWidth = 2.2; c.stroke(); }));
+      ink(C.stick, at((c) => { c.rect(-1, -23, 2, 9); c.fill(); }));
+      R(cx, by - 23, 1, 9, C.stick2);
+      ink(coat[0], at((c) => { c.ellipse(0, -1.4, 10.6, 1.9, 0, 0, Math.PI * 2); c.fill(); }));
+      // the apple: coat over all of it (toffee) or over the lower part with a wavy edge, the apple's skin above
+      const edge = kind === 'choc' ? -9.4 : -10.6, wavy = (c) => { c.moveTo(-11, 0); c.lineTo(-11, edge); for (let k = -11; k <= 11; k += 0.5) c.lineTo(k, edge + 1.3 * Math.sin(k * 0.95)); c.lineTo(11, 0); c.closePath(); };
+      if (!red) {
+        ink(skin[0], at((c) => { body(c); c.fill(); }));
+        ink(skin[1], at((c) => { c.translate(-1.2, -0.8); c.scale(0.9, 0.94); body(c); c.fill(); }));
+      }
+      const inCoat = (c) => { if (!red) { c.beginPath(); wavy(c); c.clip(); } c.beginPath(); body(c); c.clip(); c.beginPath(); };
+      ink(coat[0], at((c) => { inCoat(c); c.rect(-12, -20, 24, 20); c.fill(); }));
+      ink(coat[1], at((c) => { inCoat(c); c.translate(-1.5, -1); c.scale(0.88, 0.92); body(c); c.fill(); }));
+      if (!red) ink(coat[2], at((c) => { inCoat(c); c.ellipse(-3.6, edge + 1.6, 4.4, 1.9, -0.2, 0, Math.PI * 2); c.fill(); }));
+      // the shine: a broad light patch up on the left and a white glint
+      ink(red ? C.red3 : skin === undefined ? C.white : coat[2], at((c) => { body(c); c.clip(); c.beginPath(); c.ellipse(-4.8, -9.6, 1.9, 3.6, 0.35, 0, Math.PI * 2); c.fill(); }));
+      R(cx - 6, by - 12, 2, 1, C.white); R(cx - 6, by - 11, 1, 2, C.white); R(cx - 4, by - 6, 1, 1, C.white);
+      const rb = rng(cx * 31 + by);
+      if (kind === 'nuts') for (let k = 0; k < 15; k++) { const px = cx - 7 + Math.floor(rb() * 14), py = by - 3 - Math.floor(rb() * 6), w = rb() < 0.5 ? 2 : 1, h = w === 1 || rb() < 0.4 ? 2 : 1; R(px, py, w, h, C.nut); R(px + w - 1, py + h - 1, 1, 1, k % 3 ? C.nut2 : C.nut); }
+      if (kind === 'sprinkle' || kind === 'choc') {
+        // sprinkles on a jittered grid inside the coat, each one knot or a short dash
+        const top = kind === 'choc' ? -8 : -7, sp = [C.yellow, C.white, C.pink, C.blue, C.apple];
+        let k = 0;
+        for (let gy = top; gy <= -2; gy += 2) for (let gx = -8 + (((gy - top) / 2) % 2) * 1.5; gx <= 8; gx += 3) {
+          const px = Math.round(cx + gx + (rb() - 0.5)), py = Math.round(by + gy), e = ((px + 0.5 - cx) / 8.6) ** 2 + ((py + 0.5 - by + 8.6) / 8) ** 2;
+          if (e > 0.9) continue;
+          const col = sp[(k++) % 5]; R(px, py, 1, 1, col); if (rb() < 0.3) R(px + 1, py, 1, 1, col);
+        }
+      }
+      if (kind === 'drizzle') ink(C.choc, at((c) => { body(c); c.clip(); c.beginPath(); c.lineWidth = 1.2; for (let k = 0; k < 2; k++) { c.moveTo(-10, -7.4 + k * 3.6); for (let t = -10; t <= 10; t += 2.5) c.lineTo(t + 1.25, -7.4 + k * 3.6 + (Math.round((t + 10) / 2.5) % 2 ? -1.4 : 1.4)); } c.stroke(); }));
+      if (bow) {
+        const bc = bow;
+        ink(C.dark, at((c) => { c.moveTo(0, -17); c.lineTo(-5, -20.4); c.lineTo(-5, -14.6); c.closePath(); c.moveTo(0, -17); c.lineTo(5, -20.4); c.lineTo(5, -14.6); c.closePath(); c.fill(); c.lineWidth = 1.6; c.stroke(); }));
+        ink(bc, at((c) => { c.moveTo(0, -17); c.lineTo(-4.3, -19.8); c.lineTo(-4.3, -15.2); c.closePath(); c.moveTo(0, -17); c.lineTo(4.3, -19.8); c.lineTo(4.3, -15.2); c.closePath(); c.fill(); }));
+        R(cx - 1, by - 18, 2, 2, C.dark);
+      }
+    };
+    const rowsK = [
+      [['toffee', C.gold], ['caramel'], ['sprinkle'], ['nuts'], ['toffee'], ['choc', C.pink]],
+      [['nuts'], ['toffee', C.gold], ['drizzle'], ['sprinkle'], ['caramel', C.blue]],
+      [['drizzle'], ['toffee'], ['choc'], ['caramel', C.gold], ['toffee', C.pink], ['nuts']],
+    ];
+    rowsK.forEach((row, r) => {
+      const n = row.length, step = fw / 6, off = n === 5 ? step : step / 2, by = fy + 28 + 30 * r;
+      row.forEach(([kind, bow], i) => candy(Math.round(fx + off + step * i), by, kind, bow));
+    });
+  });
+}
+
+// Treats: wrapped candies, swirl lollipops, toffees and chocolates scattered on deep violet, a pumpkin treat bucket in each corner.
+function hlwTreats(ctx, W, H) {
+  const C = { edge: '#120820', vio: '#2c1648', vio2: '#3a2160', band: '#1e0e32', white: '#fff8f0', dark: '#140a1c',
+    o1: '#b4500e', o2: '#f07a1e', o3: '#ffc070', l1: '#4a961e', l2: '#8ad42a', l3: '#d6f482', p1: '#b02a6a', p2: '#f45ca2', p3: '#ffb4d6',
+    c1: '#1a76ae', c2: '#3cb8ea', c3: '#aee8ff', y1: '#c08a10', y2: '#f6cc2a', y3: '#fff0a2', ch1: '#3e1c0e', ch2: '#6e3a1c', ch3: '#9a5a30', silver: '#c8c4d8' };
+  const SETS = { orange: [C.o1, C.o2, C.o3], lime: [C.l1, C.l2, C.l3], pink: [C.p1, C.p2, C.p3], cyan: [C.c1, C.c2, C.c3], yellow: [C.y1, C.y2, C.y3] };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ring = (o, col) => { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); };
+    const ink = (col, f) => sweInk(x, col, f);
+    const pix = (map, ox, oy, key) => map.forEach((row, j) => { for (let i = 0; i < row.length; i++) if (key[row[i]]) R(ox + i, oy + j, 1, 1, key[row[i]]); });
+    // ---- border: dark edge, a dark band of interlocking candy corns between lime lines, a sprinkle-dot guard
+    R(0, 0, cols, rows, C.edge);
+    ring(2, C.l2); R(3, 3, cols - 6, rows - 6, C.band); ring(12, C.l2); ring(13, C.edge); ring(15, C.edge);
+    const cornAt = (i, j, P) => {
+      const q = ((i % P) + P) % P;
+      for (const [c0, up] of [[3, true], [9, false]]) {
+        const r = up ? 7 - j : j - 1; // rows from the corn's base
+        if (r < 0 || r > 6) continue;
+        const hw = 3.3 - r * 0.5; if (Math.abs(q - c0) > hw) continue;
+        return r < 2 ? C.y2 : r < 5 ? C.o2 : C.white;
+      }
+      return null;
+    };
+    ringKnots(x, cols, rows, 3, 9, 12, (i, j) => cornAt(i, j, 12));
+    const dots = [C.p2, C.y2, C.c2, C.l2, C.white];
+    ringKnots(x, cols, rows, 14, 1, 3, (i) => ((i % 3) + 3) % 3 === 1 ? dots[Math.floor(i / 3 + 100) % 5] : C.vio2, (a, b) => R(a, b, 1, 1, C.p2));
+    // little swirl lollipops in the border corners
+    for (const [ox, oy] of [[2, 2], [cols - 13, 2], [2, rows - 13], [cols - 13, rows - 13]]) {
+      R(ox, oy, 11, 11, C.l2); R(ox + 1, oy + 1, 9, 9, C.band);
+      ink(C.p2, (c) => { c.beginPath(); c.arc(ox + 5.5, oy + 5.5, 4.2, 0, Math.PI * 2); c.fill(); });
+      ink(C.white, (c) => { c.beginPath(); c.arc(ox + 5.5, oy + 5.5, 4.2, 0, Math.PI * 2); c.clip(); c.beginPath(); c.lineWidth = 1.1; for (let t = 0; t < 12; t += 0.1) { const rr = t * 0.36, px = ox + 5.5 + Math.cos(t) * rr, py = oy + 5.5 + Math.sin(t) * rr; t ? c.lineTo(px, py) : c.moveTo(px, py); } c.stroke(); });
+    }
+    // ---- the field: deep violet sprinkled with faint confetti
+    const fx = 16, fy = 16, fw = cols - 32, fh = rows - 32;
+    R(fx, fy, fw, fh, C.vio);
+    const rc = rng(911);
+    for (let k = 0; k < 140; k++) R(fx + 1 + Math.floor(rc() * (fw - 2)), fy + 1 + Math.floor(rc() * (fh - 2)), 1, 1, C.vio2);
+    // ---- the sweets, each drawn round (0, 0) and turned by `ang`
+    let sc = 1;
+    const at = (cx, cy, ang, fn) => (c) => { c.translate(cx, cy); c.rotate(ang); c.scale(sc, sc); c.beginPath(); fn(c); };
+    const twist = (cx, cy, ang, set) => {
+      const ends = (c) => { for (const sx of [-1, 1]) { c.moveTo(sx * 4.6, -1.4); c.lineTo(sx * 9.6, -4.4); c.quadraticCurveTo(sx * 8.4, 0, sx * 9.6, 4.4); c.lineTo(sx * 4.6, 1.4); c.closePath(); } };
+      const bod = (c) => c.ellipse(0, 0, 5.6, 4.3, 0, 0, Math.PI * 2);
+      ink(set[1], at(cx, cy, ang, (c) => { ends(c); c.fill(); }));
+      ink(set[0], at(cx, cy, ang, (c) => { c.lineWidth = 0.9; for (const sx of [-1, 1]) { c.moveTo(sx * 5, 0); c.lineTo(sx * 9, -2.2); c.moveTo(sx * 5, 0); c.lineTo(sx * 9, 2.4); } c.stroke(); }));
+      ink(set[0], at(cx, cy, ang, (c) => { bod(c); c.fill(); }));
+      ink(set[1], at(cx, cy, ang, (c) => { c.ellipse(-0.6, -0.6, 4.8, 3.4, 0, 0, Math.PI * 2); c.fill(); }));
+      ink(C.white, at(cx, cy, ang, (c) => { bod(c); c.clip(); c.beginPath(); c.lineWidth = 1.3; for (const k of [-3, 0.2, 3.4]) { c.moveTo(k - 2, 5); c.lineTo(k + 2, -5); } c.stroke(); }));
+      ink(set[2], at(cx, cy, ang, (c) => { c.rect(-3.2, -2.8, 2, 1.2); c.fill(); }));
+    };
+    const lolly = (cx, cy, ang, set, kind) => {
+      ink(C.white, at(cx, cy, ang, (c) => { c.rect(-0.75, 4, 1.5, 9.5); c.fill(); }));
+      ink(C.dark, at(cx, cy, ang, (c) => { c.arc(0, 0, 6.6, 0, Math.PI * 2); c.fill(); }));
+      ink(set[1], at(cx, cy, ang, (c) => { c.arc(0, 0, 5.8, 0, Math.PI * 2); c.fill(); }));
+      if (kind === 'spiral') ink(C.white, at(cx, cy, ang, (c) => { c.arc(0, 0, 5.8, 0, Math.PI * 2); c.clip(); c.beginPath(); c.lineWidth = 1.5; for (let t = 0; t < 16; t += 0.1) { const rr = t * 0.42, px = Math.cos(t) * rr, py = Math.sin(t) * rr; t ? c.lineTo(px, py) : c.moveTo(px, py); } c.stroke(); }));
+      else {
+        const ws = [C.white, SETS.yellow[1], C.white, SETS.cyan[1]];
+        ws.forEach((col, k) => ink(col, at(cx, cy, ang + k * Math.PI / 2, (c) => { c.arc(0, 0, 5.8, 0, Math.PI * 2); c.clip(); c.beginPath(); c.moveTo(0, 0); c.quadraticCurveTo(4.6, -1.2, 6.2, -4.6); c.lineTo(6.6, 0.6); c.quadraticCurveTo(3.6, 1, 0, 0); c.fill(); })));
+      }
+      ink(set[2], at(cx, cy, ang, (c) => { c.rect(-3.6, -3.8, 1.6, 1.6); c.fill(); }));
+    };
+    const toffee = (cx, cy, ang, set, band) => {
+      const ends = (c) => { for (const sx of [-1, 1]) { c.moveTo(sx * 5, -2); c.lineTo(sx * 8.6, -3.8); c.lineTo(sx * 7.8, -1.9); c.lineTo(sx * 8.8, 0); c.lineTo(sx * 7.8, 1.9); c.lineTo(sx * 8.6, 3.8); c.lineTo(sx * 5, 2); c.closePath(); } };
+      ink(set[2], at(cx, cy, ang, (c) => { ends(c); c.fill(); }));
+      ink(set[0], at(cx, cy, ang, (c) => { c.roundRect(-6, -3.6, 12, 7.2, 1.6); c.fill(); }));
+      ink(set[1], at(cx, cy, ang, (c) => { c.roundRect(-6, -3.6, 11, 6.1, 1.6); c.fill(); }));
+      ink(band, at(cx, cy, ang, (c) => { c.rect(-1.4, -3.6, 2.8, 7.2); c.fill(); }));
+      ink(set[2], at(cx, cy, ang, (c) => { c.rect(-4.8, -2.6, 2.4, 1); c.fill(); }));
+    };
+    const choc = (cx, cy, ang, set) => {
+      ink(set[0], at(cx, cy, ang, (c) => { c.moveTo(-6.4, -6.4); for (let k = 0; k <= 8; k++) c.lineTo(-6.4 + k * 1.6, k % 2 ? -7.3 : -6.4); for (let k = 0; k <= 8; k++) c.lineTo(6.4 + (k % 2 ? 0.9 : 0), -6.4 + k * 1.6); for (let k = 0; k <= 8; k++) c.lineTo(6.4 - k * 1.6, k % 2 ? 7.3 : 6.4); for (let k = 0; k <= 8; k++) c.lineTo(-6.4 - (k % 2 ? 0.9 : 0), 6.4 - k * 1.6); c.fill(); }));
+      ink(set[1], at(cx, cy, ang, (c) => { c.rect(-5.4, -5.4, 10.8, 10.8); c.fill(); }));
+      ink(set[2], at(cx, cy, ang, (c) => { c.moveTo(-5.4, 5.4); c.lineTo(-5.4, -5.4); c.lineTo(5.4, -5.4); c.lineTo(3, -3); c.lineTo(-3, 3); c.closePath(); c.fill(); }));
+      ink(C.ch1, at(cx, cy, ang, (c) => { c.rect(-4.4, -4.4, 8.8, 8.8); c.fill(); }));
+      for (const [sx, sy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+        ink(C.ch3, at(cx, cy, ang, (c) => { c.rect(sx * 2.2 - 1.9, sy * 2.2 - 1.9, 3.4, 3.4); c.fill(); }));
+        ink(C.ch2, at(cx, cy, ang, (c) => { c.rect(sx * 2.2 - 1.2, sy * 2.2 - 1.2, 2.8, 2.8); c.fill(); }));
+      }
+    };
+    const CORN = ['..w..', '.www.', '.ooo.', 'ooooo', 'yyyyy'];
+    const corn = (cx, cy, flip) => pix(flip ? [...CORN].reverse() : CORN, Math.round(cx) - 2, Math.round(cy) - 2, { w: C.white, o: C.o2, y: C.y2 });
+    // ---- a jack-o'-lantern treat bucket: handle, round ribbed pumpkin pail with a cheerful face, sweets peeking out
+    const FACE = ['...d.....d...', '..ddd...ddd..', '.ddddd.ddddd.', '.............', '......d......', '.............', 'd...........d', 'dd.ddddddd.dd', '.ddddddddddd.', '...ddd.ddd...'];
+    const bucket = (cx, cy) => {
+      ink(C.dark, (c) => { c.lineWidth = 2.6; c.beginPath(); c.ellipse(cx, cy - 2, 10.6, 12.4, 0, Math.PI * 1.06, Math.PI * 1.94); c.stroke(); });
+      ink(C.o1, (c) => { c.lineWidth = 1.1; c.beginPath(); c.ellipse(cx, cy - 2, 10.6, 12.4, 0, Math.PI * 1.07, Math.PI * 1.93); c.stroke(); });
+      sc = 0.8; lolly(cx + 3.4, cy - 9.4, 0.3, SETS.yellow, 'spiral'); twist(cx - 3.8, cy - 6, -0.42, SETS.pink); sc = 1;
+      ink(C.dark, (c) => { c.beginPath(); c.ellipse(cx, cy + 3, 11.6, 9.6, 0, 0, Math.PI * 2); c.fill(); });
+      ink(C.o1, (c) => { c.beginPath(); c.ellipse(cx, cy + 3, 10.7, 8.7, 0, 0, Math.PI * 2); c.fill(); });
+      ink(C.o2, (c) => { c.beginPath(); c.ellipse(cx - 0.8, cy + 2.4, 9.4, 7.7, 0, 0, Math.PI * 2); c.fill(); });
+      ink(C.o1, (c) => { c.lineWidth = 1; c.beginPath(); for (const k of [-1, 1]) { c.moveTo(cx + k * 6.6, cy - 4.4); c.quadraticCurveTo(cx + k * 9.6, cy + 3, cx + k * 6.6, cy + 10.8); } c.stroke(); });
+      ink(C.o3, (c) => { c.beginPath(); c.ellipse(cx - 8, cy + 1, 1, 2.4, 0.2, 0, Math.PI * 2); c.fill(); });
+      ink(C.o1, (c) => { c.beginPath(); c.ellipse(cx, cy - 4.6, 8.8, 2.8, 0, 0, Math.PI * 2); c.fill(); });
+      ink(C.dark, (c) => { c.beginPath(); c.ellipse(cx, cy - 4.6, 7.6, 1.9, 0, 0, Math.PI * 2); c.fill(); });
+      pix(FACE, Math.round(cx) - 6, Math.round(cy) - 2, { d: C.dark });
+    };
+    const bx = 15, by = 16, buckets = [[fx + bx, fy + by], [fx + fw - bx, fy + by], [fx + bx, fy + fh - by - 1], [fx + fw - bx, fy + fh - by - 1]];
+    for (const [px, py] of buckets) bucket(px, py);
+    // the scattered sweets: a half-drop grid clear of the buckets, kinds and colours in turn, each turned a little
+    const kinds = ['twist', 'lolly', 'toffee', 'choc', 'twist', 'pin', 'toffee', 'lolly', 'choc', 'twist', 'toffee', 'pin'];
+    const sets = ['orange', 'lime', 'pink', 'cyan', 'yellow'], bands = [C.p2, C.white, C.o2, C.c2, C.l2];
+    const nc = 7, nr = 4, sx = fw / nc, sy = fh / nr, rr = rng(4242);
+    let k = 0;
+    sc = 1.08;
+    for (let j = 0; j < nr; j++) for (let i = 0; i <= nc; i++) {
+      const cx = fx + sx * (i + (j % 2 ? 0 : 0.5)) + (rr() - 0.5) * 2, cy = fy + sy * (j + 0.5) + (rr() - 0.5) * 2;
+      if (cx < fx + 8 || cx > fx + fw - 8) continue;
+      if (buckets.some(([px, py]) => Math.hypot(px - cx, (py + 2 - cy) * 0.95) < 24)) continue;
+      const kind = kinds[k % kinds.length], set = SETS[sets[(k * 2 + j) % 5]], ang = (rr() - 0.5) * 1.2; k++;
+      if (kind === 'twist') twist(cx, cy, ang, set);
+      else if (kind === 'lolly') lolly(cx, cy - 3.5, ang * 0.5, set, 'spiral');
+      else if (kind === 'pin') lolly(cx, cy - 3.5, ang * 0.5, set === SETS.pink ? SETS.lime : SETS.pink, 'pin');
+      else if (kind === 'toffee') toffee(cx, cy, ang, set, bands[k % 5] === set[1] ? C.white : bands[k % 5]);
+      else choc(cx, cy, ang * 0.5, set);
+    }
+    // between the buckets on each side, one more sweet
+    lolly(fx + 14, fy + fh / 2 - 3, -0.2, SETS.cyan, 'spiral'); toffee(fx + fw - 14, fy + fh / 2, 1.2, SETS.lime, C.p2);
+    sc = 1;
+    // candy corns and little gumdrops wherever the field is still bare
+    const img = x.getImageData(0, 0, cols, rows).data, bare = new Uint8Array(cols * rows);
+    const vio = [parseInt(C.vio.slice(1, 3), 16), parseInt(C.vio2.slice(1, 3), 16)];
+    for (let i = 0; i < cols * rows; i++) bare[i] = (img[i * 4] === vio[0] || img[i * 4] === vio[1]) && img[i * 4 + 2] > 60 && img[i * 4 + 2] < 110 ? 1 : 0;
+    const free = (a, b, r) => { for (let j = b - r; j <= b + r; j++) for (let i = a - r; i <= a + r; i++) if (i < fx + 1 || j < fy + 1 || i >= fx + fw - 1 || j >= fy + fh - 1 || !bare[j * cols + i]) return false; return true; };
+    const take = (a, b, r) => { for (let j = b - r; j <= b + r; j++) for (let i = a - r; i <= a + r; i++) bare[j * cols + i] = 0; };
+    const rg = rng(77), gum = [C.p2, C.y2, C.c2, C.l2, C.o2];
+    let nCorn = 0, nGum = 0;
+    for (let j = fy + 4; j < fy + fh - 4; j += 3) for (let i = fx + 4 + (((j - fy) / 3) % 2) * 3; i < fx + fw - 4; i += 6) {
+      const a = i + Math.floor(rg() * 3) - 1, b = j;
+      if (free(a, b, 4)) { corn(a, b, (nCorn++) % 2); take(a, b, 8); }
+      else if (free(a, b, 3) && rg() < 0.15) { const col = gum[(nGum++) % 5]; R(a - 1, b - 1, 3, 2, col); R(a, b - 2, 1, 1, col); R(a - 1, b - 1, 1, 1, C.white); take(a, b, 5); }
+    }
+  });
+}
+
+// Harvest: a russet medallion of gourds, corn and apples in an oak-leaf wreath, corner sprays on cream, a leaf-garland border.
+function hlwHarvest(ctx, W, H) {
+  const C = { edge: '#2a1408', dark: '#46220e', forest: '#2e3e1c', russet: '#9a3e1e', russet2: '#7a2c14', cream: '#f2e4c4', cream2: '#e0cba0', gold: '#e2a83a',
+    orange: '#e0782a', orange2: '#a84e18', orange3: '#f4a85a', yellow: '#f4cc44', yellow2: '#c89418', red: '#bc322a', red2: '#7a1c18', red3: '#ea7262',
+    green: '#6e8e34', green2: '#3e5c22', green3: '#a8c070', white: '#faf4e2', white2: '#d2c39a', nut: '#a8702e', nut2: '#6a4218', cap: '#5a381a', husk: '#e8d6a0', husk2: '#b89e5c' };
+  weavePicture(ctx, W, H, 128, Object.values(C), (x, cols, rows) => {
+    const R = (a, b, w, h, col) => { x.fillStyle = col; x.fillRect(a, b, w, h); };
+    const ring = (o, col) => { R(o, o, cols - 2 * o, 1, col); R(o, rows - 1 - o, cols - 2 * o, 1, col); R(o, o, 1, rows - 2 * o, col); R(cols - 1 - o, o, 1, rows - 2 * o, col); };
+    const ink = (col, f) => sweInk(x, col, f);
+    const fx = 19, fy = 19, fw = cols - 38, fh = rows - 38, mx = cols / 2, my = rows / 2;
+    // how a group of shapes is placed: once, in the four field corners (mirrored), or mirrored about the middle
+    const one = (c, f) => f();
+    const four = (c, f) => { for (const [ox, oy, sx, sy] of [[fx, fy, 1, 1], [fx + fw, fy, -1, 1], [fx, fy + fh, 1, -1], [fx + fw, fy + fh, -1, -1]]) { c.save(); c.translate(ox, oy); c.scale(sx, sy); f(); c.restore(); } };
+    const sides = (c, f) => { for (const sx of [1, -1]) { c.save(); c.translate(mx, my); c.scale(sx, 1); f(); c.restore(); } };
+    const ends = (c, f) => { for (const sy of [1, -1]) { c.save(); c.translate(mx, my); c.scale(1, sy); f(); c.restore(); } };
+    // an oak leaf from (X, Y) along `ang`, `len` long: three round lobes a side, a stalk and a midrib
+    const oak = (c, X, Y, len, ang, wid = 0.36) => {
+      c.save(); c.translate(X, Y); c.rotate(ang); c.moveTo(0, 0); c.lineTo(len * 0.16, -0.5);
+      const N = 48, w = (t) => len * wid * Math.pow(Math.sin(Math.PI * Math.min(1, 0.04 + t * 1.0)), 0.6) * (0.74 + 0.3 * Math.cos(t * Math.PI * 6.2));
+      for (let i = 0; i <= N; i++) { const t = i / N; c.lineTo(len * 0.16 + t * len * 0.84, -w(t)); }
+      for (let i = N; i >= 0; i--) { const t = i / N; c.lineTo(len * 0.16 + t * len * 0.84, w(t)); }
+      c.lineTo(len * 0.16, 0.5); c.closePath(); c.restore();
+    };
+    const rib = (c, X, Y, len, ang) => { c.save(); c.translate(X, Y); c.rotate(ang); c.moveTo(0, 0); c.lineTo(len * 0.82, 0); c.restore(); };
+    const LEAF = [[C.orange, C.orange2], [C.gold, C.yellow2], [C.red, C.red2], [C.green, C.green2], [C.orange3, C.orange2], [C.yellow, C.nut]];
+    const leaves = (list, frames) => {
+      for (let k = 0; k < LEAF.length; k++) {
+        const mine = list.filter((l) => l[4] === k); if (!mine.length) continue;
+        ink(LEAF[k][0], (c) => frames(c, () => { c.beginPath(); for (const [X, Y, len, ang] of mine) oak(c, X, Y, len, ang); c.fill(); }));
+        ink(LEAF[k][1], (c) => frames(c, () => { c.beginPath(); for (const [X, Y, len, ang] of mine) rib(c, X, Y, len, ang); c.lineWidth = 1; c.stroke(); }));
+      }
+    };
+    // acorns: [x, y, ang], ang the way the cap (and stalk) points
+    const acorns = (list, frames, s = 1) => {
+      const each = (c, f) => frames(c, () => { for (const [X, Y, ang] of list) { c.save(); c.translate(X, Y); c.rotate(ang + Math.PI / 2); c.scale(s, s); c.beginPath(); f(c); c.restore(); } });
+      ink(C.dark, (c) => each(c, (c) => { c.ellipse(0, 1.2, 2.6, 3.5, 0, 0, Math.PI * 2); c.fill(); }));
+      ink(C.nut, (c) => each(c, (c) => { c.ellipse(-0.4, 0.9, 1.9, 2.9, 0, 0, Math.PI * 2); c.fill(); }));
+      ink(C.cap, (c) => each(c, (c) => { c.ellipse(0, -1.6, 3.2, 2, 0, 0, Math.PI * 2); c.fill(); c.rect(-0.5, -4.6, 1, 2); c.fill(); }));
+      ink(C.husk2, (c) => each(c, (c) => { c.rect(-2.4, -0.9, 4.8, 1); c.fill(); }));
+    };
+    // corncobs: [x, y, len, ang], the stalk end at (x, y): two husks peeled back, the cob in rows of kernels
+    const corns = (list, frames) => {
+      const each = (c, f) => frames(c, () => { for (const [X, Y, len, ang] of list) { c.save(); c.translate(X, Y); c.rotate(ang); c.beginPath(); f(c, len); c.restore(); } });
+      const blades = (c, len, d) => { for (const sg of [-1, 1]) { c.moveTo(-1, 0); c.quadraticCurveTo(len * 0.3, sg * (7.4 - d), len * 0.72 - d, sg * (5.4 - d)); c.quadraticCurveTo(len * 0.36, sg * (2.6 - d * 0.5), -1, 0); } };
+      ink(C.dark, (c) => each(c, (c, len) => { blades(c, len, 0); c.ellipse(len / 2 + 1, 0, len / 2, 4, 0, 0, Math.PI * 2); c.fill(); c.lineWidth = 1.4; c.stroke(); }));
+      ink(C.husk2, (c) => each(c, (c, len) => { blades(c, len, 0); c.fill(); }));
+      ink(C.yellow2, (c) => each(c, (c, len) => { c.ellipse(len / 2 + 1, 0, len / 2 - 0.4, 3.5, 0, 0, Math.PI * 2); c.fill(); }));
+      ink(C.yellow, (c) => each(c, (c, len) => { for (let a = 3; a < len - 0.5; a += 1.75) for (const b of [-2.6, -0.85, 0.9]) { if ((a - len / 2 - 1) ** 2 / (len / 2 - 0.6) ** 2 + (b + 0.4) ** 2 / 10 < 1) c.rect(a - 0.6, b - 0.6, 1.25, 1.25); } c.fill(); }));
+      ink(C.husk, (c) => each(c, (c, len) => { c.moveTo(-2, 0); c.quadraticCurveTo(len * 0.18, -5, len * 0.42, -3.2); c.quadraticCurveTo(len * 0.2, -0.6, -2, 0); c.moveTo(-2, 0); c.quadraticCurveTo(len * 0.12, 3.6, len * 0.3, 3.4); c.quadraticCurveTo(len * 0.12, 1, -2, 0); c.fill(); }));
+      ink(C.nut2, (c) => each(c, (c) => { c.rect(-3.2, -0.8, 2.6, 1.6); c.fill(); }));
+    };
+    // gourds and fruit: [kind, x, y, size, angle]
+    const gourdPath = (c, kind, s) => {
+      if (kind === 'pumpkin' || kind === 'white') { for (const [dx, rx] of [[-0.5, 0.55], [0.5, 0.55], [0, 0.6]]) { c.moveTo(dx * s + rx * s, 0); c.ellipse(dx * s, 0, rx * s, 0.78 * s, 0, 0, Math.PI * 2); } }
+      else if (kind === 'pear' || kind === 'bicolor') { c.moveTo(0, -1.1 * s); c.bezierCurveTo(0.5 * s, -1.1 * s, 0.4 * s, -0.4 * s, 0.75 * s, 0.1 * s); c.bezierCurveTo(1.1 * s, 0.7 * s, 0.6 * s, 1.05 * s, 0, 1.05 * s); c.bezierCurveTo(-0.6 * s, 1.05 * s, -1.1 * s, 0.7 * s, -0.75 * s, 0.1 * s); c.bezierCurveTo(-0.4 * s, -0.4 * s, -0.5 * s, -1.1 * s, 0, -1.1 * s); }
+      else if (kind === 'apple') { c.moveTo(0, -0.62 * s); c.bezierCurveTo(0.3 * s, -0.9 * s, 0.95 * s, -0.8 * s, 0.95 * s, -0.1 * s); c.bezierCurveTo(0.95 * s, 0.6 * s, 0.45 * s, 0.95 * s, 0, 0.82 * s); c.bezierCurveTo(-0.45 * s, 0.95 * s, -0.95 * s, 0.6 * s, -0.95 * s, -0.1 * s); c.bezierCurveTo(-0.95 * s, -0.8 * s, -0.3 * s, -0.9 * s, 0, -0.62 * s); }
+    };
+    const GCOL = { pumpkin: [C.orange2, C.orange, C.orange3], white: [C.white2, C.white, C.white], pear: [C.green2, C.green, C.green3], bicolor: [C.yellow2, C.yellow, C.white], apple: [C.red2, C.red, C.red3] };
+    const gourds = (list, frames) => {
+      const each = (c, f) => frames(c, () => { for (const g of list) { c.save(); c.translate(g[1], g[2]); if (g[4]) c.rotate(g[4]); c.beginPath(); f(c, g[0], g[3]); c.restore(); } });
+      ink(C.dark, (c) => each(c, (c, k, s) => { gourdPath(c, k, s); c.fill(); c.lineWidth = 1.6; c.stroke(); }));
+      ink(C.green2, (c) => each(c, (c, k, s) => { if (k === 'pumpkin' || k === 'white') { c.moveTo(-0.7, -0.55 * s); c.lineTo(0.2, -0.98 * s); c.lineTo(1.6, -1.06 * s); c.lineTo(1.2, -0.55 * s); c.closePath(); c.fill(); }
+        if (k === 'apple') { c.rect(-0.3, -1.05 * s, 1, 0.5 * s); c.fill(); } if (k === 'pear' || k === 'bicolor') { c.rect(-0.5, -1.1 * s - 1.4, 1, 1.8); c.fill(); } }));
+      for (const g of list) {
+        const [k, X, Y, s, a] = g, [d, m, l] = GCOL[k];
+        const at = (f) => (c) => frames(c, () => { c.save(); c.translate(X, Y); if (a) c.rotate(a); c.beginPath(); f(c); c.restore(); });
+        ink(d, at((c) => { gourdPath(c, k, s); c.fill(); }));
+        ink(m, at((c) => { gourdPath(c, k, s); c.clip(); c.beginPath(); c.translate(-0.12 * s, -0.1 * s); c.scale(0.92, 0.92); gourdPath(c, k, s); c.fill(); }));
+        if (k === 'pumpkin' && s > 7) ink(d, at((c) => { gourdPath(c, k, s); c.clip(); c.beginPath(); for (const dx of [-0.55, -0.12, 0.3]) { c.moveTo(dx * s, -0.8 * s); c.quadraticCurveTo(dx * s - (dx < 0 ? 0.25 : -0.25) * s, 0, dx * s, 0.8 * s); } c.lineWidth = 1; c.stroke(); }));
+        if (k === 'white' || (k === 'pumpkin' && s <= 7)) ink(d, at((c) => { gourdPath(c, k, s); c.clip(); c.beginPath(); c.moveTo(0.08 * s, -0.8 * s); c.quadraticCurveTo(-0.2 * s, 0, 0.08 * s, 0.8 * s); c.lineWidth = 1; c.stroke(); }));
+        if (k === 'pear') ink(C.white, at((c) => { gourdPath(c, k, s); c.clip(); c.beginPath(); for (const dx of [-0.45, 0, 0.45]) { c.moveTo(dx * 0.6 * s, -1.2 * s); c.quadraticCurveTo(dx * 1.6 * s, 0.2 * s, dx * 0.9 * s, 1.2 * s); } c.lineWidth = 1; c.stroke(); }));
+        if (k === 'bicolor') ink(C.green, at((c) => { gourdPath(c, k, s); c.clip(); c.beginPath(); c.moveTo(-2 * s, 0.25 * s); for (let t = -2; t <= 2; t += 0.25) c.lineTo(t * s, (0.25 + 0.12 * Math.sin(t * 9)) * s); c.lineTo(2 * s, 2 * s); c.lineTo(-2 * s, 2 * s); c.fill(); }));
+        ink(l, at((c) => { c.ellipse(-0.42 * s, -0.25 * s, 0.12 * s + 0.4, 0.22 * s + 0.4, 0.4, 0, Math.PI * 2); c.fill(); }));
+        if (k === 'apple') ink(C.green, at((c) => { oak(c, 0.3, -0.85 * s, 0.6 * s + 2.4, -0.45, 0.32); c.fill(); }));
+      }
+    };
+    // ---- border: dark edge, gold lines round a forest-green band with a garland of oak leaves and acorns, a sawtooth guard
+    R(0, 0, cols, rows, C.edge);
+    R(2, 2, cols - 4, rows - 4, C.forest);
+    ring(2, C.gold); ring(13, C.gold); ring(14, C.edge);
+    ringKnots(x, cols, rows, 15, 3, 4, (i, j) => { const q = ((i % 4) + 4) % 4; return (q === 0 && j < 3) || ((q === 1 || q === 3) && j < 2) || (q === 2 && j < 1) ? C.russet : C.cream2; }, (a, b) => R(a, b, 3, 3, C.russet));
+    ring(18, C.edge);
+    const cyc = [0, 2, 1, 4, 2, 0, 1, 4];
+    for (const [len, at] of [[cols - 30, (a, d) => [15 + a, d, 0]], [cols - 30, (a, d) => [cols - 15 - a, rows - d, Math.PI]], [rows - 30, (a, d) => [d, rows - 15 - a, -Math.PI / 2]], [rows - 30, (a, d) => [cols - d, 15 + a, Math.PI / 2]]]) {
+      const { n, d: P } = evenSteps(len, 16), wave = (a) => 8 + 1.8 * Math.sin((a / P) * Math.PI * 2), ls = [], as = [];
+      ink(C.husk2, (c) => { c.lineWidth = 1.2; c.beginPath(); for (let a = 0; a <= len; a += 0.25) { const [px, py] = at(a, wave(a)); a ? c.lineTo(px, py) : c.moveTo(px, py); } c.stroke(); });
+      for (let i = 0; i < n; i++) {
+        // a leaf springing from each crest and trough of the vine, an acorn hanging between
+        for (const [f, sg] of [[0.25, -1], [0.75, 1]]) { const a = (i + f) * P, [X, Y, r] = at(a, wave(a)); ls.push([X, Y, 9.5, r + sg * 0.62, cyc[(2 * i + (sg > 0)) % 8]]); }
+        const [ax, ay, r] = at((i + 0.02) * P, 8.4); as.push([ax, ay, r - Math.PI / 2]);
+      }
+      leaves(ls, one); acorns(as, one, 0.9);
+    }
+    for (const [ox, oy] of [[2, 2], [cols - 14, 2], [2, rows - 14], [cols - 14, rows - 14]]) {
+      R(ox, oy, 12, 12, C.gold); R(ox + 1, oy + 1, 10, 10, C.russet);
+      acorns([[ox + 6, oy + 6.4, -Math.PI / 2]], one, 1.2);
+    }
+    // ---- the field: warm cream with a quiet diaper of dots
+    R(fx, fy, fw, fh, C.cream);
+    for (let j = fy + 3; j < fy + fh - 2; j += 6) for (let i = fx + 3 + ((j - fy - 3) % 12 ? 6 : 0); i < fx + fw - 2; i += 12) R(i, j, 1, 1, C.cream2);
+    // ---- the medallion: a russet oval edged in gold, a wreath of oak leaves and acorns round it
+    const rx = 31, ry = 24;
+    ink(C.dark, (c) => { c.beginPath(); c.ellipse(mx, my, rx + 1.4, ry + 1.4, 0, 0, Math.PI * 2); c.fill(); });
+    ink(C.gold, (c) => { c.beginPath(); c.ellipse(mx, my, rx + 0.4, ry + 0.4, 0, 0, Math.PI * 2); c.fill(); });
+    ink(C.russet, (c) => { c.beginPath(); c.ellipse(mx, my, rx - 0.8, ry - 0.8, 0, 0, Math.PI * 2); c.fill(); });
+    ink(C.russet2, (c) => { c.beginPath(); c.ellipse(mx, my, rx - 3.2, ry - 3.2, 0, 0, Math.PI * 2); c.lineWidth = 1; c.stroke(); });
+    const wl = [], wa = [], NW = 28, wc = [0, 1, 2, 4, 3, 0, 1, 2, 4, 1, 0, 2, 3, 4];
+    for (let i = 0; i < NW; i++) {
+      const t = (i / NW) * Math.PI * 2, px = mx + Math.cos(t) * (rx + 2.6), py = my + Math.sin(t) * (ry + 2.6);
+      const tan = Math.atan2(Math.cos(t) * ry, -Math.sin(t) * rx);
+      wl.push([px, py, 11, tan + (i % 2 ? 0.5 : -0.2), wc[i % wc.length]]);
+    }
+    for (const t of [-Math.PI / 2, Math.PI / 2]) wa.push([mx - 4, my + Math.sin(t) * (ry + 5), t - 0.35 * Math.sin(t)], [mx + 4, my + Math.sin(t) * (ry + 5), t + 0.35 * Math.sin(t)]);
+    for (const t of [-0.5, -2.64, 0.5, 2.64, 0, Math.PI]) wa.push([mx + Math.cos(t) * (rx + 5.6), my + Math.sin(t) * (ry + 5.6), t]);
+    leaves(wl, one);
+    acorns(wa, one, 0.9);
+    // the harvest heap: two corncobs fanned behind, a pumpkin in the middle, gourds and apples round it
+    corns([[mx - 4, my + 5, 26, -Math.PI / 2 - 0.62], [mx + 4, my + 5, 26, -Math.PI / 2 + 0.62]], one);
+    leaves([[mx, my - 1, 14, -Math.PI / 2, 2], [mx - 2, my + 1, 12, -2.25, 1], [mx + 2, my + 1, 12, -0.89, 0]], one);
+    gourds([['bicolor', mx - 16, my + 2, 6.4, -0.3], ['pear', mx + 16, my + 2, 6.4, 0.3]], one);
+    gourds([['pumpkin', mx, my + 3, 10.5], ['white', mx - 9, my + 12, 5.2], ['apple', mx + 9, my + 12, 5], ['apple', mx + 2.4, my + 15, 4.2]], one);
+    // ---- corner sprays: a corncob lying along the diagonal into the corner, oak leaves fanned along both edges, a gourd
+    leaves([[8, 7, 15, 0.12, 0], [7, 8, 15, Math.PI / 2 - 0.12, 2], [9, 9, 13, 0.62, 1], [9, 9, 13, 0.95, 4], [24, 7, 10, -0.2, 3]], four);
+    corns([[27, 24, 21, Math.PI + 0.72]], four);
+    const upright = [];
+    for (const [k, gx, gy, sz, ga] of [['bicolor', 34, 11, 5.4, 0.5], ['pumpkin', 10, 31, 5, 0]]) for (const [sx, sy] of [[1, 1], [-1, 1], [1, -1], [-1, -1]]) upright.push([k, sx > 0 ? fx + gx : fx + fw - gx, sy > 0 ? fy + gy : fy + fh - gy, sz, ga * sx]);
+    gourds(upright, one);
+    acorns([[37, 22, -0.4], [20, 36, 2.1]], four);
+    // ---- left and right of the medallion: a pair of apples with a leaf; above and below it: two leaves
+    leaves([[fx + 13, my - 4, 9, -2.2, 3], [fx + fw - 13, my - 4, 9, -0.94, 3]], one);
+    gourds([['apple', fx + 9, my + 1, 4.6], ['apple', fx + 18, my + 2, 4.6], ['apple', fx + fw - 9, my + 1, 4.6], ['apple', fx + fw - 18, my + 2, 4.6]], one);
+    leaves([[-1, -my + fy + 5, 9, Math.PI - 0.2, 1], [1, -my + fy + 5, 9, 0.2, 0]], ends);
+    // ---- little motifs in the open field between: single leaves and acorns, mirrored four ways
+    leaves([[48, 6, 9, 0.3, 4], [36, 31, 8, -0.5, 2], [36, 31, 8, 0.7, 1]], four);
+    acorns([[50, 14, -2.3]], four);
+  });
+}
+
+// Drawing kit for the haunted house and the other Halloween pictures: shapes in picture units, glows, pumpkins, bats, a cat.
+function hlwHauntedKit(ctx, W, H) {
+  const u = H / 100, X = (a) => a * u;
+  const trace = (pts, close = true) => { ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); if (close) ctx.closePath(); };
+  const K = {
+    u, X, W: W / u,
+    rect: (a, b, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(X(a), X(b), X(w), X(h)); },
+    poly: (pts, col) => { ctx.fillStyle = col; trace(pts); ctx.fill(); },
+    ell: (a, b, rx, ry, col, rot = 0) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(Math.max(0.01, rx)), X(Math.max(0.01, ry)), rot, 0, Math.PI * 2); ctx.fill(); },
+    rr: (a, b, w, h, r, col) => { ctx.fillStyle = col; roundRect(ctx, X(a), X(b), X(w), X(h), X(r)); ctx.fill(); },
+    line: (pts, w, col, cap = 'round') => { ctx.strokeStyle = col; ctx.lineWidth = X(w); ctx.lineCap = cap; ctx.lineJoin = 'round'; trace(pts, false); ctx.stroke(); },
+    glow: (a, b, r, rgb, alpha) => {
+      const g = ctx.createRadialGradient(X(a), X(b), 0, X(a), X(b), X(r));
+      g.addColorStop(0, `rgba(${rgb},${alpha})`); g.addColorStop(1, `rgba(${rgb},0)`);
+      ctx.fillStyle = g; ctx.fillRect(X(a - r), X(b - r), X(2 * r), X(2 * r));
+    },
+    vgrad: (b0, b1, stops) => { const g = ctx.createLinearGradient(0, X(b0), 0, X(b1)); stops.forEach(([t, c]) => g.addColorStop(t, c)); return g; },
+    // Catmull-Rom through the points (any number of coordinates each, e.g. [a, b, width])
+    smooth: (pts, n = 8) => {
+      const out = [];
+      for (let i = 0; i < pts.length - 1; i++) {
+        const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+        for (let k = 0; k < n; k++) {
+          const t = k / n, t2 = t * t, t3 = t2 * t;
+          out.push(p1.map((_, j) => 0.5 * (2 * p1[j] + (p2[j] - p0[j]) * t + (2 * p0[j] - 5 * p1[j] + 4 * p2[j] - p3[j]) * t2 + (3 * p1[j] - p0[j] - 3 * p2[j] + p3[j]) * t3)));
+        }
+      }
+      out.push(pts[pts.length - 1]);
+      return out;
+    },
+    // lean whatever fn draws: s > 0 tips it to the right going up, pivoting on (a, b)
+    lean: (a, b, s, fn) => { ctx.save(); ctx.translate(X(a), X(b)); ctx.transform(1, 0, -s, 1, 0, 0); ctx.translate(-X(a), -X(b)); fn(); ctx.restore(); },
+  };
+  // a band along [a, b, width] points, smoothed, with round ends
+  K.band = (pts, col, n = 6) => {
+    const s = K.smooth(pts, n), L = [], Rt = [];
+    for (let i = 0; i < s.length; i++) {
+      const p = s[Math.max(0, i - 1)], q = s[Math.min(s.length - 1, i + 1)], dx = q[0] - p[0], dy = q[1] - p[1], d = Math.hypot(dx, dy) || 1, w = s[i][2] / 2;
+      L.push([s[i][0] - dy / d * w, s[i][1] + dx / d * w]); Rt.push([s[i][0] + dy / d * w, s[i][1] - dx / d * w]);
+    }
+    K.poly(L.concat(Rt.reverse()), col);
+    K.ell(s[0][0], s[0][1], s[0][2] / 2, s[0][2] / 2, col); K.ell(s[s.length - 1][0], s[s.length - 1][1], s[s.length - 1][2] / 2, s[s.length - 1][2] / 2, col);
+  };
+  // a pumpkin: ribbed body centred on (a, b), a stem, and if `face` is given a glowing carved face
+  // ('tri' triangle eyes and a toothy grin, 'round' round eyes and a wide smile, 'kind' tilted eyes and a little smile, 'tiny' for far ones)
+  K.pumpkin = (a, b, rx, ry, face = null, o = {}) => {
+    const c = o.col || '#e8742a', dark = mixHex(c, '#3a0c00', 0.38), mid = mixHex(c, '#3a0c00', 0.17), lite = mixHex(c, '#fff0b0', 0.28);
+    if (face && o.halo !== false) K.glow(a, b, Math.max(rx, ry) * 2.3, '255,150,60', o.haloA ?? 0.32);
+    const sw = Math.max(1.7, rx * 0.2), sh = Math.max(2.4, ry * 0.42), tilt = o.stemTilt ?? 0.18;
+    K.poly([[a - sw / 2, b - ry * 0.7], [a - sw / 2 + tilt * sh, b - ry * 0.75 - sh], [a + sw / 2 + tilt * sh * 1.3, b - ry * 0.78 - sh], [a + sw / 2, b - ry * 0.7]], o.stem || '#5e6a2c');
+    for (const [off, w, col] of [[-0.52, 0.5, dark], [0.52, 0.5, dark], [-0.25, 0.5, mid], [0.25, 0.5, mid], [0, 0.36, c]]) K.ell(a + off * rx, b, w * rx, ry * (1 - Math.abs(off) * 0.12), col);
+    if (rx >= 7 && !face) K.ell(a - rx * 0.28, b - ry * 0.42, rx * 0.13, ry * 0.16, lite);
+    if (!face) return;
+    const F = (pts) => pts.map(([x, y]) => [a + x * rx, b + y * ry]);
+    const hot = o.hot || '#ffd84a', core = o.core || '#fff3b0', big = rx >= 9;
+    const shape = (pts) => { K.poly(F(pts), hot); if (big) { const cx = pts.reduce((s, p) => s + p[0], 0) / pts.length, cy = pts.reduce((s, p) => s + p[1], 0) / pts.length; K.poly(F(pts.map(([x, y]) => [cx + (x - cx) * 0.55, cy + (y - cy) * 0.55])), core); } };
+    const smile = (w, top, depth, curve, teeth) => {
+      const T = [], B = [], n = 12;
+      for (let i = 0; i <= n; i++) { const x = -w + 2 * w * i / n, f = x / w; T.push([x, top - curve * f * f]); B.push([x, top - curve * f * f + depth * (1 - f * f)]); }
+      if (teeth) { // two teeth hanging from the top, one standing on the bottom in the middle
+        const tt = T.map(([x, y]) => [x, Math.abs(Math.abs(x) - w * 0.38) < w * 0.12 ? y + depth * 0.32 : y]);
+        const bb = B.map(([x, y]) => [x, Math.abs(x) < w * 0.12 ? y - depth * 0.32 : y]);
+        return tt.concat(bb.reverse());
+      }
+      return T.concat(B.reverse());
+    };
+    if (face === 'tri') {
+      shape([[-0.5, -0.06], [-0.16, -0.06], [-0.33, -0.42]]); shape([[0.16, -0.06], [0.5, -0.06], [0.33, -0.42]]);
+      shape([[-0.09, 0.14], [0.09, 0.14], [0, 0.0]]);
+      shape(smile(0.62, 0.3, 0.32, 0.14, true));
+    } else if (face === 'round') {
+      for (const s of [-1, 1]) { K.ell(a + s * 0.32 * rx, b - 0.2 * ry, 0.15 * rx, 0.19 * ry, hot); if (big) K.ell(a + s * 0.32 * rx, b - 0.2 * ry, 0.08 * rx, 0.1 * ry, core); }
+      shape(smile(0.56, 0.2, 0.36, 0.18, false));
+    } else if (face === 'kind') {
+      shape([[-0.52, -0.02], [-0.14, -0.1], [-0.28, -0.36]]); shape([[0.14, -0.1], [0.52, -0.02], [0.28, -0.36]]);
+      shape(smile(0.42, 0.26, 0.26, 0.12, false));
+    } else { // tiny: just two eyes and a mouth as single bright blobs
+      for (const s of [-1, 1]) K.ell(a + s * 0.3 * rx, b - 0.18 * ry, Math.max(0.75, 0.15 * rx), Math.max(0.8, 0.17 * ry), hot);
+      K.ell(a, b + 0.3 * ry, 0.42 * rx, Math.max(0.8, 0.16 * ry), hot);
+    }
+  };
+  // a bat in flight, s = half the wingspan
+  K.bat = (a, b, s, col, tilt = 0) => {
+    const k = (s / 10) * u;
+    ctx.save(); ctx.translate(X(a), X(b)); ctx.rotate(tilt); ctx.scale(k, k); ctx.fillStyle = col;
+    const wing = [[1, -1.6], [3.5, -4.2], [6.6, -5.6], [10, -4.6], [9.2, -2.6], [8.3, 0.6], [6.7, -0.8], [5.2, 2], [3.6, 0.8], [1.6, 2.6]];
+    ctx.beginPath(); wing.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+    for (let i = wing.length - 1; i >= 0; i--) ctx.lineTo(-wing[i][0], wing[i][1]);
+    ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(0, 0.6, 2, 3.1, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(0, -2.4, 1.9, 0, Math.PI * 2); ctx.fill();
+    for (const sg of [-1, 1]) { ctx.beginPath(); ctx.moveTo(sg * 1.9, -2.6); ctx.lineTo(sg * 1.5, -5.6); ctx.lineTo(sg * 0.2, -3.6); ctx.closePath(); ctx.fill(); }
+    ctx.restore();
+  };
+  // a black cat sitting facing us, base centre (a, b), about 22s tall; rim = colour of a lit edge on the side rimDx points to
+  K.cat = (a, b, s, o = {}) => {
+    const body = o.col || '#17121e', eye = o.eye || '#f2cf3a';
+    const draw = (col, dx) => {
+      const x = a + dx;
+      K.band([[x + 4 * s, b - 1.2 * s, 2.4 * s], [x + 8.6 * s, b - 2.4 * s, 2.2 * s], [x + 9.8 * s, b - 7 * s, 2 * s], [x + 8.2 * s, b - 10.6 * s, 1.9 * s]], col);
+      K.ell(x, b - 5.6 * s, 5.4 * s, 6 * s, col);
+      K.ell(x, b - 10.2 * s, 3.7 * s, 3.6 * s, col);
+      K.ell(x, b - 14 * s, 4.9 * s, 4.1 * s, col);
+      for (const sg of [-1, 1]) K.poly([[x + sg * 4.8 * s, b - 14.6 * s], [x + sg * 4.3 * s, b - 22.4 * s], [x + sg * 0.7 * s, b - 17.4 * s]], col);
+      for (const sg of [-1, 1]) K.ell(x + sg * 2.4 * s, b - 0.6 * s, 2 * s, 1.2 * s, col);
+    };
+    if (o.rim) draw(o.rim, o.rimDx ?? 0.9);
+    draw(body, 0);
+    for (const sg of [-1, 1]) { K.ell(a + sg * 2 * s, b - 14.3 * s, 1.3 * s, 1.4 * s, eye); if (s >= 1.3) K.ell(a + sg * 2 * s, b - 14.2 * s, 0.45 * s, 1.1 * s, body); }
+    K.poly([[a - 0.6 * s, b - 12.4 * s], [a + 0.6 * s, b - 12.4 * s], [a, b - 11.7 * s]], o.nose || '#c86a8a');
+  };
+  return K;
+}
+
+// Haunted house: a crooked mansion on a hill under a huge moon, a twisted tree with an owl, bats, a pumpkin-lit path, an iron fence.
+function hlwHaunted(ctx, W, H) {
+  const K = hlwHauntedKit(ctx, W, H), { rect, poly, ell, glow, band, line } = K, R = rng(1031), WD = K.W;
+  const MX = 109, MY = 27, MR = 25;
+  // ---- the night sky, paler towards the hill, with round stars
+  ctx.fillStyle = K.vgrad(0, 68, [[0, '#121436'], [0.42, '#29296a'], [0.78, '#493c8a'], [1, '#6a52a2']]); ctx.fillRect(0, 0, W, H);
+  for (let k = 0; k < 46; k++) {
+    const a = R() * WD, b = R() * 54, r = 0.85 + R() * 0.55;
+    if (Math.hypot(a - MX, b - MY) < MR + 7) continue;
+    ell(a, b, r, r, R() < 0.3 ? '#fff2c0' : '#dcd8ff');
+  }
+  // ---- the moon: a broad halo, a cream disc with soft grey seas
+  glow(MX, MY, MR * 2.5, '210,200,255', 0.3);
+  glow(MX, MY, MR * 1.4, '255,246,210', 0.4);
+  ell(MX, MY, MR, MR, '#f6edc8');
+  for (const [a, b, rx, ry] of [[-9, -8, 6.6, 5], [8, 5, 7.6, 5.8], [-6, 11, 4.6, 3.4], [10, -12, 3.8, 2.8], [-15, 3, 2.8, 3.4]]) ell(MX + a, MY + b, rx, ry, '#e4d8ac');
+
+  // ---- the hill, moonlit along its crest, falling to a dark lawn
+  const hill = [[0, 74], [16, 70.5], [34, 67], [52, 64.5], [70, 63], [94, 62.4], [118, 63], [136, 65.5], [158, 69], [158, 100], [0, 100]];
+  poly(hill, K.vgrad(61, 100, [[0, '#46528a'], [0.2, '#30486a'], [0.6, '#22384c'], [1, '#162432']]));
+  // ---- the mansion: dark painted boards with lavender trim along every roof edge and corner, warm windows
+  const wall = '#2c2648', wallS = '#221d3c', frame = '#120e22', roof = '#17122a', edge = '#7d6db0', LIT = '#ffd660', LIT2 = '#f6a640', DARKW = '#0f0c1e';
+  const win = (a, b, w, h, lit) => {
+    rect(a - 0.8, b - 0.8, w + 1.6, h + 1.6, frame);
+    if (lit) { rect(a, b, w, h, LIT); rect(a, b + h * 0.6, w, h * 0.4, LIT2); } else rect(a, b, w, h, DARKW);
+    rect(a - 1.3, b + h + 0.7, w + 2.6, 1.4, edge);
+  };
+  const glowWin = (a, b, w, h) => glow(a + w / 2, b + h / 2, 6, '255,190,90', 0.22);
+  ctx.save(); ctx.translate(K.X(94), K.X(63)); ctx.scale(1.16, 1.16); ctx.translate(-K.X(94), -K.X(63));
+  // left wing with a steep gable and a round attic window, leaning out to the left
+  K.lean(72, 63, -0.05, () => {
+    rect(63, 45, 18.5, 18.5, wall); rect(77.5, 45, 4, 18.5, wallS); rect(63, 45, 1.4, 18.5, edge);
+    poly([[60.6, 47.4], [72.2, 28.8], [83.8, 47.4]], edge); poly([[62.8, 47], [72.2, 31.8], [81.6, 47]], roof);
+    poly([[65.4, 47], [72.2, 36], [79, 47]], wall);
+    glowWin(70, 38, 4, 4);
+    ell(72.2, 41.2, 3.2, 3.2, frame); ell(72.2, 41.2, 2.4, 2.4, LIT);
+    for (const [a, b, lit] of [[65.6, 50, 1], [74.4, 50, 0], [65.6, 57, 0], [74.4, 57, 1]]) { if (lit) glowWin(a, b, 4, 4.6); win(a, b, 4, 4.6, lit); }
+  });
+  // chimneys, a little askew
+  poly([[80.5, 34], [81.2, 23], [85, 23.6], [84.4, 34]], '#231c3a'); rect(80.2, 21.6, 5.4, 2.2, edge);
+  poly([[100.5, 33], [101.6, 21.5], [105.2, 21.8], [104.4, 33]], '#231c3a'); rect(100.8, 20.2, 5.2, 2.2, edge);
+  // the main house: two storeys under a mansard roof with two dormers
+  rect(78.5, 39, 31.5, 24.5, wall); rect(105, 39, 5, 24.5, wallS);
+  rect(78.5, 50.6, 31.5, 1.4, edge); rect(108.6, 39, 1.4, 24.5, edge);
+  poly([[76.4, 40.5], [80.2, 30.4], [108.8, 30.4], [112.2, 40.5]], edge); poly([[77.8, 40.2], [81.4, 31.8], [107.8, 31.8], [110.8, 40.2]], roof);
+  rect(76.4, 39.8, 35.8, 1.6, edge);
+  for (const a of [86.5, 99.5]) {
+    if (a < 90) glowWin(a - 1.6, 33, 3.2, 4);
+    rect(a - 3.2, 32.4, 6.4, 7, wall); poly([[a - 4.6, 33.6], [a, 27.4], [a + 4.6, 33.6]], edge); poly([[a - 3.2, 33.2], [a, 29], [a + 3.2, 33.2]], roof);
+    win(a - 1.6, 34, 3.2, 3.8, a < 90);
+  }
+  for (const [a, lit] of [[81.6, 1], [88.2, 0], [94.8, 1], [101.4, 1]]) { if (lit) glowWin(a, 43, 4, 5.4); win(a, 43, 4, 5.4, lit); }
+  glowWin(81.6, 54.6, 4, 5.4); win(81.6, 54.6, 4, 5.4, true); win(101.6, 54.6, 4, 5.4, false);
+  // the porch: a little roof on posts, a lit open door, steps
+  glow(93, 58, 9, '255,180,80', 0.3);
+  rect(90.2, 52.6, 6, 10.6, frame); rect(91, 53.4, 4.4, 9.8, '#f2a23e'); rect(91, 53.4, 4.4, 4.8, LIT);
+  poly([[84.6, 52.2], [101.8, 52.2], [99.8, 48.4], [86.6, 48.4]], roof); rect(84.2, 51.4, 18, 1.6, edge);
+  for (const a of [85.8, 99.4]) rect(a, 52.8, 1.8, 10.6, edge);
+  rect(88.4, 62.4, 9.6, 1.6, '#5a4c84');
+  // the tower, leaning to the right, with a tall witch-hat roof and a finial
+  K.lean(113.5, 63.5, 0.075, () => {
+    rect(107.8, 27, 11.8, 36.5, wall); rect(115.6, 27, 4, 36.5, wallS); rect(107.8, 27, 1.4, 36.5, edge);
+    for (const [b, lit] of [[32.5, 1], [44, 1], [55.5, 0]]) { if (lit) glowWin(111.6, b, 4, 5.6); win(111.6, b, 4, 5.6, lit); }
+    poly([[105, 29.4], [113.7, 10.2], [122.4, 29.4]], edge); poly([[106.8, 28.6], [113.7, 12.8], [120.6, 28.6]], roof);
+    rect(105.2, 27.6, 17, 1.8, edge);
+    rect(113.05, 7.4, 1.3, 4, edge); ell(113.7, 7.6, 1.2, 1.2, edge);
+  });
+  ctx.restore();
+
+  // dark shrubs along the crest either side of the house
+  for (const [a, b, rx, ry] of [[52, 64.6, 5.4, 3.4], [59, 63.4, 4.4, 3], [47, 66, 3.6, 2.4], [131, 64.6, 5.2, 3.2], [138, 66, 4.4, 2.8], [125, 63.6, 3.6, 2.4]]) { ell(a, b, rx, ry, '#1c2440'); ell(a - rx * 0.25, b - ry * 0.35, rx * 0.55, ry * 0.45, '#2c3658'); }
+  // ---- a low mist drifting along the foot of the hill
+  for (const [a, b, rx, ry] of [[22, 73, 30, 2.8], [140, 74, 30, 2.8], [60, 76, 22, 2.2]]) ell(a, b, rx, ry, 'rgba(150,170,225,.14)');
+
+  // ---- the winding path from the door down to us, moonlit in the middle
+  const path = [[93.1, 64.4, 4.2], [86.5, 66.4, 5], [79, 69, 6.4], [76.5, 72.4, 8], [83, 76.2, 10], [95, 80.4, 13], [99, 86, 16], [92, 93, 20], [80, 101.5, 26]];
+  band(path, '#6c6290', 8);
+  band(path.map(([a, b, w]) => [a, b, w * 0.82]), '#9286b2', 8);
+  band(path.map(([a, b, w]) => [a + w * 0.04, b, w * 0.4]), '#aaa0c6', 8);
+  // pumpkins along the path: little far ones glowing, then bigger
+  for (const [a, b, rx, ry] of [[84.2, 64.6, 2.4, 2], [101.8, 66.6, 2.6, 2.2], [69.6, 70.8, 3, 2.6]]) {
+    glow(a, b, rx * 3, '255,150,60', 0.4); K.pumpkin(a, b, rx, ry, 'tiny', { halo: false });
+  }
+  // ---- the wrought-iron fence with a gate where the path comes through
+  const gateL = 88, gateR = 111, fence = '#0f0c1a';
+  rect(-2, 82.2, gateL, 1.7, fence); rect(-2, 91.2, gateL, 1.7, fence);
+  rect(gateR, 82.2, WD - gateR + 2, 1.7, fence); rect(gateR, 91.2, WD - gateR + 2, 1.7, fence);
+  for (let a = 1.5; a < WD; a += 4.4) {
+    if (a > gateL - 1.5 && a < gateR + 1) continue;
+    rect(a - 0.75, 80, 1.5, 15.5, fence);
+    poly([[a - 1.5, 80.6], [a, 77.2], [a + 1.5, 80.6]], fence);
+  }
+  // moonlit stone gate pillars topped with jack-o'-lanterns
+  for (const a of [gateL - 2.5, gateR + 2.5]) {
+    rect(a - 3, 79, 6, 17, '#4e4870'); rect(a - 3, 79, 2, 17, '#6c6694'); rect(a - 3.9, 77.2, 7.8, 2.2, '#8a84b0');
+    K.pumpkin(a, 72.6, 4.8, 4, 'tri', { haloA: 0.4 });
+  }
+  // big jack-o'-lanterns in front
+  K.pumpkin(70, 94.2, 8.4, 6.6, 'tri');
+  K.pumpkin(121, 95.6, 7.4, 6, 'round');
+  K.pumpkin(57.5, 97.4, 4.4, 3.6, null);
+  K.pumpkin(133.4, 97.2, 4.6, 3.8, null, { col: '#e88a36' });
+
+  // ---- the bare twisted tree on the left, an owl on its low branch
+  const tree = '#0f0b18';
+  band([[13, 102, 12], [17, 92, 8.6], [14.5, 82, 7.2], [19.5, 71, 6], [18, 61, 5], [23, 51, 4.2], [29, 43, 3.4], [37, 35.5, 2.7], [47, 29.5, 2.1], [57, 26.5, 1.6], [63, 22, 1.3]], tree);
+  band([[18.6, 63, 3.2], [11, 56, 2.5], [5.5, 48, 2], [1, 44, 1.6], [-2, 43, 1.4]], tree);
+  band([[23.5, 50, 2.8], [21.5, 40, 2.2], [24.5, 31, 1.8], [21, 22, 1.5], [23.5, 15, 1.3]], tree);
+  band([[37, 35.5, 2], [40, 26, 1.6], [46.5, 19, 1.4], [44, 12.5, 1.2]], tree);
+  band([[47, 29.5, 1.6], [53, 33.5, 1.4], [59, 32.5, 1.25]], tree);
+  band([[22.5, 34, 1.6], [15.5, 30, 1.4], [12, 23, 1.3]], tree);
+  band([[6, 49, 1.6], [4, 40, 1.3], [7, 34, 1.2]], tree);
+  band([[14.5, 84, 3], [7, 80, 2.2], [3, 75, 1.6]], tree);
+  // the owl: a round body, ear tufts, a pale breast, big golden eyes
+  {
+    const ox = 11.2, oy = 52.4, s = 1.45, body = '#6a4a3a', O = (dx, dy) => [ox + dx * s, oy + dy * s];
+    ell(...O(0, 0), 3.8 * s, 4.6 * s, body); ell(...O(0, -3.8), 3.5 * s, 3 * s, body);
+    for (const sg of [-1, 1]) poly([O(sg * 3.6, -4.6), O(sg * 3.3, -8), O(sg * 1.4, -5.8)], body);
+    ell(...O(0, 1.2), 2.5 * s, 2.9 * s, '#b0906c');
+    for (const sg of [-1, 1]) { ell(...O(sg * 1.6, -3.8), 1.45 * s, 1.45 * s, '#f2c23a'); ell(...O(sg * 1.6, -3.8), 0.6 * s, 0.65 * s, '#120e1a'); }
+    poly([O(-0.5, -2.5), O(0.5, -2.5), O(0, -1.2)], '#d88a3a');
+    for (const sg of [-1, 1]) ell(...O(sg * 1.2, 4.6), 0.9 * s, 0.6 * s, '#d88a3a');
+  }
+
+  // ---- bats over the moon and the hill
+  for (const [a, b, s, t] of [[93.5, 17, 5.2, -0.12], [118, 39, 4.2, 0.15], [74, 12, 4.4, 0.1], [133, 13, 5.4, -0.18], [146, 31, 3.6, 0.2], [59, 45, 3.4, -0.1]]) K.bat(a, b, s, '#0e0b16', t);
+}
+
+// Witch's cottage: a crooked thatched cottage in a forest clearing, a smoking chimney, a broom, a bubbling cauldron, a cat, toadstools.
+function hlwWitchCottage(ctx, W, H) {
+  const K = hlwHauntedKit(ctx, W, H), { rect, poly, ell, glow, band } = K, R = rng(1313), WD = K.W;
+  // ---- the night sky over the clearing: deep teal, misty green low down behind the trees
+  ctx.fillStyle = K.vgrad(0, 66, [[0, '#0b1a28'], [0.45, '#143642'], [0.78, '#245c56'], [1, '#3e7c66']]); ctx.fillRect(0, 0, W, H);
+  for (let k = 0; k < 34; k++) { const a = R() * WD, b = R() * 36, r = 0.85 + R() * 0.5; ell(a, b, r, r, R() < 0.3 ? '#fff4c8' : '#d8f0ec'); }
+  // ---- the forest round the clearing: two rows of pointed firs, lower in the middle where the cottage stands
+  const fir = (a, base, h, w, col) => {
+    rect(a - w * 0.06, base - h * 0.2, w * 0.12, h * 0.2, col);
+    for (let k = 0; k < 4; k++) { const top = base - h + k * h * 0.2, bot = top + h * 0.34, hw = w * (0.22 + k * 0.1); poly([[a, top], [a + hw, bot], [a - hw, bot]], col); }
+  };
+  for (const [base, col, step, hs] of [[65, '#1c4a46', 8.5, 30], [69, '#11302e', 12, 38]]) {
+    for (let a = -4 + R() * 4; a < WD + 6; a += step * (0.8 + R() * 0.4)) {
+      const mid = Math.min(1, Math.abs(a - 72) / 70), h = hs * (0.45 + 0.6 * mid) * (0.85 + R() * 0.3);
+      fir(a, base, h, h * 0.42, col);
+    }
+  }
+  // ---- the clearing: mossy ground, lighter where the mist and the fire light it
+  poly([[0, 70], [20, 67.6], [44, 66.4], [70, 66], [100, 66.6], [130, 67.4], [158, 69], [158, 100], [0, 100]], K.vgrad(66, 100, [[0, '#56783a'], [0.35, '#3c5e2e'], [1, '#22381e']]));
+  for (const [a, b, rx, ry] of [[6, 69, 9, 3.6], [24, 68, 7, 2.6], [128, 68.6, 8, 3], [146, 69.4, 9, 3.6], [102, 67.6, 5, 2]]) ell(a, b, rx, ry, '#1e3a22');
+  for (let k = 0; k < 34; k++) { const a = R() * WD, b = 74 + R() * 26; ell(a, b, 1.5, 1.1, ['#c8702a', '#e0a038', '#a8442a', '#7a8a2e'][k % 4], R() * 3); }
+  // fireflies over the dark trees
+  for (let k = 0; k < 16; k++) { const a = 10 + R() * 138, b = 30 + R() * 34; if (a > 34 && a < 96 && b < 70) continue; glow(a, b, 3.2, '220,240,110', 0.55); ell(a, b, 0.9, 0.9, '#f0f88a'); }
+  // ---- gnarled old trees framing the clearing, dark leaves in the top corners
+  const bark = '#16100c';
+  band([[-3, 103, 17], [4, 82, 12], [2.5, 62, 10], [6, 42, 9], [3.5, 22, 8], [6, -3, 8]], bark);
+  band([[5, 26, 4], [14, 20, 3], [24, 21, 2.2], [32, 16.5, 1.7]], bark);
+  band([[161, 103, 17], [154, 82, 12], [155.5, 60, 10], [152, 38, 9], [154.5, 16, 8], [152, -3, 8]], bark);
+  band([[152.5, 33, 4], [143, 28, 3], [135, 29.6, 2.2], [128, 25, 1.7]], bark);
+  for (const [a, b, rx, ry] of [[6, -1, 20, 8], [22, 2, 12, 5], [152, -1, 22, 9], [134, 1.5, 12, 5]]) ell(a, b, rx, ry, '#0e2620');
+
+  // ---- the cottage: crooked half-timbered walls under a bent, droopy thatched roof
+  const beam = '#4a2e1c', LIT = '#ffc860', LIT2 = '#ffe9a6';
+  // a witch's hat left on a tree stump beside it
+  rect(23.2, 69.6, 9.6, 8, '#5a3a22'); ell(28, 77.6, 4.8, 1.4, '#5a3a22'); ell(28, 69.6, 4.8, 1.6, '#9a7a4e'); ell(28, 69.6, 2.6, 0.8, '#7a5a34');
+  ell(28, 68.2, 7, 1.9, '#1d1828');
+  poly([[23.8, 68], [26.6, 58.4], [29.8, 54], [33.8, 53.2], [30.8, 55.6], [30, 59], [32.2, 68]], '#1d1828');
+  poly([[24.2, 66.2], [31.8, 66.2], [32.2, 68.2], [23.8, 68.2]], '#8a42a8');
+  ctx.save(); ctx.translate(K.X(63), K.X(75)); ctx.scale(1.1, 1.1); ctx.translate(-K.X(63), -K.X(75));
+  glow(56, 60, 22, '255,190,90', 0.22);
+  poly([[44.5, 73], [46, 49], [80, 47.4], [81.6, 73]], '#dcc898');
+  poly([[73.2, 47.8], [80, 47.4], [81.6, 73], [73.6, 73]], '#bea67a');
+  band([[46.1, 73, 1.9], [46.7, 49, 1.9]], beam); band([[80.6, 73, 1.9], [79.6, 48, 1.9]], beam);
+  rect(45.6, 66.8, 16, 1.9, beam); rect(73, 66.8, 8, 1.9, beam);
+  // stone footing
+  rect(44.4, 70.6, 37.4, 3.4, '#6a6274');
+  for (let a = 46; a < 81; a += 4.2) ell(a, 72.2, 1.7, 1.2, '#8a8296');
+  // the round glowing window (plain glass) with a little sill
+  glow(54.5, 58, 13, '255,200,100', 0.4);
+  ell(54.5, 58, 6.3, 6.3, beam); ell(54.5, 58, 4.9, 4.9, LIT); ell(53.6, 57, 2.6, 2.6, LIT2);
+  rect(48.4, 64, 12.2, 1.8, beam);
+  // the door: purple planks under a round top, left ajar so a sliver of light shows; a step stone
+  ell(67.2, 58.4, 5.6, 5.6, beam); rect(61.6, 58.4, 11.2, 14.8, beam);
+  ell(67.2, 58.6, 4.6, 4.6, '#5a2c5a'); rect(62.6, 58.6, 9.2, 14.6, '#5a2c5a');
+  rect(62.6, 54, 3, 19.2, '#4a2248'); rect(68.6, 54, 1.4, 19.2, '#4a2248');
+  rect(70.8, 56.6, 1.6, 16.6, LIT);
+  ell(64.6, 64.8, 0.9, 0.9, '#e8b44a');
+  ell(67.4, 74.2, 7.4, 1.9, '#8a8498');
+  // the thatched roof: a crooked witch's-hat sweep with its tip bent over, thatch laid in rows, a drooping eave
+  const roof = [[35.5, 53.4], [41, 47], [48, 39], [54, 30.5], [58.4, 22.5], [61.2, 16.5], [63, 13], [66, 10], [70.6, 9.4], [73.6, 12], [70.6, 12.4], [68.8, 15], [69.6, 19],
+    [72.6, 26], [78, 34], [84, 42], [88.8, 49.6], [90.2, 54], [84, 53], [70, 51.4], [55, 51.6], [44, 53.6], [37.6, 55.6]];
+  poly(roof, '#946c36');
+  ctx.save(); K.poly(roof, '#946c36'); ctx.clip();
+  for (let b = 12; b < 56; b += 5.2) { poly([[20, b], [100, b - 3], [100, b - 1.2], [20, b + 1.8]], '#715024'); poly([[20, b + 1.8], [100, b - 1.2], [100, b - 0.2], [20, b + 2.8]], '#b08848'); }
+  poly([[30, 56], [66, 50.2], [100, 54.6], [100, 60], [30, 60]], '#5e4220');
+  ell(48, 44, 3.6, 2, '#5c7a34'); ell(76, 38, 3, 1.8, '#5c7a34'); ell(81, 47.6, 4, 1.8, '#5c7a34');
+  ctx.restore();
+  // a leaning stone chimney on the left slope, smoke curling up from it
+  poly([[44.6, 45], [43.8, 22.6], [50.8, 21.4], [51.6, 39]], '#6a6276');
+  for (const [a, b] of [[46, 26], [49.4, 25], [47.4, 30.4], [45.6, 35], [49.8, 34], [47.8, 39.6]]) ell(a, b, 1.6, 1.1, '#8a8296');
+  poly([[42.6, 22.8], [42.4, 20], [52.2, 18.8], [52.4, 21.6]], '#4e4858');
+  for (const [a, b, rx, ry, al] of [[47.6, 15.4, 3, 2.5, 0.62], [45, 10.6, 3.8, 3, 0.55], [41, 5.6, 4.8, 3.6, 0.48], [35.4, 1, 6, 4.2, 0.4]]) ell(a, b, rx, ry, `rgba(200,204,220,${al})`);
+  // the broom leaning by the door: a crooked stick, straw bristles bound with red
+  band([[76.6, 50, 2.1], [79.6, 56, 2.1], [83.8, 63.6, 2.1]], '#c48a46');
+  poly([[82.2, 64.6], [85.6, 63], [91, 73.8], [83.2, 75.4]], '#e0b04e');
+  for (const t of [0.3, 0.62]) band([[82.2 + 3.4 * t, 64.6 - 1.6 * t, 1.3], [83.2 + 7.8 * t, 75.4 - 1.6 * t, 1.3]], '#b0802e');
+  poly([[81.6, 64.4], [85.4, 62.6], [86.2, 64.6], [82.4, 66.4]], '#b02e2a');
+  // pumpkins by the walls
+  K.pumpkin(59.2, 72.4, 3.6, 2.9, null);
+  ctx.restore();
+  K.pumpkin(40.4, 82, 6.6, 5.4, 'tri');
+
+  // ---- the cauldron over a fire on the right: firelight on the moss, crossed logs, flames, a black pot
+  // brimming with bubbling green brew, green steam rising
+  const cx = 118;
+  glow(cx, 84, 36, '255,140,60', 0.42);
+  band([[104.5, 93.4, 3.4], [131.5, 89, 3.4]], '#5a3820'); band([[105, 89, 3.2], [131, 93.6, 3.2]], '#714828');
+  ell(131.7, 89, 1.6, 1.6, '#b08050'); ell(104.6, 89, 1.5, 1.5, '#b08050');
+  const flame = (a, b, w, h, col) => poly([[a - w, b], [a - w * 0.85, b - h * 0.35], [a - w * 0.3, b - h * 0.7], [a, b - h], [a + w * 0.4, b - h * 0.62], [a + w * 0.9, b - h * 0.3], [a + w, b]], col);
+  for (const [a, h] of [[106, 13], [111, 16], [118, 15], [125, 16.4], [130, 12]]) flame(a, 92, 4, h, '#f0762a');
+  for (const [a, h] of [[109, 10.4], [115, 11.4], [121, 11], [127, 9.6]]) flame(a, 91.6, 2.6, h, '#ffcc48');
+  for (const [a, b] of [[104, 95], [111, 96.4], [118.5, 97], [126, 96.4], [133, 95]]) { ell(a, b, 3.3, 2, '#5e5866'); ell(a - 0.4, b - 0.5, 2.3, 1.1, '#857c8e'); }
+  for (const a of [cx - 9.8, cx + 7.4]) rect(a, 82, 2.4, 8.4, '#17161e');
+  ell(cx, 76.8, 13.4, 9.8, '#8a4a2a');
+  ell(cx, 76, 13, 9.6, '#23222c');
+  ell(cx - 6.6, 73.6, 2, 4, '#4a4a5c', 0.3);
+  ell(cx, 68.6, 14, 3.7, '#3e3e4e'); ell(cx, 68.7, 12, 2.6, '#72d446');
+  for (const [a, b, rx, ry] of [[-5, -0.4, 1.9, 1.2], [3.4, 0.4, 2.3, 1.3], [-0.6, -1, 1.5, 1], [7, -0.6, 1.4, 0.9]]) ell(cx + a, 68.6 + b, rx, ry, '#c0f88a');
+  band([[cx - 10, 69.6, 2.2], [cx - 10.3, 72.4, 1.8], [cx - 10.1, 74.2, 1.6]], '#5cc038'); band([[cx + 8.6, 70.2, 2], [cx + 9, 73.6, 1.6]], '#5cc038');
+  ell(cx - 3, 65.4, 1.7, 1.7, '#a8f070'); ell(cx + 4, 63.6, 1.3, 1.3, '#a8f070');
+  for (const [a, b, rx, ry, al] of [[0, 60.6, 4.2, 2.8, 0.62], [-2.6, 54.4, 5.2, 3.6, 0.55], [1.6, 47.4, 6, 4.2, 0.48], [-2, 39.6, 6.6, 4.6, 0.4], [2.4, 31, 7, 4.8, 0.33], [-1, 22.4, 7.4, 5, 0.26]]) {
+    ell(cx + a, b, rx, ry, `rgba(140,236,100,${al})`); ell(cx + a - rx * 0.2, b - ry * 0.15, rx * 0.5, ry * 0.45, `rgba(200,255,170,${al * 0.7})`);
+  }
+
+  // ---- the black cat sitting between the cottage and the fire, lit along its edge by the flames
+  K.cat(84.6, 98.6, 1.0, { rim: '#a4582c', rimDx: 1 });
+
+  // ---- a stepping-stone path from the door, toadstools and pumpkins in the moss
+  for (const [a, b, rx, ry] of [[65.4, 79.6, 4.4, 1.8], [61.8, 85.6, 5, 2], [65.6, 92, 5.6, 2.2], [60, 98.4, 6.4, 2.4]]) { ell(a, b, rx, ry, '#6e687e'); ell(a - 0.5, b - 0.5, rx * 0.75, ry * 0.6, '#948ea6'); }
+  const toad = (a, base, rx, h) => {
+    const ry = rx * 0.66, cy = base - h;
+    poly([[a - rx * 0.24, base], [a - rx * 0.2, cy], [a + rx * 0.2, cy], [a + rx * 0.26, base]], '#eee2c4');
+    ell(a, base, rx * 0.36, rx * 0.12, '#eee2c4');
+    const pts = [];
+    for (let i = 0; i <= 16; i++) { const t = Math.PI + Math.PI * i / 16; pts.push([a + rx * Math.cos(t), cy + ry * Math.sin(t)]); }
+    pts.push([a + rx * 0.9, cy + ry * 0.3], [a, cy + ry * 0.42], [a - rx * 0.9, cy + ry * 0.3]);
+    poly(pts, '#d43a2c');
+    poly([[a - rx, cy], [a + rx, cy], [a + rx * 0.9, cy + ry * 0.3], [a, cy + ry * 0.42], [a - rx * 0.9, cy + ry * 0.3]], '#a02620');
+    for (const [dx, dy, r] of [[-0.5, -0.36, 0.17], [0.1, -0.68, 0.15], [0.52, -0.3, 0.16], [-0.12, -0.18, 0.12]]) ell(a + dx * rx, cy + dy * ry, Math.max(1, r * rx), Math.max(0.9, r * rx * 0.8), '#f6efe0');
+  };
+  toad(16, 93, 7.8, 9); toad(28, 96.2, 5.2, 6.6); toad(7.6, 98, 4.2, 5);
+  toad(139.6, 79, 3.8, 4.6); toad(145.6, 81, 2.8, 3.4);
+  K.pumpkin(147, 90.6, 6.6, 5.4, null);
+  K.pumpkin(141.4, 97, 4.2, 3.4, null, { col: '#e8a03a' });
+  K.pumpkin(96.2, 96.4, 4, 3.2, null, { col: '#d8642a' });
+}
+
+// Trick or treat: four faceless children in costumes with treat buckets on a leafy street of decorated houses at dusk.
+function hlwTrickOrTreat(ctx, W, H) {
+  const K = hlwHauntedKit(ctx, W, H), { rect, poly, ell, rr, glow, band, line } = K, R = rng(3110), WD = K.W;
+  const GROUND = 58;
+  // ---- the dusk sky: violet overhead, rose and orange low down, the first stars
+  ctx.fillStyle = K.vgrad(0, GROUND, [[0, '#2a1f5e'], [0.4, '#56388a'], [0.72, '#ae5a84'], [1, '#f2963e']]); ctx.fillRect(0, 0, W, H);
+  for (let k = 0; k < 26; k++) { const a = R() * WD, b = R() * 20, r = 0.85 + R() * 0.45; ell(a, b, r, r, '#f4e8ff'); }
+  K.bat(108, 9, 3.6, '#1c1430', 0.1); K.bat(118.5, 5.5, 2.8, '#1c1430', -0.15);
+
+  // far rooftops and garden trees behind, in dusky violet
+  poly([[0, 58], [0, 40], [8, 40], [14, 34], [20, 40], [26, 38], [34, 33], [44, 37], [52, 36], [60, 31], [70, 36], [82, 35], [88, 30], [96, 36], [104, 34], [112, 38],
+    [122, 32], [130, 37], [140, 35], [148, 30], [158, 36], [158, 58]], '#4a3266');
+  for (const [a, b, r] of [[38, 44, 7], [90, 44, 6], [134, 42, 7]]) ell(a, b, r, r * 0.8, '#3c2a58');
+  // ---- the houses along the street, each with a lit porch, string lights and jack-o'-lanterns on its steps
+  const house = (x0, w, eave, peak, wall, roof, trim, door, lit, two) => {
+    const shade = mixHex(wall, '#1a1030', 0.25);
+    rect(x0, eave, w, GROUND - eave, wall);
+    rect(x0 + w - 3, eave, 3, GROUND - eave, shade);
+    poly([[x0 - 3, eave + 2], [x0 + w / 2, peak - 1.6], [x0 + w + 3, eave + 2]], trim);
+    poly([[x0 - 1.4, eave + 1.6], [x0 + w / 2, peak + 0.6], [x0 + w + 1.4, eave + 1.6]], roof);
+    const win = (a, b, w2, h2, on) => {
+      rect(a - 1, b - 1, w2 + 2, h2 + 2, trim);
+      rect(a, b, w2, h2, on ? '#ffd26a' : '#3a2a4a'); if (on) rect(a, b + h2 * 0.6, w2, h2 * 0.4, '#f4a644');
+    };
+    const gx = x0 + w / 2;
+    // the attic window: a plain warm glowing pane, no frame
+    const ay = (eave + peak) / 2 + 0.6;
+    glow(gx, ay + 2.4, 7, '255,200,110', 0.3); rect(gx - 2.6, ay, 5.2, 5.6, '#ffd26a'); rect(gx - 2.6, ay + 3.4, 5.2, 2.2, '#f4a644');
+    if (two) for (const [a, on] of [[x0 + 4, lit[1]], [x0 + w - 10, lit[2]]]) { glow(a + 3, eave + 7, 6, '255,200,110', 0.22); win(a, eave + 4, 6, 6.6, on); }
+    // the porch: a lit door with a glass top, a little roof on two posts, steps, string lights
+    glow(door + 3, 52, 9, '255,190,100', 0.32);
+    const wx = door < x0 + w / 2 ? door + 13 : door - 12;
+    win(wx, 47.4, 6.2, 6.4, lit[3]);
+    rect(door - 1, 46.2, 8, 11.8, trim); rect(door, 47, 6, 11, mixHex(wall, '#2a1020', 0.55)); rect(door + 1, 48, 4, 3.8, '#ffd26a');
+    rect(door - 5.4, 43.4, 16.8, 2.4, roof); rect(door - 5.4, 45.6, 16.8, 1, trim);
+    for (const a of [door - 4.8, door + 9.8]) rect(a, 46.4, 1.6, 11.8, trim);
+    for (let k = 0; k <= 6; k++) ell(door - 4.6 + k * 2.55, 47.6, 0.95, 0.95, ['#ffb040', '#b070f0', '#ffe070'][k % 3]);
+    rect(door - 2.2, GROUND, 10.4, 1.7, '#b4a6b2'); rect(door - 3.4, GROUND + 1.7, 12.8, 1.7, '#9a8c9c');
+    poly([[door - 2, GROUND + 3.4], [door + 8, GROUND + 3.4], [door + 11, 68], [door - 5, 68]], '#7c6e86');
+    K.pumpkin(door - 6.4, GROUND + 0.2, 2.8, 2.4, 'tiny', { haloA: 0.45 });
+    K.pumpkin(door + 12.4, GROUND + 1.4, 3.3, 2.8, 'tiny', { haloA: 0.45 });
+  };
+  const tree = (a, b, r, cols) => {
+    band([[a, GROUND + 1, 2.8], [a + 0.4, b + r * 0.3, 2.2], [a - 0.6, b, 1.6]], '#3a2420');
+    band([[a + 0.3, b + r * 0.55, 1.4], [a + r * 0.45, b + r * 0.1, 1.1]], '#3a2420');
+    const Rt = rng(Math.round(a * 31));
+    for (let k = 0; k < 11; k++) { const t = k / 11 * Math.PI * 2, d = r * (0.35 + Rt() * 0.4); ell(a + Math.cos(t) * d * 1.05, b + Math.sin(t) * d * 0.75, r * 0.42, r * 0.36, cols[0]); }
+    for (let k = 0; k < 6; k++) { const t = (k / 6) * Math.PI * 2 + 0.4, d = r * 0.3 * Rt(); ell(a + Math.cos(t) * d - r * 0.12, b - r * 0.18 + Math.sin(t) * d * 0.6, r * 0.34, r * 0.28, cols[1]); }
+    ell(a - r * 0.3, b - r * 0.38, r * 0.22, r * 0.16, cols[2]);
+  };
+  house(-6, 36, 31, 13, '#3c6c7c', '#2a2238', '#efe0c4', 7, [1, 0, 0, 1], false);
+  house(43, 44, 25, 7.4, '#c88f3a', '#4a2a3e', '#f4e6c8', 49, [1, 1, 0, 1], true);
+  house(97, 34, 30, 14, '#7a3e66', '#2a2238', '#f2dccc', 112, [0, 0, 0, 1], false);
+  house(140, 30, 28.5, 12, '#5f7a56', '#3a2a3a', '#eee2c6', 146, [1, 0, 0, 1], false);
+  // autumn trees between the houses
+  tree(36, 27, 12, ['#d0601e', '#f0923a', '#ffc070']);
+  tree(92, 31, 10.5, ['#b8382a', '#e0583a', '#f49060']);
+  tree(135.5, 26, 11.5, ['#d89a26', '#f2c44a', '#ffe08a']);
+  // bunting of little orange and purple pennants along the mustard house's porch
+  for (let k = 0; k < 6; k++) { const a = 60 + k * 4.2; poly([[a, 41.4], [a + 3.6, 41.4], [a + 1.8, 44.6]], k % 2 ? '#8a4ac0' : '#f08a2a'); }
+
+  // ---- the lawns, then the wide pavement with its kerb
+  rect(0, GROUND, WD, 10.5, '#2e4a32');
+  for (let k = 0; k < 40; k++) ell(R() * WD, GROUND + 2.5 + R() * 7.6, 1.3, 0.9, ['#d0601e', '#e8a63a', '#b8382a'][k % 3], R() * 3);
+  ctx.fillStyle = K.vgrad(68, 100, [[0, '#a898b2'], [1, '#867896']]); ctx.fillRect(0, K.X(68), W, H);
+  rect(0, 68, WD, 1.6, '#c8bcd2');
+  for (let k = -2; k < 9; k++) { const a = 6 + k * 21; poly([[a, 69.6], [a + 1.2, 69.6], [a + 1.2 + (a - 79) * 0.36, 100], [a + (a - 79) * 0.36, 100]], '#7a6c8c'); }
+  rect(0, 83.4, WD, 1.2, '#7a6c8c');
+
+  // ---- street lamps at the back of the pavement, pools of light below
+  for (const a of [18, 141]) {
+    ell(a, 82, 20, 6, 'rgba(255,224,160,.22)');
+    glow(a, 30, 18, '255,214,130', 0.5);
+    rect(a - 1.8, 66, 3.6, 4.4, '#1e1a2a'); band([[a, 68, 1.8], [a, 37, 1.5]], '#1e1a2a');
+    poly([[a - 3.6, 36.4], [a + 3.6, 36.4], [a + 4.4, 27.6], [a - 4.4, 27.6]], '#ffe28c');
+    rect(a - 0.6, 27.6, 1.2, 8.8, '#e8a84a');
+    poly([[a - 5.6, 28], [a + 5.6, 28], [a + 2.6, 24.4], [a - 2.6, 24.4]], '#1e1a2a'); ell(a, 23.6, 1.2, 1.2, '#1e1a2a');
+    rect(a - 4, 36.2, 8, 1.6, '#1e1a2a');
+  }
+  // leaves blown about on the pavement and in the air
+  for (let k = 0; k < 46; k++) { const a = R() * WD, b = 70 + R() * 30; ell(a, b, 1.5, 1, ['#d0601e', '#e8a63a', '#b8382a', '#8a5a2a'][k % 4], R() * 3); }
+  for (let k = 0; k < 8; k++) { const a = 10 + R() * 138, b = 34 + R() * 22; ell(a, b, 1.3, 0.9, ['#f0923a', '#e8a63a'][k % 2], R() * 3); }
+
+  // ---- the children, walking along the pavement, each with a treat bucket; no faces
+  const FEET = 95, kid = (a, s, fn) => { ctx.save(); ctx.translate(K.X(a), K.X(FEET)); ctx.scale(s, s); ctx.translate(-K.X(a), -K.X(FEET)); fn(); ctx.restore(); };
+  const shoes = (a, s, col = '#1a1622') => { ell(a - 2.1 * s, FEET - 0.7, 1.9 * s, 1.1, col); ell(a + 2.5 * s, FEET - 1.2, 1.9 * s, 1.1, col); };
+  const shadow = (a, s) => ell(a + 1, FEET + 0.4, 9 * s, 1.6, 'rgba(60,40,80,.35)');
+  const pail = (a, b, hx, hy) => {
+    line([[a - 2.6, b - 1], [hx, hy], [a + 2.6, b - 1]], 0.9, '#2a1a20');
+    K.pumpkin(a, b + 1, 3.3, 2.9, 'tiny', { halo: false, hot: '#3a1a0e', stem: '#2a1a20' });
+  };
+  // a sheet ghost with two eye holes
+  kid(36, 1.3, () => {
+    const a = 36, s = 1;
+    shadow(a, s); shoes(a, s);
+    const pts = [[a - 8.4, FEET - 3.6], [a - 7.2, FEET - 11], [a - 5.8, FEET - 17.4], [a - 5.4, FEET - 21]];
+    for (let i = 0; i <= 12; i++) { const t = Math.PI + Math.PI * i / 12; pts.push([a + 5.4 * Math.cos(t), FEET - 21 + 5.6 * Math.sin(t)]); }
+    pts.push([a + 5.8, FEET - 17.4], [a + 7.2, FEET - 11], [a + 8.4, FEET - 3.6]);
+    for (let i = 1; i < 8; i++) pts.push([a + 8.4 - i * 2.1, FEET - (i % 2 ? 1.6 : 3.8)]);
+    poly(pts, '#f4f0f8');
+    ctx.save(); K.poly(pts, '#f4f0f8'); ctx.clip();
+    ell(a + 7.4, FEET - 9, 4.6, 14, '#d0c8e2'); ell(a - 1.6, FEET - 8, 1.2, 6, '#dcd4ea');
+    ctx.restore();
+    for (const sg of [-1, 1]) ell(a + sg * 2.1, FEET - 21.4, 1.05, 1.5, '#2a2236');
+    ell(a + 7.6, FEET - 13, 2, 2, '#e6e0f0');
+    pail(a + 10.6, FEET - 9.2, a + 8.2, FEET - 13.4);
+  });
+  // a little witch: purple dress with a zigzag hem, green tights, red hair, a tall bent hat
+  kid(66.5, 1.3, () => {
+    const a = 66.5, s = 1, skin = '#e6b48c';
+    shadow(a, s);
+    rect(a - 2.6, FEET - 8, 1.9, 7, '#3a8a4a'); rect(a + 1, FEET - 8, 1.9, 7, '#3a8a4a'); shoes(a, s, '#16121e');
+    poly([[a - 3.4, FEET - 17.6], [a + 3.4, FEET - 17.6], [a + 7, FEET - 7.6], [a + 4.6, FEET - 6], [a + 2.4, FEET - 7.8], [a, FEET - 6], [a - 2.4, FEET - 7.8], [a - 4.6, FEET - 6], [a - 7, FEET - 7.6]], '#6c3ca0');
+    poly([[a + 1.6, FEET - 17.6], [a + 3.4, FEET - 17.6], [a + 7, FEET - 7.6], [a + 4.6, FEET - 6], [a + 3.4, FEET - 7.2]], '#56308a');
+    rect(a - 4.4, FEET - 13.6, 8.8, 1.4, '#f08a2a');
+    band([[a + 3, FEET - 16.4, 2], [a + 6, FEET - 12.6, 1.8], [a + 7.8, FEET - 11.2, 1.6]], '#6c3ca0'); ell(a + 8.4, FEET - 11, 1.3, 1.3, skin);
+    band([[a - 3, FEET - 16.4, 2], [a - 5.6, FEET - 13.4, 1.8]], '#6c3ca0'); ell(a - 6.2, FEET - 12.8, 1.2, 1.2, skin);
+    ell(a - 3.6, FEET - 18.8, 1.6, 3, '#c84a24'); ell(a + 3.6, FEET - 18.8, 1.6, 3, '#c84a24');
+    ell(a, FEET - 20.6, 3.4, 3.5, skin);
+    ell(a, FEET - 23.2, 7.6, 1.8, '#18141f');
+    poly([[a - 4.2, FEET - 23.4], [a - 1.6, FEET - 31.4], [a + 1.6, FEET - 35.4], [a + 6, FEET - 36.4], [a + 3.2, FEET - 33.2], [a + 2.4, FEET - 30.8], [a + 4.2, FEET - 23.4]], '#18141f');
+    poly([[a - 3.9, FEET - 25.8], [a + 3.9, FEET - 25.8], [a + 4.2, FEET - 23.6], [a - 4.2, FEET - 23.6]], '#f08a2a');
+    pail(a + 9.4, FEET - 7.4, a + 8.4, FEET - 11);
+  });
+  // a pumpkin suit with a green leaf collar and a stem cap, a purple treat bag
+  kid(97.5, 1.3, () => {
+    const a = 97.5, s = 1, skin = '#a8683e';
+    shadow(a, s);
+    rect(a - 2.8, FEET - 7, 2, 6.2, '#1e1a24'); rect(a + 1, FEET - 7, 2, 6.2, '#1e1a24'); shoes(a, s, '#3a7a36');
+    band([[a - 6.6, FEET - 14, 2], [a - 8.4, FEET - 10, 1.8]], '#e8742a'); ell(a - 8.6, FEET - 9.2, 1.3, 1.3, skin);
+    band([[a + 6.6, FEET - 14, 2], [a + 8.6, FEET - 11.4, 1.8]], '#e8742a'); ell(a + 9, FEET - 10.8, 1.3, 1.3, skin);
+    K.pumpkin(a, FEET - 12.4, 7.8, 6.8, null, { stem: '#e8742a', stemTilt: 0 });
+    poly([[a - 4.6, FEET - 19.4], [a - 3, FEET - 17], [a - 1.6, FEET - 19.4], [a, FEET - 17], [a + 1.6, FEET - 19.4], [a + 3, FEET - 17], [a + 4.6, FEET - 19.4], [a + 3.4, FEET - 20.8], [a - 3.4, FEET - 20.8]], '#3e7a34');
+    ell(a, FEET - 23, 3.4, 3.5, skin);
+    ell(a, FEET - 25.4, 3.8, 1.8, '#3e7a34'); band([[a, FEET - 26.4, 1.4], [a + 0.6, FEET - 28.6, 1.3], [a + 2, FEET - 29.4, 1.2]], '#5a3a1e');
+    rr(a + 8.2, FEET - 11, 5.4, 6.8, 1.6, '#7a3aa8'); rect(a + 9.6, FEET - 11.8, 2.6, 1.6, '#5a2a80');
+  });
+  // a small black cat: ears, a curling tail, an orange pail
+  kid(126, 1.2, () => {
+    const a = 126, s = 0.9, skin = '#f0c8a2';
+    shadow(a, s);
+    band([[a - 3.6, FEET - 6, 1.7], [a - 8, FEET - 5, 1.6], [a - 10.4, FEET - 8.6, 1.5], [a - 9.4, FEET - 12, 1.4]], '#18141f');
+    rect(a - 2.5, FEET - 7, 1.9, 6.4, '#18141f'); rect(a + 0.8, FEET - 7, 1.9, 6.4, '#18141f'); shoes(a, s, '#2a2234');
+    rr(a - 4.2, FEET - 16.6, 8.4, 10.4, 3, '#18141f');
+    band([[a + 3.4, FEET - 15, 1.8], [a + 6, FEET - 12.6, 1.6]], '#18141f'); ell(a + 6.4, FEET - 12, 1.2, 1.2, skin);
+    ell(a, FEET - 19.4, 3.8, 3.6, '#18141f');
+    ell(a, FEET - 19, 2.8, 2.8, skin);
+    for (const sg of [-1, 1]) { poly([[a + sg * 3.8, FEET - 20.4], [a + sg * 3.4, FEET - 26.4], [a + sg * 0.6, FEET - 22.6]], '#18141f'); poly([[a + sg * 3.1, FEET - 21.6], [a + sg * 2.9, FEET - 24.6], [a + sg * 1.6, FEET - 22.6]], '#e88aa8'); }
+    pail(a + 8.4, FEET - 7.8, a + 6.6, FEET - 11.6);
+  });
+}
+
+// Decorated porch: a red door with a wreath, a lantern, a cobweb, corn stalks, hay bales, sweets, jack-o'-lanterns, a cat on the rail.
+function hlwPorch(ctx, W, H) {
+  const K = hlwHauntedKit(ctx, W, H), { rect, poly, ell, glow, band, line } = K, R = rng(2910), WD = K.W;
+  const CREAM = '#ecdec2', CREAM2 = '#c6b494', FLOOR = 81;
+  // ---- outside, beyond the railing: a dusk sky over the garden, bare trees and a neighbour's roof
+  ctx.fillStyle = K.vgrad(0, 72, [[0, '#2a2060'], [0.4, '#5a3a8c'], [0.72, '#c0607a'], [1, '#f0943c']]); ctx.fillRect(0, 0, K.X(42), H);
+  for (let k = 0; k < 10; k++) { const a = 2 + R() * 34, b = 8 + R() * 18, r = 0.9 + R() * 0.4; ell(a, b, r, r, '#f4e8ff'); }
+  poly([[-2, 72], [-2, 58], [6, 52], [14, 58], [14, 72]], '#3a2650'); rect(4, 61, 4, 4.4, '#ffd26a');
+  for (const [a, b, r] of [[22, 62, 9], [33, 60, 8]]) ell(a, b, r, r * 0.9, '#2e1c42');
+  band([[30, 72, 2.4], [29, 58, 1.8], [33, 48, 1.4], [36, 42, 1.2]], '#2a1a3a'); band([[29.6, 58, 1.4], [24, 50, 1.2], [22, 44, 1]], '#2a1a3a');
+  rect(0, 70, 42, 12, '#2a2440');
+  K.bat(9, 12, 3.4, '#1c1430', 0.15);
+  // ---- the house wall: dusk-blue clapboards, warmed round the door
+  for (let b = 4, k = 0; b < FLOOR; b += 4.4, k++) { rect(42, b, WD - 42, 4.4, '#3e6078'); rect(42, b + 3, WD - 42, 1.4, '#2c465c'); }
+  glow(99, 36, 34, '255,190,110', 0.32);
+  // ---- the door: deep red with panels, a big glowing window, cream casing, a brass knob
+  rect(84, 13, 30, FLOOR - 13, CREAM); rect(83, 11, 32, 3, CREAM); rect(112, 14, 2, FLOOR - 14, CREAM2);
+  rect(87, 16, 24, FLOOR - 16, '#7c2632');
+  rect(90, 20, 18, 26, '#4e161e');
+  rect(91, 21, 16, 24, '#ffd27a'); rect(93, 23, 12, 20, '#ffe9b0'); rect(91, 37, 16, 8, '#f8b456');
+  for (const a of [90, 100.4]) { rect(a, 49, 7.6, 27, '#661e28'); rect(a + 1.2, 50.2, 5.2, 24.6, '#88303a'); }
+  rect(108.6, 47, 1.8, 5, '#b8862e'); ell(109.5, 49.4, 1.3, 1.3, '#f2cc66');
+  // the wreath of autumn leaves over the window, with a purple bow
+  const WX = 99, WY = 58.4;
+  for (let k = 0; k < 30; k++) {
+    const t = (k / 30) * Math.PI * 2, rr2 = k % 2 ? 9.6 : 7.4, col = ['#e0762a', '#b8382a', '#e8b03a', '#8a4a22', '#c8582a', '#9a8a2e'][k % 6];
+    ell(WX + Math.cos(t) * rr2, WY + Math.sin(t) * rr2, 3, 1.8, col, t + 0.7);
+  }
+  for (let k = 0; k < 14; k++) { const t = (k / 14) * Math.PI * 2 + 0.2; ell(WX + Math.cos(t) * 8.6, WY + Math.sin(t) * 8.6, 1.3, 1.3, k % 2 ? '#6a3418' : '#d8402a'); }
+  ell(WX - 3.6, WY + 9.4, 3.4, 2.2, '#7a40aa', 0.3); ell(WX + 3.6, WY + 9.4, 3.4, 2.2, '#7a40aa', -0.3);
+  poly([[WX - 1, WY + 9.6], [WX - 3.4, WY + 16.6], [WX - 1.6, WY + 16], [WX + 0.4, WY + 10]], '#5e2e8a');
+  poly([[WX + 1, WY + 9.6], [WX + 3.6, WY + 16.4], [WX + 1.8, WY + 16], [WX - 0.4, WY + 10]], '#5e2e8a');
+  ell(WX, WY + 9.4, 1.6, 1.6, '#5e2e8a');
+  // a front window right of the door, lit warm, with a paper ghost stuck on the glass
+  glow(137, 29, 22, '255,190,110', 0.25);
+  rect(121.6, 13.6, 31, 31.4, CREAM); rect(150.6, 14.6, 2, 30.4, CREAM2);
+  rect(124.4, 16.4, 25.4, 25.8, '#ffd27a'); rect(124.4, 32, 25.4, 10.2, '#f6b056'); rect(127, 18.4, 20, 12, '#ffe4a6');
+  rect(120.4, 44, 33.4, 2.2, CREAM); rect(120.4, 46, 33.4, 1, CREAM2);
+  { const gx = 137, gy = 27.6, pts = [];
+    for (let i = 0; i <= 10; i++) { const t = Math.PI + Math.PI * i / 10; pts.push([gx + 5 * Math.cos(t), gy + 5 * Math.sin(t)]); }
+    pts.push([gx + 5.4, gy + 9], [gx + 3.6, gy + 7.6], [gx + 1.8, gy + 9.2], [gx, gy + 7.6], [gx - 1.8, gy + 9.2], [gx - 3.6, gy + 7.6], [gx - 5.4, gy + 9]);
+    poly(pts, '#fbf8f2'); for (const sg of [-1, 1]) ell(gx + sg * 1.9, gy - 0.4, 0.95, 1.35, '#2a2236'); ell(gx, gy + 3, 1, 1.2, '#2a2236'); }
+  // ---- the wall lantern beside the door
+  glow(76, 32, 15, '255,214,130', 0.55);
+  rect(75, 22, 2, 4, '#1e1a22'); rect(73, 24, 6, 1.4, '#1e1a22');
+  poly([[71.2, 27], [80.8, 27], [76, 23.2]], '#1e1a22');
+  rect(71.8, 27, 8.4, 11, '#1e1a22'); rect(73, 28.2, 6, 8.6, '#ffe28c'); rect(75.4, 28.2, 1.2, 8.6, '#f2b04a');
+  rect(71, 38, 10, 1.8, '#1e1a22'); ell(76, 40.6, 1.4, 1.2, '#1e1a22');
+  // ---- a sheaf of dried corn stalks tied with twine beside the post, broad leaves drooping, two ears of autumn corn
+  const TIE = 63, sc = ['#c8aa6a', '#a88848', '#dcc088'];
+  for (let i = 0; i < 9; i++) {
+    const top = [43 + i * 2.7, 9 + Math.abs(i - 4) * 1.8], bot = [45.5 + i * 1.6, FLOOR + 0.5];
+    band([[bot[0], bot[1], 2.4], [49.6 + i * 0.7, TIE, 2.4], [(49.6 + i * 0.7 + top[0]) / 2, (TIE + top[1]) / 2, 2.2], [top[0], top[1], 1.6]], sc[i % 3]);
+  }
+  for (const [x0, y0, dir, col] of [[48, 22, -1, '#d8c088'], [56, 18, 1, '#c0a062'], [50, 34, -1, '#b89a5a'], [55, 30, 1, '#dcc088'], [49.6, 46, -1, '#c8aa6a'], [55.6, 44, 1, '#b0904e'],
+    [52, 14, -1, '#c8aa6a'], [53, 26, 1, '#a88848'], [51, 54, -1, '#dcc088']]) {
+    band([[x0, y0, 2.6], [x0 + dir * 5, y0 - 2.2, 3], [x0 + dir * 9.4, y0 + 2.4, 2.4], [x0 + dir * 11.6, y0 + 9, 1.3]], col);
+  }
+  for (const [a, rot, c1, c2] of [[46.4, 0.35, '#a8302a', '#e8a83a'], [56.6, -0.3, '#d8862a', '#7a2a3a']]) {
+    ell(a, TIE + 7.6, 2.4, 5.6, c1, rot);
+    for (const [dx, dy] of [[-0.8, -2.6], [0.8, -0.6], [-0.6, 1.4], [0.7, 3.2], [0, -4]]) ell(a + dx + dy * rot * -0.9, TIE + 7.6 + dy, 0.85, 0.85, c2);
+    poly([[a - 1.4, TIE + 2], [a + 1.4, TIE + 2], [a + 3.6 * Math.sign(rot) * -1 + 0.4, TIE + 7], [a, TIE + 4]], '#e0cc94');
+  }
+  rect(47, TIE - 1.6, 9.6, 3.2, '#8a5226'); rect(47, TIE - 0.4, 9.6, 0.9, '#5a3218');
+  // ---- the porch post and the railing, cream paint
+  rect(38, 0, 5, FLOOR + 1, CREAM); rect(41.4, 0, 1.6, FLOOR + 1, CREAM2);
+  rect(0, 50, 40, 3.2, CREAM); rect(0, 53, 40, 1.2, CREAM2); rect(0, 76.4, 40, 2.4, CREAM);
+  for (let a = 3; a < 38; a += 4.6) { rect(a, 54, 2, 22.4, CREAM); rect(a + 1.3, 54, 0.7, 22.4, CREAM2); }
+  // ---- the ceiling beam along the top, with a cobweb in the corner and a little spider
+  rect(0, 0, WD, 4.6, '#3a2418'); rect(0, 4.2, WD, 1.4, '#6a4428');
+  // the cobweb spans the corner between the beam and the post, against the sky; a little spider dangles from it
+  const CX = 38, CY = 5.6, web = '#e2dcf0', spokes = [1.64, 1.98, 2.34, 2.7, 3.06];
+  for (const t of spokes) line([[CX, CY], [CX + Math.cos(t) * 22, CY + Math.sin(t) * 22]], 1.25, web);
+  for (const rr2 of [6, 11, 16, 21]) {
+    const pts = spokes.map((t) => [CX + Math.cos(t) * rr2, CY + Math.sin(t) * rr2]);
+    for (let i = 0; i < pts.length - 1; i++) { const [a0, b0] = pts[i], [a1, b1] = pts[i + 1], mx = (a0 + a1) / 2, my = (b0 + b1) / 2; line([[a0, b0], [mx - (mx - CX) * 0.1, my - (my - CY) * 0.1], [a1, b1]], 1.2, web); }
+  }
+  const SPX = 31.6, SPY = 27;
+  line([[SPX, 12], [SPX, SPY - 2]], 0.8, web); ell(SPX, SPY, 1.9, 2.1, '#1a1420'); ell(SPX, SPY - 2.4, 1.3, 1.2, '#1a1420');
+  for (const sg of [-1, 1]) for (const dy of [-0.6, 1, 2.4]) line([[SPX, SPY - 1 + dy * 0.4], [SPX + sg * 3.2, SPY - 1.6 + dy]], 0.8, '#1a1420');
+  // a garland of paper pennants swagged under the beam
+  for (let k = 0; k < 24; k++) {
+    const a = 46 + k * 4.7, t = ((a - 44) % 37.6) / 37.6, b = 5.4 + Math.sin(t * Math.PI) * 4.2;
+    poly([[a - 2, b], [a + 2, b], [a, b + 4]], ['#f08a2a', '#7a42b0', '#f2e6c8'][k % 3]);
+  }
+  // ---- the porch floor: warm boards, a striped mat at the door, the steps down in front, lattice below the floor
+  ctx.fillStyle = K.vgrad(FLOOR, 89, [[0, '#7a4c2c'], [1, '#9a6a3e']]); ctx.fillRect(0, K.X(FLOOR), W, K.X(8));
+  for (let k = -6; k < 12; k++) { const a = 8 + k * 11; poly([[a, FLOOR], [a + 0.9, FLOOR], [a + 0.9 + (a - 99) * 0.18, 89], [a + (a - 99) * 0.18, 89]], '#5e3a20'); }
+  glow(99, 84, 24, '255,190,100', 0.3);
+  rect(0, 88.6, WD, 2.2, '#b88654');
+  rect(0, 90.8, WD, 9.2, '#2e1e1a');
+  for (let a = 0; a < WD; a += 4.6) rect(a, 90.8, 2.3, 9.2, '#3e2a22');
+  rect(70, 90.8, 58, 3.4, '#a87444'); rect(70, 94.2, 58, 1.6, '#5e3a22'); rect(70, 95.8, 58, 4.2, '#b07c4c');
+  for (const a of [70, 128]) rect(a - 1.2, 90.8, 1.6, 9.2, '#5e3a22');
+  // ---- hay bales stacked by the door, and a bowl of sweets on top
+  const bale = (x0, y0, w, h) => {
+    rect(x0, y0, w, h, '#d6ae48'); rect(x0, y0 + h - 2.2, w, 2.2, '#b48c2e'); rect(x0, y0, w, 1.6, '#ecc868');
+    const Rh = rng(Math.round(x0 * 7 + y0));
+    for (let k = 0; k < w * h / 14; k++) { const a = x0 + 1 + Rh() * (w - 2), b = y0 + 1.6 + Rh() * (h - 4); line([[a, b], [a + 2.4 - Rh() * 1.2, b + 1.2]], 1.2, Rh() < 0.5 ? '#b48c2e' : '#f0d070'); }
+    for (const f of [0.28, 0.72]) rect(x0 + w * f - 0.8, y0, 1.6, h, '#7a5626');
+  };
+  bale(118, 67, 40, 14.6); bale(124, 53.4, 30, 13.8);
+  ell(139, 51.4, 10.8, 2.2, '#f0943a');
+  for (const [dx, dy, col] of [[-6.6, -0.8, '#e8443a'], [-3.4, -2.2, '#f0c43a'], [0, -1.4, '#4ab05a'], [3.4, -2.4, '#f08ac0'], [6.6, -0.8, '#4a8ae0'], [-4.6, -4.2, '#f08a2a'], [-1.2, -5, '#e8443a'], [2.2, -4.6, '#9a5ad0'], [5, -3.6, '#f0c43a'], [0.6, -7, '#f08ac0']]) {
+    ell(139 + dx, 51.4 + dy, 1.7, 1.5, col);
+  }
+  for (const [dx, dy, col] of [[-1.6, -9.6, '#e8443a'], [4, -6.6, '#4ab05a']]) { ell(139 + dx, 51.4 + dy, 1.8, 1.2, col); poly([[139 + dx - 1.6, 51.4 + dy], [139 + dx - 3.2, 51.4 + dy - 1], [139 + dx - 3.2, 51.4 + dy + 1]], col); poly([[139 + dx + 1.6, 51.4 + dy], [139 + dx + 3.2, 51.4 + dy - 1], [139 + dx + 3.2, 51.4 + dy + 1]], col); }
+  poly([[128.2, 51.4], [149.8, 51.4], [146.2, 58.6], [131.8, 58.6]], '#6a3a9a'); rect(128.2, 51, 21.6, 1.8, '#8a52c0'); rect(133.4, 58.4, 11.2, 1.6, '#4e2a74');
+  // ---- jack-o'-lanterns of all sizes on the floor and the steps, a pale pumpkin and a little one
+  K.pumpkin(70, 76.4, 9.4, 7.6, 'tri');
+  K.pumpkin(116.4, 77.6, 6, 4.8, 'round');
+  K.pumpkin(80.6, 90.6, 5.4, 4.4, 'kind');
+  K.pumpkin(120.6, 91.6, 4.4, 3.6, null, { col: '#e6dcc4', stem: '#5a5a2c' });
+  K.pumpkin(112.4, 96.6, 6.6, 5.2, 'round');
+  K.pumpkin(91, 96.8, 3.4, 2.8, null);
+  K.pumpkin(60, 86, 5.6, 4.6, 'kind');
+  K.pumpkin(32, 84.6, 4, 3.3, null, { col: '#e88a36' });
+  // ---- the black cat on the railing, against the sunset
+  K.cat(19, 50.4, 1.06);
+}
+
+// Carving night: a kitchen table with two glowing jack-o'-lanterns, one half carved, seeds in a bowl, a candle jar, a night window.
+function hlwCarving(ctx, W, H) {
+  const K = hlwHauntedKit(ctx, W, H), { rect, poly, ell, glow, band, line } = K, R = rng(4410), WD = K.W;
+  const TABLE = 50;
+  // ---- the kitchen wall: deep green, warmed by the pumpkins and the candle; a string of lights; a shelf of jars
+  rect(0, 0, WD, TABLE, '#2c5248');
+  glow(60, 52, 50, '255,170,80', 0.3); glow(126, 54, 36, '255,170,80', 0.26);
+  // the window onto the night: dark sky with stars, rooftops with a lit window or two, a bare branch, a bat
+  const wx0 = 13, wx1 = 63, wy0 = 6, wy1 = 42;
+  ctx.save(); ctx.beginPath(); ctx.rect(K.X(wx0), K.X(wy0), K.X(wx1 - wx0), K.X(wy1 - wy0)); ctx.clip();
+  ctx.fillStyle = K.vgrad(wy0, wy1, [[0, '#0e1640'], [0.6, '#24306c'], [1, '#3c3c82']]); ctx.fillRect(K.X(wx0), K.X(wy0), K.X(wx1 - wx0), K.X(wy1 - wy0));
+  for (let k = 0; k < 16; k++) { const a = wx0 + 2 + R() * (wx1 - wx0 - 4), b = wy0 + 2 + R() * 18, r = 0.85 + R() * 0.45; ell(a, b, r, r, '#eef0ff'); }
+  glow(52, 15, 9, '240,236,200', 0.4); ell(52, 15, 4.4, 4.4, '#f4ecc8');
+  poly([[wx0, 42], [wx0, 33], [18, 28.6], [24, 33], [24, 31], [33, 31], [33, 34], [40, 29], [47, 34], [47, 32.4], [55, 32.4], [55, 30], [60, 26], [wx1, 29], [wx1, 42]], '#141230');
+  rect(20, 35, 2.6, 3, '#ffd26a'); rect(43, 35.6, 2.6, 3, '#ffd26a'); rect(56.6, 33.6, 2.4, 2.8, '#ffd26a');
+  band([[wx0 - 1, 15, 2], [22, 18, 1.6], [30, 16, 1.3], [35, 19.6, 1.1]], '#141230'); band([[22, 18, 1.2], [26, 23, 1]], '#141230');
+  K.bat(36, 11, 3.6, '#141230', -0.1);
+  ctx.restore();
+  rect(wx0 - 2.6, wy0 - 2.6, wx1 - wx0 + 5.2, 2.6, '#ecdfc4'); rect(wx0 - 2.6, wy0, 2.6, wy1 - wy0, '#ecdfc4'); rect(wx1, wy0, 2.6, wy1 - wy0, '#c8b896');
+  rect(wx0 - 4.4, wy1, wx1 - wx0 + 8.8, 3, '#ecdfc4'); rect(wx0 - 4.4, wy1 + 3, wx1 - wx0 + 8.8, 1.2, '#a89878');
+  // a gingham valance across the top of the window, scalloped
+  const val = [[wx0 - 3.6, wy0 - 3], [wx1 + 3.6, wy0 - 3]];
+  for (let k = 0; k <= 8; k++) { const a = wx1 + 3.6 - k * (wx1 - wx0 + 7.2) / 8; val.push([a, wy0 + 5.4 - (k % 2) * 1.8]); }
+  poly(val, '#c0502a');
+  for (let k = 0; k < 9; k++) rect(wx0 - 2.6 + k * 6.4, wy0 - 3, 3.2, 7.4, '#d8743e');
+  rect(wx0 - 3.6, wy0 - 3, wx1 - wx0 + 7.2, 1.4, '#8a321c');
+  // a rail with a copper pan and a ladle hanging from hooks
+  rect(70, 13.6, 24, 1.6, '#8a8a92');
+  line([[75, 15], [75, 20]], 1, '#8a8a92'); ell(75, 27.6, 6.4, 6.4, '#b8642e'); ell(75, 27.6, 4.8, 4.8, '#8a4420'); ell(73.4, 25.4, 1.6, 1.6, '#e0945a'); rect(74, 15, 2, 6, '#7a3a1a');
+  line([[88, 15], [88, 36]], 1.6, '#9a9aa4'); ell(88, 37.4, 3.2, 2.4, '#9a9aa4'); ell(88, 36.8, 2.4, 1.4, '#c8c8d2');
+  // a shelf of jars and a little gourd on the right
+  rect(98, 31.4, 58, 2.2, '#7a4e2a'); rect(98, 33.6, 58, 1, '#4e301a');
+  for (const [a, w, h, fill] of [[103, 7, 11, '#e8a838'], [113, 6, 8, '#9a3a2a'], [139, 7.4, 12.6, '#e6d6b0']]) {
+    rect(a, 31.4 - h, w, h, 'rgba(210,230,240,.35)'); rect(a + 0.6, 31.4 - h * 0.72, w - 1.2, h * 0.72 - 0.2, fill); rect(a - 0.4, 31.4 - h - 1.6, w + 0.8, 1.8, '#c8a050');
+  }
+  for (let k = 0; k < 5; k++) ell(140.8 + (k % 2) * 3.4, 26 - Math.floor(k / 2) * 2.6, 1.3, 1.1, ['#e8743a', '#f0c43a', '#e8743a', '#f2ead6', '#f0c43a'][k]);
+  K.pumpkin(127, 28.2, 4, 3.2, null, { col: '#e8c040', stem: '#5a6a2c' });
+  ell(150.6, 28, 2.6, 3.4, '#4a8a3a'); ell(150.6, 25.4, 1.8, 1.6, '#e8c040');
+  // a string of warm lights swagged along the wall
+  for (let k = 0; k <= 26; k++) {
+    const a = 66 + k * 3.6, t = ((a - 66) % 46) / 46, b = 4 + Math.sin(t * Math.PI) * 5.6;
+    if (k % 1 === 0) ell(a, b + 1.6, 1.25, 1.35, k % 2 ? '#ffb850' : '#ffe68a');
+  }
+  line(Array.from({ length: 60 }, (_, i) => { const a = 66 + i * 1.6, t = ((a - 66) % 46) / 46; return [a, 4 + Math.sin(t * Math.PI) * 5.6]; }), 0.7, '#1e2a24');
+
+  // ---- the table: honey-coloured planks running across, lit warm by the lanterns
+  ctx.fillStyle = K.vgrad(TABLE, 100, [[0, '#4a2c1e'], [0.4, '#5e3a26'], [1, '#6e4630']]); ctx.fillRect(0, K.X(TABLE), W, H);
+  rect(0, TABLE, WD, 1.8, '#2e1a10');
+  for (const b of [58.6, 69.8, 83.6]) { rect(0, b, WD, 1.4, '#36200f'); rect(0, b + 1.4, WD, 0.9, '#7e5236'); }
+  for (let k = 0; k < 18; k++) { const a = R() * WD, b = 52 + R() * 46; rect(a, b, 8 + R() * 10, 1, '#704830'); }
+  glow(54, 82, 28, '255,180,90', 0.28); glow(121, 74, 20, '255,180,90', 0.24); glow(141, 74, 16, '255,200,110', 0.3);
+
+  // ---- pumpkins and gourds waiting at the back
+  K.pumpkin(20, 57, 8, 6.4, null);
+  K.pumpkin(33.4, 59.4, 3.8, 3, null, { col: '#e8c040' });
+  K.pumpkin(151, 62, 6.4, 5, null, { col: '#e6dcc4', stem: '#5a5a2c' });
+  // ---- the candle burning in a glass jar
+  {
+    const a = 138, b = 75;
+    glow(a, b - 14, 18, '255,214,130', 0.6); glow(a, b - 14, 7, '255,236,170', 0.6);
+    rect(a - 6.4, b - 17, 12.8, 17.4, 'rgba(255,214,140,.28)');
+    rect(a - 4, b - 10.6, 8, 10.6, '#f2e6cc'); rect(a + 1.6, b - 10.6, 2.4, 10.6, '#d6c6a6');
+    rect(a - 6.6, b - 17, 1.6, 17.4, '#a8c4d8'); rect(a + 5, b - 17, 1.6, 17.4, '#88a4ba'); rect(a - 6.6, b - 1, 13.2, 1.6, '#a8c4d8');
+    rect(a - 5, b - 17, 10, 6.4, 'rgba(255,200,110,.45)');
+    poly([[a, b - 18], [a + 2, b - 13.6], [a + 1.2, b - 11.2], [a - 1.2, b - 11.2], [a - 2, b - 13.6]], '#ffae2e'); ell(a, b - 13, 1.2, 2.2, '#fff4c0');
+    rect(a - 7, b - 18.6, 14, 2.2, '#c8d8e6'); rect(a - 4.6, b - 15.4, 1.2, 4, '#eef6fc');
+    ell(a, b + 0.6, 7, 1.2, 'rgba(70,40,20,.35)');
+  }
+  // ---- the two finished jack-o'-lanterns, glowing
+  K.pumpkin(54, 70.4, 15.4, 12.6, 'tri', { haloA: 0.4 });
+  K.pumpkin(120, 64.6, 11.4, 9.4, 'round', { haloA: 0.38 });
+  // ---- the half-carved one in front: lid off, the scoop still in it, one eye cut, the rest pencilled on
+  {
+    const a = 91, b = 84.4, rx = 14.6, ry = 12;
+    K.pumpkin(a, b, rx, ry, null, { stem: '#e8742a', stemTilt: 0 });
+    ell(a, b - ry * 0.62, rx * 0.56, ry * 0.3, '#f6c070'); ell(a, b - ry * 0.6, rx * 0.46, ry * 0.22, '#3e1a08');
+    band([[a - 3.4, b - ry * 0.68, 1.4], [a - 4.2, b - ry * 0.46, 1.2]], '#f0a050');
+    band([[a + 1.6, b - ry * 0.56, 2.4], [a + 6.4, b - ry * 1.1, 2.4], [a + 10.4, b - ry * 1.56, 2.4]], '#2e86ae'); band([[a + 4.6, b - ry * 0.92, 0.9], [a + 9.8, b - ry * 1.5, 0.9]], '#7ac4e0');
+    poly([[a - 8.2, b + 0.4], [a - 2.4, b + 0.4], [a - 5.3, b - 5.4]], '#3e1a08');
+    const pen = '#4a3434';
+    line([[a + 2.4, b + 0.4], [a + 8.2, b + 0.4], [a + 5.3, b - 5.4], [a + 2.4, b + 0.4]], 1.25, pen);
+    line([[a - 8.4, b + 3.4], [a - 4.4, b + 6.6], [a, b + 7.6], [a + 4.4, b + 6.6], [a + 8.4, b + 3.4]], 1.3, pen);
+  }
+  // its lid lying beside it, stem up, the cut edge showing
+  ell(115, 95, 7.2, 3, '#c8581e'); ell(115, 94, 6.8, 2.7, '#e8742a'); ell(115, 96.2, 6.2, 1.4, '#f6c070');
+  ell(112.6, 93.4, 1.6, 0.9, '#f08a3c');
+  poly([[113.8, 93], [116.2, 93], [117.2, 88.2], [115.2, 88.2]], '#5e6a2c');
+  // ---- the bowl of seeds and stringy pulp
+  {
+    const a = 25, b = 86;
+    ell(a + 1, b + 9.4, 13, 1.8, 'rgba(70,40,20,.35)');
+    poly([[a - 13, b], [a + 13, b], [a + 10, b + 7], [a + 5, b + 9.4], [a - 5, b + 9.4], [a - 10, b + 7]], '#2e5c9a');
+    rect(a - 11.6, b + 3, 23.2, 1.8, '#f2e6cc');
+    ell(a, b, 13, 3.2, '#24497a'); ell(a, b - 0.3, 11.8, 2.6, '#e8842e');
+    for (const [dx, dy, rot] of [[-7, -1.2, 0.4], [-3, -2.2, -0.3], [1.4, -1.6, 0.6], [5.6, -2.4, 0.1], [8.4, -0.6, -0.5], [-5, 0.6, 0.9], [3, 0.4, -0.8], [-0.6, -3.6, 0.2], [7, -4, 0.7], [-8.6, -3.4, -0.4], [-2.6, -5, 0.5], [3.6, -5.6, -0.2]])
+      ell(a + dx, b + dy, 1.5, 0.95, '#f6ecd2', rot);
+    band([[a - 9, b - 1, 1.2], [a - 5, b - 4.4, 1.1], [a - 1, b - 2.6, 1]], '#c8641e'); band([[a + 2, b - 3.4, 1.1], [a + 6, b - 6, 1], [a + 9.4, b - 2, 1]], '#c8641e');
+  }
+  // ---- seeds and bits of pulp spilled on the table, the scoop and the pencil
+  for (const [a, b, rot] of [[40, 96, 0.3], [44.6, 92.6, -0.6], [69, 97.4, 0.8], [72.6, 94, -0.2], [104, 98, 0.5], [41, 81.4, 0.9], [9, 97, -0.4], [12.6, 93.2, 0.6], [36, 74.4, -0.3], [124, 82, 0.4], [130.6, 85.4, -0.7]])
+    ell(a, b, 1.5, 0.95, '#f6ecd2', rot);
+  for (const [a, b] of [[65.6, 94.2], [43, 89.4], [108.4, 85]]) { ell(a, b, 2, 1.2, '#e8842e'); ell(a + 1.4, b + 0.8, 1.2, 0.8, '#c8641e'); }
+  for (const [a, b, rot] of [[50, 95, 0.2], [54.6, 97.6, -0.5], [58, 93.6, 0.7], [47, 98.4, -0.2]]) ell(a, b, 1.5, 0.95, '#f6ecd2', rot);
+  ell(52, 92.4, 2.6, 1.3, '#e8842e'); band([[49.6, 92.6, 1], [46, 94.6, 0.9]], '#c8641e');
+  band([[127, 97.6, 2.6], [147, 90.6, 2.6]], '#f0c030'); band([[127.2, 97.1, 0.9], [146.8, 90.1, 0.9]], '#f8dc6a');
+  band([[147, 90.6, 2.6], [149.6, 89.7, 2.6]], '#b8b8c4'); band([[149.6, 89.7, 2.6], [152, 88.9, 2.6]], '#ea8aa2');
+  poly([[127.6, 99], [126.4, 96.2], [121.4, 99.4]], '#ecc898'); poly([[123.6, 99.3], [122.8, 98.4], [121.4, 99.4]], '#3a3434');
+}
+
+// Cat in the window: a black cat on the sill against a huge moon and a starry violet sky, a jack-o'-lantern, a plant, curtains.
+function hlwWindowCat(ctx, W, H) {
+  const K = hlwHauntedKit(ctx, W, H), { rect, poly, ell, glow, band } = K, R = rng(5150), WD = K.W;
+  const SILL = 75, wx0 = 33, wx1 = 125, wy0 = 7, MX = 82, MY = 40, MR = 26.5;
+  // ---- the room: striped plum wallpaper, a dark panelled dado below the sill
+  for (let a = 0, k = 0; a < WD; a += 5, k++) rect(a, 0, 5, 100, k % 2 ? '#3c2142' : '#46284e');
+  rect(0, 86, WD, 14, '#2a1630'); rect(0, 86, WD, 1.6, '#5a3a5e');
+  for (let a = 4; a < WD; a += 26) { rect(a, 90, 20, 8, '#331b3a'); rect(a, 90, 20, 1.2, '#22101f'); }
+  // ---- outside: a starry violet sky, a huge golden moon, roofs and treetops far below, bats
+  ctx.save(); ctx.beginPath(); ctx.rect(K.X(wx0), K.X(wy0), K.X(wx1 - wx0), K.X(SILL - wy0)); ctx.clip();
+  ctx.fillStyle = K.vgrad(wy0, SILL, [[0, '#1c1040'], [0.4, '#3a2272'], [0.8, '#6a3a8c'], [1, '#8e4a8e']]); ctx.fillRect(K.X(wx0), K.X(wy0), K.X(wx1 - wx0), K.X(SILL - wy0));
+  for (let k = 0; k < 40; k++) { const a = wx0 + 1 + R() * (wx1 - wx0 - 2), b = wy0 + 1 + R() * 50, r = 0.85 + R() * 0.5; if (Math.hypot(a - MX, b - MY) < MR + 7) continue; ell(a, b, r, r, R() < 0.3 ? '#fff0b8' : '#f0e4ff'); }
+  glow(MX, MY, MR * 2.1, '200,170,255', 0.3); glow(MX, MY, MR * 1.4, '255,236,180', 0.45);
+  ell(MX, MY, MR, MR, '#f8e4a2');
+  for (const [a, b, rx, ry] of [[-10, -9, 7, 5.4], [9, -13, 4.6, 3.4], [11, 5, 8, 6.2], [-7, 13, 5.4, 3.8], [-17, 3, 3.2, 3.8]]) ell(MX + a, MY + b, rx, ry, '#ecd08a');
+  poly([[wx0, SILL], [wx0, 64], [40, 61.6], [44, 64], [50, 64], [50, 61], [57, 57], [64, 61], [64, 66], [wx1 - 30, 68], [wx1 - 26, 63], [wx1 - 18, 63], [wx1 - 18, 60], [wx1 - 12, 56], [wx1 - 6, 60], [wx1, 59], [wx1, SILL]], '#22123a');
+  for (const [a, b] of [[45.6, 66], [104, 65.4], [111, 64.6]]) rect(a, b, 2.4, 2.6, '#ffcf6a');
+  for (const [a, b, s, t] of [[57, 21, 4.8, -0.15], [102, 20, 5.4, 0.12], [115, 48, 3.8, -0.1], [43, 40, 3.6, 0.2], [74, 11.4, 3.2, 0.05]]) K.bat(a, b, s, '#120a20', t);
+  ctx.restore();
+  // ---- the window frame, painted cream, deep enough to cast a shadow on the sill
+  rect(wx0 - 3.6, wy0 - 3.6, wx1 - wx0 + 7.2, 3.6, '#eadcc2'); rect(wx0 - 3.6, wy0, 3.6, SILL - wy0, '#eadcc2'); rect(wx1, wy0, 3.6, SILL - wy0, '#c8b696');
+  rect(wx0 - 3.6, wy0 - 3.6, wx1 - wx0 + 7.2, 1.2, '#fff4de');
+  // the sill: a broad ledge in front, moonlit on top
+  rect(wx0 - 7, SILL, wx1 - wx0 + 14, 3.4, '#e6d4b2'); rect(wx0 - 7, SILL + 3.4, wx1 - wx0 + 14, 2.6, '#b49c78'); rect(wx0 - 5, SILL + 6, wx1 - wx0 + 10, 1.4, '#5a3a4a');
+  // ---- the jack-o'-lantern on the sill, glowing
+  K.pumpkin(106.6, SILL - 8.6, 11.2, 8.8, 'tri', { haloA: 0.42 });
+  // ---- a trailing plant in a terracotta pot at the other end
+  {
+    const a = 46, b = SILL;
+    const lf = (x, y, s, rot, col) => { ctx.save(); ctx.translate(K.X(x), K.X(y)); ctx.rotate(rot); ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, K.X(s)); ctx.bezierCurveTo(K.X(-s * 1.2), K.X(s * 0.2), K.X(-s * 0.7), K.X(-s), 0, K.X(-s * 0.4)); ctx.bezierCurveTo(K.X(s * 0.7), K.X(-s), K.X(s * 1.2), K.X(s * 0.2), 0, K.X(s)); ctx.fill(); ctx.restore(); };
+    band([[a - 3, b - 9, 1], [a - 8, b - 4, 1], [a - 10, b + 4, 1], [a - 9, b + 12, 1]], '#2e6a32');
+    band([[a + 4, b - 9, 1], [a + 9, b - 2, 1], [a + 8, b + 7, 1]], '#2e6a32');
+    for (const [x, y, s, rot, col] of [[-8, -4.6, 2.4, -0.6, '#4a9a48'], [-10, 1.6, 2.4, 0.3, '#3a8a40'], [-9.6, 7, 2.2, -0.2, '#4a9a48'], [-8.6, 12.6, 2.2, 0.4, '#3a8a40'],
+      [9, -2.8, 2.4, 0.5, '#3a8a40'], [8.6, 3.4, 2.3, -0.3, '#4a9a48'], [8, 8.6, 2.1, 0.2, '#3a8a40']]) lf(a + x, b + y, s, rot, col);
+    poly([[a - 6.2, b - 10.4], [a + 6.2, b - 10.4], [a + 4.8, b], [a - 4.8, b]], '#c0643a'); rect(a - 6.8, b - 11.6, 13.6, 2.6, '#d8784a'); rect(a + 2.4, b - 9, 2.2, 9, '#a85430');
+    for (const [x, y, s, rot, col] of [[-3.6, -14, 2.8, -0.5, '#4a9a48'], [2.6, -15.6, 2.8, 0.4, '#3a8a40'], [-0.4, -19, 2.6, 0.05, '#5aaa50'], [5.6, -12.6, 2.4, 0.9, '#4a9a48'], [-6.6, -12.4, 2.4, -1, '#3a8a40'], [-2.4, -22.6, 2.2, -0.3, '#4a9a48']]) lf(a + x, b + y, s, rot, col);
+  }
+  // ---- the cat: sitting in profile facing out, its tail hanging over the edge of the sill; a moonlit rim, one golden eye
+  {
+    const a = 73.4, b = SILL + 0.2, s = 1.12, CAT = '#120c18';
+    const cat = (col, g) => {
+      K.band([[a - 6 * s, b - 1.2 * s, 3 * s + g], [a - 11 * s, b + 0.4 * s, 2.8 * s + g], [a - 13.4 * s, b + 6 * s, 2.6 * s + g], [a - 12.6 * s, b + 11.6 * s, 2.4 * s + g], [a - 9.6 * s, b + 13.4 * s, 2.2 * s + g]], col);
+      K.ell(a - 2.6 * s, b - 9.4 * s, 9.2 * s + g, 9.4 * s + g, col);
+      K.ell(a + 3.6 * s, b - 15 * s, 5.8 * s + g, 9.6 * s + g, col, -0.2);
+      K.poly([[a + 1.6 * s - g, b - 1], [a + 2.4 * s - g, b - 13 * s], [a + 8.4 * s + g, b - 13 * s], [a + 8.6 * s + g, b - 1]], col);
+      K.ell(a + 6.4 * s, b - 1.2 * s, 3.2 * s + g, 1.6 * s + g, col);
+      K.poly([[a + 0.6 * s - g, b - 18 * s], [a + 3 * s - g, b - 27 * s], [a + 10 * s + g, b - 27 * s], [a + 9 * s + g, b - 17 * s]], col);
+      K.ell(a + 6.4 * s, b - 27.6 * s, 7 * s + g, 6.2 * s + g, col);
+      K.ell(a + 12 * s, b - 25.4 * s, 3.6 * s + g, 2.9 * s + g, col);
+      K.poly([[a + 6.4 * s, b - 32.6 * s + g * 0.3], [a + 10.4 * s, b - 41.4 * s - g * 1.2], [a + 12.6 * s + g, b - 29.8 * s]], col);
+      K.poly([[a + 0.6 * s - g, b - 30.4 * s], [a + 1.4 * s, b - 39.6 * s - g * 1.2], [a + 7 * s, b - 33 * s]], col);
+    };
+    cat('#9a86c4', 1.1);
+    cat(CAT, 0);
+    K.ell(a + 9.6 * s, b - 28.6 * s, 1.9 * s, 1.3 * s, '#e8d23a', -0.1); K.ell(a + 10 * s, b - 28.6 * s, 0.55 * s, 1.05 * s, CAT);
+  }
+  // ---- teal velvet curtains in folds, tied back with gold cords, on a dark rod
+  const curtain = (x0, x1, side) => {
+    const n = 5, pinch = (y) => (y < 52 ? 0 : y < 61 ? (y - 52) / 9 : Math.max(0, 1 - (y - 61) / 30));
+    for (let k = 0; k < n; k++) {
+      const L = [];
+      const xs = (f, y) => side < 0 ? x0 + (x1 - x0) * f * (1 - 0.5 * pinch(y)) : x1 - (x1 - x0) * (1 - f) * (1 - 0.5 * pinch(y));
+      for (let y = 2; y <= 100; y += 2) L.push([xs(k / n, y), y]);
+      for (let y = 100; y >= 2; y -= 2) L.push([xs((k + 1) / n, y), y]);
+      poly(L, ['#1e5a5e', '#2a7478', '#184a4e', '#246a6e', '#1a5054'][k]);
+    }
+    const tx = side < 0 ? x0 + (x1 - x0) * 0.5 : x1 - (x1 - x0) * 0.5;
+    ell(tx, 60, 4.6, 2.2, '#d8a040'); ell(tx, 60, 2.6, 1.2, '#f2c868');
+    band([[tx + side * -1.6, 61.4, 1.3], [tx + side * -2.4, 67, 1.2]], '#d8a040'); ell(tx + side * -2.6, 69, 1.5, 2.4, '#d8a040');
+  };
+  curtain(0, 29, -1); curtain(129, WD, 1);
+  rect(0, 1.4, WD, 2, '#2a1a20');
+  for (const a of [2, WD - 2]) ell(a, 2.4, 2.4, 2.4, '#c8963a');
+}
+
+// Scarecrow: a friendly scarecrow with crows on his arms in a golden cornfield at sunset, pumpkins at his feet.
+function hlwScarecrow(ctx, W, H) {
+  const u = H / 100, X = (v) => v * u, rnd = rng(1031), WU = W / u;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.closePath(); ctx.fill(); };
+  const disc = (a, b, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(X(a), X(b), X(r), 0, Math.PI * 2); ctx.fill(); };
+  const ell = (a, b, rx, ry, col, rot = 0) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(rx), X(ry), rot, 0, Math.PI * 2); ctx.fill(); };
+  const rect = (a, b, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(X(a), X(b), X(w), X(h)); };
+  const line = (pts, w, col) => { ctx.strokeStyle = col; ctx.lineWidth = X(w); ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.stroke(); };
+  // the sunset sky: indigo high up, plum, rose, then orange and gold down at the fields, with long streaks of cloud
+  const sky = ctx.createLinearGradient(0, 0, 0, X(62));
+  sky.addColorStop(0, '#2e2a62'); sky.addColorStop(0.28, '#6a3c7a'); sky.addColorStop(0.55, '#c85a6c'); sky.addColorStop(0.8, '#f08a4a'); sky.addColorStop(1, '#f9c062');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  for (const [a, b, rx, ry, col] of [[24, 14, 22, 1.6, '#4e3678'], [52, 9, 14, 1.3, '#4e3678'], [132, 12, 24, 1.7, '#5a3a7e'], [100, 28, 20, 1.6, '#a8506e'], [150, 31, 14, 1.4, '#b25670'], [16, 34, 16, 1.5, '#c2606a']]) ell(a, b, rx, ry, col);
+  // the big low sun with its glow, sinking behind the far fields
+  const sx0 = 122, sy0 = 50;
+  disc(sx0, sy0, 22, '#f59a52'); disc(sx0, sy0, 18, '#f8b25c'); disc(sx0, sy0, 15, '#fdd06a'); disc(sx0 - 3, sy0 - 3, 8, '#ffe49a');
+  for (const [b, rx] of [[47.4, 26], [53, 20]]) ell(sx0 + 4, b, rx, 1.1, '#f28c4c');
+  // far rolling fields: a dusky purple ridge with a line of round trees, then striped fields in the low light
+  poly([[0, 62], [0, 57], [20, 55], [42, 57.5], [66, 55.5], [90, 57.5], [112, 56], [136, 58], [158, 56], [158, 62]], '#8a4e6a');
+  const Rt = rng(77);
+  for (let a = 2; a < WU; a += 5 + Rt() * 6) { if (a > 104 && a < 140) continue; const r = 1.8 + Rt() * 1.6; disc(a, 57 - r * 0.6, r, '#6e3c60'); }
+  const field = (y0, amp, f0, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, H); for (let k = 0; k <= 40; k++) { const t = k / 40; ctx.lineTo(W * t, X(y0 - amp * Math.sin(t * Math.PI * 1.6 + f0))); } ctx.lineTo(W, H); ctx.fill(); };
+  field(59.5, 1.2, 0.4, '#b8683c'); field(61.5, 1.4, 1.6, '#d48a42'); field(63.5, 1.2, 2.6, '#a8763a');
+  // a corn stalk, folk-art style: a stalk, broad leaves arching out and drooping, a cob in its husk, a tassel on top
+  let OUT = null, OX = 0;                                                   // when set, everything is drawn fatter in one outline colour
+  const blade = (x0, y0, f, L, th, col, rise = 1.1, bend = 1.9) => {
+    if (OUT) { col = OUT; th += OX; L += OX * 0.6; }
+    const top = [], bot = []; let x = x0, y = y0, th0 = rise;
+    for (let k = 0; k <= 14; k++) {
+      const t = k / 14, w = th * Math.pow(Math.sin(Math.PI * (0.12 + 0.88 * t)), 0.7) * (1 - 0.25 * t) + 0.2;
+      const nx = Math.sin(th0) * w / 2, ny = f * Math.cos(th0) * w / 2;
+      top.push([x - nx * f, y - Math.abs(ny)]); bot.unshift([x + nx * f, y + Math.abs(ny)]);
+      x += f * Math.cos(th0) * L / 14; y -= Math.sin(th0) * L / 14; th0 -= bend / 14;
+    }
+    poly([...top, ...bot], col);
+  };
+  const stalk = (a, b, h, C, lean = 0, cob = true) => {
+    const at = (t) => [a + lean * h * t * t, b - h * t];
+    const sw = Math.max(1.5, h * 0.05) + (OUT ? OX : 0);
+    const n = h > 40 ? 6 : h > 18 ? 4 : 3, big = h > 40;
+    line([at(0), at(0.3), at(0.6), at(1)], sw, OUT || C.stalk);
+    for (let k = 0; k < n; k++) {
+      const t = 0.2 + (k / n) * 0.72, [x0, y0] = at(t), f = k % 2 ? 1 : -1, L = h * (big ? 0.44 - k * 0.035 : 0.5 - k * 0.05), th = Math.max(1.9, h * (big ? 0.06 : 0.085));
+      blade(x0, y0, f, L, th, C.leaf2); if (th > 3) blade(x0, y0 - th * 0.12, f, L * 0.92, th * 0.5, C.leaf);
+      else if (k % 2) blade(x0, y0, f, L, th, C.leaf);
+    }
+    const o = OUT ? OX / 2 : 0;
+    if (cob && h > 14) { const [x0, y0] = at(0.48), f = lean >= 0 ? 1 : -1; ell(x0 + f * h * 0.06, y0 - h * 0.06, h * 0.05 + o, h * 0.12 + o, OUT || C.cob, f * 0.4); if (!OUT) poly([[x0, y0 + h * 0.06], [x0 + f * h * 0.14, y0 - h * 0.06], [x0 + f * h * 0.1, y0 + h * 0.04]], C.husk); }
+    const [tx, ty] = at(1);
+    for (const d of big ? [-2, -1, 0, 1, 2] : [-1, 0, 1]) line([[tx, ty], [tx + d * h * 0.04, ty - h * 0.09 + Math.abs(d) * h * 0.012], [tx + d * h * 0.07, ty - h * 0.07 + Math.abs(d) * h * 0.03]], Math.max(1.3, h * 0.025) + 2 * o, OUT || C.tassel);
+  };
+  const FAR = { stalk: '#c08638', leaf: '#cc8c38', leaf2: '#b0742e', cob: '#e8b048', husk: '#b07a34', tassel: '#e0a448' };
+  const MID = { stalk: '#d09a48', leaf: '#eaae44', leaf2: '#cc8c34', cob: '#f8d264', husk: '#a8a040', tassel: '#f4c45a' };
+  const NEAR = { stalk: '#dca450', leaf: '#f4c050', leaf2: '#d8983a', cob: '#fcdc6c', husk: '#9ca440', tassel: '#fcd472' };
+  // the cornfield: rows of stalks on a dark ground so each stalk stands clear, bigger row by row towards us
+  ctx.fillStyle = '#8a4e26'; ctx.fillRect(0, X(66), W, X(34));
+  for (let a = -1; a < WU + 3; a += 5.2 + rnd() * 0.8) stalk(a, 72 + rnd(), 11 + rnd() * 2, FAR, (rnd() - 0.5) * 0.3, false);
+  ctx.fillStyle = '#6e3c22'; ctx.fillRect(0, X(72), W, X(28));
+  for (let a = 1; a < WU + 3; a += 8 + rnd() * 1.2) stalk(a, 82 + rnd(), 19 + rnd() * 3, MID, (rnd() - 0.5) * 0.3);
+  // the near ground: a strip of tilled soil with corn stubble and fallen husks
+  ctx.fillStyle = '#9a6236'; ctx.beginPath(); ctx.moveTo(0, X(84)); ctx.quadraticCurveTo(X(60), X(81), X(158), X(85)); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill();
+  for (const [a, b, rx] of [[24, 89, 30], [110, 88.4, 34], [86, 93, 30], [150, 94, 22], [30, 96, 24], [96, 99, 30]]) ell(a, b, rx, 1.2, '#7a4a2a');
+  for (let k = 0; k < 22; k++) { const a = rnd() * WU, b = 87 + rnd() * 12; ell(a, b, 1.7, 1, rnd() < 0.5 ? '#d8a04a' : '#7a4a2a', (rnd() - 0.5) * 1.2); }
+
+  // ---- the scarecrow
+  const sx = 60;
+  // the post he is tied to
+  rect(sx - 1.7, 40, 3.4, 58, '#6e4426'); rect(sx - 1.7, 40, 1.2, 58, '#8e5e34');
+  // trousers hanging below the shirt: patched denim, straw poking out of the cuffs
+  const TR = '#3e5a8e', TR2 = '#2e4472';
+  for (const [a, f] of [[sx - 7.4, -1], [sx + 7.2, 1]]) for (let k = -2; k <= 2; k++) line([[a + k * 1.1, 80], [a + k * 2 + f * 0.4, 85.4 - Math.abs(k) * 0.9]], 1.4, k % 2 ? '#e8b448' : '#f8d672');
+  poly([[sx - 10, 62], [sx + 10, 62], [sx + 11, 82], [sx + 3.6, 82], [sx + 0.6, 69], [sx - 1, 69], [sx - 4, 82], [sx - 11, 82]], TR);
+  poly([[sx + 2.2, 69], [sx + 3.6, 82], [sx + 6, 82], [sx + 4, 69]], TR2);
+  rect(sx - 9.6, 72, 4.8, 4.8, '#d06a2e');
+  for (const [px, py] of [[-9.4, 72.2], [-6, 72.2], [-9.4, 75.6], [-6, 75.6]]) rect(sx + px, py, 1.1, 1.1, '#f6e8c4');
+  // shirt: faded blue plaid, sleeves out along the crossbar, patches sewn on with big cream stitches
+  const shirt = () => {
+    ctx.beginPath();
+    ctx.moveTo(X(sx - 11), X(37.4)); ctx.lineTo(X(sx - 32), X(38.6)); ctx.lineTo(X(sx - 32.4), X(47)); ctx.lineTo(X(sx - 12.4), X(47.6));
+    ctx.lineTo(X(sx - 13), X(64.4)); ctx.lineTo(X(sx + 13), X(64.4)); ctx.lineTo(X(sx + 12.4), X(47.6)); ctx.lineTo(X(sx + 32.4), X(47));
+    ctx.lineTo(X(sx + 32), X(38.6)); ctx.lineTo(X(sx + 11), X(37.4)); ctx.closePath();
+  };
+  // straw at the cuffs and the shirt tail, drawn first so the shirt covers the roots
+  const STRAW = ['#f8d672', '#e4ac40'];
+  for (const f of [-1, 1]) for (let k = 0; k < 6; k++) { const t = k / 5 - 0.5; line([[sx + f * 31, 42.8 + t * 6], [sx + f * (37.4 + (k % 2) * 1.4), 42.8 + t * 10]], 1.4, STRAW[k % 2]); }
+  for (let k = 0; k < 9; k++) { const a = sx - 11 + k * 2.75; line([[a, 62], [a + (k - 4) * 0.5, 67.6 - (k % 2) * 1.6]], 1.4, STRAW[k % 2]); }
+  ctx.fillStyle = '#4a8ca6'; shirt(); ctx.fill();
+  ctx.save(); shirt(); ctx.clip();
+  for (let a = sx - 32; a < sx + 34; a += 6) rect(a, 34, 1.8, 34, '#36708e');
+  for (let b = 39.4; b < 66; b += 6) rect(sx - 34, b, 68, 1.8, '#36708e');
+  rect(sx + 3.4, 37, 10, 30, 'rgba(20,40,70,0.22)');                       // shade on the far side of the body
+  ctx.restore();
+  line([[sx, 38], [sx, 62]], 1, '#2c5a78'); for (const b of [44, 50, 56]) disc(sx + 1.6, b, 1, '#f2e2b8');
+  const patch = (a, b, w, h, col, rot) => {
+    ctx.save(); ctx.translate(X(a), X(b)); ctx.rotate(rot); ctx.fillStyle = col; ctx.fillRect(X(-w / 2), X(-h / 2), X(w), X(h));
+    ctx.fillStyle = '#f6e8c4'; for (const [px, py] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) ctx.fillRect(X(px * (w / 2 - 0.8) - 0.55), X(py * (h / 2 - 0.8) - 0.55), X(1.1), X(1.1));
+    ctx.restore();
+  };
+  patch(sx - 6, 52, 7, 7, '#d2463a', 0.12); patch(sx + 23, 42.8, 6.4, 6.8, '#e6b23c', -0.1); patch(sx + 6.6, 59.4, 5.4, 4.6, '#6aa04a', -0.15);
+  // rope belt
+  rect(sx - 13.2, 62, 26.4, 2.2, '#a8763a'); line([[sx + 3, 63.6], [sx + 4.4, 68.4]], 1.3, '#a8763a');
+  // sack head: burlap gathered under a rope at the neck, button eyes, rosy cheeks, a little nose and a stitched smile
+  const BUR = '#dcb27c', BUR2 = '#c2945e', hy = 25;
+  poly([[sx - 5, hy + 10], [sx + 5, hy + 10], [sx + 7, hy + 14.4], [sx - 7, hy + 14.4]], BUR2);
+  ell(sx, hy, 12, 11.6, BUR);
+  ctx.save(); ctx.beginPath(); ctx.ellipse(X(sx), X(hy), X(12), X(11.6), 0, 0, Math.PI * 2); ctx.clip(); ell(sx + 7, hy + 3, 8, 12, BUR2); ell(sx + 2.4, hy - 0.6, 11, 11.6, BUR); ctx.restore();
+  rect(sx - 5.6, hy + 10, 11.2, 2, '#8a5a2c'); line([[sx + 2.4, hy + 11.4], [sx + 4, hy + 15]], 1.2, '#8a5a2c');
+  for (const a of [-4.8, 4.8]) disc(sx + a, hy - 1.2, 2.4, '#2a2234');
+  for (const a of [-7.6, 7.6]) disc(sx + a, hy + 3.6, 2.3, '#ea7c6a');
+  poly([[sx - 2, hy + 1], [sx + 2, hy + 1], [sx, hy + 3.8]], '#e0702e');
+  const smile = []; for (let k = 0; k <= 12; k++) { const t = k / 12 - 0.5; smile.push([sx + t * 12.4, hy + 6.4 - t * t * 8.8 + 0.4]); }
+  line(smile, 1.5, '#4a2c20');
+  for (const k of [0, 12]) { const [a, b] = smile[k]; line([[a - (k ? -0.6 : 0.6), b - 1.6], [a + (k ? -0.6 : 0.6), b + 1.4]], 1.2, '#4a2c20'); }
+  // straw sticking out under the hat
+  for (const f of [-1, 1]) for (let k = 0; k < 4; k++) line([[sx + f * 9, hy - 9.6 + k * 1.6], [sx + f * (14 + (k % 2) * 1.8), hy - 8.4 + k * 2.6]], 1.4, STRAW[k % 2]);
+  // straw hat with a wide brim, a red band and a green patch, tipped a touch
+  ctx.save(); ctx.translate(X(sx), X(14)); ctx.rotate(-0.07); ctx.translate(-X(sx), -X(14));
+  ell(sx, 14.6, 19, 3.8, '#c08a3a'); ell(sx, 13.8, 18.8, 3.3, '#ecc05c');
+  ctx.fillStyle = '#e0aa4a'; ctx.beginPath(); ctx.moveTo(X(sx - 9), X(14)); ctx.lineTo(X(sx - 8), X(5.4)); ctx.quadraticCurveTo(X(sx), X(2), X(sx + 8), X(5.4)); ctx.lineTo(X(sx + 9), X(14)); ctx.fill();
+  rect(sx - 8.9, 10.2, 17.8, 2.8, '#b8362e');
+  rect(sx + 2.4, 4.6, 4.4, 3.8, '#7aa44e');
+  ctx.restore();
+
+  // ---- crows: two perched on his arms, more flying across the sky and the sun
+  const CROW = '#211c2e', CROW2 = '#433c5c', BEAK = '#f2b23c';
+  const perched = (a, b, f, k) => {
+    ctx.save(); ctx.translate(X(a), X(b)); ctx.scale(k, k); ctx.translate(-X(a), -X(b));
+    poly([[a - f * 2.4, b + 0.4], [a - f * 8, b + 3.2], [a - f * 7.4, b + 4.8], [a - f * 1.8, b + 2.6]], CROW);
+    ell(a, b, 4.4, 3.3, CROW, f * -0.15); disc(a + f * 3.4, b - 3, 2.6, CROW);
+    ell(a - f * 0.8, b - 0.2, 3.2, 2, CROW2, f * -0.2);
+    poly([[a + f * 5.4, b - 3.9], [a + f * 8.6, b - 2.8], [a + f * 5.4, b - 1.9]], BEAK);
+    disc(a + f * 4, b - 3.6, 1.1, '#f6efe0'); disc(a + f * 4.3, b - 3.6, 0.55, '#141018');
+    rect(a - 1.4, b + 2.8, 0.9, 1.8, BEAK); rect(a + 0.8, b + 2.8, 0.9, 1.8, BEAK);
+    ctx.restore();
+  };
+  // a crow gliding, seen from the side: wings raised in a shallow V with fingered tips, a fanned tail
+  const flying = (a, b, f, k, lift) => {
+    ctx.save(); ctx.translate(X(a), X(b)); ctx.scale(k * f, k); ctx.translate(-X(a), -X(b));
+    const wing = (x0, span, up, w) => {
+      const ex = x0 - span * 0.45, ey = b - up * 0.6, tx = x0 - span, ty = b - up;
+      line([[x0, b - 0.3], [ex, ey], [tx, ty]], w, CROW);
+      for (const d of [-1, 0, 1]) line([[tx + 0.6, ty], [tx - 1.6, ty + d * 1.3 + 0.4]], 1.2, CROW);
+    };
+    wing(-0.6 + a, 7.4, lift * 0.8 + 2.6, 2.4);
+    poly([[a - 3.4, b - 0.4], [a - 7.4, b - 1.8], [a - 7.6, b + 1.4], [a - 3.4, b + 1]], CROW);
+    ell(a, b, 4.2, 1.9, CROW); disc(a + 3.9, b - 0.8, 1.9, CROW);
+    poly([[a + 5.4, b - 1.5], [a + 8, b - 0.6], [a + 5.4, b + 0.2]], BEAK);
+    ctx.save(); ctx.translate(X(a + 1.6), 0); ctx.scale(-0.7, 1); ctx.translate(-X(a + 1.6), 0); wing(a + 1.6, 7.4, lift + 4, 2.2); ctx.restore();
+    ctx.restore();
+  };
+  perched(sx - 22, 37.4, -1, 1.2); perched(sx + 26, 37.4, 1, 1.1);
+  flying(110, 43, 1, 1.25, 3); flying(128, 54, 1, 1, 1); flying(96, 21, -1, 1.1, 2); flying(141, 27, 1, 0.9, 4); flying(22, 22, -1, 0.95, 3);
+
+  // pumpkins at his feet
+  const pumpkin = (a, b, r, col, col2) => {
+    ell(a, b + r * 0.55, r * 1.2, r * 0.3, '#4a2a1a');
+    ell(a, b, r * 1.15, r * 0.82, col); ell(a - r * 0.55, b, r * 0.5, r * 0.8, col2); ell(a + r * 0.55, b, r * 0.5, r * 0.8, col2); ell(a, b, r * 0.42, r * 0.82, col);
+    ell(a - r * 0.5, b - r * 0.3, r * 0.24, r * 0.2, '#fbb862');
+    rect(a - r * 0.12, b - r * 1.1, r * 0.26, r * 0.42, '#4e6a2a');
+  };
+  pumpkin(sx - 14, 92.5, 5, '#f0862a', '#d86a20'); pumpkin(sx + 14, 93, 6.4, '#f39030', '#d8701e'); pumpkin(sx + 24, 96.4, 3.8, '#e8862e', '#cc6a1e'); pumpkin(sx - 24, 96.6, 3.2, '#ea8a30', '#cc6a1e');
+  // a crow on the ground pecking at a fallen cob, and a few cobs and husks lying about
+  const cobAt = (a, b, rot) => { ell(a, b, 3.4, 1.4, '#f4c850', rot); poly([[a - 3.2, b - 1.2], [a - 6, b - 2.6], [a - 5.4, b + 0.6]].map(([x, y]) => [a + (x - a) * Math.cos(rot) - (y - b) * Math.sin(rot), b + (x - a) * Math.sin(rot) + (y - b) * Math.cos(rot)]), '#a8a040'); };
+  cobAt(108.4, 94.8, 0.1); cobAt(122, 98, -0.2); cobAt(30, 97.6, 0.25);
+  ctx.save(); ctx.translate(X(97), X(94)); ctx.rotate(0.18); ctx.translate(-X(97), -X(94)); perched(97, 89.6, 1, 1.05); ctx.restore();
+  // a big corn stalk right at the front on each side, outlined so it stands clear of the field behind
+  for (const [a, h, lean] of [[8, 74, 0.06], [151, 72, -0.06]]) { OUT = '#5a2e1a'; OX = 1.6; stalk(a, 104, h, NEAR, lean); OUT = null; stalk(a, 104, h, NEAR, lean); }
+}
+
+// Harvest farm: a red barn and silo, hay bales, autumn maples, a pumpkin patch and a pumpkin wagon in late-afternoon light.
+function hlwFarm(ctx, W, H) {
+  const u = H / 100, X = (v) => v * u, rnd = rng(2207), WU = W / u;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.closePath(); ctx.fill(); };
+  const disc = (a, b, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(X(a), X(b), X(r), 0, Math.PI * 2); ctx.fill(); };
+  const ell = (a, b, rx, ry, col, rot = 0) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(rx), X(ry), rot, 0, Math.PI * 2); ctx.fill(); };
+  const rect = (a, b, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(X(a), X(b), X(w), X(h)); };
+  const line = (pts, w, col) => { ctx.strokeStyle = col; ctx.lineWidth = X(w); ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.stroke(); };
+  // late-afternoon sky: clear blue fading to warm gold at the hills, a few clouds lit gold underneath
+  const sky = ctx.createLinearGradient(0, 0, 0, X(50));
+  sky.addColorStop(0, '#4f8ccc'); sky.addColorStop(0.5, '#8ebce0'); sky.addColorStop(0.85, '#e8dcb0'); sky.addColorStop(1, '#f6d690');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  const cloud = (a, b, s) => {
+    for (const [dx, dy, r] of [[-5, 1.2, 3], [-1.5, -1, 4.2], [3, 0, 3.6], [6.5, 1.4, 2.4], [0, 2, 3.4]]) ell(a + dx * s, b + dy * s + 0.8, r * s * 1.25, r * s * 0.85, '#f4d2a0');
+    for (const [dx, dy, r] of [[-5, 1, 3], [-1.5, -1, 4.2], [3, 0, 3.6], [6.5, 1.4, 2.4], [0, 2, 3.4]]) ell(a + dx * s, b + dy * s, r * s * 1.2, r * s * 0.8, '#fbf6ec');
+  };
+  cloud(80, 9, 1.2); cloud(124, 12, 0.9); cloud(8, 14, 0.8);
+  // rolling hills: hazy blue far away, then a patchwork of fields with hedgerows of little autumn trees
+  const hill = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, H); pts.forEach(([a, b]) => ctx.lineTo(X(a), X(b))); ctx.lineTo(W, H); ctx.closePath(); ctx.fill(); };
+  const curve = (y0, amp, f0, fr = 1.4) => { const p = []; for (let k = 0; k <= 40; k++) { const t = k / 40; p.push([t * WU, y0 - amp * Math.sin(t * Math.PI * fr + f0)]); } return p; };
+  hill(curve(39, 6, 0.3, 1.8), '#8ea2c4'); hill(curve(44, 5, 2.2, 1.6), '#7c96a8');
+  // patchwork fields on the middle hill
+  ctx.save(); hill(curve(48, 4, 1.4, 1.3), '#9cb05a'); ctx.clip();
+  const PATCH = ['#9cb05a', '#d6b85a', '#b8783e', '#7fa04c', '#e0c46c', '#a89a48'];
+  for (let j = 0; j < 4; j++) for (let i = 0; i < 10; i++) { const x0 = i * 17 + j * 6 - 8, y0 = 40 + j * 7; poly([[x0, y0], [x0 + 17, y0], [x0 + 19, y0 + 7.4], [x0 + 2, y0 + 7.4]], PATCH[(i * 2 + j * 3) % PATCH.length]); }
+  for (let j = 0; j < 4; j++) for (let i = 0; i < 10; i++) { const x0 = i * 17 + j * 6 - 8; line([[x0, 40 + j * 7], [x0 + 2, 47 + j * 7]], 1.1, '#4e6a34'); }
+  for (const b of [47, 54, 61]) rect(0, b, WU, 1.1, '#4e6a34');
+  const Rt = rng(41);
+  for (let a = 2; a < WU; a += 3.6 + Rt() * 3) { const b = 48 - 4 * Math.sin((a / WU) * Math.PI * 1.3 + 1.4) + 0.6; disc(a, b - 1.4, 1.8 + Rt() * 0.8, ['#d0602e', '#e4a03a', '#9a4a2e', '#4e6a34'][Math.floor(Rt() * 4)]); }
+  ctx.restore();
+  // the farmyard meadow, lit warm, sloping gently
+  const mg = ctx.createLinearGradient(0, X(56), 0, H); mg.addColorStop(0, '#a6b85c'); mg.addColorStop(1, '#7e9a44');
+  ctx.fillStyle = mg; ctx.beginPath(); ctx.moveTo(0, X(62)); ctx.quadraticCurveTo(X(70), X(60), X(158), X(66)); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill();
+
+  // long late-afternoon shadows falling to the right of the barn, the silo and the trees
+  ctx.fillStyle = '#7a9442';
+  for (const pts of [[[33, 66.4], [97, 65.8], [126, 72], [62, 74]], [[20, 66], [31, 66], [52, 71], [40, 71.6]], [[4, 62], [12, 61.6], [30, 64.6], [20, 65]], [[141, 61], [153, 61], [158, 63.4], [158, 66], [150, 66]]]) { ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.closePath(); ctx.fill(); }
+  // a maple in full autumn colour: a round crown of leafy clumps, lit gold on the sunny left, shaded on the right
+  const maple = (a, b, r, cols) => {
+    rect(a - r * 0.09, b, r * 0.18, r * 1.25, '#5a3424');
+    const R = rng(Math.round(a * 13 + b)), cy = b - r * 0.3;
+    const clumps = [];
+    for (let k = 0; k < 11; k++) { const t = (k / 11) * Math.PI * 2 + R() * 0.3; clumps.push([a + Math.cos(t) * r * 0.72, cy + Math.sin(t) * r * 0.62, r * (0.3 + R() * 0.08)]); }
+    for (let k = 0; k < 6; k++) { const t = R() * Math.PI * 2, d = R() * r * 0.4; clumps.push([a + Math.cos(t) * d, cy + Math.sin(t) * d, r * 0.36]); }
+    ell(a, cy, r * 0.8, r * 0.7, cols[2]);
+    for (const [x, y, rr] of clumps) disc(x + rr * 0.2, y + rr * 0.2, rr, cols[2]);
+    for (const [x, y, rr] of clumps) disc(x - rr * 0.06, y - rr * 0.06, rr * 0.8, cols[1]);
+    for (const [x, y, rr] of clumps) if (x + y * 0.8 < a + cy * 0.8 + r * 0.2) disc(x - rr * 0.3, y - rr * 0.3, rr * 0.42, cols[0]);
+  };
+  maple(118, 52, 5.6, ['#f8cc58', '#eaa434', '#c47a2a']);
+  maple(8, 40, 14, ['#f6a840', '#e2742a', '#b04424']);
+  maple(147, 37, 17, ['#ee6a3a', '#cc3a2a', '#8e2424']);
+
+  // the silo: a tall weathered cylinder with hoops and a red dome
+  const sl = 20, sw = 11, stop = 18;
+  rect(sl, stop, sw, 48, '#b8b0a4'); rect(sl + sw * 0.62, stop, sw * 0.38, 48, '#8e8a8c'); rect(sl, stop, sw * 0.22, 48, '#d6cebe');
+  for (let b = stop + 6; b < 64; b += 7) rect(sl, b, sw, 1.1, '#6e6a70');
+  ctx.fillStyle = '#b8362e'; ctx.beginPath(); ctx.ellipse(X(sl + sw / 2), X(stop), X(sw / 2 + 0.6), X(6.4), 0, Math.PI, 0); ctx.fill();
+  ell(sl + sw * 0.32, stop - 3, 1.6, 1.8, '#d8584a');
+  rect(sl - 0.6, stop - 0.4, sw + 1.2, 1.4, '#f2ece0');
+
+  // the barn: a lit gable end facing us, the long side in shade, a slate roof, white trim everywhere
+  const RED = '#c4362c', RED2 = '#8a2626', WT = '#f4efe2', fx0 = 33, fx1 = 65, eave = 38, ridge = 18, base = 67;
+  // side wall and roof going back to the right
+  poly([[fx1, eave], [95, eave + 2.6], [95, base - 0.6], [fx1, base]], RED2);
+  for (let a = fx1 + 3; a < 95; a += 3) line([[a, eave + 1 + (a - fx1) * 0.09], [a, base - 0.4]], 0.9, '#7a2022');
+  poly([[(fx0 + fx1) / 2, ridge], [90, ridge + 3.6], [97.4, eave + 2.2], [fx1 + 1.6, eave - 0.4]], '#5e4e5a');
+  poly([[(fx0 + fx1) / 2, ridge], [90, ridge + 3.6], [91.4, ridge + 6], [(fx0 + fx1) / 2 + 2, ridge + 2.6]], '#7a6874');
+  line([[fx1 + 1.6, eave - 0.4], [97.4, eave + 2.2]], 1.3, WT);
+  rect(fx1 + 14, eave + 11, 14, 18, WT); rect(fx1 + 15.2, eave + 12.2, 11.6, 16.6, '#7a2424'); line([[fx1 + 15.6, eave + 28.4], [fx1 + 26.4, eave + 12.6]], 1.5, WT);
+  // a lean-to shed on the side
+  poly([[95, base - 0.6], [95, eave + 9], [108, eave + 13], [108, base - 1]], '#a83030');
+  poly([[94.4, eave + 8], [109.6, eave + 12.4], [109.6, eave + 14.4], [94.4, eave + 10]], '#5e4e5a');
+  rect(99, eave + 16, 6, 12.4, '#5a2a26');
+  // the gable end
+  poly([[fx0, base], [fx0, eave], [(fx0 + fx1) / 2, ridge], [fx1, eave], [fx1, base]], RED);
+  for (let a = fx0 + 3; a < fx1 - 1; a += 3) line([[a, eave + 0.5], [a, base]], 0.9, '#ac2e28');
+  line([[fx0 - 1.4, eave + 1.2], [(fx0 + fx1) / 2, ridge - 1], [fx1 + 1.4, eave + 1.2]], 2.2, WT);
+  rect(fx0 - 0.6, eave, 1.8, base - eave, WT); rect(fx1 - 1.2, eave, 1.8, base - eave, WT);
+  // hayloft door with hay showing, and the big double doors with one diagonal brace each
+  const hx = (fx0 + fx1) / 2;
+  rect(hx - 4.6, 27, 9.2, 9.4, WT); rect(hx - 3.4, 28.2, 6.8, 7, '#3a2a30');
+  for (let k = 0; k < 5; k++) line([[hx - 3 + k * 1.5, 36], [hx - 3.4 + k * 1.6, 32.6 + (k % 2) * 1.2]], 1.2, k % 2 ? '#e8b448' : '#f8d672');
+  rect(hx - 11, 44.4, 22, 22.6, WT); rect(hx - 9.6, 45.8, 9, 21.2, '#a83028'); rect(hx + 0.6, 45.8, 9, 21.2, '#a83028');
+  line([[hx - 9, 66.4], [hx - 1.2, 46.4]], 1.6, WT); line([[hx + 9, 66.4], [hx + 1.2, 46.4]], 1.6, WT);
+  // a lamp over the doors
+  rect(hx - 1, 41.4, 2, 1.6, '#3a3036'); disc(hx, 43.2, 1.2, '#f8d060');
+
+  // square bales stacked by the barn
+  const sq = (a, b, w, h) => { rect(a, b, w, h, '#e2b04a'); rect(a, b, w, 1.2, '#f4d070'); rect(a + w - 1.2, b, 1.2, h, '#b88430'); line([[a + w * 0.33, b + 0.6], [a + w * 0.33, b + h]], 0.9, '#a87a2e'); line([[a + w * 0.66, b + 0.6], [a + w * 0.66, b + h]], 0.9, '#a87a2e'); };
+  sq(16, 61, 10, 6.4); sq(25.6, 61, 10, 6.4); sq(20.8, 55, 10, 6.2);
+  // round bales out in the meadow: a rolled face with its spiral, the barrel side in shade
+  const roundBale = (a, b, r) => {
+    poly([[a, b + r], [a + r * 1.5, b + r], [a + r * 4.4, b + r * 1.5], [a + r * 1.6, b + r * 1.6]], '#6e883c');
+    rect(a, b - r, r * 1.5, r * 2, '#c89038'); ell(a + r * 1.5, b, r * 0.45, r, '#b07a30');
+    for (let k = 0; k < 3; k++) rect(a + r * (0.2 + k * 0.45), b - r, 0.9, r * 2, '#a87430');
+    disc(a, b, r, '#f0c862'); ctx.strokeStyle = '#a87430'; ctx.lineWidth = X(1.2); ctx.beginPath();
+    for (let t = 0; t < Math.PI * 4; t += 0.2) { const rr = r * 0.85 * t / (Math.PI * 4); ctx.lineTo(X(a + Math.cos(t) * rr), X(b + Math.sin(t) * rr)); } ctx.stroke();
+  };
+  roundBale(88, 75.4, 5.8); roundBale(102, 71.6, 5); roundBale(144, 70.4, 4);
+
+  // a dirt track from the barn doors down to the front, with a split-rail fence along it
+  ctx.fillStyle = '#c69a62'; ctx.beginPath(); ctx.moveTo(X(hx - 11), X(base)); ctx.lineTo(X(hx + 11), X(base)); ctx.quadraticCurveTo(X(hx + 20), X(84), X(100), X(101)); ctx.lineTo(X(66), X(101)); ctx.quadraticCurveTo(X(hx + 2), X(84), X(hx - 11), X(base)); ctx.fill();
+  ctx.fillStyle = '#ad8250'; ctx.beginPath(); ctx.moveTo(X(hx + 2), X(base + 6)); ctx.quadraticCurveTo(X(hx + 10), X(86), X(80), X(101)); ctx.lineTo(X(76), X(101)); ctx.quadraticCurveTo(X(hx + 6), X(86), X(hx - 1), X(base + 6)); ctx.fill();
+  const fence = (pts) => {
+    for (const [a, b, h] of pts) { rect(a - 0.8, b - h, 1.8, h + 1, '#7a5034'); rect(a - 0.8, b - h, 0.8, h + 1, '#9a6a44'); }
+    for (const f of [0.3, 0.68]) line(pts.map(([a, b, h]) => [a, b - h * (1 - f)]), 1.3, '#9a6a44');
+  };
+  fence([[104, 61.6, 4], [110, 62, 4], [116, 62.4, 4], [122, 62.8, 4], [128, 63.2, 4], [134, 63.6, 4]]);
+
+  // the pumpkin patch: rows of pumpkins among big green leaves and vines
+  const pumpkin = (a, b, r, col, col2, rim) => {
+    ell(a + r * 0.2, b + r * 0.6, r * 1.2, r * 0.3, '#3e5a26');
+    if (rim) ell(a, b, r * 1.18 + 0.8, r * 0.84 + 0.8, rim);
+    ell(a, b, r * 1.18, r * 0.84, col2); ell(a - r * 0.5, b, r * 0.56, r * 0.82, col); ell(a + r * 0.5, b, r * 0.56, r * 0.82, col); ell(a, b, r * 0.42, r * 0.84, col);
+    ell(a - r * 0.55, b - r * 0.32, r * 0.22, r * 0.2, '#fcc070');
+    poly([[a - r * 0.12, b - r * 0.7], [a + r * 0.16, b - r * 0.7], [a + r * 0.3, b - r * 1.2], [a + r * 0.04, b - r * 1.2]], '#5a6a2a');
+  };
+  const pleaf = (a, b, r, rot) => { ctx.save(); ctx.translate(X(a), X(b)); ctx.rotate(rot); ctx.translate(-X(a), -X(b)); for (const [dx, dy, rr] of [[0, 0, 1], [-0.8, -0.3, 0.7], [0.8, -0.3, 0.7]]) ell(a + dx * r, b + dy * r, rr * r, rr * r * 0.75, '#4e7a32'); ell(a - r * 0.3, b - r * 0.3, r * 0.4, r * 0.3, '#6e9a40'); ctx.restore(); };
+  ctx.fillStyle = '#6a5030'; ctx.beginPath(); ctx.moveTo(0, X(76)); ctx.quadraticCurveTo(X(40), X(73), X(hx + 2), X(80)); ctx.quadraticCurveTo(X(hx + 10), X(92), X(68), X(101)); ctx.lineTo(0, X(101)); ctx.fill();
+  for (const b of [80, 87, 94]) line([[0, b - 1], [30, b - 2.4], [hx - 2 + (b - 80) * 0.5, b + 1]], 1.1, '#527a34');
+  const PK = [['#f08a2a', '#d06a1e'], ['#f6a03a', '#d87a24'], ['#e87a26', '#c45e1a']];
+  const spots = [[6, 80, 3.4], [17, 79.4, 3], [29, 81, 3.6], [41, 82.6, 2.8], [10, 88.6, 4.4], [24, 89, 3.8], [38, 91, 4], [50, 89.6, 3], [4, 97.4, 4.6], [18, 97.4, 5], [33, 98.6, 4.2], [47, 98.4, 4.6], [58, 95.4, 3.2]];
+  for (const [a, b] of [[12, 83], [34, 85], [2, 92], [44, 94], [27, 94], [56, 89], [11, 93.4]]) pleaf(a, b, 2.8, rnd() - 0.5);
+  spots.forEach(([a, b, r], i) => pumpkin(a, b, r, ...PK[i % 3]));
+  for (const [a, b] of [[22, 84.6], [52, 85.6], [61, 99]]) pleaf(a, b, 2.4, rnd() - 0.5);
+  // the wooden wagon heaped with pumpkins
+  const wx = 112, wy = 86;
+  const PILE = [[wx + 4, wy - 3, 4], [wx + 12, wy - 3.4, 4.4], [wx + 20.4, wy - 3, 4.2], [wx + 28.6, wy - 2.8, 3.8], [wx + 8, wy - 9, 4], [wx + 16.6, wy - 9.6, 4.4], [wx + 25, wy - 8.6, 3.8], [wx + 12.6, wy - 15, 3.6], [wx + 21, wy - 14.4, 3.4]];
+  PILE.forEach(([a, b, r], i) => pumpkin(a, b, r, ...PK[(i + 1) % 3], '#8a3a16'));
+  rect(wx - 1, wy - 2, 35, 9, '#8a5a34'); rect(wx - 1, wy - 2, 35, 1.6, '#b07a48');
+  for (const b of [wy + 1.4, wy + 4.2]) rect(wx - 1, b, 35, 0.9, '#6a4228');
+  for (const a of [wx + 1, wx + 16, wx + 31]) rect(a, wy - 2.4, 1.6, 9.6, '#6a4228');
+  line([[wx - 1, wy + 5], [wx - 12, wy + 8.6]], 1.6, '#6a4228'); line([[wx - 12, wy + 8.6], [wx - 13.6, wy + 6.6]], 1.4, '#6a4228');
+  const wheel = (a, b, r) => {
+    disc(a, b, r, '#4a2e20'); disc(a, b, r - 1.5, '#c69a62');
+    for (let k = 0; k < 6; k++) { const t = (k / 6) * Math.PI * 2 + 0.3; line([[a, b], [a + Math.cos(t) * (r - 1.2), b + Math.sin(t) * (r - 1.2)]], 1.1, '#6a4228'); }
+    disc(a, b, 1.6, '#4a2e20');
+  };
+  ell(wx + 17, wy + 13, 22, 2, '#5e7a34');
+  wheel(wx + 5, wy + 8, 5.6); wheel(wx + 28, wy + 8, 5.6);
+}
+
+// Misty woods: a moonlit autumn forest in mist, an owl on a branch, eyes peeking from the dark, toadstools and leaves.
+function hlwWoods(ctx, W, H) {
+  const u = H / 100, X = (v) => v * u, rnd = rng(4409), WU = W / u;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.closePath(); ctx.fill(); };
+  const disc = (a, b, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(X(a), X(b), X(r), 0, Math.PI * 2); ctx.fill(); };
+  const ell = (a, b, rx, ry, col, rot = 0) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(rx), X(ry), rot, 0, Math.PI * 2); ctx.fill(); };
+  const rect = (a, b, w, h, col) => { ctx.fillStyle = col; ctx.fillRect(X(a), X(b), X(w), X(h)); };
+  const line = (pts, w, col) => { ctx.strokeStyle = col; ctx.lineWidth = X(w); ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.stroke(); };
+  // the night sky between the trees, lighter round the moon
+  const mx = 62, my = 25;
+  const sky = ctx.createRadialGradient(X(mx), X(my), X(10), X(mx), X(my), X(110));
+  sky.addColorStop(0, '#4e7a88'); sky.addColorStop(0.25, '#2e5266'); sky.addColorStop(0.6, '#1a3448'); sky.addColorStop(1, '#10202e');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  for (const [a, b] of [[12, 8], [30, 16], [104, 6], [122, 18], [90, 12], [146, 9], [40, 4]]) disc(a, b, 0.9, '#c8dce0');
+  disc(mx, my, 17, '#5a8a94'); disc(mx, my, 14.6, '#7aa2a6'); disc(mx, my, 12.4, '#f4eccc');
+  for (const [a, b, r] of [[-3.6, -2.6, 2.6], [3.4, 2.6, 3.2], [-2, 5, 1.6], [5, -5, 1.4]]) disc(mx + a, my + b, r, '#e2d8b2');
+  // a trunk: a straight column, moonlit along the edge facing the moon, with a branch or two
+  const trunk = (a, w, top, bottom, col, lit, flare = 1.5) => {
+    poly([[a - w / 2, top], [a + w / 2, top], [a + w / 2 + flare, bottom], [a - w / 2 - flare, bottom]], col);
+    const side = a < mx ? 1 : -1, ew = Math.max(1.2, w * 0.22);
+    poly(side > 0 ? [[a + w / 2 - ew, top], [a + w / 2, top], [a + w / 2 + flare, bottom], [a + w / 2 + flare - ew, bottom]] : [[a - w / 2, top], [a - w / 2 + ew, top], [a - w / 2 - flare + ew, bottom], [a - w / 2 - flare, bottom]], lit);
+  };
+  const mist = (y0, h, col, alpha, seed) => {
+    const R = rng(seed); ctx.globalAlpha = alpha;
+    for (let a = -10; a < WU + 10; a += 9) ell(a + R() * 6, y0 + (R() - 0.5) * h * 0.5, 14 + R() * 8, h * (0.4 + R() * 0.25), col);
+    ctx.globalAlpha = 1;
+  };
+  // far trunks, pale blue-grey in the haze
+  const Rf = rng(91);
+  for (let a = 3; a < WU; a += 7 + Rf() * 5) { if (Math.abs(a - mx) < 9) continue; trunk(a, 2.6 + Rf() * 1.4, -2, 66, '#36586a', '#4e7482', 0.8); }
+  mist(60, 10, '#8eaab4', 0.45, 7); mist(47, 6, '#8eaab4', 0.22, 8);
+  // middle trunks
+  for (const a of [26, 44, 84, 100, 124]) trunk(a, 5 + rnd() * 2, -2, 76, '#1e3446', '#3e6074', 1.6);
+  line([[44, 36], [54, 28], [60, 26.6]], 1.6, '#1e3446'); line([[84, 30], [76, 22], [74, 18]], 1.5, '#1e3446'); line([[100, 44], [110, 38]], 1.5, '#1e3446');
+  // the forest floor, mossy and dark, rising a little at the back
+  ctx.fillStyle = '#1a3430'; ctx.beginPath(); ctx.moveTo(0, X(72)); ctx.quadraticCurveTo(X(70), X(68), X(158), X(73)); ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.fill();
+  // ground fog drifting low over the clearing in long streaks
+  const Rm = rng(12); ctx.globalAlpha = 0.3;
+  for (let k = 0; k < 16; k++) ell(Rm() * WU, 69 + Rm() * 10, 16 + Rm() * 14, 1.8 + Rm() * 1.6, '#a8c0c6');
+  ctx.globalAlpha = 1;
+  // low bushes and ferns along the back of the clearing, with eyes peeking out of the dark
+  const bush = (a, b, r, col) => { for (const [dx, dy, rr] of [[-0.8, 0.2, 0.7], [0, -0.3, 1], [0.85, 0.15, 0.75]]) ell(a + dx * r, b + dy * r, rr * r, rr * r * 0.75, col); };
+  bush(14, 80, 9, '#12242a'); bush(56, 78.6, 8, '#14282c'); bush(92, 79.4, 9, '#12242a'); bush(138, 77, 7, '#14282c');
+  const eyes = (a, b, col, sq = 1) => { for (const d of [-2.1, 2.1]) { ell(a + d, b, 1.6, 1.4 * sq, col); } };
+  eyes(56, 77.6, '#e6e85a'); eyes(92, 78.4, '#f6b23a', 0.75); eyes(138, 76.4, '#c8ec6a');
+  // fallen leaves over the ground
+  const LV = ['#c8582e', '#e08a32', '#a8402a', '#e6b040', '#8a4a2a'];
+  const leafAt = (a, b, s, rot, col) => { ctx.save(); ctx.translate(X(a), X(b)); ctx.rotate(rot); ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(X(-2.2 * s), 0); ctx.quadraticCurveTo(0, X(-1.6 * s), X(2.2 * s), 0); ctx.quadraticCurveTo(0, X(1.6 * s), X(-2.2 * s), 0); ctx.fill(); ctx.restore(); };
+  for (let k = 0; k < 34; k++) { const a = rnd() * WU, b = 82 + rnd() * 18; if ((a > 14 && a < 44 && b > 84) || (a > 98 && a < 122 && b > 87)) continue; leafAt(a, b, 1.5 + rnd() * 0.3, rnd() * 3, LV[k % 5]); }
+  // near trunks: one on the left with a hollow (and someone inside), one on the right reaching out a branch for the owl
+  trunk(9, 13, -2, 101, '#0e1a24', '#3a6070', 3);
+  ell(10, 52, 3.8, 5.4, '#060c12'); ell(10, 52.4, 3.2, 4.6, '#04080c'); eyes(10, 52, '#f4c842');
+  for (const [a, b, h] of [[5, 30, 6], [12, 66, 5], [7, 80, 7]]) line([[a, b], [a, b + h]], 1, '#1e3240');
+  trunk(149, 15, -2, 101, '#0e1a24', '#3a6070', 3);
+  ctx.fillStyle = '#1e2c36'; ctx.beginPath(); ctx.moveTo(X(144), X(56)); ctx.quadraticCurveTo(X(124), X(58), X(96), X(55)); ctx.lineTo(X(96), X(57.6)); ctx.quadraticCurveTo(X(124), X(62.4), X(144), X(63)); ctx.fill();
+  line([[96, 56.2], [90, 52], [87, 47]], 1.6, '#0e1a24'); line([[104, 56.6], [100, 61]], 1.3, '#0e1a24');
+  line([[143, 56.6], [124, 57.6], [100, 55.6]], 1.3, '#4a6e7e');
+  for (const [a, b, rot, col] of [[89, 47, 0.6, '#e08a32'], [100.6, 61.4, -0.4, '#c8582e'], [92, 52.6, 1.2, '#e6b040']]) leafAt(a, b, 1.2, rot, col);
+  // the owl: round and soft, a pale heart-shaped face, big amber eyes, folded wings, a barred chest; drawn a size up
+  const ox = 120, oy = 42, OB = '#8e5c36', OD = '#4e3020', OL = '#d2a46a', OF = '#f0dcb4';
+  ctx.save(); ctx.translate(X(ox), X(56)); ctx.scale(1.18, 1.18); ctx.translate(-X(ox), -X(56));
+  ell(ox, oy + 4, 11.4, 12.6, OD); ell(ox, oy + 4, 10.6, 11.8, OB);
+  ell(ox, oy + 7.4, 7, 8, OL);                                             // chest
+  for (const [a, b] of [[-3.2, 4], [0, 3.2], [3.2, 4], [-4.2, 8.4], [-1.4, 7.6], [1.4, 7.6], [4.2, 8.4], [-2.8, 12], [0, 11.4], [2.8, 12]]) poly([[ox + a - 1.3, oy + b - 0.9], [ox + a, oy + b + 0.4], [ox + a + 1.3, oy + b - 0.9], [ox + a, oy + b + 1.4]], '#6a4026');
+  for (const f of [-1, 1]) { ell(ox + f * 8.4, oy + 7, 4.4, 9.6, OD, f * -0.12); ell(ox + f * 8.2, oy + 6.4, 3.6, 8.8, '#74482c', f * -0.12); for (const b of [2, 6.2, 10.4]) ell(ox + f * 8.4, oy + b, 1.2, 0.9, OL); }
+  // head with small ear tufts, the facial disc, the eyes and the beak
+  poly([[ox - 9.4, oy - 8.4], [ox - 9, oy - 14.6], [ox - 4.4, oy - 10.8]], OD); poly([[ox + 9.4, oy - 8.4], [ox + 9, oy - 14.6], [ox + 4.4, oy - 10.8]], OD);
+  ell(ox, oy - 5, 10.8, 8.6, OD); ell(ox, oy - 5.2, 10, 7.8, OB);
+  ctx.fillStyle = OF; ctx.beginPath(); ctx.moveTo(X(ox), X(oy - 7.6)); ctx.bezierCurveTo(X(ox - 4), X(oy - 12), X(ox - 10.4), X(oy - 8.6), X(ox - 8.6), X(oy - 2.6)); ctx.bezierCurveTo(X(ox - 7.4), X(oy + 1), X(ox - 2.6), X(oy + 1.6), X(ox), X(oy + 1)); ctx.bezierCurveTo(X(ox + 2.6), X(oy + 1.6), X(ox + 7.4), X(oy + 1), X(ox + 8.6), X(oy - 2.6)); ctx.bezierCurveTo(X(ox + 10.4), X(oy - 8.6), X(ox + 4), X(oy - 12), X(ox), X(oy - 7.6)); ctx.fill();
+  for (const f of [-1, 1]) { disc(ox + f * 4.3, oy - 4.6, 3.7, '#f2a42a'); disc(ox + f * 4.3, oy - 4.4, 2.1, '#1a1210'); disc(ox + f * 4.3 - 1, oy - 5.6, 0.95, '#fff8e6'); }
+  poly([[ox - 1.6, oy - 2], [ox + 1.6, oy - 2], [ox, oy + 2.2]], '#e8a838');
+  ctx.restore();
+  for (const a of [-4.6, -1.6, 1.6, 4.6]) line([[ox + a, 55.4], [ox + a * 1.1, 58]], 1.5, '#e8a838');
+  // toadstools in the leaves: red caps with white spots, and a few little brown ones
+  const toad = (a, b, r, cap, spots = true) => {
+    rect(a - r * 0.28, b - r * 1.2, r * 0.56, r * 1.25, '#efe6d2'); rect(a + r * 0.06, b - r * 1.2, r * 0.22, r * 1.25, '#cfc4ae');
+    ctx.fillStyle = cap; ctx.beginPath(); ctx.ellipse(X(a), X(b - r * 1.15), X(r), X(r * 0.72), 0, Math.PI, 0); ctx.closePath(); ctx.fill();
+    rect(a - r, b - r * 1.2, r * 2, r * 0.18, '#e8dcc0');
+    if (spots) for (const [dx, dy] of [[-0.5, -0.3], [0.1, -0.6], [0.55, -0.25]]) disc(a + dx * r, b - r * 1.15 + dy * r * 0.72, Math.max(0.9, r * 0.15), '#fbf4e4');
+  };
+  // a fallen log, mossy along the top, its cut end showing the rings
+  ell(74, 96.6, 22, 2.4, '#10221e');
+  rect(54, 87, 38, 9, '#4a3a34'); rect(54, 87, 38, 2.4, '#5e4a40'); for (const a of [60, 70, 80]) rect(a, 90, 6, 1, '#3a2c28');
+  for (const [a, w] of [[55, 9], [66, 6], [76, 11]]) ell(a + w / 2, 87.2, w / 2, 1.6, '#4e7a3a');
+  ell(92, 91.5, 3.4, 4.6, '#c8a070'); ell(92, 91.5, 2.2, 3.1, '#a87e54'); ell(92, 91.5, 1, 1.5, '#c8a070');
+  toad(62, 87, 2.6, '#b8783e', false); toad(66.4, 87.4, 2, '#a86a34', false);
+  toad(28, 95, 6.4, '#d23a2e'); toad(39.4, 97.6, 4.4, '#e04a34'); toad(18.6, 98.4, 3.6, '#c43228');
+  toad(108, 96, 5.4, '#d23a2e'); toad(117.6, 98.4, 3.6, '#e04a34');
+  // a few leaves still drifting down
+  for (const [a, b, rot, col] of [[36, 20, 0.5, '#e08a32'], [80, 40, -0.6, '#c8582e'], [104, 22, 1, '#e6b040'], [52, 58, -0.8, '#e6b040'], [140, 34, 0.4, '#c8582e']]) leafAt(a, b, 1.5, rot, col);
+}
+
+// Full-moon wolf: a wolf on a rock howling at a huge moon with bats, mountains, a lake and pines below, a starry violet sky.
+function hlwWolf(ctx, W, H) {
+  const u = H / 100, X = (v) => v * u, rnd = rng(5501), WU = W / u;
+  const poly = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.closePath(); ctx.fill(); };
+  const disc = (a, b, r, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.arc(X(a), X(b), X(r), 0, Math.PI * 2); ctx.fill(); };
+  const ell = (a, b, rx, ry, col, rot = 0) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(rx), X(ry), rot, 0, Math.PI * 2); ctx.fill(); };
+  const line = (pts, w, col) => { ctx.strokeStyle = col; ctx.lineWidth = X(w); ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); pts.forEach(([a, b], i) => (i ? ctx.lineTo(X(a), X(b)) : ctx.moveTo(X(a), X(b)))); ctx.stroke(); };
+  // deep blue-violet sky, lighter towards the moon
+  const mx = 99, my = 41, mr = 33;
+  const sky = ctx.createLinearGradient(0, 0, 0, X(80)); sky.addColorStop(0, '#15113a'); sky.addColorStop(0.55, '#272262'); sky.addColorStop(1, '#3e367c');
+  ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
+  disc(mx, my, mr + 13, '#363278'); disc(mx, my, mr + 6.5, '#4a4692');
+  // round stars, a few bigger ones, none on the moon
+  for (let k = 0; k < 80; k++) { const a = rnd() * WU, b = rnd() * 66, big = rnd() < 0.15; if (Math.hypot(a - mx, b - my) < mr + 9) continue; disc(a, b, big ? 1.25 : 0.85, big ? '#fff2c0' : '#d8d6f2'); }
+  // the moon, with soft grey-gold seas
+  disc(mx, my, mr, '#f6eecc');
+  for (const [a, b, r] of [[14, 10, 9], [-14, -14, 5], [20, -6, 4], [4, 22, 5]]) disc(mx + a, my + b, r, '#ebe0ba');
+  // mountains far off, moonlit snow on the peaks
+  const range = (pts, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(0, H); pts.forEach(([a, b]) => ctx.lineTo(X(a), X(b))); ctx.lineTo(W, H); ctx.closePath(); ctx.fill(); };
+  range([[0, 64], [12, 57], [24, 62], [40, 55], [56, 63], [74, 58], [92, 66], [112, 59], [128, 65], [146, 56], [158, 60]], '#46448c');
+  for (const [a, b] of [[40, 55], [74, 58], [112, 59], [146, 56], [12, 57]]) poly([[a, b], [a + 4.4, b + 3.4], [a + 2, b + 2.8], [a, b + 4.2], [a - 2, b + 2.8], [a - 4.4, b + 3.4]], '#a8a6d8');
+  range([[0, 70], [20, 65], [38, 69], [58, 64], [80, 69], [100, 65], [122, 70], [142, 65], [158, 68]], '#33316e');
+  // the valley: a still lake catching the moon, a pine forest along its shore
+  ctx.fillStyle = '#2a2a64'; ctx.fillRect(0, X(72), W, X(28));
+  ctx.fillStyle = '#4a4890'; ctx.beginPath(); ctx.ellipse(X(118), X(83), X(36), X(6.4), 0, 0, Math.PI * 2); ctx.fill();
+  for (const [b, w] of [[78.6, 10], [80.8, 15], [83, 12], [85.2, 7]]) { ctx.fillStyle = '#e8e0c0'; ctx.fillRect(X(116 - w / 2), X(b), X(w), X(1.1)); }
+  const pine = (a, b, h, col) => {
+    poly([[a, b - h], [a + h * 0.18, b - h * 0.62], [a + h * 0.1, b - h * 0.62], [a + h * 0.28, b - h * 0.25], [a + h * 0.16, b - h * 0.25], [a + h * 0.34, b], [a - h * 0.34, b], [a - h * 0.16, b - h * 0.25], [a - h * 0.28, b - h * 0.25], [a - h * 0.1, b - h * 0.62], [a - h * 0.18, b - h * 0.62]], col);
+  };
+  for (let a = 0; a < WU + 4; a += 3.2 + rnd() * 1.6) pine(a, 77 + rnd() * 1.5, 7 + rnd() * 4, '#1e2250');
+  // a little cabin on the far shore, one window lit, smoke rising from the chimney
+  const cx = 142, cy = 78.6;
+  ctx.save(); ctx.translate(X(cx), X(cy)); ctx.scale(1.35, 1.35); ctx.translate(-X(cx), -X(cy));
+  poly([[cx - 6, cy], [cx - 6, cy - 5.4], [cx, cy - 10], [cx + 6, cy - 5.4], [cx + 6, cy]], '#4a3e80');
+  poly([[cx - 7.4, cy - 5], [cx, cy - 11], [cx + 7.4, cy - 5], [cx + 7.4, cy - 3.4], [cx, cy - 9.2], [cx - 7.4, cy - 3.4]], '#8a86c8');
+  ctx.fillStyle = '#241c50'; ctx.fillRect(X(cx + 2.6), X(cy - 12.6), X(2), X(4.4));
+  ctx.fillStyle = '#f6b84a'; ctx.fillRect(X(cx - 1.6), X(cy - 4.8), X(3.2), X(3.2));
+  ctx.fillStyle = '#b88a5a'; ctx.fillRect(X(cx - 0.8), X(cy + 0.8), X(1.6), X(3));
+  for (let k = 0; k < 4; k++) disc(cx + 4 + k * 1.3, cy - 14 - k * 2.4, 0.9 + k * 0.35, '#5c5a9a');
+  ctx.restore();
+  for (let a = 84; a < WU + 4; a += 4.4 + rnd() * 2) pine(a, 99 + rnd() * 2, 12 + rnd() * 6, '#181c44');
+  for (let a = 84; a < WU + 4; a += 4.4 + rnd() * 2) { const h = 10 + rnd() * 5, b = 102 + rnd() * 2; pine(a, b, h, '#141838'); line([[a, b - h], [a + h * 0.18, b - h * 0.62]], 0.9, '#3e4486'); }
+  // the rocky outcrop the wolf sits on, coming in from the left, moonlit along its top
+  const ROCK = '#1c1a46', ROCK2 = '#2c2a66', ROCKL = '#6a6ab0';
+  poly([[-1, 101], [-1, 66], [10, 63], [22, 66], [34, 72], [46, 76.4], [62, 76], [78, 76.6], [90, 77], [95, 81], [97, 88], [100, 94], [101, 101]], ROCK);
+  poly([[62, 76], [78, 76.6], [90, 77], [95, 81], [86, 80], [72, 79], [60, 79.4]], ROCK2);
+  poly([[-1, 66], [10, 63], [22, 66], [34, 72], [46, 76.4], [38, 76], [26, 71], [12, 66.6], [-1, 69]], ROCK2);
+  line([[10, 63.6], [22, 66.6], [34, 72.6], [46, 77], [62, 76.6], [78, 77.2], [90, 77.6]], 1.3, ROCKL);
+  line([[90, 77.6], [95, 81.6], [97, 87.6]], 1.2, '#46468a');
+  for (const pts of [[[30, 80], [40, 86], [38, 96]], [[56, 84], [66, 90], [78, 92]], [[14, 74], [10, 86], [18, 98]], [[84, 84], [88, 96]]]) line(pts, 1.3, '#0e0c28');
+  for (const pts of [[[42, 80], [52, 82]], [[22, 82], [30, 90]], [[64, 96], [80, 98]], [[4, 76], [8, 72], [14, 71]], [[46, 90], [54, 94]]]) line(pts, 1.3, '#363478');
+  // small pines clinging to the rock at the left
+  for (const [a, b, h] of [[5, 66, 12], [12, 65.4, 9], [20, 68, 7]]) { pine(a, b, h, '#0e0c2a'); line([[a, b - h], [a + h * 0.18, b - h * 0.62], [a + h * 0.1, b - h * 0.62], [a + h * 0.28, b - h * 0.25]], 0.9, '#4a4890'); }
+  // the wolf: one silhouette, sitting, head thrown back to howl at the moon, a bushy tail along the rock
+  const WOLF = [[-26, 0], [-22, -2.6], [-18, -4.4], [-14, -6], [-16, -10], [-15.4, -14.4], [-12.6, -18], [-8.4, -21.6], [-4, -26], [0, -30.4],
+    [2.6, -34.4], [4.4, -38.6], [5, -42], [3.2, -48], [8, -44.6], [10.6, -46.4], [17.6, -54.6], [19.4, -54], [19.6, -52.4], [13.8, -47.4],
+    [18.2, -49.4], [18.2, -48.2], [12.6, -43.6], [12.6, -41], [13.6, -37.4], [12.2, -36.8], [13.2, -33.4], [11.6, -32.4], [11.8, -27.6],
+    [10.8, -22], [9.6, -17.4], [9.4, -2], [11.8, -0.8], [11.8, 0], [5.4, 0], [5.6, -12], [4.2, -12], [4, 0], [0.6, 0], [0.8, -8], [-2, -6.4],
+    [-1.4, -2.2], [2.2, -1.2], [2.2, 0], [-12, 0], [-14, -0.6], [-20, -0.2]];
+  const wolf = (ox, oy, s, col) => poly(WOLF.map(([a, b]) => [ox + a * s, oy + b * s]), col);
+  wolf(77.6, 76.4, 0.94, '#7e7cc0');                                       // a thin rim of moonlight along its back
+  wolf(78, 76.8, 0.94, '#0e0a22');
+  // bats flitting across the moon: a round body, little ears and scalloped wings
+  const bat = (a, b, s, flap) => {
+    ctx.save(); ctx.translate(X(a), X(b)); ctx.scale(s, s); ctx.translate(-X(a), -X(b));
+    const BAT = '#14102a';
+    for (const f of [-1, 1]) poly([[a + f * 1.2, b - 1.4], [a + f * 4.2, b - 3.8 - flap * 0.5], [a + f * 7.4, b - 6 - flap], [a + f * 10.6, b - 7.4 - flap * 1.2], [a + f * 10, b - 2.6 - flap * 0.6], [a + f * 8.2, b - 2.8 - flap * 0.4], [a + f * 7, b + 0.4], [a + f * 5.2, b - 0.4], [a + f * 3.8, b + 2], [a + f * 2.4, b + 0.8], [a + f * 1.2, b + 2]], BAT);
+    ell(a, b, 2, 2.6, BAT); poly([[a - 1.7, b - 1.6], [a - 1.4, b - 4], [a - 0.3, b - 2.2]], BAT); poly([[a + 1.7, b - 1.6], [a + 1.4, b - 4], [a + 0.3, b - 2.2]], BAT);
+    ctx.restore();
+  };
+  bat(116, 24, 1.15, 0.4); bat(124, 52, 1, 1.2); bat(139, 31, 0.8, 1); bat(64, 18, 0.7, 0);
+}
+
+// Draws a postcard letter scene in loops (HALLOWEEN is squeezed to ~0.43 wide; the letter runs from y 7.7 to 29.4).
+const hlwPostcardIn = (draw) => (c, w, h) => { const lx = h / 15, ly = h / 32; c.save(); c.scale(lx, ly); c.lineCap = 'round'; c.lineJoin = 'round'; draw(c, w / lx); c.restore(); };
+// One bold little Halloween scene per letter of HALLOWEEN.
+const HLW_POSTCARD_SCENES = [
+  hlwPostcardIn((c, w) => { // a jack-o'-lantern: orange skin and ribs, triangle eyes in the stems, a toothy grin along the bar
+    c.fillStyle = '#f2861e'; c.fillRect(0, 0, w, 32);
+    c.fillStyle = '#fbb04a'; c.fillRect(w * 0.13, 8, 0.9, 22); c.fillRect(w * 0.66, 8, 0.9, 22);
+    c.fillStyle = '#c85e12'; c.fillRect(w * 0.27, 20, 0.9, 10); c.fillRect(w * 0.86, 20, 0.9, 10);
+    c.fillStyle = '#4a7a2a'; c.fillRect(w * 0.12, 7, w * 0.2, 1.8);
+    c.fillStyle = '#33140a';
+    for (const x of [0.205, 0.795]) { c.beginPath(); c.moveTo(w * x, 11); c.lineTo(w * x + 1.6, 15.4); c.lineTo(w * x - 1.6, 15.4); c.fill(); }
+    c.beginPath(); c.moveTo(w * 0.08, 17.6); c.lineTo(w * 0.92, 17.6); c.lineTo(w * 0.8, 21.2); c.lineTo(w * 0.2, 21.2); c.fill();
+    c.fillStyle = '#f2861e'; for (const x of [0.38, 0.62]) c.fillRect(w * x - 0.6, 17.4, 1.2, 1.5);
+  }),
+  hlwPostcardIn((c, w) => { // a witch hat: the A is the tall purple cone, a green band across it with a gold buckle
+    c.fillStyle = '#4a2a7c'; c.fillRect(0, 0, w, 32);
+    c.fillStyle = '#6a46a6'; c.beginPath(); c.moveTo(w * 0.5, 6); c.lineTo(w * 0.36, 21); c.lineTo(w * 0.1, 21); c.fill();
+    c.fillStyle = '#2e1a50'; c.fillRect(0, 25, w, 6);
+    c.fillStyle = '#4caa3c'; c.fillRect(0, 20.6, w, 3.8);
+    c.fillStyle = '#f6c83a'; c.fillRect(w * 0.5 - 1.5, 20.2, 3, 4.6); c.fillStyle = '#4caa3c'; c.fillRect(w * 0.5 - 0.6, 21.4, 1.2, 2.2);
+    c.fillStyle = '#f6d65a'; for (const [x, y] of [[0.5, 11], [0.32, 17.4], [0.7, 16.4]]) { c.beginPath(); c.arc(w * x, y, 0.7, 0, Math.PI * 2); c.fill(); }
+  }),
+  hlwPostcardIn((c, w) => { // candy corn: broad diagonal stripes of white, orange and yellow
+    c.save(); c.rotate(-0.6);
+    const col = ['#fbf3e0', '#f2861e', '#f6c83a'];
+    for (let k = -12; k < 30; k++) { c.fillStyle = col[((k % 3) + 3) % 3]; c.fillRect(-20, k * 1.8, 60, 1.85); }
+    c.restore();
+  }),
+  hlwPostcardIn((c, w) => { // a black cat lying along the foot of the L, ears up and eyes open, its tail held straight up the stem
+    c.fillStyle = '#f4b440'; c.fillRect(0, 0, w, 32);
+    const K = '#1a1424';
+    c.strokeStyle = K; c.lineWidth = 1.5; c.beginPath(); c.moveTo(2.4, 27); c.lineTo(2.4, 11); c.quadraticCurveTo(2.4, 8.4, 3.8, 8.6); c.stroke();
+    c.fillStyle = K; c.beginPath(); c.roundRect(1, 26.2, 6, 4, 1.6); c.fill();
+    c.beginPath(); c.ellipse(6.4, 27.4, 2, 2.2, 0, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.moveTo(4.6, 26.4); c.lineTo(5, 24.4); c.lineTo(6.2, 25.8); c.lineTo(6.6, 25.8); c.lineTo(7.8, 24.4); c.lineTo(8.2, 26.4); c.fill();
+    c.fillStyle = '#d4ee5a'; for (const x of [5.5, 7.3]) { c.beginPath(); c.ellipse(x, 27.3, 0.55, 0.8, 0, 0, Math.PI * 2); c.fill(); }
+  }),
+  hlwPostcardIn((c, w) => { // the O is a full moon, soft grey-gold seas on it, bats flying across the top and bottom
+    c.fillStyle = '#f6d860'; c.fillRect(0, 0, w, 32);
+    c.fillStyle = '#e6c04a'; for (const [x, y, r] of [[0.16, 16, 1.6], [0.86, 21, 1.8], [0.2, 23.6, 1.1], [0.82, 13, 1.1]]) { c.beginPath(); c.arc(w * x, y, r, 0, Math.PI * 2); c.fill(); }
+    const bat = (x, y, s) => { c.fillStyle = '#140e26'; for (const f of [-1, 1]) { c.beginPath(); c.moveTo(x, y - 0.6 * s); c.lineTo(x + f * 1.4 * s, y - 1.8 * s); c.lineTo(x + f * 3 * s, y - 2.2 * s); c.lineTo(x + f * 2.7 * s, y + 0.2 * s); c.lineTo(x + f * 1.9 * s, y - 0.2 * s); c.lineTo(x + f * 1.3 * s, y + 0.9 * s); c.lineTo(x, y + 0.7 * s); c.fill(); } c.beginPath(); c.ellipse(x, y, 0.7 * s, 1 * s, 0, 0, Math.PI * 2); c.fill(); };
+    bat(w * 0.46, 9.8, 1.15); bat(w * 0.56, 27.6, 1.05); bat(w * 0.13, 19, 0.75);
+  }),
+  hlwPostcardIn((c, w) => { // ghosts: the letter is a pale sheet with cute black eyes and little round mouths along its strokes
+    const g = c.createLinearGradient(0, 8, 0, 30); g.addColorStop(0, '#fbfbff'); g.addColorStop(1, '#c8cce8'); c.fillStyle = g; c.fillRect(0, 0, w, 32);
+    c.fillStyle = '#1a1830';
+    for (const [x, y] of [[0.14, 13], [0.56, 15.4], [0.9, 13]]) {
+      for (const d of [-0.75, 0.75]) { c.beginPath(); c.ellipse(w * x + d, y, 0.55, 1, 0, 0, Math.PI * 2); c.fill(); }
+      c.beginPath(); c.ellipse(w * x, y + 2.6, 0.55, 0.7, 0, 0, Math.PI * 2); c.fill();
+    }
+    c.fillStyle = '#f2a4b4'; for (const [x, y] of [[0.14, 13], [0.56, 15.4], [0.9, 13]]) for (const d of [-1.6, 1.6]) { c.beginPath(); c.ellipse(w * x + d, y + 1.6, 0.5, 0.45, 0, 0, Math.PI * 2); c.fill(); }
+  }),
+  hlwPostcardIn((c, w) => { // a cobweb spun from the top corner on violet, a little spider hanging from it
+    c.fillStyle = '#6e3c9e'; c.fillRect(0, 0, w, 32);
+    c.strokeStyle = '#efe4fa'; c.lineWidth = 0.75;
+    const ox = 0.6, oy = 7.8, ang = [0.08, 0.5, 0.9, 1.25, 1.5];
+    for (const a of ang) { c.beginPath(); c.moveTo(ox, oy); c.lineTo(ox + Math.cos(a) * 30, oy + Math.sin(a) * 30); c.stroke(); }
+    for (const r of [4.4, 9, 14, 19.6]) { c.beginPath(); ang.forEach((a, i) => { const x = ox + Math.cos(a) * r, y = oy + Math.sin(a) * r; if (!i) c.moveTo(x, y); else { const m = (ang[i - 1] + a) / 2, rr = r * 0.86; c.quadraticCurveTo(ox + Math.cos(m) * rr, oy + Math.sin(m) * rr, x, y); } }); c.stroke(); }
+    c.lineWidth = 0.4; c.beginPath(); c.moveTo(w * 0.78, 7.6); c.lineTo(w * 0.78, 17); c.stroke();
+    c.fillStyle = '#1a1020'; c.beginPath(); c.ellipse(w * 0.78, 18.4, 0.9, 1.3, 0, 0, Math.PI * 2); c.fill();
+    c.strokeStyle = '#1a1020'; c.lineWidth = 0.4; for (const f of [-1, 1]) for (const d of [-0.6, 0.4]) { c.beginPath(); c.moveTo(w * 0.78, 18.4 + d); c.lineTo(w * 0.78 + f * 1.8, 17.6 + d * 2); c.stroke(); }
+  }),
+  hlwPostcardIn((c, w) => { // a haunted house wall at night: dark boards and glowing windows, a bat in one of them
+    c.fillStyle = '#2e1a3a'; c.fillRect(0, 0, w, 32);
+    c.fillStyle = '#3e2650'; for (let y = 8.4; y < 31; y += 2.2) c.fillRect(0, y, w, 0.5);
+    const win = (x, y, ww, hh) => { c.fillStyle = '#140c1a'; c.fillRect(x - 0.4, y - 0.4, ww + 0.8, hh + 0.8); c.fillStyle = '#ffc644'; c.fillRect(x, y, ww, hh); c.fillStyle = '#f08a24'; c.fillRect(x, y + hh * 0.6, ww, hh * 0.4); c.fillStyle = '#140c1a'; c.fillRect(x + ww / 2 - 0.25, y, 0.5, hh); };
+    win(w * 0.1, 9, 2.6, 3.2); win(w * 0.52, 8.6, 3, 3.4); win(w * 0.1, 16.8, 2.6, 3.4); win(w * 0.48, 17.4, 2.8, 2.4); win(w * 0.1, 25.4, 2.6, 3); win(w * 0.56, 25.6, 3, 3);
+  }),
+  hlwPostcardIn((c, w) => { // autumn leaves: red, orange and gold maple leaves tumbling over a rust-brown ground
+    c.fillStyle = '#6e341c'; c.fillRect(0, 0, w, 32);
+    const maple = (x, y, r, rot, col) => {
+      c.save(); c.translate(x, y); c.rotate(rot); c.fillStyle = col; c.beginPath();
+      for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + (k / 10) * Math.PI * 2, rr = k % 2 ? r * 0.5 : r * (k === 4 || k === 6 ? 0.8 : 1); c.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); }
+      c.fill(); c.strokeStyle = col; c.lineWidth = 0.5; c.beginPath(); c.moveTo(0, 0); c.lineTo(0, r * 1.2); c.stroke(); c.restore();
+    };
+    const L = [[0.15, 10, 0.2, '#e8402a'], [0.18, 17, -0.5, '#f6c03a'], [0.14, 25, 0.6, '#f08a2a'], [0.4, 14, 1, '#f08a2a'], [0.55, 20.6, -0.3, '#e8402a'], [0.7, 25, 0.4, '#f6c03a'], [0.85, 10.4, -0.6, '#f6c03a'], [0.86, 18, 0.3, '#e8402a'], [0.85, 26.6, -0.2, '#f08a2a']];
+    for (const [x, y, rot, col] of L) maple(w * x, y, 2.6, rot, col);
+  }),
+];
+// Postcard: "Happy HALLOWEEN", each letter a little Halloween scene, over a violet dusk sky and autumn hills with pumpkins.
+function hlwPostcard(ctx, W, H) {
+  americaPostcard(ctx, W, H, 'HALLOWEEN', HLW_POSTCARD_SCENES, 22, 48, { ribbon: 'HAPPY', sky: ['#1e1444', '#5a2e7a', '#e2804c'], hills: ['#c4702e', '#5a3460'] });
+  const u = H / 100, X = (v) => v * u;
+  const ell = (a, b, rx, ry, col) => { ctx.fillStyle = col; ctx.beginPath(); ctx.ellipse(X(a), X(b), X(rx), X(ry), 0, 0, Math.PI * 2); ctx.fill(); };
+  for (const [a, b] of [[8, 30], [150, 31], [16, 37], [142, 38]]) ell(a, b, 0.9, 0.9, '#f6e8b0');
+  const pumpkin = (a, b, r) => {
+    ell(a, b, r * 1.2, r * 0.85, '#c85a14'); ell(a - r * 0.5, b, r * 0.56, r * 0.82, '#f0861e'); ell(a + r * 0.5, b, r * 0.56, r * 0.82, '#f0861e'); ell(a, b, r * 0.4, r * 0.85, '#f69a2e');
+    ctx.fillStyle = '#4e7a2a'; ctx.fillRect(X(a - r * 0.14), X(b - r * 1.2), X(r * 0.3), X(r * 0.45));
+  };
+  for (const [a, b, r] of [[14, 91, 3.6], [24, 92.4, 2.8], [33, 91.4, 2.4], [126, 91.4, 2.4], [135, 92.4, 2.8], [145, 91, 3.6]]) pumpkin(a, b, r);
+}
+
 // ---------- USA pack: woven, pieced and knotted rugs (restored from the earlier drafts) ----------
 // Dashed stitching around a rectangle; each side starts and ends on a stitch, so the corners join up.
 function stitchRect(ctx, x, y, w, h, step, thick, color) {
@@ -23380,11 +26555,37 @@ export function makeRugCanvases(styleKey, aspect = 1.58, seed = 7, { frontOnly =
   else if (P.yilbasi === 'skating') yilSkating(ctx, W, H);
   else if (P.yilbasi === 'sleigh') yilSleigh(ctx, W, H);
   else if (P.yilbasi === 'fireworks') yilFireworks(ctx, W, H);
+  else if (P.classic === 'faded') clsFaded(ctx, W, H);
+  else if (P.classic === 'overdyed') clsOverdyed(ctx, W, H);
+  else if (P.classic === 'caucasus') clsCaucasus(ctx, W, H);
+  else if (P.classic === 'deco') clsDeco(ctx, W, H);
+  else if (P.classic === 'savonnerie') clsSavonnerie(ctx, W, H);
+  else if (P.halloween === 'bats') hlwBats(ctx, W, H);
+  else if (P.halloween === 'blackcats') hlwBlackCats(ctx, W, H);
+  else if (P.halloween === 'witchhats') hlwWitchHats(ctx, W, H);
+  else if (P.halloween === 'candycorn') hlwCandyCorn(ctx, W, H);
+  else if (P.halloween === 'owls') hlwOwls(ctx, W, H);
+  else if (P.halloween === 'potions') hlwPotions(ctx, W, H);
+  else if (P.halloween === 'mummies') hlwMummies(ctx, W, H);
+  else if (P.halloween === 'candyapples') hlwCandyApples(ctx, W, H);
+  else if (P.halloween === 'treats') hlwTreats(ctx, W, H);
+  else if (P.halloween === 'harvest') hlwHarvest(ctx, W, H);
+  else if (P.halloween === 'haunted') hlwHaunted(ctx, W, H);
+  else if (P.halloween === 'witchcottage') hlwWitchCottage(ctx, W, H);
+  else if (P.halloween === 'trickortreat') hlwTrickOrTreat(ctx, W, H);
+  else if (P.halloween === 'porch') hlwPorch(ctx, W, H);
+  else if (P.halloween === 'carving') hlwCarving(ctx, W, H);
+  else if (P.halloween === 'windowcat') hlwWindowCat(ctx, W, H);
+  else if (P.halloween === 'scarecrow') hlwScarecrow(ctx, W, H);
+  else if (P.halloween === 'farm') hlwFarm(ctx, W, H);
+  else if (P.halloween === 'woods') hlwWoods(ctx, W, H);
+  else if (P.halloween === 'wolf') hlwWolf(ctx, W, H);
+  else if (P.halloween === 'postcard') hlwPostcard(ctx, W, H);
   else if (P.halloween === 'pumpkin') halloweenPumpkin(ctx, W, H);
   else if (P.halloween === 'web') halloweenWeb(ctx, W, H, seed);
   else if (P.halloween === 'ghost') halloweenGhost(ctx, W, H, seed);
   else if (P.kilim) kilim(ctx, W, H); else persian(ctx, W, H, P, seed);
-  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : P.mexico ? MEXICO_FRAME : P.turkiye ? TURKIYE_FRAME : P.korea ? KOREA_FRAME : P.japan ? JAPAN_FRAME : P.china ? CHINA_FRAME : P.italy ? ITALY_FRAME : P.greece ? GREECE_FRAME : P.spain ? SPAIN_FRAME : P.france ? FRANCE_FRAME : P.norway ? NORWAY_FRAME : P.sweden ? SWEDEN_FRAME : P.denmark ? DENMARK_FRAME : P.finland ? FINLAND_FRAME : P.iceland ? ICELAND_FRAME : P.croatia ? CROATIA_FRAME : P.bosnia ? BOSNIA_FRAME : P.serbia ? SERBIA_FRAME : P.bulgaria ? BULGARIA_FRAME : P.albania ? ALBANIA_FRAME : P.jordan ? JORDAN_FRAME : P.morocco ? MOROCCO_FRAME : P.yilbasi ? YILBASI_FRAME : undefined); else addWeave(ctx, W, H, seed, P.silk ? 12 : 26);
+  if (P.hooked) hookedFrame(ctx, W, H, seed, inner, P.canada ? CANADA_FRAME : P.mexico ? MEXICO_FRAME : P.turkiye ? TURKIYE_FRAME : P.korea ? KOREA_FRAME : P.japan ? JAPAN_FRAME : P.china ? CHINA_FRAME : P.italy ? ITALY_FRAME : P.greece ? GREECE_FRAME : P.spain ? SPAIN_FRAME : P.france ? FRANCE_FRAME : P.norway ? NORWAY_FRAME : P.sweden ? SWEDEN_FRAME : P.denmark ? DENMARK_FRAME : P.finland ? FINLAND_FRAME : P.iceland ? ICELAND_FRAME : P.croatia ? CROATIA_FRAME : P.bosnia ? BOSNIA_FRAME : P.serbia ? SERBIA_FRAME : P.bulgaria ? BULGARIA_FRAME : P.albania ? ALBANIA_FRAME : P.jordan ? JORDAN_FRAME : P.morocco ? MOROCCO_FRAME : P.yilbasi ? YILBASI_FRAME : P.halloween ? HALLOWEEN_FRAME : undefined); else addWeave(ctx, W, H, seed, P.silk ? 12 : 26);
 
   if (frontOnly) return { front: c };
 
