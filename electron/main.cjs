@@ -346,7 +346,7 @@ async function readWallpaperMac() {
 // find where along the cropped direction the picture really sits. Returns 0..1 (0 = start, 0.5 = centered, 1 = end).
 const anchorCache = new Map();
 async function measureWallpaperAnchor(src, mode, d) {
-  if (process.platform !== 'win32' || !src || !['fill', 'span'].includes(mode)) return 0.5;
+  if (process.platform !== 'win32' || !src || mode !== 'fill') return 0.5;
   const key = JSON.stringify([src, fs.statSync(src).mtimeMs, d.bounds]);
   if (anchorCache.has(key)) return anchorCache.get(key);
   try {
@@ -402,15 +402,19 @@ async function sendWallpaper(force = false) {
     const d = rugDisplay();
     let mtime = 0;
     try { if (w.src) mtime = fs.statSync(w.src).mtimeMs; } catch {}
-    const sig = JSON.stringify([w.src, mtime, w.mode, w.color, d.bounds, d.workArea, d.scaleFactor]);
+    const sig = JSON.stringify([w.src, mtime, w.mode, w.color, d.bounds, d.workArea, d.scaleFactor, screen.getAllDisplays().map((x) => x.bounds)]);
     if (!force && sig === wallpaperSig) return;
     wallpaperSig = sig;
     const bytes = w.src ? fs.readFileSync(w.src) : null;
     const anchor = await measureWallpaperAnchor(w.src, w.mode, d);
     // Couldn't measure this time (e.g. a full-screen app covered the desktop): try again on the next check.
-    if (process.platform === 'win32' && w.src && ['fill', 'span'].includes(w.mode) && !anchorCache.has(JSON.stringify([w.src, mtime, d.bounds]))) wallpaperSig = '';
+    if (process.platform === 'win32' && w.src && w.mode === 'fill' && !anchorCache.has(JSON.stringify([w.src, mtime, d.bounds]))) wallpaperSig = '';
     lastWallpaper = { src: w.src, mode: w.mode, bytes: bytes ? bytes.length : 0, anchor };
-    send('wallpaper', { bytes, mode: w.mode, color: w.color, scale: d.scaleFactor, bounds: d.bounds, workArea: d.workArea, anchor });
+    // "Span" lays one picture over all the screens together: the rug's screen shows its own part of it.
+    const all = screen.getAllDisplays().map((x) => x.bounds);
+    const x0 = Math.min(...all.map((r) => r.x)), y0 = Math.min(...all.map((r) => r.y));
+    const virtual = { x: x0, y: y0, width: Math.max(...all.map((r) => r.x + r.width)) - x0, height: Math.max(...all.map((r) => r.y + r.height)) - y0 };
+    send('wallpaper', { bytes, mode: w.mode, color: w.color, scale: d.scaleFactor, bounds: d.bounds, workArea: d.workArea, anchor, virtual });
   } catch (e) { console.error('wallpaper failed:', e.message); }
 }
 

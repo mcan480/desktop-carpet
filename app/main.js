@@ -119,16 +119,24 @@ function drawWallpaper() {
       const w = iw / scale, h = ih / scale; // these modes show the picture at its own pixel size
       if (mode === 'center') ctx.drawImage(wallImg, (dw - w) / 2, (dh - h) / 2, w, h);
       else for (let y = 0; y < dh; y += h) for (let x = 0; x < dw; x += w) ctx.drawImage(wallImg, x, y, w, h);
+    } else if (mode === 'span' && wallInfo.virtual) {
+      // one picture filling the box round all the screens, centred on it; this screen shows its own part
+      const v = wallInfo.virtual, f = Math.max(v.width / iw, v.height / ih);
+      ctx.drawImage(wallImg, v.x - b.x + (v.width - iw * f) / 2, v.y - b.y + (v.height - ih * f) / 2, iw * f, ih * f);
     } else {
-      const f = mode === 'fit' ? Math.min(dw / iw, dh / ih) : Math.max(dw / iw, dh / ih); // fill / span
+      const f = mode === 'fit' ? Math.min(dw / iw, dh / ih) : Math.max(dw / iw, dh / ih); // fill
       // Where the OS puts a cropped picture: centered by default, or what the main process measured on screen.
       const t = mode === 'fit' ? 0.5 : (wallInfo.anchor ?? 0.5);
       ctx.drawImage(wallImg, (dw - iw * f) * t, (dh - ih * f) * t, iw * f, ih * f);
     }
     ctx.restore();
   }
+  // three.js keeps a texture's GPU storage at the size it was first made, so a canvas of another size (the window moved
+  // to a screen of another shape) needs a new texture, or the old picture stays and is stretched over the new window.
+  if (wallTex && (wallTex.userData.w !== wallCanvas.width || wallTex.userData.h !== wallCanvas.height)) { wallTex.dispose(); wallTex = null; }
   if (!wallTex) {
     wallTex = new THREE.CanvasTexture(wallCanvas);
+    wallTex.userData = { w: wallCanvas.width, h: wallCanvas.height };
     wallTex.colorSpace = THREE.NoColorSpace; // pass the wallpaper's pixels through untouched
     wallTex.generateMipmaps = false;
     wallTex.minFilter = wallTex.magFilter = THREE.LinearFilter;
