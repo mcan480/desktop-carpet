@@ -475,6 +475,8 @@ export class Cloth {
     for (const arr of [this.pos, this.prev]) {
       for (let p = 0; p < this.n; p++) { arr[p * 3] += dx; arr[p * 3 + 1] += dy; }
     }
+    // the hand moves with it (setPin caps how far the hand goes from where it was)
+    if (this.pin) { this.pin.x += dx; this.pin.y += dy; }
   }
 }
 

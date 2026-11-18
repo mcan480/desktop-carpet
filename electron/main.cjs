@@ -160,8 +160,41 @@ function nativeHwnd() {
   return Number(buf.length >= 8 ? buf.readBigUInt64LE(0) : buf.readUInt32LE(0));
 }
 
+// ---------- which screen the rug is on ----------
+// The rug window covers the work area of one screen. When a dragged rug's middle crosses onto another screen, the
+// window moves there (the rug keeps its place on the desktop), and the screen is remembered for the next start.
+let rugOn = null;   // id of the screen the window is on now
+function rugDisplay() {
+  return screen.getAllDisplays().find((d) => d.id === settings.display) || screen.getPrimaryDisplay();
+}
+
+// Move the rug window to display d. With keep, the rug stays where it is on the desktop (it's being carried across);
+// without, it's brought to the middle of the new screen.
+function moveRugTo(d, keep) {
+  if (!win || win.isDestroyed()) return;
+  const old = win.getBounds(), a = d.workArea;
+  settings.display = rugOn = d.id;
+  writeJson(SETTINGS_FILE(), settings);
+  win.setBounds({ x: a.x, y: a.y, width: a.width, height: a.height });
+  if (keep) send('shift', { dx: old.x - a.x, dy: old.y - a.y });
+  else setTimeout(() => send('center'), 200);   // after the page has taken the new size
+  if (!settings.onTop) pinToDesktop();
+  refreshTransparency();
+  if (rugState.style === 'gorunmez') sendWallpaper(true);
+  refreshMenus();
+}
+
+// The next screen after the rug's own, in left-to-right order.
+function nextDisplay() {
+  const all = screen.getAllDisplays().sort((a, b) => a.bounds.x - b.bounds.x || a.bounds.y - b.bounds.y);
+  const i = all.findIndex((d) => d.id === rugDisplay().id);
+  return all[(i + 1) % all.length];
+}
+
 function createRugWindow() {
-  const { x, y, width, height } = screen.getPrimaryDisplay().workArea;
+  const d0 = rugDisplay();
+  rugOn = d0.id;
+  const { x, y, width, height } = d0.workArea;
   win = new BrowserWindow({
     x, y, width, height, frame: false, transparent: true, backgroundColor: '#00000000',
     resizable: false, movable: false, minimizable: false, maximizable: false, fullscreenable: false,
@@ -245,9 +278,12 @@ function refreshTransparency() {
 
 function fitToScreen() {
   if (!win || win.isDestroyed()) return;
-  const { x, y, width, height } = screen.getPrimaryDisplay().workArea;
+  const d = rugDisplay();
+  const { x, y, width, height } = d.workArea;
   win.setBounds({ x, y, width, height });
   send('layout');
+  // Its screen was unplugged: the rug comes over to the main screen.
+  if (rugOn !== d.id) { rugOn = d.id; setTimeout(() => send('center'), 200); }
   if (rugState.style === 'gorunmez') sendWallpaper();
 }
 
@@ -363,7 +399,7 @@ async function sendWallpaper(force = false) {
   if (!win || win.isDestroyed()) return;
   try {
     const w = IS_MAC ? await readWallpaperMac() : process.platform === 'win32' ? await readWallpaperWin() : { src: null, mode: 'fill', color: 'rgb(0,0,0)' };
-    const d = screen.getPrimaryDisplay();
+    const d = rugDisplay();
     let mtime = 0;
     try { if (w.src) mtime = fs.statSync(w.src).mtimeMs; } catch {}
     const sig = JSON.stringify([w.src, mtime, w.mode, w.color, d.bounds, d.workArea, d.scaleFactor]);
@@ -510,6 +546,7 @@ function buildMenu() {
     items.push(
       { label: t('flatten'), click: () => rugCommand('flatten') },
       { label: t('center'), click: () => rugCommand('center') },
+      ...(screen.getAllDisplays().length > 1 ? [{ label: t('nextScreen'), click: () => moveRugTo(nextDisplay(), false) }] : []),
       userHidden ? { label: t('show'), click: () => rugCommand('show') } : { label: t('hide'), click: () => rugCommand('hide') },
       { type: 'separator' },
       { label: t('pattern'), submenu: [
@@ -890,8 +927,8 @@ app.whenReady().then(() => {
   powerMonitor.on('resume', () => setTimeout(() => checkForUpdate({ minGap: UPDATE_MIN_GAP }), 10 * 1000));
 
   screen.on('display-metrics-changed', fitToScreen);
-  screen.on('display-added', fitToScreen);
-  screen.on('display-removed', fitToScreen);
+  screen.on('display-added', () => { fitToScreen(); refreshMenus(); });
+  screen.on('display-removed', () => { fitToScreen(); refreshMenus(); });
 
   setTimeout(() => { launchSettled = true; }, 1500);
   if (process.env.DC_SMOKE) runSmoke();
@@ -911,6 +948,13 @@ app.on('activate', () => { if (launchSettled) openPanel(); });
 
 // ---------- IPC: rug window ----------
 ipcMain.on('ignore-mouse', (_e, ignore) => { if (win && !win.isDestroyed()) win.setIgnoreMouseEvents(!!ignore, { forward: true }); });
+// Where the middle of a dragged rug is (in window coordinates): on another screen, the window follows it there.
+ipcMain.on('rug-at', (_e, x, y) => {
+  if (!win || win.isDestroyed() || !Number.isFinite(x) || !Number.isFinite(y)) return;
+  const b = win.getBounds();
+  const d = screen.getDisplayNearestPoint({ x: Math.round(b.x + x), y: Math.round(b.y + y) });
+  if (d.id !== rugDisplay().id) moveRugTo(d, true);
+});
 ipcMain.on('show-menu', () => {
   if (!win || !win.isVisible()) return;
   buildMenu().popup({ callback: () => setTimeout(() => send('reset-input'), 50) });

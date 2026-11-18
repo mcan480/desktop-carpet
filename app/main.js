@@ -377,9 +377,19 @@ function startGrab(mx, my) {
   return true;
 }
 
+// While the rug is carried (and when it's let go), tell the main process where its middle is, so the window can follow
+// it onto another screen.
+let placeSent = 0;
+function reportPlace() {
+  placeSent = performance.now();
+  const { x, y } = cloth.centroid();
+  api?.rugAt?.(x, y);
+}
+
 function endGrab() {
   if (!grab) return;
   grab = null;
+  reportPlace();
   cloth.releasePin();
   checkTangle = true;
   document.body.classList.remove('grabbing');
@@ -523,7 +533,7 @@ function frame(now) {
   syncGeometry();
   renderer.render(scene, camera);
 
-  if (grab) restlessSince = now;
+  if (grab) { restlessSince = now; if (now - placeSent > 100) reportPlace(); }
   if (!grab && moved < 0.02) still++; else still = 0;
   // Barely moving a while after the last touch, or still going 3 s after it: it has landed, let it rest where it is
   // (folds and all) instead of creeping and turning on.
@@ -577,6 +587,12 @@ function command(cmd, arg) {
     case 'layout': layout(); syncGeometry(); if (wallTex) drawWallpaper(); wake(); break;
     case 'wallpaper': setWallpaper(arg); return;
     case 'cursor': onCursor(arg); return;
+    // The window moved to another screen while the rug was carried: keep the rug (and the hand) where they are.
+    case 'shift':
+      cloth.translate(arg.dx, arg.dy);
+      if (grab) { grab.x += arg.dx; grab.y += arg.dy; }
+      mouse = { x: mouse.x + arg.dx, y: mouse.y + arg.dy };
+      wake(); return;
     case 'redraw': wake(); return;
     case 'reset-input': endGrab(); setOver(!!hitTest(mouse.x, mouse.y), true); return;
   }
