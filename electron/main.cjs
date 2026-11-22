@@ -1080,6 +1080,12 @@ async function runSmoke() {
   await wait(3000);
   console.log('SMOKE after unlock rugVisible', win.isVisible());
   fs.appendFileSync(path.join(out, 'smoke.txt'), `rugVisible ${win.isVisible()}\n`);
+  if (IS_MAC) {
+    // What's really on the screen (not just the window's own picture): the rug must show on the desktop.
+    panel.hide(); await new Promise((r) => setTimeout(r, 1500));
+    try { require('child_process').execFileSync('/usr/sbin/screencapture', ['-x', path.join(out, 'screen-mac.png')]); } catch (e) { console.log('SMOKE screencapture failed', e.message); }
+    panel.show(); await new Promise((r) => setTimeout(r, 800));
+  }
   await shot(panel, 'panel-active.png');
   // every rug is in the gallery, and the search finds them
   const gallery = await panel.webContents.executeJavaScript(`(() => {
