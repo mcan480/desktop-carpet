@@ -268,6 +268,7 @@ jobs:
       - name: App update test
         run: |
           SHOTS="$RUNNER_TEMP/smoke/patched"; mkdir -p "$SHOTS"
+          defaults write com.apple.WindowManager GloballyEnabled -bool true; killall WindowManager || true; sleep 4   # TEST ONLY: Stage Manager on
           DC_SMOKE="$SHOTS" DC_SMOKE_PATCH="$PWD/dist/smoke-patch.asar" "dist/Desktop Carpet-darwin-universal/Desktop Carpet.app/Contents/MacOS/Desktop Carpet" > "$RUNNER_TEMP/smoke-patched.log" 2>&1 &
           PID=$!
           fail() { L=$(tail -c 3500 "$RUNNER_TEMP/smoke-patched.log" | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}'); echo "::error title=$1::$L"; exit 1; }
@@ -284,6 +285,7 @@ jobs:
           test -d "dist/thin-arm64/Desktop Carpet.app" || exit 0
           SHOTS="$RUNNER_TEMP/smoke/thin"; mkdir -p "$SHOTS"
           rm -rf "$HOME/Library/Application Support/Desktop Carpet/updates"
+          defaults write com.apple.WindowManager GloballyEnabled -bool false; defaults write com.apple.WindowManager StandardHideDesktopIcons -bool true; defaults write com.apple.finder CreateDesktop -bool false; killall WindowManager Finder || true; sleep 4   # TEST ONLY: desktop items hidden
           DC_SMOKE="$SHOTS" "dist/thin-arm64/Desktop Carpet.app/Contents/MacOS/Desktop Carpet" > "$RUNNER_TEMP/smoke-thin.log" 2>&1 &
           PID=$!
           for i in $(seq 1 120); do kill -0 $PID 2>/dev/null || break; sleep 1; done
