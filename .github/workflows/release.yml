@@ -208,7 +208,7 @@ jobs:
   mac:
     needs: check
     if: needs.check.outputs.skip != 'true'
-    runs-on: macos-latest
+    runs-on: macos-26
     env:
       MAC_SIGN: ${{ secrets.MAC_CERT_P12 != '' && secrets.MAC_SIGN_IDENTITY != '' }}
     steps:
