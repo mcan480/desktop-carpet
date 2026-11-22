@@ -22,6 +22,7 @@ let panel = null;        // the control panel window
 let tray = null;
 let rugReady = false;
 let userHidden = false;  // the user chose "hide the carpet"
+let rugError = '';      // last error from the rug's page (for reports)
 let rugState = { style: 'tabriz', size: 'orta', weight: 'normal' };
 let settings = { onTop: false, lang: 'auto' };
 let license = { state: 'checking' };
@@ -204,6 +205,12 @@ function createRugWindow() {
   // The rug only ever shows its own page: no pop-ups, no navigating away.
   win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
   win.webContents.on('will-navigate', (e) => e.preventDefault());
+  // The last error from the rug's page and a crash of it, for the "Help with the app" report.
+  win.webContents.on('console-message', (ev, level, message) => {
+    const lvl = ev?.level ?? level, msg = ev?.message ?? message;
+    if (lvl === 'error' || lvl === 3) rugError = String(msg).slice(0, 160);
+  });
+  win.webContents.on('render-process-gone', (_e, d) => { rugError = `page gone: ${d?.reason}`; });
   win.setIgnoreMouseEvents(true, { forward: true });
   if (IS_MAC) win.setHiddenInMissionControl?.(true);
   win.loadFile(path.join(__dirname, '..', 'app', 'index.html'));
@@ -1023,13 +1030,35 @@ ipcMain.on('open-url', (_e, which) => {
 });
 // Report a problem: posted to the contact inbox on the site (the same one as its contact form), with what we need
 // to help: app version, system, screen, the rug in use and the license key.
+// What the rug window is doing, for a report from someone who can't see it.
+function rugDiag() {
+  const parts = [];
+  if (!win || win.isDestroyed()) parts.push('no window');
+  else {
+    const b = win.getBounds(), d = rugDisplay();
+    parts.push(win.isVisible() ? 'shown' : 'not shown');
+    if (userHidden) parts.push('hidden by user');
+    if (!unlocked()) parts.push('locked');
+    parts.push(`window ${b.x},${b.y} ${b.width}x${b.height} on ${d.id === screen.getPrimaryDisplay().id ? 'main' : 'other'} screen`);
+  }
+  parts.push(settings.onTop ? 'on top' : 'on desktop');
+  if (IS_MAC) {
+    try {
+      const v = require('child_process').execFileSync('/usr/bin/defaults', ['read', 'com.apple.WindowManager', 'GloballyEnabled'], { timeout: 1500, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+      parts.push(`stage manager ${v === '1' ? 'on' : 'off'}`);
+    } catch { /* not set: off */ }
+  }
+  if (rugError) parts.push(`error: ${rugError}`);
+  return parts.join(', ');
+}
+
 ipcMain.handle('report', async (_e, r) => {
   const email = String(r?.email || '').trim().slice(0, 254), text = String(r?.message || '').trim().slice(0, 3500);
   const d = screen.getPrimaryDisplay();
   const sys = IS_MAC ? `macOS ${process.getSystemVersion()}` : `Windows ${os.release()}`;
   const diag = [`Desktop Carpet ${app.getVersion()}`, `${sys} ${process.arch}`,
     `${screen.getAllDisplays().length} screen(s), ${d.size.width}x${d.size.height} @${d.scaleFactor}x`,
-    `rug ${rugState.style} / ${rugState.size} / ${rugState.weight}`, `lang ${LANG()}`,
+    `rug ${rugState.style} / ${rugState.size} / ${rugState.weight}`, rugDiag(), `lang ${LANG()}`,
     `license ${license?.state || '?'}${license?.plan ? ' ' + license.plan : ''}`].join(' · ');
   const body = { email, topic: 'app', message: `${text}\n\n— ${diag}`, page: `app ${app.getVersion()} ${process.platform}`, t: Math.max(0, Number(r?.t) || 0),
     ...(license?.key ? { ref: String(license.key).slice(0, 60) } : {}) };
@@ -1080,6 +1109,7 @@ async function runSmoke() {
   await wait(3000);
   console.log('SMOKE after unlock rugVisible', win.isVisible());
   fs.appendFileSync(path.join(out, 'smoke.txt'), `rugVisible ${win.isVisible()}\n`);
+  fs.appendFileSync(path.join(out, 'smoke.txt'), `rugDiag ${rugDiag()}\n`);
   if (IS_MAC) {
     // What's really on the screen (not just the window's own picture): the rug must show on the desktop.
     panel.hide(); await new Promise((r) => setTimeout(r, 1500));
