@@ -1,0 +1,6 @@
+version 1.22.0 patch none shell e44.7.0-k3.3.2-s1
+koffi ok
+rugVisible true
+rugDiag shown, window 0,31 1024x677 on main screen, on desktop
+gallery rugs 421 search 16
+wallpaper {"src":"/System/Library/Desktop Pictures/Solid Colors/Black.png","mode":"fill","bytes":390,"anchor":0.5}
