@@ -214,6 +214,8 @@ function createRugWindow() {
   win.setIgnoreMouseEvents(true, { forward: true });
   if (IS_MAC) win.setHiddenInMissionControl?.(true);
   win.loadFile(path.join(__dirname, '..', 'app', 'index.html'));
+  win.on('show', statsVisibility);
+  win.on('hide', statsVisibility);
   win.once('ready-to-show', () => {
     rugReady = true; updateRugVisibility();
     global.dcBoot?.ok?.();   // this version starts fine: an app update is kept (electron/boot.cjs)
@@ -457,6 +459,10 @@ function applySetting(name, value) {
     writeJson(SETTINGS_FILE(), settings);
   } else if (name === 'openAtLogin') {
     app.setLoginItemSettings(IS_MAC ? { openAtLogin: !!value } : { openAtLogin: !!value, args: ['--autostart'] });
+  } else if (name === 'stats') {
+    settings.stats = !!value;
+    writeJson(SETTINGS_FILE(), settings);
+    if (settings.stats) statsStart(); else statsStop();
   }
   refreshMenus();
   broadcast();
@@ -499,6 +505,58 @@ async function recheck() {
   return license;
 }
 
+// ---------- anonymous usage statistics ----------
+// For the "Uygulama" page of desktopcarpet.com's admin panel: how many computers have the app open right now, which
+// versions they run and which rugs people pick. While the app runs it sends a small ping: when it starts, every
+// 15 minutes, when the rug is shown or hidden, when a newly picked rug has stayed for a minute, and when it quits.
+// A ping holds a random id made only for this (not the license key or the license's device id), the app version,
+// Windows or Mac, the rug's style name and whether the rug is shown: nothing about the person, their files or screens.
+// Off when "Send anonymous usage statistics" is unticked in the panel; never from a development run or the smoke test.
+const STATS_URL = `${SITE}/api/app/ping`;
+const STATS_EVERY = 15 * 60 * 1000, PICK_AFTER = 60 * 1000;
+let statsTimer = null, pickTimer = null, statsShown = false, statsRug = null;
+const statsOn = () => settings.stats !== false && app.isPackaged && !process.env.DC_SMOKE;
+function statsId() {
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(settings.statsId || '')) {
+    settings.statsId = require('crypto').randomUUID();
+    writeJson(SETTINGS_FILE(), settings);
+  }
+  return settings.statsId;
+}
+const rugShownNow = () => !!(win && !win.isDestroyed() && win.isVisible());
+function statsPing(ev, timeoutMs = 10000) {
+  if (!statsOn()) return;
+  const body = JSON.stringify({ id: statsId(), v: app.getVersion(), os: IS_MAC ? 'mac' : 'win', r: String(rugState.style || ''), on: rugShownNow() ? 1 : 0, ev });
+  fetch(STATS_URL, {
+    method: 'POST', headers: { 'content-type': 'application/json', 'user-agent': 'DesktopCarpet/' + app.getVersion() }, body,
+    signal: AbortSignal.timeout(timeoutMs),
+  }).catch(() => {});   // offline: the next ping will do
+}
+function statsStart() {
+  statsStop();
+  if (!statsOn()) return;
+  statsShown = rugShownNow();
+  statsPing('start');
+  statsTimer = setInterval(() => statsPing('beat'), STATS_EVERY);
+}
+function statsStop() { clearInterval(statsTimer); statsTimer = null; clearTimeout(pickTimer); }
+// The rug was shown or hidden (by the person, the license or a change of screens).
+function statsVisibility() {
+  const now = rugShownNow();
+  if (statsTimer && now !== statsShown) statsPing(now ? 'show' : 'hide');
+  statsShown = now;
+}
+// A rug picked in the panel or the menu counts once it has stayed for a minute, so browsing through rugs doesn't.
+function statsRugChanged(style) {
+  if (!style || style === statsRug) return;
+  const first = statsRug === null;
+  statsRug = style;
+  if (first || !statsTimer) return;   // the rug brought back at start isn't a pick
+  clearTimeout(pickTimer);
+  pickTimer = setTimeout(() => { if (rugState.style === style) statsPing('pick'); }, PICK_AFTER);
+}
+app.on('before-quit', () => { if (statsTimer) statsPing('bye', 1500); statsStop(); });
+
 // ---------- control panel window ----------
 function openPanel() {
   checkForUpdate({ minGap: UPDATE_MIN_GAP });   // opening the app is when people expect it to be up to date
@@ -535,7 +593,7 @@ function panelState() {
     license,
     rug: { ...rugState, hidden: userHidden },
     update: { state: installing ? 'installing' : update.state, version: update.version, progress: update.progress || 0, kind: update.kind, got: update.got || 0, total: update.total || 0, platform: process.platform },
-    settings: { onTop: settings.onTop, langSetting: settings.lang || 'auto', openAtLogin: app.getLoginItemSettings(IS_MAC ? undefined : { args: ['--autostart'] }).openAtLogin },
+    settings: { onTop: settings.onTop, langSetting: settings.lang || 'auto', openAtLogin: app.getLoginItemSettings(IS_MAC ? undefined : { args: ['--autostart'] }).openAtLogin, stats: settings.stats !== false },
   };
 }
 
@@ -932,7 +990,7 @@ app.whenReady().then(() => {
   refreshMenus();
 
   if (!AUTOSTART) openPanel();
-  initLicense();
+  initLicense().finally(statsStart);   // after the license check, so the first ping knows whether the rug is out
   checkForUpdateAtLaunch();
   setInterval(() => checkForUpdate(), 6 * 3600 * 1000);
   powerMonitor.on('resume', () => setTimeout(() => checkForUpdate({ minGap: UPDATE_MIN_GAP }), 10 * 1000));
@@ -975,6 +1033,7 @@ ipcMain.on('report-state', (_e, s) => {
   rugState = { ...rugState, style: s.style ?? rugState.style, size: s.size ?? rugState.size, weight: s.weight ?? rugState.weight };
   if (rugState.style === 'gorunmez' && !wasInvisible) sendWallpaper(true);
   if (expiredPaid() && rugState.style !== 'klasik') send('style', 'klasik');
+  statsRugChanged(rugState.style);
   refreshMenus();
   broadcast();
 });

@@ -171,6 +171,7 @@
     $('#tShow').checked = !r.hidden;
     $('#tTop').checked = !!st.settings?.onTop;
     $('#tLogin').checked = !!st.settings?.openAtLogin;
+    $('#tStats').checked = st.settings?.stats !== false;
     $('#version').textContent = 'v' + (st.version || '1.0.0');
   }
 
@@ -251,6 +252,7 @@
   $('#tShow').addEventListener('change', (e) => dc.rug(e.target.checked ? 'show' : 'hide'));
   $('#tTop').addEventListener('change', (e) => dc.setting('onTop', e.target.checked));
   $('#tLogin').addEventListener('change', (e) => dc.setting('openAtLogin', e.target.checked));
+  $('#tStats').addEventListener('change', (e) => dc.setting('stats', e.target.checked));
   $('#flattenBtn').addEventListener('click', () => dc.rug('flatten'));
   $('#centerBtn').addEventListener('click', () => dc.rug('center'));
   $$('[data-url]').forEach((b) => b.addEventListener('click', () => dc.open(b.dataset.url)));
