@@ -557,6 +557,114 @@ function statsRugChanged(style) {
 }
 app.on('before-quit', () => { if (statsTimer) statsPing('bye', 1500); statsStop(); });
 
+// ---------- asking once for a rating ----------
+// Once on each computer the app asks "How do you like Desktop Carpet?" in a small window in a corner of the screen
+// (panel/feedback.html): 1 to 5 stars, an optional comment and an optional name to show, with a note under them that
+// they may appear on desktopcarpet.com (the name only if they typed one). Answers wait in the admin panel of
+// desktopcarpet.com (Geri bildirim), where the seller picks the comments that go on the home page.
+// When: after the app has run for 20 minutes in one go, while the rug is out and someone is using the computer (and on
+// Windows, not over a full-screen game, film or presentation); a new install waits until its third day, a computer that
+// updated to this version may be asked in its first session. Asked once: settings.fbDone is saved as the window appears,
+// whatever happens next. A rating goes with a random id made for this one question (so a retry isn't counted twice), the
+// app version, Windows or Mac and the app's language: never the key, an email or the statistics id; a name only if they
+// typed one. "Skip", the close
+// button or quitting only say it was skipped, and only while anonymous statistics are on. Never in a development run or
+// the smoke test (which shows the window without sending anything).
+const FB_URL = `${SITE}/api/feedback`;
+const FB_UPTIME = 20 * 60 * 1000, FB_NEW_WAIT = 3 * 24 * 3600 * 1000, FB_CHECK = 60 * 1000, FB_W = 380, FB_H = 456;
+let fbWin = null, fbTimer = null, fbId = '', fbAnswered = false, fbDemo = false, fbNotify;
+const fbOn = () => app.isPackaged && !process.env.DC_SMOKE;
+// At launch: from when this computer may be asked. `fresh`: there were no settings yet, a new install.
+function fbPlan(fresh) {
+  if (settings.fbDone || settings.fbAfter) return;
+  settings.fbAfter = Date.now() + (fresh ? FB_NEW_WAIT : 0);
+  writeJson(SETTINGS_FILE(), settings);
+}
+function fbStart() {
+  clearInterval(fbTimer); fbTimer = null;
+  if (!fbOn() || settings.fbDone) return;
+  const since = Date.now();
+  fbTimer = setInterval(() => {
+    if (settings.fbDone) { clearInterval(fbTimer); fbTimer = null; return; }
+    if (Date.now() - since < FB_UPTIME || Date.now() < (settings.fbAfter || 0) || !fbGoodMoment()) return;
+    clearInterval(fbTimer); fbTimer = null;
+    showFeedback(false);
+  }, FB_CHECK);
+}
+// Windows tells apps whether a notification would be welcome now (5: yes; 2, 3, 7: a full-screen app; 4: presenting;
+// 6: quiet hours; 1: locked). Anything unexpected counts as yes.
+function fbNotifyState() {
+  if (process.platform !== 'win32') return 'n/a';
+  try {
+    if (fbNotify === undefined) {
+      fbNotify = null;
+      const koffi = requireKoffi();
+      fbNotify = koffi.load('shell32.dll').func('long __stdcall SHQueryUserNotificationState(_Out_ int *pquns)');
+    }
+    if (!fbNotify) return 'unknown';
+    const state = [null];
+    return fbNotify(state) === 0 ? state[0] : 'unknown';
+  } catch (e) { return 'unknown'; }
+}
+function fbGoodMoment() {
+  if (!unlocked() || !rugShownNow() || installing || (splash && !splash.isDestroyed())) return false;
+  try { if (['idle', 'locked'].includes(powerMonitor.getSystemIdleState(300))) return false; } catch {}   // away, or the screen is locked
+  const n = fbNotifyState();
+  return n === 5 || typeof n !== 'number';
+}
+// The window, in the corner of the rug's screen: bottom right on Windows, top right on a Mac (where notifications are).
+// With demo, nothing is sent and the computer can still be asked (the smoke test).
+function showFeedback(demo) {
+  if (fbWin && !fbWin.isDestroyed()) return fbWin;
+  fbDemo = !!demo; fbAnswered = false; fbId = require('crypto').randomUUID();
+  if (!fbDemo) { settings.fbDone = Date.now(); writeJson(SETTINGS_FILE(), settings); }
+  try {
+    const a = rugDisplay().workArea, m = 6;
+    const w = new BrowserWindow({
+      x: Math.round(a.x + a.width - FB_W - m), y: Math.round(IS_MAC ? a.y + m : a.y + a.height - FB_H - m), width: FB_W, height: FB_H,
+      frame: false, transparent: true, backgroundColor: '#00000000', resizable: false, minimizable: false, maximizable: false,
+      fullscreenable: false, skipTaskbar: true, alwaysOnTop: true, hasShadow: false, show: false, title: 'Desktop Carpet',
+      webPreferences: { preload: path.join(__dirname, 'feedback-preload.cjs'), contextIsolation: true, nodeIntegration: false, sandbox: true },
+    });
+    fbWin = w;
+    w.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+    w.webContents.on('will-navigate', (e) => e.preventDefault());
+    w.loadFile(path.join(__dirname, '..', 'panel', 'feedback.html'), { query: { lang: LANG() } });
+    w.once('ready-to-show', () => { if (!w.isDestroyed()) w.showInactive(); });   // never takes the keyboard from what they're doing
+    w.on('closed', () => { fbSkip(); if (fbWin === w) fbWin = null; });
+  } catch (e) { console.error('feedback window failed:', e.message); fbWin = null; }
+  return fbWin;
+}
+function fbPost(fields, timeoutMs) {
+  return fetch(FB_URL, {
+    method: 'POST', headers: { 'content-type': 'application/json', 'user-agent': 'DesktopCarpet/' + app.getVersion() },
+    body: JSON.stringify({ id: fbId, v: app.getVersion(), os: IS_MAC ? 'mac' : 'win', lang: LANG(), ...fields }),
+    signal: AbortSignal.timeout(timeoutMs),
+  });
+}
+// No answer (Skip, the close button, quitting): say so once, only while anonymous statistics are on.
+function fbSkip() {
+  if (fbAnswered) return;
+  fbAnswered = true;
+  if (!fbDemo && statsOn()) fbPost({ skip: true }, 5000).catch(() => {});
+}
+const fromFb = (e) => !!(fbWin && !fbWin.isDestroyed() && e.sender === fbWin.webContents);
+ipcMain.handle('fb-send', async (e, stars, text, name) => {
+  if (!fromFb(e)) return { ok: false };
+  if (fbAnswered) return { ok: true };
+  const n = Number(stars);
+  if (!Number.isInteger(n) || n < 1 || n > 5) return { ok: false };
+  if (fbDemo) { fbAnswered = true; return { ok: true }; }
+  try {
+    const who = String(name ?? '').trim().slice(0, 40);
+    const r = await fbPost({ stars: n, text: String(text ?? '').slice(0, 1000), ...(who ? { name: who } : {}) }, 15000);
+    if (r.ok) fbAnswered = true;
+    return { ok: r.ok };
+  } catch { return { ok: false }; }   // offline: the window says so and they can try again
+});
+ipcMain.on('fb-skip', (e) => { if (!fromFb(e)) return; fbSkip(); fbWin.close(); });
+ipcMain.on('fb-done', (e) => { if (fromFb(e)) fbWin.close(); });
+
 // ---------- control panel window ----------
 function openPanel() {
   checkForUpdate({ minGap: UPDATE_MIN_GAP });   // opening the app is when people expect it to be up to date
@@ -972,6 +1080,7 @@ function installUpdate() {
 
 // ---------- app lifecycle ----------
 app.whenReady().then(() => {
+  const freshInstall = !fs.existsSync(SETTINGS_FILE());   // nothing saved yet: a new install (asked for a rating later)
   settings = { ...settings, ...readJson(SETTINGS_FILE(), {}) };
   if (IS_MAC) {
     try { const li = app.getLoginItemSettings(); if (li.wasOpenedAtLogin || li.wasOpenedAsHidden) AUTOSTART = true; } catch {}
@@ -980,6 +1089,7 @@ app.whenReady().then(() => {
   // The first start of a newer version (after "Restart and update", or an update that went in by itself) says so.
   showUpdated = JUST_UPDATED || (!!settings.lastVersion && newer(app.getVersion(), settings.lastVersion));
   if (settings.lastVersion !== app.getVersion()) { settings.lastVersion = app.getVersion(); writeJson(SETTINGS_FILE(), settings); }
+  fbPlan(freshInstall);
   if (showUpdated) { showSplash('done', app.getVersion()); closeSplash(9000); }
   createRugWindow();
 
@@ -990,7 +1100,7 @@ app.whenReady().then(() => {
   refreshMenus();
 
   if (!AUTOSTART) openPanel();
-  initLicense().finally(statsStart);   // after the license check, so the first ping knows whether the rug is out
+  initLicense().finally(() => { statsStart(); fbStart(); });   // after the license check, so the first ping knows whether the rug is out
   checkForUpdateAtLaunch();
   setInterval(() => checkForUpdate(), 6 * 3600 * 1000);
   powerMonitor.on('resume', () => setTimeout(() => checkForUpdate({ minGap: UPDATE_MIN_GAP }), 10 * 1000));
@@ -1185,6 +1295,18 @@ async function runSmoke() {
     return 'rugs ' + rugs + ' search ' + hits;
   })()`).catch((e) => 'error ' + e.message);
   fs.appendFileSync(path.join(out, 'smoke.txt'), `gallery ${gallery}\n`);
+  // the one-time rating window, shown without sending anything: as it opens, then with four stars, a comment and a name
+  try {
+    const fw = showFeedback(true);
+    await wait(2500);
+    const title = await fw.webContents.executeJavaScript("document.getElementById('title').textContent");
+    await shot(fw, 'feedback.png');
+    await fw.webContents.executeJavaScript(`(() => { document.querySelector('.star[data-n="4"]').click(); document.getElementById('text').value = 'Lovely rugs, thank you!'; document.getElementById('name').value = 'Ana'; return true; })()`);
+    await wait(500);
+    await shot(fw, 'feedback-filled.png');
+    fs.appendFileSync(path.join(out, 'smoke.txt'), `feedback ${title ? 'ok' : 'empty'} visible ${fw.isVisible()} notify ${fbNotifyState()} done ${settings.fbDone || 'no'}\n`);
+    fw.close();
+  } catch (e) { fs.appendFileSync(path.join(out, 'smoke.txt'), `feedback failed ${e.message}\n`); }
   await shot(win, 'rug.png');
   rugCommand('style', 'gorunmez');
   await wait(3500);

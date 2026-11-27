@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'">
+<title>Desktop Carpet</title>
+<link rel="stylesheet" href="./feedback.css">
+</head>
+<body>
+<!-- Asked once on each computer, some time after the app is first used (electron/main.cjs, "asking once for a rating"):
+     1 to 5 stars, an optional comment and an optional name, with a note that they may appear on desktopcarpet.com.
+     Sending, skipping and closing go through window.dcfb (electron/feedback-preload.cjs). -->
+<main class="card" id="card">
+  <header class="bar">
+    <span class="brand"><i class="mark" aria-hidden="true"></i>Desktop Carpet</span>
+    <button type="button" class="x" id="close"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7"/></svg></button>
+  </header>
+  <form class="ask" id="form" novalidate>
+    <h1 id="title"></h1>
+    <div class="stars" id="stars" role="radiogroup" aria-labelledby="title"></div>
+    <p class="word" id="word" aria-hidden="true"></p>
+    <label class="sr" for="text" id="textLabel"></label>
+    <textarea id="text" rows="3" maxlength="1000" dir="auto" spellcheck="true"></textarea>
+    <label class="sr" for="name" id="nameLabel"></label>
+    <input id="name" type="text" maxlength="40" dir="auto" autocomplete="off" spellcheck="false">
+    <p class="note" id="note"></p>
+    <p class="err" id="err" role="alert" hidden></p>
+    <div class="acts">
+      <button type="button" class="skip" id="skip"></button>
+      <button type="submit" class="send" id="send" disabled></button>
+    </div>
+  </form>
+  <section class="thanks" id="thanks" hidden aria-live="polite">
+    <div class="seal" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2L18.5 7.5"/></svg></div>
+    <h2 id="thanksTitle"></h2>
+    <p id="thanksSub"></p>
+  </section>
+</main>
+<script src="./i18n.js"></script>
+<script src="./feedback.js"></script>
+</body>
+</html>
